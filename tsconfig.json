@@ -1,0 +1,37 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"checkJs": false,
+		"esModuleInterop": false,
+		"forceConsistentCasingInFileNames": true,
+		"incremental": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"module": "ESNext",
+		"moduleDetection": "force",
+		"moduleResolution": "Node",
+		"noEmit": true,
+		"noErrorTruncation": true, // ANCHOR - noErrorTruncation (May turn off in the future)
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedParameters": true,
+		"paths": {
+			"@/*": ["src/*"]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"resolveJsonModule": true,
+		"skipLibCheck": true /* Skip type checking all .d.ts files. */,
+		"strict": true,
+		"target": "ES2017",
+		"verbatimModuleSyntax": true
+	},
+	"exclude": ["node_modules"],
+	"include": ["prettier.config.js"]
+}
