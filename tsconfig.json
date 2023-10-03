@@ -33,5 +33,5 @@
 		"verbatimModuleSyntax": true
 	},
 	"exclude": ["node_modules"],
-	"include": ["prettier.config.js"]
+	"include": ["prettier.config.js","next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
 }
