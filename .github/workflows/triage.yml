@@ -15,5 +15,5 @@ jobs:
       - name: take an issue
         uses: bdougie/take-action@main
         with:
-          issueCurrentlyAssignedMessage: Thanks for being interested in this issue. It looks like this ticket is already assigned to a contributor.
+          issueCurrentlyAssignedMessage: Thanks for being interested in this issue. It looks like this ticket is already assigned to someone else.
           token: ${{ secrets.GITHUB_TOKEN }}
