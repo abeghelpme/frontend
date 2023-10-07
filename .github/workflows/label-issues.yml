@@ -1,22 +1,21 @@
-name: Auto Issue Labeler
-
+name: Label issues
 on:
   issues:
     types:
+      - reopened
       - opened
-
 jobs:
-  label_issue:
+  label_issues:
     runs-on: ubuntu-latest
-
+    permissions:
+      issues: write
     steps:
-      - name: Assign 'triage' label to the issue
-        uses: octokit/request-action@v2.x
+      - uses: actions/github-script@v6
         with:
-          route: POST /repos/:owner/:repo/issues/:issue_number/labels
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.repository }}
-          issue_number: ${{ github.event.issue.number }}
-          labels: triage
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["triage"]
+            })
