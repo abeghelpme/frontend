@@ -1,0 +1,41 @@
+{
+	"name": "abeghelp-frontend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"license": "AGPL-3.0",
+	"dependencies": {
+		"next": "^13.5.4",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"devDependencies": {
+		"@next/eslint-plugin-next": "^13.5.3",
+		"@types/node": "^20.8.2",
+		"@types/react": "^18.2.24",
+		"@types/react-dom": "^18.2.8",
+		"@typescript-eslint/eslint-plugin": "^6.7.4",
+		"autoprefixer": "^10.4.16",
+		"eslint": "^8.50.0",
+		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-airbnb-typescript": "^17.1.0",
+		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-import": "^2.28.1",
+		"eslint-plugin-jsx-a11y": "^6.7.1",
+		"eslint-plugin-react": "^7.33.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-unicorn": "^48.0.1",
+		"postcss": "^8.4.31",
+		"prettier": "^3.0.3",
+		"prettier-plugin-tailwindcss": "^0.5.4",
+		"tailwindcss": "^3.3.3",
+		"typescript": "^5.2.2"
+	}
+}

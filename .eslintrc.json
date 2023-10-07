@@ -1,0 +1,153 @@
+{
+	"env": {
+		"browser": true,
+		"node": true
+	},
+
+	"extends": [
+		"airbnb",
+		"airbnb-typescript",
+		"airbnb/hooks",
+		"plugin:unicorn/recommended",
+		"plugin:react/recommended",
+		"plugin:react/jsx-runtime",
+		"plugin:tailwindcss/recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:@next/next/recommended",
+		"next/core-web-vitals",
+		"prettier"
+	],
+
+	"plugins": ["react", "tailwindcss", "unicorn", "@typescript-eslint"],
+
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module",
+		"project": "./tsconfig.json",
+		"babelOptions": {
+			"presets": ["next/babel"],
+			"caller": {
+				// Eslint supports top level await when a parser for it is included. We enable the parser by default for Babel.
+				"supportsTopLevelAwait": true
+			}
+		}
+	},
+
+	"root": true,
+
+	"rules": {
+		//Base Eslint/Typescript Eslint Rules
+		"max-len": "off",
+		"indent": "off",
+		"no-implicit-coercion": "error",
+		"no-tabs": "off",
+		"eol-last": "off",
+		"no-return-assign": ["error", "except-parens"],
+		"consistent-return": "off",
+		"no-use-before-define": [
+			"error",
+			{
+				"functions": false
+			}
+		],
+		"no-multiple-empty-lines": [
+			"warn",
+			{
+				"max": 3
+			}
+		],
+		"object-curly-newline": "off",
+		"prefer-arrow-callback": [
+			"error",
+			{
+				"allowNamedFunctions": true
+			}
+		],
+		"comma-dangle": "off",
+		"arrow-body-style": "off",
+		"no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
+		"no-unused-expressions": "off",
+		"@typescript-eslint/no-unused-expressions": [
+			"error",
+			{
+				"allowShortCircuit": true,
+				"allowTernary": true
+			}
+		],
+		"no-return-await": "off",
+		"@typescript-eslint/return-await": "error",
+		"no-useless-constructor": "off",
+		"@typescript-eslint/no-useless-constructor": "error",
+
+		//React plugin rules
+		"import/no-extraneous-dependencies": [
+			"error",
+			{
+				"devDependencies": true
+			}
+		],
+		"import/prefer-default-export": "off",
+		"react/self-closing-comp": [
+			"error",
+			{
+				"component": true
+			}
+		],
+		"react/jsx-curly-brace-presence": [
+			"error",
+			{
+				"props": "ignore",
+				"children": "ignore",
+				"propElementValues": "always"
+			}
+		],
+		"react/jsx-no-useless-fragment": [
+			"error",
+			{
+				"allowExpressions": true
+			}
+		],
+		"react/jsx-boolean-value": ["error", "always"],
+		"react/button-has-type": "off",
+		"react/function-component-definition": "off",
+		"react-hooks/exhaustive-deps": "warn",
+
+		"react/jsx-filename-extension": [
+			"error",
+			{
+				"extensions": [".tsx", ".jsx"]
+			}
+		],
+		"react/jsx-props-no-spreading": ["error", { "html": "ignore", "explicitSpread": "ignore" }],
+		"react/require-default-props": "off",
+
+		//Unicorn rules
+		"unicorn/no-null": "off",
+		"unicorn/filename-case": [
+			"warn",
+			{
+				"cases": {
+					"camelCase": true,
+					"pascalCase": true,
+					"kebabCase": true
+				}
+			}
+		],
+		"unicorn/no-negated-condition": "off",
+		"unicorn/prevent-abbreviations": "off",
+		"unicorn/new-for-builtins": "off",
+		"unicorn/numeric-separators-style": "off",
+		"unicorn/no-array-reduce": "off",
+		"unicorn/no-array-for-each": "off",
+
+		//Tailwind rules
+		"tailwindcss/no-custom-classname": "off",
+		"tailwindcss/no-contradicting-classname": "off",
+		"tailwindcss/classnames-order": [
+			"warn",
+			{
+				"config": "./tailwind.config.ts"
+			}
+		]
+	}
+}
