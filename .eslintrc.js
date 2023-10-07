@@ -1,62 +1,61 @@
 module.exports = {
-  extends: [
-    'next',
-    'next/core-web-vitals',
-    'prettier',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/eslint-recommended'
-  ],
+  root: true,
+  env: {
+    browser: true,
+    es6: true,
+    node: true,
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  parserOptions: {
+    project: './tsconfig.json', // tells parser relative path of tsconfig.json
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+
+  // all plugins (eslint-plugin-xxx) go here:
+  plugins: [
+    '@typescript-eslint',
+    '@next/eslint-plugin-next', // https://github.com/vercel/next.js/blob/canary/packages/eslint-plugin-next/lib/index.js
+    'sonarjs', // sonarjs plugin for eslint
+  ],
+
+  // all configs (eslint-config-xxx) go here:
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking', // contains rules that specifically require type information
+    'plugin:@next/next/recommended',
+    'next', // https://github.com/vercel/next.js/blob/canary/packages/eslint-config-next/package.json
+    'next/core-web-vitals',
+  ],
   rules: {
     // Add any additional TypeScript-specific ESLint rules or overrides here.
 
     // TypeScript should be in strict mode (recommended).
     '@typescript-eslint/strict-boolean-expressions': 'error',
 
-    // Enforce consistent spacing before function parentheses.
-    'space-before-function-paren': ['error', 'always'],
-
-    // Enforce consistent usage of TypeScript-specific naming conventions.
-    '@typescript-eslint/naming-convention': [
-      'error',
-      {
-        selector: 'default',
-        format: ['camelCase']
-      },
-      {
-        selector: 'variable',
-        format: ['camelCase', 'PascalCase', 'UPPER_CASE']
-      },
-      {
-        selector: 'parameter',
-        format: ['camelCase'],
-        leadingUnderscore: 'allow'
-      },
-      {
-        selector: 'property',
-        format: ['camelCase', 'snake_case']
-      },
-      {
-        selector: 'method',
-        format: ['camelCase']
-      },
-      {
-        selector: 'typeLike',
-        format: ['PascalCase']
-      }
-    ],
-
     // Disallow unused variables.
     '@typescript-eslint/no-unused-vars': 'error',
-
-    // Require explicit return types on functions and class methods.
-    '@typescript-eslint/explicit-function-return-type': 'error',
 
     // Disallow the use of the 'any' type.
     '@typescript-eslint/no-explicit-any': 'error',
 
     // Enforce a consistent member ordering (recommended).
-    '@typescript-eslint/member-ordering': 'error'
-  }
+    '@typescript-eslint/member-ordering': 'error',
+
+    // Enforce a maximum cyclomatic complexity of 10
+    complexity: ['error', 10],
+
+    // Enforce rules to detect and prevent overly complex code
+    'sonarjs/cognitive-complexity': ['error', 10],
+  },
 };

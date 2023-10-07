@@ -26,9 +26,11 @@
   "dependencies": {
     "next": "13.5.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "uninstall": "^0.0.0"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^13.5.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -36,8 +38,12 @@
     "@typescript-eslint/parser": "^6.7.4",
     "autoprefixer": "^10",
     "eslint": "^8.51.0",
+    "eslint-config-next": "^13.5.4",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-complexity": "^1.0.2",
+    "eslint-plugin-performance": "^0.1.1",
     "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-sonarjs": "^0.21.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "postcss": "^8",

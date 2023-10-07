@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint", // ESLint
+    "esbenp.prettier-vscode", // Prettier - Code formatter
+    "yzhang.markdown-all-in-one", // Markdown All in One
+    "christian-kohler.path-intellisense", // Path Intellisense,
+    "eamodio.gitlens", // GitLens — Git supercharged
+    "wix.vscode-import-cost", // Import Cost,
+    "formulahendry.auto-rename-tag" // Auto Rename Tag
+  ]
+}
