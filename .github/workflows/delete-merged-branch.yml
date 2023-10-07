@@ -1,10 +1,9 @@
 name: Delete Merged Branch
 
 on:
-  push:
-    branches:
-      - main
-      - dev
+  pull_request:
+    types:
+      - closed
 
 jobs:
   delete_branch:
@@ -12,17 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check if branch was merged
+    - name: Check if pull request was merged
       run: |
-        # Get the current branch name
-        branch_name=$(git symbolic-ref --short HEAD)
+        # Get the pull request number from the GitHub event payload
+        pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
         
-        # Check if the branch is merged into main or dev
-        if [ "$branch_name" != "main" ] && [ "$branch_name" != "dev" ]; then
-          if git log --graph --oneline main..$branch_name || git log --graph --oneline dev..$branch_name; then
-            # Delete the merged branch
-            git push origin --delete $branch_name
-          fi
+        # Check if the pull request was merged
+        if [ "$(curl -s -X GET -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$pr_number/merge" | jq -r .merged)" == "true" ]; then
+          # Get the source branch name
+          source_branch=$(curl -s -X GET -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$pr_number" | jq -r .head.ref)
+          
+          # Delete the source branch
+          git push origin --delete "$source_branch"
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
