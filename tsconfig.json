@@ -25,7 +25,8 @@
     "**/*.tsx",
     ".eslintrc.js",
     "next.config.js",
-    "postcss.config.js"
+    "postcss.config.js",
+    "lint-staged.config.js"
   ],
   "exclude": ["node_modules"]
 }
