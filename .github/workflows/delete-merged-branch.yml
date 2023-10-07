@@ -1,0 +1,28 @@
+name: Delete Merged Branch
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  delete_branch:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if branch was merged
+      run: |
+        # Get the current branch name
+        branch_name=$(git symbolic-ref --short HEAD)
+        
+        # Check if the branch is merged into main or dev
+        if [ "$branch_name" != "main" ] && [ "$branch_name" != "dev" ]; then
+          if git log --graph --oneline main..$branch_name || git log --graph --oneline dev..$branch_name; then
+            # Delete the merged branch
+            git push origin --delete $branch_name
+          fi
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
