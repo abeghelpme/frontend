@@ -11,16 +11,12 @@ jobs:
 
     steps:
       - name: Assign 'triage' label to the issue
-        uses: actions/github-script@v6
+        uses: octokit/request-action@v2.x
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const label = 'triage';
-            const issueNumber = context.issue.number;
-            const addLabelResponse = await github.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issueNumber,
-              labels: [label],
-            });
-            console.log(`Label "${label}" added to issue #${issueNumber}.`);
+          route: POST /repos/:owner/:repo/issues/:issue_number/labels
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.repository }}
+          issue_number: ${{ github.event.issue.number }}
+          labels: triage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
