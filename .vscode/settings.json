@@ -1,3 +1,10 @@
 {
-  "githubPullRequests.ignoredPullRequestBranches": ["dev"]
+  "githubPullRequests.ignoredPullRequestBranches": ["dev"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  //   "editor.codeActionsOnSave": { // toggle this if you want eslint to fix issues automatically  on save
+  //     "source.fixAll.eslint": true
+  //   },
+  // Automatically format files with Prettier
+  "prettier.requireConfig": true
 }
