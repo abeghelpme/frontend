@@ -6,9 +6,6 @@
 run ```npm install```
 run ```npx husky install```
 
-
-
-
 ## Collaborators
 
 <!-- readme: collaborators -start -->

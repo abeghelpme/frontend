@@ -7,13 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "check-types": "tsc --noEmit --pretty"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "npm run lint",
-      "npm run format",
-      "git add"
+      "npm run format"
     ]
   },
   "husky": {
