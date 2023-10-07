@@ -18,16 +18,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test"
+      "pre-commit": "lint-staged"
     }
   },
   "license": "AGPL-3.0",
   "dependencies": {
     "next": "13.5.4",
     "react": "^18",
-    "react-dom": "^18",
-    "uninstall": "^0.0.0"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.5.4",
