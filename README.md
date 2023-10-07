@@ -1,7 +1,7 @@
 # abeghelp-frontend
 
 
-# Innstall dependencies and run husky
+# Install dependencies and run husky
 
 run ```npm install```
 run ```npx husky install```
