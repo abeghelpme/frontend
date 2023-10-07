@@ -13,15 +13,11 @@ jobs:
     steps:
     - name: Check if pull request was merged
       run: |
-        # Get the pull request number from the GitHub event payload
         pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-        
-        # Check if the pull request was merged
-        if [ "$(curl -s -X GET -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$pr_number/merge" | jq -r .merged)" == "true" ]; then
-          # Get the source branch name
+        merged_status=$(curl -s -X GET -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$pr_number/merge" | jq -r .merged)
+
+        if [ "$merged_status" == "true" ]; then
           source_branch=$(curl -s -X GET -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$pr_number" | jq -r .head.ref)
-          
-          # Delete the source branch
           git push origin --delete "$source_branch"
         fi
       env:
