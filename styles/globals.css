@@ -25,3 +25,11 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* 
+Storybook Preview Body Background Color intentionally set to edge against machines dark modes
+TODO: Configure a dark mode support system for stories at some point
+*/
+.sb-show-main {
+  background: white;
+}

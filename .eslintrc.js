@@ -32,10 +32,11 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking', // contains rules that specifically require type information
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:@next/next/recommended',
-    'next', // https://github.com/vercel/next.js/blob/canary/packages/eslint-config-next/package.json
+    'next',
     'next/core-web-vitals',
+    'plugin:storybook/recommended',
   ],
   rules: {
     // Add any additional TypeScript-specific ESLint rules or overrides here.

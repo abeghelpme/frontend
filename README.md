@@ -1,10 +1,36 @@
-# abeghelp-frontend
+<div align="center">
+  <br>
+  <h1>🤲 AbegHelp 🤲</h1>
+  <p><i>"Abeg, a man of many talents and skills. He is the best in all things."</i></p>
+</div>
+<br>
+
+## Local development
+
+Install application dependencies
+
+```shell 
+npm install
+````
+Run Husky
+
+```shell
+npm run prepare
+```
+Start a local copy of the app on port `3000`
+
+```shell
+npm run dev
+```
+## Storybook
+
+The Storybook for this project can be started and viewed locally on port `6006`
+
+```shell
+npm run storybook
+```
 
 
-# Install dependencies and run husky
-
-run ```npm install```
-run ```npx husky install```
 
 ## Collaborators
 
@@ -55,6 +81,13 @@ run ```npx husky install```
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/Ryan-Zayne">
+            <img src="https://avatars.githubusercontent.com/u/93886198?v=4" width="100;" alt="Ryan-Zayne"/>
+            <br />
+            <sub><b>Ryan Zayne</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/Toyin5">
             <img src="https://avatars.githubusercontent.com/u/40214690?v=4" width="100;" alt="Toyin5"/>
             <br />
@@ -62,17 +95,24 @@ run ```npx husky install```
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/Judge-Paul">
+            <img src="https://avatars.githubusercontent.com/u/110723341?v=4" width="100;" alt="Judge-Paul"/>
+            <br />
+            <sub><b>Judge-Paul Ogebe</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/babblebey">
+            <img src="https://avatars.githubusercontent.com/u/25631971?v=4" width="100;" alt="babblebey"/>
+            <br />
+            <sub><b>Olabode Lawal-Shittabey</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/jemmycodes">
             <img src="https://avatars.githubusercontent.com/u/110843645?v=4" width="100;" alt="jemmycodes"/>
             <br />
             <sub><b>Otebele Jemimah</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Ryan-Zayne">
-            <img src="https://avatars.githubusercontent.com/u/93886198?v=4" width="100;" alt="Ryan-Zayne"/>
-            <br />
-            <sub><b>Ryan Zayne</b></sub>
         </a>
     </td></tr>
 </table>
