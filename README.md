@@ -12,19 +12,22 @@
 
 Install application dependencies
 
-```shell 
+```shell
 npm install
-````
+```
+
 Run Husky
 
 ```shell
 npm run prepare
 ```
+
 Start a local copy of the app on port `3000`
 
 ```shell
 npm run dev
 ```
+
 ## Storybook
 
 The Storybook for this project can be started and viewed locally on port `6006`
@@ -32,8 +35,6 @@ The Storybook for this project can be started and viewed locally on port `6006`
 ```shell
 npm run storybook
 ```
-
-
 
 ## Collaborators
 
@@ -95,6 +96,20 @@ npm run storybook
             <img src="https://avatars.githubusercontent.com/u/40214690?v=4" width="100;" alt="Toyin5"/>
             <br />
             <sub><b>Toyin Muhammed</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Judge-Paul">
+            <img src="https://avatars.githubusercontent.com/u/110723341?v=4" width="100;" alt="Judge-Paul"/>
+            <br />
+            <sub><b>Judge-Paul Ogebe</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/babblebey">
+            <img src="https://avatars.githubusercontent.com/u/25631971?v=4" width="100;" alt="babblebey"/>
+            <br />
+            <sub><b>Olabode Lawal-Shittabey</b></sub>
         </a>
     </td>
     <td align="center">
