@@ -13,7 +13,7 @@ const Login = () => {
             </label>
             <input
               type="email"
-              className="py-2 rounded-lg bg-[#4B5563] text-gray-400 focus:outline-none px-4  border border-gray-400"
+              className="py-2 rounded-lg bg-[#4B5563] text-white focus:outline-none px-4  border border-gray-400"
               id="email"
               placeholder="name@gmail.com"
               required
@@ -26,7 +26,7 @@ const Login = () => {
             <input
               type="password"
               placeholder="......."
-              className="py-2 rounded-lg bg-[#4B5563] text-gray-400 focus:outline-none px-4  border border-gray-400"
+              className="py-2 rounded-lg bg-[#4B5563] text-white  focus:outline-none px-4  border border-gray-400"
               id="password"
               required
             />
