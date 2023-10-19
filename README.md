@@ -12,19 +12,22 @@
 
 Install application dependencies
 
-```shell 
+```shell
 npm install
-````
+```
+
 Run Husky
 
 ```shell
 npm run prepare
 ```
+
 Start a local copy of the app on port `3000`
 
 ```shell
 npm run dev
 ```
+
 ## Storybook
 
 The Storybook for this project can be started and viewed locally on port `6006`
@@ -32,8 +35,6 @@ The Storybook for this project can be started and viewed locally on port `6006`
 ```shell
 npm run storybook
 ```
-
-
 
 ## Collaborators
 
