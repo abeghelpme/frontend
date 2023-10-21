@@ -6,6 +6,5 @@
   //     "source.fixAll.eslint": true
   //   },
   // Automatically format files with Prettier
-  "prettier.requireConfig": true,
-  "cSpell.words": ["abeg", "cyclomatic"]
+  "prettier.requireConfig": true
 }
