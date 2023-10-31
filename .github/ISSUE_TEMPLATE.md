@@ -1,5 +1,3 @@
-# Issue Template
-
 ## Issue Type
 
 - [ ] Bug Report
