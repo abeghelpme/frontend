@@ -92,6 +92,13 @@ npm run storybook
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/babblebey">
+            <img src="https://avatars.githubusercontent.com/u/25631971?v=4" width="100;" alt="babblebey"/>
+            <br />
+            <sub><b>Olabode Lawal-Shittabey</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/Toyin5">
             <img src="https://avatars.githubusercontent.com/u/40214690?v=4" width="100;" alt="Toyin5"/>
             <br />
@@ -106,39 +113,10 @@ npm run storybook
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/babblebey">
-            <img src="https://avatars.githubusercontent.com/u/25631971?v=4" width="100;" alt="babblebey"/>
-            <br />
-            <sub><b>Olabode Lawal-Shittabey</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/jemmycodes">
             <img src="https://avatars.githubusercontent.com/u/110843645?v=4" width="100;" alt="jemmycodes"/>
             <br />
             <sub><b>Otebele Jemimah</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Kofi-eo">
-            <img src="https://avatars.githubusercontent.com/u/103290939?v=4" width="100;" alt="Kofi-eo"/>
-            <br />
-            <sub><b>Emmanuel Ofori</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Judge-Paul">
-            <img src="https://avatars.githubusercontent.com/u/110723341?v=4" width="100;" alt="Judge-Paul"/>
-            <br />
-            <sub><b>Judge-Paul Ogebe</b></sub>
-        </a>
-    </td></tr>
-<tr>
-    <td align="center">
-        <a href="https://github.com/babblebey">
-            <img src="https://avatars.githubusercontent.com/u/25631971?v=4" width="100;" alt="babblebey"/>
-            <br />
-            <sub><b>Olabode Lawal-Shittabey</b></sub>
         </a>
     </td></tr>
 </table>
