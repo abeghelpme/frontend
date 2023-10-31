@@ -42,6 +42,11 @@ const config: Config = {
       },
     },
   },
+  safelist: [
+    {
+      pattern: /text-(sm|base|lg|xl|2xl)/,
+    },
+  ],
   plugins: [],
 };
 export default config;
