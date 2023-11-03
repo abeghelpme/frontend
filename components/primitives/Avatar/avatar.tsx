@@ -1,13 +1,13 @@
-import { CSSProperties, FC } from "react";
+import { type CSSProperties, FC } from "react";
 import { Root, Image, Fallback } from "@radix-ui/react-avatar";
 import clsx from "clsx";
 
-interface AvatarProps {
+export interface AvatarProps {
   className?: string;
   src?: string;
   initials?: string;
   alt?: string;
-  size: "sm" | "base" | "lg" | number;
+  size?: "sm" | "base" | "lg" | number;
   hasBorder?: boolean;
   isCircle?: boolean;
   style?: CSSProperties;
@@ -34,9 +34,9 @@ const TheComponent: FC<AvatarProps> = ({
   src,
   initials,
   alt,
-  size,
-  hasBorder,
-  isCircle,
+  size = "base",
+  hasBorder = false,
+  isCircle = true,
   ...props
 }) => {
   const style = {
@@ -53,8 +53,8 @@ const TheComponent: FC<AvatarProps> = ({
       className={clsx(
         style.root,
         className,
-        (isCircle ?? false) && style.circular,
-        (hasBorder ?? false) && style.bordered,
+        isCircle === true && style.circular,
+        hasBorder === true && style.bordered,
         typeof size === "string" && style[size],
       )}
       {...props}
@@ -62,7 +62,7 @@ const TheComponent: FC<AvatarProps> = ({
       <Image
         className="h-full w-full rounded-[inherit] object-cover"
         src={src}
-        alt={alt}
+        alt={(alt ?? "") || initials}
       />
       <Fallback
         className={clsx(
@@ -72,6 +72,9 @@ const TheComponent: FC<AvatarProps> = ({
             : `text-${size}`,
         )}
         delayMs={600}
+        style={{
+          fontSize: `${typeof size === "number" && size / 2 + "px"}`,
+        }}
       >
         <span>{initials}</span>
       </Fallback>
