@@ -11,7 +11,7 @@ on:
       - dev
 
 jobs:
-  lint-format-check-types:
+  pre-commit-and-ci-checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,6 +26,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check if .husky folder exists
+        run: |
+          if [ -d .husky ]; then
+            echo ".husky folder found."
+          else
+            echo ".husky folder not found."
+            echo "Installing Husky and setting up hooks."
+            npm i husky
+            npm run prepare
+          fi
+          echo "Running Husky pre-commit hooks."
+          npm run pre-commit
+
       - name: Run ESLint
         run: npm run lint
 
@@ -34,26 +47,6 @@ jobs:
 
       - name: Check for TypeScript types
         run: npm run check-types
-
-  husky-setup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-
-      - name: Install Husky
-        run: npm i husky
-
-      - name: Setup Husky
-        run: npm run prepare
-
-      - name: Verify Husky hooks
-        run: npm run lint-staged
 
   build-and-test:
     runs-on: ubuntu-latest
