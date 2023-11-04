@@ -1,6 +1,6 @@
 import { FC } from "react";
 import clsx from "clsx";
-import getAvatarInitials from "@/libs/utils/get-avatar-initials";
+import getAvatarInitials from "@/lib/utils/get-avatar-initials";
 import Avatar, { type AvatarProps } from "../primitives/Avatar/avatar";
 
 interface StackedAvatarsProps extends AvatarProps {
