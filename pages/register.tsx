@@ -1,9 +1,9 @@
-import Link from 'next/link';
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 
 export default function Register() {
   const inputStyle =
-    'border border-gray-300 bg-gray-50 rounded-md p-2 w-full mt-2';
+    "border border-gray-300 bg-gray-50 rounded-md p-2 w-full mt-2";
 
   return (
     <main className="flex h-[100vh] w-[100vw] justify-center items-center bg-gray-200 p-4">
@@ -65,7 +65,7 @@ export default function Register() {
                 Remember Me
               </label>
             </div>
-            <Link href={'#'} className="hover:underline text-blue-700 ">
+            <Link href={"#"} className="hover:underline text-blue-700 ">
               forgot password?
             </Link>
           </div>
@@ -76,8 +76,8 @@ export default function Register() {
             Register
           </button>
           <p className="text-center w-fit text-sm font-medium text-gray-500 ">
-            Already registered?{' '}
-            <Link href={'#'} className="hover:underline text-blue-700">
+            Already registered?{" "}
+            <Link href={"#"} className="hover:underline text-blue-700">
               Login
             </Link>
           </p>
