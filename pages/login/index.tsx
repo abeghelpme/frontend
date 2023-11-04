@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 const Login = () => {
   return (
@@ -48,7 +48,7 @@ const Login = () => {
           </button>
         </form>
         <p>
-          Not registered?{' '}
+          Not registered?{" "}
           <Link href="" className="text-[#2563eb] font-bold">
             Create Account?
           </Link>
