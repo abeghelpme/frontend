@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 const Login = () => {
-  // test comment
   return (
     <main className="flex items-center justify-center w-full min-h-screen p-4">
       <div className="w-full max-w-sm p-8 space-y-5 rounded-lg bg-blue-950">
