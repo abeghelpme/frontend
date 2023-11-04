@@ -68,6 +68,35 @@ npm run storybook
             <br />
             <sub><b>Ryan Zayne</b></sub>
         </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Archangeltv">
+            <img src="https://avatars.githubusercontent.com/u/97154433?v=4" width="100;" alt="Archangeltv"/>
+            <br />
+            <sub><b>Null</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/GideonJesugbemi">
+            <img src="https://avatars.githubusercontent.com/u/105139480?v=4" width="100;" alt="GideonJesugbemi"/>
+            <br />
+            <sub><b>Gideon Jesugbemi</b></sub>
+        </a>
+    </td></tr>
+<tr>
+    <td align="center">
+        <a href="https://github.com/Danieljs-codes">
+            <img src="https://avatars.githubusercontent.com/u/108600883?v=4" width="100;" alt="Danieljs-codes"/>
+            <br />
+            <sub><b>Olamide</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/jemmycodes">
+            <img src="https://avatars.githubusercontent.com/u/110843645?v=4" width="100;" alt="jemmycodes"/>
+            <br />
+            <sub><b>Otebele Jemimah (Chef Meemah)</b></sub>
+        </a>
     </td></tr>
 </table>
 <!-- readme: collaborators -end -->
@@ -85,17 +114,17 @@ npm run storybook
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/Ryan-Zayne">
-            <img src="https://avatars.githubusercontent.com/u/93886198?v=4" width="100;" alt="Ryan-Zayne"/>
-            <br />
-            <sub><b>Ryan Zayne</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/babblebey">
             <img src="https://avatars.githubusercontent.com/u/25631971?v=4" width="100;" alt="babblebey"/>
             <br />
             <sub><b>Olabode Lawal-Shittabey</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Ryan-Zayne">
+            <img src="https://avatars.githubusercontent.com/u/93886198?v=4" width="100;" alt="Ryan-Zayne"/>
+            <br />
+            <sub><b>Ryan Zayne</b></sub>
         </a>
     </td>
     <td align="center">
