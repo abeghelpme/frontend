@@ -7,7 +7,7 @@ export default function Home() {
       {/* uncomment to see the button in action */}
       {/* <Button
         onClick={() => console.log("clicked")}
-        className="bg-red-500 px-7 py-2 "
+        className="bg-red-500 rounded-lg px-7 py-2 "
         disabled={false}
         size="sm"
         variant="primary"
