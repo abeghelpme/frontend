@@ -1,19 +1,19 @@
 import { forwardRef } from "react";
 
 interface ButtonProps {
-    className: string;
-    disabled?: boolean;
-    onClick?: () => void;
-    children: React.ReactNode;
-    size: "sm" | "base" | "lg";
+  className: string;
+  disabled?: boolean;
+  onClick?: () => void;
+  children: React.ReactNode;
+  size: "sm" | "base" | "lg";
   variant: "primary" | "secondary" | "danger";
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    { variant, size, disabled, onClick, className, children, ...props },
-    ref,
-  ) => {
+  ({ disabled, onClick, className, children, ...props }, ref) => {
+    {
+      console.log(props);
+    }
     return (
       <button
         ref={ref}
