@@ -26,6 +26,16 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+progress[value]::-webkit-progress-bar {
+  @apply bg-abeg-neutral-80 rounded-[4px];
+}
+progress[value]::-webkit-progress-value {
+  @apply bg-abeg-green rounded-[4px];
+}
+progress[value]::-moz-progress-bar {
+  @apply bg-abeg-green rounded-[4px] h-full;
+}
+
 /* 
 Storybook Preview Body Background Color intentionally set to edge against machines dark modes
 TODO: Configure a dark mode support system for stories at some point
