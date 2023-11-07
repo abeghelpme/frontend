@@ -30,7 +30,8 @@
     "clsx": "^2.0.0",
     "next": "13.5.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tailwind-merge": "^2.0.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.5.4",
