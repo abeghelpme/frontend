@@ -1,7 +1,7 @@
-import { FC } from "react";
-import clsx from "clsx";
 import getAvatarInitials from "@/lib/utils/get-avatar-initials";
+import { FC } from "react";
 import Avatar, { type AvatarProps } from "../primitives/Avatar/avatar";
+import { cn } from "@/lib/utils/cn";
 
 interface StackedAvatarsProps extends AvatarProps {
   // NOTE: Temporary `user` property type, should be replace with neccesary object wth user details
@@ -24,7 +24,7 @@ const StackedAvatars: FC<StackedAvatarsProps> = ({
       .map((user, i) => (
         <Avatar
           key={i}
-          className={clsx("transition-all duration-300", className)}
+          className={cn("transition-all duration-300", className)}
           src={user.img}
           size={size}
           initials={getAvatarInitials(user.name)}
@@ -33,7 +33,7 @@ const StackedAvatars: FC<StackedAvatarsProps> = ({
       ))}
     {displayOthersCount === true && users.length > count && (
       <Avatar
-        className={clsx("transition-all duration-300", className)}
+        className={cn("transition-all duration-300", className)}
         size={size}
         initials={`+${users.length - count}`}
         {...props}

@@ -1,6 +1,6 @@
-import { type CSSProperties, FC } from "react";
-import { Root, Image, Fallback } from "@radix-ui/react-avatar";
-import clsx from "clsx";
+import { cn } from "@/lib/utils/cn";
+import { Fallback, Image, Root } from "@radix-ui/react-avatar";
+import { FC, type CSSProperties } from "react";
 
 export interface AvatarProps {
   className?: string;
@@ -50,7 +50,7 @@ const TheComponent: FC<AvatarProps> = ({
 
   return (
     <Root
-      className={clsx(
+      className={cn(
         style.root,
         className,
         isCircle === true && style.circular,
@@ -65,7 +65,7 @@ const TheComponent: FC<AvatarProps> = ({
         alt={(alt ?? "") || initials}
       />
       <Fallback
-        className={clsx(
+        className={cn(
           "text-abeg-neutral-40 leading-1 flex items-center justify-center h-full w-full text-center bg-white font-medium",
           typeof size === "string" && size === "sm"
             ? "text-xs"
