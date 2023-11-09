@@ -1,33 +1,24 @@
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 
-interface ButtonProps {
+interface ButtonProps extends React.ComponentPropsWithRef<"button"> {
   className: string;
   disabled?: boolean;
-  onClick?: () => void;
   children: React.ReactNode;
-  size: "sm" | "base" | "lg";
-  variant: "primary" | "secondary" | "danger";
+  size?: "sm" | "base" | "lg";
+  variant?: "primary" | "secondary" | "danger";
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ disabled, onClick, className, children, ...props }, ref) => {
-    {
-      console.log(props);
-    }
-    return (
-      <button
-        ref={ref}
-        className={className}
-        onClick={onClick}
-        disabled={disabled}
-        {...props}
-      >
-        {children}
-      </button>
-    );
-  },
-);
+// const buttonClass = cl
 
-Button.displayName = "Button";
+const Button = (
+  { className, children, ...props }: ButtonProps,
+  ref: React.ForwardedRef<HTMLButtonElement>,
+) => {
+  return (
+    <button className={className} ref={ref} {...props}>
+      {children}
+    </button>
+  );
+};
 
-export default Button;
+export default forwardRef(Button);
