@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from "react";
 
 interface TitleProps {
   level?: 1 | 2 | 3 | 4 | 5 | 6;

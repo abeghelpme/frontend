@@ -1,15 +1,15 @@
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from "react";
 
-interface Iprops {
+interface TypographyWrapperprops {
   className?: string;
-  size?: string;
+  size?: "sm" | "base" | "lg";
   children?: ReactNode;
 }
 
-const TypographyWrapper: React.FC<Iprops> = ({
+const TypographyWrapper: React.FC<TypographyWrapperprops> = ({
   children,
   className,
-  size = 'sm',
+  size = "base",
   ...props
 }) => {
   return (
