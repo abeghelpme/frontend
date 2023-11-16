@@ -10,7 +10,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div className="relative">
         <input
           className={cn(
-            "py-2 px-3 text-sm placeholder:text-sm block w-full border border-[#D0D5DD] bg-white rounded-md outline-0 focus:border-abeg-green-20 placeholder:text-abeg-neutral-50 text-abeg-neutral-10",
+            "py-2 px-3 text-sm placeholder:text-sm block w-full border border-[#D0D5DD] bg-white rounded-md outline-0 focus:border-abeg-green-20 placeholder:text-abeg-neutral-50 text-abeg-neutral-10 disabled:bg-[#F0F2F5] disabled:border-[#D0D5DD]",
             {
               "pr-[32px]": type === "password",
             },

@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className={"px-4"}>
       <h1>WELCOME TO ABEG HELP!!</h1>
-      <Input placeholder={"Enter Email"} type={"password"} />
+      <Input disabled placeholder={"Enter Email"} type={"password"} />
     </div>
   );
 }
