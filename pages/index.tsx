@@ -1,7 +1,10 @@
+import Input from "@/components/primitives/Form/Input";
+
 export default function Home() {
   return (
-    <div>
+    <div className={"px-4"}>
       <h1>WELCOME TO ABEG HELP!!</h1>
+      <Input placeholder={"Enter Email"} type={"password"} />
     </div>
   );
 }
