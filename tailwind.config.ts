@@ -50,7 +50,6 @@ const config: Config = {
   ],
   plugins: [
     plugin(function ({ addVariant }) {
-      require("@tailwindcss/forms");
       addVariant("progress-unfilled", ["&::-webkit-progress-bar", "&"]);
       addVariant("progress-filled", [
         "&::-webkit-progress-value",

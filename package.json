@@ -44,7 +44,6 @@
     "@storybook/nextjs": "^7.4.6",
     "@storybook/react": "^7.4.6",
     "@storybook/testing-library": "^0.2.2",
-    "@tailwindcss/forms": "^0.5.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
