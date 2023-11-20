@@ -24,6 +24,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />
         {type === "password" && (
           <button
+            type="button"
+            className="w-5 h-5 text-abeg-neutral-50 absolute left-[calc(100%-20px)] top-1/2 -translate-x-1/2 -translate-y-1/2"
             onClick={() => setShowPassword((curPassword) => !curPassword)}
           >
             <svg
@@ -32,7 +34,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-5 h-5 text-abeg-neutral-50 absolute left-[calc(100%-20px)] top-1/2 -translate-x-1/2 -translate-y-1/2"
             >
               <path
                 strokeLinecap="round"

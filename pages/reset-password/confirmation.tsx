@@ -1,8 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function Confirmation() {
+  const router = useRouter();
   return (
     <main className="md:grid md:grid-cols-2 md:gap-10 px-5 md:px-20 h-[100vh] flex justify-center items-center bg-white">
       <div className="hidden md:block">
@@ -42,10 +43,13 @@ export default function Confirmation() {
           Password reset successful
         </div>
         <button
-          type="submit"
-          className="bg-abeg-green-50 hover:bg-abeg-green-60 transition duration-300 px-5 py-4 text-white font-medium rounded-md"
+          onClick={() => {
+            router.push("/register");
+          }}
+          type="button"
+          className="bg-abeg-green-50 hover:bg-abeg-green-60 transition duration-300 px-5 py-2 text-white font-medium rounded-md"
         >
-          <Link href={"register"}>Register</Link>
+          Register
         </button>
       </div>
     </main>
