@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils/cn";
-import { FC, HTMLProps } from "react";
+import type { HTMLProps, FC } from "react";
 
 interface ProgressBarProps {
   value: number; // Provide the progress value as a number (0-100)

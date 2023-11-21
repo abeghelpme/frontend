@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils/cn";
 import { Fallback, Image, Root } from "@radix-ui/react-avatar";
-import { FC, type CSSProperties } from "react";
+import type { CSSProperties, FC } from "react";
 
 export interface AvatarProps {
   className?: string;

@@ -13,6 +13,7 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "resolveJsonModule": true,
+    "verbatimModuleSyntax": true, // Automatically add "type" modifier to type import statements
     "isolatedModules": true,
     "incremental": true,
     "jsx": "preserve",
