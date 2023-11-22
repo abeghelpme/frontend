@@ -1,12 +1,11 @@
 import Image from "next/image";
 import React from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Confirmation() {
-  const router = useRouter();
   return (
-    <main className="md:grid md:grid-cols-2 md:gap-10 px-5 md:px-20 h-[100vh] flex justify-center items-center bg-white">
-      <div className="hidden md:block">
+    <main className="flex md:gap-10 lg:gap-10 xl:gap-0 px-5 md:px-20 h-[100dvh] w-full justify-center items-center bg-white">
+      <div className="hidden md:block md:w-3/5 lg:w-1/2">
         <Image
           src={"/abeg-plant.png"}
           alt="abeg-plant"
@@ -14,7 +13,7 @@ export default function Confirmation() {
           height={500}
         />
       </div>
-      <div className="flex flex-col w-full md:w-[20rem] lg:w-[30rem]">
+      <div className="flex flex-col w-full md:w-1/2 lg:pr-10 xl:pr-32">
         <div className="flex justify-center items-center mb-10">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -39,18 +38,15 @@ export default function Confirmation() {
             />
           </svg>
         </div>
-        <div className="flex justify-center font-bold text-black mb-5">
+        <div className="flex justify-center font-semibold text-black mb-5">
           Password reset successful
         </div>
-        <button
-          onClick={() => {
-            router.push("/register");
-          }}
-          type="button"
-          className="bg-abeg-green-50 hover:bg-abeg-green-60 transition duration-300 px-5 py-2 text-white font-medium rounded-md"
+        <Link
+          href={"signIn"}
+          className="bg-abeg-green-50 hover:bg-abeg-green-60 transition duration-300 text-center px-5 py-3 text-white font-medium rounded-md w-full"
         >
-          Register
-        </button>
+          <button type="button">Sign in</button>
+        </Link>
       </div>
     </main>
   );
