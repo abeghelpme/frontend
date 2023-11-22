@@ -1,8 +1,8 @@
+import type { FC, ReactNode } from "react";
 import Footer from "@/components/Footer/footer";
 import Navbar from "@/components/Navbar/navbar";
-import type { FC, ReactNode } from "react";
 
-export interface BaseLayoutProps {
+interface BaseLayoutProps {
   children: ReactNode;
 }
 
