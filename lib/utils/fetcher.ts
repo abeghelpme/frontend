@@ -1,14 +1,16 @@
-const BASE_BACKEND_URL = "http://abeghelp-backend-staging.up.railway.app"; //TODO - Find a way to hide this via environment variables
+import { createFetcherInstance } from "./createFetcherInstance";
 
-export const fetcher = async <TResponse>(
-  url: string,
-  options?: RequestInit,
-) => {
-  const response = await fetch(`${BASE_BACKEND_URL}/${url}`, options);
+// Added this type guard to assert that baseURL is a string, as opposed unsafe typecasting via "as string"
+const assertBaseURL = (baseURL: string | undefined) => {
+	if (typeof baseURL !== "string") {
+		throw new Error("baseURL must be a string");
+	}
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch data from server");
-  }
-
-  return response.json() as TResponse;
+	return baseURL;
 };
+
+const fetcherFn = createFetcherInstance({
+	baseURL: assertBaseURL(process.env.NEXT_PUBLIC_BACKEND_URL),
+});
+
+export { fetcherFn };
