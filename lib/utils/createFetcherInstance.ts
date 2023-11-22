@@ -1,6 +1,6 @@
 type BaseFetcherOptions<TString extends string> = RequestInit & {
   baseURL: TString;
-  baseTimeout?: number;
+  timeout?: number;
 };
 
 type FetcherOptions = RequestInit & { timeout?: number; };
@@ -8,7 +8,7 @@ type FetcherOptions = RequestInit & { timeout?: number; };
 const createFetcherInstance = <TBaseURL extends string>(
   baseOptions: BaseFetcherOptions<TBaseURL>,
 ) => {
-  const { baseURL, baseTimeout = 10000, ...restOfBaseOptions } = baseOptions;
+  const { baseURL, timeout: baseTimeout = 10000, ...restOfBaseOptions } = baseOptions;
 
   const fetcherFn = async <TResponseData>(
     url: `/${string}`,
