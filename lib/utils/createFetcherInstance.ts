@@ -1,13 +1,11 @@
-type BaseFetcherOptions<TString extends string> = RequestInit & {
-  baseURL: TString;
+type BaseFetcherOptions = RequestInit & {
+  baseURL: string;
   timeout?: number;
 };
 
 type FetcherOptions = RequestInit & { timeout?: number };
 
-const createFetcherInstance = <TBaseURL extends string>(
-  baseOptions: BaseFetcherOptions<TBaseURL>,
-) => {
+const createFetcherInstance = (baseOptions: BaseFetcherOptions) => {
   const {
     baseURL,
     timeout: baseTimeout = 10000,
