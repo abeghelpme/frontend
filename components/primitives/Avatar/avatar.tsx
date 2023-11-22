@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils/cn";
 import { Fallback, Image, Root } from "@radix-ui/react-avatar";
-import type { CSSProperties, FC } from "react";
+import type { FC, CSSProperties } from "react";
 
 export interface AvatarProps {
   className?: string;
@@ -52,10 +52,10 @@ const TheComponent: FC<AvatarProps> = ({
     <Root
       className={cn(
         style.root,
-        className,
         isCircle === true && style.circular,
         hasBorder === true && style.bordered,
         typeof size === "string" && style[size],
+        className,
       )}
       {...props}
     >

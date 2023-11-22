@@ -1,9 +1,8 @@
 import { cn } from "@/lib/utils/cn";
-import type { HTMLProps, FC } from "react";
+import type { FC } from "react";
 
 interface ProgressBarProps {
-  value: number; // Provide the progress value as a number (0-100)
-  props?: HTMLProps<HTMLProgressElement>;
+  value: number;
   className?: string;
 }
 
@@ -16,8 +15,8 @@ const ProgressBar: FC<ProgressBarProps> = ({ value, className, ...props }) => {
       )}
       id="target"
       value={`${value}`}
-      {...props}
       max="100"
+      {...props}
     >
       {value + "%"}
     </progress>
