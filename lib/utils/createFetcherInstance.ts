@@ -47,7 +47,7 @@ const createFetcherInstance = <TBaseURL extends string>(
     }
   };
 
-  fetcherFn.defualts = baseOptions; /* REVIEW - This is up for debate,
+  fetcherFn.defaults = baseOptions; /* REVIEW - This is up for debate,
 		 														whether or not we want to be able to override the defaults from instance just like axios
 												*/
 
