@@ -3,12 +3,16 @@ type BaseFetcherOptions<TString extends string> = RequestInit & {
   timeout?: number;
 };
 
-type FetcherOptions = RequestInit & { timeout?: number; };
+type FetcherOptions = RequestInit & { timeout?: number };
 
 const createFetcherInstance = <TBaseURL extends string>(
   baseOptions: BaseFetcherOptions<TBaseURL>,
 ) => {
-  const { baseURL, timeout: baseTimeout = 10000, ...restOfBaseOptions } = baseOptions;
+  const {
+    baseURL,
+    timeout: baseTimeout = 10000,
+    ...restOfBaseOptions
+  } = baseOptions;
 
   const fetcherFn = async <TResponseData>(
     url: `/${string}`,
@@ -43,10 +47,10 @@ const createFetcherInstance = <TBaseURL extends string>(
   };
 
   fetcherFn.defaults = baseOptions; /* REVIEW - This is up for debate,
-	
-		                      whether or not we want to be able to override the defaults from instance just like axios */									
+												whether or not we want to be able to override the defaults from instance just like axios
+												*/
 
- return fetcherFn;
+  return fetcherFn;
 };
 
 export { createFetcherInstance };
