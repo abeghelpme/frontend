@@ -10,7 +10,7 @@ type FetcherOptions = RequestInit & {
 const createFetcherInstance = <TBaseURL extends string>(
 	baseOptions: BaseFetcherOptions<TBaseURL>,
 ) => {
-	const { baseURL, baseTimeout = 10000 } = baseOptions;
+	const { baseURL, baseTimeout = 10000, ...restOfBaseOptions } = baseOptions;
 
 	const baseController = new AbortController();
 
@@ -23,6 +23,7 @@ const createFetcherInstance = <TBaseURL extends string>(
 		try {
 			const response = await fetch(`${baseURL}${url}`, {
 				signal: timeout === baseTimeout ? baseController.signal : controller.signal,
+				...restOfBaseOptions,
 				...restOfFetchOptions,
 			});
 
@@ -41,6 +42,10 @@ const createFetcherInstance = <TBaseURL extends string>(
 			}
 		}
 	};
+
+	fetcherFn.defualts = baseOptions; /* REVIEW - This is up for debate,
+		 														whether or not we want to be able to override the defaults from instance just like axios
+												*/
 
 	return fetcherFn;
 };
