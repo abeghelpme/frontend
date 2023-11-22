@@ -52,10 +52,10 @@ const TheComponent: FC<AvatarProps> = ({
     <Root
       className={cn(
         style.root,
-        className,
         isCircle === true && style.circular,
         hasBorder === true && style.bordered,
         typeof size === "string" && style[size],
+        className,
       )}
       {...props}
     >
