@@ -1,4 +1,4 @@
-import { createFetcherInstance } from "./createFetcherInstance";
+import { createFetcherInstance } from "./create-fetcher-instance/create-fetcher-instance";
 import { assertENV } from "./global-type-helpers";
 
 const fetcher = createFetcherInstance({
