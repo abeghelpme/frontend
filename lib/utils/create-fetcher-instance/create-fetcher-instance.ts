@@ -53,7 +53,7 @@ const createFetcherInstance = (baseConfig: BaseFetchConfig) => {
       }
 
       if (error instanceof SyntaxError) {
-        console.error("There was a SyntaxError:", error);
+        throw error;
       }
 
       console.error("Something went wrong: ", error); // REVIEW - may need better error handling
