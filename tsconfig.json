@@ -13,6 +13,7 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "resolveJsonModule": true,
+    "noErrorTruncation": true, // Disables error and type truncation
     "verbatimModuleSyntax": true, // Automatically add "type" modifier to type import statements
     "isolatedModules": true,
     "incremental": true,
