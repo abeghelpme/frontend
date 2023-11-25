@@ -16,8 +16,8 @@ const createFetcherInstance = <TBaseResponseData>(
   ) => {
     const {
       timeout = baseTimeout,
-      requestInterceptor = (requestConfig: RequestInit) => requestConfig,
-      responseInterceptor = (response: Response) => response,
+      requestInterceptor,
+      responseInterceptor,
       ...restOfFetchConfig
     } = config;
 
@@ -25,8 +25,8 @@ const createFetcherInstance = <TBaseResponseData>(
     const timeoutId = window.setTimeout(() => controller.abort(), timeout);
 
     try {
-      const modifiedFetchConfig =
-        (await requestInterceptor(restOfFetchConfig)) ?? restOfFetchConfig;
+      // prettier-ignore
+      const modifiedFetchConfig = (await requestInterceptor?.(restOfFetchConfig)) ?? restOfFetchConfig;
 
       const originalResponse = await fetch(`${baseURL}${url}`, {
         signal: controller.signal,
@@ -37,7 +37,7 @@ const createFetcherInstance = <TBaseResponseData>(
       window.clearTimeout(timeoutId);
 
       // prettier-ignore
-      const modifiedResponse = (await responseInterceptor(originalResponse)) ?? originalResponse;
+      const modifiedResponse = (await responseInterceptor?.(originalResponse)) ?? originalResponse;
 
       if (!modifiedResponse.ok) {
         throw new Error(
@@ -47,15 +47,15 @@ const createFetcherInstance = <TBaseResponseData>(
 
       return modifiedResponse.json() as TResponseData;
 
-      // Default Error handling, rethrows common errors to be handled by caller
+      // Default error handling
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
         throw new Error(`Request to ${url} timed out after ${timeout}ms`);
       }
 
-      if (error instanceof Error) {
-        throw error;
-      } // REVIEW - may need better error handling
+      // REVIEW - may need better error handling
+      // Just rethrows the error if it's not an instance of DOMException
+      throw error;
     }
   };
 
