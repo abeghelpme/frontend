@@ -1,6 +1,7 @@
 export type BaseFetchConfig = RequestInit & {
   baseURL: string;
   timeout?: number;
+  defaultErrorMessage?: string;
 };
 
 export type FetchConfig = RequestInit & {

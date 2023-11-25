@@ -1,13 +1,16 @@
 import type { BaseFetchConfig, FetchConfig } from "./create-fetcher.types";
 
-const createFetcherInstance = (baseConfig: BaseFetchConfig) => {
+const createFetcherInstance = <TBaseResponseData>(
+  baseConfig: BaseFetchConfig,
+) => {
   const {
     baseURL,
     timeout: baseTimeout = 10000,
+    defaultErrorMessage = "Failed to fetch data from server",
     ...restOfBaseConfig
   } = baseConfig;
 
-  const fetcherInstance = async <TResponseData>(
+  const fetcherInstance = async <TResponseData = TBaseResponseData>(
     url: `/${string}`,
     config: FetchConfig = {},
   ) => {
@@ -22,12 +25,13 @@ const createFetcherInstance = (baseConfig: BaseFetchConfig) => {
     const timeoutId = window.setTimeout(() => controller.abort(), timeout);
 
     try {
-      const modifiedFetchConfig = await requestInterceptor(restOfFetchConfig);
+      const modifiedFetchConfig =
+        (await requestInterceptor(restOfFetchConfig)) ?? restOfFetchConfig;
 
       const originalResponse = await fetch(`${baseURL}${url}`, {
         signal: controller.signal,
         ...restOfBaseConfig,
-        ...(modifiedFetchConfig ?? restOfFetchConfig),
+        ...modifiedFetchConfig,
       });
 
       window.clearTimeout(timeoutId);
@@ -37,26 +41,21 @@ const createFetcherInstance = (baseConfig: BaseFetchConfig) => {
 
       if (!modifiedResponse.ok) {
         throw new Error(
-          `
-			 Failed to fetch data from server!
-			 Status Info: ${modifiedResponse.statusText}, Status Code: ${modifiedResponse.status}
-			 `,
+          `${defaultErrorMessage}! Status Info: ${modifiedResponse.statusText}, Status Code: ${modifiedResponse.status}`,
         );
       }
 
       return modifiedResponse.json() as TResponseData;
 
-      // Error handling
+      // Default Error handling, rethrows common errors to be handled by caller
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
         throw new Error(`Request to ${url} timed out after ${timeout}ms`);
       }
 
-      if (error instanceof SyntaxError) {
+      if (error instanceof Error) {
         throw error;
-      }
-
-      console.error("Something went wrong: ", error); // REVIEW - may need better error handling
+      } // REVIEW - may need better error handling
     }
   };
 
