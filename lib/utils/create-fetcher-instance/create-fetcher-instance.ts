@@ -7,9 +7,7 @@ class HTTPError extends Error {
   }
 }
 
-const createFetcherInstance = <TBaseResponseData>(
-  baseConfig: BaseFetchConfig,
-) => {
+function createFetcherInstance<TBaseResponseData>(baseConfig: BaseFetchConfig) {
   const {
     baseURL,
     timeout: baseTimeout = 10000,
@@ -32,8 +30,8 @@ const createFetcherInstance = <TBaseResponseData>(
     const timeoutId = window.setTimeout(() => controller.abort(), timeout);
 
     try {
-      // prettier-ignore
-      const modifiedFetchConfig = (await requestInterceptor?.(restOfFetchConfig)) ?? restOfFetchConfig;
+      const modifiedFetchConfig =
+        (await requestInterceptor?.(restOfFetchConfig)) ?? restOfFetchConfig;
 
       const originalResponse = await fetch(`${baseURL}${url}`, {
         signal: controller.signal,
@@ -43,8 +41,8 @@ const createFetcherInstance = <TBaseResponseData>(
 
       window.clearTimeout(timeoutId);
 
-      // prettier-ignore
-      const modifiedResponse = (await responseInterceptor?.(originalResponse)) ?? originalResponse;
+      const modifiedResponse =
+        (await responseInterceptor?.(originalResponse)) ?? originalResponse;
 
       if (!modifiedResponse.ok) {
         throw new HTTPError(
@@ -70,6 +68,6 @@ const createFetcherInstance = <TBaseResponseData>(
   };
 
   return fetcherInstance;
-};
+}
 
 export { createFetcherInstance };
