@@ -1,5 +1,12 @@
 import type { BaseFetchConfig, FetchConfig } from "./create-fetcher.types";
 
+class HTTPError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "HTTPError";
+  }
+}
+
 const createFetcherInstance = <TBaseResponseData>(
   baseConfig: BaseFetchConfig,
 ) => {
@@ -40,7 +47,7 @@ const createFetcherInstance = <TBaseResponseData>(
       const modifiedResponse = (await responseInterceptor?.(originalResponse)) ?? originalResponse;
 
       if (!modifiedResponse.ok) {
-        throw new Error(
+        throw new HTTPError(
           `${defaultErrorMessage}! Status Info: ${modifiedResponse.statusText}, Status Code: ${modifiedResponse.status}`,
         );
       }
@@ -50,7 +57,10 @@ const createFetcherInstance = <TBaseResponseData>(
       // Default error handling
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
-        throw new Error(`Request to ${url} timed out after ${timeout}ms`);
+        throw new DOMException(
+          `Request to ${url} timed out after ${timeout}ms`,
+          "AbortError",
+        );
       }
 
       // REVIEW - may need better error handling
