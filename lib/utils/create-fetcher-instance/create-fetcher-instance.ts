@@ -1,6 +1,6 @@
 import type {
   BaseRequestConfig,
-  ControllerInstanceType,
+  ControllerStoreType,
 } from "./create-fetcher.types";
 import { HTTPError } from "./create-fetcher.utils";
 
@@ -15,7 +15,7 @@ const createFetcherInstance = <TBaseResponseData>(
     ...restOfBaseConfig
   } = baseConfig;
 
-  const previousController: ControllerInstanceType = { current: null };
+  const controllerStore: ControllerStoreType = { current: null };
 
   // Added overloads for better TypeScript DX
   async function callApi<TResponseData = TBaseResponseData>(
@@ -33,17 +33,19 @@ const createFetcherInstance = <TBaseResponseData>(
     method?: "POST",
     bodyData?: Record<string, unknown>,
   ) {
-    if (previousController.current) {
-      previousController.current.abort();
+    if (controllerStore.current) {
+      controllerStore.current.abort();
     }
 
-    const controller = new AbortController();
-    previousController.current = controller;
-    const timeoutId = window.setTimeout(() => controller.abort(), timeout);
+    controllerStore.current = new AbortController();
+    const timeoutId = window.setTimeout(
+      () => controllerStore.current?.abort(),
+      timeout,
+    );
 
     try {
       const response = await fetch(`${baseURL}${url}`, {
-        signal: controller.signal,
+        signal: controllerStore.current.signal,
         method,
         body: method === "POST" ? JSON.stringify(bodyData) : undefined,
         credentials: "include",

@@ -20,4 +20,4 @@ export type BaseRequestConfig = Pick<RequestInit, "signal"> & {
   responseInterceptor?: (response: Response) => Promise<void> | void;
 };
 
-export type ControllerInstanceType = { current: AbortController | null };
+export type ControllerStoreType = { current: AbortController | null };
