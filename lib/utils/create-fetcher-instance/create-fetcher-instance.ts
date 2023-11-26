@@ -50,8 +50,6 @@ const createFetcherInstance = <TBaseResponseData>(
         ...restOfBaseConfig,
       });
 
-      window.clearTimeout(timeoutId);
-
       await responseInterceptor?.(response);
 
       if (!response.ok) {
@@ -76,6 +74,10 @@ const createFetcherInstance = <TBaseResponseData>(
       }
 
       throw error;
+
+      // Clean up the timeout
+    } finally {
+      window.clearTimeout(timeoutId);
     }
   }
 
