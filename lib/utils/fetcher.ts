@@ -8,7 +8,7 @@ const callApi = createFetcherInstance({
     // REVIEW - need to handle this error properly, as well as other possible errors
 
     if (response.status === 401) {
-      throw new Error(response.statusText);
+      window.location.replace("/login?unauthenticated=true");
     }
   },
 });
