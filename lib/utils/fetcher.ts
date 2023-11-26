@@ -1,8 +1,16 @@
 import { createFetcherInstance } from "./create-fetcher-instance";
 import { assertENV } from "./global-type-helpers";
 
-const fetcher = createFetcherInstance({
+const callApi = createFetcherInstance({
   baseURL: assertENV(process.env.NEXT_PUBLIC_BACKEND_URL),
+
+  responseInterceptor: (response) => {
+    // REVIEW - need to handle this error properly, as well as other possible errors
+
+    if (response.status === 401) {
+      throw new Error(response.statusText);
+    }
+  },
 });
 
-export { fetcher };
+export { callApi };

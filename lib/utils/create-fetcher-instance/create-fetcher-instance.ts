@@ -1,56 +1,70 @@
-import type { BaseFetchConfig, FetchConfig } from "./create-fetcher.types";
+import type {
+  BaseRequestConfig,
+  ControllerInstanceType,
+} from "./create-fetcher.types";
+import { HTTPError } from "./create-fetcher.utils";
 
-class HTTPError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "HTTPError";
-  }
-}
-
-function createFetcherInstance<TBaseResponseData>(baseConfig: BaseFetchConfig) {
+const createFetcherInstance = <TBaseResponseData>(
+  baseConfig: BaseRequestConfig,
+) => {
   const {
     baseURL,
-    timeout: baseTimeout = 10000,
-    defaultErrorMessage = "Failed to fetch data from server",
+    timeout = 5000,
+    defaultErrorMessage = "Failed to fetch data from server!",
+    responseInterceptor,
     ...restOfBaseConfig
   } = baseConfig;
 
-  const fetcherInstance = async <TResponseData = TBaseResponseData>(
+  const previousController: ControllerInstanceType = { current: null };
+
+  // Added overloads for better TypeScript DX
+  async function callApi<TResponseData = TBaseResponseData>(
     url: `/${string}`,
-    config: FetchConfig = {},
-  ) => {
-    const {
-      timeout = baseTimeout,
-      requestInterceptor,
-      responseInterceptor,
-      ...restOfFetchConfig
-    } = config;
+  ): Promise<TResponseData>;
+
+  async function callApi<TResponseData = TBaseResponseData>(
+    url: `/${string}`,
+    method: "POST",
+    bodyData: Record<string, unknown>,
+  ): Promise<TResponseData>;
+
+  async function callApi<TResponseData = TBaseResponseData>(
+    url: `/${string}`,
+    method?: "POST",
+    bodyData?: Record<string, unknown>,
+  ) {
+    if (previousController.current) {
+      previousController.current.abort();
+    }
 
     const controller = new AbortController();
+    previousController.current = controller;
     const timeoutId = window.setTimeout(() => controller.abort(), timeout);
 
     try {
-      const modifiedFetchConfig =
-        (await requestInterceptor?.(restOfFetchConfig)) ?? restOfFetchConfig;
-
-      const originalResponse = await fetch(`${baseURL}${url}`, {
+      const response = await fetch(`${baseURL}${url}`, {
         signal: controller.signal,
+        method,
+        body: method === "POST" ? JSON.stringify(bodyData) : undefined,
+        credentials: "include",
         ...restOfBaseConfig,
-        ...modifiedFetchConfig,
       });
 
       window.clearTimeout(timeoutId);
 
-      const modifiedResponse =
-        (await responseInterceptor?.(originalResponse)) ?? originalResponse;
+      await responseInterceptor?.(response);
 
-      if (!modifiedResponse.ok) {
+      if (!response.ok) {
         throw new HTTPError(
-          `${defaultErrorMessage}! Status Info: ${modifiedResponse.statusText}, Status Code: ${modifiedResponse.status}`,
+          `
+          ${defaultErrorMessage}
+          Status Info: ${response.statusText},
+          Status Code: ${response.status}
+           `,
         );
       }
 
-      return modifiedResponse.json() as TResponseData;
+      return response.json() as TResponseData;
 
       // Default error handling
     } catch (error) {
@@ -61,13 +75,11 @@ function createFetcherInstance<TBaseResponseData>(baseConfig: BaseFetchConfig) {
         );
       }
 
-      // REVIEW - may need better error handling
-      // Just rethrows the error if it's not an instance of DOMException
       throw error;
     }
-  };
+  }
 
-  return fetcherInstance;
-}
+  return callApi;
+};
 
 export { createFetcherInstance };
