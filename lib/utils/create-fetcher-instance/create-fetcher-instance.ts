@@ -45,6 +45,7 @@ const createFetcherInstance = <TBaseResponseData>(
       const response = await fetch(`${baseURL}${url}`, {
         signal: controllerStore.current.signal,
         body: bodyData ? JSON.stringify(bodyData) : undefined,
+        method: !bodyData ? "GET" : "POST",
         credentials: "include",
         ...restOfBaseConfig,
       });
