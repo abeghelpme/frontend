@@ -24,13 +24,11 @@ const createFetcherInstance = <TBaseResponseData>(
 
   async function callApi<TResponseData = TBaseResponseData>(
     url: `/${string}`,
-    method: "POST",
     bodyData: Record<string, unknown>,
   ): Promise<TResponseData>;
 
   async function callApi<TResponseData = TBaseResponseData>(
     url: `/${string}`,
-    method?: "POST",
     bodyData?: Record<string, unknown>,
   ) {
     if (controllerStore.current) {
@@ -46,8 +44,7 @@ const createFetcherInstance = <TBaseResponseData>(
     try {
       const response = await fetch(`${baseURL}${url}`, {
         signal: controllerStore.current.signal,
-        method,
-        body: method === "POST" ? JSON.stringify(bodyData) : undefined,
+        body: bodyData ? JSON.stringify(bodyData) : undefined,
         credentials: "include",
         ...restOfBaseConfig,
       });
