@@ -1,7 +1,4 @@
-import type {
-  BaseRequestConfig,
-  ControllerStoreType,
-} from "./create-fetcher.types";
+import type { BaseRequestConfig } from "./create-fetcher.types";
 import { HTTPError } from "./create-fetcher.utils";
 
 const createFetcherInstance = <TBaseResponseData>(
@@ -12,12 +9,13 @@ const createFetcherInstance = <TBaseResponseData>(
     timeout = 5000,
     defaultErrorMessage = "Failed to fetch data from server!",
     responseInterceptor,
+    errorInterceptor,
     ...restOfBaseConfig
   } = baseConfig;
 
-  const controllerStore: ControllerStoreType = { current: null };
+  const controllerStore = new Map<`/${string}`, AbortController>();
 
-  // Added overloads for better TypeScript DX
+  // Overloads for better TypeScript DX
   async function callApi<TResponseData = TBaseResponseData>(
     url: `/${string}`,
   ): Promise<TResponseData>;
@@ -31,21 +29,21 @@ const createFetcherInstance = <TBaseResponseData>(
     url: `/${string}`,
     bodyData?: Record<string, unknown>,
   ) {
-    if (controllerStore.current) {
-      controllerStore.current.abort();
+    const previousController = controllerStore.get(url);
+
+    if (previousController) {
+      previousController.abort();
     }
 
-    controllerStore.current = new AbortController();
-    const timeoutId = window.setTimeout(
-      () => controllerStore.current?.abort(),
-      timeout,
-    );
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), timeout);
+    controllerStore.set(url, controller);
 
     try {
       const response = await fetch(`${baseURL}${url}`, {
-        signal: controllerStore.current.signal,
+        signal: controller.signal,
+        method: bodyData ? "POST" : "GET",
         body: bodyData ? JSON.stringify(bodyData) : undefined,
-        method: !bodyData ? "GET" : "POST",
         credentials: "include",
         ...restOfBaseConfig,
       });
@@ -73,10 +71,13 @@ const createFetcherInstance = <TBaseResponseData>(
         );
       }
 
+      await errorInterceptor?.(error as Error);
+
       throw error;
 
-      // Clean up the timeout
+      // Clean up the timeout and remove the now unneeded AbortController from store
     } finally {
+      controllerStore.delete(url);
       window.clearTimeout(timeoutId);
     }
   }

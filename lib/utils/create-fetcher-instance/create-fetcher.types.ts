@@ -5,7 +5,7 @@ export type BaseRequestConfig = Pick<RequestInit, "signal"> & {
   baseURL: string;
 
   /**
-   * The base request timeout in milliseconds.
+   * The default request timeout in milliseconds.
    */
   timeout?: number;
 
@@ -15,9 +15,12 @@ export type BaseRequestConfig = Pick<RequestInit, "signal"> & {
   defaultErrorMessage?: string;
 
   /**
-   * Intercept the response and modify the response or perform any other action before it is returned.
+   * Intercept the response and perform some action before it is returned.
    */
   responseInterceptor?: (response: Response) => Promise<void> | void;
-};
 
-export type ControllerStoreType = { current: AbortController | null };
+  /**
+   * Intercept the error and perform some action before it is rethrown to the caller.
+   */
+  errorInterceptor?: (error: Error) => Promise<void> | void;
+};
