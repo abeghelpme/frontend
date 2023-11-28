@@ -9,7 +9,6 @@ const callApi = createFetcherInstance({
 
     if (response.status === 401) {
       window.location.replace("/login?unauthenticated=true");
-      throw new Error("Unauthorized");
     }
   },
 });
