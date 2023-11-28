@@ -1,4 +1,4 @@
-export type BaseRequestConfig = Pick<RequestInit, "signal"> & {
+export type BaseRequestConfig = Pick<RequestInit, "headers"> & {
   /**
    * The base URL of the endpoint used by the fetcher instance.
    */

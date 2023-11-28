@@ -13,7 +13,7 @@ const createFetcherInstance = <TBaseResponseData>(
     ...restOfBaseConfig
   } = baseConfig;
 
-  const controllerStore = new Map<`/${string}`, AbortController>();
+  const abortControllerStore = new Map<`/${string}`, AbortController>();
 
   // Overloads for better TypeScript DX
   async function callApi<TResponseData = TBaseResponseData>(
@@ -29,7 +29,7 @@ const createFetcherInstance = <TBaseResponseData>(
     url: `/${string}`,
     bodyData?: Record<string, unknown>,
   ) {
-    const previousController = controllerStore.get(url);
+    const previousController = abortControllerStore.get(url);
 
     if (previousController) {
       previousController.abort();
@@ -37,7 +37,7 @@ const createFetcherInstance = <TBaseResponseData>(
 
     const controller = new AbortController();
     const timeoutId = window.setTimeout(() => controller.abort(), timeout);
-    controllerStore.set(url, controller);
+    abortControllerStore.set(url, controller);
 
     try {
       const response = await fetch(`${baseURL}${url}`, {
@@ -77,7 +77,7 @@ const createFetcherInstance = <TBaseResponseData>(
 
       // Clean up the timeout and remove the now unneeded AbortController from store
     } finally {
-      controllerStore.delete(url);
+      abortControllerStore.delete(url);
       window.clearTimeout(timeoutId);
     }
   }
