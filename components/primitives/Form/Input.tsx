@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import { cn } from "@/lib/utils/cn";
+import { forwardRef, useState } from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ id, type, className, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
 

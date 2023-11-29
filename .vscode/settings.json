@@ -2,9 +2,11 @@
   "githubPullRequests.ignoredPullRequestBranches": ["dev"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  //   "editor.codeActionsOnSave": { // toggle this if you want eslint to fix issues automatically  on save
-  //     "source.fixAll.eslint": true
-  //   },
-  // Automatically format files with Prettier
-  "prettier.requireConfig": true
+  "prettier.requireConfig": true,
+
+  // Keeps indentation mechanism consistent with Prettier across all machines
+  "editor.tabSize": 2,
+  "editor.indentSize": "tabSize",
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": true
 }
