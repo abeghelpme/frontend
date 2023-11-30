@@ -1,11 +1,13 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { useRouter, NextRouter } from "next/router";
+import { useRouter } from "next/router";
+import type { NextRouter } from "next/router";
 import Link from "next/link";
 import Input from "@/components/primitives/Form/Input";
 import Button from "@/components/primitives/Button/button";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z, ZodError, ZodType } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 // Define custom API error type
 type ApiErrorResponse = {
@@ -13,40 +15,32 @@ type ApiErrorResponse = {
   message: string;
 };
 
-interface FormValues {
+type FormValues = {
   password: string;
   confirmPassword: string;
-}
+};
 
 type formData = {
   password: string;
   confirmPassword: string;
 };
 
-interface QueryParams {
+type QueryParams = {
   token?: string;
-}
+};
 
 // Define Zod schema for password and confirmPassword validation
 const passwordSchema: ZodType<formData> = z
   .object({
     password: z
       .string()
-      .min(8, {
-        message: "Password must must not be less than 8 characters",
-      })
-      .refine((value) => /[!@#$%^&*(),.?":{}|<>]/.test(value), {
-        message: "Password must contain at least one special character",
-      })
-      .refine((value) => /\d/.test(value), {
-        message: "Password must contain at least one digit",
-      })
-      .refine((value) => /[a-z]/.test(value), {
-        message: "Password must contain at least one lowercase letter",
-      })
-      .refine((value) => /[A-Z]/.test(value), {
-        message: "Password must contain at least one uppercase letter",
-      }),
+      .regex(
+        /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+        {
+          message:
+            "Password must contain at least one special character, one digit, one lowercase letter, and one uppercase letter, and must not be less than 8 characters",
+        },
+      ),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -58,23 +52,19 @@ const ResetPassword: React.FC = () => {
   const router: NextRouter = useRouter();
   const [serverError, setServerError] = useState("");
   const { token }: QueryParams = router.query as QueryParams;
-
   const {
     handleSubmit,
     register,
     formState: { errors: formErrors },
     setError,
     clearErrors,
-  } = useForm<FormValues>({});
+  } = useForm<FormValues>({
+    mode: "onChange",
+    resolver: zodResolver(passwordSchema),
+  });
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit = async (data: FormValues) => {
     try {
-      // // Validate using Zod schema
-      await passwordSchema.parseAsync({
-        confirmPassword: data.confirmPassword,
-        password: data.password,
-      });
-
       const response = await fetch(
         "https://abeghelp-backend-staging.up.railway.app/api/v1/auth/password/reset",
         {
@@ -91,37 +81,19 @@ const ResetPassword: React.FC = () => {
       );
 
       if (response.ok) {
-        // Redirect or handle success
-        await new Promise<void>((resolve) => setTimeout(resolve, 2000));
-        await router.push("/reset-password/confirmation");
+        await new Promise<void>((resolve) => setTimeout(resolve, 1000));
       } else {
-        // Handle API errors
         const responseData = (await response.json()) as ApiErrorResponse;
         setServerError(responseData.message);
         // Redirect to another page after 2 seconds
         await new Promise<void>((resolve) => setTimeout(resolve, 2000));
-        await router.push("/signin");
-
-        // setTimeout(() => {
-        //   router.push("register");
-        // }, 2000);
+        await router.push("signin");
       }
     } catch (error) {
       if (error instanceof ZodError) {
-        // Extract error messages from ZodError
-        const validationErrors = Object.fromEntries(
-          error.errors.map((e) => [e.path.join("."), e.message]),
-        );
-
-        // Set errors for each field in the form
-        Object.keys(validationErrors).forEach((field) => {
-          // Ensure field is one of the allowed field names
-          if (field === "password" || field === "confirmPassword") {
-            setError(field as keyof FormValues, {
-              type: "manual",
-              message: validationErrors[field],
-            });
-          }
+        setError("root.serverCaughtError", {
+          type: error.name,
+          message: error.message,
         });
       }
     }
@@ -159,7 +131,13 @@ const ResetPassword: React.FC = () => {
         />
       </div>
       <div className="md:w-1/2 lg:pr-10 xl:pr-20">
-        <form onSubmit={void handleSubmit(onSubmit)} className="flex flex-col">
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            void handleSubmit(onSubmit)(event);
+          }}
+          className="flex flex-col"
+        >
           <div className="space-y-6 mb-14">
             {serverError && (
               <div className="border border-red-500 rounded-lg">
