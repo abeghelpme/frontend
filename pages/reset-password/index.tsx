@@ -82,6 +82,7 @@ const ResetPassword: React.FC = () => {
 
       if (response.ok) {
         await new Promise<void>((resolve) => setTimeout(resolve, 1000));
+        await router.push("/reset-password/confirmation");
       } else {
         const responseData = (await response.json()) as ApiErrorResponse;
         setServerError(responseData.message);
