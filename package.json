@@ -27,6 +27,9 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "@radix-ui/react-avatar": "^1.0.4",
+    "@tanstack/eslint-plugin-query": "^5.8.4",
+    "@tanstack/react-query": "^5.8.4",
+    "@tanstack/react-query-devtools": "^5.8.1",
     "clsx": "^2.0.0",
     "next": "13.5.4",
     "react": "^18",

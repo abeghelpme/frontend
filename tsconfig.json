@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -13,6 +13,8 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "resolveJsonModule": true,
+    "noErrorTruncation": true, // Disables error and type truncation
+    "verbatimModuleSyntax": true, // Automatically add "type" modifier to type import statements
     "isolatedModules": true,
     "incremental": true,
     "jsx": "preserve",
