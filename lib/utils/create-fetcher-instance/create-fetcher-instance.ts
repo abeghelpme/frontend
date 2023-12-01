@@ -55,7 +55,11 @@ const createFetcherInstance = <TBaseResponseData>(
 
       const responseData = (await response.json()) as unknown;
 
-      if (responseData == null && !response.ok) {
+      if (!response.ok && responseData != null) {
+        throw responseData;
+      }
+
+      if (!response.ok) {
         throw new HTTPError(
           `
           ${defaultErrorMessage}
