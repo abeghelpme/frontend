@@ -7,7 +7,7 @@ const createFetcherInstance = <TBaseResponseData>(
   const {
     baseURL,
     timeout = 5000,
-    defaultErrorMessage = "Failed to fetch data from server!",
+    defaultErrorMessage = "Failed to fetch success response from server!",
     responseInterceptor,
     errorInterceptor,
     ...restOfBaseConfig

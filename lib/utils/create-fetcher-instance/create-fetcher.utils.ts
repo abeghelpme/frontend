@@ -9,8 +9,11 @@ export class ServerError extends Error {
   status: "Error";
 
   constructor(apiErrorResponse: Pick<ServerError, "message" | "status">) {
-    super(apiErrorResponse.message);
-    this.status = apiErrorResponse.status;
+    const { message = "Something went wrong", status = "Error" } =
+      apiErrorResponse ?? {};
+
+    super(message);
+    this.status = status;
     this.name = "ServerError";
   }
 }
