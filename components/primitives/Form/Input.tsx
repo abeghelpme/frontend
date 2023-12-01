@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import { cn } from "@/lib/utils/cn";
+import { forwardRef, useState } from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ id, type, className, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div className="relative">
         <input
           className={cn(
-            "py-2 px-3 text-sm placeholder:text-sm block w-full border border-[#D0D5DD] bg-white rounded-md outline-0 focus:border-abeg-green-20 placeholder:text-abeg-neutral-50 text-abeg-neutral-10 disabled:bg-[#F0F2F5] disabled:border-[#D0D5DD]",
+            "py-3 px-3 text-sm placeholder:text-sm block w-full border border-[#D0D5DD] bg-white rounded-md outline-0 focus:border-abeg-green-20 placeholder:text-abeg-neutral-50 text-abeg-neutral-10 disabled:bg-[#F0F2F5] disabled:border-[#D0D5DD]",
             {
               "pr-[32px]": type === "password",
             },
@@ -24,6 +24,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />
         {type === "password" && (
           <button
+            type="button"
+            className="w-5 h-5 text-abeg-neutral-50 absolute left-[calc(100%-20px)] top-1/2 -translate-x-1/2 -translate-y-1/2"
             onClick={() => setShowPassword((curPassword) => !curPassword)}
           >
             <svg
@@ -32,7 +34,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-5 h-5 text-abeg-neutral-50 absolute left-[calc(100%-20px)] top-1/2 -translate-x-1/2 -translate-y-1/2"
             >
               <path
                 strokeLinecap="round"

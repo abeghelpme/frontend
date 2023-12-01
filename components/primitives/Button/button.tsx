@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils/cn";
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 
 interface ButtonProps extends React.ComponentPropsWithRef<"button"> {
   className: string;

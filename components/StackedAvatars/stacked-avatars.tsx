@@ -1,7 +1,7 @@
-import getAvatarInitials from "@/lib/utils/get-avatar-initials";
-import { FC } from "react";
-import Avatar, { type AvatarProps } from "../primitives/Avatar/avatar";
 import { cn } from "@/lib/utils/cn";
+import getAvatarInitials from "@/lib/utils/get-avatar-initials";
+import type { FC } from "react";
+import Avatar, { type AvatarProps } from "../primitives/Avatar/avatar";
 
 interface StackedAvatarsProps extends AvatarProps {
   // NOTE: Temporary `user` property type, should be replace with neccesary object wth user details
