@@ -44,13 +44,18 @@ const createFetcherInstance = <TBaseResponseData>(
         signal: controller.signal,
         method: bodyData ? "POST" : "GET",
         body: bodyData ? JSON.stringify(bodyData) : undefined,
+        headers: {
+          "Content-Type": "application/json",
+        },
         credentials: "include",
         ...restOfBaseConfig,
       });
 
       await responseInterceptor?.(response);
 
-      if (!response.ok) {
+      const responseData = (await response.json()) as unknown;
+
+      if (responseData == null && !response.ok) {
         throw new HTTPError(
           `
           ${defaultErrorMessage}
@@ -60,7 +65,7 @@ const createFetcherInstance = <TBaseResponseData>(
         );
       }
 
-      return response.json() as TResponseData;
+      return responseData as TResponseData;
 
       // Default error handling
     } catch (error) {
