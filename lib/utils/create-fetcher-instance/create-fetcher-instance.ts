@@ -1,5 +1,5 @@
 import type { BaseRequestConfig } from "./create-fetcher.types";
-import { HTTPError } from "./create-fetcher.utils";
+import { HTTPError, ServerError } from "./create-fetcher.utils";
 
 const createFetcherInstance = <TBaseResponseData>(
   baseConfig: BaseRequestConfig,
@@ -56,7 +56,7 @@ const createFetcherInstance = <TBaseResponseData>(
       const responseData = (await response.json()) as unknown;
 
       if (!response.ok && responseData != null) {
-        throw responseData;
+        throw new ServerError(responseData as ServerError);
       }
 
       if (!response.ok) {
