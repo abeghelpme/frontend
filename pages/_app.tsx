@@ -9,7 +9,7 @@ interface ComponentWithPageLayout extends AppProps {
     PageLayout?: ComponentType<{ children: ReactNode }>;
   };
 }
-        
+
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: ComponentWithPageLayout) {
@@ -23,6 +23,7 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
         ) : (
           <Component {...pageProps} />
         )}
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   );
