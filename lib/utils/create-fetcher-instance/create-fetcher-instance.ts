@@ -1,5 +1,5 @@
 import type { BaseRequestConfig } from "./create-fetcher.types";
-import { HTTPError } from "./create-fetcher.utils";
+import { HTTPError, ServerError } from "./create-fetcher.utils";
 
 const createFetcherInstance = <TBaseResponseData>(
   baseConfig: BaseRequestConfig,
@@ -7,7 +7,7 @@ const createFetcherInstance = <TBaseResponseData>(
   const {
     baseURL,
     timeout = 5000,
-    defaultErrorMessage = "Failed to fetch data from server!",
+    defaultErrorMessage = "Failed to fetch success response from server!",
     responseInterceptor,
     errorInterceptor,
     ...restOfBaseConfig
@@ -44,11 +44,20 @@ const createFetcherInstance = <TBaseResponseData>(
         signal: controller.signal,
         method: bodyData ? "POST" : "GET",
         body: bodyData ? JSON.stringify(bodyData) : undefined,
+        headers: {
+          "Content-Type": "application/json",
+        },
         credentials: "include",
         ...restOfBaseConfig,
       });
 
       await responseInterceptor?.(response);
+
+      const responseData = (await response.json()) as unknown;
+
+      if (!response.ok && responseData != null) {
+        throw new ServerError(responseData as ServerError);
+      }
 
       if (!response.ok) {
         throw new HTTPError(
@@ -60,7 +69,7 @@ const createFetcherInstance = <TBaseResponseData>(
         );
       }
 
-      return response.json() as TResponseData;
+      return responseData as TResponseData;
 
       // Default error handling
     } catch (error) {
