@@ -8,7 +8,11 @@ type CompProp = {
 const LogoBanner: FC<CompProp> = ({ textColor }) => {
   return (
     <div className="flex items-center gap-2 justify-center">
-      <Image src={logo as string} alt="AbegHelp" />
+      <Image
+        className="lg:w-[66px] lg:aspect-square"
+        src={logo as string}
+        alt="AbegHelp"
+      />
       <span className={`text-${textColor} font-medium`}>AbegHelp.me</span>
     </div>
   );

@@ -38,7 +38,7 @@ export const zodValidator = (formType: FormType) => {
           .min(2, { message: "Email is required" })
           .email({ message: "Invalid email address" }),
         terms: z.boolean().refine((value) => value === true, {
-          message: "Accept the terms before proceeding",
+          message: "Please accept the terms before proceeding",
         }),
         password: z
           .string()
@@ -53,9 +53,7 @@ export const zodValidator = (formType: FormType) => {
               message: "Password is too weak!!",
             },
           ),
-        confirmPassword: z
-          .string()
-          .min(6, { message: "Password must be at least 6 characters" }),
+        confirmPassword: z.string().min(6, { message: "Passwords must match" }),
       })
       .refine((data) => data.password === data.confirmPassword, {
         message: "Passwords do not match",
