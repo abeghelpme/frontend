@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #__next {
+html,
+body,
+#__next {
   height: 100%;
 }
 :root {
@@ -17,7 +19,6 @@ html, body, #__next {
     --background-end-rgb: 0, 0, 0;
   }
 }
-
 
 /* 
 Storybook Preview Body Background Color intentionally set to edge against machines dark modes

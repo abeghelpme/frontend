@@ -12,7 +12,7 @@ import LogoBanner from "@/layouts/logoBanner";
 import { callApi } from "@/lib/utils/callApi";
 import {
   checkPasswordStrength,
-  signupSchema,
+  zodValidator,
   type SignUpType,
 } from "@/lib/utils/validation/validateWithZod";
 // import { callApi } from "@/lib/utils/callApi";
@@ -24,6 +24,7 @@ const SignUp = () => {
   const [message, setMessage] = useState<string | undefined>("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -32,7 +33,7 @@ const SignUp = () => {
     formState: { errors, isSubmitting },
     watch,
   } = useForm<SignUpType>({
-    resolver: zodResolver(signupSchema),
+    resolver: zodResolver(zodValidator("signup")!),
     mode: "onChange",
     reValidateMode: "onChange",
   });
@@ -183,7 +184,7 @@ const SignUp = () => {
             </div>
 
             {/* Password and confirm Password */}
-            <div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
+            <div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
               <div className="space-y-1">
                 <label htmlFor="password" className="text-sm mb-1 font-medium">
                   Password
@@ -203,9 +204,9 @@ const SignUp = () => {
                     <ProgressBar
                       value={result * 25}
                       className={`${
-                        result <= 2
+                        result < 2
                           ? "progress-filled:bg-red-500"
-                          : result === 3
+                          : result >= 2 && result <= 3
                             ? "progress-filled:bg-yellow-500"
                             : "progress-filled:bg-green-500"
                       }`}
@@ -214,23 +215,23 @@ const SignUp = () => {
                       className={`${
                         result <= 2
                           ? "text-red-500"
-                          : result === 3
+                          : result >= 2 && result <= 3
                             ? "text-yellow-500"
                             : "text-green-500"
                       } text-sm`}
                     >
                       <span className="text-black">Password strength:</span>
                       &nbsp;
-                      {result <= 2
+                      {result < 2
                         ? "Weak"
-                        : result === 3
+                        : result >= 2 && result <= 3
                           ? "Medium"
                           : "Strong"}
                     </p>
                   </div>
                 )}
                 {errors.password && (
-                  <p className="bg-abeg-green-40 p-4 md:p-5 rounded-lg mt-2 select-none text-sm">
+                  <p className="bg-abeg-green-40 p-4 rounded-lg mt-3 select-none text-sm">
                     {errors.password.message}
                   </p>
                 )}
@@ -260,20 +261,20 @@ const SignUp = () => {
               </div>
             </div>
             <div className="flex flex-col mt-2">
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-2 w-full">
                 <Input
                   type="checkbox"
                   id="terms"
-                  className="w-4 md:w-5 h-[1.125rem]"
+                  className="w-4 md:w-5 h-[1.125rem] mt-1"
                   {...register("terms")}
                 />
                 <label htmlFor="terms" className="text-sm md:text-base">
-                  I agree to AbegHelp,me&apos;s{" "}
-                  <Link href="" className="text-[#268384] w-full">
+                  I agree to AbegHelp.me&apos;s{" "}
+                  <Link href="" className="text-[#268384]">
                     terms of service
-                  </Link>
-                  &nbsp;and&nbsp;
-                  <Link href="" className="text-[#268384] w-full">
+                  </Link>{" "}
+                  and{" "}
+                  <Link href="" className="text-[#268384]">
                     privacy notice
                   </Link>
                   .
