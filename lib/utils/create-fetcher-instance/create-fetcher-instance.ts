@@ -1,5 +1,5 @@
 import type { BaseRequestConfig } from "./create-fetcher.types";
-import { ServerError, type ApiErrorResponse } from "./create-fetcher.utils";
+import { AbegAPIError, type ApiErrorResponse } from "./create-fetcher.utils";
 
 const createFetcherInstance = <TBaseResponseData>(
   baseConfig: BaseRequestConfig,
@@ -54,7 +54,7 @@ const createFetcherInstance = <TBaseResponseData>(
       await responseInterceptor?.(response);
 
       if (!response.ok) {
-        throw new ServerError({
+        throw new AbegAPIError({
           statusCode: response.status,
           statusInfo: response.statusText,
           message: defaultErrorMessage,

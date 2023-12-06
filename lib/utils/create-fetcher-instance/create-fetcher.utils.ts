@@ -3,7 +3,7 @@ export type ApiErrorResponse = {
   message: string;
 };
 
-export class ServerError extends Error {
+export class AbegAPIError extends Error {
   statusCode: number;
   statusInfo: string;
   response: ApiErrorResponse;
@@ -22,7 +22,7 @@ export class ServerError extends Error {
     } = errorDetails;
 
     super(message);
-    this.name = "ServerError";
+    this.name = "AbegAPIError";
     this.statusCode = statusCode;
     this.statusInfo = statusInfo;
     this.response = responseData;
