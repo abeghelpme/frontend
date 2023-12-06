@@ -17,6 +17,10 @@ const config: Config = {
       },
       colors: {
         abeg: {
+          button: {
+            10: "#1C8384",
+            20: "#005E5F",
+          },
           green: {
             DEFAULT: "#324823",
             20: "#7C946B",

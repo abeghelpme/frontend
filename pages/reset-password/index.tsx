@@ -1,13 +1,13 @@
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import type { NextRouter } from "next/router";
-import Link from "next/link";
 import Input from "@/components/primitives/Form/Input";
 import Button from "@/components/primitives/Button/button";
 import { useForm } from "react-hook-form";
 import { z, ZodError, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AbegHelpMe } from "@/components/primitives/abeg-help.me/abeg-help-me-svg";
+// import *  from "../../public/abeg-auth-bg.png"
 
 // Define custom API error type
 type ApiErrorResponse = {
@@ -122,16 +122,11 @@ const ResetPassword: React.FC = () => {
   ]);
 
   return (
-    <main className="flex md:gap-10 lg:gap-10 xl:gap-0 px-5 md:px-20 h-[100dvh] w-full justify-center items-center bg-white">
-      <div className="hidden md:block md:w-3/5 lg:w-1/2">
-        <Image
-          src={"/abeg-plant.png"}
-          alt="abeg-plant"
-          width={500}
-          height={500}
-        />
+    <main className="px-5 h-[100dvh] w-full">
+      <div className="pt-10 flex justify-center mb-40">
+        <AbegHelpMe />
       </div>
-      <div className="md:w-1/2 lg:pr-10 xl:pr-20">
+      <div className="mx-auto w-full bg-white p-6 rounded-md justify-center items-center md:w-1/2 lg:w-4/12">
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -139,7 +134,7 @@ const ResetPassword: React.FC = () => {
           }}
           className="flex flex-col"
         >
-          <div className="space-y-6 mb-14">
+          <div className="space-y-6">
             {serverError && (
               <div className="border border-red-500 rounded-lg">
                 <div className="p-10 text-red-500 flex justify-center">
@@ -147,13 +142,10 @@ const ResetPassword: React.FC = () => {
                 </div>
               </div>
             )}
-            <div className="space-y-2">
-              <h1 className="text-3xl font-medium text-gray-900 ">
+            <div className="flex justify-center mb-10">
+              <h1 className="text-3xl font-bold text-gray-900">
                 Reset Password
               </h1>
-              <p className="text-gray-500">
-                Kindly choose a new password for your account
-              </p>
             </div>
 
             <div className="space-y-4">
@@ -165,7 +157,7 @@ const ResetPassword: React.FC = () => {
                   <Input
                     {...register("password")}
                     className="py-3"
-                    placeholder="Enter your new password"
+                    placeholder="Create a password"
                     type="password"
                   />
                 </div>
@@ -176,36 +168,30 @@ const ResetPassword: React.FC = () => {
                 )}
               </div>
 
-              <div className="relative">
-                <Input
-                  {...register("confirmPassword")}
-                  className="py-3"
-                  placeholder="Confirm your new password"
-                  type="password"
-                />
-              </div>
-              {formErrors.confirmPassword && (
-                <div className="text-red-500">
-                  <h1>{formErrors.confirmPassword.message}</h1>
+              <div>
+                <label htmlFor="email" className="font-medium text-gray-900">
+                  Confirm password
+                </label>
+                <div className="relative">
+                  <Input
+                    {...register("confirmPassword")}
+                    className="py-3"
+                    placeholder="Re-enter password"
+                    type="password"
+                  />
                 </div>
-              )}
+                {formErrors.confirmPassword && (
+                  <div className="text-red-500">
+                    <h1>{formErrors.confirmPassword.message}</h1>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
-          <Button className="bg-abeg-green-50 hover:bg-abeg-green-60 transition duration-300 font-medium text-md px-10 py-3 mb-5">
-            Reset Password
+          <Button className="bg-abeg-button-10 hover:bg-abeg-button-20 transition duration-300 font-medium text-md px-10 py-3 mt-6">
+            Submit
           </Button>
-
-          <Link href={"signIn"}>
-            <Button
-              variant="secondary"
-              className="py-3 text-md"
-              fullWidth
-              type="button"
-            >
-              Back to Sign in
-            </Button>
-          </Link>
         </form>
       </div>
     </main>
