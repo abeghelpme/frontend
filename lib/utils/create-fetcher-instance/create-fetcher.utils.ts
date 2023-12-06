@@ -1,19 +1,30 @@
-export class HTTPError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "HTTPError";
-  }
-}
+export type ApiErrorResponse = {
+  status: "Error";
+  message: string;
+};
 
 export class ServerError extends Error {
-  status: "Error";
+  statusCode: number;
+  statusInfo: string;
+  response: ApiErrorResponse;
 
-  constructor(apiErrorResponse: Pick<ServerError, "message" | "status">) {
-    const { message = "Something went wrong", status = "Error" } =
-      apiErrorResponse ?? {};
+  constructor(errorDetails: {
+    statusCode: number;
+    statusInfo: string;
+    message: string;
+    responseData: ApiErrorResponse;
+  }) {
+    const {
+      statusCode,
+      statusInfo = "Http Response Error",
+      message,
+      responseData,
+    } = errorDetails;
 
     super(message);
-    this.status = status;
     this.name = "ServerError";
+    this.statusCode = statusCode;
+    this.statusInfo = statusInfo;
+    this.response = responseData;
   }
 }

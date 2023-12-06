@@ -1,5 +1,5 @@
 import type { BaseRequestConfig } from "./create-fetcher.types";
-import { HTTPError, ServerError } from "./create-fetcher.utils";
+import { ServerError, type ApiErrorResponse } from "./create-fetcher.utils";
 
 const createFetcherInstance = <TBaseResponseData>(
   baseConfig: BaseRequestConfig,
@@ -53,23 +53,16 @@ const createFetcherInstance = <TBaseResponseData>(
 
       await responseInterceptor?.(response);
 
-      const responseData = (await response.json()) as unknown;
-
-      if (!response.ok && responseData != null) {
-        throw new ServerError(responseData as ServerError);
-      }
-
       if (!response.ok) {
-        throw new HTTPError(
-          `
-          ${defaultErrorMessage}
-          Status Info: ${response.statusText},
-          Status Code: ${response.status}
-           `,
-        );
+        throw new ServerError({
+          statusCode: response.status,
+          statusInfo: response.statusText,
+          message: defaultErrorMessage,
+          responseData: (await response.json()) as ApiErrorResponse,
+        });
       }
 
-      return responseData as TResponseData;
+      return response.json() as TResponseData;
 
       // Default error handling
     } catch (error) {
