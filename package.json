@@ -27,18 +27,21 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
+    "@lottiefiles/react-lottie-player": "^3.5.3",
     "@radix-ui/react-avatar": "^1.0.4",
     "@tanstack/eslint-plugin-query": "^5.8.4",
     "@tanstack/react-query": "^5.8.4",
     "@tanstack/react-query-devtools": "^5.8.1",
+    "@zxcvbn-ts/core": "^3.0.4",
+    "@zxcvbn-ts/language-common": "^3.0.4",
+    "@zxcvbn-ts/language-en": "^3.0.2",
     "clsx": "^2.0.0",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
     "tailwind-merge": "^2.0.0",
-    "zod": "^3.22.4",
-    "zxcvbn": "^4.4.2"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.5.4",
