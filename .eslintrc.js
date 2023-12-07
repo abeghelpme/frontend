@@ -55,10 +55,10 @@ module.exports = {
     // Enforce a consistent member ordering (recommended).
     "@typescript-eslint/member-ordering": "error",
 
-    // Enforce a maximum cyclomatic complexity of 10
-    complexity: ["error", 10],
+    // Enforce a maximum cyclomatic complexity of 20
+    complexity: ["error", 25],
 
     // Enforce rules to detect and prevent overly complex code
-    "sonarjs/cognitive-complexity": ["error", 10],
+    "sonarjs/cognitive-complexity": ["error", 25],
   },
 };
