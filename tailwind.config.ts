@@ -16,12 +16,20 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
+        formTemp: "#1B1818",
+        formBtn: "#008080",
         abeg: {
+          button: {
+            10: "#1C8384",
+            20: "#005E5F",
+          },
           green: {
             DEFAULT: "#324823",
             20: "#7C946B",
             30: "#C9DDBB",
             40: "#F4FAF0",
+            50: "#007004",
+            60: "#006004",
           },
           neutral: {
             10: "#101E14",

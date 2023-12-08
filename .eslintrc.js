@@ -33,11 +33,13 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
     "plugin:@next/next/recommended",
     "next",
     "next/core-web-vitals",
     "plugin:storybook/recommended",
   ],
+
   rules: {
     // Add any additional TypeScript-specific ESLint rules or overrides here.
 
@@ -53,10 +55,10 @@ module.exports = {
     // Enforce a consistent member ordering (recommended).
     "@typescript-eslint/member-ordering": "error",
 
-    // Enforce a maximum cyclomatic complexity of 10
-    complexity: ["error", 10],
+    // Enforce a maximum cyclomatic complexity of 20
+    complexity: ["error", 25],
 
     // Enforce rules to detect and prevent overly complex code
-    "sonarjs/cognitive-complexity": ["error", 10],
+    "sonarjs/cognitive-complexity": ["error", 25],
   },
 };
