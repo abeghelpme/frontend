@@ -6,7 +6,9 @@ import LogoBanner from "@/layouts/logoBanner";
 export default function Confirmation() {
   return (
     <main className="px-5 h-[100dvh] w-full">
-      <LogoBanner textColor="formTemp" />
+      <div className="pt-10 flex justify-center mb-20">
+        <LogoBanner textColor="formTemp" />
+      </div>
       <div className="mx-auto w-full bg-white p-6 rounded-md justify-center items-center md:w-1/2 lg:w-4/12 space-y-10">
         <div>
           <div className="flex justify-center items-center mb-8">
