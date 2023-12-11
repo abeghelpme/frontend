@@ -1,7 +1,7 @@
-import { createFetcherInstance } from "./create-fetcher-instance";
+import { createFetcher } from "./create-fetcher";
 import { assertENV } from "./global-type-helpers";
 
-const callApi = createFetcherInstance({
+const callApi = createFetcher({
   baseURL: assertENV(process.env.NEXT_PUBLIC_BACKEND_URL),
 
   responseInterceptor: (response) => {
