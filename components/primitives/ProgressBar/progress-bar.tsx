@@ -10,7 +10,7 @@ const ProgressBar: FC<ProgressBarProps> = ({ value, className, ...props }) => {
   return (
     <progress
       className={cn(
-        "appearance-none progress-unfilled:bg-abeg-neutral-80 progress-unfilled:h-2 progress-unfilled:rounded-[4px] w-full border-none mx-9 progress-filled:bg-abeg-green progress-filled:rounded-[4px]",
+        "appearance-none progress-unfilled:bg-abeg-neutral-80 progress-unfilled:h-2 progress-unfilled:rounded-[4px] w-full border-none progress-filled:bg-abeg-green progress-filled:rounded-[4px]",
         className,
       )}
       id="target"
