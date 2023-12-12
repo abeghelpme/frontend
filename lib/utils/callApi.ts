@@ -6,7 +6,7 @@ const callApi = createFetcher({
 
   responseInterceptor: (response) => {
     // NOTE - remember to handle this error properly, as well as other possible errors
-
+    // handle email not verified here
     if (response.status === 401) {
       window.location.replace("/login?unauthenticated=true");
     }

@@ -1,23 +1,24 @@
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useDeferredValue } from "react";
 import { useRouter } from "next/router";
 import type { NextRouter } from "next/router";
-import Link from "next/link";
 import Input from "@/components/primitives/Form/Input";
 import Button from "@/components/primitives/Button/button";
 import { useForm } from "react-hook-form";
-import { z, ZodError, ZodType } from "zod";
+import { ZodError } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  checkPasswordStrength,
+  zodValidator,
+  type ResetPasswordType,
+} from "@/lib/utils/validation/validateWithZod";
+import LogoBanner from "@/layouts/logoBanner";
+import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
+// import *  from "../../public/abeg-auth-bg.png"
 
 // Define custom API error type
 type ApiErrorResponse = {
   status: "Error";
   message: string;
-};
-
-type FormValues = {
-  password: string;
-  confirmPassword: string;
 };
 
 type formData = {
@@ -30,27 +31,39 @@ type QueryParams = {
 };
 
 // Define Zod schema for password and confirmPassword validation
-const passwordSchema: ZodType<formData> = z
-  .object({
-    password: z
-      .string()
-      .regex(
-        /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-        {
-          message:
-            "Password must contain at least one special character, one digit, one lowercase letter, and one uppercase letter, and must not be less than 8 characters",
-        },
-      ),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+// const passwordSchema: ZodType<formData> = z
+//   .object({
+//     password: z
+//       .string()
+//       .min(6, { message: "Password must be at least 6 characters" })
+//       .max(50)
+//       .regex(
+//         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+//         {
+//           message:
+//             "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+//         },
+//       ),
+//     // .refine(
+//     //   async (value) => {
+//     //     const result = await checkPasswordStrength(value);
+//     //     return typeof result === "number" && result < 3 ? false : true;
+//     //   },
+//     //   {
+//     //     message: "Password is too weak!!",
+//     //   },
+//     // ),
+//     confirmPassword: z.string().min(6, { message: "Passwords must match" }),
+//   })
+//   .refine((data) => data.password === data.confirmPassword, {
+//     message: "Passwords do not match",
+//     path: ["confirmPassword"],
+//   });
 
 const ResetPassword: React.FC = () => {
   const router: NextRouter = useRouter();
   const [serverError, setServerError] = useState("");
+  // const password: string = watch("password", "");
   const { token }: QueryParams = router.query as QueryParams;
   const {
     handleSubmit,
@@ -58,12 +71,29 @@ const ResetPassword: React.FC = () => {
     formState: { errors: formErrors },
     setError,
     clearErrors,
-  } = useForm<FormValues>({
+    watch,
+  } = useForm<ResetPasswordType>({
+    //import and use resetPassword type here
+    resolver: zodResolver(zodValidator("resetPassword")!), //import and use resolver: zodResolver(zodValidator("resetPassword")!),
     mode: "onChange",
-    resolver: zodResolver(passwordSchema),
+    reValidateMode: "onChange",
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const password: string = watch("password", "");
+  const [result, setResult] = useState<number>(0);
+  const deferredPassword = useDeferredValue(password);
+
+  useEffect(() => {
+    const genStrength = async () => {
+      const passwordStrength = await checkPasswordStrength(deferredPassword); //import and use checkPasswordStrength here
+      setResult(passwordStrength);
+    };
+    genStrength().catch((e) => {
+      console.log(e);
+    });
+  }, [deferredPassword]);
+
+  const onSubmit = async (data: formData) => {
     try {
       const response = await fetch(
         "https://abeghelp-backend-staging.up.railway.app/api/v1/auth/password/reset",
@@ -88,7 +118,7 @@ const ResetPassword: React.FC = () => {
         setServerError(responseData.message);
         // Redirect to another page after 2 seconds
         await new Promise<void>((resolve) => setTimeout(resolve, 2000));
-        await router.push("signin");
+        await router.push("/signin");
       }
     } catch (error) {
       if (error instanceof ZodError) {
@@ -122,16 +152,12 @@ const ResetPassword: React.FC = () => {
   ]);
 
   return (
-    <main className="flex md:gap-10 lg:gap-10 xl:gap-0 px-5 md:px-20 h-[100dvh] w-full justify-center items-center bg-white">
-      <div className="hidden md:block md:w-3/5 lg:w-1/2">
-        <Image
-          src={"/abeg-plant.png"}
-          alt="abeg-plant"
-          width={500}
-          height={500}
-        />
-      </div>
-      <div className="md:w-1/2 lg:pr-10 xl:pr-20">
+    <div
+      role=""
+      className="mx-auto w-full bg-white p-6 rounded-md justify-center items-center md:w-1/2 lg:w-4/12"
+    >
+      <LogoBanner textColor="formTemp" />
+      <div className="space-y-6 w-full h-full lg:space-y-0 mt-40">
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -139,7 +165,7 @@ const ResetPassword: React.FC = () => {
           }}
           className="flex flex-col"
         >
-          <div className="space-y-6 mb-14">
+          <div className="space-y-6">
             {serverError && (
               <div className="border border-red-500 rounded-lg">
                 <div className="p-10 text-red-500 flex justify-center">
@@ -147,13 +173,10 @@ const ResetPassword: React.FC = () => {
                 </div>
               </div>
             )}
-            <div className="space-y-2">
-              <h1 className="text-3xl font-medium text-gray-900 ">
+            <div className="flex justify-center mb-10">
+              <h1 className="text-3xl font-bold text-gray-900">
                 Reset Password
               </h1>
-              <p className="text-gray-500">
-                Kindly choose a new password for your account
-              </p>
             </div>
 
             <div className="space-y-4">
@@ -165,10 +188,41 @@ const ResetPassword: React.FC = () => {
                   <Input
                     {...register("password")}
                     className="py-3"
-                    placeholder="Enter your new password"
+                    placeholder="Create a password"
                     type="password"
                   />
                 </div>
+                {password.length > 0 && (
+                  <div>
+                    <ProgressBar
+                      value={result * 25}
+                      className={`${
+                        result < 2
+                          ? "progress-filled:bg-red-500"
+                          : result >= 2 && result <= 3
+                            ? "progress-filled:bg-yellow-500"
+                            : "progress-filled:bg-green-500"
+                      }`}
+                    />
+                    <p
+                      className={`${
+                        result <= 2
+                          ? "text-red-500"
+                          : result >= 2 && result <= 3
+                            ? "text-yellow-500"
+                            : "text-green-500"
+                      } text-sm`}
+                    >
+                      <span className="text-black">Password strength:</span>
+                      &nbsp;
+                      {result < 2
+                        ? "Weak"
+                        : result >= 2 && result <= 3
+                          ? "Medium"
+                          : "Strong"}
+                    </p>
+                  </div>
+                )}
                 {formErrors.password && (
                   <div className="text-red-500">
                     <h1>{formErrors.password.message}</h1>
@@ -176,39 +230,33 @@ const ResetPassword: React.FC = () => {
                 )}
               </div>
 
-              <div className="relative">
-                <Input
-                  {...register("confirmPassword")}
-                  className="py-3"
-                  placeholder="Confirm your new password"
-                  type="password"
-                />
-              </div>
-              {formErrors.confirmPassword && (
-                <div className="text-red-500">
-                  <h1>{formErrors.confirmPassword.message}</h1>
+              <div>
+                <label htmlFor="email" className="font-medium text-gray-900">
+                  Confirm password
+                </label>
+                <div className="relative">
+                  <Input
+                    {...register("confirmPassword")}
+                    className="py-3"
+                    placeholder="Re-enter password"
+                    type="password"
+                  />
                 </div>
-              )}
+                {formErrors.confirmPassword && (
+                  <div className="text-red-500">
+                    <h1>{formErrors.confirmPassword.message}</h1>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
-          <Button className="bg-abeg-green-50 hover:bg-abeg-green-60 transition duration-300 font-medium text-md px-10 py-3 mb-5">
-            Reset Password
+          <Button className="bg-abeg-button-10 hover:bg-abeg-button-20 transition duration-300 font-medium text-md px-10 py-3 mt-6">
+            Submit
           </Button>
-
-          <Link href={"signIn"}>
-            <Button
-              variant="secondary"
-              className="py-3 text-md"
-              fullWidth
-              type="button"
-            >
-              Back to Sign in
-            </Button>
-          </Link>
         </form>
       </div>
-    </main>
+    </div>
   );
 };
 export default ResetPassword;
