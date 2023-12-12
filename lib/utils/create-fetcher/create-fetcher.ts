@@ -1,7 +1,12 @@
-import type { BaseRequestConfig } from "./create-fetcher.types";
-import { AbegAPIError, type ApiErrorResponse } from "./create-fetcher.utils";
+import type {
+  AbegErrorResponse,
+  AbegResponseData,
+  AbegSuccessResponse,
+  BaseRequestConfig,
+} from "./create-fetcher.types";
+import { getResponseData } from "./create-fetcher.utils";
 
-const createFetcherInstance = <TBaseResponseData>(
+const createFetcher = <TBaseData, TBaseError>(
   baseConfig: BaseRequestConfig,
 ) => {
   const {
@@ -9,26 +14,26 @@ const createFetcherInstance = <TBaseResponseData>(
     timeout = 5000,
     defaultErrorMessage = "Failed to fetch success response from server!",
     responseInterceptor,
-    errorInterceptor,
     ...restOfBaseConfig
   } = baseConfig;
 
   const abortControllerStore = new Map<`/${string}`, AbortController>();
 
   // Overloads for better TypeScript DX
-  async function callApi<TResponseData = TBaseResponseData>(
+  async function callApi<TData = TBaseData, TError = TBaseError>(
     url: `/${string}`,
-  ): Promise<TResponseData>;
+  ): Promise<AbegResponseData<TData, TError>>;
 
-  async function callApi<TResponseData = TBaseResponseData>(
+  async function callApi<TData = TBaseData, TError = TBaseError>(
     url: `/${string}`,
     bodyData: Record<string, unknown>,
-  ): Promise<TResponseData>;
+  ): Promise<AbegResponseData<TData, TError>>;
 
-  async function callApi<TResponseData = TBaseResponseData>(
+  // Implementation
+  async function callApi<TData = TBaseData, TError = TBaseError>(
     url: `/${string}`,
     bodyData?: Record<string, unknown>,
-  ) {
+  ): Promise<AbegResponseData<TData, TError>> {
     const previousController = abortControllerStore.get(url);
 
     if (previousController) {
@@ -54,27 +59,44 @@ const createFetcherInstance = <TBaseResponseData>(
       await responseInterceptor?.(response);
 
       if (!response.ok) {
-        throw new AbegAPIError({
-          statusCode: response.status,
-          statusInfo: response.statusText,
-          message: defaultErrorMessage,
-          responseData: (await response.json()) as ApiErrorResponse,
-        });
+        return {
+          data: null,
+          error: await getResponseData<AbegErrorResponse<TError>>(response),
+        };
       }
 
-      return response.json() as TResponseData;
+      return {
+        data: await getResponseData<AbegSuccessResponse<TData>>(response),
+        error: null,
+      };
 
-      // Default error handling
+      // Exhaustive error handling
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
-        throw new DOMException(
-          `Request to ${url} timed out after ${timeout}ms`,
-          "AbortError",
-        );
+        process.env.NODE_ENV === "development" &&
+          console.error(
+            "AbortError",
+            `Request to ${url} timed out after ${timeout}ms`,
+          );
+
+        return {
+          data: null,
+          error: {
+            status: "Error",
+            message: `Request to ${url} timed out after ${timeout}ms`,
+          },
+        };
       }
 
-      await errorInterceptor?.(error as Error);
-      throw error;
+      return {
+        data: null,
+        error: {
+          status: "Error",
+          message:
+            (error as SyntaxError | TypeError | Error).message ??
+            defaultErrorMessage,
+        },
+      };
 
       // Clean up the timeout and remove the now unneeded AbortController from store
     } finally {
@@ -86,4 +108,4 @@ const createFetcherInstance = <TBaseResponseData>(
   return callApi;
 };
 
-export { createFetcherInstance };
+export { createFetcher };
