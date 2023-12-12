@@ -60,14 +60,14 @@ const createFetcher = <TBaseData, TBaseError>(
 
       if (!response.ok) {
         return {
-          dataInfo: null,
-          errorInfo: await getResponseData<AbegErrorResponse<TError>>(response),
+          data: null,
+          error: await getResponseData<AbegErrorResponse<TError>>(response),
         };
       }
 
       return {
-        dataInfo: await getResponseData<AbegSuccessResponse<TData>>(response),
-        errorInfo: null,
+        data: await getResponseData<AbegSuccessResponse<TData>>(response),
+        error: null,
       };
 
       // Exhaustive error handling
@@ -80,8 +80,8 @@ const createFetcher = <TBaseData, TBaseError>(
           );
 
         return {
-          dataInfo: null,
-          errorInfo: {
+          data: null,
+          error: {
             status: "Error",
             message: `Request to ${url} timed out after ${timeout}ms`,
           },
@@ -89,8 +89,8 @@ const createFetcher = <TBaseData, TBaseError>(
       }
 
       return {
-        dataInfo: null,
-        errorInfo: {
+        data: null,
+        error: {
           status: "Error",
           message:
             (error as SyntaxError | TypeError | Error).message ??

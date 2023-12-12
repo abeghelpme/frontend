@@ -25,7 +25,6 @@ export type AbegErrorResponse<TError = Record<string, unknown>> = {
   error?: TError;
   message: string;
 };
-
 export type AbegSuccessResponse<TData> = {
   status: "Success";
   data: TData | null;
@@ -34,10 +33,10 @@ export type AbegSuccessResponse<TData> = {
 
 export type AbegResponseData<TData, TError = Record<string, unknown>> =
   | {
-      dataInfo: AbegSuccessResponse<TData>;
-      errorInfo: null;
+      data: AbegSuccessResponse<TData>;
+      error: null;
     }
   | {
-      dataInfo: null;
-      errorInfo: AbegErrorResponse<TError>;
+      data: null;
+      error: AbegErrorResponse<TError>;
     };
