@@ -1,59 +1,128 @@
+import Image from "next/image";
 import Link from "next/link";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { callApi } from "@/lib/utils/callApi";
+import {
+  zodValidator,
+  type LoginType,
+} from "@/lib/utils/validation/validateWithZod";
+
+import Button from "@/components/primitives/Button/button";
+import Input from "@/components/primitives/Form/Input";
+
+import google from "@/public/assets/icons/shared/google.png";
+import AuthLayout from "@/layouts/authLayout";
+
+// import Link from "next/link";
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    // reset,
+    // control,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginType>({
+    resolver: zodResolver(zodValidator("login")!),
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
+
+  const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
+    const { data: responseData, error } = await callApi("/auth/signin", {
+      email: data.email,
+      password: data.password,
+    });
+    console.log(responseData);
+
+    console.log(error);
+  };
+
   return (
-    <main className="flex items-center justify-center w-full min-h-screen p-4">
-      <div className="w-full max-w-sm p-8 space-y-5 rounded-lg bg-blue-950">
-        <h1 className="text-xl font-bold">Sign in to our platform</h1>
-        <form className="flex flex-col gap-5">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-sm font-medium">
-              Your Email
+    <AuthLayout>
+      <div className="flex flex-col w-full">
+        <h2 className="text-center font-semibold text-xl">Welcome back!</h2>
+        <p className="text-center text-lg">Sign in to continue</p>
+
+        <form
+          className="mt-4"
+          onSubmit={(event) => {
+            event.preventDefault();
+            void handleSubmit(onSubmit)(event);
+          }}
+        >
+          <div className="space-y-1">
+            <label htmlFor="email" className="font-medium text-sm">
+              Email Address
             </label>
-            <input
+            <Input
+              {...register("email")}
+              autoFocus
               type="email"
-              className="py-2 rounded-lg bg-[#4B5563] text-white focus:outline-none px-4  border border-gray-400"
               id="email"
-              placeholder="name@gmail.com"
-              required
+              placeholder="Enter your email address"
+              className={`min-h-[45px] ${
+                errors.email &&
+                "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+              }`}
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="password" className="text-sm font-medium">
-              Your Password
+          <div className="space-y-1">
+            <label htmlFor="password" className="font-medium text-sm">
+              Password
             </label>
-            <input
+            <Input
+              {...register("password")}
               type="password"
-              placeholder="......."
-              className="py-2 rounded-lg bg-[#4B5563] text-white  focus:outline-none px-4  border border-gray-400"
               id="password"
-              required
+              placeholder="Enter password"
+              className={`min-h-[45px] ${
+                errors.password &&
+                "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+              }`}
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
           </div>
-          <div className="flex justify-between gap-2">
-            <span className="flex items-center gap-2">
-              <input type="checkbox" id="remember-me" />
-              <label className="" htmlFor="remember-me">
-                Remember me
-              </label>
-            </span>
-            <p>Forgot Password?</p>
-          </div>
-          <button
-            className="bg-[#2563EB] py-2 font-medium w-full rounded-md  "
-            onClick={(e) => e.preventDefault()}
+          <Link
+            href={"#"}
+            className="text-formBtn text-sm font-semibold inline-flex w-full justify-end mt-2 hover:underline"
           >
-            Login to your account
-          </button>
+            Forgot Password?
+          </Link>
+          <Button
+            disabled={isSubmitting}
+            className="text-white bg-formBtn py-4 mt-6 disabled:bg-gray-500 "
+            fullWidth
+          >
+            Sign in
+          </Button>
         </form>
-        <p>
-          Not registered?{" "}
-          <Link href="" className="text-[#2563eb] font-bold">
-            Create Account?
+        <div className="flex items-center gap-2 my-6">
+          <span className="bg-[#F0F2F5] h-[2px] flex-1" />
+          <span className="text-gray-500 pb-1 text-sm">or signup with</span>
+          <span className="bg-[#F0F2F5] h-[2px] flex-1" />
+        </div>
+        <Button
+          className="flex items-center gap-4 text-black justify-center border border-border"
+          fullWidth
+        >
+          <Image src={google} alt="" className="" />
+          <span className="">Continue with Google</span>
+        </Button>
+        <p className="text-center text-sm mt-6">
+          Dont&apos;t have an account?&nbsp;
+          <Link href="/signup" className="text-formBtn font-medium">
+            Sign up
           </Link>
         </p>
       </div>
-    </main>
+    </AuthLayout>
   );
 };
 
