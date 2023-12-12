@@ -74,7 +74,6 @@ const createFetcherInstance = <TBaseResponseData>(
       }
 
       await errorInterceptor?.(error as Error);
-
       throw error;
 
       // Clean up the timeout and remove the now unneeded AbortController from store
