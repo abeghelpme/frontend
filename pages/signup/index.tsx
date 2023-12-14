@@ -53,13 +53,14 @@ const SignUp = () => {
   }, [deferredPassword]);
 
   const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
-    const { data: res, error } = await callApi("/auth/signup", {
+    const { data: responseData, error } = await callApi("/auth/signup", {
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
       password: data.password,
+      confirmPassword: data.confirmPassword,
+      isTermAndConditionAccepted: data.terms,
     });
-    console.log(res, error);
     //   // const response = await fetch(`${BASE_URL}/auth/signup`, {
     //   //   method: "POST",
     //   //   credentials: "include",
@@ -82,7 +83,8 @@ const SignUp = () => {
     //   //   return;
     //   // }
 
-    console.log(data);
+    console.log(responseData);
+    console.log(error);
   };
 
   return (
