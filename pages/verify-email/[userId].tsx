@@ -40,7 +40,7 @@ const CheckEmail = () => {
 };
 
 const VerificationPage = () => {
-  const { id: userId, token } = useRouter().query;
+  const { userId, token } = useRouter().query;
   const [tokenStatus, setTokenStatus] = useState({
     expired: false,
     invalid: false,
