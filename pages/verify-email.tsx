@@ -40,7 +40,7 @@ const CheckEmail = () => {
 };
 
 const VerificationPage = () => {
-  const { userId, token } = useRouter().query;
+  const { token } = useRouter().query;
   const [tokenStatus, setTokenStatus] = useState({
     expired: false,
     invalid: false,
@@ -59,7 +59,6 @@ const VerificationPage = () => {
 
   const verifyEmail = async () => {
     const { data, error } = await callApi("/auth/verify-email", {
-      userId,
       token,
     });
 

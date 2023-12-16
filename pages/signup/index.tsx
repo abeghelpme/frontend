@@ -68,7 +68,7 @@ const SignUp = () => {
     });
 
     if (responseData) {
-      void router.push("/verify-email/email-sent");
+      void router.push("/verify-email");
     }
     console.log(responseData);
     console.log(error);
