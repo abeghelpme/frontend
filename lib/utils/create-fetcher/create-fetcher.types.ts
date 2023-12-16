@@ -18,9 +18,25 @@ export type BaseRequestConfig = Pick<RequestInit, "headers"> & {
    * Intercept the response and perform some action before it is returned.
    */
   responseInterceptor?: (response: Response) => Promise<void> | void;
-
-  /**
-   * Intercept the error and perform some action before it is rethrown to the caller.
-   */
-  errorInterceptor?: (error: Error) => Promise<void> | void;
 };
+
+export type AbegErrorResponse<TError = Record<string, unknown>> = {
+  status: "Error";
+  error?: TError;
+  message: string;
+};
+export type AbegSuccessResponse<TData> = {
+  status: "Success";
+  data: TData | null;
+  message: string;
+};
+
+export type AbegResponseData<TData, TError = Record<string, unknown>> =
+  | {
+      data: AbegSuccessResponse<TData>;
+      error: null;
+    }
+  | {
+      data: null;
+      error: AbegErrorResponse<TError>;
+    };
