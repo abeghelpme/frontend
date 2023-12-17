@@ -1,40 +1,40 @@
-import { useDeferredValue, useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, type SubmitHandler } from "react-hook-form";
-
+import Button from "@/components/primitives/Button/button";
+import Input from "@/components/primitives/Form/Input";
+import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
+import LogoBanner from "@/layouts/logoBanner";
 import { callApi } from "@/lib/utils/callApi";
 import {
   checkPasswordStrength,
   zodValidator,
   type SignUpType,
 } from "@/lib/utils/validation/validateWithZod";
-
-import Button from "@/components/primitives/Button/button";
-import Input from "@/components/primitives/Form/Input";
 import google from "@/public/assets/icons/shared/google.png";
-
-import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
-import LogoBanner from "@/layouts/logoBanner";
-
-// import { callApi } from "@/lib/utils/callApi";
-
-// const BASE_URL: string | undefined = process.env.NEXT_PUBLIC_BACKEND_URL;
+import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useDeferredValue, useEffect, useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
 
 const SignUp = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [message, setMessage] = useState<string | undefined>("");
+  const [message, setMessage] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    confirmPassword: "",
+    isTermAndConditionAccepted: "",
+    default: "",
+  });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [error, setError] = useState(false);
+  const [isError, setIsError] = useState(false);
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
     // reset,
-    // control,
     formState: { errors, isSubmitting },
     watch,
   } = useForm<SignUpType>({
@@ -67,11 +67,66 @@ const SignUp = () => {
       isTermAndConditionAccepted: data.terms,
     });
 
-    if (responseData) {
-      void router.push("/verify-email");
+    type ErrorResponse = {
+      status: string;
+      message: string;
+      error?: {
+        [key: string]: string[];
+      };
+    };
+
+    if (error) {
+      const castedError = error as ErrorResponse;
+      if (error?.message === "Validation failed") {
+        setIsError(true);
+        setMessage({
+          ...message,
+          firstName: castedError?.error?.firstName
+            ? castedError?.error?.firstName[0]
+            : "",
+          lastName: castedError?.error?.lastName
+            ? castedError?.error?.lastName[0]
+            : "",
+          password: castedError?.error?.password
+            ? castedError?.error?.password[0]
+            : "",
+          confirmPassword: castedError?.error?.confirmPassword
+            ? castedError?.error?.confirmPassword[0]
+            : "",
+          isTermAndConditionAccepted: castedError?.error
+            ?.isTermAndConditionAccepted
+            ? castedError?.error?.isTermAndConditionAccepted[0]
+            : "",
+        });
+        return;
+      } else if (error?.message === "User with email already exists") {
+        setIsError(true);
+        setMessage({
+          firstName: "",
+          lastName: "",
+          password: "",
+          confirmPassword: "",
+          isTermAndConditionAccepted: "",
+          default: "",
+          email: error?.message,
+        });
+        return;
+      } else {
+        setIsError(true);
+        setMessage({
+          ...message,
+          default: error?.message,
+        });
+        return;
+      }
     }
-    console.log(responseData);
-    console.log(error);
+
+    if (responseData.status === "success") {
+      setMessage({ ...message, default: responseData.message });
+      setTimeout(() => {
+        void router.push("/verify-email");
+      }, 1000);
+    }
   };
 
   return (
@@ -83,8 +138,8 @@ const SignUp = () => {
         <LogoBanner textColor="formTemp" />
         <div className="rounded-lg md:rounded-none mx-auto bg-white px-4 py-10 lg:p-12">
           <div className="space-y-2 text-center font-medium">
-            <p className="text-lg md:text-2xl">Welcome</p>
-            <h1 className="font-semibold text-abeg-neutral-10 md:text-xl">
+            <p className="text-lg md:text-xl">Welcome</p>
+            <h1 className="font-semibold text-abeg-neutral-10 md:text-2xl">
               Create your account
             </h1>
           </div>
@@ -96,15 +151,15 @@ const SignUp = () => {
             action=""
             className="mt-8 flex flex-col gap-4"
           >
-            {message !== "" && (
+            {message.default === "" && (
               <p
-                className={`p-2 py-4  rounded-md text-sm ${
-                  !error
+                className={`rounded-md p-4 text-sm font-medium ${
+                  !isError
                     ? "bg-abeg-green-40 text-abeg-green-20"
                     : "bg-abeg-error-40 text-abeg-error-20"
                 }`}
               >
-                {message}
+                {message.default}
               </p>
             )}
             {/* Firstname and LastName */}
@@ -120,15 +175,14 @@ const SignUp = () => {
                   id="firstName"
                   placeholder="Enter your first name"
                   className={`min-h-[45px] ${
-                    errors.firstName &&
+                    message.firstName &&
                     "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
                   }`}
+                  errorField={errors.firstName}
                 />
-                {errors.firstName && (
-                  <p className="text-red-500 text-sm">
-                    {errors.firstName.message}
-                  </p>
-                )}
+                {isError ? (
+                  <p className="text-red-500 text-sm">{message.firstName}</p>
+                ) : null}
               </div>
               <div className="space-y-1">
                 <label htmlFor="lastName" className="font-medium text-sm">
@@ -140,15 +194,14 @@ const SignUp = () => {
                   id="lastName"
                   placeholder="Enter your last name"
                   className={`min-h-[45px] ${
-                    errors.lastName &&
+                    message.lastName &&
                     "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
                   }`}
+                  errorField={errors.lastName}
                 />
-                {errors.lastName && (
-                  <p className="text-red-500 text-sm">
-                    {errors.lastName.message}
-                  </p>
-                )}
+                {isError ? (
+                  <p className="text-red-500 text-sm">{message.lastName}</p>
+                ) : null}
               </div>
             </div>
 
@@ -162,13 +215,14 @@ const SignUp = () => {
                 id="email"
                 placeholder="Enter your valid email"
                 className={`min-h-[45px] ${
-                  errors.email &&
+                  message.email &&
                   "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
                 }`}
                 {...register("email")}
+                errorField={errors.email}
               />
-              {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              {isError && (
+                <p className="text-red-500 text-sm">{message.email}</p>
               )}
             </div>
 
@@ -183,10 +237,8 @@ const SignUp = () => {
                   {...register("password")}
                   id="password"
                   placeholder="Create a secure password"
-                  className={`min-h-[45px] ${
-                    errors.password &&
-                    "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
-                  }`}
+                  className={`min-h-[45px]`}
+                  errorField={errors.password}
                 />
                 {password.length > 0 && (
                   <div>
@@ -220,7 +272,7 @@ const SignUp = () => {
                   </div>
                 )}
                 {errors.password && (
-                  <p className="bg-abeg-green-40 p-4 rounded-lg mt-3 select-none text-sm">
+                  <p className="bg-abeg-green-40 p-4 rounded-lg select-none text-sm">
                     {errors.password.message}
                   </p>
                 )}
@@ -237,10 +289,8 @@ const SignUp = () => {
                   {...register("confirmPassword")}
                   id="confirmPassword"
                   placeholder="Confirm your password"
-                  className={`min-h-[45px] ${
-                    errors.confirmPassword &&
-                    "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
-                  }`}
+                  className={`min-h-[45px]`}
+                  errorField={errors.confirmPassword}
                 />
                 {errors.confirmPassword && (
                   <p className="text-red-500 text-sm">

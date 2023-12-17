@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
 import { callApi } from "@/lib/utils/callApi";
-
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import LogoBanner from "@/layouts/logoBanner";
