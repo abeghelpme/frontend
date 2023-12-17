@@ -18,7 +18,7 @@ const SuccessPage = () => {
           <h1 className="text-xl font-medium">Success!</h1>
           <p className="">Your email has been verified</p>
           <Link
-            href="/"
+            href="/login"
             className="block mt-6 p-3 text-white bg-formBtn w-full rounded-md md:rounded-lg text-sm md:text-base font-semibold"
           >
             Proceed
