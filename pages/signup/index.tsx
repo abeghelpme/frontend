@@ -1,20 +1,24 @@
-import Button from "@/components/primitives/Button/button";
-import Input from "@/components/primitives/Form/Input";
-import google from "@/public/assets/icons/shared/google.png";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
-import Link from "next/link";
 import { useDeferredValue, useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
-import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
-import LogoBanner from "@/layouts/logoBanner";
 import { callApi } from "@/lib/utils/callApi";
 import {
   checkPasswordStrength,
   zodValidator,
   type SignUpType,
 } from "@/lib/utils/validation/validateWithZod";
+
+import Button from "@/components/primitives/Button/button";
+import Input from "@/components/primitives/Form/Input";
+import google from "@/public/assets/icons/shared/google.png";
+
+import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
+import LogoBanner from "@/layouts/logoBanner";
+
 // import { callApi } from "@/lib/utils/callApi";
 
 // const BASE_URL: string | undefined = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -24,6 +28,7 @@ const SignUp = () => {
   const [message, setMessage] = useState<string | undefined>("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -61,28 +66,10 @@ const SignUp = () => {
       confirmPassword: data.confirmPassword,
       isTermAndConditionAccepted: data.terms,
     });
-    //   // const response = await fetch(`${BASE_URL}/auth/signup`, {
-    //   //   method: "POST",
-    //   //   credentials: "include",
-    //   //   body: JSON.stringify({
-    //   //     email: data.email,
-    //   //     firstName: data.firstName,
-    //   //     lastName: data.lastName,
-    //   //     phoneNumber: data.phoneNumber,
-    //   //     password: data.password,
-    //   //     gender: data.gender,
-    //   //   }),
-    //   //   headers: {
-    //   //     "Content-Type": "application/json",
-    //   //   },
-    //   // }).then<ApiResponse<unknown>>((res) => res.json());
 
-    //   // if (response.status !== "success") {
-    //   //   setMessage(response?.message);
-    //   //   setError(true);
-    //   //   return;
-    //   // }
-
+    if (responseData) {
+      void router.push("/verify-email");
+    }
     console.log(responseData);
     console.log(error);
   };
