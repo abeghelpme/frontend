@@ -38,6 +38,7 @@
     "@zxcvbn-ts/language-en": "^3.0.2",
     "clsx": "^2.0.0",
     "next": "13.5.4",
+    "nextjs-progressbar": "^0.0.16",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",

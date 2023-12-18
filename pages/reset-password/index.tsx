@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useDeferredValue } from "react";
-import { useRouter } from "next/router";
-import type { NextRouter } from "next/router";
-import Input from "@/components/primitives/Form/Input";
 import Button from "@/components/primitives/Button/button";
-import { useForm } from "react-hook-form";
-import { ZodError } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import Input from "@/components/primitives/Form/Input";
+import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
+import LogoBanner from "@/layouts/logoBanner";
 import {
   checkPasswordStrength,
   zodValidator,
   type ResetPasswordType,
 } from "@/lib/utils/validation/validateWithZod";
-import LogoBanner from "@/layouts/logoBanner";
-import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { NextRouter } from "next/router";
+import { useRouter } from "next/router";
+import React, { useDeferredValue, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { ZodError } from "zod";
 // import *  from "../../public/abeg-auth-bg.png"
 
 // Define custom API error type

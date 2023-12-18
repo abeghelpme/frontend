@@ -13,7 +13,7 @@ const CheckEmail = () => {
           <p className="text-center text-sm mt-6">
             Didn&apos;t get the email?&nbsp;
             <Link
-              href="/signup"
+              href="/verify-email/resend"
               className="text-formBtn font-medium hover:underline"
             >
               Click here to resend
