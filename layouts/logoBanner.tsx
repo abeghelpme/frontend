@@ -12,9 +12,12 @@ const LogoBanner: FC<CompProp> = ({ textColor }) => {
         className="w-[35px] md:w-[40px] lg:w-[46px] lg:aspect-square"
         src={logo as string}
         priority
-        alt="AbegHelp"
+        alt=""
       />
-      <span className={`text-${textColor} font-medium md:text-lg lg:text-xl`}>
+      <span
+        role=""
+        className={`text-${textColor} font-medium md:text-lg lg:text-xl`}
+      >
         AbegHelp.me
       </span>
     </div>

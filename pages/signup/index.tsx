@@ -51,6 +51,7 @@ const SignUp = () => {
   }, [deferredPassword]);
 
   const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
+    void router.push({ pathname: "/verify-email", query: { signup: true } });
     const { error } = await callApi("/auth/signup", {
       email: data.email,
       firstName: data.firstName,
@@ -68,7 +69,7 @@ const SignUp = () => {
 
     reset();
     setTimeout(() => {
-      void router.push("/verify-email");
+      void router.push({ pathname: "/verify-email", query: { signup: true } });
     }, 1000);
   };
 
