@@ -26,7 +26,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
         className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
       />
       {/* <div className="w-[90%] mx-auto md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] space-y-6 h-full lg:space-y-[3.5rem]"> */}
-      <LogoBanner textColor="abeg-teal-10" />
+      <LogoBanner textColor="#2B908E" />
 
       {/* <div className="h-full w-full"> */}
       <div className="w-[90%] md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] 3xl:w-[29%] rounded-lg md:rounded-none bg-white py-10 px-4 md:p-10 lg:p-10 md:mx-0">
