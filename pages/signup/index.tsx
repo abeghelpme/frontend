@@ -1,8 +1,8 @@
-import { useDeferredValue, useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useDeferredValue, useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 import { callApi } from "@/lib/utils/callApi";
@@ -66,9 +66,9 @@ const SignUp = () => {
       confirmPassword: data.confirmPassword,
       isTermAndConditionAccepted: data.terms,
     });
-
+    console.log(data);
     if (responseData) {
-      void router.push("/verify-email");
+      void router.push("/verify-email/check-email");
     }
     console.log(responseData);
     console.log(error);

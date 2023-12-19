@@ -28,6 +28,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
     "@lottiefiles/react-lottie-player": "^3.5.3",
+    "@next/swc-darwin-arm64": "^14.0.4",
     "@radix-ui/react-avatar": "^1.0.4",
     "@tanstack/eslint-plugin-query": "^5.8.4",
     "@tanstack/react-query": "^5.8.4",
@@ -37,6 +38,7 @@
     "@zxcvbn-ts/language-en": "^3.0.2",
     "clsx": "^2.0.0",
     "next": "13.5.4",
+    "nextjs-progressbar": "^0.0.16",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
