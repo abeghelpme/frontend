@@ -7,7 +7,11 @@ type CompProp = {
 };
 const LogoBanner: FC<CompProp> = ({ textColor }) => {
   return (
-    <div className="flex items-center gap-2 justify-center">
+    <div
+      className={`flex items-center gap-2 justify-center ${
+        !textColor && "backdrop-blur-sm p-2 bg-slate-50/40"
+      }`}
+    >
       <Image
         className="w-[35px] md:w-[40px] lg:w-[46px] lg:aspect-square"
         src={logo as string}
@@ -16,7 +20,7 @@ const LogoBanner: FC<CompProp> = ({ textColor }) => {
       />
       <span
         role=""
-        className={`text-${textColor} font-medium md:text-lg lg:text-xl`}
+        className={`${textColor} font-medium md:text-lg lg:text-xl`}
       >
         AbegHelp.me
       </span>

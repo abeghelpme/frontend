@@ -44,6 +44,7 @@ const Login = () => {
       formType="signup"
       greeting="Welcome!"
       heading="Create your account"
+      withHeader
     >
       <div className="flex flex-col w-full">
         <h2 className="text-center font-semibold text-xl">Welcome back!</h2>
