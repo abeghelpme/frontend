@@ -40,7 +40,11 @@ const Login = () => {
   };
 
   return (
-    <AuthLayout>
+    <AuthLayout
+      formType="signup"
+      greeting="Welcome!"
+      heading="Create your account"
+    >
       <div className="flex flex-col w-full">
         <h2 className="text-center font-semibold text-xl">Welcome back!</h2>
         <p className="text-center text-lg">Sign in to continue</p>

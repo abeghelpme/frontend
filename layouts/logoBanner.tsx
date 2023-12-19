@@ -9,7 +9,7 @@ const LogoBanner: FC<CompProp> = ({ textColor }) => {
   return (
     <div className="flex items-center gap-2 justify-center">
       <Image
-        className="lg:w-[46px] lg:aspect-square"
+        className="w-[35px] md:w-[40px] lg:w-[46px] lg:aspect-square"
         src={logo as string}
         priority
         alt="AbegHelp"

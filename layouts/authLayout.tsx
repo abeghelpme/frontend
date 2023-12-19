@@ -1,23 +1,43 @@
+import authBgContours from "@/public/assets/images/auth/auth-bg-contours.png";
+import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
+import Image from "next/image";
 import type { FC, ReactNode } from "react";
 import LogoBanner from "./logoBanner";
 
 interface AuthLayoutProps {
   children: ReactNode;
+  formType: "signup" | "other";
+  greeting: string;
+  heading: string;
 }
 
-const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
+const AuthLayout: FC<AuthLayoutProps> = ({
+  children,
+  formType,
+  greeting,
+  heading,
+}) => {
   return (
-    <>
-      <div className="relative h-screen flex flex-col items-center w-screen bg-[url('/auth-background.svg')] pt-6">
-        <LogoBanner textColor="formTemp" />
-
-        <div className=" w-[90%] sm:w-[50%] md:max-w-[397px] mx-auto flex-1 flex items-center justify-center">
-          <main className="shadow-auth-layout-shadow w-full  py-3 px-3 lg:px-12 flex items-center justify-center  rounded-[0.375rem] opacity-[0.8] border-2 border-[#0068FF1A] bg-white">
-            {children}
-          </main>
+    <div className="py-12 flex flex-col items-center justify-center h-auto lg:h-full relative">
+      <Image
+        src={formType === "signup" ? (authBgJar as string) : authBgContours}
+        alt=""
+        priority
+        className="absolute inset-0 -z-[1] object-cover object-[75%] h-full"
+      />
+      <div className="w-[90%] mx-auto md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] space-y-6 h-full lg:space-y-0">
+        <LogoBanner textColor="abeg-teal-10" />
+        <div className="rounded-lg md:rounded-none mx-auto bg-white py-10 px-4 md:p-10 lg:p-12 md:mx-0 w-full">
+          <div className="space-y-2 text-center font-medium">
+            <p className="text-lg md:text-xl">{greeting}</p>
+            <h1 className="font-semibold text-abeg-neutral-10 text-xl md:text-2xl">
+              {heading}
+            </h1>
+          </div>
+          {children}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
