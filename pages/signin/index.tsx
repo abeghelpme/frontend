@@ -1,18 +1,18 @@
-import Image from "next/image";
-import Link from "next/link";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { callApi } from "@/lib/utils/callApi";
 import {
   zodValidator,
   type LoginType,
 } from "@/lib/utils/validation/validateWithZod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import Link from "next/link";
+import { useForm, type SubmitHandler } from "react-hook-form";
 
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 
-import google from "@/public/assets/icons/shared/google.png";
 import AuthLayout from "@/layouts/authLayout";
+import google from "@/public/assets/icons/shared/google.png";
 
 // import Link from "next/link";
 
