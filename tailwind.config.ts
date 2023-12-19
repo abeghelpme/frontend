@@ -11,6 +11,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        "3xl": "2000px",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -20,12 +23,17 @@ const config: Config = {
         "auth-layout-shadow": " 0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
       },
       colors: {
-        formTemp: "#1B1818",
+        text: "#1B1818",
         formBtn: "#008080",
+        validationMsg: "#268384",
         abeg: {
           button: {
             10: "#1C8384",
             20: "#005E5F",
+          },
+          teal: {
+            DEFAULT: "#268384",
+            10: "#2B908E",
           },
           green: {
             DEFAULT: "#324823",
@@ -53,6 +61,20 @@ const config: Config = {
           },
         },
       },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
   },
   safelist: [
@@ -61,6 +83,7 @@ const config: Config = {
     },
   ],
   plugins: [
+    require("tailwindcss-animate"),
     plugin(function ({ addVariant }) {
       addVariant("progress-unfilled", ["&::-webkit-progress-bar", "&"]);
       addVariant("progress-filled", [

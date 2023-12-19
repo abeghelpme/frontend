@@ -29,18 +29,27 @@ const signUpSchema: z.ZodType<SignUpProps> = z
     firstName: z
       .string()
       .min(2, { message: "First Name is required" })
+      .regex(/^[A-Z][a-z]+(?:-[a-z']+)?$/, {
+        message:
+          'First name must be in sentence case, can include hyphen, and apostrophes (e.g., "Ali", "Ade-Bright" or "Smith\'s").',
+      })
       .max(50, { message: "First Name must be less than 50 characters" }),
     lastName: z
       .string()
       .min(2, { message: "Last Name is required" })
+      .regex(/^[A-Z][a-z]+(?:-[a-z']+)?$/, {
+        message:
+          'Last name must be in sentence case, can include hyphen, and apostrophes (e.g., "Ali", "Ade-Bright" or "Smith\'s").',
+      })
       .max(50, { message: "Last Name must be less than 50 characters" }),
     email: z
       .string()
+
+      .min(2, { message: "Email is required" })
+      .email({ message: "Invalid email address" })
       .regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
         message: "Enter a valid email",
-      })
-      .min(2, { message: "Email is required" })
-      .email({ message: "Invalid email address" }),
+      }),
     terms: z.boolean().refine((value) => value === true, {
       message: "Please accept the terms before proceeding",
     }),
