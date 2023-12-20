@@ -1,3 +1,4 @@
+
 import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
 import authBgContours from "@/public/assets/images/shared/bg-contours.png";
 import Image from "next/image";
