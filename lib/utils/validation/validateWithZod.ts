@@ -97,10 +97,10 @@ const loginSchema: z.ZodType<LoginProps> = z.object({
 const forgotPasswordSchema: z.ZodType<ForgotPasswordProps> = z.object({
   email: z
     .string()
+    .min(2, { message: "Email is required" })
     .regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
       message: "Enter a valid email",
     })
-    .min(2, { message: "Email is required" })
     .email({ message: "Invalid email address" }),
 });
 

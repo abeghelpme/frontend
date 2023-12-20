@@ -42,9 +42,10 @@ const VerificationPage = () => {
 
   return (
     <AuthLayout
-      contentClass="md:w-[55%] lg:w-[50%] xl:w-[35%] 2xl:w-[30%] "
+      contentClass="md:w-[55%] lg:w-[50%] xl:w-[35%] 2xl:w-[30%]"
       formType="signup"
       withHeader={false}
+      hasSuccess={false}
     >
       <div className="space-y-2 text-center">
         <h1 className="font-semibold text-abeg-neutral-10 text-xl md:text-2xl">
@@ -54,8 +55,8 @@ const VerificationPage = () => {
           Please check your email for the verification link sent to you. Click
           the link to verify your email
         </p>
-        <div className="flex flex-col gap-2">
-          <p className="text-center text-sm mt-6">Didn&apos;t get the email?</p>
+        <div className="flex flex-col gap-2 !mt-6">
+          <p className="text-center text-sm">Didn&apos;t get the email?</p>
           <Button
             className="bg-abeg-teal py-4"
             onClick={() => void handleResendEmail()}

@@ -45,6 +45,7 @@ const Login = () => {
       greeting="Welcome!"
       heading="Create your account"
       withHeader
+      hasSuccess={false}
     >
       <div className="flex flex-col w-full">
         <h2 className="text-center font-semibold text-xl">Welcome back!</h2>

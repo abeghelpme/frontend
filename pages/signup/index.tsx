@@ -84,6 +84,7 @@ const SignUp = () => {
       contentClass="md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] 3xl:w-[29%]"
       bannerTextColor="text-abeg-teal-10"
       withHeader
+      hasSuccess={false}
     >
       <form
         onSubmit={(event) => {
