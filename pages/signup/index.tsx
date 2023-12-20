@@ -51,7 +51,10 @@ const SignUp = () => {
   }, [deferredPassword]);
 
   const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
-    void router.push({ pathname: "/verify-email", query: { signup: true } });
+    void router.push({
+      pathname: "/signup/verification",
+      query: { email: data.email },
+    });
     const { error } = await callApi("/auth/signup", {
       email: data.email,
       firstName: data.firstName,
@@ -78,6 +81,10 @@ const SignUp = () => {
       formType="signup"
       greeting="Welcome!"
       heading="Create your account"
+      contentClass="md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] 3xl:w-[29%]"
+      bannerTextColor="text-abeg-teal-10"
+      withHeader
+      hasSuccess={false}
     >
       <form
         onSubmit={(event) => {

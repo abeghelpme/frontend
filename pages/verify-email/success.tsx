@@ -1,13 +1,20 @@
-import LogoBanner from "@/layouts/logoBanner";
-import { Player } from "@lottiefiles/react-lottie-player";
+import Success from "@/components/Shared/Success";
+import AuthLayout from "@/layouts/authLayout";
 import Link from "next/link";
 
-const SuccessPage = () => {
+const VerifyEmailSuccessPage = () => {
   return (
-    <div className="h-full flex flex-col items-center justify-center space-y-10">
-      <LogoBanner textColor="formTemp" />
-
-      <div className="bg-white p-4 sm:p-6 w-[90%] sm:w-[50%] md:max-w-[397px] mx-auto rounded-md">
+    <AuthLayout withHeader={false} hasSuccess contentClass="" formType="signup">
+      {" "}
+      <Success textContent="Your email has been verified">
+        <Link
+          href="/login"
+          className="block text-center mt-6 p-3 text-white bg-formBtn w-full rounded-md md:rounded-lg text-sm md:text-base font-semibold"
+        >
+          Proceed
+        </Link>
+      </Success>
+      {/* <div className="">
         <Player
           autoplay
           loop
@@ -24,9 +31,9 @@ const SuccessPage = () => {
             Proceed
           </Link>
         </div>
-      </div>
-    </div>
+      </div> */}
+    </AuthLayout>
   );
 };
 
-export default SuccessPage;
+export default VerifyEmailSuccessPage;

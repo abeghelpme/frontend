@@ -1,5 +1,6 @@
-import authBgContours from "@/public/assets/images/auth/auth-bg-contours.png";
+
 import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
+import authBgContours from "@/public/assets/images/shared/bg-contours.png";
 import Image from "next/image";
 import type { FC, ReactNode } from "react";
 import LogoBanner from "./logoBanner";
@@ -7,8 +8,12 @@ import LogoBanner from "./logoBanner";
 interface AuthLayoutProps {
   children: ReactNode;
   formType: "signup" | "other";
-  greeting: string;
-  heading: string;
+  greeting?: string;
+  heading?: string;
+  contentClass?: string;
+  withHeader: boolean;
+  hasSuccess: boolean;
+  bannerTextColor?: string;
 }
 
 const AuthLayout: FC<AuthLayoutProps> = ({
@@ -16,45 +21,38 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   formType,
   greeting,
   heading,
+  withHeader,
+  contentClass,
+  bannerTextColor,
+  hasSuccess,
 }) => {
   return (
-    <div className="py-12 flex flex-col items-center justify-center lg:justify-star min-h-full relative gap-y-6 md:gap-y-[2rem] lg:gap-y-[2.7rem]">
+    <div className="py-12 flex flex-col items-center min-h-full relative gap-8 md:gap-0">
       <Image
         src={formType === "signup" ? (authBgJar as string) : authBgContours}
         alt=""
         priority
         className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
       />
-      {/* <div className="w-[90%] mx-auto md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] space-y-6 h-full lg:space-y-[3.5rem]"> */}
-      <LogoBanner textColor="#2B908E" />
+      <LogoBanner textColor={bannerTextColor!} />
 
-      {/* <div className="h-full w-full"> */}
-      <div className="w-[90%] md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] 3xl:w-[29%] rounded-lg md:rounded-none bg-white py-10 px-4 md:p-10 lg:p-10 md:mx-0">
-        <div className="space-y-2 text-center font-medium">
-          <p className="text-lg md:text-xl">{greeting}</p>
-          <h1 className="font-semibold text-abeg-neutral-10 text-xl md:text-2xl">
-            {heading}
-          </h1>
-        </div>
-        {children}
-      </div>
-      {/* </div> */}
-      {/* </div> */}
-      {/* <div className="w-[90%] mx-auto md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] space-y-6 h-full lg:space-y-[3.5rem]">
-        <LogoBanner textColor="abeg-teal-10" />
-
-        <div className="h-full w-full">
-          <div className="rounded-lg md:rounded-none mx-auto bg-white py-10 px-4 md:p-10 lg:p-12 md:mx-0 w-full">
+      {!hasSuccess ? (
+        <div
+          className={`w-[90%] mx-auto rounded-lg my-auto md:rounded-m bg-white py-10 px-4 md:p-10 lg:p-10 md:mx-0 shadow-auth-layout-shadow ${contentClass}`}
+        >
+          {withHeader && (
             <div className="space-y-2 text-center font-medium">
               <p className="text-lg md:text-xl">{greeting}</p>
               <h1 className="font-semibold text-abeg-neutral-10 text-xl md:text-2xl">
                 {heading}
               </h1>
             </div>
-            {children}
-          </div>
+          )}
+          {children}
         </div>
-      </div> */}
+      ) : (
+        <div className="my-auto w-full">{children}</div>
+      )}
     </div>
   );
 };

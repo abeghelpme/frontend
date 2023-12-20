@@ -24,6 +24,7 @@ const config: Config = {
       },
       colors: {
         text: "#1B1818",
+        successText: "#484848",
         formBtn: "#008080",
         validationMsg: "#268384",
         abeg: {
