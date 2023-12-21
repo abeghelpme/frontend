@@ -96,7 +96,6 @@ const ResetPassword: React.FC = () => {
       >
         <div className="space-y-6">
           <h1 className="text-2xl font-semibold text-center">Reset Password</h1>
-
           <div className="space-y-4">
             <div className="space-y-1">
               <label htmlFor="password" className="font-medium">
