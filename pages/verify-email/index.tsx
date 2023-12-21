@@ -66,6 +66,7 @@ const VerificationPage = () => {
             className="bg-formBtn py-3 !mt-6"
             onClick={() => void verifyEmail()}
             fullWidth
+             loading={loading}
           >
             Verify
           </Button>
