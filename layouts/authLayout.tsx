@@ -13,7 +13,7 @@ interface AuthLayoutProps {
   contentClass?: string;
   withHeader: boolean;
   hasSuccess: boolean;
-  bannerTextColor?: string;
+  bannerTextColor?: boolean;
 }
 
 const AuthLayout: FC<AuthLayoutProps> = ({
@@ -38,14 +38,16 @@ const AuthLayout: FC<AuthLayoutProps> = ({
 
       {!hasSuccess ? (
         <div
-          className={`w-[90%] mx-auto rounded-lg my-auto md:rounded-m bg-white py-10 px-4 md:p-10 lg:p-10 md:mx-0 shadow-auth-layout-shadow ${contentClass}`}
+          className={`w-[90%] mx-auto rounded-lg my-auto space-y-6 bg-white py-10 px-4 md:p-10 lg:p-10 md:mx-0 shadow-auth-layout-shadow ${
+            formType === "other" ? "max-w-[467px]" : contentClass
+          }`}
         >
           {withHeader && (
             <div className="space-y-2 text-center font-medium">
-              <p className="text-lg md:text-xl">{greeting}</p>
               <h1 className="font-semibold text-abeg-neutral-10 text-xl md:text-2xl">
                 {heading}
               </h1>
+              <p className="text-lg md:text-xl">{greeting}</p>
             </div>
           )}
           {children}

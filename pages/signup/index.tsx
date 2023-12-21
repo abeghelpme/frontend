@@ -79,10 +79,10 @@ const SignUp = () => {
   return (
     <AuthLayout
       formType="signup"
-      greeting="Welcome!"
-      heading="Create your account"
+      heading="Welcome!"
+      greeting="Create your account"
       contentClass="md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] 3xl:w-[29%]"
-      bannerTextColor="text-abeg-teal-10"
+      bannerTextColor
       withHeader
       hasSuccess={false}
     >
@@ -92,7 +92,7 @@ const SignUp = () => {
           void handleSubmit(onSubmit)(event);
         }}
         action=""
-        className="mt-8 flex flex-col gap-4"
+        className="flex flex-col gap-4"
       >
         {message.message !== "" && !message.error ? (
           <p
