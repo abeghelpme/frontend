@@ -83,8 +83,7 @@ const ResetPassword: React.FC = () => {
   return (
     <AuthLayout
       formType="other"
-      contentClass="max-w-[467px]"
-      bannerTextColor="text-abeg-teal-10"
+      bannerTextColor
       withHeader={false}
       hasSuccess={false}
     >
@@ -96,7 +95,7 @@ const ResetPassword: React.FC = () => {
         className="flex flex-col"
       >
         <div className="space-y-6">
-          <h1 className="text-2xl font-semibold">Reset Password</h1>
+          <h1 className="text-2xl font-semibold text-center">Reset Password</h1>
 
           <div className="space-y-4">
             <div className="space-y-1">
@@ -106,8 +105,11 @@ const ResetPassword: React.FC = () => {
               <div className="relative">
                 <Input
                   {...register("password")}
-                  className="py-3"
-                  placeholder="Create a password"
+                  className={`min-h-[45px] ${
+                    errors.password &&
+                    "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+                  }`}
+                  placeholder="Create a new password"
                   type="password"
                 />
               </div>
@@ -156,7 +158,10 @@ const ResetPassword: React.FC = () => {
               <div className="relative">
                 <Input
                   {...register("confirmPassword")}
-                  className="py-3"
+                  className={`min-h-[45px] ${
+                    errors.confirmPassword &&
+                    "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+                  }`}
                   placeholder="Re-enter password"
                   type="password"
                 />

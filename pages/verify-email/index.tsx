@@ -45,6 +45,7 @@ const VerificationPage = () => {
 
   return (
     <AuthLayout
+      bannerTextColor
       withHeader={false}
       hasSuccess={false}
       formType="signup"
