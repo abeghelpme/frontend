@@ -3,7 +3,7 @@ import Input from "@/components/primitives/Form/Input";
 import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
 import { useToast } from "@/components/ui/use-toast";
 import AuthLayout from "@/layouts/authLayout";
-import { callApi } from "@/lib/utils/callApi";
+import callApi from "@/lib/api/callApi";
 import {
   checkPasswordStrength,
   zodValidator,
@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 const ResetPassword: React.FC = () => {
   const router = useRouter();
   const { toast } = useToast();
+
   const [token, setToken] = useState("");
   useEffect(() => {
     setToken(router.query.token as string);
@@ -64,14 +65,14 @@ const ResetPassword: React.FC = () => {
 
     if (error) {
       return toast({
-        title: error.status,
+        title: error.status as string,
         description: error.message,
         duration: 3000,
       });
     } else {
       toast({
         title: "Success",
-        description: responseData.message,
+        description: (responseData as { message: string }).message,
         duration: 3000,
       });
       setTimeout(() => {

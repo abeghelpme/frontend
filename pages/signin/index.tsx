@@ -3,7 +3,7 @@ import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import { useToast } from "@/components/ui/use-toast";
 import AuthLayout from "@/layouts/authLayout";
-import { callApi } from "@/lib/utils/callApi";
+import callApi from "@/lib/api/callApi";
 import {
   zodValidator,
   type LoginType,
@@ -59,23 +59,23 @@ const Login = () => {
 
     if (error) {
       return toast({
-        title: error.status,
+        title: error.status as string,
         description: error.message,
         duration: 3000,
       });
     } else {
       toast({
         title: "Success",
-        description: responseData.message,
+        description: (responseData as { message: string }).message,
         duration: 3000,
       });
       reset();
-       if (choose2FA === "true") {
-       setOpenModal(true)                        
-      setTimeout(() => {
-        void router.push("/create-campaign");
-      }, 2000)
-     }
+      if (choose2FA === "true") {
+        setOpenModal(true);
+        setTimeout(() => {
+          void router.push("/create-campaign");
+        }, 2000);
+      }
     }
     return;
   };
@@ -139,7 +139,7 @@ const Login = () => {
         >
           Forgot Password?
         </Link>
-       <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
             setOpen={() => setOpenModal(false)}
