@@ -29,18 +29,27 @@ const signUpSchema: z.ZodType<SignUpProps> = z
     firstName: z
       .string()
       .min(2, { message: "First Name is required" })
+      .regex(/^[A-Z][a-z]+(?:-[a-z']+)?$/, {
+        message:
+          'First name must be in sentence case, can include hyphen, and apostrophes (e.g., "Ali", "Ade-Bright" or "Smith\'s").',
+      })
       .max(50, { message: "First Name must be less than 50 characters" }),
     lastName: z
       .string()
       .min(2, { message: "Last Name is required" })
+      .regex(/^[A-Z][a-z]+(?:-[a-z']+)?$/, {
+        message:
+          'Last name must be in sentence case, can include hyphen, and apostrophes (e.g., "Ali", "Ade-Bright" or "Smith\'s").',
+      })
       .max(50, { message: "Last Name must be less than 50 characters" }),
     email: z
       .string()
+
+      .min(2, { message: "Email is required" })
+      .email({ message: "Invalid email address" })
       .regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
         message: "Enter a valid email",
-      })
-      .min(2, { message: "Email is required" })
-      .email({ message: "Invalid email address" }),
+      }),
     terms: z.boolean().refine((value) => value === true, {
       message: "Please accept the terms before proceeding",
     }),
@@ -74,10 +83,11 @@ const signUpSchema: z.ZodType<SignUpProps> = z
 const loginSchema: z.ZodType<LoginProps> = z.object({
   email: z
     .string()
+
+    .min(2, { message: "Email is required" })
     .regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
       message: "Enter a valid email",
     })
-    .min(2, { message: "Email is required" })
     .email({ message: "Invalid email address" }),
   password: z
     .string()
@@ -88,32 +98,37 @@ const loginSchema: z.ZodType<LoginProps> = z.object({
 const forgotPasswordSchema: z.ZodType<ForgotPasswordProps> = z.object({
   email: z
     .string()
+    .min(2, { message: "Email is required" })
     .regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
       message: "Enter a valid email",
     })
-    .min(2, { message: "Email is required" })
     .email({ message: "Invalid email address" }),
 });
 
-const resetPasswordSchema: z.ZodType<ResetPasswordProps> = z
-  .object({
-    password: z
-      .string()
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
-        {
-          message:
-            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-        },
-      )
-      .min(6, { message: "Password must be at least 6 characters" })
-      .max(50),
-    confirmPassword: z.string().min(6, { message: "Passwords must match" }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+const resetPasswordSchema: z.ZodType<ResetPasswordProps> = z.object({
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters" })
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+      {
+        message:
+          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+      },
+    )
+    .max(50),
+  confirmPassword: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters" })
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+      {
+        message:
+          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+      },
+    )
+    .max(50),
+});
 export const zodValidator = (formType: FormType) => {
   switch (formType) {
     case "signup":

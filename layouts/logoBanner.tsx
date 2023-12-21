@@ -1,20 +1,29 @@
 import React, { type FC } from "react";
 import logo from "@/public/assets/images/shared/logo.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 type CompProp = {
-  textColor: string;
+  textColor: boolean;
 };
 const LogoBanner: FC<CompProp> = ({ textColor }) => {
   return (
-    <div className="flex items-center gap-2 justify-center">
+    <Link href="/" className={`flex items-center gap-2 justify-center`}>
       <Image
-        className="lg:w-[66px] lg:aspect-square"
+        className="w-[35px] md:w-[40px] lg:w-[46px] lg:aspect-square"
         src={logo as string}
-        alt="AbegHelp"
+        priority
+        alt=""
       />
-      <span className={`text-${textColor} font-medium`}>AbegHelp.me</span>
-    </div>
+      <span
+        role=""
+        className={`${
+          textColor ? "text-abeg-teal-10" : "backdrop-blur-sm px-1 bg-white/40"
+        } font-medium md:text-lg lg:text-xl`}
+      >
+        AbegHelp.me
+      </span>
+    </Link>
   );
 };
 
