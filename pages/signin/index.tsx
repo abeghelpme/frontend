@@ -52,7 +52,7 @@ const Login = () => {
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-    const { data: responseData, error } = await callApi("/auth/sign", {
+    const { data: responseData, error } = await callApi("/auth/signin", {
       email: data.email,
       password: data.password,
     });
