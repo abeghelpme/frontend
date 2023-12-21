@@ -74,7 +74,7 @@ const SignUp = () => {
     setTimeout(() => {
       void router.push({
         pathname: "/signup/verification",
-        query: { signup: true },
+        query: { signup: true, email: data.email.toLowerCase() },
       });
     }, 1000);
   };
