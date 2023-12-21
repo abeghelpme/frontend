@@ -64,16 +64,18 @@ const Login = () => {
         duration: 3000,
       });
     } else {
-      choose2FA === "true" && setOpenModal(true);
       toast({
         title: "Success",
         description: responseData.message,
         duration: 3000,
       });
       reset();
+       if (choose2FA === "true") {
+       setOpenModal(true)                        
       setTimeout(() => {
         void router.push("/create-campaign");
-      }, 2000);
+      }, 2000)
+     }
     }
     return;
   };
