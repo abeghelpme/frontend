@@ -9,12 +9,14 @@ const VerificationPage = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setToken(router.query.token as string);
   }, [router]);
 
   const verifyEmail = async () => {
+    setLoading(true);
     if (!token)
       return toast({
         title: "Request Failed",
@@ -26,12 +28,14 @@ const VerificationPage = () => {
     });
 
     if (error) {
+      setLoading(false);
       return toast({
         title: error.status,
         description: error.message,
         duration: 3000,
       });
     } else {
+      setLoading(false);
       toast({
         title: "Success",
         description: data.message,
@@ -62,6 +66,7 @@ const VerificationPage = () => {
             className="bg-formBtn py-3 !mt-6"
             onClick={() => void verifyEmail()}
             fullWidth
+            loading={loading}
           >
             Verify
           </Button>

@@ -72,7 +72,10 @@ const SignUp = () => {
 
     reset();
     setTimeout(() => {
-      void router.push({ pathname: "/verify-email", query: { signup: true } });
+      void router.push({
+        pathname: "/signup/verification",
+        query: { signup: true },
+      });
     }, 1000);
   };
 
@@ -280,7 +283,7 @@ const SignUp = () => {
           </Button>
           <p className="text-center text-sm">
             Already have an account?&nbsp;
-            <Link href="/login" className="text-abeg-teal font-medium">
+            <Link href="/signin" className="text-abeg-teal font-medium">
               Login
             </Link>
           </p>
