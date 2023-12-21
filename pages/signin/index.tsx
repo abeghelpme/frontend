@@ -72,7 +72,7 @@ const Login = () => {
       });
       reset();
       setTimeout(() => {
-        void router.push("/reset-password/success");
+        void router.push("/create-campaign");
       }, 2000);
     }
     return;
