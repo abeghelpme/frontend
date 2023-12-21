@@ -72,7 +72,7 @@ const SignUp = () => {
 
     reset();
     setTimeout(() => {
-      void router.push({ pathname: "/verify-email", query: { signup: true } });
+      void router.push({ pathname: "/signup/verification", query: { signup: true } });
     }, 1000);
   };
 
