@@ -137,49 +137,59 @@ const Login = () => {
         >
           Forgot Password?
         </Link>
-        <DialogComponent
-          openDialog={openModal}
-          setOpen={() => setOpenModal(false)}
-          trigger={
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              loading={isSubmitting}
-              className="text-white bg-formBtn py-4 mt-6 disabled:bg-gray-500 "
-              fullWidth
-            >
-              Sign in
-            </Button>
-          }
-        >
-          <div className="text-center">
-            <h2 className="font-semibold text-2xl">Keep your account safe!</h2>
-            <div className="space-y-2 mt-4">
-              <p className="">Your safety is our number one priority</p>
-              <p className="">
-                Activate two-factor authentication and add an extra layer of
-                security to your account
-              </p>
-            </div>
-            <div className="mt-6">
-              <Link
-                href={"#"}
-                className="text-white block bg-formBtn text-sm font-semibold py-4 w-full rounded-md"
-              >
-                Activate
-              </Link>
+       <div className="flex flex-col gap-3">
+          <DialogComponent
+            openDialog={openModal}
+            setOpen={() => setOpenModal(false)}
+            trigger={
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                onClick={handleOption}
-                className="text-abeg-teal border-formBtn border py-4 mt-4 disabled:bg-gray-500 disabled:text-white"
+                loading={isSubmitting}
+                className="text-white bg-formBtn py-4 mt-6 disabled:bg-gray-500 "
                 fullWidth
               >
-                Skip
+                Sign in
               </Button>
+            }
+          >
+            <div className="text-center">
+              <h2 className="font-semibold text-2xl">
+                Keep your account safe!
+              </h2>
+              <div className="space-y-2 mt-4">
+                <p className="">Your safety is our number one priority</p>
+                <p className="">
+                  Activate two-factor authentication and add an extra layer of
+                  security to your account
+                </p>
+              </div>
+              <div className="mt-6">
+                <Link
+                  href={"#"}
+                  className="text-white block bg-formBtn text-sm font-semibold py-4 w-full rounded-md"
+                >
+                  Activate
+                </Link>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  onClick={handleOption}
+                  className="text-abeg-teal border-formBtn border py-4 mt-4 disabled:bg-gray-500 disabled:text-white"
+                  fullWidth
+                >
+                  Skip
+                </Button>
+              </div>
             </div>
-          </div>
-        </DialogComponent>
+          </DialogComponent>
+          <p className="text-center text-sm">
+            Don&apos;t have an account?&nbsp;
+            <Link href="/signup" className="text-abeg-teal font-medium">
+              Register
+            </Link>
+          </p>
+        </div>
       </form>
     </AuthLayout>
   );
