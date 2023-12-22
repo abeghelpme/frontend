@@ -26,7 +26,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   hasSuccess,
 }) => {
   return (
-    <div className="py-12 flex flex-col items-center min-h-full relative gap-8 md:gap-0">
+    <div className="py-12 flex flex-col items-center min-h-full relative gap-8 md:gap-9">
       <Image
         src={formType === "signup" ? (authBgJar as string) : authBgContours}
         alt=""
