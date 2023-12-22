@@ -128,7 +128,7 @@ const Email = () => {
                   inputType="tel"
                   renderInput={(props) => <input {...props} />}
                   containerStyle="flex justify-center items-center space-x-2 lg:space-x-4"
-                  inputStyle="w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 xl:w-20 xl:h-20 border-2 rounded bg-transparent outline-none text-center font-semibold text-xl md:text-2xl border-gray-700 focus:border-formBtn focus:border-gray-700 focus:text-formBtn text-gray-400  shadow-lg transition-all duration-500"
+                  inputStyle="flex-1 aspect-square border-2 rounded bg-transparent outline-none text-center font-semibold text-xl md:text-2xl border-gray-700 focus:border-formBtn focus:border-gray-700 focus:text-formBtn text-gray-400  shadow-lg transition-all duration-500"
                   skipDefaultStyles
                 />
                 <p className="text-sm md:text-base">
