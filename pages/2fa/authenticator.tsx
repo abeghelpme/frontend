@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
 import AuthenticatorFirstStep from "@/components/2fa/AuthenticatorFirstStep";
 import authBgContours from "@/public/assets/images/shared/bg-contours.png";
-import Button from "@/components/primitives/Button/button";
+import AuthenticatorSecondStep from "@/components/2fa/AuthenticatorSecondStep";
 
-const authenticator = () => {
+const Authenticator = () => {
+  const [step, setStep] = useState(1);
   return (
     <main className="min-h-screen  flex flex-col flex-1 relative">
       <Image
@@ -15,15 +16,13 @@ const authenticator = () => {
         priority
         className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
       />
-      <AuthenticatorFirstStep />
-      <hr className="mt-auto" />
-      <div className="flex justify-end px-4 max-w-7xl md:px-16 my-4">
-        <Button className="bg-abeg-button-10 w-fit " size="sm">
-          NEXT
-        </Button>
-      </div>
+      {step === 1 ? (
+        <AuthenticatorFirstStep setStep={setStep} />
+      ) : (
+        <AuthenticatorSecondStep />
+      )}
     </main>
   );
 };
 
-export default authenticator;
+export default Authenticator;
