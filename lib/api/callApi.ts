@@ -1,4 +1,5 @@
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
+import { useSession } from "@/state/useSession";
 
 const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
@@ -16,7 +17,7 @@ const api: AxiosInstance = axios.create({
 
 const handle401 = () => {
   // Add your logic here
-  console.log("Received 401 status code");
+  useSession.getState().clearSession();
 };
 
 interface ApiError {
@@ -38,7 +39,6 @@ const callApi = async <T>(
       ...(data && { data }),
       cancelToken: source.token,
     });
-
     return { data: response.data };
   } catch (error) {
     let apiError: ApiError | undefined;
@@ -48,14 +48,16 @@ const callApi = async <T>(
     }
 
     if (axios.isAxiosError(error) && error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
+      apiError = error.response.data as ApiError;
+      // console.log(error.response.data);
+      // console.log(error.response.status);
+      // console.log(error.response.headers);
 
       if (
         error.response.status === 401 &&
         (endpoint === "/login" || endpoint === "/signup")
       ) {
+        console.log("unauthenticated");
         handle401();
       }
     } else {
@@ -66,7 +68,6 @@ const callApi = async <T>(
         };
       }
     }
-
     return { error: apiError };
   }
 };

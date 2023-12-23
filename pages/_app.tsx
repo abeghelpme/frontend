@@ -1,4 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
+import { useSession } from "@/state/useSession";
+import { useEffect } from "react";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import NextNProgress from "nextjs-progressbar";
@@ -11,6 +13,13 @@ interface ComponentWithPageLayout extends AppProps {
 }
 
 export default function App({ Component, pageProps }: ComponentWithPageLayout) {
+  useEffect(() => {
+    void (async () => {
+      await useSession.getState().getSession();
+      console.log("fetching session done");
+    })();
+  }, []);
+
   return (
     <>
       <NextNProgress color="#324823" />
