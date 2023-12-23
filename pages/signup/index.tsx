@@ -85,7 +85,7 @@ const SignUp = () => {
       heading="Welcome!"
       greeting="Create your account"
       contentClass="md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] 3xl:w-[29%]"
-      bannerTextColor
+      bannerTextColor={false}
       withHeader
       hasSuccess={false}
     >
@@ -272,7 +272,7 @@ const SignUp = () => {
             </p>
           )}
         </div>
-        <div className="space-y-5 md:space-y-8 flex flex-col items-center">
+        <div className="space-y-5 flex flex-col items-center">
           <Button
             disabled={isSubmitting}
             className="text-white bg-abeg-teal py-4 mt-6 md:w-[60%] lg:w-[55%] xl:w-[52%]"
