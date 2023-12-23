@@ -1,7 +1,6 @@
-import React from "react";
-import Link from "next/link";
-import AuthLayout from "@/layouts/authLayout";
 import Success from "@/components/Shared/Success";
+import AuthLayout from "@/layouts/authLayout";
+import Link from "next/link";
 
 const ResetPasswordSuccessPage = () => {
   return (
