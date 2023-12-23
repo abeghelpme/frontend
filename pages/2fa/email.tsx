@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { callApi } from "@/lib/utils/callApi";
+// import { callApi } from "@/lib/utils/callApi";
 import authBgContours from "@/public/assets/images/shared/bg-contours.png";
 import Image from "next/image";
 import { ChevronLeftIcon, CrossCircledIcon } from "@radix-ui/react-icons";
 import OTPInput from "react-otp-input";
 import Button from "@/components/primitives/Button/button";
 import Link from "next/link";
+import callApi from "@/lib/api/callApi";
 
 const Email = () => {
   const [otpCode, setOtpCode] = useState<string>("");
@@ -33,15 +34,13 @@ const Email = () => {
         throw new Error("Otp code incomplete");
       }
       console.log(otpCodeInputed, typeof otpCodeInputed);
+
+      const { data } = await callApi("/auth/2fa/time/verify", {
+        email: "test@gmail.com",
+        token: otpCodeInputed,
+        twoFactorVerificationType: "EMAIL_CODE",
+      });
       setPage(1);
-      const { data } = await callApi(
-        "/2fa/time/verify",
-        // {
-        //   email: "test@gmail.com",
-        //   token: otpCodeInputed,
-        //   twoFactorVerificationType: "EMAIL_CODE",
-        // }
-      );
       console.log(data);
     } catch (error) {
       console.error(error);
