@@ -2,7 +2,7 @@ import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import { useToast } from "@/components/ui/use-toast";
 import AuthLayout from "@/layouts/authLayout";
-import { callApi } from "@/lib/utils/callApi";
+import callApi from "@/lib/api/callApi";
 import {
   zodValidator,
   type ForgotPasswordType,
@@ -12,10 +12,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
-
 const ForgotPasswordPage: React.FC = () => {
   const router = useRouter();
   const { toast } = useToast();
+
   const {
     handleSubmit,
     register,
@@ -37,14 +37,14 @@ const ForgotPasswordPage: React.FC = () => {
 
     if (error) {
       return toast({
-        title: error.status,
+        title: error.status.toString(),
         description: error.message,
         duration: 3000,
       });
     } else {
       toast({
         title: "Success",
-        description: responseData.message,
+        description: (responseData as { message: string }).message,
         duration: 3000,
       });
       reset();
