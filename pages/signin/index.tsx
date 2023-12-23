@@ -19,6 +19,7 @@ const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
+  const [success, setIsSuccess] = useState(false);
   const [choose2FA, setChoose2FA] = useState("true");
   useEffect(() => {
     const checkLS = () => {
@@ -49,9 +50,7 @@ const Login = () => {
   const handleOption = () => {
     setChoose2FA("false");
     setOpenModal(false);
-    setTimeout(() => {
-      void router.push("/create-campaign");
-    }, 2000);
+    void router.push("/create-campaign");
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
@@ -72,12 +71,17 @@ const Login = () => {
         description: responseData.message,
         duration: 3000,
       });
+      setIsSuccess(true);
       reset();
       if (choose2FA === "true") {
         setOpenModal(true);
+      } else {
+        setTimeout(() => {
+          void router.push("/create-campaign");
+        }, 1500);
       }
+      return;
     }
-    return;
   };
 
   return (
@@ -142,11 +146,11 @@ const Login = () => {
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
-            setOpen={() => setOpenModal(false)}
+            setOpen={() => setOpenModal(true)}
             trigger={
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || success}
                 loading={isSubmitting}
                 className="text-white bg-formBtn py-4 mt-6 disabled:bg-gray-500 "
                 fullWidth
@@ -168,7 +172,7 @@ const Login = () => {
               </div>
               <div className="mt-6">
                 <Link
-                  href={"#"}
+                  href="/2fa"
                   className="text-white block bg-formBtn text-sm font-semibold py-4 w-full rounded-md"
                 >
                   Activate

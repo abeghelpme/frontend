@@ -26,7 +26,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   hasSuccess,
 }) => {
   return (
-    <div className="py-12 flex flex-col items-center min-h-full relative gap-8 md:gap-9">
+    <div className="scroll-smooth py-12 flex flex-col items-center min-h-full relative gap-8 md:gap-9">
       <Image
         src={formType === "signup" ? (authBgJar as string) : authBgContours}
         alt=""
@@ -37,7 +37,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
 
       {!hasSuccess ? (
         <div
-          className={`w-[90%] mx-auto rounded-lg my-auto space-y-6 bg-white py-10 px-4 md:p-10 lg:p-10 md:mx-0 shadow-auth-layout-shadow ${
+          className={`w-[90%] mx-auto rounded-lg my-auto space-y-6 bg-white py-10 px-4 md:p-10 lg:p-10 md:mx-0 shadow-auth-layout-shadow scroll-smooth ${
             formType === "other" ? "max-w-[467px]" : contentClass
           }`}
         >

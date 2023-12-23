@@ -1,6 +1,7 @@
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
+import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse } from "@/interfaces/formInputs";
 import AuthLayout from "@/layouts/authLayout";
 import { callApi } from "@/lib/utils/callApi";
@@ -16,6 +17,7 @@ import { useDeferredValue, useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 const SignUp = () => {
+  const { toast } = useToast();
   const [message, setMessage] = useState<ApiResponse>({
     status: "",
     message: "",
@@ -51,11 +53,7 @@ const SignUp = () => {
   }, [deferredPassword]);
 
   const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
-    void router.push({
-      pathname: "/signup/verification",
-      query: { email: data.email },
-    });
-    const { error } = await callApi("/auth/signup", {
+    const { data: responseData, error } = await callApi("/auth/signup", {
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
@@ -67,16 +65,31 @@ const SignUp = () => {
     if (error) {
       const castedError = error as ApiResponse;
       setMessage(castedError);
-      return;
-    }
-
-    reset();
-    setTimeout(() => {
-      void router.push({
-        pathname: "/signup/verification",
-        query: { signup: true },
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
       });
-    }, 1000);
+      toast({
+        title: error.status,
+        description: "Error in credentials provided",
+        duration: 3000,
+      });
+      return;
+    } else {
+      toast({
+        title: "Success",
+        description: responseData.message,
+        duration: 3000,
+      });
+      reset();
+      setTimeout(() => {
+        void router.push({
+          pathname: "/signup/verification",
+          query: { signup: true },
+        });
+      }, 1000);
+    }
   };
 
   return (
