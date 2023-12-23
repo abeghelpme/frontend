@@ -8,6 +8,7 @@ function useRedirect(dep: string, url: string) {
       void router.push(url);
     }, 2000);
     return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dep]);
 }
 
