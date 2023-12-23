@@ -49,6 +49,9 @@ const Login = () => {
   const handleOption = () => {
     setChoose2FA("false");
     setOpenModal(false);
+    setTimeout(() => {
+      void router.push("/create-campaign");
+    }, 2000);
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
@@ -71,10 +74,11 @@ const Login = () => {
       });
       reset();
       if (choose2FA === "true") {
-        setOpenModal(true);
+        setOpenModal(true);        
+      } else {
         setTimeout(() => {
           void router.push("/create-campaign");
-        }, 2000);
+        }, 1500);
       }
     }
     return;

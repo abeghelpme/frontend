@@ -41,9 +41,19 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
             className="w-5 h-5 text-abeg-neutral-50 absolute left-[calc(100%-20px)] top-1/2 -translate-x-1/2 -translate-y-1/2"
           >
             {showPassword ? (
-              <Image src={slashEye as string} width={24} height={24} alt="" />
+              <Image
+                src={slashEye as string}
+                width={24}
+                height={24}
+                alt="hide password"
+              />
             ) : (
-              <Image src={eye as string} width={24} height={24} alt="" />
+              <Image
+                src={eye as string}
+                width={24}
+                height={24}
+                alt="show password"
+              />
             )}
           </button>
         )}
