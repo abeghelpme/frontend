@@ -74,7 +74,7 @@ const Login = () => {
       });
       reset();
       if (choose2FA === "true") {
-        setOpenModal(true);        
+        setOpenModal(true);
       } else {
         setTimeout(() => {
           void router.push("/create-campaign");
