@@ -8,7 +8,7 @@ const callApi = createFetcher({
     // NOTE - remember to handle this error properly, as well as other possible errors
     // handle email not verified here
     if (response.status === 401) {
-      window.location.replace("/signin?unauthenticated=true");
+      // window.location.replace("/signin?unauthenticated=true");
     }
   },
 });
