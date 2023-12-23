@@ -3,7 +3,7 @@ import Input from "@/components/primitives/Form/Input";
 import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
 import type { ApiResponse } from "@/interfaces/formInputs";
 import AuthLayout from "@/layouts/authLayout";
-import { callApi } from "@/lib/utils/callApi";
+import callApi from "@/lib/api/callApi";
 import {
   checkPasswordStrength,
   zodValidator,
@@ -72,7 +72,10 @@ const SignUp = () => {
 
     reset();
     setTimeout(() => {
-      void router.push({ pathname: "/signup/verification", query: { signup: true } });
+      void router.push({
+        pathname: "/signup/verification",
+        query: { signup: true, email: data.email.toLowerCase() },
+      });
     }, 1000);
   };
 

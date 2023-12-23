@@ -1,7 +1,7 @@
 import Button from "@/components/primitives/Button/button";
 import { useToast } from "@/components/ui/use-toast";
 import AuthLayout from "@/layouts/authLayout";
-import { callApi } from "@/lib/utils/callApi";
+import callApi from "@/lib/api/callApi";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -9,7 +9,7 @@ const VerificationPage = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [token, setToken] = useState("");
-   const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setToken(router.query.token as string);
@@ -30,7 +30,7 @@ const VerificationPage = () => {
     if (error) {
       setLoading(false);
       return toast({
-        title: error.status,
+        title: error.status as string,
         description: error.message,
         duration: 3000,
       });
@@ -38,7 +38,7 @@ const VerificationPage = () => {
       setLoading(false);
       toast({
         title: "Success",
-        description: data.message,
+        description: (data as { message: string }).message,
         duration: 3000,
       });
       setTimeout(() => {
@@ -66,7 +66,7 @@ const VerificationPage = () => {
             className="bg-formBtn py-3 !mt-6"
             onClick={() => void verifyEmail()}
             fullWidth
-             loading={loading}
+            loading={loading}
           >
             Verify
           </Button>
