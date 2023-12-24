@@ -12,7 +12,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
   return (
     <>
       <Navbar />
-      <main className={`${manrope.className}`}>{children}</main>
+      <main className={`${manrope.className} h-full`}>{children}</main>
       <Footer />
     </>
   );

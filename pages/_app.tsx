@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
           </Component.PageLayout>
         ) : (
           <>
-            <main className={`${manrope.className}`}>
+            <main className={`${manrope.className} h-full`}>
               {" "}
               <Component {...pageProps} />
               <Toaster />
