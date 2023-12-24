@@ -1,33 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+
 import { useToast } from "../ui/use-toast";
 import OtpInput from "react-otp-input";
+import callApi from "@/lib/api/callApi";
 
 import Loader from "./Loader";
-import QRCode from "@/public/assets/images/shared/QR-code.png";
 import { ClipboardIcon } from "@radix-ui/react-icons";
 import DialogComponent from "../Shared/Dialog";
 import Button from "../primitives/Button/button";
 
 type AuthenticatorFirstStepProps = {
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  recoveryCode: React.MutableRefObject<string | null>;
 };
 
-const AuthenticatorFirstStep = ({ setStep }: AuthenticatorFirstStepProps) => {
-  const [loading] = useState(false);
+type Setup2FaResponse = {
+  message: string;
+  status: string;
+  data: { qrCode: string; recoveryCode: string; secret: string };
+};
+type OtpResponse = {
+  status: string;
+  data: null;
+  message: string;
+};
+
+const AuthenticatorFirstStep = ({
+  setStep,
+  recoveryCode,
+}: AuthenticatorFirstStepProps) => {
+  const [loading, setLoading] = useState(true);
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [data, setData] = useState<Setup2FaResponse | undefined>();
   const { toast } = useToast();
   const [otp, setOtp] = useState("");
-  const someText = "anderson";
+
+  // get qr code or secret
+  useEffect(() => {
+    const setup2fa = async () => {
+      const { data, error } = await callApi<Setup2FaResponse>(
+        "/auth/2fa/time/setup",
+        {
+          email: "test@gmail.com",
+        },
+      );
+      if (data) {
+        setData(data);
+        recoveryCode.current = data.data.recoveryCode;
+        setLoading(false);
+      }
+      if (error) {
+        toast({
+          title: error.status as string,
+          description: error.message,
+          duration: 3000,
+        });
+        setLoading(false);
+      }
+    };
+    void setup2fa();
+  }, [recoveryCode, toast]);
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(someText).then(() => {
-        toast({
-          title: "Success",
-          description: "Key copied to clipboard",
-          duration: 3000,
+      await navigator.clipboard
+        .writeText(data?.data.secret as string)
+        .then(() => {
+          toast({
+            title: "Success",
+            description: "Key copied to clipboard",
+            duration: 3000,
+          });
         });
-      });
     } catch (err) {
       toast({
         title: "Error",
@@ -37,8 +82,31 @@ const AuthenticatorFirstStep = ({ setStep }: AuthenticatorFirstStepProps) => {
     }
   };
 
-  const handleOtpSubmit = () => {
-    setStep(2);
+  // handle otp submit
+  const handleOtpSubmit = async () => {
+    setOtpLoading(true);
+
+    const { data, error } = await callApi<OtpResponse>(
+      "/auth/2fa/time/complete",
+      {
+        token: otp,
+        receiveCodeViaEmail: true,
+      },
+    );
+
+    if (data) {
+      localStorage.setItem("show-modal", "false");
+      setStep(2);
+      setOtpLoading(false);
+    }
+    if (error) {
+      toast({
+        title: error.status as string,
+        description: error.message,
+        duration: 3000,
+      });
+      setOtpLoading(false);
+    }
   };
 
   return (
@@ -64,9 +132,9 @@ const AuthenticatorFirstStep = ({ setStep }: AuthenticatorFirstStepProps) => {
             <div className="flex flex-col gap-y-2 md:flex-row items-center justify-around w-full">
               <div className="relative">
                 <Image
-                  className="w-[150px] md:w-[150px] lg:w-[150px] lg:aspect-square"
-                  src={QRCode}
-                  priority
+                  src={data?.data.qrCode as string}
+                  height={250}
+                  width={250}
                   alt=""
                 />
               </div>
@@ -78,9 +146,7 @@ const AuthenticatorFirstStep = ({ setStep }: AuthenticatorFirstStepProps) => {
               </div>
 
               <div className="flex flex-col items-center">
-                <p className="font-bold text-center">
-                  FHS DSBS 42H3 WB4F SAIS HFFS ADFV HGT3
-                </p>
+                <p className="font-bold text-center">{data?.data.secret}</p>
                 <button
                   className="flex text-abeg-teal mt-2 justify-center font-semibold items-center"
                   onClick={() => void handleCopy()}
@@ -103,7 +169,11 @@ const AuthenticatorFirstStep = ({ setStep }: AuthenticatorFirstStepProps) => {
       <div className="flex justify-end px-4 max-w-7xl md:px-16 my-4">
         <DialogComponent
           trigger={
-            <Button className="bg-abeg-button-10 w-fit " size="sm">
+            <Button
+              className="bg-abeg-button-10 w-fit "
+              size="sm"
+              disabled={data === undefined}
+            >
               NEXT
             </Button>
           }
@@ -129,8 +199,10 @@ const AuthenticatorFirstStep = ({ setStep }: AuthenticatorFirstStepProps) => {
               renderInput={(props) => <input {...props} />}
             />
             <Button
-              className="bg-abeg-button-10 mt-8"
-              onClick={handleOtpSubmit}
+              className="bg-formBtn py-4 text-sm font-semibold mt-6"
+              disabled={otp.length !== 6}
+              onClick={() => void handleOtpSubmit()}
+              loading={otpLoading}
             >
               Complete
             </Button>

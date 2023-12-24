@@ -2,17 +2,54 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useToast } from "@/components/ui/use-toast";
 
 import Button from "@/components/primitives/Button/button";
 import authBgContours from "@/public/assets/images/shared/bg-contours.png";
+import callApi from "@/lib/api/callApi";
+
+type EmailResponse = {
+  status: "string";
+  data: null;
+  message: string;
+};
 
 const TwoFa = () => {
   const router = useRouter();
+  const { toast } = useToast();
   const [selectedOption, setSelectedOption] = useState("authenticator");
 
-  const handleNextButton = () => {
+  const handleNextButton = async () => {
     if (selectedOption === "authenticator") {
       void router.push("/2fa/authenticator");
+    } else {
+      if (router.query.email === undefined) {
+        return toast({
+          title: "Error",
+          description: "Email not provided",
+          duration: 3000,
+        });
+      }
+
+      const { data, error } = await callApi<EmailResponse>(
+        "/auth/2fa/code/email",
+        { email: router.query.email },
+      );
+      if (data) {
+        toast({
+          title: "Success",
+          description: data.message,
+          duration: 3000,
+        });
+        void router.push("/2fa/email");
+      }
+      if (error) {
+        toast({
+          title: "Error",
+          description: error.message,
+          duration: 3000,
+        });
+      }
     }
   };
 
@@ -80,7 +117,7 @@ const TwoFa = () => {
         <Button
           className="bg-abeg-button-10 w-fit "
           size="sm"
-          onClick={handleNextButton}
+          onClick={() => void handleNextButton()}
         >
           NEXT
         </Button>

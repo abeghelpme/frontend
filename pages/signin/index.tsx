@@ -16,6 +16,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 
 const Login = () => {
   const showModal = useRef(false);
+  const userEmail = useRef<null | string>(null);
   const router = useRouter();
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
@@ -67,14 +68,17 @@ const Login = () => {
         duration: 3000,
       });
     } else {
-      toast({
-        title: "Success",
-        description: (responseData as { message: string }).message,
-        duration: 3000,
-      });
+      // toast({
+      //   title: "Success",
+      //   description: (responseData as { message: string }).message,
+      //   duration: 3000,
+      // });
+      userEmail.current = (
+        responseData as { data: { timeBased2FA: boolean; email: string } }
+      ).data.email;
       reset();
       if (choose2FA === "true") {
-        setOpenModal(true);        
+        setOpenModal(true);
       } else {
         setTimeout(() => {
           void router.push("/create-campaign");
@@ -82,6 +86,13 @@ const Login = () => {
       }
     }
     return;
+  };
+
+  const handleActivate2fa = () => {
+    void router.push({
+      pathname: "/2fa",
+      query: { email: userEmail?.current },
+    });
   };
 
   return (
@@ -171,12 +182,15 @@ const Login = () => {
                 </p>
               </div>
               <div className="mt-6">
-                <Link
-                  href={"#"}
-                  className="text-white block bg-formBtn text-sm font-semibold py-4 w-full rounded-md"
+                <Button
+                  className="bg-formBtn py-4 text-sm font-semibold"
+                  variant="primary"
+                  fullWidth
+                  onClick={handleActivate2fa}
                 >
                   Activate
-                </Link>
+                </Button>
+
                 <Button
                   type="submit"
                   disabled={isSubmitting}

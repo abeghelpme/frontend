@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 
 import AuthenticatorFirstStep from "@/components/2fa/AuthenticatorFirstStep";
@@ -7,6 +7,7 @@ import AuthenticatorSecondStep from "@/components/2fa/AuthenticatorSecondStep";
 
 const Authenticator = () => {
   const [step, setStep] = useState(1);
+  const recoveryCode = useRef<string | null>(null);
   return (
     <main className="min-h-screen  flex flex-col flex-1 relative">
       <Image
@@ -17,9 +18,9 @@ const Authenticator = () => {
         className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
       />
       {step === 1 ? (
-        <AuthenticatorFirstStep setStep={setStep} />
+        <AuthenticatorFirstStep setStep={setStep} recoveryCode={recoveryCode} />
       ) : (
-        <AuthenticatorSecondStep />
+        <AuthenticatorSecondStep recoveryCode={recoveryCode.current} />
       )}
     </main>
   );
