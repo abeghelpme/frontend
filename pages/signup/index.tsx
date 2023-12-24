@@ -4,7 +4,7 @@ import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
 import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse } from "@/interfaces/formInputs";
 import AuthLayout from "@/layouts/authLayout";
-import { callApi } from "@/lib/utils/callApi";
+import callApi from "@/lib/api/callApi";
 import {
   checkPasswordStrength,
   zodValidator,
@@ -53,14 +53,17 @@ const SignUp = () => {
   }, [deferredPassword]);
 
   const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
-    const { data: responseData, error } = await callApi("/auth/signup", {
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      password: data.password,
-      confirmPassword: data.confirmPassword,
-      isTermAndConditionAccepted: data.terms,
-    });
+    const { data: responseData, error } = await callApi<ApiResponse>(
+      "/auth/signup",
+      {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        isTermAndConditionAccepted: data.terms,
+      },
+    );
 
     if (error) {
       const castedError = error as ApiResponse;
@@ -70,8 +73,9 @@ const SignUp = () => {
         left: 0,
         behavior: "smooth",
       });
+
       toast({
-        title: error.status,
+        title: castedError.status,
         description: "Error in credentials provided",
         duration: 3000,
       });
@@ -79,14 +83,14 @@ const SignUp = () => {
     } else {
       toast({
         title: "Success",
-        description: responseData.message,
+        description: responseData?.message,
         duration: 3000,
       });
       reset();
       setTimeout(() => {
         void router.push({
           pathname: "/signup/verification",
-          query: { signup: true },
+          query: { signup: true, email: data.email.toLowerCase() },
         });
       }, 1000);
     }

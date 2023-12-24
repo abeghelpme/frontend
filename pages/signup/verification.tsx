@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import Button from "@/components/primitives/Button/button";
 import { useToast } from "@/components/ui/use-toast";
-import { callApi } from "@/lib/utils/callApi";
+import callApi from "@/lib/api/callApi";
 
 const VerificationPage = () => {
   const router = useRouter();
@@ -27,14 +27,14 @@ const VerificationPage = () => {
 
     if (error) {
       return toast({
-        title: error.status,
+        title: error.status as string,
         description: error.message,
         duration: 3000,
       });
     } else {
       toast({
         title: "Success",
-        description: data.message,
+        description: (data as { message: string }).message,
         duration: 3000,
       });
     }
