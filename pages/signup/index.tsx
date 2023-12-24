@@ -13,17 +13,27 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDeferredValue, useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 const SignUp = () => {
   const { toast } = useToast();
+  const showModal = useRef(false);
   const [message, setMessage] = useState<ApiResponse>({
     status: "",
     message: "",
     error: undefined,
     data: undefined,
   });
+
+  useEffect(() => {
+    const checkLS = () => {
+      if (!showModal.current) {
+        localStorage.setItem("show-modal", "true");
+      }
+    };
+    checkLS();
+  }, []);
   const router = useRouter();
 
   const {
@@ -76,15 +86,15 @@ const SignUp = () => {
 
       toast({
         title: castedError.status,
-        description: "Error in credentials provided",
-        duration: 3000,
+        description: castedError.message,
+        duration: 2000,
       });
       return;
     } else {
       toast({
         title: "Success",
         description: responseData?.message,
-        duration: 3000,
+        duration: 2000,
       });
       reset();
       setTimeout(() => {

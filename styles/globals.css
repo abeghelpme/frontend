@@ -8,6 +8,16 @@ body,
   height: 100%;
 }
 
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* 
 Storybook Preview Body Background Color intentionally set to edge against machines dark modes
 TODO: Configure a dark mode support system for stories at some point

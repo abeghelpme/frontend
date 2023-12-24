@@ -163,7 +163,7 @@ const Login = () => {
               <h2 className="font-semibold text-2xl">
                 Keep your account safe!
               </h2>
-              <div className="space-y-2 mt-4">
+              <div className="space-y-2 mt-3">
                 <p className="">Your safety is our number one priority</p>
                 <p className="">
                   Activate two-factor authentication and add an extra layer of
