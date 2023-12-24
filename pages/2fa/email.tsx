@@ -7,10 +7,14 @@ import OTPInput from "react-otp-input";
 import Button from "@/components/primitives/Button/button";
 import Link from "next/link";
 import callApi from "@/lib/api/callApi";
-
+import { useRouter } from "next/router";
+import { useToast } from "@/components/ui/use-toast";
 const Email = () => {
+  const router = useRouter();
+  const { toast } = useToast();
   const [otpCode, setOtpCode] = useState<string>("");
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [whichAuthenticationMode, setWhichAuthenticationMode] =
     useState<string>("");
   console.log(whichAuthenticationMode);
@@ -27,23 +31,32 @@ const Email = () => {
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ): Promise<void> => {
+    e.preventDefault();
+    setIsLoading(true);
     try {
-      e.preventDefault();
-      const otpCodeInputed: string = otpCode;
-      if (otpCodeInputed.length < 6) {
-        throw new Error("Otp code incomplete");
-      }
-      console.log(otpCodeInputed, typeof otpCodeInputed);
-
-      const { data } = await callApi("/auth/2fa/time/verify", {
-        email: "test@gmail.com",
-        token: otpCodeInputed,
+      const { data, error } = await callApi("/auth/2fa/time/verify", {
+        email: router.query.email,
+        token: otpCode,
         twoFactorVerificationType: "EMAIL_CODE",
       });
-      setPage(1);
+      if (error) {
+        toast({
+          title: "Error",
+          description: `${error.message}`,
+          duration: 3000,
+        });
+        return;
+      }
+      setTimeout(() => {
+        setPage(2);
+      }, 3000);
       console.log(data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
     }
   };
 
@@ -55,7 +68,7 @@ const Email = () => {
         priority
         className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
       />
-      {page === 0 && (
+      {page === 1 && (
         <>
           <div className="flex flex-col gap-8 text-base md:text-2xl max-w-7xl px-8 md:px-16 lg:px-8 flex-grow justify-center mt-14">
             <p className="text-xl md:text-3xl font-semibold">
@@ -124,10 +137,10 @@ const Email = () => {
                   onChange={setOtpCode}
                   numInputs={6}
                   shouldAutoFocus
-                  inputType="tel"
+                  inputType="number"
                   renderInput={(props) => <input {...props} />}
                   containerStyle="flex justify-center items-center space-x-2 lg:space-x-4"
-                  inputStyle="flex-1 aspect-square border-2 rounded bg-transparent outline-none text-center font-semibold text-xl md:text-2xl border-gray-700 focus:border-formBtn focus:border-gray-700 focus:text-formBtn text-gray-400  shadow-lg transition-all duration-500"
+                  inputStyle="flex-1 aspect-square border-2 rounded bg-transparent outline-none text-center font-semibold text-xl md:text-2xl border-gray-700 focus:border-formBtn focus:text-formBtn text-gray-400  shadow-lg transition-all duration-500"
                   skipDefaultStyles
                 />
                 <p className="text-sm md:text-base">
@@ -137,8 +150,9 @@ const Email = () => {
                 <Button
                   className="mt-4 md:mt-8 bg-formBtn py-4 rounded-md"
                   fullWidth
-                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                  onClick={handleSubmit}
+                  disabled={otpCode.length < 6}
+                  onClick={(e) => void handleSubmit(e)}
+                  loading={isLoading}
                 >
                   Complete
                 </Button>
@@ -147,7 +161,7 @@ const Email = () => {
           </div>
         </>
       )}
-      {page === 1 && (
+      {page === 2 && (
         <div className="flex flex-col gap-8 text-base md:text-2xl max-w-7xl px-8 md:px-16 lg:px-8 flex-grow justify-center mt-14">
           <p className="text-xl md:text-3xl font-semibold">
             Two-factor authentication is enabled
