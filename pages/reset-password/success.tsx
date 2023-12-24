@@ -2,20 +2,19 @@ import Success from "@/components/Shared/Success";
 import AuthLayout from "@/layouts/authLayout";
 import Link from "next/link";
 
-const VerifyEmailSuccessPage = () => {
+const ResetPasswordSuccessPage = () => {
   return (
-    <AuthLayout withHeader={false} hasSuccess contentClass="" formType="signup">
-      {" "}
-      <Success textContent="Your email has been verified">
+    <AuthLayout withHeader={false} hasSuccess contentClass="" formType="other">
+      <Success textContent="Password Reset Successful">
         <Link
           href="/signin"
           className="block text-center mt-6 p-3 text-white bg-formBtn w-full rounded-md md:rounded-lg text-sm md:text-base font-semibold"
         >
-          Back to sign in
+          Sign in to continue
         </Link>
       </Success>
     </AuthLayout>
   );
 };
 
-export default VerifyEmailSuccessPage;
+export default ResetPasswordSuccessPage;

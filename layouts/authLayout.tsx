@@ -1,23 +1,60 @@
+import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
+import authBgContours from "@/public/assets/images/shared/bg-contours.png";
+import Image from "next/image";
 import type { FC, ReactNode } from "react";
 import LogoBanner from "./logoBanner";
 
 interface AuthLayoutProps {
   children: ReactNode;
+  formType: "signup" | "other";
+  greeting?: string;
+  heading?: string;
+  contentClass?: string;
+  withHeader: boolean;
+  hasSuccess: boolean;
+  bannerTextColor?: boolean;
 }
 
-const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
+const AuthLayout: FC<AuthLayoutProps> = ({
+  children,
+  formType,
+  greeting,
+  heading,
+  withHeader,
+  contentClass,
+  bannerTextColor,
+  hasSuccess,
+}) => {
   return (
-    <>
-      <div className="relative h-screen flex flex-col items-center w-screen bg-[url('/auth-background.svg')] pt-6">
-        <LogoBanner textColor="formTemp" />
+    <div className="py-12 flex flex-col items-center min-h-full relative gap-8 md:gap-9">
+      <Image
+        src={formType === "signup" ? (authBgJar as string) : authBgContours}
+        alt=""
+        priority
+        className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
+      />
+      <LogoBanner textColor={bannerTextColor!} />
 
-        <div className=" w-[90%] sm:w-[50%] md:max-w-[397px] mx-auto flex-1 flex items-center justify-center">
-          <main className="shadow-auth-layout-shadow w-full  py-3 px-3 lg:px-12 flex items-center justify-center  rounded-[0.375rem] opacity-[0.8] border-2 border-[#0068FF1A] bg-white">
-            {children}
-          </main>
+      {!hasSuccess ? (
+        <div
+          className={`w-[90%] mx-auto rounded-lg my-auto space-y-6 bg-white py-10 px-4 md:p-10 lg:p-10 md:mx-0 shadow-auth-layout-shadow ${
+            formType === "other" ? "max-w-[467px]" : contentClass
+          }`}
+        >
+          {withHeader && (
+            <div className="space-y-2 text-center font-medium">
+              <h1 className="font-semibold text-abeg-neutral-10 text-xl md:text-2xl">
+                {heading}
+              </h1>
+              <p className="text-lg md:text-xl">{greeting}</p>
+            </div>
+          )}
+          {children}
         </div>
-      </div>
-    </>
+      ) : (
+        <div className="my-auto w-full">{children}</div>
+      )}
+    </div>
   );
 };
 

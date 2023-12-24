@@ -1,12 +1,12 @@
 import type { WithPageLayout } from "@/interfaces/with-page-layout";
 import BaseLayout from "@/layouts/base-layout";
-import { socketHelper } from "@/lib/utils/socket-helper";
-import { useEffect } from "react";
+// import { socketHelper } from "@/lib/utils/socket-helper";
+// import { useEffect } from "react";
 
 const Home: WithPageLayout = () => {
-  useEffect(() => {
-    socketHelper();
-  }, []);
+  // useEffect(() => {
+  //   socketHelper();
+  // }, []);
 
   return (
     <div>

@@ -1,34 +1,46 @@
+import { Toaster } from "@/components/ui/toaster";
+import { useSession } from "@/state/useSession";
+import { useEffect } from "react";
 import "@/styles/globals.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { AppProps } from "next/app";
+import { Manrope } from "next/font/google";
 import NextNProgress from "nextjs-progressbar";
 import type { ComponentType, ReactNode } from "react";
 
+const manrope = Manrope({ subsets: ["latin"] });
 interface ComponentWithPageLayout extends AppProps {
   Component: AppProps["Component"] & {
     PageLayout?: ComponentType<{ children: ReactNode }>;
   };
 }
 
-const queryClient = new QueryClient();
-
 export default function App({ Component, pageProps }: ComponentWithPageLayout) {
+  useEffect(() => {
+    void (async () => {
+      await useSession.getState().getSession();
+      console.log("fetching session done");
+    })();
+  }, []);
+
   return (
     <>
       <NextNProgress color="#324823" />
-      <QueryClientProvider client={queryClient}>
-        <>
-          {Component.PageLayout ? (
-            <Component.PageLayout>
-              <Component {...pageProps} />
-            </Component.PageLayout>
-          ) : (
+      <>
+        {Component.PageLayout ? (
+          <Component.PageLayout>
             <Component {...pageProps} />
-          )}
-          <ReactQueryDevtools initialIsOpen={false} />
-        </>
-      </QueryClientProvider>
+            <Toaster />
+          </Component.PageLayout>
+        ) : (
+          <>
+            <main className={`${manrope.className}`}>
+              {" "}
+              <Component {...pageProps} />
+              <Toaster />
+            </main>
+          </>
+        )}
+      </>
     </>
   );
 }
