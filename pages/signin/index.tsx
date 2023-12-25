@@ -20,21 +20,21 @@ const Login = () => {
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
   const [success, setIsSuccess] = useState(false);
-  const [choose2FA, setChoose2FA] = useState("true");
+  const [select2FA, setSelect2FA] = useState("true");
   useEffect(() => {
     const checkLS = () => {
       if (!showModal.current) {
         const modal = localStorage.getItem("show-modal");
         if (modal !== null) {
-          setChoose2FA(modal);
+          setSelect2FA(modal);
         }
         showModal.current = true;
       } else {
-        localStorage.setItem("show-modal", choose2FA);
+        localStorage.setItem("show-modal", select2FA);
       }
     };
     checkLS();
-  }, [choose2FA]);
+  }, [select2FA]);
 
   const {
     register,
@@ -48,7 +48,7 @@ const Login = () => {
   });
 
   const handleOption = () => {
-    setChoose2FA("false");
+    setSelect2FA("false");
     setOpenModal(false);
     void router.push("/create-campaign");
   };
@@ -69,16 +69,22 @@ const Login = () => {
       toast({
         title: "Success",
         description: (responseData as { message: string }).message,
-        duration: 3000,
+        duration: 2500,
       });
       setIsSuccess(true);
       reset();
-      if (choose2FA === "true") {
+      if (select2FA === "true") {
         setOpenModal(true);
       } else {
         setTimeout(() => {
-          void router.push("/create-campaign");
-        }, 1500);
+          void router.push({
+            pathname: "/signin/authenticate",
+            query: {
+              verificationChoice: "email",
+              email: data.email.toLowerCase(),
+            },
+          });
+        }, 2500);
       }
       return;
     }
