@@ -1,11 +1,11 @@
 import { Toaster } from "@/components/ui/toaster";
-import { useSession } from "@/state/useSession";
-import { useEffect } from "react";
+import { useSession } from "@/store/useSession";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Manrope } from "next/font/google";
 import NextNProgress from "nextjs-progressbar";
 import type { ComponentType, ReactNode } from "react";
+import { useEffect } from "react";
 
 const manrope = Manrope({ subsets: ["latin"] });
 interface ComponentWithPageLayout extends AppProps {

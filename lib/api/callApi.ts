@@ -1,5 +1,5 @@
+import { useSession } from "@/store/useSession";
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
-import { useSession } from "@/state/useSession";
 
 const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
