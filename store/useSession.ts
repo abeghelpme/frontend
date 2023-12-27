@@ -1,46 +1,50 @@
-import type { ApiResponse } from "./../interfaces/formInputs";
-import { createWithEqualityFn } from "zustand/traditional";
-import { shallow } from "zustand/shallow";
 import callApi from "@/lib/api/callApi";
+import { shallow } from "zustand/shallow";
+import { createWithEqualityFn } from "zustand/traditional";
+import type { ApiResponse } from "./../interfaces/formInputs";
 
 interface Session {
+  isFirstMount: boolean;
   loading: boolean;
   user: unknown;
-  isAuthenticated: boolean;
   clearSession: () => void;
-  getSession: () => Promise<void>;
-  updateUser: () => void;
+  getSession: (isInitialLoad?: boolean) => Promise<void>;
 }
 
 const initialState = {
   loading: true,
   user: null,
-  isAuthenticated: false,
+  isFirstMount: false,
 };
 
 export const useSession = createWithEqualityFn<Session>(
-  (set) => ({
+  (set, get) => ({
     ...initialState,
-    getSession: async () => {
-      try {
-        const { data } = await callApi<ApiResponse>("/auth/session");
-
-        set({
-          isAuthenticated: data ? true : false,
-          user: data?.data ?? null,
-          loading: false,
-        });
-      } catch (error) {
-        console.error("Error during getSession:", error);
+    getSession: async (isInitialLoad) => {
+      if (isInitialLoad as boolean) {
+        set({ isFirstMount: true });
       }
+      const { data } = await callApi<ApiResponse>("/auth/session");
+      set({
+        ...(data?.data && { user: data?.data }),
+        loading: false,
+      });
     },
-
-    updateUser: () => {},
-
     clearSession: () => {
-      set({ ...initialState, loading: false });
+      set((state) => ({
+        ...initialState,
+        loading: false,
+        isFirstMount: state.isFirstMount,
+      }));
 
-      window.location.replace("/signin/unauthorized=true");
+      const currentPageUrl = window.location.pathname;
+      if (
+        currentPageUrl !== "/signin" &&
+        currentPageUrl !== "/signup" &&
+        !get().isFirstMount
+      ) {
+        window.location.replace("/signin?unauthorized=true");
+      }
     },
   }),
   shallow,

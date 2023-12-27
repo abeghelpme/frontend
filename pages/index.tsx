@@ -7,7 +7,6 @@ const Home: WithPageLayout = () => {
   // useEffect(() => {
   //   socketHelper();
   // }, []);
-
   return (
     <div>
       <h1>WELCOME TO ABEG HELP!!</h1>
