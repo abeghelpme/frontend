@@ -1,9 +1,7 @@
-import type { FC, ReactNode } from "react";
 import Footer from "@/components/Footer/footer";
 import Navbar from "@/components/Navbar/navbar";
-import { Manrope } from "next/font/google";
+import type { FC, ReactNode } from "react";
 
-const manrope = Manrope({ subsets: ["latin"] });
 interface BaseLayoutProps {
   children: ReactNode;
 }
@@ -12,7 +10,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
   return (
     <>
       <Navbar />
-      <main className={`${manrope.className} h-full`}>{children}</main>
+      <main className={`h-full`}>{children}</main>
       <Footer />
     </>
   );

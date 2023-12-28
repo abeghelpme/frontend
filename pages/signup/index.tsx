@@ -102,7 +102,7 @@ const SignUp = () => {
           pathname: "/signup/verification",
           query: { signup: true, email: data.email.toLowerCase() },
         });
-      }, 1000);
+      }, 1500);
     }
   };
 
