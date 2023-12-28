@@ -1,3 +1,4 @@
+import LoadingComp from "@/components/Shared/Loading";
 import { Toaster } from "@/components/ui/toaster";
 import { useSession } from "@/store/useSession";
 import "@/styles/globals.css";
@@ -27,7 +28,12 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
   }, []);
 
   return (
-    <main className={`${manrope.className} h-full`}>
+    <>
+      <style jsx global>{`
+        html {
+          font-family: ${manrope.style.fontFamily};
+        }
+      `}</style>
       <NextNProgress color="#324823" />
       {Component.protect === true ? (
         <Auth>
@@ -37,19 +43,20 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
         <Component {...pageProps} />
       )}
       <Toaster />
-    </main>
+    </>
   );
 }
 
 const Auth = ({ children }: { children: ReactNode }) => {
   const { user, loading } = useSession((state) => state);
   const router = useRouter();
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingComp message="Loading..." />;
 
   if (user === null) {
     void router.push("/signin");
-    return null; // show blank white or replace with loader
+    return (
+      <LoadingComp message="You are not signed in. Redirecting to Login" />
+    );
   }
-  // If not authenticated, redirect log in
   return children;
 };
