@@ -55,6 +55,7 @@ const SignUp = () => {
       pathname: "/signup/verification",
       query: { email: data.email },
     });
+
     const { error } = await callApi("/auth/signup", {
       email: data.email,
       firstName: data.firstName,

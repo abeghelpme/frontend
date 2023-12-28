@@ -8,11 +8,11 @@ interface BaseLayoutProps {
 
 const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
   return (
-    <>
+    <section className="flex flex-col min-h-screen">
       <Navbar />
       {children}
       <Footer />
-    </>
+    </section>
   );
 };
 
