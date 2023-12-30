@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import type { ApiResponse } from "@/interfaces/formInputs";
 
 const Login = () => {
   const showModal = useRef(false);
@@ -54,7 +55,7 @@ const Login = () => {
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-    const { data: responseData, error } = await callApi("/auth/signin", {
+    const { data: responseData, error } = await callApi<ApiResponse>("/auth/signin", {
       email: data.email,
       password: data.password,
     });
@@ -73,8 +74,8 @@ const Login = () => {
       });
       setIsSuccess(true);
       reset();
-      if (select2FA === "true" && (responseData as { message: string }).message) {
-        console.log((responseData as { message: string }).message)
+      if (select2FA === "true" && responseData) {
+        console.log(responseData)
         // setOpenModal(true);
       } else {
         setTimeout(() => {
@@ -153,7 +154,7 @@ const Login = () => {
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
-            setOpen={() => setOpenModal(true)}
+            setOpen={(openModal) => setOpenModal(openModal)}
             trigger={
               <Button
                 type="submit"
