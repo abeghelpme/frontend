@@ -73,7 +73,7 @@ const Login = () => {
       });
       setIsSuccess(true);
       reset();
-      if (select2FA === "true") {
+      if (select2FA === "true" && responseData) {
         setOpenModal(true);
       } else {
         setTimeout(() => {
