@@ -1,5 +1,5 @@
+import { useSession } from "@/store/useSession";
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
-import { useSession } from "@/state/useSession";
 
 const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
@@ -14,11 +14,6 @@ const api: AxiosInstance = axios.create({
   timeout: 60000, // Set timeout to 60 seconds
   withCredentials: true,
 });
-
-const handle401 = () => {
-  // Add your logic here
-  useSession.getState().clearSession();
-};
 
 interface ApiError {
   message: string;
@@ -49,16 +44,10 @@ const callApi = async <T>(
 
     if (axios.isAxiosError(error) && error.response) {
       apiError = error.response.data as ApiError;
-      // console.log(error.response.data);
-      // console.log(error.response.status);
-      // console.log(error.response.headers);
+      // avoid handling errors on the signin and signup pages
 
-      if (
-        error.response.status === 401 &&
-        (endpoint === "/login" || endpoint === "/signup")
-      ) {
-        console.log("unauthenticated");
-        handle401();
+      if (error.response.status === 401) {
+        useSession.getState().clearSession();
       }
     } else {
       if (error instanceof Error) {

@@ -2,6 +2,7 @@ import DialogComponent from "@/components/Shared/Dialog";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import { useToast } from "@/components/ui/use-toast";
+import type { ApiResponse } from "@/interfaces/formInputs";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import {
@@ -19,21 +20,22 @@ const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
-  const [choose2FA, setChoose2FA] = useState("true");
+  const [success, setIsSuccess] = useState(false);
+  const [select2FA, setSelect2FA] = useState("true");
   useEffect(() => {
     const checkLS = () => {
       if (!showModal.current) {
         const modal = localStorage.getItem("show-modal");
         if (modal !== null) {
-          setChoose2FA(modal);
+          setSelect2FA(modal);
         }
         showModal.current = true;
       } else {
-        localStorage.setItem("show-modal", choose2FA);
+        localStorage.setItem("show-modal", select2FA);
       }
     };
     checkLS();
-  }, [choose2FA]);
+  }, [select2FA]);
 
   const {
     register,
@@ -47,18 +49,19 @@ const Login = () => {
   });
 
   const handleOption = () => {
-    setChoose2FA("false");
+    setSelect2FA("false");
     setOpenModal(false);
-    setTimeout(() => {
-      void router.push("/create-campaign");
-    }, 2000);
+    void router.push("/create-campaign");
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-    const { data: responseData, error } = await callApi("/auth/signin", {
-      email: data.email,
-      password: data.password,
-    });
+    const { data: responseData, error } = await callApi<ApiResponse>(
+      "/auth/signin",
+      {
+        email: data.email,
+        password: data.password,
+      },
+    );
 
     if (error) {
       return toast({
@@ -70,18 +73,25 @@ const Login = () => {
       toast({
         title: "Success",
         description: (responseData as { message: string }).message,
-        duration: 3000,
+        duration: 2500,
       });
+      setIsSuccess(true);
       reset();
-      if (choose2FA === "true") {
+      if (select2FA === "true" && responseData) {
         setOpenModal(true);
       } else {
         setTimeout(() => {
-          void router.push("/create-campaign");
-        }, 1500);
+          void router.push({
+            pathname: "/signin/authenticate",
+            query: {
+              verificationChoice: "email",
+              email: data.email.toLowerCase(),
+            },
+          });
+        }, 2500);
       }
+      return;
     }
-    return;
   };
 
   return (
@@ -146,11 +156,11 @@ const Login = () => {
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
-            setOpen={() => setOpenModal(false)}
+            setOpen={() => setOpenModal(true)}
             trigger={
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || success}
                 loading={isSubmitting}
                 className="text-white bg-formBtn py-4 mt-6 disabled:bg-gray-500 "
                 fullWidth
@@ -163,7 +173,7 @@ const Login = () => {
               <h2 className="font-semibold text-2xl">
                 Keep your account safe!
               </h2>
-              <div className="space-y-2 mt-4">
+              <div className="space-y-2 mt-3">
                 <p className="">Your safety is our number one priority</p>
                 <p className="">
                   Activate two-factor authentication and add an extra layer of
@@ -172,7 +182,7 @@ const Login = () => {
               </div>
               <div className="mt-6">
                 <Link
-                  href={"#"}
+                  href="/2fa"
                   className="text-white block bg-formBtn text-sm font-semibold py-4 w-full rounded-md"
                 >
                   Activate
