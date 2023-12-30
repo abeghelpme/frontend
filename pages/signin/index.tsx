@@ -153,7 +153,7 @@ const Login = () => {
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
-            setOpen={(openModal) => setOpenModal(!openModal)}
+            setOpen={() => setOpenModal(false)}
             trigger={
               <Button
                 type="submit"
