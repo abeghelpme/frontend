@@ -74,7 +74,8 @@ const Login = () => {
       setIsSuccess(true);
       reset();
       if (select2FA === "true" && (responseData as { message: string }).message) {
-        setOpenModal(true);
+        console.log((responseData as { message: string }).message)
+        // setOpenModal(true);
       } else {
         setTimeout(() => {
           void router.push({
