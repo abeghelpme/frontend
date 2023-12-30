@@ -74,9 +74,8 @@ const Login = () => {
       });
       setIsSuccess(true);
       reset();
-      if (select2FA === "true" && responseData) {
-        console.log(responseData)
-        // setOpenModal(true);
+      if (select2FA === "true") {
+        setOpenModal(true);
       } else {
         setTimeout(() => {
           void router.push({
@@ -154,7 +153,7 @@ const Login = () => {
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
-            setOpen={(openModal) => setOpenModal(openModal)}
+            setOpen={(openModal) => setOpenModal(!openModal)}
             trigger={
               <Button
                 type="submit"
