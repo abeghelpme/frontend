@@ -31,7 +31,7 @@ const AuthenticatorSecondStep = ({
   };
 
   return (
-    <section className="flex-1 flex flex-col ">
+    <div className="flex-1 flex flex-col ">
       <div className="px-4 max-w-7xl md:px-16 my-4 flex flex-col gap-4">
         <h1 className=" font-semibold text-lg md:text-2xl mt-8">
           Two-factor authentication is enabled
@@ -46,7 +46,7 @@ const AuthenticatorSecondStep = ({
           your phone or can’t log in using your security method.
         </p>
         <div>
-          <h4 className="text-center">Recovery Key</h4>
+          <h4 className="text-center text-sm">Recovery Key</h4>
           <div className="flex flex-col items-center">
             <p className="font-bold text-center">{recoveryCode}</p>
             <Button
@@ -73,7 +73,7 @@ const AuthenticatorSecondStep = ({
           Got it!
         </Button>
       </div>
-    </section>
+    </div>
   );
 };
 

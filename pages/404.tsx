@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const NotFound = () => {
   return (
-    <main className=" min-h-screen flex px-4 flex-col-reverse justify-center items-center bg-abeg-neutral-60 lg:flex-row">
+    <main className="min-h-screen flex px-4 flex-col-reverse justify-center items-center bg-abeg-neutral-60 lg:flex-row">
       <section className="relative  flex flex-col gap-4 items-center justify-start lg:justify-center lg:w-1/2">
         <p className="text-2xl font-bold">Oooops!</p>
         <p className="text-lg font-semibold text-center">

@@ -23,18 +23,9 @@ const TwoFa = () => {
     if (selectedOption === "authenticator") {
       void router.push("/2fa/authenticator");
     } else {
-      if (router.query.email === undefined) {
-        return toast({
-          title: "Error",
-          description: "Email not provided",
-          duration: 3000,
-        });
-      }
-
-      const { data, error } = await callApi<EmailResponse>(
-        "/auth/2fa/code/email",
-        { email: router.query.email },
-      );
+      const { data, error } = await callApi<EmailResponse>("/auth/2fa/setup", {
+        twoFactorType: "EMAIL",
+      });
       if (data) {
         toast({
           title: "Success",
@@ -62,7 +53,7 @@ const TwoFa = () => {
         priority
         className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
       />
-      <section className="px-4 max-w-7xl md:px-16">
+      <div className="px-4 max-w-7xl md:px-16">
         <h1 className="mt-[3.5rem] font-semibold text-2xl">
           Set up two-factor authentication
         </h1>
@@ -80,38 +71,48 @@ const TwoFa = () => {
         <div>
           <h3 className="mt-10 font-semibold">Authenticator App</h3>
           <div className="flex gap-2 items-center">
-            <p>
-              <Link href={"#"} className="text-abeg-teal">
+            <label htmlFor="authenticator">
+              <Link
+                target="blank"
+                href={
+                  "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US"
+                }
+                className="text-abeg-teal"
+              >
                 Recommended
               </Link>
               . We recommend downloading the Google Authenticator app if you
               don’t have one. It will generate a code that you’ll enter when you
               log in.
-            </p>
+            </label>
             <input
               type="radio"
               value={"authenticator"}
+              name="2fa"
               checked={selectedOption === "authenticator"}
               onChange={() => setSelectedOption("authenticator")}
-              id=""
+              id="authenticator"
               className="accent-abeg-teal ml-auto"
             />
           </div>
           <hr className="border-b my-4" />
           <h3 className=" font-semibold">Email Address</h3>
           <div className="flex gap-2 items-center ">
-            <p>We will send a code to your registered email address</p>
+            <label htmlFor="email">
+              We will send a code to your registered email address
+            </label>
             <input
               type="radio"
               value={"email"}
+              name="2fa"
               checked={selectedOption === "email"}
               onChange={() => setSelectedOption("email")}
-              id=""
+              id="email"
               className="accent-abeg-teal ml-auto"
             />
           </div>
         </div>
-      </section>
+      </div>
       <hr className="mt-auto" />
       <div className="flex justify-end px-4 max-w-7xl md:px-16 my-4">
         <Button

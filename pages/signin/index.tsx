@@ -13,28 +13,29 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import type { ApiResponse } from "@/interfaces/formInputs";
 
 const Login = () => {
   const showModal = useRef(false);
-  const userEmail = useRef<null | string>(null);
   const router = useRouter();
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
-  const [choose2FA, setChoose2FA] = useState("true");
+  const [success] = useState(false);
+  const [select2FA, setSelect2FA] = useState("true");
   useEffect(() => {
     const checkLS = () => {
       if (!showModal.current) {
         const modal = localStorage.getItem("show-modal");
         if (modal !== null) {
-          setChoose2FA(modal);
+          setSelect2FA(modal);
         }
         showModal.current = true;
       } else {
-        localStorage.setItem("show-modal", choose2FA);
+        localStorage.setItem("show-modal", select2FA);
       }
     };
     checkLS();
-  }, [choose2FA]);
+  }, [select2FA]);
 
   const {
     register,
@@ -48,15 +49,13 @@ const Login = () => {
   });
 
   const handleOption = () => {
-    setChoose2FA("false");
+    setSelect2FA("false");
     setOpenModal(false);
-    setTimeout(() => {
-      void router.push("/create-campaign");
-    }, 2000);
+    void router.push("/create-campaign");
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-    const { data: responseData, error } = await callApi("/auth/signin", {
+    const { error } = await callApi<ApiResponse>("/auth/signin", {
       email: data.email,
       password: data.password,
     });
@@ -73,25 +72,28 @@ const Login = () => {
       //   description: (responseData as { message: string }).message,
       //   duration: 3000,
       // });
-      userEmail.current = (
-        responseData as { data: { timeBased2FA: boolean; email: string } }
-      ).data.email;
+
       reset();
-      if (choose2FA === "true") {
+      if (select2FA === "true") {
         setOpenModal(true);
       } else {
         setTimeout(() => {
-          void router.push("/create-campaign");
-        }, 1500);
+          void router.push({
+            pathname: "/signin/authenticate",
+            query: {
+              verificationChoice: "email",
+              email: data.email.toLowerCase(),
+            },
+          });
+        }, 2500);
       }
+      return;
     }
-    return;
   };
 
   const handleActivate2fa = () => {
     void router.push({
       pathname: "/2fa",
-      query: { email: userEmail?.current },
     });
   };
 
@@ -161,7 +163,7 @@ const Login = () => {
             trigger={
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || success}
                 loading={isSubmitting}
                 className="text-white bg-formBtn py-4 mt-6 disabled:bg-gray-500 "
                 fullWidth
@@ -174,7 +176,7 @@ const Login = () => {
               <h2 className="font-semibold text-2xl">
                 Keep your account safe!
               </h2>
-              <div className="space-y-2 mt-4">
+              <div className="space-y-2 mt-3">
                 <p className="">Your safety is our number one priority</p>
                 <p className="">
                   Activate two-factor authentication and add an extra layer of

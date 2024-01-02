@@ -1,6 +1,7 @@
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
+import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse } from "@/interfaces/formInputs";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
@@ -12,16 +13,27 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDeferredValue, useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 const SignUp = () => {
+  const { toast } = useToast();
+  const showModal = useRef(false);
   const [message, setMessage] = useState<ApiResponse>({
     status: "",
     message: "",
     error: undefined,
     data: undefined,
   });
+
+  useEffect(() => {
+    const checkLS = () => {
+      if (!showModal.current) {
+        localStorage.setItem("show-modal", "true");
+      }
+    };
+    checkLS();
+  }, []);
   const router = useRouter();
 
   const {
@@ -51,32 +63,47 @@ const SignUp = () => {
   }, [deferredPassword]);
 
   const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
-    void router.push({
-      pathname: "/signup/verification",
-      query: { email: data.email },
-    });
-    const { error } = await callApi("/auth/signup", {
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      password: data.password,
-      confirmPassword: data.confirmPassword,
-      isTermAndConditionAccepted: data.terms,
-    });
+    const { data: responseData, error } = await callApi<ApiResponse>(
+      "/auth/signup",
+      {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        isTermAndConditionAccepted: data.terms,
+      },
+    );
 
     if (error) {
       const castedError = error as ApiResponse;
       setMessage(castedError);
-      return;
-    }
-
-    reset();
-    setTimeout(() => {
-      void router.push({
-        pathname: "/signup/verification",
-        query: { signup: true, email: data.email.toLowerCase() },
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
       });
-    }, 1000);
+
+      toast({
+        title: castedError.status,
+        description: castedError.message,
+        duration: 2000,
+      });
+      return;
+    } else {
+      toast({
+        title: "Success",
+        description: responseData?.message,
+        duration: 2000,
+      });
+      reset();
+      setTimeout(() => {
+        void router.push({
+          pathname: "/signup/verification",
+          query: { signup: true, email: data.email.toLowerCase() },
+        });
+      }, 1500);
+    }
   };
 
   return (
