@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { callApi } from "@/lib/utils/callApi";
 import authBgContours from "@/public/assets/images/shared/bg-contours.png";
 import Image from "next/image";
 import { ChevronLeftIcon, CrossCircledIcon } from "@radix-ui/react-icons";
@@ -7,61 +6,75 @@ import OTPInput from "react-otp-input";
 import Button from "@/components/primitives/Button/button";
 import Link from "next/link";
 import callApi from "@/lib/api/callApi";
-import { useRouter } from "next/router";
 import { useToast } from "@/components/ui/use-toast";
+
+type ApiResponse = {
+  data: {
+    recoveryCode: string;
+  };
+  message: string;
+  status: "success";
+};
+
 const Email = () => {
-  const router = useRouter();
   const { toast } = useToast();
-  const [otpCode, setOtpCode] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const [whichAuthenticationMode, setWhichAuthenticationMode] =
-    useState<string>("");
-  console.log(whichAuthenticationMode);
+    useState("email");
+  const [recoveryCode, setRecoveryCode] = useState("");
 
-  const codes: string[] = [
-    "123 123",
-    "123 123",
-    "123 123",
-    "123 123",
-    "123 123",
-    "123 133",
-  ];
-
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ): Promise<void> => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setIsLoading(true);
-    try {
-      const { data, error } = await callApi("/auth/2fa/time/verify", {
-        email: router.query.email,
-        token: otpCode,
-        twoFactorVerificationType: "EMAIL_CODE",
+    const { data, error } = await callApi<ApiResponse>("/auth/2fa/complete", {
+      token: otpCode,
+      twoFactorType: "EMAIL",
+    });
+    if (data) {
+      toast({
+        title: "Success",
+        description: `${data.message}`,
+        duration: 3000,
       });
-      if (error) {
-        toast({
-          title: "Error",
-          description: `${error.message}`,
-          duration: 3000,
-        });
-        return;
-      }
-      setTimeout(() => {
-        setPage(2);
-      }, 3000);
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
+      setRecoveryCode(data.data.recoveryCode);
+    }
+    if (error) {
+      toast({
+        title: "Error",
+        description: `${error.message}`,
+        duration: 3000,
+      });
+      setIsLoading(false);
+      return;
+    }
+    setTimeout(() => {
+      setPage(2);
+      setIsLoading(false);
+    }, 3000);
+  };
+
+  const resendCode = async () => {
+    const { data, error } = await callApi<ApiResponse>("/auth/2fa/code/email");
+    if (data) {
+      toast({
+        title: "Success",
+        description: `${data.message}`,
+        duration: 3000,
+      });
+    }
+    if (error) {
+      toast({
+        title: "Error",
+        description: `${error.message}`,
+        duration: 3000,
+      });
+      return;
     }
   };
 
   return (
-    <div className="flex flex-col items-center min-h-full relative gap-14">
+    <div className="flex flex-col items-center min-h-[100vh] relative gap-14">
       <Image
         src={authBgContours}
         alt=""
@@ -94,10 +107,11 @@ const Email = () => {
                 </p>
               </div>
               <input
-                className="w-5 h-5 md:w-8 md:h-8 bg-formBtn checked:bg-formBtn"
+                className="w-5 h-5 md:w-8 md:h-8 accent-abeg-teal"
                 type="radio"
                 name="authentication"
                 value="authentication app"
+                checked={whichAuthenticationMode === "authentication app"}
                 onChange={(e) => setWhichAuthenticationMode(e.target.value)}
               />
             </div>
@@ -107,16 +121,17 @@ const Email = () => {
                 <p>We will send a code to your registered email address</p>
               </div>
               <input
-                className="w-5 h-5 md:w-8 md:h-8 bg-formBtn checked:bg-formBtn"
+                className="w-5 h-5 md:w-8 md:h-8 accent-abeg-teal"
                 type="radio"
                 name="authentication"
                 value="email"
+                checked={whichAuthenticationMode === "email"}
                 onChange={(e) => setWhichAuthenticationMode(e.target.value)}
               />
             </div>
           </div>
           <div className="fixed inset-0 bg-[#48484880] bg-opacity-50 flex justify-center items-center px-8">
-            <div className="bg-white px-8 py-16 flex flex-col gap-2 md:gap-4 rounded-[10px] w-[100%] md:w-[80%] lg:w-[50%] max-w-[700px]">
+            <div className="bg-white px-4 md:px-8 py-8 md:py-12 flex flex-col gap-2 md:gap-4 rounded-[10px] w-[100%] md:w-[80%] lg:w-[50%] max-w-[700px]">
               <div className="md:flex justify-between gap-4 mb-2 md:mb-4 hidden">
                 <Link href="/2fa">
                   <ChevronLeftIcon className="w-8 h-8" />
@@ -125,12 +140,12 @@ const Email = () => {
                   <CrossCircledIcon className="w-8 h-8" />
                 </Link>
               </div>
-              <div className="px-8 text-center flex flex-col gap-8">
+              <div className="px-2 md:px-4 text-center flex flex-col gap-6 md:gap-8">
                 <p className="text-base md:text-2xl font-semibold">
                   Enter verification code
                 </p>
                 <p className="text-sm md:text-base ">
-                  Enter the 6-digit code we sent to user.email
+                  Enter the 6-digit code we sent to your email
                 </p>
                 <OTPInput
                   value={otpCode}
@@ -140,18 +155,23 @@ const Email = () => {
                   inputType="number"
                   renderInput={(props) => <input {...props} />}
                   containerStyle="flex justify-center items-center space-x-2 lg:space-x-4"
-                  inputStyle="flex-1 aspect-square border-2 rounded bg-transparent outline-none text-center font-semibold text-xl md:text-2xl border-gray-700 focus:border-formBtn focus:text-formBtn text-gray-400  shadow-lg transition-all duration-500"
-                  skipDefaultStyles
+                  inputStyle="flex-1 w-full aspect-square border-2 rounded bg-transparent outline-none text-center font-semibold text-xl md:text-2xl border-gray-700 focus:border-formBtn focus:text-formBtn text-gray-400  shadow-lg transition-all duration-500"
+                  // skipDefaultStyles
                 />
                 <p className="text-sm md:text-base">
                   It may take up to a minute for you to receive this code.
-                  <span className="text-formBtn"> Resend Code.</span>
+                  <Button
+                    className="text-formBtn px-1"
+                    onClick={() => void resendCode()}
+                  >
+                    Resend Code.
+                  </Button>
                 </p>
                 <Button
                   className="mt-4 md:mt-8 bg-formBtn py-4 rounded-md"
                   fullWidth
                   disabled={otpCode.length < 6}
-                  onClick={(e) => void handleSubmit(e)}
+                  onClick={() => void handleSubmit()}
                   loading={isLoading}
                 >
                   Complete
@@ -177,13 +197,7 @@ const Email = () => {
             your security method.
           </p>
           <div className="flex flex-col gap-4 font-semibold justify-center items-center py-4 ">
-            {codes.map((singleCode, id) => {
-              return (
-                <p key={id} className="text-2xl md:text-4xl">
-                  {singleCode}
-                </p>
-              );
-            })}
+            <p className="text-2xl md:text-4xl">{recoveryCode}</p>
           </div>
           <p>
             You can use each backup code once. You can also get new codes if
