@@ -20,7 +20,7 @@ const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
-  const [success, setIsSuccess] = useState(false);
+  const [success] = useState(false);
   const [select2FA, setSelect2FA] = useState("true");
   useEffect(() => {
     const checkLS = () => {
@@ -55,7 +55,7 @@ const Login = () => {
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-    const { data: responseData, error } = await callApi<ApiResponse>("/auth/signin", {
+    const { error } = await callApi<ApiResponse>("/auth/signin", {
       email: data.email,
       password: data.password,
     });
@@ -67,12 +67,12 @@ const Login = () => {
         duration: 3000,
       });
     } else {
-      toast({
-        title: "Success",
-        description: (responseData as { message: string }).message,
-        duration: 2500,
-      });
-      setIsSuccess(true);
+      // toast({
+      //   title: "Success",
+      //   description: (responseData as { message: string }).message,
+      //   duration: 3000,
+      // });
+
       reset();
       if (select2FA === "true") {
         setOpenModal(true);
@@ -89,6 +89,12 @@ const Login = () => {
       }
       return;
     }
+  };
+
+  const handleActivate2fa = () => {
+    void router.push({
+      pathname: "/2fa",
+    });
   };
 
   return (
@@ -178,12 +184,15 @@ const Login = () => {
                 </p>
               </div>
               <div className="mt-6">
-                <Link
-                  href="/2fa"
-                  className="text-white block bg-formBtn text-sm font-semibold py-4 w-full rounded-md"
+                <Button
+                  className="bg-formBtn py-4 text-sm font-semibold"
+                  variant="primary"
+                  fullWidth
+                  onClick={handleActivate2fa}
                 >
                   Activate
-                </Link>
+                </Button>
+
                 <Button
                   type="submit"
                   disabled={isSubmitting}
