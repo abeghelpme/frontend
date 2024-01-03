@@ -2,6 +2,7 @@ import DialogComponent from "@/components/Shared/Dialog";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import { useToast } from "@/components/ui/use-toast";
+import type { ApiResponse } from "@/interfaces/formInputs";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import {
@@ -13,14 +14,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type { ApiResponse } from "@/interfaces/formInputs";
 
 const Login = () => {
   const showModal = useRef(false);
   const router = useRouter();
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
-  const [success, setIsSuccess] = useState(false);
+  const [success] = useState(false);
   const [select2FA, setSelect2FA] = useState("true");
   useEffect(() => {
     const checkLS = () => {
@@ -73,9 +73,9 @@ const Login = () => {
       toast({
         title: "Success",
         description: (responseData as { message: string }).message,
-        duration: 2500,
+        duration: 3000,
       });
-      setIsSuccess(true);
+
       reset();
       if (select2FA === "true") {
         setOpenModal(true);
@@ -93,6 +93,12 @@ const Login = () => {
       return;
     }
   };
+
+  // const handleActivate2fa = () => {
+  //   void router.push({
+  //     pathname: "/2fa",
+  //   });
+  // };
 
   return (
     <AuthLayout
@@ -180,13 +186,14 @@ const Login = () => {
                   security to your account
                 </p>
               </div>
-              <div className="mt-6">
+              <div className="mt-6 flex flex-col">
                 <Link
+                  className="bg-formBtn py-4 text-sm font-semibold w-full text-white rounded-md"
                   href="/2fa"
-                  className="text-white block bg-formBtn text-sm font-semibold py-4 w-full rounded-md"
                 >
                   Activate
                 </Link>
+
                 <Button
                   type="submit"
                   disabled={isSubmitting}
