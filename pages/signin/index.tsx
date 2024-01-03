@@ -2,7 +2,6 @@ import DialogComponent from "@/components/Shared/Dialog";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import { useToast } from "@/components/ui/use-toast";
-import type { ApiResponse } from "@/interfaces/formInputs";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import {
@@ -14,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import type { ApiResponse } from "@/interfaces/formInputs";
 
 const Login = () => {
   const showModal = useRef(false);
@@ -55,13 +55,10 @@ const Login = () => {
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-    const { data: responseData, error } = await callApi<ApiResponse>(
-      "/auth/signin",
-      {
-        email: data.email,
-        password: data.password,
-      },
-    );
+    const { data: responseData, error } = await callApi<ApiResponse>("/auth/signin", {
+      email: data.email,
+      password: data.password,
+    });
 
     if (error) {
       return toast({
