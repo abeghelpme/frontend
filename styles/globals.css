@@ -2,8 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
+html,
+body {
   height: 100%;
+}
+
+input[type="number"] {
+  -webkit-appearance: textfield;
+}
+
+/* Remove the inner spinner */
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove the outer spinner (for Firefox) */
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 #__next {
