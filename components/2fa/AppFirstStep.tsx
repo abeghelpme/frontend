@@ -16,7 +16,7 @@ type AuthenticatorFirstStepProps = {
   recoveryCode: React.MutableRefObject<string | null>;
 };
 
-const AuthenticatorFirstStep = ({
+const AppFirstStep = ({
   setStep,
   recoveryCode,
 }: AuthenticatorFirstStepProps) => {
@@ -98,20 +98,20 @@ const AuthenticatorFirstStep = ({
   };
 
   return (
-    <div className="flex-1 flex flex-col px-4 max-w-7xl md:px-16 my-4">
-      <h1 className=" font-semibold px-4 md:px-[6.25rem] text-lg md:text-2xl">
+    <div className=" flex flex-col min-h-screen">
+      <h1 className=" font-semibold mt-4 w-full px-4 mx-auto max-w-7xl md:px-16 text-lg md:text-2xl">
         Setting up your two-factor authentication
       </h1>
-      <ol className=" mt-6 list-none list-inside px-4 md:px-[6.25rem] flex flex-col gap-3">
-        <li>
+      <ol className=" mt-6 list-none list-inside w-full px-4 mx-auto max-w-7xl md:px-16 flex flex-col gap-3">
+        <li className="flex flex-col gap-4">
           <h2 className="font-semibold">1. Download an authentication app</h2>
           <p>
-            We recommend downloading Google Authenticator app if you don’t have
-            one installed yet.
+            We recommend downloading Google Authenticator app if you don&apos;t
+            have one installed yet.
           </p>
         </li>
 
-        <li>
+        <li className="flex flex-col gap-4">
           <h2 className="font-semibold">
             2. Scan this QR code or copy the key.
           </h2>
@@ -131,7 +131,7 @@ const AuthenticatorFirstStep = ({
                 Retry
               </Button>
             ) : (
-              <div className="flex flex-col gap-y-2 md:flex-row items-center justify-around w-full">
+              <div className="flex flex-col gap-y-2 lg:flex-row items-center justify-around w-full">
                 <div className="relative">
                   <Image
                     src={data?.data?.qrCode as string}
@@ -162,7 +162,7 @@ const AuthenticatorFirstStep = ({
           </div>
         </li>
 
-        <li>
+        <li className="flex flex-col gap-4">
           <h2 className="font-semibold">3. Copy and enter 6-digit code</h2>
           <p>
             After the barcode/QR code has been scanned or the key has been
@@ -171,8 +171,8 @@ const AuthenticatorFirstStep = ({
           </p>
         </li>
       </ol>
-      <hr className="mt-auto" />
-      <div className="flex justify-end px-4 max-w-7xl md:px-16 my-4">
+      <hr className="mt-auto w-full" />
+      <div className="flex justify-end w-full px-4 mx-auto max-w-7xl md:px-16 my-4">
         <DialogComponent
           trigger={
             <Button
@@ -219,4 +219,4 @@ const AuthenticatorFirstStep = ({
   );
 };
 
-export default AuthenticatorFirstStep;
+export default AppFirstStep;
