@@ -1,12 +1,12 @@
-import React, { useRef, useState } from "react";
 import Image from "next/image";
+import { useRef, useState } from "react";
 
 import AppFirstStep from "@/components/2fa/AppFirstStep";
-import authBgContours from "@/public/assets/images/shared/bg-contours.png";
 import AppSecondStep from "@/components/2fa/AppSecondStep";
+import authBgContours from "@/public/assets/images/shared/bg-contours.png";
 
 const Authenticator = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const recoveryCode = useRef<string | null>(null);
   return (
     <main className="min-h-screen  flex flex-col flex-1 relative">

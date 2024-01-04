@@ -2,6 +2,7 @@ import DialogComponent from "@/components/Shared/Dialog";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import { useToast } from "@/components/ui/use-toast";
+import type { ApiResponse, User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import {
@@ -13,7 +14,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type { ApiResponse } from "@/interfaces/formInputs";
 
 const Login = () => {
   const showModal = useRef(false);
@@ -21,21 +21,21 @@ const Login = () => {
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
   const [success] = useState(false);
-  const [select2FA, setSelect2FA] = useState("true");
+  const [skip2FA, setSkip2FA] = useState("false");
   useEffect(() => {
     const checkLS = () => {
       if (!showModal.current) {
-        const modal = localStorage.getItem("show-modal");
+        const modal = localStorage.getItem("skip-2FA");
         if (modal !== null) {
-          setSelect2FA(modal);
+          setSkip2FA(modal);
         }
         showModal.current = true;
       } else {
-        localStorage.setItem("show-modal", select2FA);
+        localStorage.setItem("skip-2FA", skip2FA);
       }
     };
     checkLS();
-  }, [select2FA]);
+  }, [skip2FA]);
 
   const {
     register,
@@ -49,16 +49,19 @@ const Login = () => {
   });
 
   const handleOption = () => {
-    setSelect2FA("false");
+    setSkip2FA("false");
     setOpenModal(false);
     void router.push("/create-campaign");
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-    const { error } = await callApi<ApiResponse>("/auth/signin", {
-      email: data.email,
-      password: data.password,
-    });
+    const { data: responseData, error } = await callApi<ApiResponse<User>>(
+      "/auth/signin",
+      {
+        email: data.email,
+        password: data.password,
+      },
+    );
 
     if (error) {
       return toast({
@@ -67,23 +70,29 @@ const Login = () => {
         duration: 3000,
       });
     } else {
-      // toast({
-      //   title: "Success",
-      //   description: (responseData as { message: string }).message,
-      //   duration: 3000,
-      // });
+      toast({
+        title: "Success",
+        description: (responseData as { message: string }).message,
+        duration: 3000,
+      });
 
       reset();
-      if (select2FA === "true") {
+      if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
         setOpenModal(true);
+        return;
       } else {
         setTimeout(() => {
           void router.push({
             pathname: "/signin/authenticate",
-            query: {
-              verificationChoice: "email",
-              email: data.email.toLowerCase(),
-            },
+            query:
+              responseData?.data?.twoFA?.type === "EMAIL"
+                ? {
+                    verificationChoice: responseData?.data?.twoFA?.type,
+                    email: data.email.toLowerCase(),
+                  }
+                : {
+                    verificationChoice: responseData?.data?.twoFA?.type,
+                  },
           });
         }, 2500);
       }
@@ -91,11 +100,11 @@ const Login = () => {
     }
   };
 
-  const handleActivate2fa = () => {
-    void router.push({
-      pathname: "/2fa",
-    });
-  };
+  // const handleActivate2fa = () => {
+  //   void router.push({
+  //     pathname: "/2fa",
+  //   });
+  // };
 
   return (
     <AuthLayout
@@ -103,7 +112,6 @@ const Login = () => {
       heading="Welcome back!"
       greeting="Sign in to continue"
       withHeader
-      bannerTextColor
       hasSuccess={false}
     >
       <form
@@ -159,7 +167,7 @@ const Login = () => {
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
-            setOpen={() => setOpenModal(false)}
+            setOpen={() => setOpenModal(openModal)}
             trigger={
               <Button
                 type="submit"
@@ -183,15 +191,13 @@ const Login = () => {
                   security to your account
                 </p>
               </div>
-              <div className="mt-6">
-                <Button
-                  className="bg-formBtn py-4 text-sm font-semibold"
-                  variant="primary"
-                  fullWidth
-                  onClick={handleActivate2fa}
+              <div className="mt-6 flex flex-col">
+                <Link
+                  className="bg-formBtn py-4 text-sm font-semibold w-full text-white rounded-md"
+                  href="/2fa"
                 >
                   Activate
-                </Button>
+                </Link>
 
                 <Button
                   type="submit"

@@ -1,12 +1,9 @@
-import React, { type FC } from "react";
 import logo from "@/public/assets/images/shared/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { type FC } from "react";
 
-type CompProp = {
-  textColor: boolean;
-};
-const LogoBanner: FC<CompProp> = ({ textColor }) => {
+const LogoBanner: FC = () => {
   return (
     <Link href="/" className={`flex items-center gap-2 justify-center`}>
       <Image
@@ -17,9 +14,7 @@ const LogoBanner: FC<CompProp> = ({ textColor }) => {
       />
       <span
         role=""
-        className={`${
-          textColor ? "text-abeg-teal-10" : "backdrop-blur-sm px-1 bg-white/40"
-        } font-medium md:text-lg lg:text-xl`}
+        className={`font-medium md:text-lg lg:text-xl text-abeg-teal-10`}
       >
         AbegHelp.me
       </span>

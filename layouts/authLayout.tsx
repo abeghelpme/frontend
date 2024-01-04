@@ -12,7 +12,6 @@ interface AuthLayoutProps {
   contentClass?: string;
   withHeader: boolean;
   hasSuccess: boolean;
-  bannerTextColor?: boolean;
 }
 
 const AuthLayout: FC<AuthLayoutProps> = ({
@@ -22,7 +21,6 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   heading,
   withHeader,
   contentClass,
-  bannerTextColor,
   hasSuccess,
 }) => {
   return (
@@ -33,7 +31,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
         priority
         className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
       />
-      <LogoBanner textColor={bannerTextColor!} />
+      <LogoBanner />
 
       {!hasSuccess ? (
         <div

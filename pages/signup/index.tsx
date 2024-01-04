@@ -2,7 +2,7 @@ import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
 import { useToast } from "@/components/ui/use-toast";
-import type { ApiResponse } from "@/interfaces/formInputs";
+import type { ApiResponse } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import {
@@ -29,7 +29,7 @@ const SignUp = () => {
   useEffect(() => {
     const checkLS = () => {
       if (!showModal.current) {
-        localStorage.setItem("show-modal", "true");
+        localStorage.setItem("skip-2Fa", "true");
       }
     };
     checkLS();
@@ -112,7 +112,6 @@ const SignUp = () => {
       heading="Welcome!"
       greeting="Create your account"
       contentClass="md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] 3xl:w-[29%]"
-      bannerTextColor={false}
       withHeader
       hasSuccess={false}
     >
