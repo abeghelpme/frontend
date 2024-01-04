@@ -1,40 +1,42 @@
-import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Image from "next/image";
-import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
 
+import DialogComponent from "@/components/Shared/Dialog";
 import Button from "@/components/primitives/Button/button";
-import authBgContours from "@/public/assets/images/shared/bg-contours.png";
+import type { ApiResponse } from "@/interfaces/apiResponses";
 import callApi from "@/lib/api/callApi";
-
-type EmailResponse = {
-  status: "string";
-  data: null;
-  message: string;
-};
+import authBgContours from "@/public/assets/images/shared/bg-contours.png";
 
 const TwoFa = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [selectedOption, setSelectedOption] = useState("app");
+  const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleNextButton = async () => {
     if (selectedOption === "app") {
       void router.push("/2fa/app");
     } else {
-      const { data, error } = await callApi<EmailResponse>("/auth/2fa/setup", {
+      setLoading(true);
+      const { data, error } = await callApi<ApiResponse>("/auth/2fa/setup", {
         twoFactorType: "EMAIL",
       });
+
       if (data) {
         toast({
           title: "Success",
           description: data.message,
           duration: 3000,
         });
-        void router.push("/2fa/email");
+        setOpenModal(true);
+        setLoading(false);
       }
       if (error) {
+        setLoading(false);
         toast({
           title: "Error",
           description: error.message,
@@ -116,13 +118,22 @@ const TwoFa = () => {
       </div>
       <hr className="mt-auto" />
       <div className="flex justify-end w-full px-4 mx-auto max-w-7xl md:px-16 my-4">
-        <Button
-          className="bg-abeg-button-10 w-fit "
-          size="sm"
-          onClick={() => void handleNextButton()}
+        <DialogComponent
+          openDialog={openModal}
+          setOpen={() => setOpenModal(openModal)}
+          trigger={
+            <Button
+              className="bg-abeg-button-10 w-fit "
+              size="sm"
+              onClick={() => void handleNextButton()}
+              loading={loading}
+            >
+              NEXT
+            </Button>
+          }
         >
-          NEXT
-        </Button>
+          hello
+        </DialogComponent>
       </div>
     </main>
   );

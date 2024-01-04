@@ -20,14 +20,3 @@ export type ResetPasswordProps = {
 export type ForgotPasswordProps = {
   email: string;
 };
-
-export type ApiResponse = {
-  status: string;
-  message: string;
-  error?: {
-    [key: string]: string[];
-  };
-  data?: {
-    [key: string]: string;
-  };
-};

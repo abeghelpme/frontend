@@ -2,7 +2,7 @@ import DialogComponent from "@/components/Shared/Dialog";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import { useToast } from "@/components/ui/use-toast";
-import type { ApiResponse } from "@/interfaces/formInputs";
+import type { ApiResponse, User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import {
@@ -21,21 +21,21 @@ const Login = () => {
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
   const [success] = useState(false);
-  const [select2FA, setSelect2FA] = useState("true");
+  const [skip2FA, setSkip2FA] = useState("false");
   useEffect(() => {
     const checkLS = () => {
       if (!showModal.current) {
-        const modal = localStorage.getItem("show-modal");
+        const modal = localStorage.getItem("skip-2FA");
         if (modal !== null) {
-          setSelect2FA(modal);
+          setSkip2FA(modal);
         }
         showModal.current = true;
       } else {
-        localStorage.setItem("show-modal", select2FA);
+        localStorage.setItem("skip-2FA", skip2FA);
       }
     };
     checkLS();
-  }, [select2FA]);
+  }, [skip2FA]);
 
   const {
     register,
@@ -49,13 +49,13 @@ const Login = () => {
   });
 
   const handleOption = () => {
-    setSelect2FA("false");
+    setSkip2FA("false");
     setOpenModal(false);
     void router.push("/create-campaign");
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-    const { data: responseData, error } = await callApi<ApiResponse>(
+    const { data: responseData, error } = await callApi<ApiResponse<User>>(
       "/auth/signin",
       {
         email: data.email,
@@ -77,16 +77,22 @@ const Login = () => {
       });
 
       reset();
-      if (select2FA === "true") {
+      if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
         setOpenModal(true);
+        return;
       } else {
         setTimeout(() => {
           void router.push({
             pathname: "/signin/authenticate",
-            query: {
-              verificationChoice: "email",
-              email: data.email.toLowerCase(),
-            },
+            query:
+              responseData?.data?.twoFA?.type === "EMAIL"
+                ? {
+                    verificationChoice: responseData?.data?.twoFA?.type,
+                    email: data.email.toLowerCase(),
+                  }
+                : {
+                    verificationChoice: responseData?.data?.twoFA?.type,
+                  },
           });
         }, 2500);
       }
@@ -106,7 +112,6 @@ const Login = () => {
       heading="Welcome back!"
       greeting="Sign in to continue"
       withHeader
-      bannerTextColor
       hasSuccess={false}
     >
       <form
@@ -162,7 +167,7 @@ const Login = () => {
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
-            setOpen={() => setOpenModal(true)}
+            setOpen={() => setOpenModal(openModal)}
             trigger={
               <Button
                 type="submit"

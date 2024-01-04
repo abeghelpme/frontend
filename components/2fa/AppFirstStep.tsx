@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-
-import { useToast } from "../ui/use-toast";
-import OtpInput from "react-otp-input";
+import type { ApiResponse } from "@/interfaces/apiResponses";
 import callApi from "@/lib/api/callApi";
-
-import Loader from "./Loader";
 import { ClipboardIcon } from "@radix-ui/react-icons";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import OtpInput from "react-otp-input";
 import DialogComponent from "../Shared/Dialog";
 import Button from "../primitives/Button/button";
-import type { ApiResponse } from "@/interfaces/formInputs";
+import { useToast } from "../ui/use-toast";
+import Loader from "./Loader";
 
 type AuthenticatorFirstStepProps = {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -148,7 +146,9 @@ const AppFirstStep = ({
                 </div>
 
                 <div className="flex flex-col items-center">
-                  <p className="font-bold text-center">{data?.data?.secret}</p>
+                  <p className="font-bold text-center">
+                    {data?.data?.secret as string}
+                  </p>
                   <button
                     className="flex text-abeg-teal mt-2 justify-center font-semibold items-center"
                     onClick={() => void handleCopy()}

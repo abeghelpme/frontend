@@ -1,6 +1,6 @@
 import Button from "@/components/primitives/Button/button";
 import { useToast } from "@/components/ui/use-toast";
-import { type ApiResponse } from "@/interfaces/formInputs";
+import { type ApiResponse } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import authPadlock from "@/public/assets/icons/auth/auth-padlock.svg";
@@ -16,14 +16,9 @@ const EmailAuth = ({ email }: { email: string }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setLoading(true);
-    const { data, error } = await callApi<ApiResponse>(
-      "/auth/2fa/time/verify",
-      {
-        email,
-        token: String(otp),
-        twoFactorVerificationType: "EMAIL_CODE",
-      },
-    );
+    const { data, error } = await callApi<ApiResponse>("/auth/2fa/verify", {
+      token: String(otp),
+    });
     if (error) {
       setLoading(false);
       return toast({
@@ -183,12 +178,7 @@ const AuthenticateUser = () => {
   }, [router]);
 
   return (
-    <AuthLayout
-      formType="other"
-      withHeader={false}
-      hasSuccess={false}
-      bannerTextColor
-    >
+    <AuthLayout formType="other" withHeader={false} hasSuccess={false}>
       {queryParam.verificationChoice === "email" ? (
         <EmailAuth email={queryParam.email} />
       ) : (

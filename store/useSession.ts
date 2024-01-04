@@ -1,7 +1,7 @@
 import callApi from "@/lib/api/callApi";
 import { shallow } from "zustand/shallow";
 import { createWithEqualityFn } from "zustand/traditional";
-import type { ApiResponse } from "./../interfaces/formInputs";
+import type { ApiResponse } from "./../interfaces/apiResponses";
 
 interface Session {
   isFirstMount: boolean;

@@ -17,12 +17,14 @@ const VerificationPage = () => {
 
   const verifyEmail = async () => {
     setLoading(true);
-    if (!token)
+    if (!token) {
+      setLoading(false);
       return toast({
         title: "Request Failed",
         description: "No data provided",
         duration: 3000,
       });
+    }
     const { data, error } = await callApi("/auth/verify-email", {
       token,
     });
@@ -49,11 +51,10 @@ const VerificationPage = () => {
 
   return (
     <AuthLayout
-      bannerTextColor
       withHeader={false}
       hasSuccess={false}
       formType="signup"
-      contentClass="md:w-[55%] lg:w-[50%] xl:w-[35%] 2xl:w-[30%]"
+      contentClass="md:max-w-[400px]  lg:w-[50%] xl:w-[35%] 2xl:w-[30%]"
     >
       {" "}
       <div className="text-center space-y-2">

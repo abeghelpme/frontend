@@ -55,12 +55,7 @@ const ForgotPasswordPage: React.FC = () => {
   };
 
   return (
-    <AuthLayout
-      formType="other"
-      bannerTextColor
-      withHeader={false}
-      hasSuccess={false}
-    >
+    <AuthLayout formType="other" withHeader={false} hasSuccess={false}>
       <form
         onSubmit={(event) => {
           event.preventDefault();
