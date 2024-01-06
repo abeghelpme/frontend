@@ -27,9 +27,9 @@ const AppSecondStep = ({ recoveryCode }: { recoveryCode: string | null }) => {
   };
 
   return (
-    <div className="flex-1 flex flex-col ">
-      <div className="w-full px-4 mx-auto max-w-7xl md:px-16 my-4 flex flex-col gap-4">
-        <h1 className=" font-semibold text-lg md:text-2xl mt-8">
+    <div className="flex flex-1 flex-col ">
+      <div className="mx-auto my-4 flex w-full max-w-7xl flex-col gap-4 px-4 md:px-16">
+        <h1 className=" mt-8 text-lg font-semibold md:text-2xl">
           Two-factor authentication is enabled
         </h1>
         <p>
@@ -44,9 +44,9 @@ const AppSecondStep = ({ recoveryCode }: { recoveryCode: string | null }) => {
         <div>
           <h4 className="text-center text-sm">Recovery Key</h4>
           <div className="flex flex-col items-center">
-            <p className="font-bold text-center">{recoveryCode}</p>
+            <p className="text-center font-bold">{recoveryCode}</p>
             <Button
-              className="flex text-abeg-teal mt-2 justify-center  items-center"
+              className="mt-2 flex items-center justify-center  text-abeg-teal"
               onClick={() => void handleCopy()}
             >
               <ClipboardIcon aria-hidden="true" />
@@ -60,9 +60,9 @@ const AppSecondStep = ({ recoveryCode }: { recoveryCode: string | null }) => {
         </p>
       </div>
       <hr className="mt-auto" />
-      <div className="flex justify-end w-full px-4 mx-auto max-w-7xl md:px-16 my-4">
+      <div className="mx-auto my-4 flex w-full max-w-7xl justify-end px-4 md:px-16">
         <Button
-          className="bg-abeg-button-10 w-fit "
+          className="w-fit bg-abeg-button-10 "
           size="sm"
           onClick={() => void router.push("/create-campaign")}
         >

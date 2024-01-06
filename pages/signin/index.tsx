@@ -122,7 +122,7 @@ const Login = () => {
         }}
       >
         <div className="space-y-1">
-          <label htmlFor="email" className="font-medium text-sm">
+          <label htmlFor="email" className="text-sm font-medium">
             Email Address
           </label>
           <Input
@@ -137,11 +137,11 @@ const Login = () => {
             }`}
           />
           {errors.email && (
-            <p className="text-abeg-teal text-sm">{errors.email.message}</p>
+            <p className="text-sm text-abeg-teal">{errors.email.message}</p>
           )}
         </div>
-        <div className="space-y-1 mt-4">
-          <label htmlFor="password" className="font-medium text-sm">
+        <div className="mt-4 space-y-1">
+          <label htmlFor="password" className="text-sm font-medium">
             Password
           </label>
           <Input
@@ -155,12 +155,12 @@ const Login = () => {
             }`}
           />
           {errors.password && (
-            <p className="text-abeg-teal text-sm">{errors.password.message}</p>
+            <p className="text-sm text-abeg-teal">{errors.password.message}</p>
           )}
         </div>
         <Link
           href="/forgot-password"
-          className="text-formBtn text-sm font-semibold inline-flex w-full justify-end mt-2 hover:underline"
+          className="mt-2 inline-flex w-full justify-end text-sm font-semibold text-formBtn hover:underline"
         >
           Forgot Password?
         </Link>
@@ -173,7 +173,7 @@ const Login = () => {
                 type="submit"
                 disabled={isSubmitting || success}
                 loading={isSubmitting}
-                className="text-white bg-formBtn py-4 mt-6 disabled:bg-gray-500 "
+                className="mt-6 bg-formBtn py-4 text-white disabled:bg-gray-500 "
                 fullWidth
               >
                 Sign in
@@ -181,10 +181,10 @@ const Login = () => {
             }
           >
             <div className="text-center">
-              <h2 className="font-semibold text-2xl">
+              <h2 className="text-2xl font-semibold">
                 Keep your account safe!
               </h2>
-              <div className="space-y-2 mt-3">
+              <div className="mt-3 space-y-2">
                 <p className="">Your safety is our number one priority</p>
                 <p className="">
                   Activate two-factor authentication and add an extra layer of
@@ -193,7 +193,7 @@ const Login = () => {
               </div>
               <div className="mt-6 flex flex-col">
                 <Link
-                  className="bg-formBtn py-4 text-sm font-semibold w-full text-white rounded-md"
+                  className="w-full rounded-md bg-formBtn py-4 text-sm font-semibold text-white"
                   href="/2fa"
                 >
                   Activate
@@ -203,7 +203,7 @@ const Login = () => {
                   type="submit"
                   disabled={isSubmitting}
                   onClick={handleOption}
-                  className="text-abeg-teal border-formBtn border py-4 mt-4 disabled:bg-gray-500 disabled:text-white"
+                  className="mt-4 border border-formBtn py-4 text-abeg-teal disabled:bg-gray-500 disabled:text-white"
                   fullWidth
                 >
                   Skip
@@ -213,7 +213,7 @@ const Login = () => {
           </DialogComponent>
           <p className="text-center text-sm">
             Don&apos;t have an account?&nbsp;
-            <Link href="/signup" className="text-abeg-teal font-medium">
+            <Link href="/signup" className="font-medium text-abeg-teal">
               Register
             </Link>
           </p>

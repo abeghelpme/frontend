@@ -91,7 +91,7 @@ const ResetPassword: React.FC = () => {
         className="flex flex-col"
       >
         <div className="space-y-6">
-          <h1 className="text-2xl font-semibold text-center">Reset Password</h1>
+          <h1 className="text-center text-2xl font-semibold">Reset Password</h1>
           <div className="space-y-4">
             <div className="space-y-1">
               <label htmlFor="password" className="font-medium">
@@ -140,7 +140,7 @@ const ResetPassword: React.FC = () => {
                 </div>
               )}
               {errors.password && (
-                <div className="text-abeg-teal text-sm mt-2">
+                <div className="mt-2 text-sm text-abeg-teal">
                   <h1>{errors.password.message}</h1>
                 </div>
               )}
@@ -162,7 +162,7 @@ const ResetPassword: React.FC = () => {
                 />
               </div>
               {errors.confirmPassword && (
-                <div className="text-abeg-teal text-sm mt-2">
+                <div className="mt-2 text-sm text-abeg-teal">
                   <h1>{errors.confirmPassword.message}</h1>
                 </div>
               )}
@@ -173,7 +173,7 @@ const ResetPassword: React.FC = () => {
         <Button
           disabled={isSubmitting}
           loading={isSubmitting}
-          className="bg-abeg-button-10 font-medium text-md px-10 py-3 mt-6"
+          className="text-md mt-6 bg-abeg-button-10 px-10 py-3 font-medium"
         >
           Submit
         </Button>

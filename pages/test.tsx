@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/base-layout";
 const Test = () => {
   return (
     <BaseLayout>
-      <div className="bg-red-500 flex-1">Test</div>
+      <div className="flex-1 bg-red-500">Test</div>
     </BaseLayout>
   );
 };

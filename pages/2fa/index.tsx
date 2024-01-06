@@ -84,16 +84,16 @@ const TwoFa = () => {
   };
 
   return (
-    <div className="min-h-full flex flex-col justify-between relative">
+    <div className="relative flex min-h-full flex-col justify-between">
       <Image
         src={authBgContours}
         alt=""
         role="presentation"
         priority
-        className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
+        className="absolute inset-0 -z-[1] h-full w-full object-cover object-[75%]"
       />
-      <div className="w-full mx-auto px-[5%] md:px-[10%] max-w-7xl">
-        <h1 className="mt-[3.5rem] font-semibold text-2xl">
+      <div className="mx-auto w-full max-w-7xl px-[5%] md:px-[10%]">
+        <h1 className="mt-[3.5rem] text-2xl font-semibold">
           Set up two-factor authentication
         </h1>
         <p className="mt-6 text-text">
@@ -104,13 +104,13 @@ const TwoFa = () => {
           additional code when you log in on a device that we don&apos;t
           recognise.
         </p>
-        <h2 className="mt-[3rem] font-semibold text-xl">
+        <h2 className="mt-[3rem] text-xl font-semibold">
           Choose how you want to receive verification code
         </h2>
 
         <div>
           <h3 className="mt-10 font-semibold">Authentication app</h3>
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <label htmlFor="app">
               <Link
                 target="blank"
@@ -132,12 +132,12 @@ const TwoFa = () => {
               checked={selectedOption === "app"}
               onChange={() => setSelectedOption("app")}
               id="app"
-              className="accent-abeg-teal ml-auto"
+              className="ml-auto accent-abeg-teal"
             />
           </div>
-          <hr className="border-b my-4" />
+          <hr className="my-4 border-b" />
           <h3 className=" font-semibold">Email Address</h3>
-          <div className="flex gap-2 items-center ">
+          <div className="flex items-center gap-2 ">
             <label htmlFor="email">
               We will send a code to your registered email address
             </label>
@@ -148,12 +148,12 @@ const TwoFa = () => {
               checked={selectedOption === "email"}
               onChange={() => setSelectedOption("email")}
               id="email"
-              className="accent-abeg-teal ml-auto"
+              className="ml-auto accent-abeg-teal"
             />
           </div>
         </div>
       </div>
-      <div className="flex justify-end w-full px-[5%] md:px-[10%] py-6 md:py-7 max-w-7xl border-t border-t-formBtn">
+      <div className="flex w-full max-w-7xl justify-end border-t border-t-formBtn px-[5%] py-6 md:px-[10%] md:py-7">
         <DialogComponent
           openDialog={openModal}
           setOpen={() => {
@@ -162,7 +162,7 @@ const TwoFa = () => {
           }}
           trigger={
             <Button
-              className="bg-abeg-button-10 w-fit py-3 px-6 font-medium"
+              className="w-fit bg-abeg-button-10 px-6 py-3 font-medium"
               onClick={(e) => void handleStep(e)}
               loading={loading}
             >
@@ -179,14 +179,14 @@ const TwoFa = () => {
               </>
             }
             bottomSection={
-              <div className="flex flex-col gap-10 mt-6 w-full">
+              <div className="mt-6 flex w-full flex-col gap-10">
                 <p className="text-center">
                   Didn&apos;t get a code? We can&nbsp;
                   <Button
                     type="submit"
                     disabled={loading}
                     onClick={(e) => void handleStep(e)}
-                    className="text-abeg-teal font-medium p-0 text-base disabled:text-neutral-50"
+                    className="p-0 text-base font-medium text-abeg-teal disabled:text-neutral-50"
                   >
                     resend it
                   </Button>
@@ -194,7 +194,7 @@ const TwoFa = () => {
                 <Button
                   className={`${
                     otp === "" && "cursor-not-allowed"
-                  } text-white block bg-formBtn font-semibold py-4 w-full rounded-md`}
+                  } block w-full rounded-md bg-formBtn py-4 font-semibold text-white`}
                   fullWidth
                   type="submit"
                   onClick={(e) => otp !== "" && void handleSubmit(e)}
