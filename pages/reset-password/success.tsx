@@ -8,7 +8,7 @@ const ResetPasswordSuccessPage = () => {
       <Success textContent="Password Reset Successful">
         <Link
           href="/signin"
-          className="block text-center mt-6 p-3 text-white bg-formBtn w-full rounded-md md:rounded-lg text-sm md:text-base font-semibold"
+          className="mt-6 block w-full rounded-md bg-formBtn p-3 text-center text-sm font-semibold text-white md:rounded-lg md:text-base"
         >
           Sign in to continue
         </Link>
