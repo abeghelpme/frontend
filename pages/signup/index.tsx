@@ -125,13 +125,13 @@ const SignUp = () => {
       >
         {message.message !== "" && !message.error ? (
           <p
-            className={`rounded-md p-4 text-sm font-medium bg-abeg-error-40 text-abeg-error-20`}
+            className={`rounded-md bg-abeg-error-40 p-4 text-sm font-medium text-abeg-error-20`}
           >
             {message.message}
           </p>
         ) : (
           message.error && (
-            <ul className="rounded-md p-4 text-xs font-medium space-y-1 bg-abeg-error-40 text-abeg-error-20 list-disc list-inside">
+            <ul className="list-inside list-disc space-y-1 rounded-md bg-abeg-error-40 p-4 text-xs font-medium text-abeg-error-20">
               {Object.keys(message.error).length > 0 &&
                 Object.keys(message.error).map((key) => (
                   <li key={key} className={``}>
@@ -143,7 +143,7 @@ const SignUp = () => {
         )}
         <div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
           <div className="space-y-1">
-            <label htmlFor="firstName" className="font-medium text-sm">
+            <label htmlFor="firstName" className="text-sm font-medium">
               First Name
             </label>
             <Input
@@ -156,13 +156,13 @@ const SignUp = () => {
               errorField={errors.firstName}
             />
             {errors.firstName && (
-              <p className="text-abeg-teal text-sm mt-2">
+              <p className="mt-2 text-sm text-abeg-teal">
                 {errors.firstName.message}
               </p>
             )}
           </div>
           <div className="space-y-1">
-            <label htmlFor="lastName" className="font-medium text-sm">
+            <label htmlFor="lastName" className="text-sm font-medium">
               Last Name
             </label>
             <Input
@@ -174,7 +174,7 @@ const SignUp = () => {
               errorField={errors.lastName}
             />
             {errors.lastName && (
-              <p className="text-abeg-teal text-sm mt-2">
+              <p className="mt-2 text-sm text-abeg-teal">
                 {errors.lastName.message}
               </p>
             )}
@@ -182,7 +182,7 @@ const SignUp = () => {
         </div>
 
         <div className="space-y-1">
-          <label htmlFor="email" className="font-medium text-sm">
+          <label htmlFor="email" className="text-sm font-medium">
             Email
           </label>
           <Input
@@ -194,7 +194,7 @@ const SignUp = () => {
             errorField={errors.email}
           />
           {errors.email && (
-            <p className="text-abeg-teal text-sm mt-2">
+            <p className="mt-2 text-sm text-abeg-teal">
               {errors.email.message}
             </p>
           )}
@@ -202,7 +202,7 @@ const SignUp = () => {
 
         <div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
           <div className="space-y-1">
-            <label htmlFor="password" className="text-sm mb-1 font-medium">
+            <label htmlFor="password" className="mb-1 text-sm font-medium">
               Password
             </label>
             <Input
@@ -245,7 +245,7 @@ const SignUp = () => {
               </div>
             )}
             {errors.password && (
-              <p className="text-abeg-teal text-sm mt-2">
+              <p className="mt-2 text-sm text-abeg-teal">
                 {errors.password.message}
               </p>
             )}
@@ -253,7 +253,7 @@ const SignUp = () => {
           <div className="space-y-1">
             <label
               htmlFor="confirmPassword"
-              className="text-sm mb-1 font-medium"
+              className="mb-1 text-sm font-medium"
             >
               Confirm Password
             </label>
@@ -266,18 +266,18 @@ const SignUp = () => {
               errorField={errors.confirmPassword}
             />
             {errors.confirmPassword && (
-              <p className="text-abeg-teal text-sm">
+              <p className="text-sm text-abeg-teal">
                 {errors.confirmPassword.message}
               </p>
             )}
           </div>
         </div>
-        <div className="flex flex-col mt-2">
-          <div className="flex gap-2 w-full">
+        <div className="mt-2 flex flex-col">
+          <div className="flex w-full gap-2">
             <Input
               type="checkbox"
               id="terms"
-              className="w-4 md:w-5 h-[1.125rem] mt-1 accent-abeg-teal"
+              className="mt-1 h-[1.125rem] w-4 accent-abeg-teal md:w-5"
               {...register("terms")}
             />
             <label htmlFor="terms" className="text-sm md:text-base">
@@ -293,15 +293,15 @@ const SignUp = () => {
             </label>
           </div>
           {errors.terms && (
-            <p className="text-abeg-teal text-sm mt-2">
+            <p className="mt-2 text-sm text-abeg-teal">
               {errors.terms.message}
             </p>
           )}
         </div>
-        <div className="space-y-5 flex flex-col items-center">
+        <div className="flex flex-col items-center space-y-5">
           <Button
             disabled={isSubmitting}
-            className="text-white bg-abeg-teal py-4 mt-6 md:w-[60%] lg:w-[55%] xl:w-[52%]"
+            className="mt-6 bg-abeg-teal py-4 text-white md:w-[60%] lg:w-[55%] xl:w-[52%]"
             fullWidth
             loading={isSubmitting}
           >
@@ -309,7 +309,7 @@ const SignUp = () => {
           </Button>
           <p className="text-center text-sm">
             Already have an account?&nbsp;
-            <Link href="/signin" className="text-abeg-teal font-medium">
+            <Link href="/signin" className="font-medium text-abeg-teal">
               Login
             </Link>
           </p>
