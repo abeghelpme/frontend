@@ -3,18 +3,18 @@ import React from "react";
 
 const ServerError: React.FC = () => {
   return (
-    <main className="min-h-screen flex items-center flex-col justify-center">
-      <div className="relative flex items-center justify-center h-[15rem] md:h-[30rem] w-full">
+    <main className="flex min-h-screen flex-col items-center justify-center">
+      <div className="relative flex h-[15rem] w-full items-center justify-center md:h-[30rem]">
         <Image
           src="/500.svg"
           alt=""
           sizes="(min-width: 808px) 50vw, 100vw"
           priority
           fill
-          className="w-full h-auto"
+          className="h-auto w-full"
         />
       </div>
-      <p className="text-lg text-abeg-green font-semibold">
+      <p className="text-lg font-semibold text-abeg-green">
         Server error, please try again after some time
       </p>
     </main>

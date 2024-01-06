@@ -6,10 +6,10 @@ type CompProp = {
 };
 const LoadingComp = ({ message }: CompProp) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 h-full overflow-hidden w-full text-abeg-teal-10 font-medium">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-3 overflow-hidden font-medium text-abeg-teal-10">
       <div className="flex items-center justify-center gap-2">
         <Image
-          className="w-[35px] md:w-[40px] lg:w-[46px] lg:aspect-square"
+          className="w-[35px] md:w-[40px] lg:aspect-square lg:w-[46px]"
           src={logo as string}
           priority
           alt=""
