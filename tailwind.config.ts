@@ -25,6 +25,8 @@ const config: Config = {
       colors: {
         text: "#1B1818",
         successText: "#484848",
+        placeholder: "#8D8B8B",
+        unfocused: "#A8CCCC",
         formBtn: "#008080",
         validationMsg: "#268384",
         popover: "hsl(0 0% 100%)",
