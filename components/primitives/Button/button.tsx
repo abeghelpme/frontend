@@ -34,7 +34,7 @@ const Button = (
   return (
     <button
       className={cn(
-        "px-5 py-2 rounded-lg text-white text-sm font-medium disabled:bg-abeg-neutral-50",
+        "rounded-lg px-5 py-2 text-sm font-medium text-white disabled:bg-abeg-neutral-50",
         buttonClass,
         className,
       )}
@@ -45,7 +45,7 @@ const Button = (
         <div role="status" className="flex items-center justify-center gap-2">
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-gray-200 animate-spin fill-blue-500"
+            className="h-5 w-5 animate-spin fill-blue-500 text-gray-200"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

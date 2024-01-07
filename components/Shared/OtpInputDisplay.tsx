@@ -17,14 +17,14 @@ const OtpInputDisplay = ({
   bottomSection,
 }: OtpProps) => {
   return (
-    <div className="flex flex-col items-center text-sm md:text-base max-w-[467px]">
+    <div className="flex max-w-[467px] flex-col items-center text-sm md:text-base">
       <div className="text-center">
         <Image
           src={authPadlock as string}
           alt=""
-          className="w-[80px] aspect-square mx-auto"
+          className="mx-auto aspect-square w-[80px]"
         />
-        <h1 className="font-medium md:text-2xl mt-6 mb-4">
+        <h1 className="mb-4 mt-6 font-medium md:text-2xl">
           Enter your verification code
         </h1>
         {topSection}
