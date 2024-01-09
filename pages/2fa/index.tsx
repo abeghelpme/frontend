@@ -103,7 +103,7 @@ const TwoFa = () => {
       />
       {step === 1 ? (
         <>
-          <div className="md:px-[10% mx-auto mt-[3.5rem] w-full px-[5%] md:w-[80%]">
+          <div className="md:px-[10% mx-auto mt-[3.5rem] w-full px-[5%] md:w-[80%] md:px-0 lg:max-w-[1000px]">
             <h1 className="text-2xl font-semibold">
               Set up two-factor authentication
             </h1>
@@ -111,8 +111,8 @@ const TwoFa = () => {
               Add an extra layer of security to your account
             </p>
             <p className="mt-4">
-              Two-factor authentication protects your account by requiring an
-              additional code when you log in on a device that we don&apos;t
+              Two&#8209;factor authentication protects your account by requiring
+              an additional code when you log in on a device that we don&apos;t
               recognize.
             </p>
             <div className="mt-[3rem] space-y-8">
@@ -120,17 +120,21 @@ const TwoFa = () => {
                 Choose how you want to receive verification code
               </h2>
               <div>
-                <label htmlFor="app" className="space-y-2">
+                <label
+                  htmlFor="app"
+                  aria-label="Set up with Authenticator app"
+                  className="space-y-2"
+                >
                   <h3 className="font-semibold">Authentication app</h3>
                   <div className="flex items-center gap-8">
-                    <p className="balancedText">
+                    <p className="balancedText md:text-lg">
                       We recommend downloading the{" "}
                       <Link
                         target="_blank"
                         href={
                           "https://support.google.com/accounts/answer/1066447?hl=en&co=GENIE.Platform%3DiOS&oco=0"
                         }
-                        className="text-abeg-teal"
+                        className="font-medium text-abeg-green-50"
                       >
                         Google Authenticator
                       </Link>{" "}
@@ -140,7 +144,7 @@ const TwoFa = () => {
                     <input
                       type="radio"
                       value={"app"}
-                      name="2fa"
+                      name="2fa-app"
                       checked={selectedOption === "app"}
                       onChange={() => setSelectedOption("app")}
                       id="app"
@@ -149,16 +153,20 @@ const TwoFa = () => {
                   </div>
                 </label>
                 <hr className="my-4 border-b" />
-                <label htmlFor="email" className="space-y-2">
+                <label
+                  htmlFor="email"
+                  aria-label="Set up with email"
+                  className="space-y-2"
+                >
                   <h3 className=" font-semibold">Email Address</h3>
                   <div className="flex items-center gap-2 ">
-                    <p className="balancedText">
+                    <p className="balancedText md:text-lg">
                       We will send a code to your registered email address
                     </p>
                     <input
                       type="radio"
                       value={"email"}
-                      name="2fa"
+                      name="2fa-email"
                       checked={selectedOption === "email"}
                       onChange={() => setSelectedOption("email")}
                       id="email"
@@ -169,59 +177,61 @@ const TwoFa = () => {
               </div>
             </div>
           </div>
-          <div className="flex w-full justify-end border-t border-t-formBtn px-[5%] py-6 md:px-[10%] md:py-7">
-            <DialogComponent
-              openDialog={openModal}
-              setOpen={() => {
-                setOpenModal(false);
-                setOtp("");
-              }}
-              trigger={
-                <Button
-                  className="w-fit bg-abeg-button-10 px-6 py-3 font-medium"
-                  onClick={(e) => void handleStep(e)}
-                  loading={loading}
-                >
-                  NEXT
-                </Button>
-              }
-            >
-              <OtpInputDisplay
-                otp={otp}
-                setOtp={setOtp}
-                topSection={
-                  <>
-                    <p className="">{`Enter the 6 digits code we sent to ${castedUser?.email}`}</p>
-                  </>
+          <div className="border-t border-t-formBtn">
+            <div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
+              <DialogComponent
+                openDialog={openModal}
+                setOpen={() => {
+                  setOpenModal(false);
+                  setOtp("");
+                }}
+                trigger={
+                  <Button
+                    className="w-fit bg-abeg-button-10 px-6 py-3 font-medium"
+                    onClick={(e) => void handleStep(e)}
+                    loading={loading}
+                  >
+                    NEXT
+                  </Button>
                 }
-                bottomSection={
-                  <div className="mt-6 flex w-full flex-col gap-10">
-                    <p className="text-center">
-                      Didn&apos;t get a code? We can&nbsp;
+              >
+                <OtpInputDisplay
+                  otp={otp}
+                  setOtp={setOtp}
+                  topSection={
+                    <>
+                      <p className="">{`Enter the 6 digits code we sent to ${castedUser?.email}`}</p>
+                    </>
+                  }
+                  bottomSection={
+                    <div className="mt-6 flex w-full flex-col gap-10">
+                      <p className="text-center">
+                        Didn&apos;t get a code? We can&nbsp;
+                        <Button
+                          type="submit"
+                          disabled={loading}
+                          onClick={(e) => void handleStep(e)}
+                          className="p-0 text-base font-medium text-abeg-teal disabled:text-neutral-50"
+                        >
+                          resend it
+                        </Button>
+                      </p>
                       <Button
+                        className={`${
+                          otp === "" && "cursor-not-allowed"
+                        } block w-full rounded-md bg-formBtn py-4 font-semibold text-white`}
+                        fullWidth
                         type="submit"
-                        disabled={loading}
-                        onClick={(e) => void handleStep(e)}
-                        className="p-0 text-base font-medium text-abeg-teal disabled:text-neutral-50"
+                        onClick={(e) => otp !== "" && void handleSubmit(e)}
+                        loading={loading}
                       >
-                        resend it
+                        Complete
                       </Button>
-                    </p>
-                    <Button
-                      className={`${
-                        otp === "" && "cursor-not-allowed"
-                      } block w-full rounded-md bg-formBtn py-4 font-semibold text-white`}
-                      fullWidth
-                      type="submit"
-                      onClick={(e) => otp !== "" && void handleSubmit(e)}
-                      loading={loading}
-                    >
-                      Complete
-                    </Button>
-                  </div>
-                }
-              />
-            </DialogComponent>
+                    </div>
+                  }
+                />
+              </DialogComponent>
+            </div>
           </div>
         </>
       ) : (

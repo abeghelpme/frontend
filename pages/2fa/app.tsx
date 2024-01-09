@@ -8,7 +8,7 @@ const Authenticator = () => {
   const [step, setStep] = useState(2);
   const recoveryCode = useRef<string | null>(null);
   return (
-    <main className="relative  flex min-h-screen flex-1 flex-col">
+    <div className="relative flex min-h-screen flex-1 flex-col justify-between">
       <Image
         src={authBgContours}
         alt=""
@@ -21,7 +21,7 @@ const Authenticator = () => {
       ) : (
         <ShowRecoveryCode recoveryCode={recoveryCode.current} />
       )}
-    </main>
+    </div>
   );
 };
 
