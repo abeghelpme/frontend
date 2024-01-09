@@ -66,7 +66,7 @@ const TheComponent: FC<AvatarProps> = ({
       />
       <Fallback
         className={cn(
-          "text-abeg-neutral-40 leading-1 flex items-center justify-center h-full w-full text-center bg-white font-medium",
+          "leading-1 flex h-full w-full items-center justify-center bg-white text-center font-medium text-abeg-neutral-40",
           typeof size === "string" && size === "sm"
             ? "text-xs"
             : `text-${size}`,

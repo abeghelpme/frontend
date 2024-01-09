@@ -9,13 +9,13 @@ const Authenticator = () => {
   const [step, setStep] = useState(1);
   const recoveryCode = useRef<string | null>(null);
   return (
-    <main className="min-h-screen  flex flex-col flex-1 relative">
+    <main className="relative  flex min-h-screen flex-1 flex-col">
       <Image
         src={authBgContours}
         alt=""
         role="presentation"
         priority
-        className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
+        className="absolute inset-0 -z-[1] h-full w-full object-cover object-[75%]"
       />
       {step === 1 ? (
         <AppFirstStep setStep={setStep} recoveryCode={recoveryCode} />

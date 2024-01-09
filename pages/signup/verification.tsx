@@ -48,14 +48,14 @@ const VerificationPage = () => {
       hasSuccess={false}
     >
       <div className="space-y-2 text-center">
-        <h1 className="font-semibold text-abeg-neutral-10 text-xl md:text-2xl">
+        <h1 className="text-xl font-semibold text-abeg-neutral-10 md:text-2xl">
           Email Verification
         </h1>
         <p className="">
           Please check your email for the verification link sent to you. Click
           the link to verify your email
         </p>
-        <div className="flex flex-col gap-2 !mt-6">
+        <div className="!mt-6 flex flex-col gap-2">
           <p className="text-center text-sm">Didn&apos;t get the email?</p>
           <Button
             className="bg-abeg-teal py-4"

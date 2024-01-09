@@ -52,7 +52,7 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
             disabled={loading}
             loading={loading}
             onClick={(e) => void handleSubmit(e)}
-            className="text-white block bg-formBtn font-semibold py-4 w-full rounded-md my-8"
+            className="my-8 block w-full rounded-md bg-formBtn py-4 font-semibold text-white"
             fullWidth
           >
             Confirm
@@ -64,7 +64,7 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
                 type="submit"
                 disabled={resend.current}
                 onClick={(e) => void resendCode(e)}
-                className="text-abeg-teal font-medium p-0 disabled:text-neutral-50"
+                className="p-0 font-medium text-abeg-teal disabled:text-neutral-50"
               >
                 resend it
               </Button>
@@ -96,7 +96,7 @@ const AuthApp = ({ otp, setOtp, handleSubmit, loading }: Props) => {
           disabled={loading}
           loading={loading}
           onClick={(e) => void handleSubmit(e)}
-          className="text-white block bg-formBtn font-semibold py-4 w-full rounded-md mt-8"
+          className="mt-8 block w-full rounded-md bg-formBtn py-4 font-semibold text-white"
           fullWidth
         >
           Confirm
