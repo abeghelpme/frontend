@@ -5,7 +5,14 @@ import { type ApiResponse, type User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import { useSession } from "@/store/useSession";
-import { useRef, useState, type Dispatch, type FormEvent } from "react";
+import { useRouter } from "next/router";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type FormEvent,
+} from "react";
 
 type Props = {
   email?: string;
@@ -17,8 +24,8 @@ type Props = {
 const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
   const { toast } = useToast();
   const resend = useRef(false);
-  const resendCode = async (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const resendCode = async () => {
+    // e.preventDefault();
 
     resend.current = true;
     const { data, error } = await callApi<ApiResponse>("/auth/2fa/code/email");
@@ -27,17 +34,21 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
       return toast({
         title: error.status as string,
         description: error.message,
-        duration: 3000,
+        duration: 2000,
       });
     } else {
       resend.current = false;
       toast({
         title: "Success",
         description: (data as { message: string }).message,
-        duration: 3000,
+        duration: 2000,
       });
     }
   };
+  useEffect(() => {
+    void resendCode();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <OtpInputDisplay
       otp={otp}
@@ -63,8 +74,8 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
               <Button
                 type="submit"
                 disabled={resend.current}
-                onClick={(e) => void resendCode(e)}
-                className="p-0 font-medium text-abeg-teal disabled:text-neutral-50"
+                onClick={() => void resendCode()}
+                className="p-0 font-medium text-abeg-teal disabled:bg-transparent disabled:text-neutral-50"
               >
                 resend it
               </Button>
@@ -108,9 +119,21 @@ const AuthApp = ({ otp, setOtp, handleSubmit, loading }: Props) => {
 const AuthenticateUser = () => {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userPref, setUserPref] = useState({
+    verificationType: "",
+    email: "",
+  });
   const { toast } = useToast();
   const { user } = useSession((state) => state);
+  const router = useRouter();
   const castedUser = user as User;
+  const { email, verificationChoice } = router.query;
+  useEffect(() => {
+    setUserPref({
+      verificationType: verificationChoice as string,
+      email: email as string,
+    });
+  }, [email, verificationChoice]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -129,23 +152,24 @@ const AuthenticateUser = () => {
       return toast({
         title: error.status as string,
         description: error.message,
-        duration: 3000,
+        duration: 2000,
       });
     } else {
       setLoading(false);
       toast({
         title: "Success",
         description: (data as { message: string }).message,
-        duration: 3000,
+        duration: 2000,
       });
+      void router.push("/create-campaign");
     }
   };
-
   return (
     <AuthLayout formType="other" withHeader={false} hasSuccess={false}>
-      {castedUser?.twoFA.type !== "EMAIL" ? (
+      {castedUser?.twoFA.type !== "EMAIL" ||
+      userPref?.verificationType.toUpperCase() === "EMAIL" ? (
         <EmailAuth
-          email={castedUser?.email}
+          email={castedUser?.email || userPref?.email}
           otp={otp}
           setOtp={setOtp}
           handleSubmit={(e) => void handleSubmit(e)}

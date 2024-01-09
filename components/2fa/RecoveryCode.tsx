@@ -1,10 +1,13 @@
-import React from "react";
-import { useRouter } from "next/router";
-import { useToast } from "../ui/use-toast";
 import { ClipboardIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/router";
 import Button from "../primitives/Button/button";
+import { useToast } from "../ui/use-toast";
 
-const AppSecondStep = ({ recoveryCode }: { recoveryCode: string | null }) => {
+const ShowRecoveryCode = ({
+  recoveryCode,
+}: {
+  recoveryCode: string | null;
+}) => {
   const router = useRouter();
   const { toast } = useToast();
 
@@ -73,4 +76,4 @@ const AppSecondStep = ({ recoveryCode }: { recoveryCode: string | null }) => {
   );
 };
 
-export default AppSecondStep;
+export default ShowRecoveryCode;
