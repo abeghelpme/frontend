@@ -4,6 +4,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { type ApiResponse, type User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
+import { layoutForAuthPages } from "@/lib/utils/AuthPagesLayout";
 import { useSession } from "@/store/useSession";
 import { useRouter } from "next/router";
 import {
@@ -165,7 +166,7 @@ const AuthenticateUser = () => {
     }
   };
   return (
-    <AuthLayout formType="other" withHeader={false} hasSuccess={false}>
+    <AuthLayout withHeader={false} hasSuccess={false}>
       {castedUser?.twoFA.type !== "EMAIL" ||
       userPref?.verificationType.toUpperCase() === "EMAIL" ? (
         <EmailAuth
@@ -188,3 +189,5 @@ const AuthenticateUser = () => {
 };
 
 export default AuthenticateUser;
+
+AuthenticateUser.getLayout = layoutForAuthPages;

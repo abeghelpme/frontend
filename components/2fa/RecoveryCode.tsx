@@ -30,49 +30,52 @@ const ShowRecoveryCode = ({
   };
 
   return (
-    <div className="flex flex-1 flex-col ">
-      <div className="mx-auto my-4 flex w-full max-w-7xl flex-col gap-4 px-4 md:px-16">
-        <h1 className=" mt-8 text-lg font-semibold md:text-2xl">
+    <>
+      <div className="mx-auto mt-[3.5rem] flex w-full flex-col gap-8 px-[5%] md:w-[80%] md:px-0 lg:max-w-[1000px]">
+        <h1 className="balancedText text-lg font-semibold md:text-2xl">
           Two-factor authentication is enabled
         </h1>
         <p>
-          We’ll now ask for a login code whenever you log in on a device that we
-          don’t recognise.
+          We’ll now ask for a login code whenever you want to log in so that
+          we&apos;re sure it&apos;s you
         </p>
-        <p>
+        <p className="balancedText">
           Make sure to secure your recovery key in safe place . Without these,
           you may not be able to disable 2FA your account if you lose access to
           your phone or can’t log in using your security method.
         </p>
-        <div>
-          <h4 className="text-center text-sm">Recovery Key</h4>
-          <div className="flex flex-col items-center">
-            <p className="text-center font-bold">{recoveryCode}</p>
-            <Button
-              className="mt-2 flex items-center justify-center  text-abeg-teal"
-              onClick={() => void handleCopy()}
-            >
-              <ClipboardIcon aria-hidden="true" />
-              <span>Copy Key</span>
-            </Button>
+        <div className="mt-4 space-y-12">
+          <div>
+            <h4 className="text-center font-medium">Recovery Key</h4>
+            <div className="flex flex-col items-center">
+              <span className="text-center font-semibold">{recoveryCode}</span>
+              <Button
+                className="mt-2 flex items-center justify-center  text-abeg-teal"
+                onClick={() => void handleCopy()}
+              >
+                <ClipboardIcon aria-hidden="true" />
+                <span>Copy Key</span>
+              </Button>
+            </div>
           </div>
+          <p>
+            Keep your recovery key in a secure place as it is the only code that
+            can be used to disable your 2FA
+          </p>
         </div>
-        <p>
-          Keep your recovery key in a secure place as it is the only code that
-          can be used to disable your 2FA
-        </p>
       </div>
-      <hr className="mt-auto" />
-      <div className="mx-auto my-4 flex w-full max-w-7xl justify-end px-4 md:px-16">
-        <Button
-          className="w-fit bg-abeg-button-10 "
-          size="sm"
-          onClick={() => void router.push("/create-campaign")}
-        >
-          Got it!
-        </Button>
+      <div className="border-t border-t-formBtn">
+        <div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
+          <Button
+            className="w-fit bg-abeg-button-10 "
+            size="sm"
+            onClick={() => void router.push("/create-campaign")}
+          >
+            Got it!
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

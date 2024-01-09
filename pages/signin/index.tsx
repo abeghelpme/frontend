@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse, User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
+import { layoutForAuthPages } from "@/lib/utils/AuthPagesLayout";
 import {
   zodValidator,
   type LoginType,
@@ -100,15 +101,8 @@ const Login = () => {
     }
   };
 
-  // const handleActivate2fa = () => {
-  //   void router.push({
-  //     pathname: "/2fa",
-  //   });
-  // };
-
   return (
     <AuthLayout
-      formType="other"
       heading="Welcome back!"
       greeting="Sign in to continue"
       withHeader
@@ -224,3 +218,5 @@ const Login = () => {
 };
 
 export default Login;
+
+Login.getLayout = layoutForAuthPages;
