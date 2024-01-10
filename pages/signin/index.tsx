@@ -1,3 +1,4 @@
+import AuthChecker from "@/components/AuthChecker/AuthChecker";
 import DialogComponent from "@/components/Shared/Dialog";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
@@ -107,119 +108,123 @@ const Login = () => {
   // };
 
   return (
-    <AuthLayout
-      formType="other"
-      heading="Welcome back!"
-      greeting="Sign in to continue"
-      withHeader
-      hasSuccess={false}
-    >
-      <form
-        className=""
-        onSubmit={(event) => {
-          event.preventDefault();
-          void handleSubmit(onSubmit)(event);
-        }}
+    <AuthChecker>
+      <AuthLayout
+        formType="other"
+        heading="Welcome back!"
+        greeting="Sign in to continue"
+        withHeader
+        hasSuccess={false}
       >
-        <div className="space-y-1">
-          <label htmlFor="email" className="text-sm font-medium">
-            Email Address
-          </label>
-          <Input
-            {...register("email")}
-            autoFocus
-            type="email"
-            id="email"
-            placeholder="Enter your email address"
-            className={`min-h-[45px] ${
-              errors.email &&
-              "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
-            }`}
-          />
-          {errors.email && (
-            <p className="text-sm text-abeg-teal">{errors.email.message}</p>
-          )}
-        </div>
-        <div className="mt-4 space-y-1">
-          <label htmlFor="password" className="text-sm font-medium">
-            Password
-          </label>
-          <Input
-            {...register("password")}
-            type="password"
-            id="password"
-            placeholder="Enter password"
-            className={`min-h-[45px] ${
-              errors.password &&
-              "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
-            }`}
-          />
-          {errors.password && (
-            <p className="text-sm text-abeg-teal">{errors.password.message}</p>
-          )}
-        </div>
-        <Link
-          href="/forgot-password"
-          className="mt-2 inline-flex w-full justify-end text-sm font-semibold text-formBtn hover:underline"
+        <form
+          className=""
+          onSubmit={(event) => {
+            event.preventDefault();
+            void handleSubmit(onSubmit)(event);
+          }}
         >
-          Forgot Password?
-        </Link>
-        <div className="flex flex-col gap-3">
-          <DialogComponent
-            openDialog={openModal}
-            setOpen={() => setOpenModal(openModal)}
-            trigger={
-              <Button
-                type="submit"
-                disabled={isSubmitting || success}
-                loading={isSubmitting}
-                className="mt-6 bg-formBtn py-4 text-white disabled:bg-gray-500 "
-                fullWidth
-              >
-                Sign in
-              </Button>
-            }
+          <div className="space-y-1">
+            <label htmlFor="email" className="text-sm font-medium">
+              Email Address
+            </label>
+            <Input
+              {...register("email")}
+              autoFocus
+              type="email"
+              id="email"
+              placeholder="Enter your email address"
+              className={`min-h-[45px] ${
+                errors.email &&
+                "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+              }`}
+            />
+            {errors.email && (
+              <p className="text-sm text-abeg-teal">{errors.email.message}</p>
+            )}
+          </div>
+          <div className="mt-4 space-y-1">
+            <label htmlFor="password" className="text-sm font-medium">
+              Password
+            </label>
+            <Input
+              {...register("password")}
+              type="password"
+              id="password"
+              placeholder="Enter password"
+              className={`min-h-[45px] ${
+                errors.password &&
+                "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+              }`}
+            />
+            {errors.password && (
+              <p className="text-sm text-abeg-teal">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+          <Link
+            href="/forgot-password"
+            className="mt-2 inline-flex w-full justify-end text-sm font-semibold text-formBtn hover:underline"
           >
-            <div className="text-center">
-              <h2 className="text-2xl font-semibold">
-                Keep your account safe!
-              </h2>
-              <div className="mt-3 space-y-2">
-                <p className="">Your safety is our number one priority</p>
-                <p className="">
-                  Activate two-factor authentication and add an extra layer of
-                  security to your account
-                </p>
-              </div>
-              <div className="mt-6 flex flex-col">
-                <Link
-                  className="w-full rounded-md bg-formBtn py-4 text-sm font-semibold text-white"
-                  href="/2fa"
-                >
-                  Activate
-                </Link>
-
+            Forgot Password?
+          </Link>
+          <div className="flex flex-col gap-3">
+            <DialogComponent
+              openDialog={openModal}
+              setOpen={() => setOpenModal(openModal)}
+              trigger={
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
-                  onClick={handleOption}
-                  className="mt-4 border border-formBtn py-4 text-abeg-teal disabled:bg-gray-500 disabled:text-white"
+                  disabled={isSubmitting || success}
+                  loading={isSubmitting}
+                  className="mt-6 bg-formBtn py-4 text-white disabled:bg-gray-500 "
                   fullWidth
                 >
-                  Skip
+                  Sign in
                 </Button>
+              }
+            >
+              <div className="text-center">
+                <h2 className="text-2xl font-semibold">
+                  Keep your account safe!
+                </h2>
+                <div className="mt-3 space-y-2">
+                  <p className="">Your safety is our number one priority</p>
+                  <p className="">
+                    Activate two-factor authentication and add an extra layer of
+                    security to your account
+                  </p>
+                </div>
+                <div className="mt-6 flex flex-col">
+                  <Link
+                    className="w-full rounded-md bg-formBtn py-4 text-sm font-semibold text-white"
+                    href="/2fa"
+                  >
+                    Activate
+                  </Link>
+
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    onClick={handleOption}
+                    className="mt-4 border border-formBtn py-4 text-abeg-teal disabled:bg-gray-500 disabled:text-white"
+                    fullWidth
+                  >
+                    Skip
+                  </Button>
+                </div>
               </div>
-            </div>
-          </DialogComponent>
-          <p className="text-center text-sm">
-            Don&apos;t have an account?&nbsp;
-            <Link href="/signup" className="font-medium text-abeg-teal">
-              Register
-            </Link>
-          </p>
-        </div>
-      </form>
-    </AuthLayout>
+            </DialogComponent>
+            <p className="text-center text-sm">
+              Don&apos;t have an account?&nbsp;
+              <Link href="/signup" className="font-medium text-abeg-teal">
+                Register
+              </Link>
+            </p>
+          </div>
+        </form>
+      </AuthLayout>
+    </AuthChecker>
   );
 };
 
