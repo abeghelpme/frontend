@@ -11,8 +11,9 @@ const AuthChecker = ({ children }: Children) => {
 
   if (isLoggedIn) {
     void router.push("/");
+    return null;
   }
 
-  return <>{!isLoggedIn ? children : null}</>;
+  return <>{children}</>;
 };
 export default AuthChecker;
