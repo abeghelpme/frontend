@@ -6,20 +6,20 @@ import type { AppProps } from "next/app";
 import { Manrope } from "next/font/google";
 import { useRouter } from "next/router";
 import NextNProgress from "nextjs-progressbar";
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { useEffect } from "react";
 
 const manrope = Manrope({ subsets: ["latin"] });
-
 interface ComponentWithPageLayout extends AppProps {
   Component: AppProps["Component"] & {
     protect?: boolean;
+    getLayout?: (page: ReactElement) => ReactNode;
   };
 }
 
 export default function App({ Component, pageProps }: ComponentWithPageLayout) {
   const { getSession } = useSession((state) => state);
-
+  const getLayout = Component.getLayout ?? ((page) => page);
   useEffect(() => {
     void (async () => {
       await getSession(true);
@@ -40,7 +40,7 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
           <Component {...pageProps} />
         </Auth>
       ) : (
-        <Component {...pageProps} />
+        getLayout(<Component {...pageProps} />)
       )}
       <Toaster />
     </>

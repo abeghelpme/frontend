@@ -1,12 +1,11 @@
 import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
-import authBgContours from "@/public/assets/images/shared/bg-contours.png";
 import Image from "next/image";
 import type { FC, ReactNode } from "react";
 import LogoBanner from "./logoBanner";
 
 interface AuthLayoutProps {
   children: ReactNode;
-  formType: "signup" | "other";
+  formType?: "signup" | "other";
   greeting?: string;
   heading?: string;
   contentClass?: string;
@@ -26,7 +25,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   return (
     <div className="relative flex h-full flex-1 flex-col items-center gap-8 scroll-smooth py-12 md:gap-9">
       <Image
-        src={formType === "signup" ? (authBgJar as string) : authBgContours}
+        src={formType === "signup" ? (authBgJar as string) : ""}
         alt=""
         priority
         className="absolute inset-0 -z-[1] h-full w-full object-cover object-[75%]"

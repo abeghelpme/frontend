@@ -78,8 +78,6 @@ const signUpSchema: z.ZodType<SignUpProps> = z
         zxcvbnOptions.setOptions(options);
         const testedResult = zxcvbn(value);
 
-       
-
         if (testedResult.score < 3) {
           testedResult.feedback.suggestions.map((issue) =>
             ctx.addIssue({

@@ -38,7 +38,6 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition:
@@ -48,6 +47,10 @@ input:-webkit-autofill:focus {
 
 input[data-autocompleted] {
   background-color: transparent !important;
+}
+
+.balancedText {
+  text-wrap: balance;
 }
 
 /* 
