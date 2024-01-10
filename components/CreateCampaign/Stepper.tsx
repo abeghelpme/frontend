@@ -1,45 +1,99 @@
+import { cn } from "@/lib/utils";
 import tickIcon from "@/public/assets/icons/campaign/tick-circle.svg";
+import { useFormStore } from "@/store/formStore/formStore";
 import Image from "next/image";
 
-const semanticClasses = {
-  stepperIcon:
-    "grid font-bold shrink-0 text-white place-content-center aspect-square w-[2rem] bg-formBtn rounded-full",
+type StepIndicatorProps = {
+  children: React.ReactNode;
+  disabled?: boolean;
+  isCompleted?: boolean;
 };
 
+type StepInfoProps = Pick<StepIndicatorProps, "disabled"> & {
+  title: string;
+  description: string;
+};
+
+function StepIndicator({
+  children,
+  isCompleted = false,
+  disabled = false,
+}: StepIndicatorProps) {
+  const step = Number(children);
+
+  const TickIcon = (
+    <Image src={tickIcon as string} alt="" width={12} height={12} />
+  );
+
+  const Separator = (
+    <hr
+      className={cn(
+        "my-[0.4rem] basis-full border border-dashed border-formBtn",
+        disabled && "border-unfocused",
+      )}
+    />
+  );
+
+  return (
+    <div className={cn(step > 1 && "flex basis-full flex-col items-center")}>
+      {step > 1 && Separator}
+
+      <span
+        className={cn(
+          "grid aspect-square w-[2rem] shrink-0 place-content-center rounded-full bg-formBtn font-bold text-white",
+          disabled && "bg-unfocused",
+        )}
+      >
+        {isCompleted ? TickIcon : children}
+      </span>
+    </div>
+  );
+}
+
+function StepInfo({ title, description, disabled = false }: StepInfoProps) {
+  return (
+    <article className={cn("w-full", disabled && "text-unfocused")}>
+      <h5 className="text-[1.2rem] font-medium">{title}</h5>
+      <p>{description}</p>
+    </article>
+  );
+}
+
 function Stepper() {
+  const currentStep = useFormStore((state) => state.currentStep);
+
   return (
     <section className="flex gap-[1.2rem]">
-      <div className="flex flex-col items-center gap-[0.4rem] text-[1.2rem]">
-        <span className={semanticClasses.stepperIcon}>
-          <Image src={tickIcon as string} alt="" width={12} height={12} />
-        </span>
+      <div className="flex flex-col text-[1.2rem]">
+        <StepIndicator isCompleted={currentStep > 1}>1</StepIndicator>
 
-        <hr className="basis-full [border:1px_dashed_rgb(0,128,128)]" />
+        <StepIndicator disabled={currentStep < 2} isCompleted={currentStep > 2}>
+          2
+        </StepIndicator>
 
-        <span className={semanticClasses.stepperIcon}>2</span>
-
-        <hr className="basis-full [border:1px_dashed_rgb(0,128,128)]" />
-
-        <span className={semanticClasses.stepperIcon}>3</span>
+        <StepIndicator disabled={currentStep < 3}>3</StepIndicator>
       </div>
 
       <div className="flex flex-col items-center justify-between gap-[3.2rem] text-[1rem] text-formBtn">
-        <article className="w-full">
-          <h5 className="text-[1.2rem] font-medium">Basic Info</h5>
-          <p>Create a campaign to fund your passion or cause</p>
-        </article>
+        <StepInfo
+          title="Basic Info"
+          description="Create a campaign to fund your passion or cause"
+        />
 
-        <article className="w-full">
-          <h5 className="text-[1.2rem] font-medium">Funding</h5>
-          <p>Share your funding goal and deadline</p>
-        </article>
+        <StepInfo
+          title="Funding"
+          description="Share your funding goal and deadline"
+          disabled={currentStep < 2}
+        />
 
-        <article className="w-full">
-          <h5 className="text-[1.2rem] font-medium">Story</h5>
-          <p>Your story matters, and this is where it begins</p>
-        </article>
+        <StepInfo
+          title="Preview"
+          description="Preview your campaign"
+          disabled={currentStep < 3}
+        />
       </div>
     </section>
   );
 }
+
 export default Stepper;

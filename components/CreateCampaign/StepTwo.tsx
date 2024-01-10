@@ -30,7 +30,7 @@ function StepTwo() {
               icon={<ChevronDownIcon />}
               className="mt-[1.6rem] rounded-[10px] border-unfocused p-[2.3rem_0.8rem] text-[1rem] data-[placeholder]:text-placeholder"
             >
-              <Select.Value placeholder="Select your country" />
+              <Select.Value placeholder="Specify who is fundraising" />
             </Select.Trigger>
 
             <Select.Content id="category">
@@ -58,7 +58,7 @@ function StepTwo() {
             Campaign Deadline
           </label>
 
-          <DatePicker />
+          <DatePicker placeholder="Specify the end date for your campaign" />
         </div>
       </form>
     </section>

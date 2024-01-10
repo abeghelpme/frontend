@@ -6,7 +6,7 @@ import Button, { buttonVariants } from "../../Button/button";
 import Calendar from "./Calender";
 import { Popover } from "./Popover";
 
-const DatePicker = () => {
+const DatePicker = ({ placeholder }: { placeholder?: string }) => {
   const [date, setDate] = useState<Date>();
 
   return (
@@ -16,15 +16,11 @@ const DatePicker = () => {
           variant="secondary"
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "rounder-[6px] mt-[1.6rem] w-full justify-between border border-unfocused p-[2.3rem_0.8rem] text-left text-[1.2rem] font-normal",
+            "mt-[1.6rem] w-full justify-between rounded-[6px] border border-unfocused p-[2.3rem_0.8rem] text-left text-[1.2rem] font-normal",
             !date && "text-muted-foreground",
           )}
         >
-          {date ? (
-            format(date, "PPP")
-          ) : (
-            <span>Specify the end date for your campaign</span>
-          )}
+          {date ? format(date, "PPP") : <span>{placeholder}</span>}
 
           <CalendarIcon className="aspect-square w-[1.6rem]" />
         </Button>
