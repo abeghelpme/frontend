@@ -1,3 +1,4 @@
+import CloudFlareTensileBot from "@/components/CloudFlareTurnstile/CloudFlareTensileBot";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
@@ -5,6 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
+import { detectBot } from "@/lib/utils/detectBot";
 import {
   checkPasswordStrength,
   zodValidator,
@@ -116,8 +118,21 @@ const SignUp = () => {
       hasSuccess={false}
     >
       <form
+        id="sign-in-form"
         onSubmit={(event) => {
           event.preventDefault();
+
+          const turnstileResponse = detectBot(event);
+
+          if (turnstileResponse === "") {
+            toast({
+              title: "Error",
+              description: "Bot Detection test failed",
+              duration: 3000,
+            });
+            return;
+          }
+
           void handleSubmit(onSubmit)(event);
         }}
         action=""
@@ -273,6 +288,7 @@ const SignUp = () => {
           </div>
         </div>
         <div className="mt-2 flex flex-col">
+          <CloudFlareTensileBot />
           <div className="flex w-full gap-2">
             <Input
               type="checkbox"
@@ -291,6 +307,7 @@ const SignUp = () => {
               </Link>
               .
             </label>
+            c
           </div>
           {errors.terms && (
             <p className="mt-2 text-sm text-abeg-teal">

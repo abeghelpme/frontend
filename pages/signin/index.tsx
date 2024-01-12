@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse, User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
+import { detectBot } from "@/lib/utils/detectBot";
 import { layoutForAuthPages } from "@/lib/utils/AuthPagesLayout";
 import {
   zodValidator,
@@ -15,6 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import CloudFlareTensileBot from "@/components/CloudFlareTurnstile/CloudFlareTensileBot";
 
 const Login = () => {
   const showModal = useRef(false);
@@ -112,6 +114,18 @@ const Login = () => {
         className=""
         onSubmit={(event) => {
           event.preventDefault();
+
+          const turnstileResponse = detectBot(event);
+
+          if (turnstileResponse === "") {
+            toast({
+              title: "Error",
+              description: "Bot Detection test failed",
+              duration: 3000,
+            });
+            return;
+          }
+
           void handleSubmit(onSubmit)(event);
         }}
       >
@@ -158,6 +172,7 @@ const Login = () => {
         >
           Forgot Password?
         </Link>
+        <CloudFlareTensileBot />
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
