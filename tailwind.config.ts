@@ -97,6 +97,7 @@ const config: Config = {
   ],
   plugins: [
     require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
     plugin(function ({ addVariant }) {
       addVariant("progress-unfilled", ["&::-webkit-progress-bar", "&"]);
       addVariant("progress-filled", [

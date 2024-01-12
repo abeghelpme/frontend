@@ -1,14 +1,17 @@
 import { cn } from "@/lib/utils";
-import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
-import { useState } from "react";
+import { CalendarIcon } from "lucide-react";
 import Button, { buttonVariants } from "../../Button/button";
 import Calendar from "./Calender";
 import { Popover } from "./Popover";
 
-const DatePicker = ({ placeholder }: { placeholder?: string }) => {
-  const [date, setDate] = useState<Date>();
+type DatePickerProps = {
+  placeholder?: string;
+  dateValue?: Date;
+  onChange?: (date?: Date) => void;
+};
 
+const DatePicker = ({ placeholder, dateValue, onChange }: DatePickerProps) => {
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
@@ -17,10 +20,10 @@ const DatePicker = ({ placeholder }: { placeholder?: string }) => {
           className={cn(
             buttonVariants({ variant: "outline" }),
             "mt-[1.6rem] w-full justify-between rounded-[6px] border border-unfocused p-[2.3rem_0.8rem] text-left text-[1.2rem] font-normal",
-            !date && "text-muted-foreground",
+            !dateValue && "text-muted-foreground",
           )}
         >
-          {date ? format(date, "PPP") : <span>{placeholder}</span>}
+          <span>{dateValue ? format(dateValue, "PPP") : placeholder}</span>
 
           <CalendarIcon className="aspect-square w-[1.6rem]" />
         </Button>
@@ -33,9 +36,9 @@ const DatePicker = ({ placeholder }: { placeholder?: string }) => {
             cell: "text-[1.2rem] font-medium hover:scale-[1.03]",
           }}
           mode="single"
-          selected={date}
-          onSelect={setDate}
-          initialFocus
+          selected={dateValue}
+          onSelect={onChange}
+          initialFocus={true}
         />
       </Popover.Content>
     </Popover.Root>

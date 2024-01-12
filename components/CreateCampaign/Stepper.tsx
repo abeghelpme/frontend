@@ -63,7 +63,7 @@ function Stepper() {
   const currentStep = useFormStore((state) => state.currentStep);
 
   return (
-    <section className="flex gap-[1.2rem]">
+    <section className="flex gap-[1.2rem] px-[2.4rem]">
       <div className="flex flex-col text-[1.2rem]">
         <StepIndicator isCompleted={currentStep > 1}>1</StepIndicator>
 

@@ -10,8 +10,8 @@
   "editor.detectIndentation": false,
   "editor.insertSpaces": true,
   "cSpell.words": ["signin", "zustand"],
-  "files.autoSave": "off",
   "editor.codeActionsOnSave": {
     "source.addMissingImports": "never"
+    // "source.organizeImports": "never"
   }
 }

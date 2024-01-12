@@ -1,31 +1,49 @@
-type StepOneData = {
-  fundRaiserCategory: string;
+export type JSONContent = {
+  [key: string]: NonNullable<unknown> | undefined;
+  type?: string;
+  attrs?: Record<string, NonNullable<unknown>>;
+  content?: JSONContent[];
+
+  marks?: Array<{
+    [key: string]: NonNullable<unknown> | undefined;
+    type: string;
+    attrs?: JSONContent["attrs"];
+  }>;
+
+  text?: string;
+};
+
+export type StepOneData = {
+  fundraiserCategory: string;
   country: string;
   campaignTags: string[];
 };
 
-type StepTwoData = {
+export type StepTwoData = {
   campaignTitle: string;
-  fundraisrIdentity: string;
+  fundraiserTarget: string;
   campaignGoal: string;
-  campaignDeadline: string;
+  campaignDeadline: Date;
 };
 
-type StepThreeData = {
-  campaignImageUrl: string;
-  campaignStory: string;
+export type StepThreeData = {
+  campaignImage: string;
+  campaignStory: JSONContent;
 };
 
-type setDataType =
-  | { step: 1; data: StepOneData }
-  | { step: 2; data: StepTwoData }
+type SetDataParams =
+  | { step: 1; data: StepOneData; nextStep?: 2 }
+  | { step: 2; data: StepTwoData; nextStep?: 3 }
   | { step: 3; data: StepThreeData };
 
 export type FormStore = {
-  currentStep: 1 | 2 | 3;
-  stepOne: StepOneData | null;
-  stepTwo: StepTwoData | null;
-  stepThree: StepThreeData | null;
+  currentStep: SetDataParams["step"];
+  stepOneData: StepOneData | null;
+  stepTwoData: StepTwoData | null;
+  stepThreeData: StepThreeData | null;
 
-  setStepAndData: ({ step, data }: setDataType) => void;
+  setData: (paramsObj: SetDataParams) => void;
+  initializeStoreData: () => Promise<void>;
 };
+
+export type SelectorFn<TState> = (state: FormStore) => TState;
