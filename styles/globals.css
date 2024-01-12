@@ -60,6 +60,10 @@ input[data-autocompleted] {
   background-color: transparent !important;
 }
 
+.balancedText {
+  text-wrap: balance;
+}
+
 /*
 Storybook Preview Body Background Color intentionally set to edge against machines dark modes
 TODO: Configure a dark mode support system for stories at some point

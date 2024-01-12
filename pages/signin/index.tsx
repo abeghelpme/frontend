@@ -5,10 +5,12 @@ import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse, User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
+import { layoutForAuthPages } from "@/lib/utils/AuthPagesLayout";
 import {
   zodValidator,
   type LoginType,
 } from "@/lib/utils/validation/validateWithZod";
+import { useSession } from "@/store/useSession";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -22,6 +24,7 @@ const Login = () => {
   const [openModal, setOpenModal] = useState(false);
   const [success] = useState(false);
   const [skip2FA, setSkip2FA] = useState("false");
+  const { user } = useSession((state) => state);
   useEffect(() => {
     const checkLS = () => {
       if (!showModal.current) {
@@ -100,15 +103,12 @@ const Login = () => {
     }
   };
 
-  // const handleActivate2fa = () => {
-  //   void router.push({
-  //     pathname: "/2fa",
-  //   });
-  // };
-
+  if (user !== null) {
+    void router.push("/");
+    return null;
+  }
   return (
     <AuthLayout
-      formType="other"
       heading="Welcome back!"
       greeting="Sign in to continue"
       withHeader
@@ -224,3 +224,6 @@ const Login = () => {
 };
 
 export default Login;
+
+Login.protect = true;
+Login.getLayout = layoutForAuthPages;

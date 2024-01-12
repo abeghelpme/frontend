@@ -15,6 +15,7 @@ const config: Config = {
         "3xl": "2000px",
       },
       backgroundImage: {
+        contours: "url('/assets/images/shared/bg-contours.png')",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
