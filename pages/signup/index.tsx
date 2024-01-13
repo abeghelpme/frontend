@@ -12,6 +12,7 @@ import {
   zodValidator,
   type SignUpType,
 } from "@/lib/utils/validation/validateWithZod";
+import { useSession } from "@/store/useSession";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -20,6 +21,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 
 const SignUp = () => {
   const { toast } = useToast();
+  const { user } = useSession((state) => state);
   const showModal = useRef(false);
   const [message, setMessage] = useState<ApiResponse>({
     status: "",
@@ -107,6 +109,10 @@ const SignUp = () => {
       }, 1500);
     }
   };
+  if (user !== null) {
+    void router.push("/");
+    return null;
+  }
 
   return (
     <AuthLayout
@@ -337,3 +343,5 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+SignUp.protect = true;

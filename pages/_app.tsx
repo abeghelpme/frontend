@@ -52,7 +52,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   if (loading) return <LoadingComp message="Loading..." />;
 
-  if (user === null) {
+  if (user === null && router.pathname !== "/signin") {
     void router.push("/signin");
     return (
       <LoadingComp message="You are not signed in. Redirecting to Login" />

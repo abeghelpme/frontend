@@ -11,6 +11,7 @@ import {
   zodValidator,
   type LoginType,
 } from "@/lib/utils/validation/validateWithZod";
+import { useSession } from "@/store/useSession";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -25,6 +26,7 @@ const Login = () => {
   const [openModal, setOpenModal] = useState(false);
   const [success] = useState(false);
   const [skip2FA, setSkip2FA] = useState("false");
+  const { user } = useSession((state) => state);
   useEffect(() => {
     const checkLS = () => {
       if (!showModal.current) {
@@ -100,9 +102,13 @@ const Login = () => {
         }, 2500);
       }
       return;
-    }
+    }    
   };
 
+  if (user !== null) {
+    void router.push("/");
+    return null;
+  }
   return (
     <AuthLayout
       heading="Welcome back!"
@@ -235,3 +241,4 @@ const Login = () => {
 export default Login;
 
 Login.getLayout = layoutForAuthPages;
+Login.protect = true;
