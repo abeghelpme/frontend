@@ -24,18 +24,20 @@ const AuthLayout: FC<AuthLayoutProps> = ({
 }) => {
   return (
     <div className="relative flex h-full flex-1 flex-col items-center gap-8 scroll-smooth py-12 md:gap-9">
-      <Image
-        src={formType === "signup" ? (authBgJar as string) : ""}
-        alt=""
-        priority
-        className="absolute inset-0 -z-[1] h-full w-full object-cover object-[75%]"
-      />
+      {formType === "signup" && (
+        <Image
+          src={authBgJar as string}
+          alt=""
+          priority
+          className="absolute inset-0 -z-[1] h-full w-full object-cover object-[75%]"
+        />
+      )}
       <LogoBanner />
 
       {!hasSuccess ? (
         <div
           className={`mx-auto my-auto w-[90%] space-y-6 scroll-smooth rounded-lg bg-white px-4 py-10 shadow-auth-layout-shadow md:mx-0 md:p-10 lg:p-10 ${
-            formType === "other" ? "max-w-[467px]" : contentClass
+            contentClass === "" ? "max-w-[467px]" : contentClass
           }`}
         >
           {withHeader && (
