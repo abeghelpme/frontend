@@ -100,7 +100,7 @@ const Login = () => {
         }, 2500);
       }
       return;
-    }
+    }    
   };
 
   if (user !== null) {
@@ -225,5 +225,5 @@ const Login = () => {
 
 export default Login;
 
-// Login.protect = true;
 Login.getLayout = layoutForAuthPages;
+Login.protect = false;
