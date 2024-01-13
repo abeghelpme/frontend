@@ -225,5 +225,5 @@ const Login = () => {
 
 export default Login;
 
-Login.protect = true;
 Login.getLayout = layoutForAuthPages;
+Login.protect = true;
