@@ -3,7 +3,6 @@ import { Select } from "@/components/primitives/Form/Select";
 import { useFormStore, type StepTwoData } from "@/store/formStore";
 import { ChevronDownIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
-import NextButton from "./NextButton";
 
 function StepTwo() {
   const { setData, stepTwoData } = useFormStore((state) => state);
@@ -19,18 +18,19 @@ function StepTwo() {
 
   return (
     <section>
-      <h2 className="px-[2.4rem] text-[1.6rem] font-bold text-formBtn">
+      <h2 className="text-[1.6rem] font-bold text-formBtn">
         Share your funding goal and deadline
       </h2>
 
       <form
-        className="mt-[3.2rem] flex flex-col gap-[4rem]"
+        id="step-2"
+        className="mt-[3.2rem]"
         onSubmit={(event) => {
           event.preventDefault();
           void handleSubmit(onSubmit)(event);
         }}
       >
-        <ol className="flex flex-col gap-[2.4rem] px-[2.4rem]">
+        <ol className="flex flex-col gap-[2.4rem]">
           <li>
             <label
               htmlFor="campaignTitle"
@@ -113,8 +113,6 @@ function StepTwo() {
             />
           </li>
         </ol>
-
-        <NextButton />
       </form>
     </section>
   );

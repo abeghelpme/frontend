@@ -27,7 +27,7 @@ export type StepTwoData = {
 };
 
 export type StepThreeData = {
-  campaignImage: string;
+  campaignImageFiles: File[];
   campaignStory: JSONContent;
 };
 

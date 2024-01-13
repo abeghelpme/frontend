@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useRef, type KeyboardEvent, type MouseEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Button from "../primitives/Button/button";
-import NextButton from "./NextButton";
 
 function StepOne() {
   const campaignTagInputRef = useRef<HTMLInputElement>(null);
@@ -23,6 +22,10 @@ function StepOne() {
     mode: "onTouched",
     defaultValues: stepOneData ?? {},
   });
+
+  const onSubmit = (data: StepOneData) => {
+    setData({ step: 1, data, nextStep: 2 });
+  };
 
   const handleAddCampaignTag = (
     event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>,
@@ -55,7 +58,7 @@ function StepOne() {
   };
 
   const handleRemoveCampaignTags = (tag: string) => () => {
-    const newState = campaignTags.filter((t) => t !== tag);
+    const newState = campaignTags.filter((t) => tag !== t);
 
     if (stepOneData === null) return;
 
@@ -64,24 +67,21 @@ function StepOne() {
     setFormValue("campaignTags", newState);
   };
 
-  const onSubmit = (data: StepOneData) => {
-    setData({ step: 1, data, nextStep: 2 });
-  };
-
   return (
     <section>
-      <h2 className="px-[2.4rem] text-[1.6rem] font-bold text-formBtn">
+      <h2 className="text-[1.6rem] font-bold text-formBtn">
         Create a campaign to fund your passion or cause.
       </h2>
 
       <form
+        id="step-1"
         onSubmit={(event) => {
           event.preventDefault();
           void handleSubmit(onSubmit)(event);
         }}
-        className="mt-[3.2rem] flex flex-col gap-[4rem]"
+        className="mt-[3.2rem]"
       >
-        <ol className="flex flex-col gap-[2.4rem] px-[2.4rem]">
+        <ol className="flex flex-col gap-[2.4rem]">
           <li>
             <label className="text-[1.4rem] font-semibold">
               What best describes your fundraiser?
@@ -203,8 +203,6 @@ function StepOne() {
             </div>
           </li>
         </ol>
-
-        <NextButton />
       </form>
     </section>
   );

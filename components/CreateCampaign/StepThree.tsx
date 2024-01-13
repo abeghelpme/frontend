@@ -1,9 +1,9 @@
 import { useFormStore } from "@/store/formStore/formStore";
 import type { StepThreeData } from "@/store/formStore/formStore.types";
+import Image from "next/image";
 import { Controller, useForm } from "react-hook-form";
 import Button from "../primitives/Button/button";
 import { toast } from "../ui/use-toast";
-import NextButton from "./NextButton";
 import TiptapEditor from "./TipTapEditor";
 
 const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -15,7 +15,14 @@ const FILE_SIZE_LIMIT = 5 * 1024 * 1024;
 function StepThree() {
   const { setData, stepThreeData } = useFormStore((state) => state);
 
-  const { control, handleSubmit, reset } = useForm({
+  const { campaignImageFiles = [] } = stepThreeData ?? {};
+
+  const {
+    control,
+    handleSubmit,
+    setValue: setFormValue,
+    getValues: getFormValues,
+  } = useForm({
     mode: "onTouched",
     defaultValues: stepThreeData ?? {},
   });
@@ -24,7 +31,6 @@ function StepThree() {
     if (event.target.files === null) {
       toast({
         title: "Error",
-        className: "text-[1.4rem]",
         description: "No file selected",
         duration: 3000,
         variant: "destructive",
@@ -39,7 +45,6 @@ function StepThree() {
       if (!allowedFileTypes.includes(file.type)) {
         toast({
           title: "Error",
-          className: "text-[2rem]",
           description: `File type must be of ${acceptedFilesString}`,
           duration: 3000,
           variant: "destructive",
@@ -51,7 +56,6 @@ function StepThree() {
       if (file.size > FILE_SIZE_LIMIT) {
         toast({
           title: "Error",
-          className: "text-[1.4rem]",
           description: "Cannot upload a file larger than 5mb",
           duration: 3000,
           variant: "destructive",
@@ -59,37 +63,52 @@ function StepThree() {
 
         return;
       }
-
-      const reader = new FileReader();
-
-      reader.readAsDataURL(file);
-
-      reader.onloadend = () => {
-        console.log(reader.result);
-      };
     }
+
+    const newState = [...fileList];
+
+    setData({
+      step: 3,
+      data: {
+        ...(stepThreeData ?? getFormValues()),
+        campaignImageFiles: newState,
+      },
+    });
+
+    setFormValue("campaignImageFiles", newState);
   };
 
   const onSubmit = (data: StepThreeData) => {
     setData({ step: 3, data });
 
-    reset();
+    const formData = new FormData();
+
+    formData.set("campaignStory", JSON.stringify(data.campaignStory));
+
+    if (data.campaignImageFiles.length === 0) return; //TODO - show error
+
+    for (const file of data.campaignImageFiles) {
+      formData.append("campaignImages", file);
+    }
+
+    console.log(formData.getAll("campaignImages"));
   };
 
   return (
     <section>
-      <h2 className="px-[2.4rem] text-[1.6rem] font-bold text-formBtn">
+      <h2 className="text-[1.6rem] font-bold text-formBtn">
         Your story matters and this is where it begins.
       </h2>
 
       <form
-        className="mt-[3.2rem] flex flex-col gap-[4rem]"
+        id="step-3"
+        className="mt-[3.2rem]"
         onSubmit={(event) => {
           event.preventDefault();
           void handleSubmit(onSubmit)(event);
         }}
       >
-        <ol className="flex flex-col gap-[2.4rem] px-[2.4rem]">
+        <ol className="flex flex-col gap-[2.4rem]">
           <li>
             <label className="text-[1.4rem] font-semibold">
               Campaign Cover Image
@@ -114,6 +133,17 @@ function StepThree() {
               <p className="mt-[1.5rem]">Support files; PDF, JPG, CSV </p>
               <p className="text-abeg-green">Not more than 5mb</p>
             </div>
+
+            {campaignImageFiles.map((file) => (
+              <Image
+                width={500}
+                height={500}
+                key={file.name}
+                src={URL.createObjectURL(file)}
+                alt={file.name}
+                className="mt-[1.6rem] rounded-[5px]"
+              />
+            ))}
           </li>
 
           <li>
@@ -139,8 +169,6 @@ function StepThree() {
             />
           </li>
         </ol>
-
-        <NextButton />
       </form>
     </section>
   );

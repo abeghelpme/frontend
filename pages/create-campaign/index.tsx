@@ -1,9 +1,10 @@
 import {
   StepOne,
   StepThree,
+  StepTracker,
   StepTwo,
-  Stepper,
 } from "@/components/CreateCampaign";
+import NextButton from "@/components/CreateCampaign/NextButton";
 import { useFormStore } from "@/store/formStore";
 import { useEffect } from "react";
 
@@ -25,10 +26,14 @@ function CreateCampaignPage() {
   }, [currentStep]);
 
   return (
-    <main className="flex flex-col gap-[3.2rem] pt-[3.2rem]" data-rem-reset>
-      <Stepper />
+    <main className="pt-[3.2rem]" data-rem-reset>
+      <div className="flex flex-col gap-[3.2rem] border-b-[1px] border-b-formBtn px-[2.4rem] pb-[5.5rem]">
+        <StepTracker />
 
-      {FORM_STEP_LOOKUP[currentStep]}
+        {FORM_STEP_LOOKUP[currentStep]}
+      </div>
+
+      <NextButton targetForm={`step-${currentStep}`} />
     </main>
   );
 }

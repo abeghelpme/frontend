@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
 import tickIcon from "@/public/assets/icons/campaign/tick-circle.svg";
+import type { FormStore } from "@/store/formStore";
 import { useFormStore } from "@/store/formStore/formStore";
 import Image from "next/image";
 
 type StepIndicatorProps = {
-  children: React.ReactNode;
+  step: FormStore["currentStep"];
   disabled?: boolean;
   isCompleted?: boolean;
 };
@@ -15,12 +16,10 @@ type StepInfoProps = Pick<StepIndicatorProps, "disabled"> & {
 };
 
 function StepIndicator({
-  children,
+  step,
   isCompleted = false,
   disabled = false,
 }: StepIndicatorProps) {
-  const step = Number(children);
-
   const TickIcon = (
     <Image src={tickIcon as string} alt="" width={12} height={12} />
   );
@@ -44,7 +43,7 @@ function StepIndicator({
           disabled && "bg-unfocused",
         )}
       >
-        {isCompleted ? TickIcon : children}
+        {isCompleted ? TickIcon : step}
       </span>
     </div>
   );
@@ -59,19 +58,21 @@ function StepInfo({ title, description, disabled = false }: StepInfoProps) {
   );
 }
 
-function Stepper() {
-  const currentStep = useFormStore((state) => state.currentStep);
+function StepTracker() {
+  const { currentStep } = useFormStore((state) => state);
 
   return (
-    <section className="flex gap-[1.2rem] px-[2.4rem]">
+    <section className="flex gap-[1.2rem]">
       <div className="flex flex-col text-[1.2rem]">
-        <StepIndicator isCompleted={currentStep > 1}>1</StepIndicator>
+        <StepIndicator step={1} isCompleted={currentStep > 1} />
 
-        <StepIndicator disabled={currentStep < 2} isCompleted={currentStep > 2}>
-          2
-        </StepIndicator>
+        <StepIndicator
+          step={2}
+          disabled={currentStep < 2}
+          isCompleted={currentStep > 2}
+        />
 
-        <StepIndicator disabled={currentStep < 3}>3</StepIndicator>
+        <StepIndicator step={3} disabled={currentStep < 3} />
       </div>
 
       <div className="flex flex-col items-center justify-between gap-[3.2rem] text-[1rem] text-formBtn">
@@ -96,4 +97,4 @@ function Stepper() {
   );
 }
 
-export default Stepper;
+export default StepTracker;
