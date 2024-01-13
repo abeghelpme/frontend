@@ -5,7 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
-import { detectBot } from "@/lib/utils/create-fetcher/detectBot";
+import { detectBot } from "@/lib/utils/detectBot";
 import {
   checkPasswordStrength,
   zodValidator,

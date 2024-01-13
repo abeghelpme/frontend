@@ -7,7 +7,7 @@ import type { ApiResponse, User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import { layoutForAuthPages } from "@/lib/utils/AuthPagesLayout";
-import { detectBot } from "@/lib/utils/create-fetcher/detectBot";
+import { detectBot } from "@/lib/utils/detectBot";
 import {
   zodValidator,
   type LoginType,
