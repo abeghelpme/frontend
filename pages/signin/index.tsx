@@ -1,3 +1,4 @@
+import CloudFlareTurnStile from "@/components/CloudflareTurnstile/CloudFlareTurnStile";
 import DialogComponent from "@/components/Shared/Dialog";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
@@ -6,6 +7,7 @@ import type { ApiResponse, User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import { layoutForAuthPages } from "@/lib/utils/AuthPagesLayout";
+import { detectBot } from "@/lib/utils/create-fetcher/detectBot";
 import {
   zodValidator,
   type LoginType,
@@ -100,7 +102,7 @@ const Login = () => {
         }, 2500);
       }
       return;
-    }    
+    }
   };
 
   if (user !== null) {
@@ -115,9 +117,21 @@ const Login = () => {
       hasSuccess={false}
     >
       <form
+        id="cf-turnstile-form"
         className=""
         onSubmit={(event) => {
           event.preventDefault();
+          const turnstileResponse = detectBot(event);
+
+          if (turnstileResponse === "") {
+            toast({
+              title: "Bot Detection Error",
+              description: "Bot Detection Error Failed.",
+              duration: 2000,
+            });
+            return;
+          }
+
           void handleSubmit(onSubmit)(event);
         }}
       >
@@ -164,6 +178,7 @@ const Login = () => {
         >
           Forgot Password?
         </Link>
+        <CloudFlareTurnStile />
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}

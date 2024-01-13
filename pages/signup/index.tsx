@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
+import { detectBot } from "@/lib/utils/create-fetcher/detectBot";
 import {
   checkPasswordStrength,
   zodValidator,
@@ -122,8 +123,20 @@ const SignUp = () => {
       hasSuccess={false}
     >
       <form
+        id="cf-turnstile-form"
         onSubmit={(event) => {
           event.preventDefault();
+          const turnstileResponse = detectBot(event);
+
+          if (turnstileResponse === "") {
+            toast({
+              title: "Bot Detection Error",
+              description: "Bot Detection Error Failed.",
+              duration: 2000,
+            });
+            return;
+          }
+
           void handleSubmit(onSubmit)(event);
         }}
         action=""
