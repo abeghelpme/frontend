@@ -48,7 +48,7 @@ function TiptapEditor({ placeholder, editorContent, onChange }: EditorProps) {
     <div className="flex min-h-[17.8rem] flex-col justify-between rounded-[6px] border border-unfocused p-[1.6rem] focus-within:[outline:2px_solid_theme(colors.formBtn)]">
       <EditorContent
         editor={editor}
-        className="text-[1.2rem] lg:text-[1.6rem] [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:float-right [&_p.is-editor-empty:first-child]:before:text-placeholder [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"
+        className="text-[1.2rem] lg:text-[1.6rem] [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:absolute [&_p.is-editor-empty:first-child]:before:left-0  [&_p.is-editor-empty:first-child]:before:text-placeholder [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"
       />
 
       <div className="flex flex-col gap-[0.8rem]">

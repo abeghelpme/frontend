@@ -59,7 +59,7 @@ function StepInfo({ title, description, disabled = false }: StepInfoProps) {
 }
 
 function StepTracker() {
-  const { currentStep } = useFormStore((state) => state);
+  const currentStep = useFormStore((state) => state.currentStep);
 
   return (
     <section className="flex gap-[1.2rem]">

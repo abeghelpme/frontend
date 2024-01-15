@@ -15,7 +15,7 @@ const FORM_STEP_LOOKUP = {
 };
 
 function CreateCampaignPage() {
-  const { currentStep } = useFormStore((state) => state);
+  const currentStep = useFormStore((state) => state.currentStep);
 
   useEffect(() => {
     window.scrollTo({

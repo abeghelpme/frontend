@@ -1,3 +1,4 @@
+import Button from "@/components/primitives/Button/button";
 import { Select } from "@/components/primitives/Form/Select";
 import crossIcon from "@/public/assets/icons/campaign/cross-icon.svg";
 import { useFormStore, type StepOneData } from "@/store/formStore";
@@ -5,7 +6,6 @@ import { ChevronDownIcon } from "lucide-react";
 import Image from "next/image";
 import { useRef, type KeyboardEvent, type MouseEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
-import Button from "../primitives/Button/button";
 
 function StepOne() {
   const campaignTagInputRef = useRef<HTMLInputElement>(null);
@@ -17,7 +17,6 @@ function StepOne() {
     control,
     handleSubmit,
     setValue: setFormValue,
-    getValues: getFormValues,
   } = useForm({
     mode: "onTouched",
     defaultValues: stepOneData ?? {},
@@ -49,7 +48,7 @@ function StepOne() {
 
     setData({
       step: 1,
-      data: { ...(stepOneData ?? getFormValues()), campaignTags: newState },
+      data: { campaignTags: newState },
     });
 
     setFormValue("campaignTags", newState);
@@ -58,11 +57,9 @@ function StepOne() {
   };
 
   const handleRemoveCampaignTags = (tag: string) => () => {
-    const newState = campaignTags.filter((t) => tag !== t);
+    const newState = campaignTags.filter((t) => t !== tag);
 
-    if (stepOneData === null) return;
-
-    setData({ step: 1, data: { ...stepOneData, campaignTags: newState } });
+    setData({ step: 1, data: { campaignTags: newState } });
 
     setFormValue("campaignTags", newState);
   };
@@ -160,8 +157,8 @@ function StepOne() {
                 id="campaignTags"
                 name="campaignTags"
                 type="text"
-                className="w-full rounded-[10px] border border-unfocused p-[1.5rem_0.8rem] text-[1rem] focus-visible:outline-formBtn"
                 placeholder="Add hashtags or search keywords to your campaign"
+                className="w-full rounded-[10px] border border-unfocused p-[1.5rem_0.8rem] text-[1rem] focus-visible:outline-formBtn"
                 onKeyDown={handleAddCampaignTag}
               />
               <Button

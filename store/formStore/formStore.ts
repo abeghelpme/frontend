@@ -6,9 +6,9 @@ const STEP_LOOKUP = {
   1: "stepOneData",
   2: "stepTwoData",
   3: "stepThreeData",
-};
+} as const;
 
-const stateObjectFn: StateCreator<FormStore> = (set) => ({
+const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
   currentStep: 1,
   stepOneData: null,
   stepTwoData: null,
@@ -16,10 +16,13 @@ const stateObjectFn: StateCreator<FormStore> = (set) => ({
 
   setData: (paramsObj) => {
     const { step, data } = paramsObj;
+    const stepDataKey = STEP_LOOKUP[step];
 
-    set({ [STEP_LOOKUP[step]]: data });
+    const { [stepDataKey]: prevData } = get();
 
-    if ("nextStep" in paramsObj && paramsObj.nextStep) {
+    set({ [stepDataKey]: { ...prevData, ...data } });
+
+    if ("nextStep" in paramsObj) {
       set({ currentStep: paramsObj.nextStep });
     }
   },
