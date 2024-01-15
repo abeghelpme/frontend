@@ -5,7 +5,7 @@ import {
   StepTwo,
 } from "@/components/CreateCampaign";
 import NextButton from "@/components/CreateCampaign/NextButton";
-import { useFormStore } from "@/store/formStore";
+import { FORM_STEP_KEY_LOOKUP, useFormStore } from "@/store/formStore";
 import { useEffect } from "react";
 
 const FORM_STEP_LOOKUP = {
@@ -33,7 +33,7 @@ function CreateCampaignPage() {
         {FORM_STEP_LOOKUP[currentStep]}
       </div>
 
-      <NextButton targetForm={`step-${currentStep}`} />
+      <NextButton targetForm={FORM_STEP_KEY_LOOKUP[currentStep]} />
     </main>
   );
 }

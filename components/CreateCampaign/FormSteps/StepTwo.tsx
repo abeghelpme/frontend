@@ -1,6 +1,7 @@
 import { DatePicker } from "@/components/primitives/Form/DatePicker";
 import { Select } from "@/components/primitives/Form/Select";
 import { useFormStore, type StepTwoData } from "@/store/formStore";
+import { FORM_STEP_KEY_LOOKUP } from "@/store/formStore/formStore";
 import { ChevronDownIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -23,7 +24,7 @@ function StepTwo() {
       </h2>
 
       <form
-        id="step-2"
+        id={FORM_STEP_KEY_LOOKUP[2]}
         className="mt-[3.2rem]"
         onSubmit={(event) => {
           event.preventDefault();

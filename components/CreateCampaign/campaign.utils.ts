@@ -1,10 +1,32 @@
 import { toast } from "@/components/ui/use-toast";
+import {
+  FILE_SIZE_LIMIT,
+  acceptedFilesString,
+  allowedFileTypes,
+} from "./campaign.constants";
 
-const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+export const validateTagValue = (
+  tagArray: string[],
+  tagInputRef: React.RefObject<HTMLInputElement>,
+) => {
+  if (!tagInputRef.current) {
+    return "";
+  }
 
-export const acceptedFilesString = allowedFileTypes.join(", ");
+  if (tagInputRef.current.value.length < 3) {
+    return "";
+  } //TODO - show error
 
-const FILE_SIZE_LIMIT = 5 * 1024 * 1024;
+  if (tagArray.includes(tagInputRef.current.value)) {
+    return "";
+  } //TODO - show error
+
+  if (tagArray.length >= 5) {
+    return "";
+  } //TODO - show error
+
+  return tagInputRef.current.value;
+};
 
 export const validateFiles = (imageFiles: File[], fileList: FileList) => {
   const validatedFileList = [];
@@ -32,9 +54,8 @@ export const validateFiles = (imageFiles: File[], fileList: FileList) => {
       continue;
     }
 
-    const isFileUnique = imageFiles?.every(
-      (file) => file.name !== imageFile.name,
-    );
+    // prettier-ignore
+    const isFileUnique = imageFiles.every((file) => file.name !== imageFile.name);
 
     if (!isFileUnique) continue;
 

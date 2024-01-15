@@ -2,7 +2,7 @@ import { create, type StateCreator } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import type { FormStore, SelectorFn } from "./formStore.types";
 
-const STEP_LOOKUP = {
+export const FORM_STEP_KEY_LOOKUP = {
   1: "stepOneData",
   2: "stepTwoData",
   3: "stepThreeData",
@@ -16,7 +16,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
 
   setData: (paramsObj) => {
     const { step, data } = paramsObj;
-    const stepDataKey = STEP_LOOKUP[step];
+    const stepDataKey = FORM_STEP_KEY_LOOKUP[step];
 
     const { [stepDataKey]: prevData } = get();
 

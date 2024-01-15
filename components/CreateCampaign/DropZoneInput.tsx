@@ -3,14 +3,17 @@ import { useFormStore } from "@/store/formStore";
 import type { ChangeEvent, DragEvent } from "react";
 import Button from "../primitives/Button/button";
 import { toast } from "../ui/use-toast";
-import { acceptedFilesString, validateFiles } from "./create-campaign.utils";
+import { acceptedFilesString } from "./campaign.constants";
+import { validateFiles } from "./campaign.utils";
 
 type DropZoneInputProps = {
   value: File[];
   onChange: (files: File[]) => void;
 };
 
-function DropZoneInput({ value: imageFiles, onChange }: DropZoneInputProps) {
+function DropZoneInput(props: DropZoneInputProps) {
+  const { value: imageFiles = [], onChange } = props;
+
   const setData = useFormStore((state) => state.setData);
 
   const [, toggleIsDragActive] = useToggle(false);
@@ -79,7 +82,7 @@ function DropZoneInput({ value: imageFiles, onChange }: DropZoneInputProps) {
       />
 
       <p className="mb-[0.3rem] mt-[1.5rem] text-[1.2rem] italic text-formBtn">
-        {`Drag 'n' drop some files here, or click to select files`}
+        Click to select files, or Drag {`'n'`} Drop
       </p>
       <p>Support files; PDF, JPG, CSV </p>
       <p className="text-abeg-green">Not more than 5mb</p>

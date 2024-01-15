@@ -6,9 +6,7 @@ const useToggle = (initialValue: InitialStateType = false) => {
   const [value, setValue] = useState(initialValue);
 
   const toggle = useCallback((value?: boolean) => {
-    if (typeof value !== "boolean") return;
-
-    if (value !== undefined) {
+    if (typeof value === "boolean") {
       setValue(value);
       return;
     }

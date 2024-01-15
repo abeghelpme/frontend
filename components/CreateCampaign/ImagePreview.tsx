@@ -10,22 +10,24 @@ type ImagePreviewProps = {
   onChange: (files: File[]) => void;
 };
 
-function ImagePreview({ value: imageFiles, onChange }: ImagePreviewProps) {
-  const setData = useFormStore((state) => state.setData);
+function ImagePreview(props: ImagePreviewProps) {
+  const { value: imageFiles = [], onChange } = props;
 
   const imageUrls = imageFiles.map((file) => URL.createObjectURL(file));
 
-  useEffect(
-    () => () => imageUrls.forEach((url) => URL.revokeObjectURL(url)),
-    [imageUrls],
-  );
+  const setData = useFormStore((state) => state.setData);
+
+  const { For: ImagePreviewList } = useElementList();
 
   const [lightBoxControls, setLightBoxControls] = useState({
     isOpen: false,
     slide: 1,
   });
 
-  const { For: ImagePreviewList } = useElementList();
+  useEffect(
+    () => () => imageUrls.forEach((url) => URL.revokeObjectURL(url)),
+    [imageUrls],
+  );
 
   const handleLightBoxControls = (index: number) => () => {
     setLightBoxControls({

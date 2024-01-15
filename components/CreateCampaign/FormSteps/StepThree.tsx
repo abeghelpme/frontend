@@ -1,5 +1,8 @@
-import { useFormStore } from "@/store/formStore/formStore";
-import type { StepThreeData } from "@/store/formStore/formStore.types";
+import {
+  FORM_STEP_KEY_LOOKUP,
+  useFormStore,
+  type StepThreeData,
+} from "@/store/formStore";
 import { Controller, useForm } from "react-hook-form";
 import DropZoneInput from "../DropZoneInput";
 import ImagePreview from "../ImagePreview";
@@ -34,7 +37,7 @@ function StepThree() {
       </h2>
 
       <form
-        id="step-3"
+        id={FORM_STEP_KEY_LOOKUP[3]}
         className="mt-[3.2rem]"
         onSubmit={(event) => {
           event.preventDefault();
