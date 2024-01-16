@@ -1,3 +1,4 @@
+import CloudFlareTurnStile from "@/components/CloudflareTurnstile/CloudFlareTurnStile";
 import DialogComponent from "@/components/Shared/Dialog";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
@@ -6,6 +7,7 @@ import type { ApiResponse, User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import { layoutForAuthPages } from "@/lib/utils/AuthPagesLayout";
+import { detectBot } from "@/lib/utils/detectBot";
 import {
   zodValidator,
   type LoginType,
@@ -115,10 +117,16 @@ const Login = () => {
       hasSuccess={false}
     >
       <form
+        id="cf-turnstile-form"
         className=""
         onSubmit={(event) => {
           event.preventDefault();
-          void handleSubmit(onSubmit)(event);
+          const turnstileResponse = detectBot(event);
+
+          if (turnstileResponse) {
+            void handleSubmit(onSubmit)(event);
+          }
+          
         }}
       >
         <div className="space-y-1">
@@ -164,6 +172,7 @@ const Login = () => {
         >
           Forgot Password?
         </Link>
+        <CloudFlareTurnStile />
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
