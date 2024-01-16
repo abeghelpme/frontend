@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
+import { detectBot } from "@/lib/utils/detectBot";
 import {
   checkPasswordStrength,
   zodValidator,
@@ -122,9 +123,15 @@ const SignUp = () => {
       hasSuccess={false}
     >
       <form
+        id="cf-turnstile-form"
         onSubmit={(event) => {
           event.preventDefault();
-          void handleSubmit(onSubmit)(event);
+          const turnstileResponse = detectBot(event);
+
+          if (turnstileResponse) {
+            void handleSubmit(onSubmit)(event);
+          }
+
         }}
         action=""
         className="flex flex-col gap-4"
