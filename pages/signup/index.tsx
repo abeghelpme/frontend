@@ -128,16 +128,10 @@ const SignUp = () => {
           event.preventDefault();
           const turnstileResponse = detectBot(event);
 
-          if (turnstileResponse === "") {
-            toast({
-              title: "Bot Detection Error",
-              description: "Bot Detection Error Failed.",
-              duration: 2000,
-            });
-            return;
+          if (turnstileResponse) {
+            void handleSubmit(onSubmit)(event);
           }
 
-          void handleSubmit(onSubmit)(event);
         }}
         action=""
         className="flex flex-col gap-4"

@@ -1,6 +1,5 @@
 import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
 import Image from "next/image";
-import Script from "next/script";
 import type { FC, ReactNode } from "react";
 import LogoBanner from "./logoBanner";
 
@@ -24,12 +23,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   hasSuccess,
 }) => {
   return (
-    <>
-      <Script
-        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-        async
-        defer
-      />
+   
       <div className="relative flex h-full flex-1 flex-col items-center gap-8 scroll-smooth py-12 md:gap-9">
         {formType === "signup" && (
           <Image
@@ -61,7 +55,6 @@ const AuthLayout: FC<AuthLayoutProps> = ({
           <div className="my-auto w-full">{children}</div>
         )}
       </div>
-    </>
   );
 };
 
