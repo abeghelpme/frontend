@@ -6,7 +6,7 @@ import { ChevronDownIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 
 function StepTwo() {
-  const { setData, stepTwoData } = useFormStore((state) => state);
+  const { setData, goToStep, stepTwoData } = useFormStore((state) => state);
 
   const { control, register, handleSubmit } = useForm({
     mode: "onTouched",
@@ -14,7 +14,8 @@ function StepTwo() {
   });
 
   const onSubmit = (data: StepTwoData) => {
-    setData({ step: 2, data, nextStep: 3 });
+    setData({ step: 2, data });
+    goToStep(3);
   };
 
   return (
@@ -57,6 +58,7 @@ function StepTwo() {
             <Controller
               control={control}
               name="fundraiserTarget"
+              defaultValue=""
               render={({ field }) => (
                 <Select.Root
                   name={field.name}
@@ -71,8 +73,10 @@ function StepTwo() {
                   </Select.Trigger>
 
                   <Select.Content id="category">
-                    <Select.Item value="You">You</Select.Item>
-                    <Select.Item value="Someone else">Someone else</Select.Item>
+                    <Select.Item value="Individual">For Myself</Select.Item>
+                    <Select.Item value="Beneficiary">
+                      For someone else
+                    </Select.Item>
                   </Select.Content>
                 </Select.Root>
               )}

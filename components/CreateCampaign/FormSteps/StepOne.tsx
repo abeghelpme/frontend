@@ -16,7 +16,7 @@ import { validateTagValue } from "../campaign.utils";
 
 function StepOne() {
   const tagInputRef = useRef<HTMLInputElement>(null);
-  const { setData, stepOneData } = useFormStore((state) => state);
+  const { setData, goToStep, stepOneData } = useFormStore((state) => state);
   const campaignTags = stepOneData?.campaignTags ?? [];
 
   const {
@@ -41,9 +41,14 @@ function StepOne() {
 
     isEnterKey && event.preventDefault();
 
-    const validatedTag = validateTagValue(campaignTags, tagInputRef);
+    if (!tagInputRef.current) return;
 
-    if (validatedTag === "") return;
+    const validatedTag = validateTagValue(
+      campaignTags,
+      tagInputRef.current.value,
+    );
+
+    if (validatedTag === undefined) return;
 
     const newState = [...campaignTags, validatedTag];
 
@@ -51,7 +56,7 @@ function StepOne() {
 
     setFormValue("campaignTags", newState);
 
-    tagInputRef.current && (tagInputRef.current.value = "");
+    tagInputRef.current.value = "";
   };
 
   const handleRemoveCampaignTags = (tag: string) => () => {
@@ -62,8 +67,9 @@ function StepOne() {
     setFormValue("campaignTags", newState);
   };
 
-  const onSubmit = (data: StepOneData) => {
-    setData({ step: 1, data, nextStep: 2 });
+  const onFormSubmit = (data: StepOneData) => {
+    setData({ step: 1, data });
+    goToStep(2);
   };
 
   return (
@@ -77,7 +83,7 @@ function StepOne() {
         className="mt-[3.2rem]"
         onSubmit={(event) => {
           event.preventDefault();
-          void handleSubmit(onSubmit)(event);
+          void handleSubmit(onFormSubmit)(event);
         }}
       >
         <ol className="flex flex-col gap-[2.4rem]">
@@ -124,6 +130,7 @@ function StepOne() {
             <Controller
               control={control}
               name="country"
+              defaultValue=""
               render={({ field }) => (
                 <Select.Root
                   name={field.name}
@@ -159,8 +166,8 @@ function StepOne() {
 
             <div className="mt-[1.6rem] flex gap-[0.8rem]">
               <input
+                {...register("campaignTags")}
                 ref={tagInputRef}
-                name={register("campaignTags").name}
                 type="text"
                 placeholder="Add hashtags or search keywords to your campaign"
                 className="w-full rounded-[10px] border border-unfocused p-[1.5rem_0.8rem] text-[1rem] focus-visible:outline-formBtn"

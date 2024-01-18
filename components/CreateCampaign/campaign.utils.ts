@@ -5,34 +5,40 @@ import {
   allowedFileTypes,
 } from "./campaign.constants";
 
-export const validateTagValue = (
-  tagArray: string[],
-  tagInputRef: React.RefObject<HTMLInputElement>,
-) => {
-  if (!tagInputRef.current) {
-    return "";
-  }
-
-  if (tagInputRef.current.value.length < 3) {
-    return "";
+export const validateTagValue = (tagArray: string[], tagValue: string) => {
+  if (tagValue.length < 3) {
+    return;
   } //TODO - show error
 
-  if (tagArray.includes(tagInputRef.current.value)) {
-    return "";
+  if (tagArray.includes(tagValue)) {
+    return;
   } //TODO - show error
 
   if (tagArray.length >= 5) {
-    return "";
+    return;
   } //TODO - show error
 
-  return tagInputRef.current.value;
+  return tagValue;
 };
 
-export const validateFiles = (imageFiles: File[], fileList: FileList) => {
+type ValidateFilesParams =
+  | [fileList: FileList]
+  | [fileList: FileList, exisitingimageFiles: File[]];
+
+export function validateFiles(fileList: FileList): File[];
+
+export function validateFiles(
+  fileList: FileList,
+  exisitingimageFiles: File[],
+): File[];
+
+export function validateFiles(...params: ValidateFilesParams) {
+  const [fileList, exisitingimageFiles] = params;
+
   const validatedFileList = [];
 
-  for (const imageFile of fileList) {
-    if (!allowedFileTypes.includes(imageFile.type)) {
+  for (const file of fileList) {
+    if (!allowedFileTypes.includes(file.type)) {
       toast({
         title: "Error",
         description: `File type must be of ${acceptedFilesString}`,
@@ -43,7 +49,7 @@ export const validateFiles = (imageFiles: File[], fileList: FileList) => {
       continue;
     }
 
-    if (imageFile.size > FILE_SIZE_LIMIT) {
+    if (file.size > FILE_SIZE_LIMIT) {
       toast({
         title: "Error",
         description: "Cannot upload a file larger than 5mb",
@@ -54,13 +60,21 @@ export const validateFiles = (imageFiles: File[], fileList: FileList) => {
       continue;
     }
 
-    // prettier-ignore
-    const isFileUnique = imageFiles.every((file) => file.name !== imageFile.name);
+    if (!exisitingimageFiles) {
+      validatedFileList.push(file);
+
+      continue;
+    }
+
+    // Check against duplicate files
+    const isFileUnique = exisitingimageFiles.every(
+      (imageFile) => imageFile.name !== file.name,
+    );
 
     if (!isFileUnique) continue;
 
-    validatedFileList.push(imageFile);
+    validatedFileList.push(file);
   }
 
   return validatedFileList;
-};
+}

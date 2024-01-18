@@ -1,8 +1,10 @@
 import {
   FORM_STEP_KEY_LOOKUP,
   useFormStore,
+  type JSONContent,
   type StepThreeData,
 } from "@/store/formStore";
+import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import DropZoneInput from "../DropZoneInput";
 import ImagePreview from "../ImagePreview";
@@ -16,9 +18,9 @@ function StepThree() {
     defaultValues: stepThreeData ?? {},
   });
 
-  const onSubmit = (data: StepThreeData) => {
-    if (data.campaignImageFiles == null) return; //TODO - show error
+  const router = useRouter();
 
+  const onSubmit = (data: StepThreeData) => {
     setData({ step: 3, data });
 
     const formData = new FormData();
@@ -28,6 +30,8 @@ function StepThree() {
     data.campaignImageFiles.forEach((imageFile) => {
       formData.append("campaignImages", imageFile);
     });
+
+    void router.push("/create-campaign/preview");
   };
 
   return (
@@ -53,6 +57,7 @@ function StepThree() {
             <Controller
               control={control}
               name="campaignImageFiles"
+              defaultValue={[]}
               render={({ field }) => (
                 <>
                   <DropZoneInput
@@ -79,10 +84,11 @@ function StepThree() {
             <Controller
               control={control}
               name="campaignStory"
+              defaultValue={"null"}
               render={({ field }) => (
                 <TiptapEditor
                   placeholder="Write a compelling story that would arouse the interest of donors..."
-                  editorContent={field.value}
+                  editorContent={JSON.parse(field.value) as JSONContent}
                   onChange={field.onChange}
                 />
               )}

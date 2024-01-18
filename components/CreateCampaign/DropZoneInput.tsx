@@ -12,7 +12,7 @@ type DropZoneInputProps = {
 };
 
 function DropZoneInput(props: DropZoneInputProps) {
-  const { value: imageFiles = [], onChange } = props;
+  const { value: imageFiles, onChange } = props;
 
   const setData = useFormStore((state) => state.setData);
 
@@ -37,7 +37,7 @@ function DropZoneInput(props: DropZoneInputProps) {
       return;
     }
 
-    const validatedFileList = validateFiles(imageFiles, fileList);
+    const validatedFileList = validateFiles(fileList, imageFiles);
 
     if (validatedFileList.length === 0) return;
 

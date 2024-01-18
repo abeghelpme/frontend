@@ -1,4 +1,5 @@
 import { create, type StateCreator } from "zustand";
+import { devtools } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
 import type { FormStore, SelectorFn } from "./formStore.types";
 
@@ -14,23 +15,22 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
   stepTwoData: null,
   stepThreeData: null,
 
-  setData: (paramsObj) => {
-    const { step, data } = paramsObj;
+  goToStep: (step) => set({ currentStep: step }),
+
+  setData: ({ step, data }) => {
     const stepDataKey = FORM_STEP_KEY_LOOKUP[step];
 
     const { [stepDataKey]: prevData } = get();
 
     set({ [stepDataKey]: { ...prevData, ...data } });
-
-    if ("nextStep" in paramsObj) {
-      set({ currentStep: paramsObj.nextStep });
-    }
   },
 
-  initializeStoreData: async () => {},
+  initializeStoreData: (storeData) => set(storeData),
 });
 
-const useInitStore = create<FormStore>()(stateObjectFn);
+const useInitStore = create<FormStore>()(
+  devtools(stateObjectFn, { name: "formStore" }),
+);
 
 export const useFormStore = <TState>(selector: SelectorFn<TState>) => {
   const state = useInitStore(useShallow(selector));

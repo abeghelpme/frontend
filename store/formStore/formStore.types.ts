@@ -28,15 +28,13 @@ export type StepTwoData = {
 
 export type StepThreeData = {
   campaignImageFiles: File[];
-  campaignStory: JSONContent;
+  campaignStory: string;
 };
 
 type SetDataParams =
   | { step: 1; data: Partial<StepOneData> }
   | { step: 2; data: Partial<StepTwoData> }
-  | { step: 3; data: Partial<StepThreeData> }
-  | { step: 1; data: StepOneData; nextStep: 2 }
-  | { step: 2; data: StepTwoData; nextStep: 3 };
+  | { step: 3; data: Partial<StepThreeData> };
 
 export type FormStore = {
   currentStep: SetDataParams["step"];
@@ -44,9 +42,13 @@ export type FormStore = {
   stepTwoData: StepTwoData | null;
   stepThreeData: StepThreeData | null;
 
+  goToStep: (step: FormStore["currentStep"]) => void;
+
   setData: (paramsObj: SetDataParams) => void;
 
-  initializeStoreData: () => Promise<void>;
+  initializeStoreData: (
+    storeData: Omit<FormStore, "setData" | "initializeStoreData">,
+  ) => void;
 };
 
 export type SelectorFn<TState> = (state: FormStore) => TState;

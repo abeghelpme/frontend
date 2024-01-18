@@ -40,6 +40,8 @@ module.exports = {
   ],
 
   rules: {
+    "no-console": "warn",
+
     // Add any additional TypeScript-specific ESLint rules or overrides here.
 
     // TypeScript should be in strict mode (recommended).

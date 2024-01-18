@@ -11,7 +11,7 @@ type ImagePreviewProps = {
 };
 
 function ImagePreview(props: ImagePreviewProps) {
-  const { value: imageFiles = [], onChange } = props;
+  const { value: imageFiles, onChange } = props;
 
   const imageUrls = imageFiles.map((file) => URL.createObjectURL(file));
 
@@ -72,7 +72,10 @@ function ImagePreview(props: ImagePreviewProps) {
                 </button>
 
                 <button type="button" onClick={handleRemoveImage(file)}>
-                  <Trash2Icon size={20} className="text-red-500" />
+                  <Trash2Icon
+                    size={20}
+                    className="text-red-500 active:scale-110"
+                  />
                 </button>
               </div>
             </li>
