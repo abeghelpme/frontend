@@ -41,3 +41,12 @@ export type AbegResponseData<TData, TError = Record<string, string[]>> =
       data: null;
       error: AbegErrorResponse<TError>;
     };
+
+export type CallApiParams =
+  | [url: `/${string}`]
+  | [url: `/${string}`, bodyData: Record<string, unknown> | FormData]
+  | [
+      url: `/${string}`,
+      bodyData: Record<string, unknown> | FormData,
+      signal: RequestInit["signal"],
+    ];

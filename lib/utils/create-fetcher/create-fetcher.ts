@@ -1,8 +1,10 @@
+import { isObject } from "../global-type-helpers";
 import type {
   AbegErrorResponse,
   AbegResponseData,
   AbegSuccessResponse,
   BaseRequestConfig,
+  CallApiParams,
 } from "./create-fetcher.types";
 import { getResponseData } from "./create-fetcher.utils";
 
@@ -27,21 +29,21 @@ const createFetcher = <TBaseData, TBaseError>(
 
   async function callApi<TData = TBaseData, TError = TBaseError>(
     url: `/${string}`,
-    bodyData: Record<string, unknown>,
+    bodyData: Record<string, unknown> | FormData,
   ): Promise<AbegResponseData<TData, TError>>;
 
   async function callApi<TData = TBaseData, TError = TBaseError>(
     url: `/${string}`,
-    bodyData: Record<string, unknown>,
-    externalSignal: RequestInit["signal"],
+    bodyData: Record<string, unknown> | FormData,
+    signal: RequestInit["signal"],
   ): Promise<AbegResponseData<TData, TError>>;
 
   // Implementation
   async function callApi<TData = TBaseData, TError = TBaseError>(
-    url: `/${string}`,
-    bodyData?: Record<string, unknown>,
-    externalSignal?: RequestInit["signal"],
+    ...params: CallApiParams
   ) {
+    const [url, bodyData, signal] = params;
+
     const previousController = abortControllerStore.get(url);
 
     if (previousController) {
@@ -58,11 +60,12 @@ const createFetcher = <TBaseData, TBaseError>(
 
     try {
       const response = await fetch(`${baseURL}${url}`, {
-        signal: externalSignal ?? controller.signal,
+        signal: signal ?? controller.signal,
         method: bodyData ? "POST" : "GET",
-        body: bodyData ? JSON.stringify(bodyData) : undefined,
 
-        headers: bodyData
+        body: isObject(bodyData) ? JSON.stringify(bodyData) : bodyData,
+
+        headers: isObject(bodyData)
           ? {
               "content-type": "application/json",
               accept: "application/json",
@@ -90,9 +93,10 @@ const createFetcher = <TBaseData, TBaseError>(
         error: null,
       };
 
-      // Exhaustive error handling
+      // Exhaustive error handling for fetch failures
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
+        // eslint-disable-next-line no-console
         console.info(
           `%cAbortError: Request to ${url} timed out after ${timeout}ms`,
 
