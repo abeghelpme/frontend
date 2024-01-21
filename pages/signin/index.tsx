@@ -1,5 +1,6 @@
 import CloudFlareTurnStile from "@/components/CloudflareTurnstile/CloudFlareTurnStile";
 import DialogComponent from "@/components/Shared/Dialog";
+import LoadingComp from "@/components/Shared/Loading";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import { useToast } from "@/components/ui/use-toast";
@@ -106,8 +107,11 @@ const Login = () => {
   };
 
   if (user !== null) {
-    void router.push("/");
-    return null;
+    // // setTimeout(() => {}, 1000);
+    void router.back();
+    return (
+      <LoadingComp message={`You are already signed in. Redirecting back`} />
+    );
   }
   return (
     <AuthLayout
@@ -126,7 +130,6 @@ const Login = () => {
           if (turnstileResponse) {
             void handleSubmit(onSubmit)(event);
           }
-          
         }}
       >
         <div className="space-y-1">
