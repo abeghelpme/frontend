@@ -38,7 +38,6 @@
     "axios": "^1.6.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "million": "^2.6.4",
     "next": "13.5.4",
     "nextjs-progressbar": "^0.0.16",
     "react": "^18",
