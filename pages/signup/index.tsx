@@ -6,21 +6,23 @@ import type { ApiResponse } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
 import { detectBot } from "@/lib/utils/detectBot";
+import { signupLayout } from "@/lib/utils/normalLayout";
 import {
   checkPasswordStrength,
   zodValidator,
   type SignUpType,
 } from "@/lib/utils/validation/validateWithZod";
-import { useSession } from "@/store/useSession";
+// import { useSession } from "@/store/useSession";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDeferredValue, useEffect, useRef, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { setTimeout } from "timers";
 
 const SignUp = () => {
   const { toast } = useToast();
-  const { user } = useSession((state) => state);
+  // const { user } = useSession((state) => state);
   const showModal = useRef(false);
   const [message, setMessage] = useState<ApiResponse>({
     status: "",
@@ -108,10 +110,14 @@ const SignUp = () => {
       }, 1500);
     }
   };
-  if (user !== null) {
-    void router.push("/");
-    return null;
-  }
+
+  // if (user !== null) {
+  //   // // setTimeout(() => {}, 1000);
+  //   void router.back();
+  //   return (
+  //     <LoadingComp message={`You are already signed in. Redirecting back`} />
+  //   );
+  // }
 
   return (
     <AuthLayout
@@ -131,7 +137,6 @@ const SignUp = () => {
           if (turnstileResponse) {
             void handleSubmit(onSubmit)(event);
           }
-
         }}
         action=""
         className="flex flex-col gap-4"
@@ -334,4 +339,5 @@ const SignUp = () => {
 
 export default SignUp;
 
+SignUp.getLayout = signupLayout;
 SignUp.protect = true;

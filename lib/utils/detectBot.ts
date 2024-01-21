@@ -6,7 +6,7 @@ export const detectBot = (event: FormEvent) => {
   const turnstileResponse = formData.get("cf-turnstile-response");
 
   if (turnstileResponse === "") {
-    console.log("failed")
+    console.log("failed");
     toast({
       title: "Bot Detection Error",
       description: "Bot Detection Error Failed.",
@@ -15,7 +15,7 @@ export const detectBot = (event: FormEvent) => {
 
     return;
   }
-    console.log("passed")
+  console.log("passed");
 
   return true;
 };

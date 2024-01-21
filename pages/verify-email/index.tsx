@@ -77,3 +77,5 @@ const VerificationPage = () => {
   );
 };
 export default VerificationPage;
+
+VerificationPage.protect = true;

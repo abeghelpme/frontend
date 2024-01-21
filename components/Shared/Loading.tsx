@@ -2,7 +2,7 @@ import logo from "@/public/assets/images/shared/logo.svg";
 import Image from "next/image";
 
 type CompProp = {
-  message?: string;
+  message?: string | JSX.Element;
 };
 const LoadingComp = ({ message }: CompProp) => {
   return (
