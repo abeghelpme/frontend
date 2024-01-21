@@ -19,7 +19,23 @@ interface ComponentWithPageLayout extends AppProps {
 
 export default function App({ Component, pageProps }: ComponentWithPageLayout) {
   const { getSession } = useSession((state) => state);
-  const getLayout = Component.getLayout ?? ((page) => page);
+  // const router = useRouter();
+
+  // useEffect(() => storePathValues(), [router.asPath]);
+
+  // function storePathValues() {
+  //   const storage = globalThis?.sessionStorage;
+  //   if (storage === null) {
+  //     return;
+  //   }
+  //   // Set the previous path as the value of the current path.
+  //   const prevPath = storage.getItem("currentPath");
+  //   storage.setItem("prevPath", prevPath!);
+  //   // Set the current path value by looking at the browser's location object.
+  //   storage.setItem("currentPath", globalThis.location.pathname);
+  // }
+
+  const getLayout = Component.getLayout || ((page) => page);
   useEffect(() => {
     void (async () => {
       await getSession(true);
@@ -36,9 +52,7 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
       `}</style>
       <NextNProgress color="#324823" />
       {Component.protect === true ? (
-        <Auth>
-          <Component {...pageProps} />
-        </Auth>
+        <Auth>{getLayout(<Component {...pageProps} />)}</Auth>
       ) : (
         getLayout(<Component {...pageProps} />)
       )}
@@ -50,12 +64,27 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
 const Auth = ({ children }: { children: ReactNode }) => {
   const { user, loading } = useSession((state) => state);
   const router = useRouter();
-  if (loading) return <LoadingComp message="Loading..." />;
-
-  if (user === null && router.pathname !== "/signin") {
+  if (loading)
+    return <LoadingComp message="Validating authorization status..." />;
+  const protectedPath = [
+    "/signin",
+    "/signup",
+    "/signin/authenticate",
+    "/signup/verification",
+    "/verify-email",
+    "/verify-email/success",
+  ];
+  if (user === null && !protectedPath.includes(router.pathname)) {
     void router.push("/signin");
     return (
       <LoadingComp message="You are not signed in. Redirecting to Login" />
+    );
+  } else if (user !== null && protectedPath.includes(router.pathname)) {
+    setTimeout(() => {
+      void router.back();
+    }, 1000);
+    return (
+      <LoadingComp message={`You are already signed in. Redirecting back`} />
     );
   }
   return children;

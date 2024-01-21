@@ -25,6 +25,7 @@ type Props = {
 const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
   const { toast } = useToast();
   const resend = useRef(false);
+
   const resendCode = async () => {
     // e.preventDefault();
 
@@ -162,9 +163,16 @@ const AuthenticateUser = () => {
         description: (data as { message: string }).message,
         duration: 2000,
       });
-      void router.push("/create-campaign");
+      void router.push("/");
     }
   };
+  // if (user !== null) {
+  //   // // setTimeout(() => {}, 1000);
+  //   void router.back();
+  //   return (
+  //     <LoadingComp message={`You are already signed in. Redirecting back`} />
+  //   );
+  // }
   return (
     <AuthLayout withHeader={false} hasSuccess={false}>
       {castedUser?.twoFA.type !== "EMAIL" ||
@@ -191,3 +199,4 @@ const AuthenticateUser = () => {
 export default AuthenticateUser;
 
 AuthenticateUser.getLayout = layoutForAuthPages;
+AuthenticateUser.protect = true;

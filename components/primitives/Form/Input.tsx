@@ -37,6 +37,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
         />
         {type === "password" && (
           <button
+            type="button"
             onClick={handleToggle}
             className="absolute left-[calc(100%-20px)] top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 text-abeg-neutral-50"
           >
