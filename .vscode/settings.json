@@ -9,7 +9,7 @@
   "editor.indentSize": "tabSize",
   "editor.detectIndentation": false,
   "editor.insertSpaces": true,
-  "cSpell.words": ["signin", "zustand"],
+  "cSpell.words": ["signin", "SITEKEY", "zustand"],
   "editor.codeActionsOnSave": {
     "source.addMissingImports": "never"
   }

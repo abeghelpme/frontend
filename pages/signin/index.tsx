@@ -125,8 +125,8 @@ const Login = () => {
         className=""
         onSubmit={(event) => {
           event.preventDefault();
+          // check for bot with CF turnstile
           const turnstileResponse = detectBot(event);
-
           if (turnstileResponse) {
             void handleSubmit(onSubmit)(event);
           }
