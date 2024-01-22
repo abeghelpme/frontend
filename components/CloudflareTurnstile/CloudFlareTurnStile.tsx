@@ -10,7 +10,7 @@ const CloudFlareTurnStile = () => {
       />
       <div
         data-size="compact"
-        className="cf-turnstile [&_>_iframe]:w-56"
+        className="cf-turnstile [&_>_iframe]:!w-56 [&_>_iframe]:!h-24"
         data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITEKEY}
       ></div>
     </>
