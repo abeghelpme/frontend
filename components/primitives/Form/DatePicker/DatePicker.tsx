@@ -1,3 +1,4 @@
+import { DATE_TODAY } from "@/components/CreateCampaign/campaign.constants";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -8,10 +9,12 @@ import { Popover } from "./Popover";
 type DatePickerProps = {
   placeholder?: string;
   dateValue?: Date;
-  onChange?: (date?: Date) => void;
+  onChange?: (dateValue?: Date) => void;
 };
 
 const DatePicker = ({ placeholder, dateValue, onChange }: DatePickerProps) => {
+  const isValidDeadline = dateValue !== undefined && dateValue !== DATE_TODAY;
+
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
@@ -20,10 +23,12 @@ const DatePicker = ({ placeholder, dateValue, onChange }: DatePickerProps) => {
           className={cn(
             buttonVariants({ variant: "outline" }),
             "mt-[1.6rem] w-full justify-between rounded-[6px] border border-unfocused p-[2.3rem_0.8rem] text-left text-[1.2rem] font-normal",
-            !dateValue && "text-muted-foreground",
+            dateValue === undefined && "text-muted-foreground",
           )}
         >
-          <span>{dateValue ? format(dateValue, "PPP") : placeholder}</span>
+          <span>
+            {isValidDeadline ? format(dateValue, "PPP") : placeholder}
+          </span>
 
           <CalendarIcon className="aspect-square w-[1.6rem]" />
         </Button>
@@ -39,6 +44,7 @@ const DatePicker = ({ placeholder, dateValue, onChange }: DatePickerProps) => {
           selected={dateValue}
           onSelect={onChange}
           initialFocus={true}
+          disabled={{ before: DATE_TODAY }}
         />
       </Popover.Content>
     </Popover.Root>

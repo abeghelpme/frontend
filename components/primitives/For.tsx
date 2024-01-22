@@ -13,6 +13,10 @@ type ForProps<TArray extends unknown[]> =
 function For<TArrayProp extends unknown[]>(props: ForProps<TArrayProp>) {
   const { each: listOfItems, render, children } = props;
 
+  if (listOfItems == null) {
+    return [];
+  }
+
   const JSXElementList = listOfItems.map((item, index) => {
     if (typeof children === "function") {
       return children(item, index);

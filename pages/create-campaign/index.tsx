@@ -4,7 +4,7 @@ import {
   StepTracker,
   StepTwo,
 } from "@/components/CreateCampaign";
-import FormActionButton from "@/components/CreateCampaign/FormControlButton";
+import FormActionButton from "@/components/CreateCampaign/FormActionButton";
 import {
   FORM_STEP_KEY_LOOKUP,
   useFormStore,
@@ -30,22 +30,25 @@ function CreateCampaignPage() {
   }, [currentStep]);
 
   return (
-    <main className="bg-contours bg-cover pt-[3.2rem]" data-rem-reset>
-      <div className="flex flex-col gap-[3.2rem] border-b-[1px] border-b-formBtn px-[2.4rem] pb-[5.5rem]">
+    <>
+      <main
+        className="flex flex-col gap-[3.2rem] bg-contours bg-cover px-[2.4rem] pb-[5.5rem] pt-[3.2rem]"
+        data-rem-reset
+      >
         <StepTracker />
 
         {FORM_STEP_LOOKUP[currentStep]}
-      </div>
+      </main>
 
-      <div className="flex items-center justify-between p-[1.6rem_2.4rem]">
+      <footer className="flex items-center justify-between border-t border-t-formBtn p-[1.6rem_2.4rem]">
         <FormActionButton
           type="button"
           text="Go Back"
           className="min-w-[7.8rem]"
+          disabled={currentStep === 1}
           onClick={() =>
             goToStep((currentStep - 1) as FormStore["currentStep"])
           }
-          disabled={currentStep === 1}
         />
 
         <FormActionButton
@@ -53,8 +56,8 @@ function CreateCampaignPage() {
           text="Continue"
           targetForm={FORM_STEP_KEY_LOOKUP[currentStep]}
         />
-      </div>
-    </main>
+      </footer>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
+import { cn } from "@/lib/utils";
 import * as TogglePrimitive from "@radix-ui/react-toggle";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
 
 type ForwardedRefType<TComponent extends React.ElementType> =

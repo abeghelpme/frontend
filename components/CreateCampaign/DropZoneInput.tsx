@@ -1,4 +1,5 @@
 import { useToggle } from "@/lib/hooks/useToggle";
+import { cn } from "@/lib/utils";
 import { useFormStore } from "@/store/formStore";
 import type { ChangeEvent, DragEvent } from "react";
 import Button from "../primitives/Button/button";
@@ -16,11 +17,13 @@ function DropZoneInput(props: DropZoneInputProps) {
 
   const setData = useFormStore((state) => state.setData);
 
-  const [, toggleIsDragActive] = useToggle(false);
+  const [isDragActive, toggleIsDragActive] = useToggle(false);
 
   const handleImageUpload = (
     event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>,
   ) => {
+    event.type === "drop" && toggleIsDragActive(false);
+
     const fileList =
       event.type === "drop"
         ? (event as DragEvent).dataTransfer.files
@@ -63,7 +66,10 @@ function DropZoneInput(props: DropZoneInputProps) {
       onDrop={handleImageUpload}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
-      className="relative mt-[1.6rem] flex min-h-[16.1rem] flex-col items-center justify-end rounded-[5px] border border-dashed border-formBtn py-[1.5rem] text-[1rem]"
+      className={cn(
+        "relative mt-[1.6rem] flex min-h-[16.1rem] flex-col items-center justify-end rounded-[5px] border border-dashed border-formBtn py-[1.5rem] text-[1rem]",
+        isDragActive && "opacity-60",
+      )}
     >
       <Button
         variant="primary"
@@ -84,7 +90,9 @@ function DropZoneInput(props: DropZoneInputProps) {
       <p className="mb-[0.3rem] mt-[1.5rem] text-[1.2rem] italic text-formBtn">
         Click to select files, or Drag {`'n'`} Drop
       </p>
+
       <p>Support files; PDF, JPG, CSV </p>
+
       <p className="text-abeg-green">Not more than 5mb</p>
     </div>
   );

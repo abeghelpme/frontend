@@ -4,6 +4,7 @@ import { useFormStore, type StepTwoData } from "@/store/formStore";
 import { FORM_STEP_KEY_LOOKUP } from "@/store/formStore/formStore";
 import { ChevronDownIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
+import { DATE_TODAY } from "../campaign.constants";
 
 function StepTwo() {
   const { setData, goToStep, stepTwoData } = useFormStore((state) => state);
@@ -107,6 +108,7 @@ function StepTwo() {
 
             <Controller
               control={control}
+              defaultValue={DATE_TODAY}
               name="campaignDeadline"
               render={({ field }) => (
                 <DatePicker

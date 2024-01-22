@@ -1,4 +1,4 @@
-import { type JSONContent } from "@/store/formStore";
+import { parseJSON } from "@/lib/utils/parseJSON";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -8,41 +8,43 @@ import { validateFiles } from "./campaign.utils";
 
 type EditorProps = {
   placeholder?: string;
-  editorContent?: JSONContent;
+  editorContent?: string;
   onChange?: (content: string) => void;
 };
 
+export const getExtensions = (placeholder = "") => [
+  StarterKit.configure({
+    bulletList: {
+      HTMLAttributes: {
+        class: "list-disc p-[0_1.6rem]",
+      },
+    },
+
+    orderedList: {
+      HTMLAttributes: {
+        class: "list-decimal p-[0_1.6rem]",
+      },
+    },
+
+    dropcursor: {
+      class: "text-pink-600",
+    },
+  }),
+
+  Placeholder.configure({ placeholder }),
+
+  Image.configure({
+    allowBase64: true,
+    HTMLAttributes: {
+      class:
+        "mx-auto my-[1rem] object-cover aspect-[1/0.6] w-full rounded-[5px]",
+    },
+  }),
+];
+
 function TiptapEditor({ placeholder, editorContent, onChange }: EditorProps) {
   const editor = useEditor({
-    extensions: [
-      StarterKit.configure({
-        bulletList: {
-          HTMLAttributes: {
-            class: "list-disc p-[0_1.6rem]",
-          },
-        },
-
-        orderedList: {
-          HTMLAttributes: {
-            class: "list-decimal p-[0_1.6rem]",
-          },
-        },
-
-        dropcursor: {
-          class: "text-pink-600",
-        },
-      }),
-
-      Placeholder.configure({ placeholder }),
-
-      Image.configure({
-        allowBase64: true,
-        HTMLAttributes: {
-          class:
-            "mx-auto my-[1rem] object-cover aspect-[1/0.6] w-full rounded-[5px]",
-        },
-      }),
-    ],
+    extensions: getExtensions(placeholder),
 
     editorProps: {
       attributes: {
@@ -57,46 +59,48 @@ function TiptapEditor({ placeholder, editorContent, onChange }: EditorProps) {
           return false;
         }
 
-        const validatedFile = validateFiles(fileList)[0];
+        const { 0: validatedFile } = validateFiles(fileList);
 
-        const fileReader = new FileReader();
+        if (validatedFile == null) return;
 
         const image = new window.Image();
 
+        const onImageLoad = (imageUrl: string) => () => {
+          const coordinates = view.posAtCoords({
+            left: event.clientX,
+            top: event.clientY,
+          });
+
+          if (coordinates === null) return;
+
+          const imageNode = view.state.schema.nodes.image.create({
+            src: imageUrl,
+          }); // creates the image element
+
+          const transaction = view.state.tr.insert(coordinates.pos, imageNode); // places it in the correct position
+
+          return view.dispatch(transaction);
+        };
+
+        const fileReader = new FileReader();
+
         fileReader.readAsDataURL(validatedFile);
 
-        fileReader.onload = () => {
+        fileReader.addEventListener("load", () => {
           const imageUrl = fileReader.result as string;
 
           image.src = imageUrl;
 
-          image.addEventListener("load", () => {
-            const { schema } = view.state;
-
-            const coordinates = view.posAtCoords({
-              left: event.clientX,
-              top: event.clientY,
-            });
-
-            if (coordinates === null) return;
-
-            const node = schema.nodes.image.create({ src: imageUrl }); // creates the image element
-            const transaction = view.state.tr.insert(coordinates.pos, node); // places it in the correct position
-
-            return view.dispatch(transaction);
-          });
-        };
+          image.addEventListener("load", onImageLoad(imageUrl));
+        });
 
         return true;
       },
     },
 
-    content: editorContent,
+    content: parseJSON(editorContent),
 
-    onUpdate: ({ editor }) => {
-      const JSONString = JSON.stringify(editor.getJSON());
-      onChange?.(JSONString);
-    },
+    onUpdate: ({ editor }) => onChange?.(JSON.stringify(editor.getJSON())),
   });
 
   if (!editor) {
@@ -104,7 +108,7 @@ function TiptapEditor({ placeholder, editorContent, onChange }: EditorProps) {
   }
 
   return (
-    <div className="flex min-h-[17.8rem] flex-col justify-between gap-[2rem] rounded-[6px] border border-unfocused p-[1.6rem] focus-within:[outline:2px_solid_theme(colors.formBtn)]">
+    <div className="flex min-h-[17.8rem] flex-col justify-between gap-[0.8rem] rounded-[6px] border border-unfocused p-[1.6rem] focus-within:[outline:2px_solid_theme(colors.formBtn)]">
       <EditorContent
         editor={editor}
         className="text-[1.2rem] lg:text-[1.6rem] [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:absolute [&_p.is-editor-empty:first-child]:before:left-0 [&_p.is-editor-empty:first-child]:before:text-placeholder [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"

@@ -59,7 +59,7 @@ function ImagePreview(props: ImagePreviewProps) {
           render={(file, index) => (
             <li
               key={file.name}
-              className="flex items-center justify-between p-[1.2rem]"
+              className="flex items-center justify-between p-[1.2rem] text-[1.2rem]"
             >
               <div className="flex w-full items-center gap-[0.8rem]">
                 <ImageIcon size={20} className="shrink-0 text-gray-700" />

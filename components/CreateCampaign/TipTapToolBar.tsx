@@ -1,3 +1,5 @@
+import imageIcon from "@/public/assets/icons/campaign/gallery-icon.svg";
+import videoIcon from "@/public/assets/icons/campaign/video-icon.svg";
 import type { Editor } from "@tiptap/react";
 import {
   BoldIcon,
@@ -36,16 +38,21 @@ const handleImageUpload =
 
     if (validatedFileList.length === 0) return;
 
-    const fileReader = new FileReader();
-
     validatedFileList.forEach((file) => {
+      const fileReader = new FileReader();
+
       fileReader.readAsDataURL(file);
 
-      fileReader.onload = () => {
+      fileReader.addEventListener("load", () => {
         const url = fileReader.result as string;
 
-        editor.chain().focus().setImage({ src: url }).run();
-      };
+        editor
+          .chain()
+          .focus()
+          .setImage({ src: url })
+          .createParagraphNear()
+          .run();
+      });
     });
   };
 
@@ -53,10 +60,10 @@ function TipTapToolBar({ editor }: ToolBarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="flex items-center gap-[0.8rem]">
+    <div className="flex items-center gap-[0.8rem] text-successText/85">
       <button type="button">
         <Image
-          src="/assets/icons/campaign/video-icon.svg"
+          src={videoIcon as string}
           alt="video icon"
           width={20}
           height={20}
@@ -69,7 +76,7 @@ function TipTapToolBar({ editor }: ToolBarProps) {
         onClick={() => fileInputRef.current?.click()}
       >
         <Image
-          src="/assets/icons/campaign/gallery-icon.svg"
+          src={imageIcon as string}
           alt="image icon"
           width={20}
           height={20}
@@ -87,14 +94,13 @@ function TipTapToolBar({ editor }: ToolBarProps) {
 
       <button
         type="button"
-        className="flex text-successText/85 active:scale-110"
+        className="flex  active:scale-110"
         onClick={() => editor.commands.deleteSelection()}
       >
         <Trash2Icon size={20} />
       </button>
 
       <Toggle
-        className="text-successText/85"
         pressed={editor.isActive("bold")}
         onPressedChange={() => editor.chain().focus().toggleBold().run()}
       >
@@ -102,7 +108,6 @@ function TipTapToolBar({ editor }: ToolBarProps) {
       </Toggle>
 
       <Toggle
-        className="text-successText/85"
         pressed={editor.isActive("italic")}
         onPressedChange={() => editor.chain().focus().toggleItalic().run()}
       >
@@ -110,16 +115,14 @@ function TipTapToolBar({ editor }: ToolBarProps) {
       </Toggle>
 
       <Toggle
-        className="text-successText/85"
-        pressed={editor.isActive("listItem")}
+        pressed={editor.isActive("bulletList")}
         onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
       >
         <ListIcon size={20} />
       </Toggle>
 
       <Toggle
-        className="text-successText/85"
-        pressed={editor.isActive("listItem")}
+        pressed={editor.isActive("orderedList")}
         onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
       >
         <ListOrderedIcon size={20} />
@@ -127,4 +130,5 @@ function TipTapToolBar({ editor }: ToolBarProps) {
     </div>
   );
 }
+
 export default TipTapToolBar;

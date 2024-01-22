@@ -1,4 +1,9 @@
+import { getExtensions } from "@/components/CreateCampaign/TipTapEditor";
 import { toast } from "@/components/ui/use-toast";
+import { parseJSON } from "@/lib/utils/parseJSON";
+import { generateHTML } from "@tiptap/html";
+import type { JSONContent } from "@tiptap/react";
+import DOMPurify from "isomorphic-dompurify";
 import {
   FILE_SIZE_LIMIT,
   acceptedFilesString,
@@ -78,3 +83,13 @@ export function validateFiles(...params: ValidateFilesParams) {
 
   return validatedFileList;
 }
+
+export const getPurifiedHtml = (JSONString: string | undefined) => {
+  const JSONContent = parseJSON<JSONContent>(JSONString);
+
+  if (JSONContent === null) {
+    return "";
+  }
+
+  return DOMPurify.sanitize(generateHTML(JSONContent, getExtensions()));
+};

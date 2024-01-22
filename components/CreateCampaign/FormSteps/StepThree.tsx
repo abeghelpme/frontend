@@ -1,7 +1,6 @@
 import {
   FORM_STEP_KEY_LOOKUP,
   useFormStore,
-  type JSONContent,
   type StepThreeData,
 } from "@/store/formStore";
 import { useRouter } from "next/router";
@@ -84,11 +83,10 @@ function StepThree() {
             <Controller
               control={control}
               name="campaignStory"
-              defaultValue={"null"}
               render={({ field }) => (
                 <TiptapEditor
                   placeholder="Write a compelling story that would arouse the interest of donors..."
-                  editorContent={JSON.parse(field.value) as JSONContent}
+                  editorContent={field.value}
                   onChange={field.onChange}
                 />
               )}

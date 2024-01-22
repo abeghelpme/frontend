@@ -29,6 +29,7 @@ const config: Config = {
         placeholder: "#8D8B8B",
         unfocused: "#A8CCCC",
         formBtn: "#008080",
+        semiWhite: "#E6EAEE",
         validationMsg: "#268384",
         popover: "hsl(0 0% 100%)",
         "popover-foreground": "hsl(222.2 47.4% 11.2%)",

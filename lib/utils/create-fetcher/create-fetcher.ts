@@ -35,15 +35,13 @@ const createFetcher = <TBaseData, TBaseError>(
   async function callApi<TData = TBaseData, TError = TBaseError>(
     url: `/${string}`,
     bodyData: Record<string, unknown> | FormData,
-    signal: RequestInit["signal"],
+    signal: AbortSignal,
   ): Promise<AbegResponseData<TData, TError>>;
 
   // Implementation
   async function callApi<TData = TBaseData, TError = TBaseError>(
-    ...params: CallApiParams
+    ...[url, bodyData, signal]: CallApiParams
   ) {
-    const [url, bodyData, signal] = params;
-
     const previousController = abortControllerStore.get(url);
 
     if (previousController) {

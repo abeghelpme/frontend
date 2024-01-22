@@ -48,5 +48,5 @@ export type CallApiParams =
   | [
       url: `/${string}`,
       bodyData: Record<string, unknown> | FormData,
-      signal: RequestInit["signal"],
+      signal: AbortSignal,
     ];
