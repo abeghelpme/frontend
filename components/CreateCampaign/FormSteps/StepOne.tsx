@@ -11,8 +11,8 @@ import { ChevronDownIcon } from "lucide-react";
 import Image from "next/image";
 import { useRef, type KeyboardEvent, type MouseEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { fundraiserCategories } from "../campaign.constants";
-import { validateTagValue } from "../campaign.utils";
+import { fundraiserCategories } from "../campaign-utils/constants";
+import { validateTagValue } from "../campaign-utils/validateTagValue";
 
 function StepOne() {
   const tagInputRef = useRef<HTMLInputElement>(null);

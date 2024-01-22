@@ -1,10 +1,9 @@
-import { parseJSON } from "@/lib/utils/parseJSON";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TipTapToolBar from "./TipTapToolBar";
-import { validateFiles } from "./campaign.utils";
+import { validateFiles } from "./campaign-utils/validateFiles";
 
 type EditorProps = {
   placeholder?: string;
@@ -65,23 +64,6 @@ function TiptapEditor({ placeholder, editorContent, onChange }: EditorProps) {
 
         const image = new window.Image();
 
-        const onImageLoad = (imageUrl: string) => () => {
-          const coordinates = view.posAtCoords({
-            left: event.clientX,
-            top: event.clientY,
-          });
-
-          if (coordinates === null) return;
-
-          const imageNode = view.state.schema.nodes.image.create({
-            src: imageUrl,
-          }); // creates the image element
-
-          const transaction = view.state.tr.insert(coordinates.pos, imageNode); // places it in the correct position
-
-          return view.dispatch(transaction);
-        };
-
         const fileReader = new FileReader();
 
         fileReader.readAsDataURL(validatedFile);
@@ -91,16 +73,36 @@ function TiptapEditor({ placeholder, editorContent, onChange }: EditorProps) {
 
           image.src = imageUrl;
 
-          image.addEventListener("load", onImageLoad(imageUrl));
+          const onImageLoad = () => {
+            const coordinates = view.posAtCoords({
+              left: event.clientX,
+              top: event.clientY,
+            });
+
+            if (coordinates === null) return;
+
+            const imageNode = view.state.schema.nodes.image.create({
+              src: imageUrl,
+            }); // creates the image element
+
+            const transaction = view.state.tr.insert(
+              coordinates.pos,
+              imageNode,
+            ); // places it in the correct position
+
+            return view.dispatch(transaction);
+          };
+
+          image.addEventListener("load", onImageLoad);
         });
 
         return true;
       },
     },
 
-    content: parseJSON(editorContent),
+    content: editorContent,
 
-    onUpdate: ({ editor }) => onChange?.(JSON.stringify(editor.getJSON())),
+    onUpdate: ({ editor }) => onChange?.(editor.getText()),
   });
 
   if (!editor) {

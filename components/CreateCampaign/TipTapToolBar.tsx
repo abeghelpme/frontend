@@ -12,8 +12,8 @@ import Image from "next/image";
 import { useRef } from "react";
 import Toggle from "../primitives/Toggle";
 import { toast } from "../ui/use-toast";
-import { acceptedFilesString } from "./campaign.constants";
-import { validateFiles } from "./campaign.utils";
+import { acceptedFilesString } from "./campaign-utils/constants";
+import { validateFiles } from "./campaign-utils/validateFiles";
 
 type ToolBarProps = {
   editor: Editor;

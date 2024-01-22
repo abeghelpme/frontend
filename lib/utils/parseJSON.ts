@@ -3,7 +3,7 @@ const parseJSON = <TResult>(value: string | undefined | null) => {
     return null;
   }
 
-  return JSON.parse(value) satisfies TResult as TResult;
+  return JSON.parse(value) as TResult;
 };
 
 export { parseJSON };

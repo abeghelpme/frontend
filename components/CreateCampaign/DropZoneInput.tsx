@@ -4,8 +4,8 @@ import { useFormStore } from "@/store/formStore";
 import type { ChangeEvent, DragEvent } from "react";
 import Button from "../primitives/Button/button";
 import { toast } from "../ui/use-toast";
-import { acceptedFilesString } from "./campaign.constants";
-import { validateFiles } from "./campaign.utils";
+import { acceptedFilesString } from "./campaign-utils/constants";
+import { validateFiles } from "./campaign-utils/validateFiles";
 
 type DropZoneInputProps = {
   value: File[];

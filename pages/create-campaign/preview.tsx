@@ -1,4 +1,3 @@
-import { getPurifiedHtml } from "@/components/CreateCampaign/campaign.utils";
 import Button from "@/components/primitives/Button/button";
 import { useElementList } from "@/lib/hooks/useElementList";
 import moneyIcon from "@/public/assets/icons/campaign/money.svg";
@@ -6,7 +5,6 @@ import { useFormStore } from "@/store/formStore";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
 
 function Preview() {
   const { stepOneData, stepTwoData, stepThreeData } = useFormStore(
@@ -16,10 +14,7 @@ function Preview() {
   const { For: ImageFileList } = useElementList();
   const { For: TagList } = useElementList();
 
-  const campaignStory = useMemo(
-    () => getPurifiedHtml(stepThreeData?.campaignStory),
-    [stepThreeData?.campaignStory],
-  );
+  const campaignStory = stepThreeData?.campaignStory;
 
   if (!stepOneData || !stepTwoData || !stepThreeData) {
     return null;
@@ -112,10 +107,8 @@ function Preview() {
           <h3 className="mt-[1.2rem] border-b border-b-placeholder p-[0.8rem] font-bold">
             Story
           </h3>
-          <div
-            className="mt-[2.4rem]"
-            dangerouslySetInnerHTML={{ __html: campaignStory }}
-          />
+
+          <p className="mt-[2.4rem]">{campaignStory}</p>
         </section>
 
         <section className="mt-[2.4rem] flex flex-col gap-[2.4rem] pb-[1.6rem]">
