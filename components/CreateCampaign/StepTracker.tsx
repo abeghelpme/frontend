@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import tickIcon from "@/public/assets/icons/campaign/tick-circle.svg";
-import type { FormStore } from "@/store/formStore";
-import { useFormStore } from "@/store/formStore/formStore";
+import type { FormStore } from "@/store/useformStore";
+import { useFormStore } from "@/store/useformStore/formStore";
 import Image from "next/image";
 
 type StepIndicatorProps = {
@@ -15,19 +15,17 @@ type StepInfoProps = Pick<StepIndicatorProps, "disabled"> & {
   description: string;
 };
 
-function StepIndicator({
-  step,
-  isCompleted = false,
-  disabled = false,
-}: StepIndicatorProps) {
-  const TickIcon = (
-    <Image src={tickIcon as string} alt="" width={12} height={12} />
-  );
+const TickIcon = (
+  <Image src={tickIcon as string} width={12} height={12} alt="" />
+);
+
+function StepIndicator(props: StepIndicatorProps) {
+  const { step, isCompleted = false, disabled = false } = props;
 
   const Separator = (
     <hr
       className={cn(
-        "my-[0.4rem] basis-full border border-dashed border-formBtn",
+        "my-0.4 basis-full border border-dashed border-formBtn",
         disabled && "border-unfocused",
       )}
     />
@@ -39,7 +37,7 @@ function StepIndicator({
 
       <span
         className={cn(
-          "grid aspect-square w-[2rem] shrink-0 place-content-center rounded-full bg-formBtn font-bold text-white",
+          "grid aspect-square w-2 shrink-0 place-content-center rounded-full bg-formBtn font-bold text-white",
           disabled && "bg-unfocused",
         )}
       >
@@ -52,7 +50,7 @@ function StepIndicator({
 function StepInfo({ title, description, disabled = false }: StepInfoProps) {
   return (
     <article className={cn("w-full", disabled && "text-unfocused")}>
-      <h5 className="text-[1.2rem] font-medium">{title}</h5>
+      <h4 className="text-1.2 font-medium">{title}</h4>
       <p>{description}</p>
     </article>
   );
@@ -62,8 +60,8 @@ function StepTracker() {
   const currentStep = useFormStore((state) => state.currentStep);
 
   return (
-    <section className="flex gap-[1.2rem]">
-      <div className="flex flex-col text-[1.2rem]">
+    <section className="flex gap-1.2">
+      <div className="flex flex-col text-1.2">
         <StepIndicator step={1} isCompleted={currentStep > 1} />
 
         <StepIndicator
@@ -75,7 +73,7 @@ function StepTracker() {
         <StepIndicator step={3} disabled={currentStep < 3} />
       </div>
 
-      <div className="flex flex-col items-center justify-between gap-[3.2rem] text-[1rem] text-formBtn">
+      <div className="flex flex-col items-center justify-between gap-3.2 text-1 text-formBtn">
         <StepInfo
           title="Basic Info"
           description="Create a campaign to fund your passion or cause"

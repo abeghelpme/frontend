@@ -5,14 +5,11 @@ import {
   StepTwo,
 } from "@/components/CreateCampaign";
 import FormActionButton from "@/components/CreateCampaign/FormActionButton";
-import {
-  FORM_STEP_KEY_LOOKUP,
-  useFormStore,
-  type FormStore,
-} from "@/store/formStore";
+import { useFormStore, type FormStore } from "@/store/useformStore";
+import { STEP_DATA_KEY_LOOKUP } from "@/store/useformStore/constants";
 import { useEffect } from "react";
 
-const FORM_STEP_LOOKUP = {
+const STEP_COMPONENT_LOOKUP = {
   1: <StepOne />,
   2: <StepTwo />,
   3: <StepThree />,
@@ -32,15 +29,15 @@ function CreateCampaignPage() {
   return (
     <>
       <main
-        className="flex flex-col gap-[3.2rem] bg-contours bg-cover px-[2.4rem] pb-[5.5rem] pt-[3.2rem]"
+        className="flex flex-col gap-3.2 bg-contours bg-cover px-2.4 pb-5.5 pt-3.2"
         data-rem-reset
       >
         <StepTracker />
 
-        {FORM_STEP_LOOKUP[currentStep]}
+        {STEP_COMPONENT_LOOKUP[currentStep]}
       </main>
 
-      <footer className="flex items-center justify-between border-t border-t-formBtn p-[1.6rem_2.4rem]">
+      <footer className="flex items-center justify-between border-t border-t-formBtn px-2.4 py-1.6">
         <FormActionButton
           type="button"
           text="Go Back"
@@ -54,7 +51,7 @@ function CreateCampaignPage() {
         <FormActionButton
           type="submit"
           text="Continue"
-          targetForm={FORM_STEP_KEY_LOOKUP[currentStep]}
+          targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
         />
       </footer>
     </>

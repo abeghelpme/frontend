@@ -1,18 +1,3 @@
-export type JSONContent = {
-  [key: string]: NonNullable<unknown> | undefined;
-  type?: string;
-  attrs?: Record<string, NonNullable<unknown>>;
-  content?: JSONContent[];
-
-  marks?: Array<{
-    [key: string]: NonNullable<unknown> | undefined;
-    type: string;
-    attrs?: JSONContent["attrs"];
-  }>;
-
-  text?: string;
-};
-
 export type StepOneData = {
   fundraiserCategory: string;
   country: string;
@@ -28,7 +13,8 @@ export type StepTwoData = {
 
 export type StepThreeData = {
   campaignImageFiles: File[];
-  campaignStory: string;
+  campaignStoryHtml: string;
+  campaignStoryText: string;
 };
 
 type SetDataParams =
@@ -38,9 +24,9 @@ type SetDataParams =
 
 export type FormStore = {
   currentStep: SetDataParams["step"];
-  stepOneData: StepOneData | null;
-  stepTwoData: StepTwoData | null;
-  stepThreeData: StepThreeData | null;
+  stepOneData: StepOneData;
+  stepTwoData: StepTwoData;
+  stepThreeData: StepThreeData;
 
   goToStep: (step: FormStore["currentStep"]) => void;
 

@@ -1,17 +1,19 @@
 // Added this type guard to assert that envVariable is a string, as opposed unsafe typecasting via "as string"
 export const assertENV = (
-  envVariable: string | undefined,
+  variable: string | undefined,
   options?: { message: string },
 ) => {
-  if (typeof envVariable !== "string") {
-    throw new Error(
-      options?.message ?? "Environment variable must be a string",
-    );
+  const { message = "Required Environment variable is missing or undefined" } =
+    options ?? {};
+
+  if (variable === undefined) {
+    throw new Error(message);
   }
 
-  return envVariable;
+  return variable;
 };
 
+// typeof assertions
 export const isArray = (value: unknown): value is unknown[] =>
   Array.isArray(value);
 

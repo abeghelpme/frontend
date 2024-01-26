@@ -2,22 +2,19 @@ import Button from "@/components/primitives/Button/button";
 import { Select } from "@/components/primitives/Form/Select";
 import { useElementList } from "@/lib/hooks/useElementList";
 import crossIcon from "@/public/assets/icons/campaign/cross-icon.svg";
-import {
-  FORM_STEP_KEY_LOOKUP,
-  useFormStore,
-  type StepOneData,
-} from "@/store/formStore";
+import { useFormStore, type StepOneData } from "@/store/useformStore";
+import { STEP_DATA_KEY_LOOKUP } from "@/store/useformStore/constants";
 import { ChevronDownIcon } from "lucide-react";
 import Image from "next/image";
 import { useRef, type KeyboardEvent, type MouseEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { validateTagValue } from "../campaign-utils";
 import { fundraiserCategories } from "../campaign-utils/constants";
-import { validateTagValue } from "../campaign-utils/validateTagValue";
 
 function StepOne() {
   const tagInputRef = useRef<HTMLInputElement>(null);
   const { setData, goToStep, stepOneData } = useFormStore((state) => state);
-  const campaignTags = stepOneData?.campaignTags ?? [];
+  const campaignTags = stepOneData.campaignTags;
 
   const {
     control,
@@ -26,7 +23,7 @@ function StepOne() {
     setValue: setFormValue,
   } = useForm({
     mode: "onTouched",
-    defaultValues: stepOneData ?? {},
+    defaultValues: stepOneData,
   });
 
   const { For: TagList } = useElementList();
@@ -74,27 +71,26 @@ function StepOne() {
 
   return (
     <section>
-      <h2 className="text-[1.6rem] font-bold text-formBtn">
+      <h2 className="font-bold text-formBtn">
         Create a campaign to fund your passion or cause.
       </h2>
 
       <form
-        id={FORM_STEP_KEY_LOOKUP[1]}
-        className="mt-[3.2rem]"
+        id={STEP_DATA_KEY_LOOKUP[1]}
+        className="mt-3.2"
         onSubmit={(event) => {
           event.preventDefault();
           void handleSubmit(onFormSubmit)(event);
         }}
       >
-        <ol className="flex flex-col gap-[2.4rem]">
+        <ol className="flex flex-col gap-2.4">
           <li>
-            <label className="text-[1.4rem] font-semibold">
+            <label className="text-1.4 font-semibold">
               What best describes your fundraiser?
             </label>
 
             <Controller
               control={control}
-              defaultValue=""
               name="fundraiserCategory"
               render={({ field }) => (
                 <Select.Root
@@ -104,7 +100,7 @@ function StepOne() {
                 >
                   <Select.Trigger
                     icon={<ChevronDownIcon />}
-                    className="mt-[1.6rem] rounded-[10px] border-unfocused p-[2.1rem_0.8rem] text-[1rem] data-[placeholder]:text-placeholder"
+                    className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.1 text-1 data-[placeholder]:text-placeholder"
                   >
                     <Select.Value placeholder="Select what category best suit your fundraiser" />
                   </Select.Trigger>
@@ -124,13 +120,13 @@ function StepOne() {
           </li>
 
           <li>
-            <label className="text-[1.4rem] font-semibold">
+            <label className="text-1.4 font-semibold">
               What country are you located?
             </label>
+
             <Controller
               control={control}
               name="country"
-              defaultValue=""
               render={({ field }) => (
                 <Select.Root
                   name={field.name}
@@ -139,7 +135,7 @@ function StepOne() {
                 >
                   <Select.Trigger
                     icon={<ChevronDownIcon />}
-                    className="mt-[1.6rem] rounded-[10px] border-unfocused p-[2.3rem_0.8rem] text-[1rem] data-[placeholder]:text-placeholder"
+                    className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1  data-[placeholder]:text-placeholder"
                   >
                     <Select.Value placeholder="Select your country" />
                   </Select.Trigger>
@@ -157,39 +153,36 @@ function StepOne() {
           </li>
 
           <li>
-            <label
-              htmlFor="campaignTags"
-              className="text-[1.4rem] font-semibold"
-            >
+            <label htmlFor="campaignTags" className="text-1.4 font-semibold">
               Campaign Tags
             </label>
 
-            <div className="mt-[1.6rem] flex gap-[0.8rem]">
+            <div className="mt-1.6 flex gap-0.8">
               <input
                 {...register("campaignTags")}
                 ref={tagInputRef}
                 type="text"
                 placeholder="Add hashtags or search keywords to your campaign"
-                className="w-full rounded-[10px] border border-unfocused p-[1.5rem_0.8rem] text-[1rem] focus-visible:outline-formBtn"
+                className="w-full rounded-10 border border-unfocused px-0.8 py-1.5 text-1 focus-visible:outline-formBtn"
                 onKeyDown={handleAddCampaignTag}
               />
 
               <Button
                 type="button"
                 variant="secondary"
-                className="rounded-[6px] border-formBtn p-[0.8rem_1.2rem] text-[1.2rem] font-semibold text-formBtn"
+                className="rounded-6 border-formBtn px-1.2 py-0.8 text-1.2 font-semibold text-formBtn"
                 onClick={handleAddCampaignTag}
               >
                 Add
               </Button>
             </div>
 
-            <div className="mt-[1.6rem] flex flex-col gap-[1.6rem]">
-              <span className="text-[1.2rem] text-formBtn">
+            <div className="mt-1.6 flex flex-col gap-1.6">
+              <span className="text-1.2 text-formBtn">
                 {campaignTags.length}/5 tags
               </span>
 
-              <ul className="flex flex-wrap gap-[0.8rem] text-[1.2rem] font-medium text-formBtn">
+              <ul className="flex flex-wrap gap-0.8 text-1.2 font-medium text-formBtn">
                 <TagList
                   each={campaignTags}
                   render={(tag) => (

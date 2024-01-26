@@ -22,7 +22,7 @@ const DatePicker = ({ placeholder, dateValue, onChange }: DatePickerProps) => {
           variant="secondary"
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "mt-[1.6rem] w-full justify-between rounded-[6px] border border-unfocused p-[2.3rem_0.8rem] text-left text-[1.2rem] font-normal",
+            "mt-16 w-full justify-between rounded-6 border border-unfocused p-[2.3rem_0.8rem] text-left text-1.2 font-normal",
             dateValue === undefined && "text-muted-foreground",
           )}
         >
@@ -30,15 +30,15 @@ const DatePicker = ({ placeholder, dateValue, onChange }: DatePickerProps) => {
             {isValidDeadline ? format(dateValue, "PPP") : placeholder}
           </span>
 
-          <CalendarIcon className="aspect-square w-[1.6rem]" />
+          <CalendarIcon className="aspect-square w-1.6" />
         </Button>
       </Popover.Trigger>
 
       <Popover.Content className="w-auto p-0">
         <Calendar
-          className="rounded-[10px] border border-unfocused p-[1.2rem]"
+          className="rounded-10 border border-unfocused p-12"
           classNames={{
-            cell: "text-[1.2rem] font-medium hover:scale-[1.03]",
+            cell: "text-1.2 font-medium hover:scale-[1.03]",
           }}
           mode="single"
           selected={dateValue}

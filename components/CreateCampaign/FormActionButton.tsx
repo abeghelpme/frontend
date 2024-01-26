@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import Button from "../primitives/Button/button";
 
 type NextButtonProps = {
@@ -24,7 +24,7 @@ function FormActionButton({
       type={type}
       variant="primary"
       className={cn(
-        "rounded-[6px] bg-formBtn p-[0.8rem_1.2rem] text-[1.2rem] font-semibold",
+        "ounded-6 bg-formBtn px-1.2 py-0.8 text-[1.2rem] font-semibold",
         disabled && "cursor-not-allowed bg-unfocused",
         className,
       )}

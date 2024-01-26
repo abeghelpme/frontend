@@ -1,17 +1,16 @@
 import { DatePicker } from "@/components/primitives/Form/DatePicker";
 import { Select } from "@/components/primitives/Form/Select";
-import { useFormStore, type StepTwoData } from "@/store/formStore";
-import { FORM_STEP_KEY_LOOKUP } from "@/store/formStore/formStore";
+import { useFormStore, type StepTwoData } from "@/store/useformStore";
+import { STEP_DATA_KEY_LOOKUP } from "@/store/useformStore/constants";
 import { ChevronDownIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
-import { DATE_TODAY } from "../campaign-utils/constants";
 
 function StepTwo() {
   const { setData, goToStep, stepTwoData } = useFormStore((state) => state);
 
   const { control, register, handleSubmit } = useForm({
     mode: "onTouched",
-    defaultValues: stepTwoData ?? {},
+    defaultValues: stepTwoData,
   });
 
   const onSubmit = (data: StepTwoData) => {
@@ -21,24 +20,21 @@ function StepTwo() {
 
   return (
     <section>
-      <h2 className="text-[1.6rem] font-bold text-formBtn">
+      <h2 className="text-1.6 font-bold text-formBtn">
         Share your funding goal and deadline
       </h2>
 
       <form
-        id={FORM_STEP_KEY_LOOKUP[2]}
-        className="mt-[3.2rem]"
+        id={STEP_DATA_KEY_LOOKUP[2]}
+        className="mt-3.2"
         onSubmit={(event) => {
           event.preventDefault();
           void handleSubmit(onSubmit)(event);
         }}
       >
-        <ol className="flex flex-col gap-[2.4rem]">
+        <ol className="flex flex-col gap-2.4">
           <li>
-            <label
-              htmlFor="campaignTitle"
-              className="text-[1.4rem] font-semibold"
-            >
+            <label htmlFor="campaignTitle" className="text-1.4 font-semibold">
               Campaign Title
             </label>
 
@@ -47,19 +43,18 @@ function StepTwo() {
               id="campaignTitle"
               type="text"
               placeholder="Give your campaign a catchy title that can resonate with donors"
-              className="mt-[1.6rem] w-full rounded-[10px] border-[1px] border-unfocused p-[1.5rem_0.8rem] text-[1rem] focus-visible:outline-formBtn"
+              className="mt-1.6 w-full rounded-10 border border-unfocused px-0.8 py-1.5 text-1 focus-visible:outline-formBtn"
             />
           </li>
 
           <li>
-            <label className="text-[1.4rem] font-semibold">
+            <label className="text-1.4 font-semibold">
               Who is fundraising?
             </label>
 
             <Controller
               control={control}
               name="fundraiserTarget"
-              defaultValue=""
               render={({ field }) => (
                 <Select.Root
                   name={field.name}
@@ -68,7 +63,7 @@ function StepTwo() {
                 >
                   <Select.Trigger
                     icon={<ChevronDownIcon />}
-                    className="mt-[1.6rem] rounded-[10px] border-unfocused p-[2.3rem_0.8rem] text-[1rem] data-[placeholder]:text-placeholder"
+                    className="mt-1.6 rounded-10 border-unfocused p-[2.3rem_0.8rem] text-1 data-[placeholder]:text-placeholder"
                   >
                     <Select.Value placeholder="Specify who is fundraising" />
                   </Select.Trigger>
@@ -85,10 +80,7 @@ function StepTwo() {
           </li>
 
           <li>
-            <label
-              htmlFor="campaignGoal"
-              className="text-[1.4rem] font-semibold"
-            >
+            <label htmlFor="campaignGoal" className="text-1.4 font-semibold">
               Campaign Goal
             </label>
 
@@ -97,18 +89,15 @@ function StepTwo() {
               id="campaignGoal"
               type="text"
               placeholder="Set a realistic target amount"
-              className="mt-[1.6rem] w-full rounded-[10px] border-[1px] border-unfocused p-[1.5rem_0.8rem] text-[1rem] focus-visible:outline-formBtn"
+              className="mt-1.6 w-full rounded-10 border-[1px] border-unfocused p-[1.5rem_0.8rem] text-1 focus-visible:outline-formBtn"
             />
           </li>
 
           <li>
-            <label className="text-[1.4rem] font-semibold">
-              Campaign Deadline
-            </label>
+            <label className="text-1.4 font-semibold">Campaign Deadline</label>
 
             <Controller
               control={control}
-              defaultValue={DATE_TODAY}
               name="campaignDeadline"
               render={({ field }) => (
                 <DatePicker
