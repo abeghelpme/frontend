@@ -1,3 +1,4 @@
+import CloudFlareTurnStile from "@/components/CloudflareTurnstile/CloudFlareTurnStile";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import ProgressBar from "@/components/primitives/ProgressBar/progress-bar";
@@ -312,6 +313,8 @@ const SignUp = () => {
             </p>
           )}
         </div>
+        <CloudFlareTurnStile />
+
         <div className="flex flex-col items-center space-y-5">
           <Button
             disabled={isSubmitting}
