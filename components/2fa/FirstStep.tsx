@@ -1,4 +1,4 @@
-import {Button, CustomDialog, Loader} from '@/components'
+import {Button, CustomDialog, Loader} from '@/components/index'
 import type {ApiResponse} from '@/interfaces'
 import {callApi} from '@/lib'
 import {ClipboardIcon} from '@radix-ui/react-icons'

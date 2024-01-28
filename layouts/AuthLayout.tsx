@@ -1,4 +1,4 @@
-import {LogoBanner} from '@/components'
+import LogoBanner from '@/components/shared/LogoBanner'
 import type {AuthLayoutProps} from '@/interfaces'
 import authBgJar from '@/public/assets/images/auth/auth-bg-jar.svg'
 import Image from 'next/image'
@@ -36,10 +36,8 @@ export const AuthLayout = ({
 					<LogoBanner />
 					{withHeader && (
 						<div className="space-y-2 text-center font-medium">
-							<h1 className="text-xl font-semibold text-abeg-neutral-10 md:text-2xl">
-								{heading}
-							</h1>
-							<p className="text-lg md:text-xl">{greeting}</p>
+							<h1 className="font-semibold md:text-2xl">{heading}</h1>
+							<p className="text-sm font-medium md:text-xl">{greeting}</p>
 						</div>
 					)}
 					{children}

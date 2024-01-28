@@ -1,4 +1,4 @@
-import {Loader} from '@/components'
+import {Loader} from '@/components/index'
 import {Toaster} from '@/components/ui/toaster'
 import {useSession} from '@/store'
 import '@/styles/globals.css'
@@ -48,6 +48,7 @@ export default function App({Component, pageProps}: ComponentWithPageLayout) {
 			<style jsx global>{`
         html {
           font-family: ${manrope.style.fontFamily};
+          color: #484848;
         }
       `}</style>
 			<NextNProgress color="#324823" />

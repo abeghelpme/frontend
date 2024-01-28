@@ -1,4 +1,4 @@
-import {Footer, NavBar} from '@/components'
+import {Footer, NavBar} from '@/components/index'
 import type {BaseLayoutProps} from '@/interfaces'
 
 export const BaseLayout = ({children}: BaseLayoutProps) => {

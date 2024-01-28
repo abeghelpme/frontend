@@ -1,5 +1,5 @@
 import {setTimeout} from 'timers'
-import {Button, Input, ProgressBar} from '@/components'
+import {Button, Input, ProgressBar} from '@/components/index'
 import {useToast} from '@/components/ui/use-toast'
 import type {ApiResponse} from '@/interfaces'
 import {AuthLayout} from '@/layouts'

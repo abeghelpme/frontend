@@ -1,4 +1,4 @@
-import {Button} from '@/components'
+import {Button} from '@/components/index'
 import {useToast} from '@/components/ui/use-toast'
 import {AuthLayout} from '@/layouts'
 import {callApi} from '@/lib'

@@ -1,4 +1,9 @@
-import {Button, CustomDialog, OtpInputDisplay, RecoveryCode} from '@/components'
+import {
+	Button,
+	CustomDialog,
+	OtpInputDisplay,
+	RecoveryCode,
+} from '@/components/index'
 import {useToast} from '@/components/ui/use-toast'
 import type {ApiResponse, User} from '@/interfaces'
 import {callApi} from '@/lib'

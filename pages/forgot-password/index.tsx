@@ -1,4 +1,4 @@
-import {Button, Input} from '@/components'
+import {Button, Input} from '@/components/index'
 import {useToast} from '@/components/ui/use-toast'
 import {AuthLayout} from '@/layouts'
 import {type ForgotPasswordType, callApi, zodValidator} from '@/lib'

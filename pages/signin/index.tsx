@@ -1,4 +1,4 @@
-import {Button, CustomDialog, Input, Loader} from '@/components'
+import {Button, CustomDialog, Input, Loader} from '@/components/index'
 import {useToast} from '@/components/ui/use-toast'
 import type {ApiResponse, User} from '@/interfaces/ApiResponses'
 import {AuthLayout, AuthPagesLayout} from '@/layouts'

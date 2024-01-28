@@ -6,12 +6,12 @@ const LogoBanner = () => {
 	return (
 		<Link href="/" className={`flex items-center justify-center gap-2`}>
 			<Image
-				className="aspect-square w-[35px] md:w-[40px]"
+				className="aspect-square w-[24px] md:w-[32px]"
 				src={logo as string}
 				priority
 				alt=""
 			/>
-			<span role="" className={`font-medium text-abeg-teal-10 md:text-lg`}>
+			<span role="" className={`font-bold text-abeg-teal-10 md:text-xl`}>
 				AbegHelp.me
 			</span>
 		</Link>

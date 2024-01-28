@@ -1,4 +1,4 @@
-import {Button, Input, ProgressBar} from '@/components'
+import {Button, Input, ProgressBar} from '@/components/index'
 import {useToast} from '@/components/ui/use-toast'
 import {AuthLayout} from '@/layouts'
 import {

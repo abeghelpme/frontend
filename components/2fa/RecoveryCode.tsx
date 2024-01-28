@@ -1,4 +1,4 @@
-import {Button} from '@/components'
+import {Button} from '@/components/index'
 import {ClipboardIcon} from '@radix-ui/react-icons'
 import {useRouter} from 'next/router'
 import {useToast} from '../ui/use-toast'

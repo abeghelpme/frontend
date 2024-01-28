@@ -1,5 +1,6 @@
 import {cn} from '@/lib'
 
+import {forwardRef} from 'react'
 interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
 	className: string
 	fullWidth?: boolean
@@ -68,4 +69,4 @@ const Button = (
 	)
 }
 
-export default Button
+export default forwardRef(Button)

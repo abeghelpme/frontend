@@ -1,4 +1,4 @@
-import {Success} from '@/components'
+import {Success} from '@/components/index'
 import {AuthLayout} from '@/layouts'
 import Link from 'next/link'
 

@@ -1,4 +1,4 @@
-import {Button, OtpInputDisplay} from '@/components'
+import {Button, OtpInputDisplay} from '@/components/index'
 import {useToast} from '@/components/ui/use-toast'
 import {type ApiResponse, type User} from '@/interfaces'
 import {AuthLayout, AuthPagesLayout} from '@/layouts'
