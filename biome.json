@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "organizeImports": {
-    "enabled": false
+    "enabled": true
   },
   "linter": {
     "enabled": false
@@ -17,30 +17,20 @@
   "formatter": {
     "enabled": true,
     "formatWithErrors": true,
-    "ignore": [
-      "api-docs",
-      ".github",
-      "tests",
-      "fixtures",
-      "scripts",
-      "src",
-      "static/app/data/world.json",
-      "static/app/**/*trace.json",
-      "package.json"
-    ]
+    "ignore": []
   },
   "javascript": {
     "formatter": {
       "enabled": true,
       "bracketSpacing": false,
       "bracketSameLine": false,
-      "lineWidth": 90,
+      "lineWidth": 80,
       "semicolons": "always",
       "quoteStyle": "single",
       "indentWidth": 2,
       "trailingComma": "es5",
       "arrowParentheses": "asNeeded",
-      "indentStyle": "space",
+      "indentStyle": "tab",
       "jsxQuoteStyle": "double",
       "quoteProperties": "asNeeded"
     }
