@@ -1,7 +1,7 @@
-import { layoutForAuthPages } from "@/lib/utils/AuthPagesLayout";
+import {layoutForAuthPages} from '@/lib/utils/AuthPagesLayout';
 
 const Test = () => {
-  return <div className="flex-1 bg-red-500">Test</div>;
+	return <div className="flex-1 bg-red-500">Test</div>;
 };
 
 export default Test;
