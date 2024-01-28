@@ -63,6 +63,9 @@ const config: Config = {
           },
         },
       },
+      height: {
+        '23': '6rem',
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
