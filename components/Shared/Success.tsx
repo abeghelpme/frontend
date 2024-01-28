@@ -6,7 +6,7 @@ type SuccessProps = {
 	textContent: string
 }
 
-export const Success = ({children, textContent}: SuccessProps) => {
+const Success = ({children, textContent}: SuccessProps) => {
 	return (
 		<div className="mx-auto w-[90%] max-w-[397px] rounded-md bg-white p-6 shadow-auth-layout-shadow sm:w-[50%]">
 			<Player
@@ -23,3 +23,5 @@ export const Success = ({children, textContent}: SuccessProps) => {
 		</div>
 	)
 }
+
+export default Success

@@ -7,7 +7,7 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {useForm} from 'react-hook-form'
 
-export const ForgotPasswordPage = () => {
+const ForgotPasswordPage = () => {
 	const router = useRouter()
 	const {toast} = useToast()
 
@@ -103,3 +103,5 @@ export const ForgotPasswordPage = () => {
 		</AuthLayout>
 	)
 }
+
+export default ForgotPasswordPage

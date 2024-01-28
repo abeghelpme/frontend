@@ -11,7 +11,7 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {useRef, useState} from 'react'
 
-export const TwoFa = () => {
+const TwoFa = () => {
 	const router = useRouter()
 	const {toast} = useToast()
 	const [selectedOption, setSelectedOption] = useState('app')
@@ -239,3 +239,5 @@ export const TwoFa = () => {
 		</div>
 	)
 }
+
+export default TwoFa

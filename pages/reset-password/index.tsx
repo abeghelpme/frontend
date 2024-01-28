@@ -9,10 +9,10 @@ import {
 } from '@/lib'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {useRouter} from 'next/router'
-import React, {useDeferredValue, useEffect, useState} from 'react'
+import {useDeferredValue, useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
-const ResetPassword: React.FC = () => {
+const ResetPassword = () => {
 	const router = useRouter()
 	const {toast} = useToast()
 

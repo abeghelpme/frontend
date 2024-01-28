@@ -3,11 +3,7 @@ import {ClipboardIcon} from '@radix-ui/react-icons'
 import {useRouter} from 'next/router'
 import {useToast} from '../ui/use-toast'
 
-export const RecoveryCode = ({
-	recoveryCode,
-}: {
-	recoveryCode: string | null
-}) => {
+const RecoveryCode = ({recoveryCode}: {recoveryCode: string | null}) => {
 	const router = useRouter()
 	const {toast} = useToast()
 
@@ -78,3 +74,5 @@ export const RecoveryCode = ({
 		</>
 	)
 }
+
+export default RecoveryCode

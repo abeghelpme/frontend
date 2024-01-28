@@ -1,7 +1,7 @@
 import {FirstStep, RecoveryCode} from '@/components'
 import {useRef, useState} from 'react'
 
-export const Authenticator = () => {
+const Authenticator = () => {
 	const [step, setStep] = useState(2)
 	const recoveryCode = useRef<string | null>(null)
 	return (
@@ -14,3 +14,4 @@ export const Authenticator = () => {
 		</div>
 	)
 }
+export default Authenticator

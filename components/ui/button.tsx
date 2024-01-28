@@ -9,7 +9,7 @@ interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
 	variant?: 'primary' | 'secondary' | 'danger'
 }
 
-export const Button = (
+const Button = (
 	{
 		className,
 		children,
@@ -67,3 +67,5 @@ export const Button = (
 		</button>
 	)
 }
+
+export default Button

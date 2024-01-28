@@ -9,7 +9,7 @@ import type {FieldErrors} from 'react-hook-form'
 type InputProps = {errorField?: FieldErrors<SignUpProps> | string}
 type TInputProps = InputProps & React.InputHTMLAttributes<HTMLInputElement>
 
-export const Input = forwardRef<HTMLInputElement, TInputProps>(
+const Input = forwardRef<HTMLInputElement, TInputProps>(
 	({id, type, className, errorField, ...props}, ref) => {
 		const [showPassword, setShowPassword] = useState(false)
 
@@ -64,3 +64,5 @@ export const Input = forwardRef<HTMLInputElement, TInputProps>(
 )
 
 Input.displayName = 'Input'
+
+export default Input

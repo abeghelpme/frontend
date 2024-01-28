@@ -12,10 +12,7 @@ type AuthenticatorFirstStepProps = {
 	recoveryCode: React.MutableRefObject<string | null>
 }
 
-export const FirstStep = ({
-	setStep,
-	recoveryCode,
-}: AuthenticatorFirstStepProps) => {
+const FirstStep = ({setStep, recoveryCode}: AuthenticatorFirstStepProps) => {
 	const [isQRCodeLoading, setIsQRCodeLoading] = useState(true)
 	const [QRCodeError, setQRCodeError] = useState(false)
 	const [otpLoading, setOtpLoading] = useState(false)
@@ -215,3 +212,5 @@ export const FirstStep = ({
 		</>
 	)
 }
+
+export default FirstStep

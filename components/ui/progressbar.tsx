@@ -5,7 +5,7 @@ interface ProgressBarProps {
 	className?: string
 }
 
-export const ProgressBar = ({value, className, ...props}: ProgressBarProps) => {
+const ProgressBar = ({value, className, ...props}: ProgressBarProps) => {
 	return (
 		<progress
 			className={cn(
@@ -21,3 +21,5 @@ export const ProgressBar = ({value, className, ...props}: ProgressBarProps) => {
 		</progress>
 	)
 }
+
+export default ProgressBar

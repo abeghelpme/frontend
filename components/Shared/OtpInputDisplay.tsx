@@ -11,7 +11,7 @@ type OtpProps = {
 	bottomSection?: React.ReactNode
 }
 
-export const OtpInputDisplay = ({
+const OtpInputDisplay = ({
 	otp,
 	setOtp,
 	topSection,
@@ -70,3 +70,5 @@ export const OtpInputDisplay = ({
 		</div>
 	)
 }
+
+export default OtpInputDisplay

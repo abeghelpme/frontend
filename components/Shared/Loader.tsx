@@ -5,7 +5,7 @@ type CompProp = {
 	message?: string | JSX.Element
 }
 
-export const Loader = ({message}: CompProp) => {
+const Loader = ({message}: CompProp) => {
 	return (
 		<div className="flex h-full w-full flex-col items-center justify-center gap-3 overflow-hidden font-medium text-abeg-teal-10">
 			<div className="flex items-center justify-center gap-2">
@@ -23,3 +23,5 @@ export const Loader = ({message}: CompProp) => {
 		</div>
 	)
 }
+
+export default Loader

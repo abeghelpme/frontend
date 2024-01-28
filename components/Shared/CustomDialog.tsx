@@ -3,7 +3,7 @@ import {
 	DialogClose,
 	DialogContent,
 	DialogTrigger,
-} from '@/components/ui'
+} from '@/components'
 import {CrossCircledIcon} from '@radix-ui/react-icons'
 import {type ReactNode, type SetStateAction} from 'react'
 
@@ -14,7 +14,7 @@ type DialogProps = {
 	setOpen?: (value: SetStateAction<boolean>) => void
 }
 
-export const CustomDialog = ({
+const CustomDialog = ({
 	children,
 	trigger,
 	openDialog,
@@ -33,3 +33,4 @@ export const CustomDialog = ({
 		</DialogComp>
 	)
 }
+export default CustomDialog

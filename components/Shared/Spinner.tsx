@@ -1,4 +1,4 @@
-export const Spinner = () => {
+const Spinner = () => {
 	return (
 		<div
 			role="status"
@@ -25,3 +25,5 @@ export const Spinner = () => {
 		</div>
 	)
 }
+
+export default Spinner

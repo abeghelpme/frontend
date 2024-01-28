@@ -2,7 +2,7 @@ import logo from '@/public/assets/images/shared/logo.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export const LogoBanner = () => {
+const LogoBanner = () => {
 	return (
 		<Link href="/" className={`flex items-center justify-center gap-2`}>
 			<Image
@@ -17,3 +17,5 @@ export const LogoBanner = () => {
 		</Link>
 	)
 }
+
+export default LogoBanner
