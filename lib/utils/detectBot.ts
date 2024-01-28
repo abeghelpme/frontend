@@ -6,6 +6,7 @@ export const detectBot = (event: FormEvent) => {
   const turnstileResponse = formData.get("cf-turnstile-response");
 
   if (turnstileResponse === "") {
+//     console.log("failed");
     toast({
       title: "CAPTCHA Failed",
       description: "We cannot verify you are a human!",
@@ -14,5 +15,7 @@ export const detectBot = (event: FormEvent) => {
 
     return;
   }
+//   console.log("passed");
+
   return true;
 };

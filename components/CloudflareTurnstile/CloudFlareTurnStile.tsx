@@ -14,7 +14,12 @@ const CloudFlareTurnStile = () => {
         async
         defer
       />
-      <div className="cf-turnstile mt-2" data-sitekey={SITEKEY}></div>
+      <div
+        data-size="compact"
+        className="cf-turnstile [&_>_iframe]:!w-56 [&_>_iframe]:!h-23"
+        data-sitekey="3x00000000000000000000FF"
+        // data-sitekey={process.env.NEXT_PUBLIC_CF_TURNSTILE_SITEKEY} for production purposes only.
+      ></div>
     </div>
   );
 };
