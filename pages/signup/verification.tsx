@@ -1,15 +1,15 @@
-import AuthLayout from "@/layouts/authLayout";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import AuthLayout from '@/layouts/authLayout';
+import {useRouter} from 'next/router';
+import {useEffect, useState} from 'react';
 
-import Button from "@/components/primitives/Button/button";
-import { useToast } from "@/components/ui/use-toast";
-import callApi from "@/lib/api/callApi";
+import Button from '@/components/primitives/Button/button';
+import {useToast} from '@/components/ui/use-toast';
+import callApi from '@/lib/api/callApi';
 
 const VerificationPage = () => {
   const router = useRouter();
-  const { toast } = useToast();
-  const [queryParam, setQueryParam] = useState("");
+  const {toast} = useToast();
+  const [queryParam, setQueryParam] = useState('');
 
   useEffect(() => {
     setQueryParam(router.query.email as string);
@@ -18,10 +18,10 @@ const VerificationPage = () => {
   const handleResendEmail = async () => {
     if (!queryParam)
       return toast({
-        title: "Request Failed",
-        description: "No email provided",
+        title: 'Request Failed',
+        description: 'No email provided',
       });
-    const { data, error } = await callApi("/auth/resend-verification", {
+    const {data, error} = await callApi('/auth/resend-verification', {
       email: queryParam,
     });
 
@@ -33,8 +33,8 @@ const VerificationPage = () => {
       });
     } else {
       toast({
-        title: "Success",
-        description: (data as { message: string }).message,
+        title: 'Success',
+        description: (data as {message: string}).message,
         duration: 3000,
       });
     }
@@ -52,15 +52,12 @@ const VerificationPage = () => {
           Email Verification
         </h1>
         <p className="">
-          Please check your email for the verification link sent to you. Click
-          the link to verify your email
+          Please check your email for the verification link sent to you. Click the link to
+          verify your email
         </p>
         <div className="!mt-6 flex flex-col gap-2">
           <p className="text-center text-sm">Didn&apos;t get the email?</p>
-          <Button
-            className="bg-abeg-teal py-4"
-            onClick={() => void handleResendEmail()}
-          >
+          <Button className="bg-abeg-teal py-4" onClick={() => void handleResendEmail()}>
             Click here to resend
           </Button>
         </div>

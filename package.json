@@ -6,18 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "format": "prettier --write .",
     "check-types": "tsc --noEmit --pretty",
-    "prepare": "husky install",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "npm run lint",
-      "npm run format"
-    ]
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
@@ -51,6 +41,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.5.3",
     "@next/eslint-plugin-next": "^13.5.4",
     "@storybook/addon-essentials": "^7.4.6",
     "@storybook/addon-interactions": "^7.4.6",
