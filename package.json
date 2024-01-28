@@ -9,11 +9,7 @@
     "check-types": "tsc --noEmit --pretty",
     "prepare": "husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
+
   "license": "AGPL-3.0",
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
