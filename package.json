@@ -9,7 +9,6 @@
     "check-types": "tsc --noEmit --pretty",
     "prepare": "husky install"
   },
-
   "license": "AGPL-3.0",
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",

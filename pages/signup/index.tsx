@@ -1,44 +1,39 @@
-import {setTimeout} from 'timers';
-import Button from '@/components/primitives/Button/button';
-import Input from '@/components/primitives/Form/Input';
-import ProgressBar from '@/components/primitives/ProgressBar/progress-bar';
-import {useToast} from '@/components/ui/use-toast';
-import type {ApiResponse} from '@/interfaces/apiResponses';
-import AuthLayout from '@/layouts/authLayout';
-import callApi from '@/lib/api/callApi';
-import {signupLayout} from '@/lib/utils/normalLayout';
+import {setTimeout} from 'timers'
+import {Button, Input, ProgressBar} from '@/components'
+import {useToast} from '@/components/ui/use-toast'
+import type {ApiResponse} from '@/interfaces'
+import {AuthLayout} from '@/layouts'
 import {
 	type SignUpType,
+	callApi,
 	checkPasswordStrength,
 	zodValidator,
-} from '@/lib/utils/validation/validateWithZod';
-// import { useSession } from "@/store/useSession";
-import {zodResolver} from '@hookform/resolvers/zod';
-import Link from 'next/link';
-import {useRouter} from 'next/router';
-import {useDeferredValue, useEffect, useRef, useState} from 'react';
-import {type SubmitHandler, useForm} from 'react-hook-form';
+} from '@/lib'
+import {zodResolver} from '@hookform/resolvers/zod'
+import Link from 'next/link'
+import {useRouter} from 'next/router'
+import {useDeferredValue, useEffect, useRef, useState} from 'react'
+import {type SubmitHandler, useForm} from 'react-hook-form'
 
 const SignUp = () => {
-	const {toast} = useToast();
-	// const { user } = useSession((state) => state);
-	const showModal = useRef(false);
+	const {toast} = useToast()
+	const showModal = useRef(false)
 	const [message, setMessage] = useState<ApiResponse>({
 		status: '',
 		message: '',
 		error: undefined,
 		data: undefined,
-	});
+	})
 
 	useEffect(() => {
 		const checkLS = () => {
 			if (!showModal.current) {
-				localStorage.setItem('skip-2Fa', 'true');
+				localStorage.setItem('skip-2Fa', 'true')
 			}
-		};
-		checkLS();
-	}, []);
-	const router = useRouter();
+		}
+		checkLS()
+	}, [])
+	const router = useRouter()
 
 	const {
 		register,
@@ -50,21 +45,21 @@ const SignUp = () => {
 		resolver: zodResolver(zodValidator('signup')!),
 		mode: 'onChange',
 		reValidateMode: 'onChange',
-	});
+	})
 
-	const password = watch('password', '');
+	const password = watch('password', '')
 
-	const [result, setResult] = useState<number>(0);
-	const deferredPassword = useDeferredValue(password);
+	const [result, setResult] = useState<number>(0)
+	const deferredPassword = useDeferredValue(password)
 	useEffect(() => {
 		const genStrength = async () => {
-			const passwordStrength = await checkPasswordStrength(deferredPassword);
-			setResult(passwordStrength);
-		};
+			const passwordStrength = await checkPasswordStrength(deferredPassword)
+			setResult(passwordStrength)
+		}
 		genStrength().catch(e => {
-			console.log(e);
-		});
-	}, [deferredPassword]);
+			console.log(e)
+		})
+	}, [deferredPassword])
 
 	const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
 		const {data: responseData, error} = await callApi<ApiResponse>(
@@ -77,38 +72,38 @@ const SignUp = () => {
 				confirmPassword: data.confirmPassword,
 				isTermAndConditionAccepted: data.terms,
 			}
-		);
+		)
 
 		if (error) {
-			const castedError = error as ApiResponse;
-			setMessage(castedError);
+			const castedError = error as ApiResponse
+			setMessage(castedError)
 			window.scrollTo({
 				top: 0,
 				left: 0,
 				behavior: 'smooth',
-			});
+			})
 
 			toast({
 				title: castedError.status,
 				description: castedError.message,
 				duration: 2000,
-			});
-			return;
+			})
+			return
 		} else {
 			toast({
 				title: 'Success',
 				description: responseData?.message,
 				duration: 2000,
-			});
-			reset();
+			})
+			reset()
 			setTimeout(() => {
 				void router.push({
 					pathname: '/signup/verification',
 					query: {signup: true, email: data.email.toLowerCase()},
-				});
-			}, 1500);
+				})
+			}, 1500)
 		}
-	};
+	}
 
 	// if (user !== null) {
 	//   // // setTimeout(() => {}, 1000);
@@ -129,8 +124,8 @@ const SignUp = () => {
 		>
 			<form
 				onSubmit={event => {
-					event.preventDefault();
-					void handleSubmit(onSubmit)(event);
+					event.preventDefault()
+					void handleSubmit(onSubmit)(event)
 				}}
 				action=""
 				className="flex flex-col gap-3"
@@ -325,10 +320,9 @@ const SignUp = () => {
 				</div>
 			</form>
 		</AuthLayout>
-	);
-};
+	)
+}
 
-export default SignUp;
+export default SignUp
 
-SignUp.getLayout = signupLayout;
-SignUp.protect = true;
+SignUp.protect = true

@@ -1,96 +1,95 @@
-import ShowRecoveryCode from '@/components/2fa/RecoveryCode';
-import DialogComponent from '@/components/Shared/Dialog';
-import OtpInputDisplay from '@/components/Shared/OtpInputDisplay';
-import Button from '@/components/primitives/Button/button';
-import {useToast} from '@/components/ui/use-toast';
-import type {ApiResponse, User} from '@/interfaces/apiResponses';
-import callApi from '@/lib/api/callApi';
-import authBgContours from '@/public/assets/images/shared/bg-contours.png';
-import {useSession} from '@/store/useSession';
-import Image from 'next/image';
-import Link from 'next/link';
-import {useRouter} from 'next/router';
-import {useRef, useState} from 'react';
+import {Button, CustomDialog, OtpInputDisplay, RecoveryCode} from '@/components'
+import {useToast} from '@/components/ui/use-toast'
+import type {ApiResponse, User} from '@/interfaces'
+import {callApi} from '@/lib'
 
-const TwoFa = () => {
-	const router = useRouter();
-	const {toast} = useToast();
-	const [selectedOption, setSelectedOption] = useState('app');
-	const [step, setStep] = useState(1);
-	const [openModal, setOpenModal] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const [otp, setOtp] = useState('');
-	const recoveryCodeRef = useRef<string | null>(null);
-	const {user} = useSession(state => state);
-	const castedUser = user as User;
+import authBgContours from '@/public/assets/images/shared/bg-contours.png'
+import {useSession} from '@/store'
+
+import Image from 'next/image'
+import Link from 'next/link'
+import {useRouter} from 'next/router'
+import {useRef, useState} from 'react'
+
+export const TwoFa = () => {
+	const router = useRouter()
+	const {toast} = useToast()
+	const [selectedOption, setSelectedOption] = useState('app')
+	const [step, setStep] = useState(1)
+	const [openModal, setOpenModal] = useState(false)
+	const [loading, setLoading] = useState(false)
+	const [otp, setOtp] = useState('')
+	const recoveryCodeRef = useRef<string | null>(null)
+	const {user} = useSession(state => state)
+	const castedUser = user as User
 
 	const handleStep = async (e: React.FormEvent<HTMLButtonElement>) => {
 		if (selectedOption === 'app') {
-			void router.push('/2fa/app');
+			void router.push('/2fa/app')
 		} else {
-			setLoading(true);
-			e.preventDefault();
+			setLoading(true)
+			e.preventDefault()
 			const {data, error} = await callApi<ApiResponse>('/auth/2fa/setup', {
 				twoFactorType: 'EMAIL',
-			});
+			})
 
 			if (data) {
 				toast({
 					title: 'Success',
 					description: data.message,
 					duration: 3000,
-				});
-				setOpenModal(true);
-				setLoading(false);
+				})
+				setOpenModal(true)
+				setLoading(false)
 			}
 			if (error) {
-				setLoading(false);
+				setLoading(false)
 				toast({
 					title: 'Error',
 					description: error.message,
 					duration: 3000,
-				});
+				})
 			}
 		}
-	};
+	}
 
 	const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
-		e.preventDefault();
-		setLoading(true);
+		e.preventDefault()
+		setLoading(true)
 		if (otp.length < 6) {
-			setLoading(false);
+			setLoading(false)
 			return toast({
 				title: 'Error',
 				description: 'Please enter a valid code',
 				duration: 1500,
-			});
+			})
 		}
 		const {data, error} = await callApi<ApiResponse>('/auth/2fa/complete', {
 			token: String(otp),
 			twoFactorType: 'EMAIL',
-		});
+		})
 
 		if (error) {
-			setLoading(false);
+			setLoading(false)
 			return toast({
 				title: error.status as string,
 				description: error.message,
 				duration: 3000,
-			});
+			})
 		} else {
-			setLoading(false);
+			setLoading(false)
 			toast({
 				title: 'Success',
 				description: (data as {message: string}).message,
 				duration: 1500,
-			});
-			recoveryCodeRef.current = data?.data?.recoveryCode as string;
+			})
+			recoveryCodeRef.current = data?.data?.recoveryCode as string
 
 			setTimeout(() => {
-				setStep(2);
-			}, 1000);
+				setStep(2)
+			}, 1000)
 		}
-	};
+	}
 
 	return (
 		<div className="relative flex min-h-full flex-col justify-between">
@@ -179,11 +178,11 @@ const TwoFa = () => {
 					</div>
 					<div className="border-t border-t-formBtn">
 						<div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
-							<DialogComponent
+							<CustomDialog
 								openDialog={openModal}
 								setOpen={() => {
-									setOpenModal(false);
-									setOtp('');
+									setOpenModal(false)
+									setOtp('')
 								}}
 								trigger={
 									<Button
@@ -230,15 +229,13 @@ const TwoFa = () => {
 										</div>
 									}
 								/>
-							</DialogComponent>
+							</CustomDialog>
 						</div>
 					</div>
 				</>
 			) : (
-				<ShowRecoveryCode recoveryCode={recoveryCodeRef.current} />
+				<RecoveryCode recoveryCode={recoveryCodeRef.current} />
 			)}
 		</div>
-	);
-};
-
-export default TwoFa;
+	)
+}

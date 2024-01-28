@@ -1,6 +1,6 @@
-import Success from '@/components/Shared/Success';
-import AuthLayout from '@/layouts/authLayout';
-import Link from 'next/link';
+import {Success} from '@/components'
+import {AuthLayout} from '@/layouts'
+import Link from 'next/link'
 
 const ResetPasswordSuccessPage = () => {
 	return (
@@ -14,7 +14,7 @@ const ResetPasswordSuccessPage = () => {
 				</Link>
 			</Success>
 		</AuthLayout>
-	);
-};
+	)
+}
 
-export default ResetPasswordSuccessPage;
+export default ResetPasswordSuccessPage

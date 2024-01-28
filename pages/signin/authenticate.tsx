@@ -1,56 +1,48 @@
-import OtpInputDisplay from '@/components/Shared/OtpInputDisplay';
-import Button from '@/components/primitives/Button/button';
-import {useToast} from '@/components/ui/use-toast';
-import {type ApiResponse, type User} from '@/interfaces/apiResponses';
-import AuthLayout from '@/layouts/authLayout';
-import callApi from '@/lib/api/callApi';
-import {layoutForAuthPages} from '@/lib/utils/AuthPagesLayout';
-import {useSession} from '@/store/useSession';
-import {useRouter} from 'next/router';
-import {
-	type Dispatch,
-	type FormEvent,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import {Button, OtpInputDisplay} from '@/components'
+import {useToast} from '@/components/ui/use-toast'
+import {type ApiResponse, type User} from '@/interfaces'
+import {AuthLayout, AuthPagesLayout} from '@/layouts'
+import {callApi} from '@/lib'
+import {useSession} from '@/store'
+import {useRouter} from 'next/router'
+import {type Dispatch, type FormEvent, useEffect, useRef, useState} from 'react'
 
 type Props = {
-	email?: string;
-	loading: boolean;
-	otp: string;
-	setOtp: Dispatch<React.SetStateAction<string>>;
-	handleSubmit: (e: FormEvent<HTMLButtonElement>) => void;
-};
+	email?: string
+	loading: boolean
+	otp: string
+	setOtp: Dispatch<React.SetStateAction<string>>
+	handleSubmit: (e: FormEvent<HTMLButtonElement>) => void
+}
 const EmailAuth = ({otp, setOtp, handleSubmit, loading, email}: Props) => {
-	const {toast} = useToast();
-	const resend = useRef(false);
+	const {toast} = useToast()
+	const resend = useRef(false)
 
 	const resendCode = async () => {
 		// e.preventDefault();
 
-		resend.current = true;
-		const {data, error} = await callApi<ApiResponse>('/auth/2fa/code/email');
+		resend.current = true
+		const {data, error} = await callApi<ApiResponse>('/auth/2fa/code/email')
 		if (error) {
-			resend.current = false;
+			resend.current = false
 			return toast({
 				title: error.status as string,
 				description: error.message,
 				duration: 2000,
-			});
+			})
 		} else {
-			resend.current = false;
+			resend.current = false
 			toast({
 				title: 'Success',
 				description: (data as {message: string}).message,
 				duration: 2000,
-			});
+			})
 		}
-	};
+	}
 	useEffect(() => {
-		void resendCode();
+		void resendCode()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [])
 	return (
 		<OtpInputDisplay
 			otp={otp}
@@ -90,8 +82,8 @@ const EmailAuth = ({otp, setOtp, handleSubmit, loading, email}: Props) => {
 				</>
 			}
 		/>
-	);
-};
+	)
+}
 
 const AuthApp = ({otp, setOtp, handleSubmit, loading}: Props) => {
 	return (
@@ -116,56 +108,56 @@ const AuthApp = ({otp, setOtp, handleSubmit, loading}: Props) => {
 				</Button>
 			}
 		/>
-	);
-};
+	)
+}
 const AuthenticateUser = () => {
-	const [otp, setOtp] = useState('');
-	const [loading, setLoading] = useState(false);
+	const [otp, setOtp] = useState('')
+	const [loading, setLoading] = useState(false)
 	const [userPref, setUserPref] = useState({
 		verificationType: '',
 		email: '',
-	});
-	const {toast} = useToast();
-	const {user} = useSession(state => state);
-	const router = useRouter();
-	const castedUser = user as User;
-	const {email, verificationChoice} = router.query;
+	})
+	const {toast} = useToast()
+	const {user} = useSession(state => state)
+	const router = useRouter()
+	const castedUser = user as User
+	const {email, verificationChoice} = router.query
 	useEffect(() => {
 		setUserPref({
 			verificationType: verificationChoice as string,
 			email: email as string,
-		});
-	}, [email, verificationChoice]);
+		})
+	}, [email, verificationChoice])
 
 	const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
-		e.preventDefault();
+		e.preventDefault()
 		if (otp === '')
 			return toast({
 				title: 'Error',
 				description: 'Please enter a valid code',
 				duration: 1500,
-			});
-		setLoading(true);
+			})
+		setLoading(true)
 		const {data, error} = await callApi<ApiResponse>('/auth/2fa/verify', {
 			token: String(otp),
-		});
+		})
 		if (error) {
-			setLoading(false);
+			setLoading(false)
 			return toast({
 				title: error.status as string,
 				description: error.message,
 				duration: 2000,
-			});
+			})
 		} else {
-			setLoading(false);
+			setLoading(false)
 			toast({
 				title: 'Success',
 				description: (data as {message: string}).message,
 				duration: 2000,
-			});
-			void router.push('/');
+			})
+			void router.push('/')
 		}
-	};
+	}
 	// if (user !== null) {
 	//   // // setTimeout(() => {}, 1000);
 	//   void router.back();
@@ -175,8 +167,8 @@ const AuthenticateUser = () => {
 	// }
 	return (
 		<AuthLayout withHeader={false} hasSuccess={false}>
-			{castedUser?.twoFA.type !== 'EMAIL' ||
-			userPref?.verificationType.toUpperCase() === 'EMAIL' ? (
+			{castedUser.twoFA.type !== 'EMAIL' ||
+			userPref.verificationType.toUpperCase() === 'EMAIL' ? (
 				<EmailAuth
 					email={castedUser?.email || userPref?.email}
 					otp={otp}
@@ -193,10 +185,10 @@ const AuthenticateUser = () => {
 				/>
 			)}
 		</AuthLayout>
-	);
-};
+	)
+}
 
-export default AuthenticateUser;
+export default AuthenticateUser
 
-AuthenticateUser.getLayout = layoutForAuthPages;
-AuthenticateUser.protect = true;
+AuthenticateUser.getLayout = AuthPagesLayout
+AuthenticateUser.protect = true

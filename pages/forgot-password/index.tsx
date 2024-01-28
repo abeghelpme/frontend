@@ -1,20 +1,15 @@
-import Button from '@/components/primitives/Button/button';
-import Input from '@/components/primitives/Form/Input';
-import {useToast} from '@/components/ui/use-toast';
-import AuthLayout from '@/layouts/authLayout';
-import callApi from '@/lib/api/callApi';
-import {
-	type ForgotPasswordType,
-	zodValidator,
-} from '@/lib/utils/validation/validateWithZod';
-import {zodResolver} from '@hookform/resolvers/zod';
-import Link from 'next/link';
-import {useRouter} from 'next/router';
-import React from 'react';
-import {useForm} from 'react-hook-form';
-const ForgotPasswordPage: React.FC = () => {
-	const router = useRouter();
-	const {toast} = useToast();
+import {Button, Input} from '@/components'
+import {useToast} from '@/components/ui/use-toast'
+import {AuthLayout} from '@/layouts'
+import {type ForgotPasswordType, callApi, zodValidator} from '@/lib'
+import {zodResolver} from '@hookform/resolvers/zod'
+import Link from 'next/link'
+import {useRouter} from 'next/router'
+import {useForm} from 'react-hook-form'
+
+export const ForgotPasswordPage = () => {
+	const router = useRouter()
+	const {toast} = useToast()
 
 	const {
 		handleSubmit,
@@ -25,38 +20,38 @@ const ForgotPasswordPage: React.FC = () => {
 		resolver: zodResolver(zodValidator('forgotPassword')!),
 		mode: 'onChange',
 		reValidateMode: 'onChange',
-	});
+	})
 
 	const onSubmit = async (data: ForgotPasswordType) => {
 		const {data: responseData, error} = await callApi('/auth/password/forgot', {
 			email: data.email,
-		});
+		})
 
 		if (error) {
 			return toast({
 				title: error.status.toString(),
 				description: error.message,
 				duration: 3000,
-			});
+			})
 		} else {
 			toast({
 				title: 'Success',
 				description: (responseData as {message: string}).message,
 				duration: 3000,
-			});
-			reset();
+			})
+			reset()
 			setTimeout(() => {
-				void router.push('/signin');
-			}, 2000);
+				void router.push('/signin')
+			}, 2000)
 		}
-	};
+	}
 
 	return (
 		<AuthLayout formType="other" withHeader={false} hasSuccess={false}>
 			<form
 				onSubmit={event => {
-					event.preventDefault();
-					void handleSubmit(onSubmit)(event);
+					event.preventDefault()
+					void handleSubmit(onSubmit)(event)
 				}}
 				className="flex flex-col gap-5"
 			>
@@ -106,6 +101,5 @@ const ForgotPasswordPage: React.FC = () => {
 				</div>
 			</form>
 		</AuthLayout>
-	);
-};
-export default ForgotPasswordPage;
+	)
+}

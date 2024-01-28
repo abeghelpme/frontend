@@ -1,44 +1,43 @@
-import AuthLayout from '@/layouts/authLayout';
-import {useRouter} from 'next/router';
-import {useEffect, useState} from 'react';
-
-import Button from '@/components/primitives/Button/button';
-import {useToast} from '@/components/ui/use-toast';
-import callApi from '@/lib/api/callApi';
+import {Button} from '@/components'
+import {useToast} from '@/components/ui/use-toast'
+import {AuthLayout} from '@/layouts'
+import {callApi} from '@/lib'
+import {useRouter} from 'next/router'
+import {useEffect, useState} from 'react'
 
 const VerificationPage = () => {
-	const router = useRouter();
-	const {toast} = useToast();
-	const [queryParam, setQueryParam] = useState('');
+	const router = useRouter()
+	const {toast} = useToast()
+	const [queryParam, setQueryParam] = useState('')
 
 	useEffect(() => {
-		setQueryParam(router.query.email as string);
-	}, [router]);
+		setQueryParam(router.query.email as string)
+	}, [router])
 
 	const handleResendEmail = async () => {
 		if (!queryParam)
 			return toast({
 				title: 'Request Failed',
 				description: 'No email provided',
-			});
+			})
 		const {data, error} = await callApi('/auth/resend-verification', {
 			email: queryParam,
-		});
+		})
 
 		if (error) {
 			return toast({
 				title: error.status as string,
 				description: error.message,
 				duration: 3000,
-			});
+			})
 		} else {
 			toast({
 				title: 'Success',
 				description: (data as {message: string}).message,
 				duration: 3000,
-			});
+			})
 		}
-	};
+	}
 
 	return (
 		<AuthLayout
@@ -66,9 +65,9 @@ const VerificationPage = () => {
 				</div>
 			</div>
 		</AuthLayout>
-	);
-};
+	)
+}
 
-export default VerificationPage;
+export default VerificationPage
 
-VerificationPage.protect = true;
+VerificationPage.protect = true

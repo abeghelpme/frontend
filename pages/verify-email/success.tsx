@@ -1,6 +1,6 @@
-import Success from '@/components/Shared/Success';
-import AuthLayout from '@/layouts/authLayout';
-import Link from 'next/link';
+import {Success} from '@/components'
+import {AuthLayout} from '@/layouts'
+import Link from 'next/link'
 
 const VerifyEmailSuccessPage = () => {
 	return (
@@ -15,9 +15,9 @@ const VerifyEmailSuccessPage = () => {
 				</Link>
 			</Success>
 		</AuthLayout>
-	);
-};
+	)
+}
 
-export default VerifyEmailSuccessPage;
+export default VerifyEmailSuccessPage
 
-VerifyEmailSuccessPage.protect = true;
+VerifyEmailSuccessPage.protect = true

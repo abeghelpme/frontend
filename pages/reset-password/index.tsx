@@ -1,27 +1,25 @@
-import Button from '@/components/primitives/Button/button';
-import Input from '@/components/primitives/Form/Input';
-import ProgressBar from '@/components/primitives/ProgressBar/progress-bar';
-import {useToast} from '@/components/ui/use-toast';
-import AuthLayout from '@/layouts/authLayout';
-import callApi from '@/lib/api/callApi';
+import {Button, Input, ProgressBar} from '@/components'
+import {useToast} from '@/components/ui/use-toast'
+import {AuthLayout} from '@/layouts'
 import {
 	type ResetPasswordType,
+	callApi,
 	checkPasswordStrength,
 	zodValidator,
-} from '@/lib/utils/validation/validateWithZod';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {useRouter} from 'next/router';
-import React, {useDeferredValue, useEffect, useState} from 'react';
-import {useForm} from 'react-hook-form';
+} from '@/lib'
+import {zodResolver} from '@hookform/resolvers/zod'
+import {useRouter} from 'next/router'
+import React, {useDeferredValue, useEffect, useState} from 'react'
+import {useForm} from 'react-hook-form'
 
 const ResetPassword: React.FC = () => {
-	const router = useRouter();
-	const {toast} = useToast();
+	const router = useRouter()
+	const {toast} = useToast()
 
-	const [token, setToken] = useState('');
+	const [token, setToken] = useState('')
 	useEffect(() => {
-		setToken(router.query.token as string);
-	}, [router]);
+		setToken(router.query.token as string)
+	}, [router])
 	const {
 		handleSubmit,
 		register,
@@ -31,21 +29,21 @@ const ResetPassword: React.FC = () => {
 		resolver: zodResolver(zodValidator('resetPassword')!),
 		mode: 'onChange',
 		reValidateMode: 'onChange',
-	});
+	})
 
-	const password: string = watch('password', '');
-	const [result, setResult] = useState<number>(0);
-	const deferredPassword = useDeferredValue(password);
+	const password: string = watch('password', '')
+	const [result, setResult] = useState<number>(0)
+	const deferredPassword = useDeferredValue(password)
 
 	useEffect(() => {
 		const genStrength = async () => {
-			const passwordStrength = await checkPasswordStrength(deferredPassword);
-			setResult(passwordStrength);
-		};
+			const passwordStrength = await checkPasswordStrength(deferredPassword)
+			setResult(passwordStrength)
+		}
 		genStrength().catch(e => {
-			console.log(e);
-		});
-	}, [deferredPassword]);
+			console.log(e)
+		})
+	}, [deferredPassword])
 
 	const onSubmit = async (data: ResetPasswordType) => {
 		if (!token)
@@ -53,37 +51,37 @@ const ResetPassword: React.FC = () => {
 				title: 'Request Failed',
 				description: 'Incomplete data provided',
 				duration: 3000,
-			});
+			})
 		const {data: responseData, error} = await callApi('/auth/password/reset', {
 			token,
 			password: data.password,
 			confirmPassword: data.confirmPassword,
-		});
+		})
 
 		if (error) {
 			return toast({
 				title: error.status as string,
 				description: error.message,
 				duration: 3000,
-			});
+			})
 		} else {
 			toast({
 				title: 'Success',
 				description: (responseData as {message: string}).message,
 				duration: 3000,
-			});
+			})
 			setTimeout(() => {
-				void router.push('/reset-password/success');
-			}, 2000);
+				void router.push('/reset-password/success')
+			}, 2000)
 		}
-	};
+	}
 
 	return (
 		<AuthLayout formType="other" withHeader={false} hasSuccess={false}>
 			<form
 				onSubmit={event => {
-					event.preventDefault();
-					void handleSubmit(onSubmit)(event);
+					event.preventDefault()
+					void handleSubmit(onSubmit)(event)
 				}}
 				className="flex flex-col"
 			>
@@ -176,6 +174,6 @@ const ResetPassword: React.FC = () => {
 				</Button>
 			</form>
 		</AuthLayout>
-	);
-};
-export default ResetPassword;
+	)
+}
+export default ResetPassword

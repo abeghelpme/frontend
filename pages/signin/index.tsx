@@ -1,45 +1,37 @@
-import DialogComponent from '@/components/Shared/Dialog';
-import LoadingComp from '@/components/Shared/Loading';
-import Button from '@/components/primitives/Button/button';
-import Input from '@/components/primitives/Form/Input';
-import {useToast} from '@/components/ui/use-toast';
-import type {ApiResponse, User} from '@/interfaces/apiResponses';
-import AuthLayout from '@/layouts/authLayout';
-import callApi from '@/lib/api/callApi';
-import {layoutForAuthPages} from '@/lib/utils/AuthPagesLayout';
-import {
-	type LoginType,
-	zodValidator,
-} from '@/lib/utils/validation/validateWithZod';
-import {useSession} from '@/store/useSession';
-import {zodResolver} from '@hookform/resolvers/zod';
-import Link from 'next/link';
-import {useRouter} from 'next/router';
-import {useEffect, useRef, useState} from 'react';
-import {type SubmitHandler, useForm} from 'react-hook-form';
+import {Button, CustomDialog, Input, Loader} from '@/components'
+import {useToast} from '@/components/ui/use-toast'
+import type {ApiResponse, User} from '@/interfaces/ApiResponses'
+import {AuthLayout, AuthPagesLayout} from '@/layouts'
+import {type LoginType, callApi, zodValidator} from '@/lib'
+import {useSession} from '@/store'
+import {zodResolver} from '@hookform/resolvers/zod'
+import Link from 'next/link'
+import {useRouter} from 'next/router'
+import {useEffect, useRef, useState} from 'react'
+import {type SubmitHandler, useForm} from 'react-hook-form'
 
 const Login = () => {
-	const showModal = useRef(false);
-	const router = useRouter();
-	const {toast} = useToast();
-	const [openModal, setOpenModal] = useState(false);
-	const [success] = useState(false);
-	const [skip2FA, setSkip2FA] = useState('false');
-	const {user} = useSession(state => state);
+	const showModal = useRef(false)
+	const router = useRouter()
+	const {toast} = useToast()
+	const [openModal, setOpenModal] = useState(false)
+	const [success] = useState(false)
+	const [skip2FA, setSkip2FA] = useState('false')
+	const {user} = useSession(state => state)
 	useEffect(() => {
 		const checkLS = () => {
 			if (!showModal.current) {
-				const modal = localStorage.getItem('skip-2FA');
+				const modal = localStorage.getItem('skip-2FA')
 				if (modal !== null) {
-					setSkip2FA(modal);
+					setSkip2FA(modal)
 				}
-				showModal.current = true;
+				showModal.current = true
 			} else {
-				localStorage.setItem('skip-2FA', skip2FA);
+				localStorage.setItem('skip-2FA', skip2FA)
 			}
-		};
-		checkLS();
-	}, [skip2FA]);
+		}
+		checkLS()
+	}, [skip2FA])
 
 	const {
 		register,
@@ -50,13 +42,13 @@ const Login = () => {
 		resolver: zodResolver(zodValidator('login')!),
 		mode: 'onChange',
 		reValidateMode: 'onChange',
-	});
+	})
 
 	const handleOption = () => {
-		setSkip2FA('false');
-		setOpenModal(false);
-		void router.push('/create-campaign');
-	};
+		setSkip2FA('false')
+		setOpenModal(false)
+		void router.push('/create-campaign')
+	}
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
 		const {data: responseData, error} = await callApi<ApiResponse<User>>(
@@ -65,25 +57,25 @@ const Login = () => {
 				email: data.email,
 				password: data.password,
 			}
-		);
+		)
 
 		if (error) {
 			return toast({
 				title: error.status as string,
 				description: error.message,
 				duration: 3000,
-			});
+			})
 		} else {
 			toast({
 				title: 'Success',
 				description: (responseData as {message: string}).message,
 				duration: 3000,
-			});
+			})
 
-			reset();
+			reset()
 			if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
-				setOpenModal(true);
-				return;
+				setOpenModal(true)
+				return
 			} else {
 				setTimeout(() => {
 					void router.push({
@@ -97,19 +89,17 @@ const Login = () => {
 								: {
 										verificationChoice: responseData?.data?.twoFA?.type,
 								  },
-					});
-				}, 2500);
+					})
+				}, 2500)
 			}
-			return;
+			return
 		}
-	};
+	}
 
 	if (user !== null) {
 		// // setTimeout(() => {}, 1000);
-		void router.back();
-		return (
-			<LoadingComp message={`You are already signed in. Redirecting back`} />
-		);
+		void router.back()
+		return <Loader message={`You are already signed in. Redirecting back`} />
 	}
 	return (
 		<AuthLayout
@@ -121,8 +111,8 @@ const Login = () => {
 			<form
 				className=""
 				onSubmit={event => {
-					event.preventDefault();
-					void handleSubmit(onSubmit)(event);
+					event.preventDefault()
+					void handleSubmit(onSubmit)(event)
 				}}
 			>
 				<div className="space-y-1">
@@ -169,7 +159,7 @@ const Login = () => {
 					Forgot Password?
 				</Link>
 				<div className="flex flex-col gap-3">
-					<DialogComponent
+					<CustomDialog
 						openDialog={openModal}
 						setOpen={() => setOpenModal(openModal)}
 						trigger={
@@ -214,7 +204,7 @@ const Login = () => {
 								</Button>
 							</div>
 						</div>
-					</DialogComponent>
+					</CustomDialog>
 					<p className="text-center text-sm">
 						Don&apos;t have an account?&nbsp;
 						<Link href="/signup" className="font-medium text-abeg-teal">
@@ -224,10 +214,10 @@ const Login = () => {
 				</div>
 			</form>
 		</AuthLayout>
-	);
-};
+	)
+}
 
-export default Login;
+export default Login
 
-Login.getLayout = layoutForAuthPages;
-Login.protect = true;
+Login.getLayout = AuthPagesLayout
+Login.protect = true
