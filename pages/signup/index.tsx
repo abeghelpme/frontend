@@ -139,7 +139,7 @@ const SignUp = () => {
           }
         }}
         action=""
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-3"
       >
         {message.message !== "" && !message.error ? (
           <p
@@ -238,27 +238,23 @@ const SignUp = () => {
                   className={`${
                     result < 2
                       ? "progress-filled:bg-red-500"
-                      : result >= 2 && result <= 3
+                      : result === 2
                         ? "progress-filled:bg-yellow-500"
                         : "progress-filled:bg-green-500"
                   }`}
                 />
                 <p
                   className={`${
-                    result <= 2
+                    result < 2
                       ? "text-text-red"
-                      : result >= 2 && result <= 3
+                      : result === 2
                         ? "text-yellow-500"
                         : "text-green-500"
                   } text-sm`}
                 >
                   <span className="text-black">Password strength:</span>
                   &nbsp;
-                  {result < 2
-                    ? "Weak"
-                    : result >= 2 && result <= 3
-                      ? "Medium"
-                      : "Strong"}
+                  {result < 2 ? "Weak" : result === 2 ? "Medium" : "Strong"}
                 </p>
               </div>
             )}
