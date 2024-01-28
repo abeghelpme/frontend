@@ -8,8 +8,12 @@ import { ChevronDownIcon } from "lucide-react";
 import Image from "next/image";
 import { useRef, type KeyboardEvent, type MouseEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
+import Heading from "../Heading";
 import { validateTagValue } from "../campaign-utils";
-import { fundraiserCategories } from "../campaign-utils/constants";
+import {
+  fundraiserCategories,
+  targetCountries,
+} from "../campaign-utils/constants";
 
 function StepOne() {
   const tagInputRef = useRef<HTMLInputElement>(null);
@@ -28,6 +32,7 @@ function StepOne() {
 
   const { For: TagList } = useElementList();
   const { For: CategoryList } = useElementList();
+  const { For: CountryList } = useElementList();
 
   const handleAddCampaignTag = (
     event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>,
@@ -70,10 +75,10 @@ function StepOne() {
   };
 
   return (
-    <section>
-      <h2 className="font-bold text-formBtn">
+    <section className="w-full">
+      <Heading as="h2" className="text-formBtn">
         Create a campaign to fund your passion or cause.
-      </h2>
+      </Heading>
 
       <form
         id={STEP_DATA_KEY_LOOKUP[1]}
@@ -95,21 +100,22 @@ function StepOne() {
               render={({ field }) => (
                 <Select.Root
                   name={field.name}
-                  onValueChange={field.onChange}
                   value={field.value}
+                  onValueChange={field.onChange}
                 >
                   <Select.Trigger
                     icon={<ChevronDownIcon />}
-                    className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.1 text-1 data-[placeholder]:text-placeholder"
+                    className="mt-1.6 rounded-10 border-unfocused px-0.8 py-[2.3rem] text-1 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-[2.9rem] lg:text-1.6"
                   >
                     <Select.Value placeholder="Select what category best suit your fundraiser" />
                   </Select.Trigger>
+
                   <Select.Content>
                     <CategoryList
                       each={fundraiserCategories}
-                      render={(item) => (
-                        <Select.Item key={item} value={item}>
-                          {item}
+                      render={(category) => (
+                        <Select.Item key={category} value={category}>
+                          {category}
                         </Select.Item>
                       )}
                     />
@@ -135,17 +141,20 @@ function StepOne() {
                 >
                   <Select.Trigger
                     icon={<ChevronDownIcon />}
-                    className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1  data-[placeholder]:text-placeholder"
+                    className="mt-1.6 rounded-10 border-unfocused px-0.8 py-[2.3rem] text-1 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-[2.9rem] lg:text-1.6"
                   >
                     <Select.Value placeholder="Select your country" />
                   </Select.Trigger>
+
                   <Select.Content>
-                    <Select.Item value="Nigeria">Nigeria</Select.Item>
-                    <Select.Item value="Ghana">Ghana</Select.Item>
-                    <Select.Item value="Mali">Mali</Select.Item>
-                    <Select.Item value="Liberia">Liberia</Select.Item>
-                    <Select.Item value="Cameroon">Cameroon</Select.Item>
-                    <Select.Item value="Gambia">Gambia</Select.Item>
+                    <CountryList
+                      each={targetCountries}
+                      render={(country) => (
+                        <Select.Item key={country} value={country}>
+                          {country}
+                        </Select.Item>
+                      )}
+                    />
                   </Select.Content>
                 </Select.Root>
               )}
@@ -157,20 +166,20 @@ function StepOne() {
               Campaign Tags
             </label>
 
-            <div className="mt-1.6 flex gap-0.8">
+            <div className="mt-1.6 flex items-center gap-0.8">
               <input
                 {...register("campaignTags")}
                 ref={tagInputRef}
                 type="text"
                 placeholder="Add hashtags or search keywords to your campaign"
-                className="w-full rounded-10 border border-unfocused px-0.8 py-1.5 text-1 focus-visible:outline-formBtn"
+                className="w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1 focus-visible:outline-formBtn lg:px-1.6 lg:py-2.4 lg:text-1.6"
                 onKeyDown={handleAddCampaignTag}
               />
 
               <Button
                 type="button"
                 variant="secondary"
-                className="rounded-6 border-formBtn px-1.2 py-0.8 text-1.2 font-semibold text-formBtn"
+                className="rounded-6 border-formBtn px-1.2 py-0.8 text-1.2 font-semibold text-formBtn lg:px-2.8 lg:py-1.6 lg:text-1.6"
                 onClick={handleAddCampaignTag}
               >
                 Add
@@ -193,7 +202,7 @@ function StepOne() {
                       <p>#{tag}</p>
 
                       <button
-                        className=" transition-transform duration-100 active:scale-[1.12]"
+                        className="transition-transform duration-100 active:scale-[1.12]"
                         type="button"
                         onClick={handleRemoveCampaignTags(tag)}
                       >

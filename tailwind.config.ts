@@ -22,14 +22,20 @@ const config: Config = {
         1.4: "1.4rem",
         1.5: "1.5rem",
         1.6: "1.6rem",
+        1.9: "1.9rem",
         2: "2rem",
-        2.1: "2.1rem",
         2.3: "2.3rem",
         2.4: "2.4rem",
+        2.6: "2.6rem",
+        2.8: "2.8rem",
         3: "3rem",
         3.2: "3.2rem",
+        4.8: "4.8rem",
         5.5: "5.5rem",
         6.2: "6.2rem",
+        7: "7rem",
+        10: "10rem",
+        21.3: "21.3rem",
       },
 
       borderRadius: {
@@ -44,6 +50,7 @@ const config: Config = {
         1.4: "1.4rem",
         1.6: "1.6rem",
         2: "2rem",
+        2.4: "2.4rem",
       },
 
       screens: {

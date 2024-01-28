@@ -1,8 +1,8 @@
 import type { StepThreeData } from "@/store/useformStore";
 import { EditorContent, useEditor } from "@tiptap/react";
 import type { UseFormSetValue } from "react-hook-form";
+import { getEditorExtensions, getPurifiedHTML } from "../campaign-utils";
 import TipTapToolBar from "./TipTapToolBar";
-import { getEditorExtensions, getPurifiedHTML } from "./campaign-utils";
 
 type EditorProps = {
   placeholder?: string;

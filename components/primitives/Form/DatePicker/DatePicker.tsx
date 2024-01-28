@@ -1,5 +1,5 @@
 import { DATE_TODAY } from "@/components/CreateCampaign/campaign-utils/constants";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import Button, { buttonVariants } from "../../Button/button";
@@ -22,7 +22,7 @@ const DatePicker = ({ placeholder, dateValue, onChange }: DatePickerProps) => {
           variant="secondary"
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "mt-16 w-full justify-between rounded-6 border border-unfocused p-[2.3rem_0.8rem] text-left text-1.2 font-normal",
+            "mt-1.6 w-full justify-between rounded-10 border border-unfocused px-0.8 py-2.3 text-left text-1.2 font-normal",
             dateValue === undefined && "text-muted-foreground",
           )}
         >
@@ -36,9 +36,10 @@ const DatePicker = ({ placeholder, dateValue, onChange }: DatePickerProps) => {
 
       <Popover.Content className="w-auto p-0">
         <Calendar
-          className="rounded-10 border border-unfocused p-12"
+          className="rounded-10 border border-unfocused p-1.2"
           classNames={{
-            cell: "text-1.2 font-medium hover:scale-[1.03]",
+            cell: "hover:scale-[1.03]",
+            button: "text-1.2 font-medium",
           }}
           mode="single"
           selected={dateValue}

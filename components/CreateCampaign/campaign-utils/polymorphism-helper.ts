@@ -1,29 +1,27 @@
-type WithChildren<TProps> = TProps & {
-  children: React.ReactNode;
+export type AsProp<TElement extends React.ElementType> = {
+  as?: TElement;
 };
 
-type AsPropObject<TElement extends React.ElementType> = { as?: TElement };
-
-type RefPropObject<TElement extends React.ElementType> = {
+type RefProp<TElement extends React.ElementType> = {
   ref?: React.ComponentPropsWithRef<TElement>["ref"];
 };
 
-type MergePropsWithAs<
+type MergePropsWithAsProp<
   TElement extends React.ElementType,
   TProps,
-> = WithChildren<AsPropObject<TElement> & TProps>;
+> = AsProp<TElement> & TProps;
 
-type GetRestOfProps<TElement extends React.ElementType, TProps> = Omit<
+type OtherValidProps<TElement extends React.ElementType, TProps> = Omit<
   React.ComponentPropsWithoutRef<TElement>,
-  keyof MergePropsWithAs<TElement, TProps>
+  keyof MergePropsWithAsProp<TElement, TProps>
 >;
 
 export type PolymorphicProps<
   TElement extends React.ElementType,
-  TProps extends Record<string, unknown> = AsPropObject<TElement>,
-> = MergePropsWithAs<TElement, TProps> & GetRestOfProps<TElement, TProps>;
+  TProps extends Record<string, unknown> = AsProp<TElement>,
+> = MergePropsWithAsProp<TElement, TProps> & OtherValidProps<TElement, TProps>;
 
 export type PolymorphicPropsWithRef<
   TElement extends React.ElementType,
-  TProps extends Record<string, unknown> = AsPropObject<TElement>,
-> = PolymorphicProps<TElement, TProps> & RefPropObject<TElement>;
+  TProps extends Record<string, unknown> = AsProp<TElement>,
+> = PolymorphicProps<TElement, TProps> & RefProp<TElement>;

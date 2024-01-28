@@ -11,7 +11,7 @@ const getEditorExtensions = (placeholder = "") => [
 
     orderedList: {
       HTMLAttributes: {
-        class: "list-decimal px-1.4",
+        class: "list-decimal marker:font-semibold px-1.4",
       },
     },
 

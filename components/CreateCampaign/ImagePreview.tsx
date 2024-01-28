@@ -45,9 +45,9 @@ function ImagePreview(props: ImagePreviewProps) {
           return (
             <li
               key={file.name}
-              className="flex items-center justify-between p-1 text-1.2"
+              className="flex items-center justify-between px-1 py-0.8 text-1.2"
             >
-              <div className="flex w-full items-center gap-0.8">
+              <div className="flex min-w-0 items-center gap-0.8">
                 <Image
                   src={imageUrls[index]}
                   className="size-[4rem] shrink-0 rounded-6 object-cover"
@@ -58,11 +58,11 @@ function ImagePreview(props: ImagePreviewProps) {
                 />
 
                 {isCoverImage && (
-                  <span className="absolute left-[50%] top-0 block translate-x-[-50%] text-1.2 font-bold text-formBtn">
+                  <span className="absolute left-[50%] top-0.5 block translate-x-[-50%] text-1.2 font-bold text-formBtn">
                     *Cover image
                   </span>
                 )}
-                <p className="w-0 basis-full truncate">{file.name}</p>
+                <p className="truncate">{file.name}</p>
               </div>
 
               <button type="button" onClick={handleRemoveImage(file)}>

@@ -4,6 +4,7 @@ import { useFormStore, type StepTwoData } from "@/store/useformStore";
 import { STEP_DATA_KEY_LOOKUP } from "@/store/useformStore/constants";
 import { ChevronDownIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
+import Heading from "../Heading";
 
 function StepTwo() {
   const { setData, goToStep, stepTwoData } = useFormStore((state) => state);
@@ -20,9 +21,9 @@ function StepTwo() {
 
   return (
     <section>
-      <h2 className="text-1.6 font-bold text-formBtn">
+      <Heading as="h2" className="text-formBtn">
         Share your funding goal and deadline
-      </h2>
+      </Heading>
 
       <form
         id={STEP_DATA_KEY_LOOKUP[2]}
@@ -63,7 +64,7 @@ function StepTwo() {
                 >
                   <Select.Trigger
                     icon={<ChevronDownIcon />}
-                    className="mt-1.6 rounded-10 border-unfocused p-[2.3rem_0.8rem] text-1 data-[placeholder]:text-placeholder"
+                    className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1 data-[placeholder]:text-placeholder"
                   >
                     <Select.Value placeholder="Specify who is fundraising" />
                   </Select.Trigger>

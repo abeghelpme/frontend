@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { forwardRef } from "react";
 
@@ -41,3 +41,4 @@ const Popover = {
 };
 
 export { Popover };
+

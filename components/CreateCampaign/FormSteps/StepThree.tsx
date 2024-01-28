@@ -3,6 +3,7 @@ import { STEP_DATA_KEY_LOOKUP } from "@/store/useformStore/constants";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import DropZoneInput from "../DropZoneInput";
+import Heading from "../Heading";
 import ImagePreview from "../ImagePreview";
 import TiptapEditor from "../TipTapEditor";
 
@@ -20,7 +21,7 @@ function StepThree() {
 
   const router = useRouter();
 
-  const onSubmit = (data: StepThreeData) => {
+  const onFormSubmit = (data: StepThreeData) => {
     setData({ step: 3, data });
 
     const formData = new FormData();
@@ -36,17 +37,17 @@ function StepThree() {
   };
 
   return (
-    <section>
-      <h2 className="font-bold text-formBtn">
+    <section className="w-full">
+      <Heading as="h2" className="text-formBtn">
         Your story matters and this is where it begins.
-      </h2>
+      </Heading>
 
       <form
         id={STEP_DATA_KEY_LOOKUP[3]}
-        className="mt-3.2"
+        className="mt-3.2 lg:mt-4.8"
         onSubmit={(event) => {
           event.preventDefault();
-          void handleSubmit(onSubmit)(event);
+          void handleSubmit(onFormSubmit)(event);
         }}
       >
         <ol className="flex flex-col gap-2.4">

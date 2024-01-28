@@ -3,9 +3,9 @@ import Button from "../primitives/Button/button";
 
 type NextButtonProps = {
   targetForm?: string;
+  type: "button" | "submit";
   text: string;
   className?: string;
-  type: "button" | "submit";
   disabled?: boolean;
   onClick?: () => void;
 };
@@ -24,7 +24,7 @@ function FormActionButton({
       type={type}
       variant="primary"
       className={cn(
-        "ounded-6 bg-formBtn px-1.2 py-0.8 text-[1.2rem] font-semibold",
+        "rounded-6 bg-formBtn px-1.2 py-0.8 text-1.2 font-semibold lg:rounded-8 lg:px-2.4 lg:py-1.4 lg:text-1.4 lg:font-bold",
         disabled && "cursor-not-allowed bg-unfocused",
         className,
       )}

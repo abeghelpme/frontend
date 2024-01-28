@@ -1,6 +1,7 @@
+import Heading from "@/components/CreateCampaign/Heading";
 import Button from "@/components/primitives/Button/button";
 import { useElementList } from "@/lib/hooks/useElementList";
-import moneyIcon from "@/public/assets/icons/campaign/money.svg";
+import { MoneyIcon } from "@/public/assets/icons/campaign";
 import { useFormStore } from "@/store/useformStore";
 import { format } from "date-fns";
 import Image from "next/image";
@@ -19,9 +20,9 @@ function Preview() {
   );
 
   return (
-    <>
-      <header className="mt-3.2 flex flex-col gap-0.8 px-2.4">
-        <h1 className="font-semibold text-formBtn">Campaign Preview</h1>
+    <div className="flex min-h-screen flex-col justify-between pt-3.2">
+      <header className="flex flex-col gap-0.8 px-2.4">
+        <Heading as="h1">Campaign Preview</Heading>
 
         <p className="text-1.4 text-formBtn">
           This is what your fundraiser campaign will look like to donors
@@ -29,11 +30,14 @@ function Preview() {
       </header>
 
       <main
-        className="bg-contours bg-cover px-2.4 pb-6.2 pt-3.2 text-successText"
+        className="mt-3.2 bg-contours bg-cover px-2.4 pb-6.2 text-successText"
         data-rem-reset
       >
         <section>
-          <h2 className="text-2 font-bold">{stepTwoData.campaignTitle}</h2>
+          <Heading as="h2" className="text-2">
+            {stepTwoData.campaignTitle}
+          </Heading>
+
           <Image
             src={imageUrls[0] ?? "/"}
             alt="campaign cover image"
@@ -42,11 +46,12 @@ function Preview() {
             height={200}
           />
 
-          <article className="gap-2.8 mt-0.8 flex flex-col px-2.4 py-3">
+          <article className="mt-0.8 flex flex-col gap-2.8 px-2.4 py-3">
             <div>
               <p>₦{stepTwoData.campaignGoal} goal</p>
               <span className="mt-0.8 block h-[0.6rem] rounded-8 bg-semiWhite" />
             </div>
+
             <div className="flex flex-col gap-1.6">
               <Button
                 variant="primary"
@@ -63,13 +68,8 @@ function Preview() {
             </div>
 
             <div className="flex items-start gap-8 text-1.2">
-              <Image
-                className="mt-0.4"
-                src={moneyIcon as string}
-                alt="money-icon"
-                width={20}
-                height={20}
-              />
+              <MoneyIcon className="mt-0.4" />
+
               <p>
                 Be the first to donate to this fundraiser, every penny donated
                 will go a long way
@@ -80,7 +80,7 @@ function Preview() {
               <Image
                 src={"/"}
                 className="rounded-full"
-                alt="person-icon"
+                alt="person-avatar"
                 width={20}
                 height={20}
               />
@@ -93,19 +93,25 @@ function Preview() {
         </section>
 
         <section className="mt-0.8">
-          <h2 className="flex gap-1.6 border-b border-b-placeholder p-0.8 font-bold">
+          <Heading
+            as="h3"
+            className="flex gap-1.6 border-b border-b-placeholder p-0.8"
+          >
             Category:
             <span className="font-normal">
               {stepOneData.fundraiserCategory}
             </span>
-          </h2>
+          </Heading>
 
-          <h3 className="mt-1.2 border-b border-b-placeholder p-0.8 font-bold">
+          <Heading
+            as="h3"
+            className="mt-1.2 border-b border-b-placeholder p-0.8"
+          >
             Story
-          </h3>
+          </Heading>
 
           <div
-            className="mt-2.4"
+            className="mt-2.4 min-h-7"
             dangerouslySetInnerHTML={{
               __html: stepThreeData.campaignStoryHtml,
             }}
@@ -113,7 +119,8 @@ function Preview() {
         </section>
 
         <section className="mt-2.4 flex flex-col gap-2.4 pb-1.6">
-          <h2 className="font-bold">See more pictures below:</h2>
+          <Heading as="h2">See more pictures below:</Heading>
+
           <div className="flex flex-col items-center gap-2.3">
             <ImageFileList
               each={imageUrls.slice(1)}
@@ -146,7 +153,7 @@ function Preview() {
           <Image
             src={"/"}
             className="rounded-full"
-            alt="person-icon"
+            alt="person-avatar"
             width={48}
             height={48}
           />
@@ -168,7 +175,7 @@ function Preview() {
         </section>
       </main>
 
-      <footer className="flex justify-end gap-0.8 border-t border-t-formBtn px-2.4 py-1.6">
+      <footer className="mt-auto flex justify-end gap-0.8 border-t border-t-formBtn px-2.4 py-1.6">
         <Button
           variant="secondary"
           className="rounded-6  border-formBtn px-1.2 py-0.8 text-1.2 font-bold text-formBtn"
@@ -183,7 +190,7 @@ function Preview() {
           Create Campaign
         </Button>
       </footer>
-    </>
+    </div>
   );
 }
 

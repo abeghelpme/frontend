@@ -27,17 +27,19 @@ function CreateCampaignPage() {
   }, [currentStep]);
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col justify-between gap-5.5 pt-3.2 max-lg:items-center lg:gap-7 lg:pt-4.8">
       <main
-        className="flex flex-col gap-3.2 bg-contours bg-cover px-2.4 pb-5.5 pt-3.2"
+        className="flex w-[min(100%,48rem)] shrink-0 flex-col gap-3.2 bg-contours bg-cover px-2.4 lg:w-full lg:flex-row lg:items-start lg:gap-7 lg:px-10"
         data-rem-reset
       >
-        <StepTracker />
+        <section className="flex shrink-0 gap-1.2 lg:mt-1.9">
+          <StepTracker />
+        </section>
 
         {STEP_COMPONENT_LOOKUP[currentStep]}
       </main>
 
-      <footer className="flex items-center justify-between border-t border-t-formBtn px-2.4 py-1.6">
+      <footer className="flex w-full items-center justify-between border-t border-t-formBtn px-2.4 py-1.6 lg:px-10 lg:py-2.4">
         <FormActionButton
           type="button"
           text="Go Back"
@@ -54,7 +56,7 @@ function CreateCampaignPage() {
           targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
         />
       </footer>
-    </>
+    </div>
   );
 }
 

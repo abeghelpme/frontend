@@ -12,6 +12,15 @@ export const fundraiserCategories = [
   "Others",
 ];
 
+export const targetCountries = [
+  "Nigeria",
+  "Ghana",
+  "Mali",
+  "Liberia",
+  "Cameroon",
+  "Gambia",
+];
+
 export const FILE_SIZE_LIMIT = 5 * 1024 * 1024;
 
 export const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
