@@ -3,7 +3,7 @@ import {
 	type LoginProps,
 	type ResetPasswordProps,
 	type SignUpProps,
-} from '@/interfaces/FormInputs'
+} from '@/interfaces/formInputs'
 import {zxcvbn, zxcvbnAsync, zxcvbnOptions} from '@zxcvbn-ts/core'
 import * as zxcvbnCommonPackage from '@zxcvbn-ts/language-common'
 import * as zxcvbnEnPackage from '@zxcvbn-ts/language-en'

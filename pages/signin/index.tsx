@@ -1,6 +1,6 @@
 import {Button, CustomDialog, Input, Loader} from '@/components/index'
 import {useToast} from '@/components/ui/use-toast'
-import type {ApiResponse, User} from '@/interfaces/ApiResponses'
+import type {ApiResponse, User} from '@/interfaces/apiResponses'
 import {AuthLayout, AuthPagesLayout} from '@/layouts'
 import {type LoginType, callApi, zodValidator} from '@/lib'
 import {useSession} from '@/store'
