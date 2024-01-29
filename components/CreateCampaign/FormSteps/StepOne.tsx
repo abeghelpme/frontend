@@ -1,5 +1,5 @@
-import Button from "@/components/primitives/Button/button";
-import { Select } from "@/components/primitives/Form/Select";
+import { Select } from "@/components/ui/Select";
+import Button from "@/components/ui/button";
 import { useElementList } from "@/lib/hooks/useElementList";
 import crossIcon from "@/public/assets/icons/campaign/cross-icon.svg";
 import { useFormStore, type StepOneData } from "@/store/useformStore";

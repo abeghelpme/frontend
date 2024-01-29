@@ -1,5 +1,5 @@
-import { DatePicker } from "@/components/primitives/Form/DatePicker";
-import { Select } from "@/components/primitives/Form/Select";
+import { DatePicker } from "@/components/ui/DatePicker";
+import { Select } from "@/components/ui/Select";
 import { useFormStore, type StepTwoData } from "@/store/useformStore";
 import { STEP_DATA_KEY_LOOKUP } from "@/store/useformStore/constants";
 import { ChevronDownIcon } from "lucide-react";

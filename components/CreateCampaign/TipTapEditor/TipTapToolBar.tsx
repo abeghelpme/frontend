@@ -6,7 +6,7 @@ import {
   ListOrderedIcon,
   Trash2Icon,
 } from "lucide-react";
-import Toggle from "../../primitives/Toggle";
+import Toggle from "../../ui/Toggle";
 
 type ToolBarProps = {
   editor: Editor;

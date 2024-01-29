@@ -1,5 +1,5 @@
 import type { SignUpProps } from "@/interfaces/formInputs";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/helpers/cn";
 import eye from "@/public/assets/icons/auth/eye.svg";
 import slashEye from "@/public/assets/icons/auth/slashEye.svg";
 import Image from "next/image";

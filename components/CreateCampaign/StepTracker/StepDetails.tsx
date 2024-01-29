@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/helpers/cn";
 import { TickIcon } from "@/public/assets/icons/campaign";
 import type { FormStore } from "@/store/useformStore";
 

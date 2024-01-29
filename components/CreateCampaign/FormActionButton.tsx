@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils/cn";
-import Button from "../primitives/Button/button";
+import { cn } from "@/lib/helpers/cn";
+import Button from "../ui/button";
 
 type NextButtonProps = {
   targetForm?: string;

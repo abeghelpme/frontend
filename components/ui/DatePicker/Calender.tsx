@@ -1,5 +1,5 @@
-import { buttonVariants } from "@/components/primitives/Button/button";
-import { cn } from "@/lib/utils/cn";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/helpers/cn";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { DayPicker } from "react-day-picker";
 

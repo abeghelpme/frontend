@@ -1,5 +1,5 @@
 import Heading from "@/components/CreateCampaign/Heading";
-import Button from "@/components/primitives/Button/button";
+import Button from "@/components/ui/button";
 import { useElementList } from "@/lib/hooks/useElementList";
 import { MoneyIcon } from "@/public/assets/icons/campaign";
 import { useFormStore } from "@/store/useformStore";
