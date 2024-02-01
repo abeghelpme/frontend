@@ -1,27 +1,27 @@
-import Heading from "@/components/CreateCampaign/Heading"
-import Button from "@/components/ui/button"
-import { useElementList } from "@/lib/hooks"
-import { MoneyIcon } from "@/public/assets/icons/campaign"
-import { useFormStore } from "@/store/useformStore"
-import { format } from "date-fns"
-import Image from "next/image"
-import Link from "next/link"
+import Heading from "@/components/CreateCampaign/Heading";
+import Button from "@/components/ui/button";
+import { useElementList } from "@/lib/hooks";
+import { MoneyIcon } from "@/public/assets/icons/campaign";
+import { useFormStore } from "@/store/useformStore";
+import { format } from "date-fns";
+import Image from "next/image";
+import Link from "next/link";
 
 function Preview() {
 	const { stepOneData, stepTwoData, stepThreeData } = useFormStore(
 		(state) => state
-	)
+	);
 
-	const { For: ImageFileList } = useElementList()
-	const { For: TagList } = useElementList()
+	const { For: ImageFileList } = useElementList();
+	const { For: TagList } = useElementList();
 
 	const imageUrls = stepThreeData.campaignImageFiles.map((file) =>
 		URL.createObjectURL(file)
-	)
+	);
 
 	return (
-		<div className="flex min-h-screen flex-col justify-between pt-3.2">
-			<header className="flex flex-col gap-0.8 px-2.4">
+		<div className="flex min-h-screen flex-col justify-between">
+			<header className="flex flex-col gap-0.8 px-2.4 pt-3.2 lg:pt-4.8">
 				<Heading as="h1">Campaign Preview</Heading>
 
 				<p className="text-1.4 text-formBtn">
@@ -191,7 +191,7 @@ function Preview() {
 				</Button>
 			</footer>
 		</div>
-	)
+	);
 }
 
-export default Preview
+export default Preview;

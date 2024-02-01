@@ -1,17 +1,17 @@
-const validateTagValue = (tagArrayState: string[], tagValue: string) => {
-	if (tagValue.length < 3) {
-		return
+const validateTagValue = (tagsArray: string[], newTag: string) => {
+	if (newTag.length < 3) {
+		return;
 	} //TODO - show error
 
-	if (tagArrayState.includes(tagValue)) {
-		return
+	if (tagsArray.includes(newTag)) {
+		return;
 	} //TODO - show error
 
-	if (tagArrayState.length >= 5) {
-		return
+	if (tagsArray.length >= 5) {
+		return;
 	} //TODO - show error
 
-	return tagValue
-}
+	return newTag;
+};
 
-export { validateTagValue }
+export { validateTagValue };

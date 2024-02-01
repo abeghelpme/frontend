@@ -1,32 +1,32 @@
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "@/components/ui/use-toast";
 import {
 	FILE_SIZE_LIMIT,
 	acceptedFilesString,
 	allowedFileTypes,
-} from "./constants"
+} from "./constants";
 
 type ValidateFilesParams =
 	| [fileList: FileList]
-	| [fileList: FileList, exisitingimageFiles: File[]]
+	| [fileList: FileList, exisitingimageFiles: File[]];
 
-function validateFiles(fileList: FileList): File[]
-function validateFiles(fileList: FileList, exisitingimageFiles: File[]): File[]
+function validateFiles(fileList: FileList): File[];
+function validateFiles(fileList: FileList, exisitingimageFiles: File[]): File[];
 
 function validateFiles(...params: ValidateFilesParams) {
-	const [fileList, exisitingimageFiles] = params
+	const [newFileList, exisitingImageArray] = params;
 
-	const validatedFileList = []
+	const validFilesArray: File[] = [];
 
-	for (const file of fileList) {
+	Array.from(newFileList).forEach((file) => {
 		if (!allowedFileTypes.includes(file.type)) {
 			toast({
 				title: "Error",
 				description: `File type must be of ${acceptedFilesString}`,
 				duration: 3000,
 				variant: "destructive",
-			})
+			});
 
-			continue
+			return;
 		}
 
 		if (file.size > FILE_SIZE_LIMIT) {
@@ -35,26 +35,26 @@ function validateFiles(...params: ValidateFilesParams) {
 				description: "Cannot upload a file larger than 5mb",
 				duration: 3000,
 				variant: "destructive",
-			})
+			});
 
-			continue
+			return;
 		}
 
-		if (!exisitingimageFiles) {
-			validatedFileList.push(file)
-			continue
+		if (!exisitingImageArray) {
+			validFilesArray.push(file);
+			return;
 		}
 
-		const isFileUnique = exisitingimageFiles.every(
+		const isFileUnique = exisitingImageArray.every(
 			(imageFile) => imageFile.name !== file.name
-		)
+		);
 
-		if (!isFileUnique) continue
+		if (!isFileUnique) return;
 
-		validatedFileList.push(file)
-	}
+		validFilesArray.push(file);
+	});
 
-	return validatedFileList
+	return validFilesArray;
 }
 
-export { validateFiles }
+export { validateFiles };

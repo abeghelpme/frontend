@@ -1,19 +1,19 @@
-import type { StepThreeData } from "@/store/useformStore"
-import { EditorContent, useEditor } from "@tiptap/react"
-import DOMPurify from "isomorphic-dompurify"
-import type { UseFormSetValue } from "react-hook-form"
-import { getEditorExtensions } from "../campaign-utils"
-import TipTapToolBar from "./TipTapToolBar"
+import type { StepThreeData } from "@/store/useformStore";
+import { EditorContent, useEditor } from "@tiptap/react";
+import DOMPurify from "isomorphic-dompurify";
+import type { UseFormSetValue } from "react-hook-form";
+import { getEditorExtensions } from "../campaign-utils";
+import TipTapToolBar from "./TipTapToolBar";
 
 type EditorProps = {
-	placeholder?: string
-	editorContent: string
-	setFormValue: UseFormSetValue<StepThreeData>
-	onChange: (content: string) => void
-}
+	placeholder?: string;
+	editorContent: string;
+	setFormValue: UseFormSetValue<StepThreeData>;
+	onChange: (content: string) => void;
+};
 
 function TiptapEditor(props: EditorProps) {
-	const { placeholder, editorContent, setFormValue, onChange } = props
+	const { placeholder, editorContent, setFormValue, onChange } = props;
 
 	const editor = useEditor({
 		extensions: getEditorExtensions(placeholder),
@@ -28,33 +28,33 @@ function TiptapEditor(props: EditorProps) {
 		content: editorContent,
 
 		onUpdate: ({ editor }) => {
-			const purifiedContent = DOMPurify.sanitize(editor.getHTML())
+			const purifiedContent = DOMPurify.sanitize(editor.getHTML());
 
-			onChange(purifiedContent)
-			setFormValue("campaignStoryText", editor.getText())
+			onChange(purifiedContent);
+			setFormValue("campaignStoryText", editor.getText());
 		},
-	})
+	});
 
 	if (!editor) {
-		return null
+		return null;
 	}
 
 	return (
-		<div className="flex min-h-[17.8rem] flex-col justify-between gap-0.8 rounded-6 border border-unfocused p-1.6 focus-within:[outline:2px_solid_theme(colors.formBtn)]">
+		<div className="flex min-h-[17.8rem] bg-slate-50 flex-col justify-between gap-0.8 rounded-6 border border-unfocused p-1.6 focus-within:outline-2 focus-within:outline-formBtn">
 			<EditorContent
 				editor={editor}
 				className="text-1.2 lg:text-1.6 [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:absolute [&_p.is-editor-empty:first-child]:before:left-0 [&_p.is-editor-empty:first-child]:before:text-placeholder [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"
 			/>
 
-			<div className="flex flex-col gap-0.8">
+			<div className="flex flex-col gap-0.8 lg:flex-row lg:justify-between lg:gap-4.8 lg:items-center">
 				<TipTapToolBar editor={editor} />
 
-				<p className="text-1.2 opacity-70">
+				<p className="text-1.2 opacity-70 lg:text-1.6">
 					Add images/videos to make your story more compelling
 				</p>
 			</div>
 		</div>
-	)
+	);
 }
 
-export default TiptapEditor
+export default TiptapEditor;

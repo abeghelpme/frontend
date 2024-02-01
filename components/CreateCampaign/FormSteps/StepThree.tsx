@@ -1,14 +1,14 @@
-import { type StepThreeData, useFormStore } from "@/store/useformStore"
-import { STEP_DATA_KEY_LOOKUP } from "@/store/useformStore/constants"
-import { useRouter } from "next/router"
-import { Controller, useForm } from "react-hook-form"
-import DropZoneInput from "../DropZoneInput"
-import Heading from "../Heading"
-import ImagePreview from "../ImagePreview"
-import TiptapEditor from "../TipTapEditor"
+import { type StepThreeData, useFormStore } from "@/store/useformStore";
+import { STEP_DATA_KEY_LOOKUP } from "@/store/useformStore/constants";
+import { useRouter } from "next/router";
+import { Controller, useForm } from "react-hook-form";
+import DropZoneInput from "../DropZoneInput";
+import Heading from "../Heading";
+import ImagePreview from "../ImagePreview";
+import TiptapEditor from "../TipTapEditor";
 
 function StepThree() {
-	const { setData, stepThreeData } = useFormStore((state) => state)
+	const { setData, stepThreeData } = useFormStore((state) => state);
 
 	const {
 		control,
@@ -17,24 +17,24 @@ function StepThree() {
 	} = useForm({
 		mode: "onTouched",
 		defaultValues: stepThreeData,
-	})
+	});
 
-	const router = useRouter()
+	const router = useRouter();
 
 	const onFormSubmit = (data: StepThreeData) => {
-		setData({ step: 3, data })
+		setData({ step: 3, data });
 
-		const formData = new FormData()
+		const formData = new FormData();
 
-		formData.set("campaignStoryHtml", data.campaignStoryHtml)
-		formData.set("campaignStoryText", data.campaignStoryText)
+		formData.set("campaignStoryHtml", data.campaignStoryHtml);
+		formData.set("campaignStoryText", data.campaignStoryText);
 
 		data.campaignImageFiles.forEach((imageFile) => {
-			formData.append("campaignImages", imageFile)
-		})
+			formData.append("campaignImages", imageFile);
+		});
 
-		void router.push("/create-campaign/preview")
-	}
+		void router.push("/create-campaign/preview");
+	};
 
 	return (
 		<section className="w-full">
@@ -46,13 +46,13 @@ function StepThree() {
 				id={STEP_DATA_KEY_LOOKUP[3]}
 				className="mt-3.2 lg:mt-4.8"
 				onSubmit={(event) => {
-					event.preventDefault()
-					void handleSubmit(onFormSubmit)(event)
+					event.preventDefault();
+					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-2.4">
 					<li>
-						<label className="text-1.4 font-semibold">
+						<label className="text-1.4 font-semibold lg:text-2">
 							Campaign Cover Image
 						</label>
 
@@ -73,9 +73,11 @@ function StepThree() {
 					</li>
 
 					<li>
-						<label className="text-1.4 font-semibold">Campaign Story</label>
+						<label className="text-1.4 font-semibold lg:text-2">
+							Campaign Story
+						</label>
 
-						<p className="my-1.6 text-1.2">
+						<p className="my-1.6 text-1.2 lg:text-1.6rem">
 							A detailed description of the campaign, outlining the need for
 							funding and how the funds will be used.
 						</p>
@@ -96,7 +98,7 @@ function StepThree() {
 				</ol>
 			</form>
 		</section>
-	)
+	);
 }
 
-export default StepThree
+export default StepThree;
