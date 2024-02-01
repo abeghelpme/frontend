@@ -1,31 +1,35 @@
-import { create, type StateCreator } from "zustand";
-import { devtools } from "zustand/middleware";
-import { useShallow } from "zustand/react/shallow";
-import { initialFormState, STEP_DATA_KEY_LOOKUP } from "./constants";
-import type { FormStore, SelectorFn } from "./formStore.types";
+import { type StateCreator, create } from "zustand"
+import { devtools } from "zustand/middleware"
+import { useShallow } from "zustand/react/shallow"
+import { STEP_DATA_KEY_LOOKUP, initialFormState } from "./constants"
+import type { FormStore, SelectorFn } from "./formStore.types"
 
 const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
-  ...initialFormState,
+	...initialFormState,
 
-  goToStep: (step) => set({ currentStep: step }),
+	goToStep: (step) => set({ currentStep: step }),
 
-  setData: ({ step, data }) => {
-    const stepDataKey = STEP_DATA_KEY_LOOKUP[step];
+	setData: ({ step, data }) => {
+		const dataKey = STEP_DATA_KEY_LOOKUP[step]
 
-    const { [stepDataKey]: prevData } = get();
+		const { [dataKey]: previousData } = get()
 
-    set({ [stepDataKey]: { ...prevData, ...data } });
-  },
+		const updatedData = { ...previousData, ...data }
 
-  initializeStoreData: (storeData) => set(storeData),
-});
+		set({ [dataKey]: updatedData })
+	},
 
-const useInitStore = create<FormStore>()(
-  devtools(stateObjectFn, { name: "formStore" }),
-);
+	initializeStoreData: (storeData) => set(storeData),
+})
 
-export const useFormStore = <TState>(selector: SelectorFn<TState>) => {
-  const state = useInitStore(useShallow(selector));
+const useInitFormStore = create<FormStore>()(
+	devtools(stateObjectFn, { name: "formStore" })
+)
 
-  return state;
-};
+export const useFormStore = <TResult>(
+	selector: SelectorFn<FormStore, TResult>
+) => {
+	const state = useInitFormStore(useShallow(selector))
+
+	return state
+}

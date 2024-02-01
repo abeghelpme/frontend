@@ -1,4 +1,3 @@
-export { getEditorExtensions } from "./getEditorExtensions";
-export { getPurifiedHTML } from "./getPurifiedHTML";
-export { validateFiles } from "./validateFiles";
-export { validateTagValue } from "./validateTagValue";
+export { getEditorExtensions } from "./getEditorExtensions"
+export { validateFiles } from "./validateFiles"
+export { validateTagValue } from "./validateTagValue"
