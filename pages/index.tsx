@@ -1,20 +1,14 @@
 import type { WithPageLayout } from "@/interfaces/with-page-layout";
 import BaseLayout from "@/layouts/base-layout";
-// import { socketHelper } from "@/lib/utils/socket-helper";
-// import { useEffect } from "react";
+import Link from "next/link";
 
 const Home: WithPageLayout = () => {
-  // useEffect(() => {
-  //   socketHelper();
-  // }, []);
-
   return (
-    <div>
+    <BaseLayout>
+      <Link href="/test"> Go to test </Link>
       <h1>WELCOME TO ABEG HELP!!</h1>
-    </div>
+    </BaseLayout>
   );
 };
-
-Home.PageLayout = BaseLayout;
 
 export default Home;

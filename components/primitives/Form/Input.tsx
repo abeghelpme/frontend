@@ -22,7 +22,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
       <div className="relative">
         <input
           className={cn(
-            "py-3 px-3 text-sm placeholder:text-sm block w-full border border-[#D0D5DD] bg-white rounded-md outline-0 focus:border-abeg-green-20 placeholder:text-abeg-neutral-50 text-abeg-neutral-10 disabled:bg-[#F0F2F5] disabled:border-[#D0D5DD]",
+            "block w-full rounded-md border border-[#D0D5DD] bg-white px-3 py-3 text-sm text-abeg-neutral-10 outline-0 placeholder:text-sm placeholder:text-abeg-neutral-50 focus:border-abeg-green-20 disabled:border-[#D0D5DD] disabled:bg-[#F0F2F5]",
             {
               "pr-[32px]": type === "password",
               "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20":
@@ -37,8 +37,9 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
         />
         {type === "password" && (
           <button
+            type="button"
             onClick={handleToggle}
-            className="w-5 h-5 text-abeg-neutral-50 absolute left-[calc(100%-20px)] top-1/2 -translate-x-1/2 -translate-y-1/2"
+            className="absolute left-[calc(100%-20px)] top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 text-abeg-neutral-50"
           >
             {showPassword ? (
               <Image

@@ -17,12 +17,14 @@ const VerificationPage = () => {
 
   const verifyEmail = async () => {
     setLoading(true);
-    if (!token)
+    if (!token) {
+      setLoading(false);
       return toast({
         title: "Request Failed",
         description: "No data provided",
         duration: 3000,
       });
+    }
     const { data, error } = await callApi("/auth/verify-email", {
       token,
     });
@@ -49,21 +51,20 @@ const VerificationPage = () => {
 
   return (
     <AuthLayout
-      bannerTextColor
       withHeader={false}
       hasSuccess={false}
       formType="signup"
-      contentClass="md:w-[55%] lg:w-[50%] xl:w-[35%] 2xl:w-[30%]"
+      contentClass="md:max-w-[400px]  lg:w-[50%] xl:w-[35%] 2xl:w-[30%]"
     >
       {" "}
-      <div className="text-center space-y-2">
+      <div className="space-y-2 text-center">
         <h1 className="text-xl font-medium">Verify your email</h1>
         <div className="">
           <p className="">
             Please click on the button below to verify your email.
           </p>
           <Button
-            className="bg-formBtn py-3 !mt-6"
+            className="!mt-6 bg-formBtn py-3"
             onClick={() => void verifyEmail()}
             fullWidth
             loading={loading}
@@ -76,3 +77,5 @@ const VerificationPage = () => {
   );
 };
 export default VerificationPage;
+
+VerificationPage.protect = true;

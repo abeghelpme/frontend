@@ -1,18 +1,16 @@
 import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
-import authBgContours from "@/public/assets/images/shared/bg-contours.png";
 import Image from "next/image";
 import type { FC, ReactNode } from "react";
 import LogoBanner from "./logoBanner";
 
 interface AuthLayoutProps {
   children: ReactNode;
-  formType: "signup" | "other";
+  formType?: "signup" | "other";
   greeting?: string;
   heading?: string;
   contentClass?: string;
   withHeader: boolean;
   hasSuccess: boolean;
-  bannerTextColor?: boolean;
 }
 
 const AuthLayout: FC<AuthLayoutProps> = ({
@@ -22,28 +20,33 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   heading,
   withHeader,
   contentClass,
-  bannerTextColor,
   hasSuccess,
 }) => {
   return (
-    <div className="py-12 flex flex-col items-center min-h-full relative gap-8 md:gap-9">
-      <Image
-        src={formType === "signup" ? (authBgJar as string) : authBgContours}
-        alt=""
-        priority
-        className="absolute inset-0 -z-[1] object-cover object-[75%] h-full w-full"
-      />
-      <LogoBanner textColor={bannerTextColor!} />
+    <div
+      className={`relative flex min-h-full flex-col items-center gap-8 scroll-smooth md:gap-9 ${
+        formType === "signup" ? "py-7" : "py-12"
+      }`}
+    >
+      {formType === "signup" && (
+        <Image
+          src={authBgJar as string}
+          alt=""
+          priority
+          className="absolute inset-0 -z-[1] h-full w-full object-cover object-[75%]"
+        />
+      )}
 
       {!hasSuccess ? (
         <div
-          className={`w-[90%] mx-auto rounded-lg my-auto space-y-6 bg-white py-10 px-4 md:p-10 lg:p-10 md:mx-0 shadow-auth-layout-shadow ${
-            formType === "other" ? "max-w-[467px]" : contentClass
+          className={`mx-auto my-auto w-[90%] space-y-6 scroll-smooth rounded-lg bg-white px-4 py-10 shadow-auth-layout-shadow md:mx-0 md:p-10 lg:py-7 ${
+            contentClass! ? contentClass : "max-w-[467px]"
           }`}
         >
+          <LogoBanner />
           {withHeader && (
             <div className="space-y-2 text-center font-medium">
-              <h1 className="font-semibold text-abeg-neutral-10 text-xl md:text-2xl">
+              <h1 className="text-xl font-semibold text-abeg-neutral-10 md:text-2xl">
                 {heading}
               </h1>
               <p className="text-lg md:text-xl">{greeting}</p>

@@ -1,13 +1,19 @@
+import CloudFlareTurnStile from "@/components/CloudflareTurnstile/CloudFlareTurnStile";
 import DialogComponent from "@/components/Shared/Dialog";
+import LoadingComp from "@/components/Shared/Loading";
 import Button from "@/components/primitives/Button/button";
 import Input from "@/components/primitives/Form/Input";
 import { useToast } from "@/components/ui/use-toast";
+import type { ApiResponse, User } from "@/interfaces/apiResponses";
 import AuthLayout from "@/layouts/authLayout";
 import callApi from "@/lib/api/callApi";
+import { layoutForAuthPages } from "@/lib/utils/AuthPagesLayout";
+import { detectBot } from "@/lib/utils/detectBot";
 import {
   zodValidator,
   type LoginType,
 } from "@/lib/utils/validation/validateWithZod";
+import { useSession } from "@/store/useSession";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -19,21 +25,23 @@ const Login = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [openModal, setOpenModal] = useState(false);
-  const [choose2FA, setChoose2FA] = useState("true");
+  const [success] = useState(false);
+  const [skip2FA, setSkip2FA] = useState("false");
+  const { user } = useSession((state) => state);
   useEffect(() => {
     const checkLS = () => {
       if (!showModal.current) {
-        const modal = localStorage.getItem("show-modal");
+        const modal = localStorage.getItem("skip-2FA");
         if (modal !== null) {
-          setChoose2FA(modal);
+          setSkip2FA(modal);
         }
         showModal.current = true;
       } else {
-        localStorage.setItem("show-modal", choose2FA);
+        localStorage.setItem("skip-2FA", skip2FA);
       }
     };
     checkLS();
-  }, [choose2FA]);
+  }, [skip2FA]);
 
   const {
     register,
@@ -47,18 +55,19 @@ const Login = () => {
   });
 
   const handleOption = () => {
-    setChoose2FA("false");
+    setSkip2FA("false");
     setOpenModal(false);
-    setTimeout(() => {
-      void router.push("/create-campaign");
-    }, 2000);
+    void router.push("/create-campaign");
   };
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-    const { data: responseData, error } = await callApi("/auth/signin", {
-      email: data.email,
-      password: data.password,
-    });
+    const { data: responseData, error } = await callApi<ApiResponse<User>>(
+      "/auth/signin",
+      {
+        email: data.email,
+        password: data.password,
+      },
+    );
 
     if (error) {
       return toast({
@@ -72,36 +81,59 @@ const Login = () => {
         description: (responseData as { message: string }).message,
         duration: 3000,
       });
+
       reset();
-      if (choose2FA === "true") {
+      if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
         setOpenModal(true);
+        return;
       } else {
         setTimeout(() => {
-          void router.push("/create-campaign");
-        }, 1500);
+          void router.push({
+            pathname: "/signin/authenticate",
+            query:
+              responseData?.data?.twoFA?.type === "EMAIL"
+                ? {
+                    verificationChoice: responseData?.data?.twoFA?.type,
+                    email: data.email.toLowerCase(),
+                  }
+                : {
+                    verificationChoice: responseData?.data?.twoFA?.type,
+                  },
+          });
+        }, 2500);
       }
+      return;
     }
-    return;
   };
 
+  if (user !== null) {
+    // // setTimeout(() => {}, 1000);
+    void router.back();
+    return (
+      <LoadingComp message={`You are already signed in. Redirecting back`} />
+    );
+  }
   return (
     <AuthLayout
-      formType="other"
       heading="Welcome back!"
       greeting="Sign in to continue"
       withHeader
-      bannerTextColor
       hasSuccess={false}
     >
       <form
+        id="cf-turnstile-form"
         className=""
         onSubmit={(event) => {
           event.preventDefault();
-          void handleSubmit(onSubmit)(event);
+          // check for bot with CF turnstile
+          const turnstileResponse = detectBot(event);
+          if (turnstileResponse) {
+            void handleSubmit(onSubmit)(event);
+          }
         }}
       >
         <div className="space-y-1">
-          <label htmlFor="email" className="font-medium text-sm">
+          <label htmlFor="email" className="text-sm font-medium">
             Email Address
           </label>
           <Input
@@ -116,11 +148,11 @@ const Login = () => {
             }`}
           />
           {errors.email && (
-            <p className="text-abeg-teal text-sm">{errors.email.message}</p>
+            <p className="text-sm text-abeg-teal">{errors.email.message}</p>
           )}
         </div>
-        <div className="space-y-1 mt-4">
-          <label htmlFor="password" className="font-medium text-sm">
+        <div className="mt-4 space-y-1">
+          <label htmlFor="password" className="text-sm font-medium">
             Password
           </label>
           <Input
@@ -134,25 +166,26 @@ const Login = () => {
             }`}
           />
           {errors.password && (
-            <p className="text-abeg-teal text-sm">{errors.password.message}</p>
+            <p className="text-sm text-abeg-teal">{errors.password.message}</p>
           )}
         </div>
         <Link
           href="/forgot-password"
-          className="text-formBtn text-sm font-semibold inline-flex w-full justify-end mt-2 hover:underline"
+          className="mt-2 inline-flex w-full justify-end text-sm font-semibold text-formBtn hover:underline"
         >
           Forgot Password?
         </Link>
+        <CloudFlareTurnStile />
         <div className="flex flex-col gap-3">
           <DialogComponent
             openDialog={openModal}
-            setOpen={() => setOpenModal(false)}
+            setOpen={() => setOpenModal(openModal)}
             trigger={
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || success}
                 loading={isSubmitting}
-                className="text-white bg-formBtn py-4 mt-6 disabled:bg-gray-500 "
+                className="mt-6 bg-formBtn py-4 text-white disabled:bg-gray-500 "
                 fullWidth
               >
                 Sign in
@@ -160,28 +193,29 @@ const Login = () => {
             }
           >
             <div className="text-center">
-              <h2 className="font-semibold text-2xl">
+              <h2 className="text-2xl font-semibold">
                 Keep your account safe!
               </h2>
-              <div className="space-y-2 mt-4">
+              <div className="mt-3 space-y-2">
                 <p className="">Your safety is our number one priority</p>
                 <p className="">
                   Activate two-factor authentication and add an extra layer of
                   security to your account
                 </p>
               </div>
-              <div className="mt-6">
+              <div className="mt-6 flex flex-col">
                 <Link
-                  href={"#"}
-                  className="text-white block bg-formBtn text-sm font-semibold py-4 w-full rounded-md"
+                  className="w-full rounded-md bg-formBtn py-4 text-sm font-semibold text-white"
+                  href="/2fa"
                 >
                   Activate
                 </Link>
+
                 <Button
                   type="submit"
                   disabled={isSubmitting}
                   onClick={handleOption}
-                  className="text-abeg-teal border-formBtn border py-4 mt-4 disabled:bg-gray-500 disabled:text-white"
+                  className="mt-4 border border-formBtn py-4 text-abeg-teal disabled:bg-gray-500 disabled:text-white"
                   fullWidth
                 >
                   Skip
@@ -191,7 +225,7 @@ const Login = () => {
           </DialogComponent>
           <p className="text-center text-sm">
             Don&apos;t have an account?&nbsp;
-            <Link href="/signup" className="text-abeg-teal font-medium">
+            <Link href="/signup" className="font-medium text-abeg-teal">
               Register
             </Link>
           </p>
@@ -202,3 +236,6 @@ const Login = () => {
 };
 
 export default Login;
+
+Login.getLayout = layoutForAuthPages;
+Login.protect = true;

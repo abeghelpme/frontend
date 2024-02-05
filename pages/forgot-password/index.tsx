@@ -55,12 +55,7 @@ const ForgotPasswordPage: React.FC = () => {
   };
 
   return (
-    <AuthLayout
-      formType="other"
-      bannerTextColor
-      withHeader={false}
-      hasSuccess={false}
-    >
+    <AuthLayout formType="other" withHeader={false} hasSuccess={false}>
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -68,9 +63,9 @@ const ForgotPasswordPage: React.FC = () => {
         }}
         className="flex flex-col gap-5"
       >
-        <div className="text-center space-y-2">
+        <div className="space-y-2 text-center">
           {" "}
-          <h1 className="font-semibold text-abeg-neutral-10 text-xl md:text-2xl">
+          <h1 className="text-xl font-semibold text-abeg-neutral-10 md:text-2xl">
             Forgot Password?
           </h1>
           <p className="md:text-lg">
@@ -78,9 +73,9 @@ const ForgotPasswordPage: React.FC = () => {
             instruction
           </p>
         </div>
-        <div className="space-y-6 mt-2">
+        <div className="mt-2 space-y-6">
           <div className="space-y-1">
-            <label htmlFor="email" className="font-medium text-sm">
+            <label htmlFor="email" className="text-sm font-medium">
               Email Address
             </label>
             <Input
@@ -95,7 +90,7 @@ const ForgotPasswordPage: React.FC = () => {
               }`}
             />
             {errors.email && (
-              <p className="text-abeg-teal text-sm">{errors.email.message}</p>
+              <p className="text-sm text-abeg-teal">{errors.email.message}</p>
             )}
           </div>
         </div>
@@ -104,7 +99,7 @@ const ForgotPasswordPage: React.FC = () => {
           <Button
             disabled={isSubmitting}
             loading={isSubmitting}
-            className="bg-abeg-button-10 font-medium text-md px-10 py-3"
+            className="text-md bg-abeg-button-10 px-10 py-3 font-medium"
           >
             Submit
           </Button>
