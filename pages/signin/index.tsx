@@ -1,87 +1,87 @@
-import {Button, CustomDialog, Input, Loader} from '@/components/index'
-import {useToast} from '@/components/ui/use-toast'
-import type {ApiResponse, User} from '@/interfaces/apiResponses'
-import {AuthLayout, AuthPagesLayout} from '@/layouts'
-import {type LoginType, callApi, zodValidator} from '@/lib'
-import {useSession} from '@/store'
-import {zodResolver} from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import {useRouter} from 'next/router'
-import {useEffect, useRef, useState} from 'react'
-import {type SubmitHandler, useForm} from 'react-hook-form'
+import { Button, CustomDialog, Input, Loader } from "@/components/index";
+import { useToast } from "@/components/ui/use-toast";
+import type { ApiResponse, User } from "@/interfaces/apiResponses";
+import { AuthLayout, AuthPagesLayout } from "@/layouts";
+import { type LoginType, callApi, zodValidator } from "@/lib";
+import { useSession } from "@/store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
 
 const Login = () => {
-	const showModal = useRef(false)
-	const router = useRouter()
-	const {toast} = useToast()
-	const [openModal, setOpenModal] = useState(false)
-	const [success] = useState(false)
-	const [skip2FA, setSkip2FA] = useState('false')
-	const {user} = useSession(state => state)
+	const showModal = useRef(false);
+	const router = useRouter();
+	const { toast } = useToast();
+	const [openModal, setOpenModal] = useState(false);
+	const [success] = useState(false);
+	const [skip2FA, setSkip2FA] = useState("false");
+	const { user } = useSession((state) => state);
 	useEffect(() => {
 		const checkLS = () => {
 			if (!showModal.current) {
-				const modal = localStorage.getItem('skip-2FA')
+				const modal = localStorage.getItem("skip-2FA");
 				if (modal !== null) {
-					setSkip2FA(modal)
+					setSkip2FA(modal);
 				}
-				showModal.current = true
+				showModal.current = true;
 			} else {
-				localStorage.setItem('skip-2FA', skip2FA)
+				localStorage.setItem("skip-2FA", skip2FA);
 			}
-		}
-		checkLS()
-	}, [skip2FA])
+		};
+		checkLS();
+	}, [skip2FA]);
 
 	const {
 		register,
 		handleSubmit,
 		reset,
-		formState: {errors, isSubmitting},
+		formState: { errors, isSubmitting },
 	} = useForm<LoginType>({
-		resolver: zodResolver(zodValidator('login')!),
-		mode: 'onChange',
-		reValidateMode: 'onChange',
-	})
+		resolver: zodResolver(zodValidator("login")!),
+		mode: "onChange",
+		reValidateMode: "onChange",
+	});
 
 	const handleOption = () => {
-		setSkip2FA('false')
-		setOpenModal(false)
-		void router.push('/create-campaign')
-	}
+		setSkip2FA("false");
+		setOpenModal(false);
+		void router.push("/create-campaign");
+	};
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-		const {data: responseData, error} = await callApi<ApiResponse<User>>(
-			'/auth/signin',
+		const { data: responseData, error } = await callApi<ApiResponse<User>>(
+			"/auth/signin",
 			{
 				email: data.email,
 				password: data.password,
 			}
-		)
+		);
 
 		if (error) {
 			return toast({
 				title: error.status as string,
 				description: error.message,
 				duration: 3000,
-			})
+			});
 		} else {
 			toast({
-				title: 'Success',
-				description: (responseData as {message: string}).message,
+				title: "Success",
+				description: (responseData as { message: string }).message,
 				duration: 3000,
-			})
+			});
 
-			reset()
-			if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
-				setOpenModal(true)
-				return
+			reset();
+			if (!responseData?.data?.twoFA?.active && !isSubmitting) {
+				setOpenModal(true);
+				return;
 			} else {
 				setTimeout(() => {
 					void router.push({
-						pathname: '/signin/authenticate',
+						pathname: "/signin/authenticate",
 						query:
-							responseData?.data?.twoFA?.type === 'EMAIL'
+							responseData?.data?.twoFA?.type === "EMAIL"
 								? {
 										verificationChoice: responseData?.data?.twoFA?.type,
 										email: data.email.toLowerCase(),
@@ -89,17 +89,17 @@ const Login = () => {
 								: {
 										verificationChoice: responseData?.data?.twoFA?.type,
 								  },
-					})
-				}, 2500)
+					});
+				}, 1000);
 			}
-			return
+			return;
 		}
-	}
+	};
 
 	if (user !== null) {
 		// // setTimeout(() => {}, 1000);
-		void router.back()
-		return <Loader message={`You are already signed in. Redirecting back`} />
+		void router.back();
+		return <Loader message={`You are already signed in. Redirecting back`} />;
 	}
 	return (
 		<AuthLayout
@@ -110,9 +110,9 @@ const Login = () => {
 		>
 			<form
 				className=""
-				onSubmit={event => {
-					event.preventDefault()
-					void handleSubmit(onSubmit)(event)
+				onSubmit={(event) => {
+					event.preventDefault();
+					void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<div className="space-y-1">
@@ -120,14 +120,14 @@ const Login = () => {
 						Email Address
 					</label>
 					<Input
-						{...register('email')}
+						{...register("email")}
 						autoFocus
 						type="email"
 						id="email"
 						placeholder="Enter your email address"
 						className={`min-h-[45px] ${
 							errors.email &&
-							'ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20'
+							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
 					{errors.email && (
@@ -139,13 +139,13 @@ const Login = () => {
 						Password
 					</label>
 					<Input
-						{...register('password')}
+						{...register("password")}
 						type="password"
 						id="password"
 						placeholder="Enter password"
 						className={`min-h-[45px] ${
 							errors.password &&
-							'ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20'
+							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
 					{errors.password && (
@@ -214,10 +214,10 @@ const Login = () => {
 				</div>
 			</form>
 		</AuthLayout>
-	)
-}
+	);
+};
 
-export default Login
+export default Login;
 
-Login.getLayout = AuthPagesLayout
-Login.protect = true
+Login.getLayout = AuthPagesLayout;
+Login.protect = true;
