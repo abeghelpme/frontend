@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
+    "allowSyntheticDefaultImports": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,8 +20,8 @@
     "incremental": true,
     "jsx": "preserve",
     "paths": {
-      "@/*": ["./*"],
-    },
+      "@/*": ["./*"]
+    }
   },
   "include": [
     "next-env.d.ts",
@@ -30,7 +31,7 @@
     "next.config.js",
     "postcss.config.js",
     "prettier.config.js",
-    "lint-staged.config.js",
+    "lint-staged.config.js"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }

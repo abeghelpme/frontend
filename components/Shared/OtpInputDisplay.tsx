@@ -1,45 +1,46 @@
-import React from "react";
 // import Button from '../primitives/Button/button';
-import authPadlock from "@/public/assets/icons/auth/auth-padlock.svg";
-import Image from "next/image";
-import OTPInput from "react-otp-input";
+import authPadlock from '@/public/assets/icons/auth/auth-padlock.svg'
+import Image from 'next/image'
+import React from 'react'
+import OTPInput from 'react-otp-input'
 
 type OtpProps = {
-  otp: string;
-  setOtp: React.Dispatch<React.SetStateAction<string>>;
-  topSection?: React.ReactNode;
-  bottomSection?: React.ReactNode;
-};
+	otp: string
+	setOtp: React.Dispatch<React.SetStateAction<string>>
+	topSection?: React.ReactNode
+	bottomSection?: React.ReactNode
+}
+
 const OtpInputDisplay = ({
-  otp,
-  setOtp,
-  topSection,
-  bottomSection,
+	otp,
+	setOtp,
+	topSection,
+	bottomSection,
 }: OtpProps) => {
-  return (
-    <div className="flex max-w-[467px] flex-col items-center text-sm md:text-base">
-      <div className="text-center">
-        <Image
-          src={authPadlock as string}
-          alt=""
-          className="mx-auto aspect-square w-[80px]"
-        />
-        <h1 className="mb-4 mt-6 font-medium md:text-2xl">
-          Enter your verification code
-        </h1>
-        {topSection}
-        <OTPInput
-          value={otp}
-          onChange={setOtp}
-          numInputs={6}
-          containerStyle="flex justify-between gap-1"
-          inputStyle="!w-[15%] aspect-square border-[0.25px] border-[#0068FF]/10 focus:border-abeg-teal focus:border rounded-[3px] mt-6"
-          inputType="number"
-          renderInput={(props) => <input {...props} />}
-        />
-      </div>
-      {bottomSection}
-      {/* <Button
+	return (
+		<div className="flex max-w-[467px] flex-col items-center text-sm md:text-base">
+			<div className="text-center">
+				<Image
+					src={authPadlock as string}
+					alt=""
+					className="mx-auto aspect-square w-[80px]"
+				/>
+				<h1 className="mb-4 mt-6 font-medium md:text-2xl">
+					Enter your verification code
+				</h1>
+				{topSection}
+				<OTPInput
+					value={otp}
+					onChange={setOtp}
+					numInputs={6}
+					containerStyle="flex justify-between gap-1"
+					inputStyle="!w-[15%] aspect-square border-[0.25px] border-[#0068FF]/10 focus:border-abeg-teal focus:border rounded-[3px] mt-6"
+					inputType="number"
+					renderInput={props => <input {...props} />}
+				/>
+			</div>
+			{bottomSection}
+			{/* <Button
         type="submit"
         disabled={loading}
         loading={loading}
@@ -49,7 +50,7 @@ const OtpInputDisplay = ({
       >
         Confirm
       </Button> */}
-      {/* <div className="space-y-3">
+			{/* <div className="space-y-3">
         <p className="text-center">
           Didn&apos;t get a code? We can&nbsp;
           <button
@@ -66,8 +67,8 @@ const OtpInputDisplay = ({
           codes.
         </p>
       </div> */}
-    </div>
-  );
-};
+		</div>
+	)
+}
 
-export default OtpInputDisplay;
+export default OtpInputDisplay
