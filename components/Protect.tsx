@@ -2,9 +2,9 @@ import type { User } from "@/interfaces";
 import { useSession } from "@/store";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
-import Loader from "./shared/Loader";
+import { Loader } from "./shared";
 
-export const Auth = ({ children }: { children: ReactNode }) => {
+const Auth = ({ children }: { children: ReactNode }) => {
 	const { user, loading } = useSession((state) => state);
 
 	const router = useRouter();
@@ -59,3 +59,5 @@ export const Auth = ({ children }: { children: ReactNode }) => {
 
 	return children;
 };
+
+export default Auth;

@@ -15,7 +15,7 @@ interface TurnstileProps {
 	onStatusChange: (status: "success" | "idle" | "error") => void;
 }
 
-const CloudFlareTurnStile = (
+const CloudFlareTurnStileComp = (
 	{ onStatusChange }: TurnstileProps,
 	ref: ForwardedRefType<typeof Turnstile>
 ) => {
@@ -46,4 +46,4 @@ const CloudFlareTurnStile = (
 	);
 };
 
-export default forwardRef(CloudFlareTurnStile);
+export default forwardRef(CloudFlareTurnStileComp);

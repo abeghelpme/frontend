@@ -1,5 +1,4 @@
-import { Button } from "@/components/index";
-import { useToast } from "@/components/ui/use-toast";
+import { Button, useToast } from "@/components/ui";
 import { AuthLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import { useRouter } from "next/router";

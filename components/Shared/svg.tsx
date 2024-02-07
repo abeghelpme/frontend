@@ -29,7 +29,7 @@ export const AbegHelpLogo = () => (
 			fill="#1B1818"
 		/>
 	</svg>
-)
+);
 
 export const ArrowDown = () => (
 	<svg
@@ -48,4 +48,4 @@ export const ArrowDown = () => (
 			stroke-linejoin="round"
 		/>
 	</svg>
-)
+);

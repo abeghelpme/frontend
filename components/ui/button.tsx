@@ -1,16 +1,16 @@
-import {cn} from '@/lib'
+import { cn } from "@/lib";
 
-import {forwardRef} from 'react'
-interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
-	className: string
-	fullWidth?: boolean
-	children: React.ReactNode
-	loading?: boolean
-	size?: 'sm' | 'base' | 'lg'
-	variant?: 'primary' | 'secondary' | 'danger'
+import { forwardRef } from "react";
+interface ButtonProps extends React.ComponentPropsWithRef<"button"> {
+	className: string;
+	fullWidth?: boolean;
+	children: React.ReactNode;
+	loading?: boolean;
+	size?: "sm" | "base" | "lg";
+	variant?: "primary" | "secondary" | "danger";
 }
 
-const Button = (
+const ButtonUI = (
 	{
 		className,
 		children,
@@ -23,18 +23,18 @@ const Button = (
 	ref: React.ForwardedRef<HTMLButtonElement>
 ) => {
 	const buttonClass = {
-		'bg-abeg-error-20': variant === 'danger',
-		'border-abeg-green text-abeg-green border': variant === 'secondary',
-		'bg-abeg-neutral-20': variant === 'primary',
-		'px-3': size === 'sm',
-		'px-10': size === 'lg',
-		'w-full': fullWidth,
-	}
+		"bg-abeg-error-20": variant === "danger",
+		"border-abeg-green text-abeg-green border": variant === "secondary",
+		"bg-abeg-neutral-20": variant === "primary",
+		"px-3": size === "sm",
+		"px-10": size === "lg",
+		"w-full": fullWidth,
+	};
 
 	return (
 		<button
 			className={cn(
-				'rounded-lg px-5 py-2 text-sm font-medium text-white disabled:bg-abeg-neutral-50',
+				"rounded-lg px-5 py-2 text-sm font-medium text-white disabled:bg-abeg-neutral-50",
 				buttonClass,
 				className
 			)}
@@ -66,7 +66,8 @@ const Button = (
 				children
 			)}
 		</button>
-	)
-}
+	);
+};
 
-export default forwardRef(Button)
+const Button = forwardRef(ButtonUI);
+export default Button;

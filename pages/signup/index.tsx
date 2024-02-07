@@ -1,11 +1,6 @@
 import { setTimeout } from "timers";
-import {
-	Button,
-	CloudFlareTurnStile,
-	Input,
-	ProgressBar,
-} from "@/components/index";
-import { useToast } from "@/components/ui/use-toast";
+import { CloudFlareTurnStile } from "@/components/shared";
+import { Button, Input, ProgressBar, useToast } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import { AuthLayout } from "@/layouts";
 import {

@@ -1,15 +1,15 @@
 // import Button from '../primitives/Button/button';
-import authPadlock from '@/public/assets/icons/auth/auth-padlock.svg'
-import Image from 'next/image'
-import React from 'react'
-import OTPInput from 'react-otp-input'
+import authPadlock from "@/public/assets/icons/auth/auth-padlock.svg";
+import Image from "next/image";
+import React from "react";
+import OTPInput from "react-otp-input";
 
 type OtpProps = {
-	otp: string
-	setOtp: React.Dispatch<React.SetStateAction<string>>
-	topSection?: React.ReactNode
-	bottomSection?: React.ReactNode
-}
+	otp: string;
+	setOtp: React.Dispatch<React.SetStateAction<string>>;
+	topSection?: React.ReactNode;
+	bottomSection?: React.ReactNode;
+};
 
 const OtpInputDisplay = ({
 	otp,
@@ -36,7 +36,7 @@ const OtpInputDisplay = ({
 					containerStyle="flex justify-between gap-1"
 					inputStyle="!w-[15%] aspect-square border-[0.25px] border-[#0068FF]/10 focus:border-abeg-teal focus:border rounded-[3px] mt-6"
 					inputType="number"
-					renderInput={props => <input {...props} />}
+					renderInput={(props) => <input {...props} />}
 				/>
 			</div>
 			{bottomSection}
@@ -68,7 +68,7 @@ const OtpInputDisplay = ({
         </p>
       </div> */}
 		</div>
-	)
-}
+	);
+};
 
-export default OtpInputDisplay
+export default OtpInputDisplay;

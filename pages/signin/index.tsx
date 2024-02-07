@@ -1,11 +1,6 @@
-import {
-	Button,
-	CloudFlareTurnStile,
-	CustomDialog,
-	Input,
-} from "@/components/index";
-import { useToast } from "@/components/ui/use-toast";
-import type { ApiResponse, User } from "@/interfaces/apiResponses";
+import { CloudFlareTurnStile, CustomDialog } from "@/components/shared";
+import { Button, Input, useToast } from "@/components/ui";
+import type { ApiResponse, User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
 import { useSession } from "@/store";

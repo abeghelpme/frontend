@@ -1,4 +1,4 @@
-import { FirstStep, RecoveryCode } from "@/components/index";
+import { FirstStep, RecoveryCode } from "@/components/2fa";
 import { useRef, useState } from "react";
 
 const Authenticator = () => {

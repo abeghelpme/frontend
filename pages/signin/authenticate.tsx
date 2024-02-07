@@ -1,5 +1,5 @@
-import { Button, OtpInputDisplay } from "@/components/index";
-import { useToast } from "@/components/ui/use-toast";
+import { OtpInputDisplay } from "@/components/shared";
+import { Button, useToast } from "@/components/ui";
 import { type ApiResponse, type User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";

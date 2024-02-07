@@ -1,29 +1,29 @@
-import {Button} from '@/components/index'
-import {ClipboardIcon} from '@radix-ui/react-icons'
-import {useRouter} from 'next/router'
-import {useToast} from '../ui/use-toast'
+import { Button } from "@/components/ui";
+import { ClipboardIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/router";
+import { useToast } from "../ui/use-toast";
 
-const RecoveryCode = ({recoveryCode}: {recoveryCode: string | null}) => {
-	const router = useRouter()
-	const {toast} = useToast()
+const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
+	const router = useRouter();
+	const { toast } = useToast();
 
 	const handleCopy = async () => {
 		try {
 			await navigator.clipboard.writeText(recoveryCode as string).then(() => {
 				toast({
-					title: 'Success',
-					description: 'Key copied to clipboard',
+					title: "Success",
+					description: "Key copied to clipboard",
 					duration: 3000,
-				})
-			})
+				});
+			});
 		} catch (err) {
 			toast({
-				title: 'Error',
-				description: 'Could not copy',
+				title: "Error",
+				description: "Could not copy",
 				duration: 3000,
-			})
+			});
 		}
-	}
+	};
 
 	return (
 		<>
@@ -65,14 +65,14 @@ const RecoveryCode = ({recoveryCode}: {recoveryCode: string | null}) => {
 					<Button
 						className="w-fit bg-abeg-button-10 "
 						size="sm"
-						onClick={() => void router.push('/create-campaign')}
+						onClick={() => void router.push("/create-campaign")}
 					>
 						Got it!
 					</Button>
 				</div>
 			</div>
 		</>
-	)
-}
+	);
+};
 
-export default RecoveryCode
+export default RecoveryCode;
