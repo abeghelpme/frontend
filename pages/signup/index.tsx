@@ -1,5 +1,10 @@
 import { setTimeout } from "timers";
-import { Button, Input, ProgressBar } from "@/components/index";
+import {
+	Button,
+	CloudFlareTurnStile,
+	Input,
+	ProgressBar,
+} from "@/components/index";
 import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse } from "@/interfaces";
 import { AuthLayout } from "@/layouts";
@@ -10,12 +15,17 @@ import {
 	zodValidator,
 } from "@/lib";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDeferredValue, useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
 const SignUp = () => {
+	const [botStatus, setBotStatus] = useState<"success" | "error" | "idle">(
+		"idle"
+	);
+	const cfTurnStile = useRef<TurnstileInstance>(null);
 	const { toast } = useToast();
 	const showModal = useRef(false);
 	const [message, setMessage] = useState<ApiResponse>({
@@ -24,6 +34,9 @@ const SignUp = () => {
 		error: undefined,
 		data: undefined,
 	});
+
+	const handleBotStatus = (status: "success" | "error" | "idle") =>
+		setBotStatus(status);
 
 	useEffect(() => {
 		const checkLS = () => {
@@ -93,16 +106,17 @@ const SignUp = () => {
 			toast({
 				title: "Success",
 				description: responseData?.message,
-				duration: 1000,
+				duration: 2000,
 			});
 			reset();
-			void router.push({
-				pathname: "/signup/verification",
-				query: { signup: true, email: data.email.toLowerCase() },
-			});
+			setTimeout(() => {
+				void router.push({
+					pathname: "/signup/verification",
+					query: { signup: true, email: data.email.toLowerCase() },
+				});
+			}, 1500);
 		}
 	};
-
 	// if (user !== null) {
 	//   // // setTimeout(() => {}, 1000);
 	//   void router.back();
@@ -123,6 +137,16 @@ const SignUp = () => {
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();
+
+					if (botStatus !== "success") {
+						toast({
+							title: "Error",
+							description: "Please complete the bot verification",
+							duration: 3000,
+						});
+						return;
+					}
+
 					void handleSubmit(onSubmit)(event);
 				}}
 				action=""
@@ -299,7 +323,10 @@ const SignUp = () => {
 						</p>
 					)}
 				</div>
-
+				<CloudFlareTurnStile
+					onStatusChange={handleBotStatus}
+					ref={cfTurnStile}
+				/>
 				<div className="flex flex-col items-center space-y-5">
 					<Button
 						disabled={isSubmitting}

@@ -1,16 +1,27 @@
-import { Button, CustomDialog, Input, Loader } from "@/components/index";
+import {
+	Button,
+	CloudFlareTurnStile,
+	CustomDialog,
+	Input,
+	Loader,
+} from "@/components/index";
 import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse, User } from "@/interfaces/apiResponses";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
 import { useSession } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
 const Login = () => {
+	const [botStatus, setBotStatus] = useState<"success" | "error" | "idle">(
+		"idle"
+	);
+	const cfTurnStile = useRef<TurnstileInstance>(null);
 	const showModal = useRef(false);
 	const router = useRouter();
 	const { toast } = useToast();
@@ -18,6 +29,10 @@ const Login = () => {
 	const [success] = useState(false);
 	const [skip2FA, setSkip2FA] = useState("false");
 	const { user } = useSession((state) => state);
+
+	const handleBotStatus = (status: "success" | "error" | "idle") =>
+		setBotStatus(status);
+
 	useEffect(() => {
 		const checkLS = () => {
 			if (!showModal.current) {
@@ -73,7 +88,7 @@ const Login = () => {
 			});
 
 			reset();
-			if (!responseData?.data?.twoFA?.active && !isSubmitting) {
+			if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
 				setOpenModal(true);
 				return;
 			} else {
@@ -112,6 +127,16 @@ const Login = () => {
 				className=""
 				onSubmit={(event) => {
 					event.preventDefault();
+
+					if (botStatus !== "success") {
+						toast({
+							title: "Error",
+							description: "Please complete the bot verification",
+							duration: 3000,
+						});
+						return;
+					}
+
 					void handleSubmit(onSubmit)(event);
 				}}
 			>
@@ -158,6 +183,10 @@ const Login = () => {
 				>
 					Forgot Password?
 				</Link>
+				<CloudFlareTurnStile
+					onStatusChange={handleBotStatus}
+					ref={cfTurnStile}
+				/>
 				<div className="flex flex-col gap-3">
 					<CustomDialog
 						openDialog={openModal}

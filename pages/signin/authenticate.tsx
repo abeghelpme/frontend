@@ -164,9 +164,16 @@ const AuthenticateUser = () => {
 			void router.push("/");
 		}
 	};
+	// if (user !== null) {
+	//   // // setTimeout(() => {}, 1000);
+	//   void router.back();
+	//   return (
+	//     <LoadingComp message={`You are already signed in. Redirecting back`} />
+	//   );
+	// }
 	return (
 		<AuthLayout withHeader={false} hasSuccess={false}>
-			{castedUser.twoFA.type === "EMAIL" ||
+			{castedUser.twoFA.type !== "EMAIL" ||
 			userPref.verificationType.toUpperCase() === "EMAIL" ? (
 				<EmailAuth
 					email={castedUser?.email || userPref?.email}

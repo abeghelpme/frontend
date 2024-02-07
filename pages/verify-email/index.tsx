@@ -34,16 +34,18 @@ const VerificationPage = () => {
 			return toast({
 				title: error.status as string,
 				description: error.message,
-				duration: 1200,
+				duration: 3000,
 			});
 		} else {
 			setLoading(false);
 			toast({
 				title: "Success",
 				description: (data as { message: string }).message,
-				duration: 1200,
+				duration: 3000,
 			});
-			void router.push("/verify-email/success");
+			setTimeout(() => {
+				void router.push("/verify-email/success");
+			}, 2000);
 		}
 	};
 
