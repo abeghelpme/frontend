@@ -38,6 +38,6 @@ export {
 	type ToastProps,
 } from "./ui/toast";
 
+export { default as CloudFlareTurnStile } from "./Shared/CloudflareTurnstile";
 export { default as Input } from "./ui/input";
 export { default as ProgressBar } from "./ui/progressbar";
-export { default as CloudFlareTurnStile } from "./Shared/CloudflareTurnstile";

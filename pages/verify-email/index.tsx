@@ -1,53 +1,53 @@
-import {Button} from '@/components/index'
-import {useToast} from '@/components/ui/use-toast'
-import {AuthLayout} from '@/layouts'
-import {callApi} from '@/lib'
-import {useRouter} from 'next/router'
-import {useEffect, useState} from 'react'
+import { Button } from "@/components/index";
+import { useToast } from "@/components/ui/use-toast";
+import { AuthLayout } from "@/layouts";
+import { callApi } from "@/lib";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const VerificationPage = () => {
-	const router = useRouter()
-	const {toast} = useToast()
-	const [token, setToken] = useState('')
-	const [loading, setLoading] = useState(false)
+	const router = useRouter();
+	const { toast } = useToast();
+	const [token, setToken] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		setToken(router.query.token as string)
-	}, [router])
+		setToken(router.query.token as string);
+	}, [router]);
 
 	const verifyEmail = async () => {
-		setLoading(true)
+		setLoading(true);
 		if (!token) {
-			setLoading(false)
+			setLoading(false);
 			return toast({
-				title: 'Request Failed',
-				description: 'No data provided',
+				title: "Request Failed",
+				description: "No data provided",
 				duration: 3000,
-			})
+			});
 		}
-		const {data, error} = await callApi('/auth/verify-email', {
+		const { data, error } = await callApi("/auth/verify-email", {
 			token,
-		})
+		});
 
 		if (error) {
-			setLoading(false)
+			setLoading(false);
 			return toast({
 				title: error.status as string,
 				description: error.message,
 				duration: 3000,
-			})
+			});
 		} else {
-			setLoading(false)
+			setLoading(false);
 			toast({
-				title: 'Success',
-				description: (data as {message: string}).message,
+				title: "Success",
+				description: (data as { message: string }).message,
 				duration: 3000,
-			})
+			});
 			setTimeout(() => {
-				void router.push('/verify-email/success')
-			}, 2000)
+				void router.push("/verify-email/success");
+			}, 1000);
 		}
-	}
+	};
 
 	return (
 		<AuthLayout
@@ -56,7 +56,7 @@ const VerificationPage = () => {
 			formType="signup"
 			contentClass="md:max-w-[400px]  lg:w-[50%] xl:w-[35%] 2xl:w-[30%]"
 		>
-			{' '}
+			{" "}
 			<div className="space-y-2 text-center">
 				<h1 className="text-xl font-medium">Verify your email</h1>
 				<div className="">
@@ -74,8 +74,8 @@ const VerificationPage = () => {
 				</div>
 			</div>
 		</AuthLayout>
-	)
-}
-export default VerificationPage
+	);
+};
+export default VerificationPage;
 
-VerificationPage.protect = true
+VerificationPage.protect = true;
