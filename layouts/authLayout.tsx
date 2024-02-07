@@ -1,7 +1,7 @@
-import LogoBanner from '@/components/Shared/LogoBanner'
-import type {AuthLayoutProps} from '@/interfaces'
-import authBgJar from '@/public/assets/images/auth/auth-bg-jar.svg'
-import Image from 'next/image'
+import LogoBanner from "@/components/Shared/LogoBanner";
+import type { AuthLayoutProps } from "@/interfaces";
+import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
+import Image from "next/image";
 
 export const AuthLayout = ({
 	children,
@@ -15,10 +15,10 @@ export const AuthLayout = ({
 	return (
 		<div
 			className={`relative flex min-h-full flex-col items-center gap-8 scroll-smooth md:gap-9 ${
-				formType === 'signup' ? 'py-7' : 'py-12'
+				formType === "signup" ? "py-7" : "py-12"
 			}`}
 		>
-			{formType === 'signup' && (
+			{formType === "signup" && (
 				<Image
 					src={authBgJar as string}
 					alt=""
@@ -30,7 +30,7 @@ export const AuthLayout = ({
 			{!hasSuccess ? (
 				<div
 					className={`mx-auto my-auto w-[90%] space-y-6 scroll-smooth rounded-lg bg-white px-4 py-10 shadow-auth-layout-shadow md:mx-0 md:p-10 lg:py-7 ${
-						contentClass! ? contentClass : 'max-w-[467px]'
+						contentClass! ? contentClass : "max-w-[467px]"
 					}`}
 				>
 					<LogoBanner />
@@ -46,5 +46,5 @@ export const AuthLayout = ({
 				<div className="my-auto w-full">{children}</div>
 			)}
 		</div>
-	)
-}
+	);
+};
