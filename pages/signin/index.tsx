@@ -27,9 +27,7 @@ const Login = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [success] = useState(false);
 	const [skip2FA, setSkip2FA] = useState("false");
-	const { user } = useSession((state) => state);
-
-	console.log(user);
+	const { user, updateUser } = useSession((state) => state);
 
 	const handleBotStatus = (status: "success" | "error" | "idle") =>
 		setBotStatus(status);
@@ -76,9 +74,17 @@ const Login = () => {
 		);
 
 		if (error) {
+			const email = (error?.error as string)?.split(":")?.[1];
+
+			if (email) {
+				void router.push({
+					pathname: "/signup/verification",
+					query: { signup: true, email: data.email.toLowerCase() },
+				});
+			}
 			return toast({
 				title: error.status as string,
-				description: error.message + " Please check your mail",
+				description: error.message,
 				duration: 3000,
 			});
 		} else {
@@ -87,6 +93,8 @@ const Login = () => {
 				description: (responseData as { message: string }).message,
 				duration: 3000,
 			});
+
+			updateUser(responseData?.data as User);
 
 			reset();
 			if (responseData?.data?.twoFA?.active === false && !isSubmitting) {

@@ -1,4 +1,4 @@
-import { Button, Loader, OtpInputDisplay } from "@/components/index";
+import { Button, OtpInputDisplay } from "@/components/index";
 import { useToast } from "@/components/ui/use-toast";
 import { type ApiResponse, type User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
@@ -119,7 +119,7 @@ const AuthenticateUser = () => {
 	const [otp, setOtp] = useState("");
 	const [loading, setLoading] = useState(false);
 	const { toast } = useToast();
-	const { user } = useSession((state) => state);
+	const { user, updateUser } = useSession((state) => state);
 	const router = useRouter();
 	const castedUser = user as User;
 
@@ -143,6 +143,7 @@ const AuthenticateUser = () => {
 				duration: 2000,
 			});
 		} else {
+			updateUser(data?.data as User);
 			setLoading(false);
 			toast({
 				title: "Success",
@@ -152,21 +153,21 @@ const AuthenticateUser = () => {
 			void router.push("/");
 		}
 	};
-	if (castedUser === null) {
-		setTimeout(() => {
-			void router.push("/signin");
-		}, 1000);
-		return (
-			<Loader message={`You are not signed in. Redirecting to sign in page`} />
-		);
-	} else if (castedUser?.twoFA.isVerified) {
-		setTimeout(() => {
-			void router.push("/");
-		}, 1000);
-		return (
-			<Loader message={`You are already signed in. Redirecting to home page`} />
-		);
-	}
+	// if (castedUser === null) {
+	// 	setTimeout(() => {
+	// 		void router.push("/signin");
+	// 	}, 1000);
+	// 	return (
+	// 		<Loader message={`You are not signed in. Redirecting to sign in page`} />
+	// 	);
+	// } else if (castedUser?.twoFA.isVerified) {
+	// 	setTimeout(() => {
+	// 		void router.push("/");
+	// 	}, 1000);
+	// 	return (
+	// 		<Loader message={`You are already signed in. Redirecting to home page`} />
+	// 	);
+	// }
 	return (
 		<AuthLayout withHeader={false} hasSuccess={false}>
 			{castedUser?.twoFA.type === "EMAIL" ? (
@@ -192,4 +193,4 @@ const AuthenticateUser = () => {
 export default AuthenticateUser;
 
 AuthenticateUser.getLayout = AuthPagesLayout;
-// AuthenticateUser.protect = true;
+AuthenticateUser.protect = true;

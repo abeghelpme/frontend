@@ -159,12 +159,13 @@ const SignUp = () => {
 						{message.message}
 					</p>
 				) : (
-					message.error && (
+					message.error &&
+					typeof message.error === "object" && (
 						<ul className="list-inside list-disc space-y-1 rounded-md bg-abeg-error-40 p-4 text-xs font-medium text-abeg-error-20">
 							{Object.keys(message.error).length > 0 &&
 								Object.keys(message.error).map((key) => (
 									<li key={key} className={``}>
-										{message.error![key]}
+										{(message.error as { [key: string]: string[] })[key]}
 									</li>
 								))}
 						</ul>

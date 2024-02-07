@@ -15,3 +15,4 @@ const Authenticator = () => {
 	);
 };
 export default Authenticator;
+Authenticator.protect = true;

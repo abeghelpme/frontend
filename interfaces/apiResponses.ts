@@ -21,8 +21,10 @@ export type User = {
 export type ApiResponse<T = { [key: string]: unknown }> = {
 	status: string;
 	message: string;
-	error?: {
-		[key: string]: string[];
-	};
+	error?:
+		| {
+				[key: string]: string[];
+		  }
+		| string;
 	data?: T;
 };
