@@ -1,7 +1,6 @@
-import { Button } from "@/components/ui";
 import { ClipboardIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
-import { useToast } from "../ui/use-toast";
+import { Button, useToast } from "../ui";
 
 const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
 	const router = useRouter();

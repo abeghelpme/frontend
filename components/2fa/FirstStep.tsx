@@ -1,12 +1,11 @@
-import { CustomDialog, Loader } from "@/components/shared";
-import { Button } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import { callApi } from "@/lib";
 import { ClipboardIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
-import { useToast } from "../ui/use-toast";
+import { CustomDialog, Loader } from "../shared";
+import { Button, useToast } from "../ui";
 
 type AuthenticatorFirstStepProps = {
 	setStep: React.Dispatch<React.SetStateAction<number>>;
