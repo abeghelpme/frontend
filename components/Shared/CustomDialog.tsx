@@ -3,7 +3,7 @@ import {
 	DialogClose,
 	DialogContent,
 	DialogTrigger,
-} from "@/components";
+} from "@/components/index";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { type ReactNode, type SetStateAction } from "react";
 
