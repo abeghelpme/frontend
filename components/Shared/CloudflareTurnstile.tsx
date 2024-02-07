@@ -15,10 +15,10 @@ interface TurnstileProps {
 	onStatusChange: (status: "success" | "idle" | "error") => void;
 }
 
-function CloudFlareTurnStile(
+const CloudFlareTurnStile = (
 	{ onStatusChange }: TurnstileProps,
 	ref: ForwardedRefType<typeof Turnstile>
-) {
+) => {
 	const [status, setStatus] = useState<"success" | "idle" | "error">("idle");
 
 	useEffect(() => onStatusChange(status), [status]);
@@ -33,7 +33,8 @@ function CloudFlareTurnStile(
 		<Turnstile
 			ref={ref}
 			scriptOptions={{ defer: true }}
-			siteKey={SITEKEY}
+			// siteKey={SITEKEY}
+			siteKey="1x00000000000000000000AA"
 			className="mx-auto mt-3"
 			onError={() => setStatus("error")}
 			onExpire={() => {
@@ -44,6 +45,6 @@ function CloudFlareTurnStile(
 			onSuccess={() => setStatus("success")}
 		/>
 	);
-}
+};
 
 export default forwardRef(CloudFlareTurnStile);

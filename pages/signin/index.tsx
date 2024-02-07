@@ -3,7 +3,6 @@ import {
 	CloudFlareTurnStile,
 	CustomDialog,
 	Input,
-	Loader,
 } from "@/components/index";
 import { useToast } from "@/components/ui/use-toast";
 import type { ApiResponse, User } from "@/interfaces/apiResponses";
@@ -29,6 +28,8 @@ const Login = () => {
 	const [success] = useState(false);
 	const [skip2FA, setSkip2FA] = useState("false");
 	const { user } = useSession((state) => state);
+
+	console.log(user);
 
 	const handleBotStatus = (status: "success" | "error" | "idle") =>
 		setBotStatus(status);
@@ -77,7 +78,7 @@ const Login = () => {
 		if (error) {
 			return toast({
 				title: error.status as string,
-				description: error.message,
+				description: error.message + " Please check your mail",
 				duration: 3000,
 			});
 		} else {
@@ -93,29 +94,17 @@ const Login = () => {
 				return;
 			} else {
 				setTimeout(() => {
-					void router.push({
-						pathname: "/signin/authenticate",
-						query:
-							responseData?.data?.twoFA?.type === "EMAIL"
-								? {
-										verificationChoice: responseData?.data?.twoFA?.type,
-										email: data.email.toLowerCase(),
-								  }
-								: {
-										verificationChoice: responseData?.data?.twoFA?.type,
-								  },
-					});
+					void router.push("/signin/authenticate");
 				}, 1000);
 			}
 			return;
 		}
 	};
 
-	if (user !== null) {
-		// // setTimeout(() => {}, 1000);
-		void router.back();
-		return <Loader message={`You are already signed in. Redirecting back`} />;
-	}
+	// if (user !== null) {
+	// 	void router.push("/");
+	// 	return <Loader message={`You are already signed in. Redirecting to home`} />;
+	// }
 	return (
 		<AuthLayout
 			heading="Welcome back!"

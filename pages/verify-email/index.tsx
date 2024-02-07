@@ -45,7 +45,7 @@ const VerificationPage = () => {
 			});
 			setTimeout(() => {
 				void router.push("/verify-email/success");
-			}, 2000);
+			}, 1000);
 		}
 	};
 

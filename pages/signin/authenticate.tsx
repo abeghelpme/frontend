@@ -1,4 +1,4 @@
-import { Button, OtpInputDisplay } from "@/components/index";
+import { Button, Loader, OtpInputDisplay } from "@/components/index";
 import { useToast } from "@/components/ui/use-toast";
 import { type ApiResponse, type User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
@@ -26,7 +26,6 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 
 	const resendCode = async () => {
 		// e.preventDefault();
-
 		resend.current = true;
 		const { data, error } = await callApi<ApiResponse>("/auth/2fa/code/email");
 		if (error) {
@@ -119,21 +118,10 @@ const AuthApp = ({ otp, setOtp, handleSubmit, loading }: Props) => {
 const AuthenticateUser = () => {
 	const [otp, setOtp] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [userPref, setUserPref] = useState({
-		verificationType: "",
-		email: "",
-	});
 	const { toast } = useToast();
 	const { user } = useSession((state) => state);
 	const router = useRouter();
 	const castedUser = user as User;
-	const { email, verificationChoice } = router.query;
-	useEffect(() => {
-		setUserPref({
-			verificationType: verificationChoice as string,
-			email: email as string,
-		});
-	}, [email, verificationChoice]);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -164,19 +152,17 @@ const AuthenticateUser = () => {
 			void router.push("/");
 		}
 	};
-	// if (user !== null) {
-	//   // // setTimeout(() => {}, 1000);
-	//   void router.back();
-	//   return (
-	//     <LoadingComp message={`You are already signed in. Redirecting back`} />
-	//   );
-	// }
+	if (castedUser === null || castedUser?.twoFA.isVerified) {
+		setTimeout(() => {
+			void router.push("/");
+		}, 1000);
+		return <Loader message={`You are already signed in. Redirecting back`} />;
+	}
 	return (
 		<AuthLayout withHeader={false} hasSuccess={false}>
-			{castedUser.twoFA.type !== "EMAIL" ||
-			userPref.verificationType.toUpperCase() === "EMAIL" ? (
+			{castedUser?.twoFA.type === "EMAIL" ? (
 				<EmailAuth
-					email={castedUser?.email || userPref?.email}
+					email={castedUser?.email}
 					otp={otp}
 					setOtp={setOtp}
 					handleSubmit={(e) => void handleSubmit(e)}
@@ -197,4 +183,4 @@ const AuthenticateUser = () => {
 export default AuthenticateUser;
 
 AuthenticateUser.getLayout = AuthPagesLayout;
-AuthenticateUser.protect = true;
+// AuthenticateUser.protect = true;
