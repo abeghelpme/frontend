@@ -117,7 +117,6 @@ const SignUp = () => {
 			}, 1500);
 		}
 	};
-
 	// if (user !== null) {
 	//   // // setTimeout(() => {}, 1000);
 	//   void router.back();

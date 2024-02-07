@@ -246,7 +246,7 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default Login
 
 Login.getLayout = AuthPagesLayout;
 Login.protect = true;
