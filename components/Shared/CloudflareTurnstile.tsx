@@ -33,8 +33,7 @@ const CloudFlareTurnStile = (
 		<Turnstile
 			ref={ref}
 			scriptOptions={{ defer: true }}
-			// siteKey={SITEKEY}
-			siteKey="1x00000000000000000000AA"
+			siteKey={SITEKEY}
 			className="mx-auto mt-3"
 			onError={() => setStatus("error")}
 			onExpire={() => {
