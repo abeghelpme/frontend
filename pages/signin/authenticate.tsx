@@ -152,11 +152,20 @@ const AuthenticateUser = () => {
 			void router.push("/");
 		}
 	};
-	if (castedUser === null || castedUser?.twoFA.isVerified) {
+	if (castedUser === null) {
+		setTimeout(() => {
+			void router.push("/signin");
+		}, 1000);
+		return (
+			<Loader message={`You are not signed in. Redirecting to sign in page`} />
+		);
+	} else if (castedUser?.twoFA.isVerified) {
 		setTimeout(() => {
 			void router.push("/");
 		}, 1000);
-		return <Loader message={`You are already signed in. Redirecting back`} />;
+		return (
+			<Loader message={`You are already signed in. Redirecting to home page`} />
+		);
 	}
 	return (
 		<AuthLayout withHeader={false} hasSuccess={false}>

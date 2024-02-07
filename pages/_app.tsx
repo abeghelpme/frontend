@@ -31,11 +31,11 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
 	return (
 		<>
 			<style jsx global>{`
-        html {
-          font-family: ${manrope.style.fontFamily};
-          color: #484848;
-        }
-      `}</style>
+				html {
+					font-family: ${manrope.style.fontFamily};
+					color: #484848;
+				}
+			`}</style>
 			<NextNProgress color="#324823" />
 			{Component.protect === true ? (
 				<Auth>{getLayout(<Component {...pageProps} />)}</Auth>
@@ -65,26 +65,22 @@ const Auth = ({ children }: { children: ReactNode }) => {
 		// If user is not signed in, and they try to go to any page we protect, redirect to login
 		case castedUser === null &&
 			!forbiddenFromAuthUsers.includes(router.pathname):
-			console.log("check 1");
 			void router.push("/signin");
 			return <Loader message="You are not signed in. Redirecting to Login" />;
 		// If user is signed in but yet to verify email, redirect to verify email
 		case castedUser && !castedUser.isEmailVerified:
-			console.log("check 2");
 			void router.push("/verify-email");
 			return (
 				<Loader message="Email not verified. Proceed to verify your email" />
 			);
 		// If user is signed in but yet to verify 2fa, redirect to verify 2fa
 		case castedUser && !castedUser.twoFA.isVerified:
-			console.log("check 4");
 			setTimeout(() => {
 				void router.push("/signin/authenticate");
 			}, 1000);
 			return <Loader message="2FA not verified. Proceed to verify your 2FA" />;
 		// If user is signed in and verified, redirect to home
 		case castedUser && forbiddenFromAuthUsers.includes(router.pathname):
-			console.log("check 5");
 			setTimeout(() => {
 				void router.push("/");
 			}, 1000);
