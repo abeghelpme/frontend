@@ -1,74 +1,100 @@
-import { Select } from "@/components/ui/Select";
-import Button from "@/components/ui/button";
+import { Button, Select } from "@/components";
+import { callApi, zodValidator } from "@/lib";
 import { useElementList } from "@/lib/hooks";
 import crossIcon from "@/public/assets/icons/campaign/cross-icon.svg";
-import { type StepOneData, useFormStore } from "@/store/useformStore";
-import { STEP_DATA_KEY_LOOKUP } from "@/store/useformStore/constants";
+import {
+	STEP_DATA_KEY_LOOKUP,
+	type StepOneData,
+	useFormStore,
+} from "@/store/formStore";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import Image from "next/image";
 import { type KeyboardEvent, type MouseEvent, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
+import ErrorParagraph from "../ErrorParagraph";
 import Heading from "../Heading";
 import { validateTagValue } from "../campaign-utils";
-import {
-	fundraiserCategories,
-	targetCountries,
-} from "../campaign-utils/constants";
+import { targetCountries } from "../campaign-utils/constants";
+import { useWatchFormStatus } from "./useWatchFormStatus";
 
 function StepOne() {
 	const tagInputRef = useRef<HTMLInputElement>(null);
-	const { setData, goToStep, stepOneData } = useFormStore((state) => state);
-	const campaignTags = stepOneData.campaignTags;
 
 	const {
-		control,
-		handleSubmit,
-		register,
-		setValue: setFormValue,
-	} = useForm({
-		mode: "onTouched",
-		defaultValues: stepOneData,
-	});
+		currentStep,
+		fundraiserCategories,
+		stepOneData,
+		actions: { goToStep, setData },
+	} = useFormStore((state) => state);
 
 	const { For: TagList } = useElementList();
 	const { For: CategoryList } = useElementList();
 	const { For: CountryList } = useElementList();
 
-	const handleAddCampaignTag = (
+	const {
+		control,
+		formState,
+		handleSubmit,
+		setValue: setFormValue,
+	} = useForm({
+		mode: "onTouched",
+		resolver: zodResolver(zodValidator("campaignStepOne")!),
+		defaultValues: stepOneData,
+	});
+
+	useWatchFormStatus(formState);
+
+	const onFormSubmit = async (data: StepOneData) => {
+		setData({ step: 1, data });
+
+		const { data: dataInfo, error } = await callApi<{
+			data: { _id: string };
+		}>("/campaign/create/one", data);
+
+		if (dataInfo) {
+			const queryParams = new URLSearchParams();
+			queryParams.set("id", dataInfo.data._id);
+
+			localStorage.setItem("query-id", `?${queryParams.toString()}`);
+
+			goToStep(currentStep + 1);
+		}
+	};
+
+	const handleAddTags = (
 		event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>
 	) => {
 		const isEnterKey = (event as KeyboardEvent).key === "Enter";
 
 		if (event.type === "keydown" && !isEnterKey) return;
 
-		isEnterKey && event.preventDefault();
+		if (event.type === "keydown") {
+			event.preventDefault();
+		}
 
-		if (!tagInputRef.current) return;
-
-		const validTag = validateTagValue(campaignTags, tagInputRef.current.value);
+		const validTag = validateTagValue(
+			stepOneData.tags,
+			tagInputRef.current?.value
+		);
 
 		if (!validTag) return;
 
-		const newTagState = [...campaignTags, validTag];
+		const newTagState = [...stepOneData.tags, validTag];
 
-		setData({ step: 1, data: { campaignTags: newTagState } });
+		setData({ step: 1, data: { tags: newTagState } });
 
-		setFormValue("campaignTags", newTagState);
+		setFormValue("tags", newTagState);
 
-		tagInputRef.current.value = "";
+		tagInputRef.current && (tagInputRef.current.value = "");
 	};
 
-	const handleRemoveCampaignTags = (tag: string) => () => {
-		const newTagState = campaignTags.filter((t) => t !== tag);
+	const handleRemoveTags = (tag: string) => () => {
+		const newTagState = stepOneData.tags.filter((t) => t !== tag);
 
-		setData({ step: 1, data: { campaignTags: newTagState } });
+		setData({ step: 1, data: { tags: newTagState } });
 
-		setFormValue("campaignTags", newTagState);
-	};
-
-	const onFormSubmit = (data: StepOneData) => {
-		setData({ step: 1, data });
-		goToStep(2);
+		setFormValue("tags", newTagState);
 	};
 
 	return (
@@ -78,7 +104,7 @@ function StepOne() {
 			</Heading>
 
 			<form
-				id={STEP_DATA_KEY_LOOKUP[1]}
+				id={STEP_DATA_KEY_LOOKUP[currentStep]}
 				className="mt-3.2"
 				onSubmit={(event) => {
 					event.preventDefault();
@@ -93,7 +119,7 @@ function StepOne() {
 
 						<Controller
 							control={control}
-							name="fundraiserCategory"
+							name="categoryId"
 							render={({ field }) => (
 								<Select.Root
 									name={field.name}
@@ -102,7 +128,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-1.6 rounded-10 bg-white border-unfocused px-0.8 py-2.3 text-1 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
+										className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
 									>
 										<Select.Value placeholder="Select what category best suit your fundraiser" />
 									</Select.Trigger>
@@ -111,8 +137,8 @@ function StepOne() {
 										<CategoryList
 											each={fundraiserCategories}
 											render={(category) => (
-												<Select.Item key={category} value={category}>
-													{category}
+												<Select.Item key={category.id} value={category.id}>
+													{category.name}
 												</Select.Item>
 											)}
 										/>
@@ -120,6 +146,8 @@ function StepOne() {
 								</Select.Root>
 							)}
 						/>
+
+						<ErrorParagraph formState={formState} errorField={"categoryId"} />
 					</li>
 
 					<li>
@@ -138,7 +166,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-1.6 rounded-10 bg-white border-unfocused text-1 px-0.8 py-2.3 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
+										className="mt-1.6 rounded-10 border-unfocused text-1 px-0.8 py-2.3 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
 									>
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
@@ -147,7 +175,10 @@ function StepOne() {
 										<CountryList
 											each={targetCountries}
 											render={(country) => (
-												<Select.Item key={country} value={country}>
+												<Select.Item
+													key={country}
+													value={country.toUpperCase()}
+												>
 													{country}
 												</Select.Item>
 											)}
@@ -156,31 +187,30 @@ function StepOne() {
 								</Select.Root>
 							)}
 						/>
+
+						<ErrorParagraph formState={formState} errorField={"country"} />
 					</li>
 
 					<li>
-						<label
-							htmlFor="campaignTags"
-							className="text-1.4 font-semibold lg:text-2"
-						>
+						<label htmlFor="tags" className="text-1.4 font-semibold lg:text-2">
 							Campaign Tags
 						</label>
 
 						<div className="mt-1.6 flex items-center gap-0.8">
 							<input
-								{...register("campaignTags")}
 								ref={tagInputRef}
+								name="tags"
 								type="text"
 								placeholder="Add hashtags or search keywords to your campaign"
 								className="w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1 focus-visible:outline-formBtn lg:py-2.2 lg:px-1.6 lg:text-1.6"
-								onKeyDown={handleAddCampaignTag}
+								onKeyDown={handleAddTags}
 							/>
 
 							<Button
 								type="button"
 								variant="secondary"
 								className="rounded-6 border-formBtn px-1.2 py-0.8 text-1.2 font-semibold text-formBtn lg:px-2.8 lg:py-1.2 lg:text-1.6"
-								onClick={handleAddCampaignTag}
+								onClick={handleAddTags}
 							>
 								Add
 							</Button>
@@ -188,12 +218,12 @@ function StepOne() {
 
 						<div className="mt-1.6 flex flex-col gap-1.6">
 							<span className="text-1.2 text-formBtn">
-								{campaignTags.length}/5 tags
+								{stepOneData.tags.length}/5 tags
 							</span>
 
 							<ul className="flex flex-wrap gap-0.8 text-1.2 font-medium text-formBtn">
 								<TagList
-									each={campaignTags}
+									each={stepOneData.tags}
 									render={(tag) => (
 										<li
 											key={tag}
@@ -204,7 +234,7 @@ function StepOne() {
 											<button
 												className="transition-transform duration-100 active:scale-[1.12]"
 												type="button"
-												onClick={handleRemoveCampaignTags(tag)}
+												onClick={handleRemoveTags(tag)}
 											>
 												<Image
 													className="aspect-square w-[1rem]"

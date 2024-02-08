@@ -1,37 +1,56 @@
-import { type StepThreeData, useFormStore } from "@/store/useformStore";
-import { STEP_DATA_KEY_LOOKUP } from "@/store/useformStore/constants";
+import { callApi, zodValidator } from "@/lib";
+import {
+	STEP_DATA_KEY_LOOKUP,
+	type StepThreeData,
+	useFormStore,
+} from "@/store/formStore";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import DropZoneInput from "../DropZoneInput";
+import ErrorParagraph from "../ErrorParagraph";
 import Heading from "../Heading";
 import ImagePreview from "../ImagePreview";
 import TiptapEditor from "../TipTapEditor";
+import { useWatchFormStatus } from "./useWatchFormStatus";
 
 function StepThree() {
-	const { setData, stepThreeData } = useFormStore((state) => state);
+	const {
+		stepThreeData,
+		actions: { setData },
+	} = useFormStore((state) => state);
+
+	const router = useRouter();
 
 	const {
 		control,
 		handleSubmit,
+		formState,
 		setValue: setFormValue,
 	} = useForm({
 		mode: "onTouched",
+		resolver: zodResolver(zodValidator("campaignStepThree")!),
 		defaultValues: stepThreeData,
 	});
 
-	const router = useRouter();
+	useWatchFormStatus(formState);
 
-	const onFormSubmit = (data: StepThreeData) => {
+	const onFormSubmit = async (data: StepThreeData) => {
 		setData({ step: 3, data });
 
 		const formData = new FormData();
 
-		formData.set("campaignStoryHtml", data.campaignStoryHtml);
-		formData.set("campaignStoryText", data.campaignStoryText);
+		formData.set("storyHtml", data.storyHtml);
+		formData.set("story", data.story);
 
-		data.campaignImageFiles.forEach((imageFile) => {
-			formData.append("campaignImages", imageFile);
+		data.photos.forEach((imageFile) => {
+			formData.append("photos", imageFile);
 		});
+
+		await callApi(
+			`/campaign/create/three${localStorage.getItem("query-id")}`,
+			formData
+		);
 
 		void router.push("/create-campaign/preview");
 	};
@@ -58,7 +77,7 @@ function StepThree() {
 
 						<Controller
 							control={control}
-							name="campaignImageFiles"
+							name="photos"
 							render={({ field }) => (
 								<>
 									<DropZoneInput
@@ -77,14 +96,14 @@ function StepThree() {
 							Campaign Story
 						</label>
 
-						<p className="my-1.6 text-1.2 lg:text-1.6rem">
+						<p className="my-1.6 text-1.2 lg:text-1.6">
 							A detailed description of the campaign, outlining the need for
 							funding and how the funds will be used.
 						</p>
 
 						<Controller
 							control={control}
-							name="campaignStoryHtml"
+							name="storyHtml"
 							render={({ field }) => (
 								<TiptapEditor
 									placeholder="Write a compelling story that would arouse the interest of donors..."
@@ -94,6 +113,8 @@ function StepThree() {
 								/>
 							)}
 						/>
+
+						<ErrorParagraph formState={formState} errorField="story" />
 					</li>
 				</ol>
 			</form>

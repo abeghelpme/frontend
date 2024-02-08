@@ -1,15 +1,17 @@
-const validateTagValue = (tagsArray: string[], newTag: string) => {
+const validateTagValue = (tagsArray: string[], newTag: string | undefined) => {
+	if (!newTag) return;
+
 	if (newTag.length < 3) {
 		return;
-	} //TODO - show error
+	} // FIXME - show error
 
 	if (tagsArray.includes(newTag)) {
 		return;
-	} //TODO - show error
+	} // FIXME - show error
 
 	if (tagsArray.length >= 5) {
 		return;
-	} //TODO - show error
+	} // FIXME - show error
 
 	return newTag;
 };

@@ -1,11 +1,11 @@
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/helpers/cn";
+import { cn } from "@/lib";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { DayPicker } from "react-day-picker";
+import { buttonVariants } from "../button";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
-const Calendar = (props: CalendarProps) => {
+function Calendar(props: CalendarProps) {
 	const {
 		className,
 		classNames,
@@ -37,7 +37,7 @@ const Calendar = (props: CalendarProps) => {
 				table: "w-full border-collapse space-y-[0.4rem]",
 				head_row: "flex",
 				head_cell:
-					"text-muted-foreground rounded-md w-[3.4rem] font-normal text-[1.2rem]",
+					"text-muted-foreground rounded-md w-[3.4rem] font-normal text-[1.4rem]",
 				row: "flex w-full mt-[0.8rem]",
 				cell: "size-[3.2rem] text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
 				day: cn(
@@ -59,6 +59,6 @@ const Calendar = (props: CalendarProps) => {
 			{...restOfProps}
 		/>
 	);
-};
+}
 
 export default Calendar;

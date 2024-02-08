@@ -16,8 +16,7 @@
 	},
 	"formatter": {
 		"enabled": true,
-		"formatWithErrors": true,
-		"ignore": []
+		"formatWithErrors": true
 	},
 	"javascript": {
 		"formatter": {

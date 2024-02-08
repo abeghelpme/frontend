@@ -1,20 +1,20 @@
-import { cn } from "@/lib/helpers/cn"
-import { TickIcon } from "@/public/assets/icons/campaign"
-import type { FormStore } from "@/store/useformStore"
+import { cn } from "@/lib";
+import { TickIcon } from "@/public/assets/icons/campaign";
+import type { FormStore } from "@/store/formStore";
 
 type StepInfoProps = Pick<StepIndicatorProps, "disabled"> & {
-	title: string
-	description: string
-}
+	title: string;
+	description: string;
+};
 
 type StepIndicatorProps = {
-	step: FormStore["currentStep"]
-	disabled?: boolean
-	isCompleted?: boolean
-}
+	step: FormStore["currentStep"];
+	disabled?: boolean;
+	isCompleted?: boolean;
+};
 
 function StepIndicator(props: StepIndicatorProps) {
-	const { step, isCompleted = false, disabled = false } = props
+	const { step, isCompleted = false, disabled = false } = props;
 
 	const Separator = (
 		<hr
@@ -23,7 +23,7 @@ function StepIndicator(props: StepIndicatorProps) {
 				disabled && "border-unfocused"
 			)}
 		/>
-	)
+	);
 
 	return (
 		<div className={cn(step > 1 && "flex basis-full flex-col items-center")}>
@@ -38,7 +38,7 @@ function StepIndicator(props: StepIndicatorProps) {
 				{isCompleted ? <TickIcon /> : step}
 			</span>
 		</div>
-	)
+	);
 }
 
 function StepInformation({
@@ -52,7 +52,7 @@ function StepInformation({
 
 			<p>{description}</p>
 		</article>
-	)
+	);
 }
 
-export { StepIndicator, StepInformation }
+export { StepIndicator, StepInformation };

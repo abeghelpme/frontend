@@ -1,17 +1,3 @@
-export const fundraiserCategories = [
-	"Health and wellness",
-	"Business",
-	"Family",
-	"Emergencies",
-	"Religion",
-	"Medicals",
-	"Volunteer",
-	"Education",
-	"Events",
-	"Weddings",
-	"Others",
-];
-
 export const targetCountries = [
 	"Nigeria",
 	"Ghana",
@@ -27,4 +13,6 @@ export const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
 
 export const acceptedFilesString = allowedFileTypes.join(", ");
 
-export const DATE_TODAY = new Date();
+export const DATE_TOMORROW = new Date(
+	new Date().setDate(new Date().getDate() + 1)
+);

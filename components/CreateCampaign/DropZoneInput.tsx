@@ -1,6 +1,6 @@
-import { cn } from "@/lib/helpers/cn";
+import { cn } from "@/lib";
 import { useToggle } from "@/lib/hooks/useToggle";
-import { useFormStore } from "@/store/useformStore";
+import { useFormStore } from "@/store/formStore";
 import type { ChangeEvent, DragEvent } from "react";
 import Button from "../ui/button";
 import { toast } from "../ui/use-toast";
@@ -17,7 +17,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 	const [isDragActive, toggleIsDragActive] = useToggle(false);
 
-	const setData = useFormStore((state) => state.setData);
+	const { setData } = useFormStore((state) => state.actions);
 
 	const handleImageUpload = (
 		event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>
@@ -46,7 +46,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 		const newFileState = [...imageFiles, ...validFilesArray];
 
-		setData({ step: 3, data: { campaignImageFiles: newFileState } });
+		setData({ step: 3, data: { photos: newFileState } });
 
 		onChange(newFileState);
 	};

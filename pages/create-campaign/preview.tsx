@@ -1,8 +1,8 @@
-import Heading from "@/components/CreateCampaign/Heading";
-import Button from "@/components/ui/button";
+import { Button } from "@/components";
+import { Heading } from "@/components/CreateCampaign";
 import { useElementList } from "@/lib/hooks";
 import { MoneyIcon } from "@/public/assets/icons/campaign";
-import { useFormStore } from "@/store/useformStore";
+import { useFormStore } from "@/store/formStore";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,7 +15,7 @@ function Preview() {
 	const { For: ImageFileList } = useElementList();
 	const { For: TagList } = useElementList();
 
-	const imageUrls = stepThreeData.campaignImageFiles.map((file) =>
+	const imageUrls = stepThreeData.photos.map((file) =>
 		URL.createObjectURL(file)
 	);
 
@@ -30,12 +30,12 @@ function Preview() {
 			</header>
 
 			<main
-				className="mt-3.2 bg-contours bg-cover px-2.4 pb-6.2 text-successText"
+				className="mt-3.2 bg-contours-old bg-cover px-2.4 pb-6.2 text-successText"
 				data-rem-reset
 			>
 				<section>
 					<Heading as="h2" className="text-2">
-						{stepTwoData.campaignTitle}
+						{stepTwoData.title}
 					</Heading>
 
 					<Image
@@ -48,7 +48,7 @@ function Preview() {
 
 					<article className="mt-0.8 flex flex-col gap-2.8 px-2.4 py-3">
 						<div>
-							<p>₦{stepTwoData.campaignGoal} goal</p>
+							<p>₦{stepTwoData.goal} goal</p>
 							<span className="mt-0.8 block h-[0.6rem] rounded-8 bg-semiWhite" />
 						</div>
 
@@ -85,8 +85,8 @@ function Preview() {
 								height={20}
 							/>
 							<p>
-								{stepTwoData.fundraiserTarget ?? "Anonymous"} is in charge of
-								this fundraiser.
+								{stepTwoData.fundraiser ?? "Anonymous"} is in charge of this
+								fundraiser.
 							</p>
 						</div>
 					</article>
@@ -98,9 +98,7 @@ function Preview() {
 						className="flex gap-1.6 border-b border-b-placeholder p-0.8"
 					>
 						Category:
-						<span className="font-normal">
-							{stepOneData.fundraiserCategory}
-						</span>
+						<span className="font-normal">{stepOneData.categoryId}</span>
 					</Heading>
 
 					<Heading
@@ -113,7 +111,7 @@ function Preview() {
 					<div
 						className="mt-2.4 min-h-7"
 						dangerouslySetInnerHTML={{
-							__html: stepThreeData.campaignStoryHtml,
+							__html: stepThreeData.storyHtml,
 						}}
 					/>
 				</section>
@@ -137,13 +135,12 @@ function Preview() {
 					</div>
 
 					<p>
-						Campaign closes on:{" "}
-						{format(stepTwoData.campaignDeadline, "dd-MM-yyyy")}.
+						Campaign closes on: {format(stepTwoData.deadline, "dd-MM-yyyy")}.
 					</p>
 
 					<ul className="grid grid-cols-2 justify-items-center gap-x-0 gap-y-2.4 font-medium">
 						<TagList
-							each={stepOneData.campaignTags}
+							each={stepOneData.tags}
 							render={(tag) => <li>#{tag}</li>}
 						/>
 					</ul>
@@ -160,7 +157,7 @@ function Preview() {
 
 					<div>
 						<p>
-							{stepTwoData.fundraiserTarget || "Anonymous"} is in charge of this
+							{stepTwoData.fundraiser || "Anonymous"} is in charge of this
 							fundraiser.
 							<span className="mt-8">{stepOneData.country}</span>
 						</p>

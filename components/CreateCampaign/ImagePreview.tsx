@@ -1,46 +1,48 @@
-import { cn } from "@/lib/helpers/cn"
-import { useElementList } from "@/lib/hooks"
-import { useFormStore } from "@/store/useformStore"
-import { Trash2Icon } from "lucide-react"
-import Image from "next/image"
+import { cn } from "@/lib/helpers/cn";
+import { useElementList } from "@/lib/hooks";
+import { useFormStore } from "@/store/formStore";
+import { Trash2Icon } from "lucide-react";
+import Image from "next/image";
 
 type ImagePreviewProps = {
-	value: File[]
-	onChange: (files: File[]) => void
-}
+	value: File[];
+	onChange: (files: File[]) => void;
+};
 
 function ImagePreview(props: ImagePreviewProps) {
-	const { value: imageFiles, onChange } = props
-	const setData = useFormStore((state) => state.setData)
-	const { For: ImagePreviewList } = useElementList()
+	const { value: imageFiles, onChange } = props;
 
-	const imageUrls = imageFiles.map((file) => URL.createObjectURL(file))
+	const { setData } = useFormStore((state) => state.actions);
+
+	const { For: ImagePreviewList } = useElementList();
+
+	const imageUrls = imageFiles.map((file) => URL.createObjectURL(file));
 
 	const handleRevokeImageUrl = (index: number) => () => {
-		URL.revokeObjectURL(imageUrls[index])
-	}
+		URL.revokeObjectURL(imageUrls[index]);
+	};
 
 	const handleRemoveImage = (imageFile: File) => () => {
 		const updatedFileState = imageFiles.filter(
 			(file) => file.name !== imageFile.name
-		)
+		);
 
-		setData({ step: 3, data: { campaignImageFiles: updatedFileState } })
+		setData({ step: 3, data: { photos: updatedFileState } });
 
-		onChange(updatedFileState)
-	}
+		onChange(updatedFileState);
+	};
 
 	return (
 		<ul
 			className={cn(
-				"custom-scrollbar relative mt-1.3 max-h-[14rem] divide-y divide-gray-600 overflow-y-scroll rounded-6 border border-gray-600",
+				"custom-scrollbar relative mt-1.3 max-h-[14rem] divide-y divide-gray-600 overscroll-y-contain overflow-y-auto rounded-6 border border-gray-600",
 				imageFiles.length === 0 && "hidden"
 			)}
 		>
 			<ImagePreviewList
 				each={imageFiles}
 				render={(file, index) => {
-					const isCoverImage = index === 0
+					const isCoverImage = index === 0;
 
 					return (
 						<li
@@ -72,11 +74,11 @@ function ImagePreview(props: ImagePreviewProps) {
 								/>
 							</button>
 						</li>
-					)
+					);
 				}}
 			/>
 		</ul>
-	)
+	);
 }
 
-export default ImagePreview
+export default ImagePreview;

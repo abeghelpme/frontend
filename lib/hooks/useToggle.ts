@@ -2,19 +2,19 @@ import { useCallback, useState } from "react";
 
 type InitialStateType = boolean | (() => boolean);
 
-const useToggle = (initialValue: InitialStateType = false) => {
-  const [value, setValue] = useState(initialValue);
+const useToggle = (initialValue?: InitialStateType) => {
+	const [value, setValue] = useState(initialValue ?? false);
 
-  const toggle = useCallback((value?: boolean) => {
-    if (typeof value === "boolean") {
-      setValue(value);
-      return;
-    }
+	const toggle = useCallback((value?: boolean) => {
+		if (value) {
+			setValue(value);
+			return;
+		}
 
-    setValue((prev) => !prev);
-  }, []);
+		setValue((prev) => !prev);
+	}, []);
 
-  return [value, toggle] as const;
+	return [value, toggle] as const;
 };
 
 export { useToggle };

@@ -18,8 +18,8 @@ interface ApiError {
 	headers?: Record<string, unknown>;
 }
 export const callApi = async <T>(
-	endpoint: string,
-	data?: Record<string, unknown>
+	endpoint: `/${string}`,
+	data?: Record<string, unknown> | FormData
 ): Promise<{ data?: T; error?: ApiError }> => {
 	const source = axios.CancelToken.source();
 	const method = data ? "POST" : "GET";

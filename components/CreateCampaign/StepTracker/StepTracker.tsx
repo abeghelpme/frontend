@@ -1,8 +1,8 @@
-import { useFormStore } from "@/store/useformStore/formStore"
-import { StepIndicator, StepInformation } from "./StepDetails"
+import { useFormStore } from "@/store/formStore";
+import { StepIndicator, StepInformation } from "./StepDetails";
 
 function StepTracker() {
-	const currentStep = useFormStore((state) => state.currentStep)
+	const currentStep = useFormStore((state) => state.currentStep);
 
 	return (
 		<>
@@ -37,7 +37,7 @@ function StepTracker() {
 				/>
 			</div>
 		</>
-	)
+	);
 }
 
-export default StepTracker
+export default StepTracker;

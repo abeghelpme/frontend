@@ -1,4 +1,4 @@
-import type { StepThreeData } from "@/store/useformStore";
+import type { StepThreeData } from "@/store/formStore";
 import { EditorContent, useEditor } from "@tiptap/react";
 import DOMPurify from "isomorphic-dompurify";
 import type { UseFormSetValue } from "react-hook-form";
@@ -29,9 +29,9 @@ function TiptapEditor(props: EditorProps) {
 
 		onUpdate: ({ editor }) => {
 			const purifiedContent = DOMPurify.sanitize(editor.getHTML());
-
 			onChange(purifiedContent);
-			setFormValue("campaignStoryText", editor.getText());
+
+			setFormValue("story", editor.getText());
 		},
 	});
 
@@ -40,7 +40,7 @@ function TiptapEditor(props: EditorProps) {
 	}
 
 	return (
-		<div className="flex min-h-[17.8rem] bg-slate-50 flex-col justify-between gap-0.8 rounded-6 border border-unfocused p-1.6 focus-within:outline-2 focus-within:outline-formBtn">
+		<div className="flex min-h-[17.8rem] flex-col justify-between gap-0.8 rounded-6 border border-unfocused p-1.6 focus-within:outline-2 focus-within:outline-formBtn">
 			<EditorContent
 				editor={editor}
 				className="text-1.2 lg:text-1.6 [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:absolute [&_p.is-editor-empty:first-child]:before:left-0 [&_p.is-editor-empty:first-child]:before:text-placeholder [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"

@@ -1,16 +1,14 @@
-import type { Editor } from "@tiptap/react"
+import { Toggle } from "@/components";
+import type { Editor } from "@tiptap/react";
 import {
 	BoldIcon,
 	ItalicIcon,
 	ListIcon,
 	ListOrderedIcon,
 	Trash2Icon,
-} from "lucide-react"
-import Toggle from "../../ui/Toggle"
+} from "lucide-react";
 
-type ToolBarProps = {
-	editor: Editor
-}
+type ToolBarProps = { editor: Editor };
 
 function TipTapToolBar({ editor }: ToolBarProps) {
 	return (
@@ -19,28 +17,28 @@ function TipTapToolBar({ editor }: ToolBarProps) {
 				pressed={editor.isActive("bold")}
 				onPressedChange={() => editor.chain().focus().toggleBold().run()}
 			>
-				<BoldIcon size={20} />
+				<BoldIcon className="size-2 lg:size-2.4" />
 			</Toggle>
 
 			<Toggle
 				pressed={editor.isActive("italic")}
 				onPressedChange={() => editor.chain().focus().toggleItalic().run()}
 			>
-				<ItalicIcon size={20} />
+				<ItalicIcon className="size-2 lg:size-2.4" />
 			</Toggle>
 
 			<Toggle
 				pressed={editor.isActive("bulletList")}
 				onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
 			>
-				<ListIcon size={20} />
+				<ListIcon className="size-2 lg:size-2.4" />
 			</Toggle>
 
 			<Toggle
 				pressed={editor.isActive("orderedList")}
 				onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
 			>
-				<ListOrderedIcon size={20} />
+				<ListOrderedIcon className="size-2 lg:size-2.4" />
 			</Toggle>
 
 			<button
@@ -48,10 +46,10 @@ function TipTapToolBar({ editor }: ToolBarProps) {
 				className="flex  active:scale-110"
 				onClick={() => editor.commands.deleteSelection()}
 			>
-				<Trash2Icon size={20} />
+				<Trash2Icon className="size-2 lg:size-2.4" />
 			</button>
 		</div>
-	)
+	);
 }
 
-export default TipTapToolBar
+export default TipTapToolBar;

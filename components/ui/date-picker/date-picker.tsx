@@ -1,22 +1,28 @@
-import { DATE_TODAY } from "@/components/CreateCampaign/campaign-utils/constants";
-import { cn } from "@/lib/helpers/cn";
+import { DATE_TOMORROW } from "@/components/CreateCampaign/campaign-utils/constants";
+import { cn, parseJSON } from "@/lib";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useMemo } from "react";
 import Button, { buttonVariants } from "../button";
-import Calendar from "./Calender";
-import { Popover } from "./Popover";
+import Calendar from "./calender";
+import { Popover } from "./popover";
 
 type DatePickerProps = {
 	className?: string;
 	placeholder?: string;
-	dateValue?: Date;
-	onChange?: (dateValue?: Date) => void;
+	dateValueString: string;
+	onChange: (dateValueString?: string) => void;
 };
 
-const DatePicker = (props: DatePickerProps) => {
-	const { placeholder, dateValue, className, onChange } = props;
+function DatePicker(props: DatePickerProps) {
+	const { placeholder, dateValueString = "", className, onChange } = props;
 
-	const isValidDeadline = dateValue !== undefined && dateValue !== DATE_TODAY;
+	const dateValue = useMemo(
+		() => (dateValueString !== "" ? new Date(dateValueString) : DATE_TOMORROW),
+		[dateValueString]
+	);
+
+	const isValidDeadline = dateValue !== DATE_TOMORROW;
 
 	return (
 		<Popover.Root>
@@ -25,8 +31,7 @@ const DatePicker = (props: DatePickerProps) => {
 					variant="secondary"
 					className={cn(
 						buttonVariants({ variant: "outline" }),
-						dateValue === undefined && "text-muted-foreground",
-
+						dateValueString === "" && "text-placeholder",
 						className
 					)}
 				>
@@ -43,17 +48,17 @@ const DatePicker = (props: DatePickerProps) => {
 					className="rounded-10 border border-unfocused p-1.2"
 					classNames={{
 						cell: "hover:scale-[1.03]",
-						button: "font-medium text-[1.25rem]",
+						button: "font-medium text-[1.26rem]",
 					}}
 					mode="single"
 					selected={dateValue}
-					onSelect={onChange}
+					onSelect={(date) => onChange(date?.toISOString().split("T")[0])}
 					initialFocus={true}
-					disabled={{ before: DATE_TODAY }}
+					disabled={{ before: DATE_TOMORROW }}
 				/>
 			</Popover.Content>
 		</Popover.Root>
 	);
-};
+}
 
 export default DatePicker;

@@ -1,9 +1,9 @@
 const parseJSON = <TResult>(value: string | undefined | null) => {
-  if (value == null) {
-    return null;
-  }
+	if (typeof value !== "string" || value === "") {
+		return null;
+	}
 
-  return JSON.parse(value) as TResult;
+	return JSON.parse(value) as TResult;
 };
 
 export { parseJSON };
