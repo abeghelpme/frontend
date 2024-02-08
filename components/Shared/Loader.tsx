@@ -1,11 +1,11 @@
-import logo from '@/public/assets/images/shared/logo.svg'
-import Image from 'next/image'
+import logo from "@/public/assets/images/shared/logo.svg";
+import Image from "next/image";
 
 type CompProp = {
-	message?: string | JSX.Element
-}
+	message?: string | JSX.Element;
+};
 
-const Loader = ({message}: CompProp) => {
+const Loader = ({ message }: CompProp) => {
 	return (
 		<div className="flex h-full w-full flex-col items-center justify-center gap-3 overflow-hidden font-medium text-abeg-teal-10">
 			<div className="flex items-center justify-center gap-2">
@@ -21,7 +21,7 @@ const Loader = ({message}: CompProp) => {
 			</div>
 			<p className="text-sm">{message}</p>
 		</div>
-	)
-}
+	);
+};
 
-export default Loader
+export default Loader;

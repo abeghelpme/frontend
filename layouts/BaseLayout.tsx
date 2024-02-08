@@ -1,7 +1,7 @@
-import {Footer, NavBar} from '@/components/index'
-import type {BaseLayoutProps} from '@/interfaces'
+import { Footer, NavBar } from "@/components/shared";
+import type { BaseLayoutProps } from "@/interfaces";
 
-export const BaseLayout = ({children}: BaseLayoutProps) => {
+export const BaseLayout = ({ children }: BaseLayoutProps) => {
 	return (
 		<>
 			<NavBar />
@@ -17,5 +17,5 @@ export const BaseLayout = ({children}: BaseLayoutProps) => {
 			</main>
 			<Footer />
 		</>
-	)
-}
+	);
+};

@@ -1,6 +1,6 @@
-import logo from '@/public/assets/images/shared/logo.svg'
-import Image from 'next/image'
-import Link from 'next/link'
+import logo from "@/public/assets/images/shared/logo.svg";
+import Image from "next/image";
+import Link from "next/link";
 
 const LogoBanner = () => {
 	return (
@@ -15,7 +15,7 @@ const LogoBanner = () => {
 				AbegHelp.me
 			</span>
 		</Link>
-	)
-}
+	);
+};
 
-export default LogoBanner
+export default LogoBanner;

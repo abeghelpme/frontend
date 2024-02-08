@@ -1,12 +1,6 @@
-import {
-	Button,
-	CloudFlareTurnStile,
-	CustomDialog,
-	Input,
-	Loader,
-} from "@/components/index";
-import { useToast } from "@/components/ui/use-toast";
-import type { ApiResponse, User } from "@/interfaces/apiResponses";
+import { CloudFlareTurnStile, CustomDialog } from "@/components/shared";
+import { Button, Input, useToast } from "@/components/ui";
+import type { ApiResponse, User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
 import { useSession } from "@/store";
@@ -28,7 +22,7 @@ const Login = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [success] = useState(false);
 	const [skip2FA, setSkip2FA] = useState("false");
-	const { user } = useSession((state) => state);
+	const { user, updateUser } = useSession((state) => state);
 
 	const handleBotStatus = (status: "success" | "error" | "idle") =>
 		setBotStatus(status);
@@ -75,6 +69,14 @@ const Login = () => {
 		);
 
 		if (error) {
+			const email = (error?.error as string)?.split(":")?.[1];
+
+			if (email) {
+				void router.push({
+					pathname: "/signup/verification",
+					query: { signup: true, email: data.email.toLowerCase() },
+				});
+			}
 			return toast({
 				title: error.status as string,
 				description: error.message,
@@ -87,35 +89,25 @@ const Login = () => {
 				duration: 3000,
 			});
 
+			updateUser(responseData?.data as User);
+
 			reset();
 			if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
 				setOpenModal(true);
 				return;
 			} else {
 				setTimeout(() => {
-					void router.push({
-						pathname: "/signin/authenticate",
-						query:
-							responseData?.data?.twoFA?.type === "EMAIL"
-								? {
-										verificationChoice: responseData?.data?.twoFA?.type,
-										email: data.email.toLowerCase(),
-								  }
-								: {
-										verificationChoice: responseData?.data?.twoFA?.type,
-								  },
-					});
-				}, 2500);
+					void router.push("/signin/authenticate");
+				}, 1000);
 			}
 			return;
 		}
 	};
 
-	if (user !== null) {
-		// // setTimeout(() => {}, 1000);
-		void router.back();
-		return <Loader message={`You are already signed in. Redirecting back`} />;
-	}
+	// if (user !== null) {
+	// 	void router.push("/");
+	// 	return <Loader message={`You are already signed in. Redirecting to home`} />;
+	// }
 	return (
 		<AuthLayout
 			heading="Welcome back!"
@@ -246,7 +238,7 @@ const Login = () => {
 	);
 };
 
-export default Login
+export default Login;
 
 Login.getLayout = AuthPagesLayout;
 Login.protect = true;

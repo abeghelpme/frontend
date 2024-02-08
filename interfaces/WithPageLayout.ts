@@ -1,6 +1,6 @@
-import type {NextPage} from 'next'
-import type {ReactNode} from 'react'
+import type { NextPage } from "next";
+import type { ReactNode } from "react";
 
 export type WithPageLayout<Q = object> = NextPage<Q> & {
-	PageLayout?: React.ComponentType<{children: ReactNode}>
-}
+	PageLayout?: React.ComponentType<{ children: ReactNode }>;
+};

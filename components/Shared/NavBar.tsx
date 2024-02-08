@@ -3,6 +3,6 @@ const NavBar = () => {
 		<header>
 			<div>Navbar</div>
 		</header>
-	)
-}
-export default NavBar
+	);
+};
+export default NavBar;
