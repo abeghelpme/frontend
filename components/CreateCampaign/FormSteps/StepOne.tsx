@@ -1,8 +1,7 @@
-import Button from "@/components/ui/button";
-import { Select } from "@/components/ui/select";
+import { Button, Select } from "@/components/ui";
 import { callApi, zodValidator } from "@/lib";
 import { useElementList } from "@/lib/hooks";
-import crossIcon from "@/public/assets/icons/campaign/cross-icon.svg";
+import { CrossIcon } from "@/public/assets/icons/campaign";
 import {
 	STEP_DATA_KEY_LOOKUP,
 	type StepOneData,
@@ -10,7 +9,6 @@ import {
 } from "@/store/formStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
-import Image from "next/image";
 import { type KeyboardEvent, type MouseEvent, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ErrorParagraph from "../ErrorParagraph";
@@ -237,11 +235,7 @@ function StepOne() {
 												type="button"
 												onClick={handleRemoveTags(tag)}
 											>
-												<Image
-													className="aspect-square w-[1rem]"
-													src={crossIcon as string}
-													alt="remove-tag"
-												/>
+												<CrossIcon className="size-1" />
 											</button>
 										</li>
 									)}

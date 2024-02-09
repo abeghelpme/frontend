@@ -23,7 +23,7 @@ const Spinner = () => {
 			<span className="sr-only">Loading...</span>
 			<span className="">Loading...</span>
 		</div>
-	)
-}
+	);
+};
 
-export default Spinner
+export default Spinner;

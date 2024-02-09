@@ -1,100 +1,96 @@
-import {
-	Button,
-	CustomDialog,
-	OtpInputDisplay,
-	RecoveryCode,
-} from '@/components/index'
-import {useToast} from '@/components/ui/use-toast'
-import type {ApiResponse, User} from '@/interfaces'
-import {callApi} from '@/lib'
+import { RecoveryCode } from "@/components/2fa";
+import { CustomDialog, OtpInputDisplay } from "@/components/shared";
+import { Button, useToast } from "@/components/ui";
+import type { ApiResponse, User } from "@/interfaces";
+import { callApi } from "@/lib";
 
-import authBgContours from '@/public/assets/images/shared/bg-contours.png'
-import {useSession} from '@/store'
+import authBgContours from "@/public/assets/images/shared/bg-contours.png";
+import { useSession } from "@/store";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import {useRouter} from 'next/router'
-import {useRef, useState} from 'react'
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useRef, useState } from "react";
 
 const TwoFa = () => {
-	const router = useRouter()
-	const {toast} = useToast()
-	const [selectedOption, setSelectedOption] = useState('app')
-	const [step, setStep] = useState(1)
-	const [openModal, setOpenModal] = useState(false)
-	const [loading, setLoading] = useState(false)
-	const [otp, setOtp] = useState('')
-	const recoveryCodeRef = useRef<string | null>(null)
-	const {user} = useSession(state => state)
-	const castedUser = user as User
+	const router = useRouter();
+	const { toast } = useToast();
+	const [selectedOption, setSelectedOption] = useState("app");
+	const [step, setStep] = useState(1);
+	const [openModal, setOpenModal] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [otp, setOtp] = useState("");
+	const recoveryCodeRef = useRef<string | null>(null);
+	const { user } = useSession((state) => state);
+	const castedUser = user as User;
 
 	const handleStep = async (e: React.FormEvent<HTMLButtonElement>) => {
-		if (selectedOption === 'app') {
-			void router.push('/2fa/app')
+		if (selectedOption === "app") {
+			void router.push("/2fa/app");
 		} else {
-			setLoading(true)
-			e.preventDefault()
-			const {data, error} = await callApi<ApiResponse>('/auth/2fa/setup', {
-				twoFactorType: 'EMAIL',
-			})
+			setLoading(true);
+			e.preventDefault();
+			const { data, error } = await callApi<ApiResponse>("/auth/2fa/setup", {
+				twoFactorType: "EMAIL",
+			});
 
 			if (data) {
 				toast({
-					title: 'Success',
+					title: "Success",
 					description: data.message,
 					duration: 3000,
-				})
-				setOpenModal(true)
-				setLoading(false)
+				});
+				setOpenModal(true);
+				setLoading(false);
 			}
 			if (error) {
-				setLoading(false)
+				setLoading(false);
 				toast({
-					title: 'Error',
+					title: "Error",
 					description: error.message,
 					duration: 3000,
-				})
+				});
 			}
 		}
-	}
+	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
-		e.preventDefault()
-		setLoading(true)
+		e.preventDefault();
+		setLoading(true);
 		if (otp.length < 6) {
-			setLoading(false)
+			setLoading(false);
 			return toast({
-				title: 'Error',
-				description: 'Please enter a valid code',
+				title: "Error",
+				description: "Please enter a valid code",
 				duration: 1500,
-			})
+			});
 		}
-		const {data, error} = await callApi<ApiResponse>('/auth/2fa/complete', {
+		const { data, error } = await callApi<ApiResponse>("/auth/2fa/complete", {
 			token: String(otp),
-			twoFactorType: 'EMAIL',
-		})
+			twoFactorType: "EMAIL",
+		});
 
 		if (error) {
-			setLoading(false)
+			setLoading(false);
 			return toast({
 				title: error.status as string,
 				description: error.message,
 				duration: 3000,
-			})
+			});
 		} else {
-			setLoading(false)
+			setLoading(false);
 			toast({
-				title: 'Success',
-				description: (data as {message: string}).message,
+				title: "Success",
+				description: (data as { message: string }).message,
 				duration: 1500,
-			})
-			recoveryCodeRef.current = data?.data?.recoveryCode as string
+			});
+			recoveryCodeRef.current = data?.data?.recoveryCode as string;
 
 			setTimeout(() => {
-				setStep(2)
-			}, 1000)
+				setStep(2);
+			}, 1000);
 		}
-	}
+	};
 
 	return (
 		<div className="relative flex min-h-full flex-col justify-between">
@@ -132,25 +128,25 @@ const TwoFa = () => {
 									<h3 className="font-semibold">Authentication app</h3>
 									<div className="flex items-center gap-8">
 										<p className="balancedText md:text-lg">
-											We recommend downloading the{' '}
+											We recommend downloading the{" "}
 											<Link
 												target="_blank"
 												href={
-													'https://support.google.com/accounts/answer/1066447?hl=en&co=GENIE.Platform%3DiOS&oco=0'
+													"https://support.google.com/accounts/answer/1066447?hl=en&co=GENIE.Platform%3DiOS&oco=0"
 												}
 												className="font-medium text-abeg-green-50"
 											>
 												Google Authenticator
-											</Link>{' '}
+											</Link>{" "}
 											app if you don&apos;t have one. It will generate a code
 											that you&apos;ll enter when you log in.
 										</p>
 										<input
 											type="radio"
-											value={'app'}
+											value={"app"}
 											name="2fa-app"
-											checked={selectedOption === 'app'}
-											onChange={() => setSelectedOption('app')}
+											checked={selectedOption === "app"}
+											onChange={() => setSelectedOption("app")}
 											id="app"
 											className="ml-auto accent-abeg-teal"
 										/>
@@ -169,10 +165,10 @@ const TwoFa = () => {
 										</p>
 										<input
 											type="radio"
-											value={'email'}
+											value={"email"}
 											name="2fa-email"
-											checked={selectedOption === 'email'}
-											onChange={() => setSelectedOption('email')}
+											checked={selectedOption === "email"}
+											onChange={() => setSelectedOption("email")}
 											id="email"
 											className="ml-auto accent-abeg-teal"
 										/>
@@ -186,13 +182,13 @@ const TwoFa = () => {
 							<CustomDialog
 								openDialog={openModal}
 								setOpen={() => {
-									setOpenModal(false)
-									setOtp('')
+									setOpenModal(false);
+									setOtp("");
 								}}
 								trigger={
 									<Button
 										className="w-fit bg-abeg-button-10 px-6 py-3 font-medium"
-										onClick={e => void handleStep(e)}
+										onClick={(e) => void handleStep(e)}
 										loading={loading}
 									>
 										NEXT
@@ -214,7 +210,7 @@ const TwoFa = () => {
 												<Button
 													type="submit"
 													disabled={loading}
-													onClick={e => void handleStep(e)}
+													onClick={(e) => void handleStep(e)}
 													className="p-0 text-base font-medium text-abeg-teal disabled:text-neutral-50"
 												>
 													resend it
@@ -222,11 +218,11 @@ const TwoFa = () => {
 											</p>
 											<Button
 												className={`${
-													otp === '' && 'cursor-not-allowed'
+													otp === "" && "cursor-not-allowed"
 												} block w-full rounded-md bg-formBtn py-4 font-semibold text-white`}
 												fullWidth
 												type="submit"
-												onClick={e => otp !== '' && void handleSubmit(e)}
+												onClick={(e) => otp !== "" && void handleSubmit(e)}
 												loading={loading}
 											>
 												Complete
@@ -242,7 +238,8 @@ const TwoFa = () => {
 				<RecoveryCode recoveryCode={recoveryCodeRef.current} />
 			)}
 		</div>
-	)
-}
+	);
+};
 
-export default TwoFa
+export default TwoFa;
+TwoFa.protect = true;

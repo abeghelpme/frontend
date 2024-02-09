@@ -1,11 +1,11 @@
-import {Success} from '@/components/index'
-import {AuthLayout} from '@/layouts'
-import Link from 'next/link'
+import { Success } from "@/components/shared";
+import { AuthLayout } from "@/layouts";
+import Link from "next/link";
 
 const VerifyEmailSuccessPage = () => {
 	return (
 		<AuthLayout withHeader={false} hasSuccess contentClass="" formType="signup">
-			{' '}
+			{" "}
 			<Success textContent="Your email has been verified">
 				<Link
 					href="/signin"
@@ -15,9 +15,9 @@ const VerifyEmailSuccessPage = () => {
 				</Link>
 			</Success>
 		</AuthLayout>
-	)
-}
+	);
+};
 
-export default VerifyEmailSuccessPage
+export default VerifyEmailSuccessPage;
 
-VerifyEmailSuccessPage.protect = true
+VerifyEmailSuccessPage.protect = true;

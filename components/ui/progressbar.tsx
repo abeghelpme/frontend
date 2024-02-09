@@ -1,15 +1,15 @@
-import {cn} from '@/lib'
+import { cn } from "@/lib";
 
 interface ProgressBarProps {
-	value: number
-	className?: string
+	value: number;
+	className?: string;
 }
 
-const ProgressBar = ({value, className, ...props}: ProgressBarProps) => {
+const ProgressBar = ({ value, className, ...props }: ProgressBarProps) => {
 	return (
 		<progress
 			className={cn(
-				'w-full appearance-none border-none progress-unfilled:h-2 progress-unfilled:rounded-[4px] progress-unfilled:bg-abeg-neutral-80 progress-filled:rounded-[4px] progress-filled:bg-abeg-green',
+				"w-full appearance-none border-none progress-unfilled:h-2 progress-unfilled:rounded-[4px] progress-unfilled:bg-abeg-neutral-80 progress-filled:rounded-[4px] progress-filled:bg-abeg-green",
 				className
 			)}
 			id="target"
@@ -17,9 +17,9 @@ const ProgressBar = ({value, className, ...props}: ProgressBarProps) => {
 			max="100"
 			{...props}
 		>
-			{value + '%'}
+			{value + "%"}
 		</progress>
-	)
-}
+	);
+};
 
-export default ProgressBar
+export default ProgressBar;

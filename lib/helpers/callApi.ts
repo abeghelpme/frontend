@@ -15,6 +15,7 @@ const api: AxiosInstance = axios.create({
 interface ApiError {
 	message: string;
 	status: string | number;
+	error?: unknown;
 	headers?: Record<string, unknown>;
 }
 export const callApi = async <T>(

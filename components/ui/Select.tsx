@@ -189,6 +189,4 @@ const Select = {
 	Value: SelectPrimitive.Value,
 };
 
-export { Select };
-
-export { SelectPrimitive };
+export { Select, SelectPrimitive };

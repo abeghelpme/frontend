@@ -1,5 +1,5 @@
-import Image from 'next/image'
-import React from 'react'
+import Image from "next/image";
+import React from "react";
 
 const ServerError: React.FC = () => {
 	return (
@@ -18,7 +18,7 @@ const ServerError: React.FC = () => {
 				Server error, please try again after some time
 			</p>
 		</main>
-	)
-}
+	);
+};
 
-export default ServerError
+export default ServerError;
