@@ -1,4 +1,4 @@
-import { LogoBanner } from "@/components/shared";
+import { LogoBanner } from "@/components/Shared";
 import type { AuthLayoutProps } from "@/interfaces";
 import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
 import Image from "next/image";
