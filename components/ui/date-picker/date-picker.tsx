@@ -1,5 +1,7 @@
 import { DATE_TOMORROW } from "@/components/CreateCampaign/campaign-utils/constants";
-import { cn, parseJSON } from "@/lib";
+import { cn } from "@/lib";
+import { getDateFromString } from "@/lib/helpers/getDateFromString";
+import { useFormStore } from "@/store/formStore";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useMemo } from "react";
@@ -17,10 +19,7 @@ type DatePickerProps = {
 function DatePicker(props: DatePickerProps) {
 	const { placeholder, dateValueString = "", className, onChange } = props;
 
-	const dateValue = useMemo(
-		() => (dateValueString !== "" ? new Date(dateValueString) : DATE_TOMORROW),
-		[dateValueString]
-	);
+	const dateValue = getDateFromString(dateValueString);
 
 	const isValidDeadline = dateValue !== DATE_TOMORROW;
 

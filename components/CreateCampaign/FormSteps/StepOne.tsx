@@ -1,4 +1,5 @@
-import { Button, Select } from "@/components";
+import Button from "@/components/ui/button";
+import { Select } from "@/components/ui/select";
 import { callApi, zodValidator } from "@/lib";
 import { useElementList } from "@/lib/hooks";
 import crossIcon from "@/public/assets/icons/campaign/cross-icon.svg";

@@ -1,3 +1,4 @@
+import { DATE_TOMORROW } from "@/components/CreateCampaign/campaign-utils/constants";
 import type { FormStore } from "./formStore.types";
 
 export const initialFormState = {

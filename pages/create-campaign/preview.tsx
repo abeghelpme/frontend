@@ -1,5 +1,6 @@
-import { Button } from "@/components";
 import { Heading } from "@/components/CreateCampaign";
+import Button from "@/components/ui/button";
+import { getDateFromString } from "@/lib/helpers/getDateFromString";
 import { useElementList } from "@/lib/hooks";
 import { MoneyIcon } from "@/public/assets/icons/campaign";
 import { useFormStore } from "@/store/formStore";
@@ -8,16 +9,18 @@ import Image from "next/image";
 import Link from "next/link";
 
 function Preview() {
+	const { For: ImageFileList } = useElementList();
+	const { For: TagList } = useElementList();
+
 	const { stepOneData, stepTwoData, stepThreeData } = useFormStore(
 		(state) => state
 	);
 
-	const { For: ImageFileList } = useElementList();
-	const { For: TagList } = useElementList();
-
 	const imageUrls = stepThreeData.photos.map((file) =>
 		URL.createObjectURL(file)
 	);
+
+	const campaignDeadline = getDateFromString(stepTwoData.deadline);
 
 	return (
 		<div className="flex min-h-screen flex-col justify-between">
@@ -77,15 +80,16 @@ function Preview() {
 						</div>
 
 						<div className="flex gap-0.8 text-1.2">
-							<Image
+							<MoneyIcon className={"rounded-full"} />
+							{/* <Image
 								src={"/"}
 								className="rounded-full"
 								alt="person-avatar"
 								width={20}
 								height={20}
-							/>
+							/> */}
 							<p>
-								{stepTwoData.fundraiser ?? "Anonymous"} is in charge of this
+								{stepTwoData.fundraiser || "Anonymous"} is in charge of this
 								fundraiser.
 							</p>
 						</div>
@@ -134,9 +138,7 @@ function Preview() {
 						/>
 					</div>
 
-					<p>
-						Campaign closes on: {format(stepTwoData.deadline, "dd-MM-yyyy")}.
-					</p>
+					<p>Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.</p>
 
 					<ul className="grid grid-cols-2 justify-items-center gap-x-0 gap-y-2.4 font-medium">
 						<TagList
@@ -147,13 +149,8 @@ function Preview() {
 				</section>
 
 				<section className="mt-3.2 flex items-start gap-1.6">
-					<Image
-						src={"/"}
-						className="rounded-full"
-						alt="person-avatar"
-						width={48}
-						height={48}
-					/>
+					{/* TODO - Replace with user avatar */}
+					<MoneyIcon className="size-4.8 rounded-6" />
 
 					<div>
 						<p>
