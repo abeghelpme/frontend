@@ -1,5 +1,5 @@
 import { RecoveryCode } from "@/components/2fa";
-import { CustomDialog, OtpInputDisplay } from "@/components/shared";
+import { CustomDialog, OtpInputDisplay } from "@/components/Shared";
 import { Button, useToast } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { callApi } from "@/lib";
