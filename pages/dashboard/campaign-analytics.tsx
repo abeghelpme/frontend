@@ -1,11 +1,11 @@
-import DashBoardLayout from "@/layouts/dashboardLayout";
+import { DashBoardLayout } from "@/layouts/DashBoardPageLayout";
 
 export default function campaignAnalytics() {
-  return (
-    <DashBoardLayout>
-      <div className="flex min-h-screen items-center justify-center text-3xl">
-        <p className="flex justify-center">Campaign Analytics Coming Soon...</p>
-      </div>
-    </DashBoardLayout>
-  );
+	return (
+		<DashBoardLayout>
+			<div className="flex min-h-screen items-center justify-center text-3xl">
+				<p className="flex justify-center">Campaign Analytics Coming Soon...</p>
+			</div>
+		</DashBoardLayout>
+	);
 }
