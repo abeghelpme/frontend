@@ -6,9 +6,6 @@ import {
 	Marker,
 } from "react-simple-maps";
 
-const geoUrl =
-	"https://raw.githubusercontent.com/deldersveld/topojson/master/continents/south-america.json";
-
 type Markers = {
 	markerOffset: number;
 	name: string;
@@ -32,7 +29,7 @@ const WorldMap = () => {
 				projectionConfig={{ scale: 250 }}
 				className="aspect-video w-[100%] md:w-[70%] lg:w-[50%]"
 			>
-				<Geographies geography="/assets/features.json">
+				<Geographies geography="/assets/worldmap.json">
 					{({ geographies }) =>
 						geographies.map((geo) => (
 							<Geography
