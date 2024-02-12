@@ -1,9 +1,9 @@
-export type { ApiResponse, User } from "./ApiResponses";
+export type { ApiResponse, User } from "./apiResponses";
 export type {
 	ForgotPasswordProps,
 	LoginProps,
 	ResetPasswordProps,
 	SignUpProps,
-} from "./FormInputs";
+} from "./formInputs";
 export type { AuthLayoutProps, BaseLayoutProps } from "./Layouts";
 export type { WithPageLayout } from "./WithPageLayout";
