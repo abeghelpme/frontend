@@ -8,6 +8,8 @@ export const initialFormState = {
 		{ id: "65b0576bb36c6a968d892a52", name: "Sample Category" },
 	],
 
+	campaignId: "",
+
 	formStatus: {
 		isValid: true,
 		isSubmitting: false,

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/helpers/cn";
+import { cn } from "@/lib";
 import Button from "../ui/button";
 
 type FormActionButtonProps = {

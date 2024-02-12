@@ -52,11 +52,6 @@ function StepOne() {
 		}>("/campaign/create/one", data);
 
 		if (dataInfo) {
-			const queryParams = new URLSearchParams();
-			queryParams.set("id", dataInfo.data._id);
-
-			localStorage.setItem("query-id", `?${queryParams.toString()}`);
-
 			goToStep(currentStep + 1);
 		}
 	};

@@ -31,10 +31,9 @@ function StepTwo() {
 	const onSubmit = async (data: StepTwoData) => {
 		setData({ step: 2, data });
 
-		const { data: dataInfo, error } = await callApi(
-			`/campaign/create/two${localStorage.getItem("query-id")}`,
-			data
-		);
+		const { data: dataInfo, error } = await callApi<{
+			data: { _id: string };
+		}>(`/campaign/create/two`, data);
 
 		if (dataInfo) {
 			goToStep(currentStep + 1);
@@ -66,7 +65,7 @@ function StepTwo() {
 							id="title"
 							type="text"
 							placeholder="Give your campaign a catchy title that can resonate with donors"
-							className="w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1.2 focus-visible:outline-formBtn lg:py-2.2 lg:px-1.6 lg:text-1.6"
+							className="w-full mt-1.6 rounded-10 border border-unfocused px-0.8 py-1.6 text-1.2 focus-visible:outline-formBtn lg:py-2.2 lg:px-1.6 lg:text-1.6"
 						/>
 
 						<ErrorParagraph formState={formState} errorField="title" />
@@ -117,7 +116,7 @@ function StepTwo() {
 							id="goal"
 							type="number"
 							placeholder="Set a realistic target amount"
-							className="w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1.2 focus-visible:outline-formBtn lg:py-2.2 lg:px-1.6 lg:text-1.6"
+							className="w-full mt-1.6 rounded-10 border border-unfocused px-0.8 py-1.6 text-1.2 focus-visible:outline-formBtn lg:py-2.2 lg:px-1.6 lg:text-1.6"
 						/>
 
 						<ErrorParagraph formState={formState} errorField="goal" />

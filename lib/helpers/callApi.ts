@@ -1,6 +1,6 @@
 import { useSession } from "@/store";
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
-import { assertENV } from "./global-type-helpers";
+import { assertENV, isObject } from "./global-type-helpers";
 
 const BACKEND_API = assertENV(process.env.NEXT_PUBLIC_BACKEND_URL, {
 	message: "Please add the NEXT_PUBLIC_BACKEND_API variable to your .env file",
@@ -30,8 +30,15 @@ export const callApi = async <T>(
 			url: endpoint,
 			method,
 			...(data && { data }),
+			headers: isObject(data)
+				? {
+						"Content-Type": "application/json",
+						Accept: "application/json",
+				  }
+				: { "Content-Type": "multipart/form-data" },
 			cancelToken: source.token,
 		});
+
 		return { data: response.data };
 	} catch (error) {
 		let apiError: ApiError | undefined;

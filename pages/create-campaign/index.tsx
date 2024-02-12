@@ -5,7 +5,7 @@ import {
 	StepTracker,
 	StepTwo,
 } from "@/components/CreateCampaign";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui";
 import { callApi } from "@/lib";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -28,11 +28,11 @@ type BaseResponse = {
 	isComplete: boolean;
 };
 
-type StepOneResponse = BaseResponse & { data: Omit<StepOneData, "categories"> };
+// type StepOneResponse = BaseResponse & { data: Omit<StepOneData, "categories"> };
 
-type StepTwoResponse = BaseResponse & { data: StepTwoData };
+// type StepTwoResponse = BaseResponse & { data: StepTwoData };
 
-type StepThreeResponse = BaseResponse & { data: StepThreeData };
+// type StepThreeResponse = BaseResponse & { data: StepThreeData };
 
 type CategoriesResponse = BaseResponse & {
 	data: Array<{
@@ -45,33 +45,8 @@ function CreateCampaignPage() {
 	const {
 		currentStep,
 		formStatus,
-		actions: { goToStep, setData },
+		actions: { goToStep, setData, initializeFormData },
 	} = useFormStore((state) => state);
-
-	useEffect(() => {
-		const initializeStore = async () => {
-			const stuff = await Promise.all([
-				callApi<StepOneResponse>("/campaign/create/one"),
-				callApi<StepTwoResponse>("/campaign/create/two"),
-				callApi<StepThreeResponse>("/campaign/create/three"),
-			]);
-		};
-
-		const getCategories = async () => {
-			const { data, error } =
-				await callApi<CategoriesResponse>("/campaign/category");
-
-			if (error) {
-				toast({
-					title: error.status as string,
-					description: error.message,
-					duration: 3000,
-				});
-
-				return;
-			}
-		};
-	}, []);
 
 	useEffect(() => {
 		window.scrollTo({
@@ -80,6 +55,8 @@ function CreateCampaignPage() {
 			behavior: "smooth",
 		});
 	}, [currentStep]);
+
+	console.log(formStatus.isValid);
 
 	return (
 		<div className="flex min-h-screen flex-col justify-between max-lg:items-center">
@@ -107,7 +84,7 @@ function CreateCampaignPage() {
 					type="submit"
 					text="Continue"
 					targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
-					disabled={!formStatus.isValid || formStatus.isSubmitting}
+					disabled={formStatus.isSubmitting}
 				/>
 			</footer>
 		</div>

@@ -5,29 +5,42 @@ import { type FieldValues, type FormState } from "react-hook-form";
 const useWatchFormStatus = <TStepData extends FieldValues>(
 	formState: FormState<TStepData>
 ) => {
-	const { isValid, isSubmitting } = formState;
-
 	const { setFormStatus } = useFormStore((state) => state.actions);
 
-	const isFirstMount = useRef({
-		real: true,
-		dummy: true,
+	const firstMountRef = useRef({
+		realFirstMount: true,
+		dummyFirstMount: true,
 	});
 
+	const { isValid, isSubmitting } = formState;
+
+	// useEffect(() => {
+	// 	if (firstMountRef.current.realFirstMount) {
+	// 		firstMountRef.current.realFirstMount = false;
+	// 		setFormStatus({ isValid: true, isSubmitting });
+	// 	}
+
+	// 	// if (firstMountRef.current.dummyFirstMount) {
+	// 	// 	firstMountRef.current.dummyFirstMount = false;
+	// 	// 	return;
+	// 	// }
+
+	// setFormStatus({ isValid, isSubmitting });
+
+	// }, [isValid, isSubmitting]);
+
+	const isMounted = useRef(false);
+
 	useEffect(() => {
-		if (isFirstMount.current.real) {
-			isFirstMount.current.real = false;
+		if (!isMounted.current) {
 			setFormStatus({ isValid: true, isSubmitting });
-			return;
+			isMounted.current = true;
 		}
 
-		if (isFirstMount.current.dummy) {
-			isFirstMount.current.dummy = false;
-			return;
+		if (isMounted.current) {
+			setFormStatus({ isValid, isSubmitting });
 		}
-
-		setFormStatus({ isValid, isSubmitting });
-	}, [isSubmitting, isValid]);
+	}, [isValid, isSubmitting]);
 };
 
 export { useWatchFormStatus };

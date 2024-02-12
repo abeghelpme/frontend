@@ -1,3 +1,4 @@
+import { callApi } from "@/lib";
 import { type StateCreator, create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
@@ -9,16 +10,18 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
 	...initialFormState,
 
 	actions: {
-		setFormStatus: (newFormStatus) => {
-			const { formStatus: previousFormStatus } = get();
-
-			set({ formStatus: { ...previousFormStatus, ...newFormStatus } });
-		},
-
 		goToStep: (newStep) => {
 			if (newStep < 1 || newStep > 3) return;
 
 			set({ currentStep: newStep as FormStore["currentStep"] });
+		},
+
+		setCampaignId: (campaignId) => set({ campaignId }),
+
+		setFormStatus: (newFormStatus) => {
+			const { formStatus: previousFormStatus } = get();
+
+			set({ formStatus: { ...previousFormStatus, ...newFormStatus } });
 		},
 
 		setData: ({ step, data: newData }) => {
@@ -29,14 +32,16 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
 			set({ [dataKey]: { ...previousData, ...newData } });
 		},
 
-		initializeFormData: (storeData) => set(storeData),
+		initializeFormData: async () => {
+			const {} = await callApi("/campaign/create/one");
+		},
 	},
 });
 
 const useInitFormStore = create<FormStore>()(
 	persist(devtools(stateObjectFn, { name: "formStore" }), {
 		name: "campaignFormStore",
-		partialize: ({ currentStep }) => ({ currentStep }),
+		partialize: ({ currentStep, campaignId }) => ({ currentStep, campaignId }),
 	})
 );
 

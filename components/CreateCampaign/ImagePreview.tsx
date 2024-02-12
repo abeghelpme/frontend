@@ -1,4 +1,4 @@
-import { cn } from "@/lib/helpers/cn";
+import { cn } from "@/lib";
 import { useElementList } from "@/lib/hooks";
 import { useFormStore } from "@/store/formStore";
 import { Trash2Icon } from "lucide-react";

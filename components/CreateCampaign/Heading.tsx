@@ -1,39 +1,40 @@
-import { cn } from "@/lib/helpers/cn";
+import { cn } from "@/lib";
+import { useEffect } from "react";
 import type {
-  AsProp,
-  PolymorphicProps,
+	AsProp,
+	PolymorphicProps,
 } from "./campaign-utils/polymorphism-helper";
 
 type HeadingElementsType = keyof typeof semanticHeadings;
 
 const semanticHeadings = {
-  h1: "font-semibold text-formBtn",
-  h2: "font-bold lg:text-2.4",
-  h3: "font-bold lg:text-2",
+	h1: "font-semibold text-formBtn",
+	h2: "font-bold lg:text-2.4",
+	h3: "font-bold lg:text-2",
 };
 
 type HeadingProps<TElement extends HeadingElementsType> = Required<
-  AsProp<TElement>
+	AsProp<TElement>
 >;
 
 function Heading<TElement extends HeadingElementsType = "h1">(
-  props: PolymorphicProps<TElement, HeadingProps<TElement>>,
+	props: PolymorphicProps<TElement, HeadingProps<TElement>>
 ) {
-  const {
-    as: HeadingElement = "h1",
-    children,
-    className,
-    ...restOfProps
-  } = props;
+	const {
+		as: HeadingElement = "h1",
+		children,
+		className,
+		...restOfProps
+	} = props;
 
-  return (
-    <HeadingElement
-      className={cn(semanticHeadings[HeadingElement], className)}
-      {...restOfProps}
-    >
-      {children}
-    </HeadingElement>
-  );
+	return (
+		<HeadingElement
+			className={cn(semanticHeadings[HeadingElement], className)}
+			{...restOfProps}
+		>
+			{children}
+		</HeadingElement>
+	);
 }
 
 export default Heading;

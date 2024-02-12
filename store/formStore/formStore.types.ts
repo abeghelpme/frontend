@@ -32,6 +32,8 @@ type SetDataParams =
 export type FormStore = {
 	currentStep: SetDataParams["step"];
 
+	campaignId: string;
+
 	fundraiserCategories: Array<{ id: string; name: string }>;
 
 	formStatus: FormStatus;
@@ -41,6 +43,8 @@ export type FormStore = {
 
 	actions: {
 		goToStep: (newStep: number) => void;
+
+		setCampaignId: (campaignId: string) => void;
 
 		setData: ({ step, data }: SetDataParams) => void;
 

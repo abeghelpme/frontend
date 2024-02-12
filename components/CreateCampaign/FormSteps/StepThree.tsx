@@ -40,19 +40,21 @@ function StepThree() {
 
 		const formData = new FormData();
 
-		formData.set("storyHtml", data.storyHtml);
 		formData.set("story", data.story);
+		formData.set("storyHtml", data.storyHtml);
 
 		data.photos.forEach((imageFile) => {
 			formData.append("photos", imageFile);
 		});
 
-		await callApi(
-			`/campaign/create/three${localStorage.getItem("query-id")}`,
+		const { data: dataInfo, error } = await callApi(
+			`/campaign/create/three`,
 			formData
 		);
 
-		void router.push("/create-campaign/preview");
+		if (dataInfo) {
+			void router.push("/create-campaign/preview");
+		}
 	};
 
 	return (

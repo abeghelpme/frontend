@@ -1,4 +1,5 @@
 import { cn } from "@/lib";
+import { useEffect, useRef } from "react";
 import { type FieldValues, type FormState } from "react-hook-form";
 
 type ErrorParagraphProps<TStepData extends FieldValues> = {
@@ -12,9 +13,15 @@ function ErrorParagraph<TStepData extends FieldValues>(
 ) {
 	const { className, formState, errorField } = props;
 
-	const { errors } = formState;
+	const paragraphRef = useRef<HTMLParagraphElement>(null);
+	const message = formState.errors[errorField]?.message as string | undefined;
 
-	const message = errors[errorField]?.message as string | undefined;
+	useEffect(() => {
+		if (!paragraphRef.current) return;
+		if (paragraphRef.current.classList.contains("animate-shake")) return;
+
+		paragraphRef.current.classList.add("animate-shake");
+	}, [formState.submitCount]);
 
 	if (!message) {
 		return null;
@@ -22,12 +29,16 @@ function ErrorParagraph<TStepData extends FieldValues>(
 
 	return (
 		<p
+			ref={paragraphRef}
 			className={cn(
-				"text-[1.1rem] mt-1.2 ml-0.4 animate-shake font-semibold italic text-red-400",
+				"text-[1.1rem] font-medium mt-1.2 ml-0.4 italic text-red-400",
 				className
 			)}
+			onAnimationEnd={() => {
+				paragraphRef.current?.classList.remove("animate-shake");
+			}}
 		>
-			{message}
+			*{message}
 		</p>
 	);
 }
