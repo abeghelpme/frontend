@@ -37,7 +37,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 				const { data, error } = await callApi("/campaign/create/one");
 			},
 
-			getCampaignCategories: async () => {
+			getFundraiserCategories: async () => {
 				const { data, error } = await callApi<{
 					data: Array<{
 						id: string;

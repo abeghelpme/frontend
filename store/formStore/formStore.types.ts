@@ -52,6 +52,6 @@ export type FormStore = {
 
 		initializeFormData: () => Promise<void>;
 
-		getCampaignCategories: () => Promise<void>;
+		getFundraiserCategories: () => Promise<void>;
 	};
 };
