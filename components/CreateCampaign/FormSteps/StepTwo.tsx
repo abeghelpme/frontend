@@ -16,6 +16,7 @@ import { useWatchFormStatus } from "./useWatchFormStatus";
 function StepTwo() {
 	const {
 		currentStep,
+		campaignId,
 		stepTwoData,
 		actions: { setData, goToStep },
 	} = useFormStore((state) => state);
@@ -33,7 +34,7 @@ function StepTwo() {
 
 		const { data: dataInfo, error } = await callApi<{
 			data: { _id: string };
-		}>(`/campaign/create/two`, data);
+		}>(`/campaign/create/two`, { ...data, campaignId });
 
 		if (dataInfo) {
 			goToStep(currentStep + 1);

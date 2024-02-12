@@ -7,39 +7,22 @@ const useWatchFormStatus = <TStepData extends FieldValues>(
 ) => {
 	const { setFormStatus } = useFormStore((state) => state.actions);
 
-	const firstMountRef = useRef({
-		realFirstMount: true,
-		dummyFirstMount: true,
-	});
+	const firstMountRef = useRef({ real: true, dummy: true });
 
 	const { isValid, isSubmitting } = formState;
 
-	// useEffect(() => {
-	// 	if (firstMountRef.current.realFirstMount) {
-	// 		firstMountRef.current.realFirstMount = false;
-	// 		setFormStatus({ isValid: true, isSubmitting });
-	// 	}
-
-	// 	// if (firstMountRef.current.dummyFirstMount) {
-	// 	// 	firstMountRef.current.dummyFirstMount = false;
-	// 	// 	return;
-	// 	// }
-
-	// setFormStatus({ isValid, isSubmitting });
-
-	// }, [isValid, isSubmitting]);
-
-	const isMounted = useRef(false);
-
 	useEffect(() => {
-		if (!isMounted.current) {
+		if (firstMountRef.current.real) {
 			setFormStatus({ isValid: true, isSubmitting });
-			isMounted.current = true;
+			firstMountRef.current.real = false;
 		}
 
-		if (isMounted.current) {
-			setFormStatus({ isValid, isSubmitting });
+		if (firstMountRef.current.dummy) {
+			firstMountRef.current.dummy = false;
+			return;
 		}
+
+		setFormStatus({ isValid, isSubmitting });
 	}, [isValid, isSubmitting]);
 };
 

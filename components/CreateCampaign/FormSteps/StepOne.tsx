@@ -24,7 +24,7 @@ function StepOne() {
 		currentStep,
 		fundraiserCategories,
 		stepOneData,
-		actions: { goToStep, setData },
+		actions: { goToStep, setData, setCampaignId },
 	} = useFormStore((state) => state);
 
 	const { For: TagList } = useElementList();
@@ -52,6 +52,7 @@ function StepOne() {
 		}>("/campaign/create/one", data);
 
 		if (dataInfo) {
+			setCampaignId(dataInfo.data._id);
 			goToStep(currentStep + 1);
 		}
 	};

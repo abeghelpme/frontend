@@ -149,7 +149,7 @@ const resetPasswordSchema: z.ZodType<ResetPasswordProps> = z.object({
 const campaignStepOneSchema = z.object({
 	categoryId: z.string().min(1, { message: "Select a category" }),
 	country: z.string().min(1, { message: "Select a country" }),
-	tags: z.string().array(),
+	tags: z.array(z.string()),
 });
 
 const campaignStepTwoSchema = z.object({
@@ -157,12 +157,16 @@ const campaignStepTwoSchema = z.object({
 	fundraiser: z.enum(["INDIVIDUAL", "BENEFICIARY"], {
 		errorMap: () => ({ message: "Select the fundraiser's target" }),
 	}),
-	goal: z.coerce.number().min(1),
-	deadline: z.string().min(1, { message: "Choose a deadline" }),
+	goal: z.coerce
+		.number()
+		.min(5000, { message: "Goal must be at least 5,000 Naira" }),
+	deadline: z
+		.string()
+		.min(1, { message: "Choose a deadline for the campaign" }),
 });
 
 const campaignStepThreeSchema = z.object({
-	photos: z.custom<File>((file) => file instanceof File).array(),
+	photos: z.array(z.custom<File>((file) => file instanceof File)),
 	story: z
 		.string()
 		.min(100, { message: "Story must be at least 100 characters" }),

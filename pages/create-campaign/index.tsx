@@ -56,8 +56,6 @@ function CreateCampaignPage() {
 		});
 	}, [currentStep]);
 
-	console.log(formStatus.isValid);
-
 	return (
 		<div className="flex min-h-screen flex-col justify-between max-lg:items-center">
 			<main

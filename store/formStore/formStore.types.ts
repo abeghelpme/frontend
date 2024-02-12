@@ -9,7 +9,7 @@ export type StepOneData = {
 export type StepTwoData = {
 	title: string;
 	fundraiser: "INDIVIDUAL" | "BENEFICIARY" | "";
-	goal: number | null;
+	goal: number;
 	deadline: string;
 };
 
@@ -50,11 +50,8 @@ export type FormStore = {
 
 		setFormStatus: (newFormStatus: Partial<FormStatus>) => void;
 
-		initializeFormData: (
-			storeData: Pick<
-				FormStore,
-				"stepOneData" | "stepTwoData" | "stepThreeData"
-			>
-		) => void;
+		initializeFormData: () => Promise<void>;
+
+		getCampaignCategories: () => Promise<void>;
 	};
 };

@@ -6,37 +6,51 @@ import type { SelectorFn } from "../store-types";
 import { STEP_DATA_KEY_LOOKUP, initialFormState } from "./formStore.constants";
 import type { FormStore } from "./formStore.types";
 
-const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
-	...initialFormState,
+const stateObjectFn: StateCreator<FormStore> = (set, get) =>
+	({
+		...initialFormState,
 
-	actions: {
-		goToStep: (newStep) => {
-			if (newStep < 1 || newStep > 3) return;
+		actions: {
+			goToStep: (newStep) => {
+				if (newStep < 1 || newStep > 3) return;
 
-			set({ currentStep: newStep as FormStore["currentStep"] });
+				set({ currentStep: newStep as FormStore["currentStep"] });
+			},
+
+			setCampaignId: (campaignId) => set({ campaignId }),
+
+			setFormStatus: (newFormStatus) => {
+				const { formStatus: previousFormStatus } = get();
+
+				set({ formStatus: { ...previousFormStatus, ...newFormStatus } });
+			},
+
+			setData: ({ step, data: newData }) => {
+				const dataKey = STEP_DATA_KEY_LOOKUP[step];
+
+				const { [dataKey]: previousData } = get();
+
+				set({ [dataKey]: { ...previousData, ...newData } });
+			},
+
+			initializeFormData: async () => {
+				const { data, error } = await callApi("/campaign/create/one");
+			},
+
+			getCampaignCategories: async () => {
+				const { data, error } = await callApi<{
+					data: Array<{
+						id: string;
+						name: string;
+					}>;
+				}>("/campaign/category");
+
+				if (data) {
+					set({ fundraiserCategories: data.data });
+				}
+			},
 		},
-
-		setCampaignId: (campaignId) => set({ campaignId }),
-
-		setFormStatus: (newFormStatus) => {
-			const { formStatus: previousFormStatus } = get();
-
-			set({ formStatus: { ...previousFormStatus, ...newFormStatus } });
-		},
-
-		setData: ({ step, data: newData }) => {
-			const dataKey = STEP_DATA_KEY_LOOKUP[step];
-
-			const { [dataKey]: previousData } = get();
-
-			set({ [dataKey]: { ...previousData, ...newData } });
-		},
-
-		initializeFormData: async () => {
-			const {} = await callApi("/campaign/create/one");
-		},
-	},
-});
+	}) satisfies FormStore;
 
 const useInitFormStore = create<FormStore>()(
 	persist(devtools(stateObjectFn, { name: "formStore" }), {

@@ -1,4 +1,3 @@
-import { DATE_TOMORROW } from "@/components/CreateCampaign/campaign-utils/constants";
 import type { FormStore } from "./formStore.types";
 
 export const initialFormState = {
@@ -24,7 +23,7 @@ export const initialFormState = {
 	stepTwoData: {
 		title: "",
 		fundraiser: "",
-		goal: null,
+		goal: 0,
 		deadline: "",
 	},
 

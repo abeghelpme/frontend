@@ -16,6 +16,7 @@ import { useWatchFormStatus } from "./useWatchFormStatus";
 
 function StepThree() {
 	const {
+		campaignId,
 		stepThreeData,
 		actions: { setData },
 	} = useFormStore((state) => state);
@@ -46,6 +47,8 @@ function StepThree() {
 		data.photos.forEach((imageFile) => {
 			formData.append("photos", imageFile);
 		});
+
+		formData.set("campaignId", campaignId);
 
 		const { data: dataInfo, error } = await callApi(
 			`/campaign/create/three`,
