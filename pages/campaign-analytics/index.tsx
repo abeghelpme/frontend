@@ -1,0 +1,54 @@
+import { Card, TotalDonors, WorldMap } from "@/components/campaign-analytics";
+import React from "react";
+
+type Dummy = { title: string; amount: string; analytics: string };
+const CampaignAnalytics = () => {
+	const dummy: Dummy[] = [
+		{
+			title: "funds withdrawn",
+			amount: "#283,000,098",
+			analytics: "+3.6 in 4days",
+		},
+		{
+			title: "funds withdrawn",
+			amount: "#283,000,098",
+			analytics: "+3.6 in 4days",
+		},
+		{
+			title: "campaigns",
+			amount: "23",
+			analytics: "+0.006 in 4days",
+		},
+	];
+	return (
+		<section className="flex flex-col gap-4 md:gap-8 p-4 md:p-6 justify-center min-h-screen">
+			<div className="flex flex-col gap-4 md:flex-row">
+				{dummy.map((data, id) => {
+					return (
+						<Card
+							key={id}
+							title={data.title}
+							amount={data.amount}
+							analytics={data.analytics}
+						/>
+					);
+				})}
+			</div>
+			<div className="flex flex-col gap-4 md:gap-8  px-4 py-8 md:p-8 text-[#484848] text-sm  md:text-base border-[0.3px] border-[#8D8B8B] rounded-xl text-opacity-80 bg-white">
+				<div className="flex justify-between  items-center border-b-[0.5px] border-opacity-80 pb-4 border-b-[#385796]">
+					<p className="text-lg font-semibold">Total donors so far</p>
+					<p className="p-2 flex justify-center items-center gap-2 border-[0.3px] border-[#484848] text-sm text-[#484848] rounded-lg">
+						Real time report
+					</p>
+				</div>
+				<div className="flex gap-8 md:gap-16 flex-col md:flex-row ">
+					<WorldMap />
+					<TotalDonors />
+				</div>
+			</div>
+		</section>
+	);
+};
+
+export default CampaignAnalytics;
+CampaignAnalytics.protect = true;
