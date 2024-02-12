@@ -1,3 +1,4 @@
 {
-	"cSpell.words": ["Abeg", "clsx", "signin", "signup", "zxcvbn"]
+	"cSpell.words": ["Abeg", "clsx", "signin", "signup", "zxcvbn"],
+	"tailwindCSS.rootFontSize": 10
 }
