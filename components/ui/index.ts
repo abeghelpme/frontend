@@ -23,6 +23,24 @@ export {
 	ToastViewport,
 } from "./toast";
 
+export {
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuCheckboxItem,
+	DropdownMenuRadioItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuShortcut,
+	DropdownMenuGroup,
+	DropdownMenuPortal,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
+	DropdownMenuRadioGroup,
+} from "./dropdown-menu";
+
 export type { ToastActionElement, ToastProps } from "./toast";
 
 export { default as Toaster } from "./toaster";
