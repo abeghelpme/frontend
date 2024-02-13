@@ -29,10 +29,6 @@ const CloudFlareTurnStileComp = (
 		);
 	}
 
-	if (status === "success") {
-		(ref as NonNullable<ValidRefType<typeof ref>>).current?.remove();
-	}
-
 	return (
 		<Turnstile
 			ref={ref}
