@@ -1,4 +1,4 @@
-import Toggle from "@/components/ui/toggle";
+import { Toggle } from "@/components/ui";
 import type { Editor } from "@tiptap/react";
 import {
 	BoldIcon,

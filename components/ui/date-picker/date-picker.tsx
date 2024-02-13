@@ -1,10 +1,8 @@
 import { DATE_TOMORROW } from "@/components/CreateCampaign/campaign-utils/constants";
+import { getDateFromString } from "@/components/CreateCampaign/campaign-utils/getDateFromString";
 import { cn } from "@/lib";
-import { getDateFromString } from "@/lib/helpers/getDateFromString";
-import { useFormStore } from "@/store/formStore";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useMemo } from "react";
 import Button, { buttonVariants } from "../button";
 import Calendar from "./calender";
 import { Popover } from "./popover";
@@ -51,7 +49,11 @@ function DatePicker(props: DatePickerProps) {
 					}}
 					mode="single"
 					selected={dateValue}
-					onSelect={(date) => onChange(date?.toISOString().split("T")[0])}
+					onSelect={(date) => {
+						if (!date) return;
+
+						onChange(date.toISOString().split("T")[0]);
+					}}
 					initialFocus={true}
 					disabled={{ before: DATE_TOMORROW }}
 				/>

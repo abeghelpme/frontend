@@ -1,3 +1,4 @@
-export { getEditorExtensions } from "./getEditorExtensions"
-export { validateFiles } from "./validateFiles"
-export { validateTagValue } from "./validateTagValue"
+export { getEditorExtensions } from "./getEditorExtensions";
+export { getDateFromString } from "./getDateFromString";
+export { validateFiles } from "./validateFiles";
+export { validateTagValue } from "./validateTagValue";

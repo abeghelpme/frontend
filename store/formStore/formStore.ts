@@ -17,7 +17,11 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 				set({ currentStep: newStep as FormStore["currentStep"] });
 			},
 
-			setCampaignId: (campaignId) => set({ campaignId }),
+			setCampaignId: (campaignId) => {
+				if (get().campaignId === campaignId) return;
+
+				set({ campaignId });
+			},
 
 			setFormStatus: (newFormStatus) => {
 				const { formStatus: previousFormStatus } = get();

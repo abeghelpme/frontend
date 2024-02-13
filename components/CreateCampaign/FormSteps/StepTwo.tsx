@@ -1,5 +1,4 @@
-import { DatePicker } from "@/components/ui/date-picker";
-import { Select } from "@/components/ui/select";
+import { DatePicker, Select } from "@/components/ui";
 import { callApi, zodValidator } from "@/lib";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -18,7 +17,7 @@ function StepTwo() {
 		currentStep,
 		campaignId,
 		stepTwoData,
-		actions: { setData, goToStep },
+		actions: { setData, goToStep, setCampaignId },
 	} = useFormStore((state) => state);
 
 	const { control, formState, register, handleSubmit } = useForm({
@@ -29,7 +28,7 @@ function StepTwo() {
 
 	useWatchFormStatus(formState);
 
-	const onSubmit = async (data: StepTwoData) => {
+	const onFormSubmit = async (data: StepTwoData) => {
 		setData({ step: 2, data });
 
 		const { data: dataInfo, error } = await callApi<{
@@ -37,6 +36,7 @@ function StepTwo() {
 		}>(`/campaign/create/two`, { ...data, campaignId });
 
 		if (dataInfo) {
+			setCampaignId(dataInfo.data._id);
 			goToStep(currentStep + 1);
 		}
 	};
@@ -52,7 +52,7 @@ function StepTwo() {
 				className="mt-3.2"
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onSubmit)(event);
+					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-2.4">

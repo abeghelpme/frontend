@@ -56,8 +56,8 @@ function StepThree() {
 		);
 
 		if (dataInfo) {
-			void router.push("/create-campaign/preview");
 		}
+		void router.push("/create-campaign/preview");
 	};
 
 	return (
@@ -89,6 +89,8 @@ function StepThree() {
 										value={field.value}
 										onChange={field.onChange}
 									/>
+
+									<ErrorParagraph formState={formState} errorField="photos" />
 
 									<ImagePreview value={field.value} onChange={field.onChange} />
 								</>

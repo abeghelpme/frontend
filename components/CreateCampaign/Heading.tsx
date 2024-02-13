@@ -1,5 +1,4 @@
 import { cn } from "@/lib";
-import { useEffect } from "react";
 import type {
 	AsProp,
 	PolymorphicProps,

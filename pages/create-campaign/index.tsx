@@ -5,15 +5,7 @@ import {
 	StepTracker,
 	StepTwo,
 } from "@/components/CreateCampaign";
-import { toast } from "@/components/ui";
-import { callApi } from "@/lib";
-import {
-	STEP_DATA_KEY_LOOKUP,
-	type StepOneData,
-	type StepThreeData,
-	type StepTwoData,
-	useFormStore,
-} from "@/store/formStore";
+import { STEP_DATA_KEY_LOOKUP, useFormStore } from "@/store/formStore";
 import { useEffect } from "react";
 
 const STEP_COMPONENT_LOOKUP = {
@@ -26,19 +18,6 @@ type BaseResponse = {
 	status: "success" | "Error";
 	message: string;
 	isComplete: boolean;
-};
-
-// type StepOneResponse = BaseResponse & { data: Omit<StepOneData, "categories"> };
-
-// type StepTwoResponse = BaseResponse & { data: StepTwoData };
-
-// type StepThreeResponse = BaseResponse & { data: StepThreeData };
-
-type CategoriesResponse = BaseResponse & {
-	data: Array<{
-		id: string;
-		name: string;
-	}>;
 };
 
 function CreateCampaignPage() {
@@ -59,7 +38,7 @@ function CreateCampaignPage() {
 	return (
 		<div className="flex min-h-screen flex-col justify-between max-lg:items-center">
 			<main
-				className="flex w-[min(100%,48rem)] shrink-0 flex-col gap-3.2 bg-contours-old lg:pt-4.8 bg-cover pt-3.2 px-2.4 pb-5.5 lg:w-full lg:flex-row lg:items-start lg:gap-7 lg:px-10 lg:pb-10"
+				className="flex shrink-0 flex-col gap-3.2 w-[min(100%,48rem)] bg-contours-old lg:pt-4.8 bg-cover pt-3.2 px-2.4 pb-5.5 lg:w-full lg:flex-row lg:items-start lg:gap-7 lg:px-10 lg:pb-10"
 				data-rem-reset
 			>
 				<section className="flex shrink-0 gap-1.2 lg:mt-1.9">
@@ -82,6 +61,7 @@ function CreateCampaignPage() {
 					type="submit"
 					text="Continue"
 					targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+					isLoading={formStatus.isSubmitting}
 					disabled={formStatus.isSubmitting}
 				/>
 			</footer>

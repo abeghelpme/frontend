@@ -21,6 +21,7 @@ function StepOne() {
 	const tagInputRef = useRef<HTMLInputElement>(null);
 
 	const {
+		campaignId,
 		currentStep,
 		fundraiserCategories,
 		stepOneData,

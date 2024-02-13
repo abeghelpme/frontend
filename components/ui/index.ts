@@ -31,5 +31,6 @@ export { toast, useToast } from "./use-toast";
 export { default as Input } from "./input";
 export { default as ProgressBar } from "./progressbar";
 
-export * from "./select";
+export { Select, SelectPrimitive } from "./select";
+export { DatePicker } from "./date-picker";
 export { default as Toggle } from "./toggle";

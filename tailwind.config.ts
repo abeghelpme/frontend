@@ -52,6 +52,7 @@ const config = {
 				1.6: "1.6rem",
 				2: "2rem",
 				2.4: "2.4rem",
+				3.2: "3.2rem",
 			},
 
 			screens: {

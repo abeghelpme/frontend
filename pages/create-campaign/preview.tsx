@@ -1,6 +1,6 @@
 import { Heading } from "@/components/CreateCampaign";
-import Button from "@/components/ui/button";
-import { getDateFromString } from "@/lib/helpers/getDateFromString";
+import { getDateFromString } from "@/components/CreateCampaign/campaign-utils";
+import { Button } from "@/components/ui";
 import { useElementList } from "@/lib/hooks";
 import { MoneyIcon } from "@/public/assets/icons/campaign";
 import { useFormStore } from "@/store/formStore";
@@ -24,7 +24,7 @@ function Preview() {
 
 	return (
 		<div className="flex min-h-screen flex-col justify-between">
-			<header className="flex flex-col gap-0.8 px-2.4 pt-3.2 lg:pt-4.8">
+			<header className="flex flex-col gap-0.8  mx-auto w-[min(100%,48rem)] lg:w-full px-2.4 pt-3.2 lg:pt-4.8">
 				<Heading as="h1">Campaign Preview</Heading>
 
 				<p className="text-1.4 text-formBtn">
@@ -33,23 +33,25 @@ function Preview() {
 			</header>
 
 			<main
-				className="mt-3.2 bg-contours-old bg-cover px-2.4 pb-6.2 text-successText"
+				className="mt-3.2 w-[min(100%,48rem)] lg:w-full flex flex-col mx-auto bg-contours-old bg-cover px-2.4 pb-6.2 text-successText"
 				data-rem-reset
 			>
-				<section>
-					<Heading as="h2" className="text-2">
-						{stepTwoData.title}
-					</Heading>
+				<section className="flex flex-col gap-0.8 lg:flex-row">
+					<article>
+						<Heading as="h2" className="text-2 lg:text-3.2">
+							{stepTwoData.title}
+						</Heading>
 
-					<Image
-						src={imageUrls[0] ?? "/"}
-						alt="campaign cover image"
-						className="mt-0.8 w-full rounded-8"
-						width={342}
-						height={200}
-					/>
+						<Image
+							src={imageUrls[0] ?? "/"}
+							alt="campaign cover image"
+							className="w-full min-w-[32rem] aspect-[171/100] rounded-8"
+							width={342}
+							height={200}
+						/>
+					</article>
 
-					<article className="mt-0.8 flex flex-col gap-2.8 px-2.4 py-3">
+					<article className="flex flex-col gap-2.8 px-2.4 py-3">
 						<div>
 							<p>₦{stepTwoData.goal} goal</p>
 							<span className="mt-0.8 block h-[0.6rem] rounded-8 bg-semiWhite" />
@@ -154,8 +156,8 @@ function Preview() {
 
 					<div>
 						<p>
-							{stepTwoData.fundraiser || "Anonymous"} is in charge of this
-							fundraiser.
+							{stepTwoData.fundraiser === "INDIVIDUAL" ? "You" : "Anonymous"}{" "}
+							are in in charge of this fundraiser.
 							<span className="mt-8">{stepOneData.country}</span>
 						</p>
 
