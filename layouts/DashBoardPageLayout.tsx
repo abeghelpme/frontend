@@ -1,14 +1,13 @@
-import SideBarNav from "@/components/Shared/SideBarNav";
-import TopNav from "@/components/Shared/TopNav";
-import bgContours from "@/public/assets/images/shared/bg-contours.png";
-import Image from "next/image";
+import DashboardSidebarNav from "@/components/Shared/DashboardSidebarNav";
+import DashboardTopNav from "@/components/Shared/DashboardTopNav";
+
 import { type ReactNode, useState } from "react";
 
 type DashBoardLayoutProps = {
 	children: ReactNode;
 };
 
-export const DashBoardLayout = function getLayout({
+export const DashBoardPageLayout = function getLayout({
 	children,
 }: DashBoardLayoutProps): JSX.Element {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -19,21 +18,13 @@ export const DashBoardLayout = function getLayout({
 
 	return (
 		<main className="relative min-h-full scroll-smooth">
-			<div className="fixed inset-0 z-[-1] h-full w-full overflow-hidden">
-				<Image
-					src={bgContours}
-					alt=""
-					priority
-					className="h-full w-full object-cover object-[75%]"
-				/>
-			</div>
-			<section className="relative flex">
-				<SideBarNav isSidebarOpen={isSidebarOpen} />
-				<article className="flex-1 overflow-y-auto">
-					<TopNav toggleSidebar={toggleSidebar} />
+			<div className="relative flex">
+				<DashboardSidebarNav isSidebarOpen={isSidebarOpen} />
+				<div className="flex-1 overflow-y-auto">
+					<DashboardTopNav toggleSidebar={toggleSidebar} />
 					{children}
-				</article>
-			</section>
+				</div>
+			</div>
 		</main>
 	);
 };
