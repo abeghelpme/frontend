@@ -3,19 +3,17 @@ import { Button, Input, useToast } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
+import { useCloudflareTurnstile } from "@/lib/hooks";
 import { useSession } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
 const Login = () => {
-	const [botStatus, setBotStatus] = useState<"success" | "error" | "idle">(
-		"idle"
-	);
-	const cfTurnStile = useRef<TurnstileInstance>(null);
+	const { cfTurnStile, checkBotStatus, handleBotStatus } =
+		useCloudflareTurnstile();
 	const showModal = useRef(false);
 	const router = useRouter();
 	const { toast } = useToast();
@@ -23,9 +21,6 @@ const Login = () => {
 	const [success] = useState(false);
 	const [skip2FA, setSkip2FA] = useState("false");
 	const { user, updateUser } = useSession((state) => state);
-
-	const handleBotStatus = (status: "success" | "error" | "idle") =>
-		setBotStatus(status);
 
 	useEffect(() => {
 		const checkLS = () => {
@@ -120,16 +115,9 @@ const Login = () => {
 				onSubmit={(event) => {
 					event.preventDefault();
 
-					if (botStatus !== "success") {
-						toast({
-							title: "Error",
-							description: "Please complete the bot verification",
-							duration: 3000,
-						});
-						return;
-					}
+					const response = checkBotStatus();
 
-					void handleSubmit(onSubmit)(event);
+					response && void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<div className="space-y-1">
@@ -175,9 +163,10 @@ const Login = () => {
 				>
 					Forgot Password?
 				</Link>
+
 				<CloudFlareTurnStile
-					onStatusChange={handleBotStatus}
 					ref={cfTurnStile}
+					onStatusChange={handleBotStatus}
 				/>
 				<div className="flex flex-col gap-3">
 					<CustomDialog

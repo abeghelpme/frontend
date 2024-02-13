@@ -9,18 +9,16 @@ import {
 	checkPasswordStrength,
 	zodValidator,
 } from "@/lib";
+import { useCloudflareTurnstile } from "@/lib/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDeferredValue, useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
 const SignUp = () => {
-	const [botStatus, setBotStatus] = useState<"success" | "error" | "idle">(
-		"idle"
-	);
-	const cfTurnStile = useRef<TurnstileInstance>(null);
+	const { cfTurnStile, checkBotStatus, handleBotStatus } =
+		useCloudflareTurnstile();
 	const { toast } = useToast();
 	const showModal = useRef(false);
 	const [message, setMessage] = useState<ApiResponse>({
@@ -29,9 +27,6 @@ const SignUp = () => {
 		error: undefined,
 		data: undefined,
 	});
-
-	const handleBotStatus = (status: "success" | "error" | "idle") =>
-		setBotStatus(status);
 
 	useEffect(() => {
 		const checkLS = () => {
@@ -133,16 +128,9 @@ const SignUp = () => {
 				onSubmit={(event) => {
 					event.preventDefault();
 
-					if (botStatus !== "success") {
-						toast({
-							title: "Error",
-							description: "Please complete the bot verification",
-							duration: 3000,
-						});
-						return;
-					}
+					const response = checkBotStatus();
 
-					void handleSubmit(onSubmit)(event);
+					response && void handleSubmit(onSubmit)(event);
 				}}
 				action=""
 				className="flex flex-col gap-3"

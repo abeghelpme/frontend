@@ -1,5 +1,1 @@
-const useHook = () => {
-	return {}
-}
-
-export default useHook
+export { default as useCloudflareTurnstile } from "./useCloudflareTurnstile";
