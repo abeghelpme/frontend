@@ -1,5 +1,4 @@
-import { RecieveIcon } from "@/components/shared";
-import { ArrowDown } from "@/components/shared";
+import { ArrowDown, RecieveIcon } from "@/components/Shared";
 import { Button } from "@/components/ui";
 import {
 	DropdownMenu,
