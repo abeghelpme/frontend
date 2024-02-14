@@ -1,53 +1,49 @@
-import { PlusButtonIcon, UserIcon } from "@/components/Shared";
+import { PlusButtonIcon } from "@/components/Shared";
 import { Button, ProgressBar } from "@/components/ui";
 import { DashBoardPageLayout } from "@/layouts/DashBoardPageLayout";
-// import UserIcon from "@/public/assets/icons/dashboard/userIcon.svg";
+import userImage from "@/public/assets/icons/dashboard/userIcon.svg";
 import dashboardImage from "@/public/assets/images/dashboard/dashboardImage.png";
 import Image from "next/image";
-import React, { useState } from "react";
 
-export default function index() {
-	const [totalAmount, setTotalAmount] = useState(100);
-	const [remainingAmount, setRemainingAmount] = useState(80);
-
+const dashboard = () => {
 	const campaignData = [
 		{
-			image: <UserIcon />,
+			image: userImage,
 			name: "Jane Doe",
 			email: "Janedoe12@gmail.com",
 			time: "4 mins",
 			amount: "+300,000",
 		},
 		{
-			image: <UserIcon />,
+			image: userImage,
 			name: "Jane Doe",
 			email: "Janedoe12@gmail.com",
 			time: "4 mins",
 			amount: "+300,000",
 		},
 		{
-			image: <UserIcon />,
+			image: userImage,
 			name: "Jane Doe",
 			email: "Janedoe12@gmail.com",
 			time: "4 mins",
 			amount: "+300,000",
 		},
 		{
-			image: <UserIcon />,
+			image: userImage,
 			name: "Jane Doe",
 			email: "Janedoe12@gmail.com",
 			time: "4 mins",
 			amount: "+300,000",
 		},
 		{
-			image: <UserIcon />,
+			image: userImage,
 			name: "Jane Doe",
 			email: "Janedoe12@gmail.com",
 			time: "4 mins",
 			amount: "+300,000",
 		},
 		{
-			image: <UserIcon />,
+			image: userImage,
 			name: "Jane Doe",
 			email: "Janedoe12@gmail.com",
 			time: "4 mins",
@@ -57,21 +53,21 @@ export default function index() {
 
 	const encouragements = [
 		{
-			image: <UserIcon />,
+			image: userImage,
 			name: "Jane Doe",
 			email: "Janedoe12@gmail.com",
 			comment:
 				"You're doing such important work in raising awareness and support for this cause. Keep up the amazing effort!",
 		},
 		{
-			image: <UserIcon />,
+			image: userImage,
 			name: "Jane Doe",
 			email: "Janedoe12@gmail.com",
 			comment:
 				"You're doing such important work in raising awareness and support for this cause. Keep up the amazing effort!",
 		},
 		{
-			image: <UserIcon />,
+			image: userImage,
 			name: "Jane Doe",
 			email: "Janedoe12@gmail.com",
 			comment:
@@ -137,11 +133,11 @@ export default function index() {
 							className="hidden lg:block w-full h-60 object-cover rounded-md"
 						/>
 						<div className="lg:flex gap-2 items-center mt-5 hidden">
-							<UserIcon />
+							<Image src={userImage} alt="User Image" width={30} height={30} />
 
 							<p>TheLocsDesigner is in charge of this fundraiser.</p>
 						</div>
-						<section className="md:mt-5">
+						<div className="md:mt-5">
 							<p className="text-lg border-b border-gray-400 pb-1">
 								<span className="font-semibold">Category:</span> Health and
 								Wellness
@@ -151,22 +147,28 @@ export default function index() {
 								Words of encouragement
 							</p>
 							<br />
-						</section>
+						</div>
 
-						{encouragements.map((item: any, index) => (
-							<div key={index} className="flex gap-2 mb-3 md:mb-10">
-								<div className="flex flex-1">{item.image}</div>
-								<div>
-									<h5 className="font-medium text-lg">{item.name}</h5>
-									<span className="space-y-2">
-										<p className="md:text-sm font-light md:font-normal">
-											{item.email}
-										</p>
-										<p className="md:text-sm">{item.comment}</p>
-									</span>
-								</div>
-							</div>
-						))}
+						<article className="space-y-3">
+							{encouragements.map((item: any, index) => (
+								<aside key={index} className="flex items-start gap-2">
+									<Image
+										src={item.image}
+										alt="User Image"
+										width={30}
+										height={30}
+										className="object-fit"
+									/>
+									<div className="space-y-2">
+										<div>
+											<h5 className="font-medium ">{item.name}</h5>
+											<p className="t ext-sm font-light">{item.email}</p>
+										</div>
+										<p>{item.comment}</p>
+									</div>
+								</aside>
+							))}
+						</article>
 					</div>
 					<div className="w-full lg:w-1/2">
 						<h1 className="font-semibold text-2xl lg:mb-3 hidden md:block">
@@ -199,7 +201,13 @@ export default function index() {
 									<div key={index} className="mb-3 lg:mb-8">
 										<div className="flex justify-between">
 											<div className="flex gap-2 items-center">
-												{user.image}
+												<Image
+													src={user.image}
+													alt="User Image"
+													width={30}
+													height={30}
+												/>
+
 												<div>
 													<h5 className="font-medium">{user.name}</h5>
 													<div className="flex justify-between gap-5">
@@ -255,4 +263,5 @@ export default function index() {
 			</div>
 		</DashBoardPageLayout>
 	);
-}
+};
+export default dashboard;

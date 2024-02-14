@@ -1,30 +1,36 @@
-import Image from "next/image";
 import Link from "next/link";
-import Logo from "/public/assets/icons/dashboard/Logo.svg";
 import {
 	AnalyticsChartIcon,
 	ChatIcon,
 	DashboardIcon,
+	Logo,
 	SettingsIcon,
 	UpdatesIcon,
 } from "./dashboardIcons";
 
 type SideBarNavProps = {
 	isSidebarOpen: boolean;
+	onSidebarItemClick: (path: string) => void;
 };
 
-const DashboardSidebarNav = ({ isSidebarOpen }: SideBarNavProps) => {
+const DashboardSidebarNav = ({
+	isSidebarOpen,
+	onSidebarItemClick,
+}: SideBarNavProps) => {
 	const navItems = [
 		{ path: "/dashboard", icon: <DashboardIcon />, name: "Dashboard" },
 		{
-			path: "/dashboard/campaign-analytics",
+			path: "/dashboard",
 			icon: <AnalyticsChartIcon />,
 			name: "Campaign Analytics",
 		},
-		{ path: "/dashboard/updates", icon: <UpdatesIcon />, name: "Updates" },
-		{ path: "/dashboard/settings", icon: <SettingsIcon />, name: "Settings" },
+		{ path: "/dashboard", icon: <UpdatesIcon />, name: "Updates" },
+		{ path: "/dashboard", icon: <SettingsIcon />, name: "Settings" },
 	];
 
+	const handleSidebarClick = (name: string) => {
+		onSidebarItemClick(name);
+	};
 	return (
 		<aside
 			className={`${
@@ -41,12 +47,7 @@ const DashboardSidebarNav = ({ isSidebarOpen }: SideBarNavProps) => {
 					>
 						<li className="mt-5  hidden lg:flex flex-col items-center justify-center lg:pb-10">
 							<Link href={"/dashboard"}>
-								<Image
-									src={Logo as string}
-									width={28}
-									height={28}
-									alt="abeghelp logo"
-								/>
+								<Logo />
 							</Link>
 						</li>
 						{navItems.map((item) => (
@@ -54,7 +55,10 @@ const DashboardSidebarNav = ({ isSidebarOpen }: SideBarNavProps) => {
 								key={item.name}
 								className="flex flex-col items-center justify-center pb-2 space-y-3 "
 							>
-								<Link href={item.path} onClick={() => isSidebarOpen}>
+								<Link
+									href={item.path}
+									onClick={() => handleSidebarClick(item.name)}
+								>
 									<span className="flex flex-col items-center justify-center">
 										<span>{item.icon}</span>
 										<span className="mt-1 text-sm">{item.name}</span>

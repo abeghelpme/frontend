@@ -1,8 +1,8 @@
-const DashboardAnalytics = () => {
+const DashboardSettings = () => {
 	return (
 		<div className="flex min-h-screen items-center justify-center text-3xl">
-			Analytics Coming Soon...
+			Settings Coming Soon...
 		</div>
 	);
 };
-export default DashboardAnalytics;
+export default DashboardSettings;

@@ -1,3 +1,4 @@
+import userImage from "@/public/assets/icons/dashboard/userIcon.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui";
@@ -7,7 +8,6 @@ import {
 	MenuIcon,
 	NotificationIcon,
 	PlusButtonIcon,
-	UserIcon,
 } from "./dashboardIcons";
 
 type TopNavProps = {
@@ -40,9 +40,13 @@ const DashboardTopNav = ({ toggleSidebar }: TopNavProps) => {
 					<NotificationIcon />
 				</div>
 				<div className="flex items-center cursor-pointer  space-x-2 text-sm pr-5 md:px-0 md:pl-3">
-					<div className="hidden md:block flex-1">
-						<UserIcon />
-					</div>
+					<Image
+						src={userImage}
+						width={25}
+						height={25}
+						alt="User Image"
+						className="hidden md:block flex-1"
+					/>
 					<div className="rounded-full border border-teal-500 md:hidden">
 						<p className="p-2 ">LD</p>
 					</div>
