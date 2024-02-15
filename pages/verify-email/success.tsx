@@ -4,7 +4,14 @@ import Link from "next/link";
 
 const VerifyEmailSuccessPage = () => {
 	return (
-		<AuthLayout withHeader={false} hasSuccess contentClass="" formType="signup">
+		<AuthLayout
+			title="Email Verification Successful!"
+			content="Your email was verified successfully! "
+			withHeader={false}
+			hasSuccess
+			contentClass=""
+			formType="signup"
+		>
 			{" "}
 			<Success textContent="Your email has been verified">
 				<Link
