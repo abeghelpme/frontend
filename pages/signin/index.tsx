@@ -105,6 +105,8 @@ const Login = () => {
 	// }
 	return (
 		<AuthLayout
+			title="Sign in to your account"
+			content="Sign in to your account to continue using Abeg Help!"
 			heading="Welcome back!"
 			greeting="Sign in to continue"
 			withHeader

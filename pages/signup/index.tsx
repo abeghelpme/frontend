@@ -117,6 +117,8 @@ const SignUp = () => {
 
 	return (
 		<AuthLayout
+			title="Create an Account!"
+			content="Create an Abeg Help account to start your crowdfunding!"
 			formType="signup"
 			heading="Welcome!"
 			greeting="Create your account"

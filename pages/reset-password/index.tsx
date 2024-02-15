@@ -83,7 +83,13 @@ const ResetPassword = () => {
 	};
 
 	return (
-		<AuthLayout formType="other" withHeader={false} hasSuccess={false}>
+		<AuthLayout
+			title="Reset Password"
+			content="Reset your Password! Follow the instructions on this page to reset your password!"
+			formType="other"
+			withHeader={false}
+			hasSuccess={false}
+		>
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();

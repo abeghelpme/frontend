@@ -50,6 +50,8 @@ const VerificationPage = () => {
 
 	return (
 		<AuthLayout
+			title="Verify your email"
+			content="Verify your account to complete your registration process, check your email to complete this process!"
 			withHeader={false}
 			hasSuccess={false}
 			formType="signup"

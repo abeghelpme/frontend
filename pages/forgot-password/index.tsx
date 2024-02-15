@@ -53,7 +53,13 @@ const ForgotPasswordPage = () => {
 	};
 
 	return (
-		<AuthLayout formType="other" withHeader={false} hasSuccess={false}>
+		<AuthLayout
+			title="Forgot Password"
+			content="Reset your password. Follow the instructions on this page to get your account back!"
+			formType="other"
+			withHeader={false}
+			hasSuccess={false}
+		>
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();
