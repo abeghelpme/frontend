@@ -21,7 +21,6 @@ function StepOne() {
 	const tagInputRef = useRef<HTMLInputElement>(null);
 
 	const {
-		campaignId,
 		currentStep,
 		fundraiserCategories,
 		stepOneData,
@@ -162,7 +161,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-1.6 rounded-10 border-unfocused text-1 px-0.8 py-2.3 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
+										className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
 									>
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
@@ -198,7 +197,7 @@ function StepOne() {
 								name="tags"
 								type="text"
 								placeholder="Add hashtags or search keywords to your campaign"
-								className="w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1 focus-visible:outline-formBtn lg:py-2.2 lg:px-1.6 lg:text-1.6"
+								className="w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1 focus-visible:outline-formBtn lg:px-1.6 lg:py-2.2 lg:text-1.6"
 								onKeyDown={handleAddTags}
 							/>
 

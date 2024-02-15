@@ -27,11 +27,11 @@ function TiptapEditor(props: EditorProps) {
 
 		content: editorContent,
 
-		onUpdate: ({ editor }) => {
-			const purifiedContent = DOMPurify.sanitize(editor.getHTML());
+		onUpdate: (options) => {
+			const purifiedContent = DOMPurify.sanitize(options.editor.getHTML());
 			onChange(purifiedContent);
 
-			setFormValue("story", editor.getText());
+			setFormValue("story", options.editor.getText());
 		},
 	});
 
@@ -40,16 +40,16 @@ function TiptapEditor(props: EditorProps) {
 	}
 
 	return (
-		<div className="flex min-h-[17.8rem] flex-col justify-between gap-0.8 rounded-6 border border-unfocused p-1.6 focus-within:outline-2 focus-within:outline-formBtn">
+		<div className="gap-0.8 rounded-6 border-unfocused p-1.6 focus-within:outline-formBtn flex min-h-[17.8rem] flex-col justify-between border focus-within:outline-2">
 			<EditorContent
 				editor={editor}
-				className="text-1.2 lg:text-1.6 [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:absolute [&_p.is-editor-empty:first-child]:before:left-0 [&_p.is-editor-empty:first-child]:before:text-placeholder [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"
+				className="text-1.2 lg:text-1.6 [&_p.is-editor-empty:first-child]:before:text-placeholder [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:absolute [&_p.is-editor-empty:first-child]:before:left-0 [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"
 			/>
 
-			<div className="flex flex-col gap-0.8 lg:flex-row lg:justify-between lg:gap-4.8 lg:items-center">
+			<div className="gap-0.8 lg:gap-4.8 flex flex-col lg:flex-row lg:items-center lg:justify-between">
 				<TipTapToolBar editor={editor} />
 
-				<p className="text-1.2 opacity-70 lg:text-1.6">
+				<p className="text-1.2 lg:text-1.6 opacity-70">
 					Add images/videos to make your story more compelling
 				</p>
 			</div>

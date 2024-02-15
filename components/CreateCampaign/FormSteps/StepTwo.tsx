@@ -66,7 +66,7 @@ function StepTwo() {
 							id="title"
 							type="text"
 							placeholder="Give your campaign a catchy title that can resonate with donors"
-							className="w-full mt-1.6 rounded-10 border border-unfocused px-0.8 py-1.6 text-1.2 focus-visible:outline-formBtn lg:py-2.2 lg:px-1.6 lg:text-1.6"
+							className="mt-1.6 w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1.2 focus-visible:outline-formBtn lg:px-1.6 lg:py-2.2 lg:text-1.6"
 						/>
 
 						<ErrorParagraph formState={formState} errorField="title" />
@@ -89,7 +89,7 @@ function StepTwo() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-1.6 rounded-10 border-unfocused text-1.2 px-0.8 py-2.3 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
+										className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1.2 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
 									>
 										<Select.Value placeholder="Specify who is fundraising" />
 									</Select.Trigger>
@@ -117,7 +117,7 @@ function StepTwo() {
 							id="goal"
 							type="number"
 							placeholder="Set a realistic target amount"
-							className="w-full mt-1.6 rounded-10 border border-unfocused px-0.8 py-1.6 text-1.2 focus-visible:outline-formBtn lg:py-2.2 lg:px-1.6 lg:text-1.6"
+							className="mt-1.6 w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1.2 focus-visible:outline-formBtn lg:px-1.6 lg:py-2.2 lg:text-1.6"
 						/>
 
 						<ErrorParagraph formState={formState} errorField="goal" />
@@ -133,7 +133,7 @@ function StepTwo() {
 							name="deadline"
 							render={({ field }) => (
 								<DatePicker
-									className="mt-1.6 w-full justify-between rounded-10 border border-unfocused px-0.8 py-2.3 text-1.2 lg:py-3.4 lg:px-1.6 lg:text-1.6"
+									className="mt-1.6 w-full justify-between rounded-10 border border-unfocused px-0.8 py-2.3 text-1.2 lg:px-1.6 lg:py-3.4 lg:text-1.6"
 									placeholder="Specify the end date for your campaign"
 									dateValueString={field.value}
 									onChange={field.onChange}

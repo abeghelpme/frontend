@@ -74,9 +74,9 @@ function StepThree() {
 					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
-				<ol className="flex flex-col gap-2.4">
+				<ol className="gap-2.4 flex flex-col">
 					<li>
-						<label className="text-1.4 font-semibold lg:text-2">
+						<label className="text-1.4 lg:text-2 font-semibold">
 							Campaign Cover Image
 						</label>
 
@@ -99,7 +99,7 @@ function StepThree() {
 					</li>
 
 					<li>
-						<label className="text-1.4 font-semibold lg:text-2">
+						<label className="text-1.4 lg:text-2 font-semibold">
 							Campaign Story
 						</label>
 

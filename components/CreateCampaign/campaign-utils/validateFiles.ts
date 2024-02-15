@@ -1,4 +1,4 @@
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui";
 import {
 	MAX_FILES_QUANTITY,
 	MAX_FILE_SIZE,
@@ -6,19 +6,10 @@ import {
 	allowedFileTypes,
 } from "./constants";
 
-type ValidateFilesParams =
-	| [fileList: FileList]
-	| [fileList: FileList, exisitingimageFiles: File[]];
-
-function validateFiles(fileList: FileList): File[];
-function validateFiles(fileList: FileList, exisitingimageFiles: File[]): File[];
-
-function validateFiles(...params: ValidateFilesParams) {
-	const [newFileList, exisitingImageArray] = params;
-
+const validateFiles = (newFileList: FileList, exisitingImageArray?: File[]) => {
 	const validFilesArray: File[] = [];
 
-	Array.from(newFileList).forEach((file) => {
+	for (const file of newFileList) {
 		if (!allowedFileTypes.includes(file.type)) {
 			toast({
 				title: "Error",
@@ -27,7 +18,7 @@ function validateFiles(...params: ValidateFilesParams) {
 				variant: "destructive",
 			});
 
-			return;
+			continue;
 		}
 
 		if (file.size > MAX_FILE_SIZE) {
@@ -38,22 +29,22 @@ function validateFiles(...params: ValidateFilesParams) {
 				variant: "destructive",
 			});
 
-			return;
+			continue;
 		}
 
 		if (!exisitingImageArray) {
 			validFilesArray.push(file);
-			return;
+			continue;
 		}
 
 		const isFileUnique = exisitingImageArray.every(
 			(imageFile) => imageFile.name !== file.name
 		);
 
-		if (!isFileUnique) return;
+		if (!isFileUnique) continue;
 
 		validFilesArray.push(file);
-	});
+	}
 
 	if (validFilesArray.length > MAX_FILES_QUANTITY) {
 		toast({
@@ -66,6 +57,6 @@ function validateFiles(...params: ValidateFilesParams) {
 	}
 
 	return validFilesArray;
-}
+};
 
 export { validateFiles };

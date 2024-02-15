@@ -1,6 +1,6 @@
 import { useFormStore } from "@/store/formStore";
 import { useEffect, useRef } from "react";
-import { type FieldValues, type FormState } from "react-hook-form";
+import type { FieldValues, FormState } from "react-hook-form";
 
 const useWatchFormStatus = <TStepData extends FieldValues>(
 	formState: FormState<TStepData>
@@ -23,6 +23,7 @@ const useWatchFormStatus = <TStepData extends FieldValues>(
 		}
 
 		setFormStatus({ isValid, isSubmitting });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isValid, isSubmitting]);
 };
 

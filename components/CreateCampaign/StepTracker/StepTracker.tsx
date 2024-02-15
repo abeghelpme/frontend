@@ -6,7 +6,7 @@ function StepTracker() {
 
 	return (
 		<>
-			<div className="flex flex-col text-1.2">
+			<div className="text-1.2 flex flex-col">
 				<StepIndicator step={1} isCompleted={currentStep > 1} />
 
 				<StepIndicator
@@ -18,7 +18,7 @@ function StepTracker() {
 				<StepIndicator step={3} disabled={currentStep < 3} />
 			</div>
 
-			<div className="flex flex-col items-center justify-between gap-3.2 text-1.2 text-formBtn lg:max-w-21.3 lg:text-1.4">
+			<div className="gap-3.2 text-1.2 text-formBtn lg:max-w-21.3 lg:text-1.4 flex flex-col items-center justify-between">
 				<StepInformation
 					title="Basic Info"
 					description="Create a campaign to fund your passion or cause"
