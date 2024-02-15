@@ -2,17 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-	font-size: 62.5%;
-}
-
-body {
-	font-size: 1.6rem;
-}
 
 html,
 body {
 	min-height: 100%;
+}
+
+html:has([data-rem-reset]) {
+	font-size: 62.5%;
+}
+
+body:has([data-rem-reset]) {
+	font-size: 1.6rem;
 }
 
 input[type="number"] {
