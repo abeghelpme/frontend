@@ -1,5 +1,8 @@
-import { Card, TotalDonors, WorldMap } from "@/components/campaign-analytics";
-import React from "react";
+import {
+	Card,
+	SingleCountryDonor,
+	WorldMap,
+} from "@/components/campaign-analytics";
 
 type Dummy = { title: string; amount: string; analytics: string };
 const CampaignAnalytics = () => {
@@ -43,7 +46,17 @@ const CampaignAnalytics = () => {
 				</div>
 				<div className="flex gap-8 md:gap-16 flex-col md:flex-row ">
 					<WorldMap />
-					<TotalDonors />
+					<div className="flex flex-col gap-3 flex-1  ">
+						<p className=" text-2xl md:text-4xl font-semibold">10.8K</p>
+						<div className="parent-to-make-a-compontnet flex flex-col gap-2">
+							<SingleCountryDonor countryName="Nigeria" progress={70} />
+							<SingleCountryDonor countryName="Ghana" progress={49} />
+							<SingleCountryDonor countryName="Liberia" progress={30} />
+							<SingleCountryDonor countryName="Cameroon" progress={17} />
+							<SingleCountryDonor countryName="Gambia" progress={7} />
+							<SingleCountryDonor countryName="Mali" progress={33} />
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>

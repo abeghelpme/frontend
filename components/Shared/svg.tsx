@@ -50,7 +50,7 @@ export const ArrowDown = () => (
 	</svg>
 );
 
-export const RecieveIcon = () => {
+export const ReceiveIcon = () => {
 	return (
 		<svg
 			width="20"
@@ -107,3 +107,133 @@ export const RecieveIcon = () => {
 		</svg>
 	);
 };
+export const NigeriaFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-ng"
+		viewBox="0 0 512 512"
+	>
+		<g fill-rule="evenodd" stroke-width="1pt">
+			<path fill="#fff" d="M0 0h512v512H0z" />
+			<path fill="#008753" d="M341.3 0H512v512H341.3zM0 0h170.7v512H0z" />
+		</g>
+	</svg>
+);
+export const GambiaFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-gm"
+		viewBox="0 0 512 512"
+	>
+		<g fill-rule="evenodd" stroke-width="1pt">
+			<path fill="red" d="M0 0h512v170.7H0z" />
+			<path fill="#fff" d="M0 170.7h512V199H0z" />
+			<path fill="#009" d="M0 199.1h512V313H0z" />
+			<path fill="#fff" d="M0 312.9h512v28.4H0z" />
+			<path fill="#090" d="M0 341.3h512V512H0z" />
+		</g>
+	</svg>
+);
+// Nigeria, Ghana, Mali, Liberia, Cameroon, Gambia
+
+export const GhanaFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-gh"
+		viewBox="0 0 512 512"
+	>
+		<path fill="#006b3f" d="M0 0h512v512H0z" />
+		<path fill="#fcd116" d="M0 0h512v341.3H0z" />
+		<path fill="#ce1126" d="M0 0h512v170.7H0z" />
+		<path
+			fill="#000001"
+			d="m256 170.7 55.5 170.6L166.3 236h179.4L200.6 341.3z"
+		/>
+	</svg>
+);
+export const MaliFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-ml"
+		viewBox="0 0 512 512"
+	>
+		<g fill-rule="evenodd">
+			<path fill="red" d="M340.6 0H512v512H340.6z" />
+			<path fill="#009a00" d="M0 0h170.3v512H0z" />
+			<path fill="#ff0" d="M170.3 0h171.2v512H170.3z" />
+		</g>
+	</svg>
+);
+export const LiberiaFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-lr"
+		viewBox="0 0 512 512"
+	>
+		<defs>
+			<clipPath id="lr-a">
+				<path fill-opacity=".7" d="M0 0h512v512H0z" />
+			</clipPath>
+		</defs>
+		<g fill-rule="evenodd" clip-path="url(#lr-a)">
+			<path fill="#fff" d="M0 0h767.9v512H0z" />
+			<path fill="#006" d="M0 0h232.7v232.8H0z" />
+			<path fill="#c00" d="M0 464.9h767.9V512H0z" />
+			<path
+				fill="#c00"
+				d="M0 465.4h767.9V512H0zm0-92.9h767.9v46.2H0zm0-93.2h766V326H0zM232.7 0h535.1v46.5H232.7zm0 186h535.1v46.8H232.7zm0-92.7h535.1v46.5H232.7z"
+			/>
+			<path
+				fill="#fff"
+				d="m166.3 177.5-50.7-31-50.4 31.3 18.7-50.9-50.3-31.4 62.3-.4 19.3-50.7L135 95h62.3l-50.1 31.7z"
+			/>
+		</g>
+	</svg>
+);
+export const CameroonFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		xmlns-xlink="http://www.w3.org/1999/xlink"
+		id="flag-icons-cm"
+		viewBox="0 0 512 512"
+	>
+		<path fill="#007a5e" d="M0 0h170.7v512H0z" />
+		<path fill="#ce1126" d="M170.7 0h170.6v512H170.7z" />
+		<path fill="#fcd116" d="M341.3 0H512v512H341.3z" />
+		<g fill="#fcd116" transform="translate(256 256)scale(5.6889)">
+			<g id="cm-b">
+				<path id="cm-a" d="M0-8-2.5-.4 1.3.9z" />
+				<use
+					xlinkHref="#cm-a"
+					width="100%"
+					height="100%"
+					transform="scale(-1 1)"
+				/>
+			</g>
+			<use
+				xlinkHref="#cm-b"
+				width="100%"
+				height="100%"
+				transform="rotate(72)"
+			/>
+			<use
+				xlinkHref="#cm-b"
+				width="100%"
+				height="100%"
+				transform="rotate(144)"
+			/>
+			<use
+				xlinkHref="#cm-b"
+				width="100%"
+				height="100%"
+				transform="rotate(-144)"
+			/>
+			<use
+				xlinkHref="#cm-b"
+				width="100%"
+				height="100%"
+				transform="rotate(-72)"
+			/>
+		</g>
+	</svg>
+);

@@ -1,4 +1,3 @@
-import React from "react";
 import {
 	ComposableMap,
 	Geographies,
@@ -7,19 +6,48 @@ import {
 } from "react-simple-maps";
 
 type Markers = {
-	markerOffset: number;
 	name: string;
 	coordinates: [number, number];
 };
 
+const Countries = {
+	Nigeria: {
+		country: "Nigeria",
+		coordinates: [9.0563, 7.4985],
+	},
+	Ghana: {
+		country: "Ghana",
+		coordinates: [9.0563, 7.4985],
+	},
+	Mali: { country: "Mali", coordinates: [9.0563, 7.4985] },
+	Liberia: {
+		country: "Liberia",
+		coordinates: [9.0563, 7.4985],
+	},
+	Cameroon: {
+		country: "Cameroon",
+		coordinates: [9.0563, 7.4985],
+	},
+	Gambia: {
+		country: "Gambia",
+		coordinates: [9.0563, 7.4985],
+	},
+};
+// TODO:
+// Nigeria, Ghana, Mali, Liberia, Cameroon, Gambia
+// select instead of dropdown menu
+// Arbitrary values
+// Make worldmap a component with a worldmap geojson in the world map folder THIS THROWS A BUG:
+// make use of svg for the countries flag
+
 const markers: Markers[] = [
-	{ markerOffset: 5, name: "Brasilia", coordinates: [-47.8825, -15.7942] },
-	{ markerOffset: 5, name: "Santiago", coordinates: [-70.6693, -33.4489] },
-	{ markerOffset: 5, name: "Quito", coordinates: [-78.4678, -0.1807] },
-	{ markerOffset: 5, name: "Georgetown", coordinates: [-58.1551, 6.8013] },
-	{ markerOffset: 5, name: "Paramaribo", coordinates: [-55.2038, 5.852] },
-	{ markerOffset: 5, name: "Lima", coordinates: [-77.0428, -12.0464] },
-	{ markerOffset: 5, name: "Nigeria", coordinates: [9.0563, 7.4985] },
+	{ name: "Liberia", coordinates: [6.4281, 9.4295] },
+	{ name: "Santiago", coordinates: [-70.6693, -33.4489] },
+	{ name: "Quito", coordinates: [-78.4678, -0.1807] },
+	{ name: "Georgetown", coordinates: [-58.1551, 6.8013] },
+	{ name: "Paramaribo", coordinates: [-55.2038, 5.852] },
+	{ name: "Lima", coordinates: [-77.0428, -12.0464] },
+	{ name: "Nigeria", coordinates: [9.0563, 7.4985] },
 ];
 
 const WorldMap = () => {

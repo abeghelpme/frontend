@@ -1,4 +1,4 @@
-import { ArrowDown, RecieveIcon } from "@/components/Shared";
+import { ArrowDown, ReceiveIcon } from "@/components/Shared";
 import { Button } from "@/components/ui";
 import {
 	DropdownMenu,
@@ -7,7 +7,7 @@ import {
 	DropdownMenuRadioItem,
 	DropdownMenuTrigger,
 } from "@/components/ui";
-import React, { useState } from "react";
+import { useState } from "react";
 
 type CardProps = { title: string; amount?: string; analytics?: string };
 const Card = ({ title, amount = "0", analytics = "+ 0%" }: CardProps) => {
@@ -16,7 +16,7 @@ const Card = ({ title, amount = "0", analytics = "+ 0%" }: CardProps) => {
 	return (
 		<div className="text-[#484848] text-sm  md:text-base flex flex-col justify-center gap-3 lg:gap-4 p-4 w-full border-[0.3px] border-[#8D8B8B] rounded-xl h-[180px] text-opacity-80 bg-white">
 			<div className="flex relative gap-4 justify-center items-center">
-				<RecieveIcon />
+				<ReceiveIcon />
 				<p className="flex-1">Total {title}</p>
 				<DropdownMenu>
 					<DropdownMenuTrigger

@@ -8,4 +8,14 @@ export { default as NavBar } from "./NavBar";
 export { default as OtpInputDisplay } from "./OtpInputDisplay";
 export { default as Spinner } from "./Spinner";
 export { default as Success } from "./Success";
-export { AbegHelpLogo, ArrowDown, RecieveIcon } from "./svg";
+export {
+	AbegHelpLogo,
+	ArrowDown,
+	ReceiveIcon,
+	NigeriaFlag,
+	LiberiaFlag,
+	CameroonFlag,
+	GambiaFlag,
+	GhanaFlag,
+	MaliFlag,
+} from "./svg";
