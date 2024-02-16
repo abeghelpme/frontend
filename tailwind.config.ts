@@ -64,6 +64,10 @@ const config = {
 				"3xl": "2000px",
 			},
 
+			height: {
+				"23": "6rem",
+			},
+
 			backgroundImage: {
 				contours: "url('/assets/images/shared/bg-contours.png')",
 				"contours-old": "url('/assets/images/shared/contours-old.png')",
