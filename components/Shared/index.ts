@@ -19,3 +19,4 @@ export {
 	MaliFlag,
 } from "./svg";
 export { default as Success } from "./Success";
+export { default as PageMetaData } from "./PageMetaData";

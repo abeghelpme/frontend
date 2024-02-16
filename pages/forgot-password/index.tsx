@@ -1,6 +1,8 @@
+import CloudflareTurnstile from "@/components/Shared/CloudflareTurnstile";
 import { Button, Input, useToast } from "@/components/ui";
 import { AuthLayout } from "@/layouts";
 import { type ForgotPasswordType, callApi, zodValidator } from "@/lib";
+import { useCloudflareTurnstile } from "@/lib/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,6 +11,8 @@ import { useForm } from "react-hook-form";
 const ForgotPasswordPage = () => {
 	const router = useRouter();
 	const { toast } = useToast();
+	const { cfTurnStile, checkBotStatus, handleBotStatus } =
+		useCloudflareTurnstile();
 
 	const {
 		handleSubmit,
@@ -49,11 +53,19 @@ const ForgotPasswordPage = () => {
 	};
 
 	return (
-		<AuthLayout formType="other" withHeader={false} hasSuccess={false}>
+		<AuthLayout
+			title="Forgot Password"
+			content="Reset your password. Follow the instructions on this page to get your account back!"
+			formType="other"
+			withHeader={false}
+			hasSuccess={false}
+		>
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onSubmit)(event);
+					const response = checkBotStatus();
+
+					response && void handleSubmit(onSubmit)(event);
 				}}
 				className="flex flex-col gap-5"
 			>
@@ -88,7 +100,10 @@ const ForgotPasswordPage = () => {
 						)}
 					</div>
 				</div>
-
+				<CloudflareTurnstile
+					ref={cfTurnStile}
+					onStatusChange={handleBotStatus}
+				/>
 				<div className="flex flex-col gap-4 text-center">
 					<Button
 						disabled={isSubmitting}

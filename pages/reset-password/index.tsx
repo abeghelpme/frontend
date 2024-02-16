@@ -1,3 +1,4 @@
+import { CloudFlareTurnStile } from "@/components/Shared";
 import { Button, Input, ProgressBar, useToast } from "@/components/ui";
 import { AuthLayout } from "@/layouts";
 import {
@@ -6,6 +7,7 @@ import {
 	checkPasswordStrength,
 	zodValidator,
 } from "@/lib";
+import { useCloudflareTurnstile } from "@/lib/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useDeferredValue, useEffect, useState } from "react";
@@ -14,6 +16,8 @@ import { useForm } from "react-hook-form";
 const ResetPassword = () => {
 	const router = useRouter();
 	const { toast } = useToast();
+	const { cfTurnStile, checkBotStatus, handleBotStatus } =
+		useCloudflareTurnstile();
 
 	const [token, setToken] = useState("");
 	useEffect(() => {
@@ -79,11 +83,19 @@ const ResetPassword = () => {
 	};
 
 	return (
-		<AuthLayout formType="other" withHeader={false} hasSuccess={false}>
+		<AuthLayout
+			title="Reset Password"
+			content="Reset your Password! Follow the instructions on this page to reset your password!"
+			formType="other"
+			withHeader={false}
+			hasSuccess={false}
+		>
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onSubmit)(event);
+
+					const response = checkBotStatus();
+					response && void handleSubmit(onSubmit)(event);
 				}}
 				className="flex flex-col"
 			>
@@ -166,7 +178,10 @@ const ResetPassword = () => {
 						</div>
 					</div>
 				</div>
-
+				<CloudFlareTurnStile
+					ref={cfTurnStile}
+					onStatusChange={handleBotStatus}
+				/>
 				<Button
 					disabled={isSubmitting}
 					loading={isSubmitting}

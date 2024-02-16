@@ -4,7 +4,14 @@ import Link from "next/link";
 
 const ResetPasswordSuccessPage = () => {
 	return (
-		<AuthLayout withHeader={false} hasSuccess contentClass="" formType="other">
+		<AuthLayout
+			title="Success"
+			content="You have successfully Reset Password!"
+			withHeader={false}
+			hasSuccess
+			contentClass=""
+			formType="other"
+		>
 			<Success textContent="Password Reset Successful">
 				<Link
 					href="/signin"
