@@ -9,10 +9,10 @@ export const ArrowDownIcon = () => (
 		<path
 			d="M13.2797 5.9668L8.93306 10.3135C8.41973 10.8268 7.57973 10.8268 7.06639 10.3135L2.71973 5.9668"
 			stroke="#292D32"
-			stroke-width="1.5"
-			stroke-miterlimit="10"
-			stroke-linecap="round"
-			stroke-linejoin="round"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"
 		/>
 	</svg>
 );

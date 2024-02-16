@@ -127,6 +127,7 @@ const dashboard = () => {
 					<div className="w-full lg:w-1/2">
 						<Image
 							src={dashboardImage}
+							priority
 							alt="Dashboard Image"
 							width={500}
 							height={500}
@@ -240,6 +241,7 @@ const dashboard = () => {
 								<Image
 									src={item.image}
 									alt={item.name}
+									priority
 									width={400}
 									height={400}
 									className="pb-3 object-cover w-full rounded-md h-60"
