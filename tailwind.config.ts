@@ -11,6 +11,12 @@ const config = {
 
 	theme: {
 		extend: {
+			borderWidth: {
+				CampaignCardBorderWidth: "0.3px",
+			},
+			borderColor: {
+				CampaignCardBorderColor: "#8D8B8B",
+			},
 			spacing: {
 				// PADDING (X & Y)
 				DSignupFormPadding: "3rem",
