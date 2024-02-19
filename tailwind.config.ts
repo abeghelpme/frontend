@@ -14,9 +14,7 @@ const config = {
 			borderWidth: {
 				CampaignCardBorderWidth: "0.3px",
 			},
-			borderColor: {
-				CampaignCardBorderColor: "#8D8B8B",
-			},
+
 			spacing: {
 				// PADDING (X & Y)
 				DSignupFormPadding: "3rem",
@@ -38,6 +36,42 @@ const config = {
 				// GAP (X & Y)
 				DSignupFormGap: "1.5rem",
 				MSignupFormGap: "1rem",
+				SuccessGap: "1.5rem",
+
+				// Padding, margins and gap sizes
+				"@0.3": "0.1875rem",
+				"@0.4": "0.25rem",
+				"@0.8": "0.5rem",
+				"@1": "0.625rem",
+				"@1.2": "0.75rem",
+				"@1.3": "0.8125rem",
+				"@1.4": "0.875rem",
+				"@1.5": "0.9375rem",
+				"@1.6": "1rem",
+				"@1.8": "1.125rem",
+				"@1.9": "1.1875rem",
+				"@2": "1.25rem",
+				"@2.2": "1.375rem",
+				"@2.3": "1.4375rem",
+				"@2.4": "1.5rem",
+				"@2.6": "1.625rem",
+				"@2.8": "1.75rem",
+				"@3": "1.875rem",
+				"@3.2": "2rem",
+				"@3.4": "2.125rem",
+				"@4": "2.5rem",
+				"@4.8": "3rem",
+				"@5.5": "3.4375rem",
+				"@6.2": "3.875rem",
+				"@7": "4.375rem",
+				"@10": "6.25rem",
+
+				// Heights
+				"@20": "12.5rem",
+				"@21.3": "13.3125rem",
+				"@25": "15.625rem",
+				"@32.4": "20.25rem",
+				"@50.5": "31.5625rem",
 				AuthFlowGap: "1.5rem",
 			},
 			screens: {
@@ -45,16 +79,34 @@ const config = {
 			},
 			backgroundImage: {
 				contours: "url('/assets/images/shared/bg-contours.png')",
+				"contours-old": "url('/assets/images/shared/contours-old.png')",
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
+
 			boxShadow: {
-				"auth-layout-shadow": " 0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
-				otpInput: "2px 4px 4px 0 rgba(139, 210, 189, 0.1)",
+				"auth-layout-shadow": "0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
 			},
+
 			colors: {
-				overlay: "rgba(72, 72, 72, 0.5)",
+				text: "#1B1818",
+				successText: "#484848",
+				placeholder: "#8D8B8B",
+				unfocused: "#A8CCCC",
+				formBtn: "#008080",
+				semiWhite: "#E6EAEE",
+				validationMsg: "#268384",
+				popover: "hsl(0 0% 100%)",
+				"popover-foreground": "hsl(222.2 47.4% 11.2%)",
+				accent: "hsl(210 40% 96.1%)",
+				"accent-foreground": "hsl(222.2 47.4% 11.2%)",
+				input: "hsl(214.3 31.8% 91.4%)",
+				ring: "hsl(215 20.2% 65.1%)",
+				muted: "hsl(210 40% 96.1%)",
+				"muted-foreground": "hsl(215.4 16.3% 46.9%)",
+				background: "hsl(0 0% 100%)",
+
 				abeg: {
 					primary: "#008080",
 					text: "#484848",
@@ -96,6 +148,7 @@ const config = {
 					},
 				},
 			},
+
 			height: {
 				"23": "6rem",
 				DInputField: "3.13rem",
@@ -105,6 +158,7 @@ const config = {
 				w80: "80%",
 				inputField: "3.13ren",
 			},
+
 			keyframes: {
 				"accordion-down": {
 					from: { height: "0" },
@@ -114,10 +168,17 @@ const config = {
 					from: { height: "var(--radix-accordion-content-height)" },
 					to: { height: "0" },
 				},
+				shake: {
+					"0%, 100%": { transform: "translateX(0rem)" },
+					"25%": { transform: "translateX(0.6rem)" },
+					"75%": { transform: "translateX(-0.6rem)" },
+				},
 			},
+
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
+				shake: "shake 0.2s ease-in-out 0s 3",
 			},
 		},
 	},

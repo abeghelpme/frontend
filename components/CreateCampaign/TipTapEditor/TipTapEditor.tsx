@@ -1,8 +1,8 @@
+import { getEditorExtensions } from "@/lib/helpers/campaign";
 import type { StepThreeData } from "@/store/formStore";
 import { EditorContent, useEditor } from "@tiptap/react";
 import DOMPurify from "isomorphic-dompurify";
 import type { UseFormSetValue } from "react-hook-form";
-import { getEditorExtensions } from "../campaign-utils";
 import TipTapToolBar from "./TipTapToolBar";
 
 type EditorProps = {
@@ -21,7 +21,7 @@ function TiptapEditor(props: EditorProps) {
 		editorProps: {
 			attributes: {
 				class:
-					"focus-visible:outline-none disabled:cursor-not-allowed min-h-[10rem]",
+					"focus-visible:outline-none disabled:cursor-not-allowed min-h-24",
 			},
 		},
 
@@ -40,16 +40,16 @@ function TiptapEditor(props: EditorProps) {
 	}
 
 	return (
-		<div className="gap-0.8 rounded-6 border-unfocused p-1.6 focus-within:outline-formBtn flex min-h-[17.8rem] flex-col justify-between border focus-within:outline-2">
+		<div className="focus-within:outline-@2 flex min-h-44 flex-col justify-between gap-@0.8 rounded-md border border-unfocused p-@1.6 focus-within:outline-formBtn lg:min-h-48">
 			<EditorContent
 				editor={editor}
-				className="text-1.2 lg:text-1.6 [&_p.is-editor-empty:first-child]:before:text-placeholder [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:absolute [&_p.is-editor-empty:first-child]:before:left-0 [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"
+				className="text-xs lg:text-base [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:absolute [&_p.is-editor-empty:first-child]:before:left-0 [&_p.is-editor-empty:first-child]:before:text-placeholder [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"
 			/>
 
-			<div className="gap-0.8 lg:gap-4.8 flex flex-col lg:flex-row lg:items-center lg:justify-between">
+			<div className="flex flex-col gap-@0.8 lg:flex-row lg:items-center lg:justify-between lg:gap-@4.8">
 				<TipTapToolBar editor={editor} />
 
-				<p className="text-1.2 lg:text-1.6 opacity-70">
+				<p className="text-xs opacity-70 lg:text-base">
 					Add images/videos to make your story more compelling
 				</p>
 			</div>

@@ -5,13 +5,13 @@ const getEditorExtensions = (placeholder = "") => [
 	StarterKit.configure({
 		bulletList: {
 			HTMLAttributes: {
-				class: "list-disc px-1.6",
+				class: "list-disc px-@1.6",
 			},
 		},
 
 		orderedList: {
 			HTMLAttributes: {
-				class: "list-decimal marker:font-semibold px-1.4",
+				class: "list-decimal marker:font-semibold px-@1.4",
 			},
 		},
 

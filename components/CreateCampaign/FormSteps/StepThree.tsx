@@ -1,4 +1,5 @@
 import { callApi, zodValidator } from "@/lib";
+import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
 	type StepThreeData,
@@ -12,7 +13,6 @@ import ErrorParagraph from "../ErrorParagraph";
 import Heading from "../Heading";
 import ImagePreview from "../ImagePreview";
 import TiptapEditor from "../TipTapEditor";
-import { useWatchFormStatus } from "./useWatchFormStatus";
 
 function StepThree() {
 	const {
@@ -56,8 +56,8 @@ function StepThree() {
 		);
 
 		if (dataInfo) {
+			void router.push("/create-campaign/preview");
 		}
-		void router.push("/create-campaign/preview");
 	};
 
 	return (
@@ -68,15 +68,15 @@ function StepThree() {
 
 			<form
 				id={STEP_DATA_KEY_LOOKUP[3]}
-				className="mt-3.2 lg:mt-4.8"
+				className="mt-@3.2 lg:mt-@4.8"
 				onSubmit={(event) => {
 					event.preventDefault();
 					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
-				<ol className="gap-2.4 flex flex-col">
+				<ol className="flex flex-col gap-@2.4">
 					<li>
-						<label className="text-1.4 lg:text-2 font-semibold">
+						<label className="text-sm font-semibold lg:text-xl">
 							Campaign Cover Image
 						</label>
 
@@ -99,11 +99,11 @@ function StepThree() {
 					</li>
 
 					<li>
-						<label className="text-1.4 lg:text-2 font-semibold">
+						<label className="text-sm font-semibold lg:text-xl">
 							Campaign Story
 						</label>
 
-						<p className="my-1.6 text-1.2 lg:text-1.6">
+						<p className="my-@1.6 text-xs lg:text-base">
 							A detailed description of the campaign, outlining the need for
 							funding and how the funds will be used.
 						</p>
