@@ -1,10 +1,10 @@
 {
 	"recommendations": [
-    "yzhang.markdown-all-in-one", // Markdown All in One
-    "christian-kohler.path-intellisense", // Path Intellisense,
-    "eamodio.gitlens", // GitLens — Git supercharged
-    "wix.vscode-import-cost", // Import Cost,
-    "formulahendry.auto-rename-tag", // Auto Rename Tag
-    "streetsidesoftware.code-spell-checker" // Code Spell Checker
-  ]
+		"yzhang.markdown-all-in-one", // Markdown All in One
+		"christian-kohler.path-intellisense", // Path Intellisense,
+		"eamodio.gitlens", // GitLens — Git supercharged
+		"wix.vscode-import-cost", // Import Cost,
+		"formulahendry.auto-rename-tag", // Auto Rename Tag
+		"streetsidesoftware.code-spell-checker" // Code Spell Checker
+	]
 }
