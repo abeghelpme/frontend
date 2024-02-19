@@ -5,32 +5,28 @@ import {
 	Marker,
 } from "react-simple-maps";
 
-type Markers = {
-	name: string;
-	coordinates: [number, number];
+type CountriesMap = {
+	[key: string]: { coordinates: [number, number] };
 };
 
-const Countries = {
+const Countries: CountriesMap = {
 	Nigeria: {
-		country: "Nigeria",
 		coordinates: [9.0563, 7.4985],
 	},
 	Ghana: {
-		country: "Ghana",
-		coordinates: [9.0563, 7.4985],
+		coordinates: [7.9465, 1.0232],
 	},
-	Mali: { country: "Mali", coordinates: [9.0563, 7.4985] },
+	Mali: {
+		coordinates: [17.5707, 3.9962],
+	},
 	Liberia: {
-		country: "Liberia",
-		coordinates: [9.0563, 7.4985],
+		coordinates: [6.4281, 9.4295],
 	},
 	Cameroon: {
-		country: "Cameroon",
-		coordinates: [9.0563, 7.4985],
+		coordinates: [7.3697, 12.3547],
 	},
 	Gambia: {
-		country: "Gambia",
-		coordinates: [9.0563, 7.4985],
+		coordinates: [13.4432, 15.3101],
 	},
 };
 // TODO:
@@ -40,17 +36,7 @@ const Countries = {
 // Make worldmap a component with a worldmap geojson in the world map folder THIS THROWS A BUG:
 // make use of svg for the countries flag
 
-const markers: Markers[] = [
-	{ name: "Liberia", coordinates: [6.4281, 9.4295] },
-	{ name: "Santiago", coordinates: [-70.6693, -33.4489] },
-	{ name: "Quito", coordinates: [-78.4678, -0.1807] },
-	{ name: "Georgetown", coordinates: [-58.1551, 6.8013] },
-	{ name: "Paramaribo", coordinates: [-55.2038, 5.852] },
-	{ name: "Lima", coordinates: [-77.0428, -12.0464] },
-	{ name: "Nigeria", coordinates: [9.0563, 7.4985] },
-];
-
-const WorldMap = () => {
+const WorldMap = ({ countries }: { countries?: string[] }) => {
 	return (
 		<>
 			<ComposableMap
@@ -71,8 +57,8 @@ const WorldMap = () => {
 						))
 					}
 				</Geographies>
-				{markers.map(({ name, coordinates }) => (
-					<Marker key={name} coordinates={coordinates}>
+				{countries?.map((name) => (
+					<Marker key={name} coordinates={Countries[name].coordinates}>
 						<circle
 							r={5}
 							fill="#A8CCCC"

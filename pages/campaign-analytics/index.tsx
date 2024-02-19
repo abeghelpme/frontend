@@ -45,7 +45,7 @@ const CampaignAnalytics = () => {
 					</p>
 				</div>
 				<div className="flex gap-8 md:gap-16 flex-col md:flex-row ">
-					<WorldMap />
+					<WorldMap countries={["Nigeria", "Mali"]} />
 					<div className="flex flex-col gap-3 flex-1  ">
 						<p className=" text-2xl md:text-4xl font-semibold">10.8K</p>
 						<div className="flex flex-col gap-2">
