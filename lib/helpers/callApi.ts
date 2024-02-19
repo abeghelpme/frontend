@@ -1,13 +1,10 @@
 import { useSession } from "@/store";
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
+import { assertENV, isObject } from "./global-type-helpers";
 
-const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_URL!;
-
-if (!BACKEND_API) {
-	throw new Error(
-		"Please add the NEXT_PUBLIC_BACKEND_API variable to your .env file"
-	);
-}
+const BACKEND_API = assertENV(process.env.NEXT_PUBLIC_BACKEND_URL, {
+	message: "Please add the NEXT_PUBLIC_BACKEND_API variable to your .env file",
+});
 
 const api: AxiosInstance = axios.create({
 	baseURL: BACKEND_API,
@@ -22,8 +19,8 @@ interface ApiError {
 	headers?: Record<string, unknown>;
 }
 export const callApi = async <T>(
-	endpoint: string,
-	data?: Record<string, unknown>
+	endpoint: `/${string}`,
+	data?: Record<string, unknown> | FormData
 ): Promise<{ data?: T; error?: ApiError }> => {
 	const source = axios.CancelToken.source();
 	const method = data ? "POST" : "GET";
@@ -33,8 +30,15 @@ export const callApi = async <T>(
 			url: endpoint,
 			method,
 			...(data && { data }),
+			headers: isObject(data)
+				? {
+						"Content-Type": "application/json",
+						Accept: "application/json",
+				  }
+				: { "Content-Type": "multipart/form-data" },
 			cancelToken: source.token,
 		});
+
 		return { data: response.data };
 	} catch (error) {
 		let apiError: ApiError | undefined;
