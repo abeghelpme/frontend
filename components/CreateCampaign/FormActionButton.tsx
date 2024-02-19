@@ -38,7 +38,7 @@ function FormActionButton(props: FormActionButtonProps) {
 			type={type}
 			variant={variant}
 			className={cn(
-				"flex items-center gap-0.4 rounded-6 px-1.2 py-0.8 text-1.2 font-semibold lg:rounded-8 lg:px-2.4 lg:py-1.6 lg:text-1.5 lg:font-bold",
+				"flex items-center gap-@0.4 rounded-md px-@1.2 py-@0.8 text-xs font-semibold lg:rounded-lg lg:px-@2.4 lg:py-@1.6 lg:text-[length:theme(spacing[@1.5])] lg:font-bold",
 				disabled && "cursor-not-allowed bg-unfocused",
 				className
 			)}
@@ -46,7 +46,7 @@ function FormActionButton(props: FormActionButtonProps) {
 			disabled={disabled}
 		>
 			{isLoading && (
-				<ArrowSpinIcon className="size-1.6 animate-spin lg:size-2" />
+				<ArrowSpinIcon className="size-@1.6 animate-spin lg:size-@2" />
 			)}
 			{"children" in restOfProps ? restOfProps.children : restOfProps.text}
 		</Button>

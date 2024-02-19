@@ -2,12 +2,12 @@ import { cn } from "@/lib";
 import type {
 	AsProp,
 	PolymorphicProps,
-} from "./campaign-utils/polymorphism-helper";
+} from "../../lib/helpers/campaign/polymorphism-helper";
 
 const semanticHeadings = {
-	h1: "font-semibold text-formBtn lg:text-2.4",
-	h2: "font-bold lg:text-2.4",
-	h3: "font-bold lg:text-2",
+	h1: "font-semibold text-formBtn lg:text-xl.4",
+	h2: "font-bold lg:text-xl.4",
+	h3: "font-bold lg:text-xl",
 };
 
 type HeadingElementsType = keyof typeof semanticHeadings;

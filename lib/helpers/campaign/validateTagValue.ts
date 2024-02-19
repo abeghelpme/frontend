@@ -13,6 +13,7 @@ const validateTagValue = (tagsArray: string[], newTag: string | undefined) => {
 		return;
 	} // FIXME - show error
 
+	// eslint-disable-next-line consistent-return
 	return newTag;
 };
 

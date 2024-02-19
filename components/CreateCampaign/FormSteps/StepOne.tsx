@@ -1,6 +1,7 @@
 import { Button, Select } from "@/components/ui";
 import { callApi, zodValidator } from "@/lib";
-import { useElementList } from "@/lib/hooks";
+import { targetCountries, validateTagValue } from "@/lib/helpers/campaign";
+import { useElementList, useWatchFormStatus } from "@/lib/hooks";
 import { CrossIcon } from "@/public/assets/icons/campaign";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -13,9 +14,6 @@ import { type KeyboardEvent, type MouseEvent, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ErrorParagraph from "../ErrorParagraph";
 import Heading from "../Heading";
-import { validateTagValue } from "../campaign-utils";
-import { targetCountries } from "../campaign-utils/constants";
-import { useWatchFormStatus } from "./useWatchFormStatus";
 
 function StepOne() {
 	const tagInputRef = useRef<HTMLInputElement>(null);
@@ -100,15 +98,15 @@ function StepOne() {
 
 			<form
 				id={STEP_DATA_KEY_LOOKUP[currentStep]}
-				className="mt-3.2"
+				className="mt-@3.2"
 				onSubmit={(event) => {
 					event.preventDefault();
 					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
-				<ol className="flex flex-col gap-2.4">
+				<ol className="flex flex-col gap-@2.4">
 					<li>
-						<label className="text-1.4 font-semibold lg:text-2">
+						<label className="text-sm font-semibold lg:text-xl">
 							What best describes your fundraiser?
 						</label>
 
@@ -123,7 +121,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
+										className="mt-@1.6 rounded-[10px] border-unfocused px-@0.8 py-@2.3 text-xs data-[placeholder]:text-placeholder lg:px-@1.6 lg:py-@3.4 lg:text-base"
 									>
 										<Select.Value placeholder="Select what category best suit your fundraiser" />
 									</Select.Trigger>
@@ -146,7 +144,7 @@ function StepOne() {
 					</li>
 
 					<li>
-						<label className="text-1.4 font-semibold lg:text-2">
+						<label className="text-sm font-semibold lg:text-xl">
 							What country are you located?
 						</label>
 
@@ -161,7 +159,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
+										className="mt-@1.6 rounded-[10px] border-unfocused px-@0.8 py-@2.3 text-xs data-[placeholder]:text-placeholder lg:px-@1.6 lg:py-@3.4 lg:text-base"
 									>
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
@@ -187,36 +185,36 @@ function StepOne() {
 					</li>
 
 					<li>
-						<label htmlFor="tags" className="text-1.4 font-semibold lg:text-2">
+						<label htmlFor="tags" className="text-sm font-semibold lg:text-xl">
 							Campaign Tags
 						</label>
 
-						<div className="mt-1.6 flex items-center gap-0.8">
+						<div className="mt-@1.6 flex items-center gap-@0.8">
 							<input
 								ref={tagInputRef}
 								name="tags"
 								type="text"
 								placeholder="Add hashtags or search keywords to your campaign"
-								className="w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1 focus-visible:outline-formBtn lg:px-1.6 lg:py-2.2 lg:text-1.6"
+								className="w-full rounded-[10px] border border-unfocused px-@0.8 py-@1.6 text-xs focus-visible:outline-formBtn lg:px-@1.6 lg:py-@2.2 lg:text-base"
 								onKeyDown={handleAddTags}
 							/>
 
 							<Button
 								type="button"
 								variant="secondary"
-								className="rounded-6 border-formBtn px-1.2 py-0.8 text-1.2 font-semibold text-formBtn lg:px-2.8 lg:py-1.2 lg:text-1.6"
+								className="rounded-md border-formBtn px-@1.2 py-@0.8 text-xs font-semibold text-formBtn lg:px-@2.8 lg:py-@1.2 lg:text-base"
 								onClick={handleAddTags}
 							>
 								Add
 							</Button>
 						</div>
 
-						<div className="mt-1.6 flex flex-col gap-1.6">
-							<span className="text-1.2 text-formBtn">
+						<div className="mt-@1.6 flex flex-col gap-@1.6">
+							<span className="text-xs text-formBtn">
 								{stepOneData.tags.length}/5 tags
 							</span>
 
-							<ul className="flex flex-wrap gap-0.8 text-1.2 font-medium text-formBtn">
+							<ul className="flex flex-wrap gap-@0.8 text-xs font-medium text-formBtn">
 								<TagList
 									each={stepOneData.tags}
 									render={(tag) => (
@@ -231,7 +229,7 @@ function StepOne() {
 												type="button"
 												onClick={handleRemoveTags(tag)}
 											>
-												<CrossIcon className="size-1" />
+												<CrossIcon className="size-@1" />
 											</button>
 										</li>
 									)}

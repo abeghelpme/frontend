@@ -35,7 +35,7 @@ function ImagePreview(props: ImagePreviewProps) {
 	return (
 		<ul
 			className={cn(
-				"custom-scrollbar relative mt-1.3 max-h-[14rem] divide-y divide-gray-600 overscroll-y-contain overflow-y-auto rounded-6 border border-gray-600",
+				"custom-scrollbar relative mt-@1.3 max-h-[14rem] divide-y divide-gray-600 overflow-y-auto overscroll-y-contain rounded-md border border-gray-600",
 				imageFiles.length === 0 && "hidden"
 			)}
 		>
@@ -47,12 +47,12 @@ function ImagePreview(props: ImagePreviewProps) {
 					return (
 						<li
 							key={file.name}
-							className="flex items-center justify-between px-1 py-0.8 text-1.2"
+							className="flex items-center justify-between px-@1 py-@0.8 text-xs"
 						>
-							<div className="flex min-w-0 items-center gap-0.8">
+							<div className="flex min-w-0 items-center gap-@0.8">
 								<Image
 									src={imageUrls[index]}
-									className="size-[4rem] shrink-0 rounded-6 object-cover"
+									className="size-[4rem] shrink-0 rounded-md object-cover"
 									width={40}
 									height={40}
 									alt="thumbnail"
@@ -60,7 +60,7 @@ function ImagePreview(props: ImagePreviewProps) {
 								/>
 
 								{isCoverImage && (
-									<span className="absolute left-[50%] top-0.5 block translate-x-[-50%] text-1.2 font-bold text-formBtn">
+									<span className="absolute left-[50%] top-0.5 block translate-x-[-50%] text-xs font-bold text-formBtn">
 										*Cover image
 									</span>
 								)}

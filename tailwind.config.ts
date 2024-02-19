@@ -43,10 +43,12 @@ const config = {
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
+
 			boxShadow: {
 				"auth-layout-shadow": " 0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
 				otpInput: "2px 4px 4px 0 rgba(139, 210, 189, 0.1)",
 			},
+
 			colors: {
 				overlay: "rgba(72, 72, 72, 0.5)",
 				abeg: {
@@ -90,6 +92,7 @@ const config = {
 					},
 				},
 			},
+
 			height: {
 				"23": "6rem",
 				DInputField: "3.13rem",
@@ -97,7 +100,6 @@ const config = {
 			},
 			width: {
 				w80: "80%",
-				inputField: "3.13ren",
 			},
 			keyframes: {
 				"accordion-down": {
