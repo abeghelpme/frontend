@@ -7,20 +7,20 @@ export const AbegHelpLogo = () => (
 		xmlns="http://www.w3.org/2000/svg"
 	>
 		<path
-			fill-rule="evenodd"
-			clip-rule="evenodd"
+			fillRule="evenodd"
+			clipRule="evenodd"
 			d="M3.22033 0.00174404C10.3794 -0.00289531 17.5387 0.00174404 24.6978 0.0153892C26.3074 0.215154 27.3673 1.0838 27.8771 2.62161C27.9312 2.81837 27.9675 3.01869 27.9863 3.222C28.0046 10.4083 28.0046 17.595 27.9863 24.7813C27.6823 26.6136 26.6133 27.6826 24.7797 27.9879C17.5933 28.0062 10.4067 28.0062 3.22033 27.9879C1.88119 27.8032 0.912383 27.1073 0.313907 25.9002C0.153986 25.5149 0.0538301 25.1148 0.0137134 24.6995C-0.00457113 17.5404 -0.00457113 10.3811 0.0137134 3.222C0.171724 2.00076 0.776751 1.07725 1.82852 0.452034C2.26844 0.215973 2.73237 0.0658762 3.22033 0.00174404Z"
 			fill="#008080"
 		/>
 		<path
-			fill-rule="evenodd"
-			clip-rule="evenodd"
+			fillRule="evenodd"
+			clipRule="evenodd"
 			d="M13.9706 4.06836C17.673 10.6647 21.3662 17.2689 25.0504 23.8811C25.0414 23.8901 25.0321 23.8994 25.0231 23.9084C21.3365 22.0832 17.643 20.2731 13.9433 18.4776C10.2686 20.2832 6.59343 22.0797 2.91797 23.8675C6.60926 17.2703 10.2935 10.6707 13.9706 4.06836Z"
 			fill="#FEFEFE"
 		/>
 		<path
-			fill-rule="evenodd"
-			clip-rule="evenodd"
+			fillRule="evenodd"
+			clipRule="evenodd"
 			d="M13.976 8.08008C16.0951 11.8265 18.2008 15.5835 20.2937 19.351C20.3125 19.3736 20.3079 19.3919 20.2801 19.4056C18.1724 18.3723 16.0667 17.3353 13.9623 16.2945C11.8812 17.3099 9.80248 18.3289 7.72651 19.351C7.7175 19.342 7.70822 19.3327 7.69922 19.3237C9.79184 15.5751 11.8842 11.8273 13.976 8.08008Z"
 			fill="#008080"
 		/>
@@ -42,10 +42,198 @@ export const ArrowDown = () => (
 		<path
 			d="M16.9201 0.949951L10.4001 7.46995C9.63008 8.23995 8.37008 8.23995 7.60008 7.46995L1.08008 0.949951"
 			stroke="#292D32"
-			stroke-width="1.5"
-			stroke-miterlimit="10"
-			stroke-linecap="round"
-			stroke-linejoin="round"
+			strokeWidth="1.5"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"
 		/>
+	</svg>
+);
+
+export const ReceiveIcon = () => {
+	return (
+		<svg
+			width="20"
+			height="20"
+			viewBox="0 0 24 24"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M2 8.5H14.5"
+				stroke="#484848"
+				strokeWidth="1.5"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M6 16.5H8"
+				stroke="#484848"
+				strokeWidth="1.5"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M10.5 16.5H14.5"
+				stroke="#484848"
+				strokeWidth="1.5"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M22 14.03V16.11C22 19.62 21.11 20.5 17.56 20.5H6.44C2.89 20.5 2 19.62 2 16.11V7.89C2 4.38 2.89 3.5 6.44 3.5H14.5"
+				stroke="#484848"
+				strokeWidth="1.5"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M20 3.5V9.5L22 7.5"
+				stroke="#484848"
+				strokeWidth="1.5"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M20 9.5L18 7.5"
+				stroke="#484848"
+				strokeWidth="1.5"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+export const NigeriaFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-ng"
+		viewBox="0 0 512 512"
+	>
+		<g fill-rule="evenodd" stroke-width="1pt">
+			<path fill="#fff" d="M0 0h512v512H0z" />
+			<path fill="#008753" d="M341.3 0H512v512H341.3zM0 0h170.7v512H0z" />
+		</g>
+	</svg>
+);
+export const GambiaFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-gm"
+		viewBox="0 0 512 512"
+	>
+		<g fill-rule="evenodd" stroke-width="1pt">
+			<path fill="red" d="M0 0h512v170.7H0z" />
+			<path fill="#fff" d="M0 170.7h512V199H0z" />
+			<path fill="#009" d="M0 199.1h512V313H0z" />
+			<path fill="#fff" d="M0 312.9h512v28.4H0z" />
+			<path fill="#090" d="M0 341.3h512V512H0z" />
+		</g>
+	</svg>
+);
+// Nigeria, Ghana, Mali, Liberia, Cameroon, Gambia
+
+export const GhanaFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-gh"
+		viewBox="0 0 512 512"
+	>
+		<path fill="#006b3f" d="M0 0h512v512H0z" />
+		<path fill="#fcd116" d="M0 0h512v341.3H0z" />
+		<path fill="#ce1126" d="M0 0h512v170.7H0z" />
+		<path
+			fill="#000001"
+			d="m256 170.7 55.5 170.6L166.3 236h179.4L200.6 341.3z"
+		/>
+	</svg>
+);
+export const MaliFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-ml"
+		viewBox="0 0 512 512"
+	>
+		<g fill-rule="evenodd">
+			<path fill="red" d="M340.6 0H512v512H340.6z" />
+			<path fill="#009a00" d="M0 0h170.3v512H0z" />
+			<path fill="#ff0" d="M170.3 0h171.2v512H170.3z" />
+		</g>
+	</svg>
+);
+export const LiberiaFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		id="flag-icons-lr"
+		viewBox="0 0 512 512"
+	>
+		<defs>
+			<clipPath id="lr-a">
+				<path fill-opacity=".7" d="M0 0h512v512H0z" />
+			</clipPath>
+		</defs>
+		<g fill-rule="evenodd" clip-path="url(#lr-a)">
+			<path fill="#fff" d="M0 0h767.9v512H0z" />
+			<path fill="#006" d="M0 0h232.7v232.8H0z" />
+			<path fill="#c00" d="M0 464.9h767.9V512H0z" />
+			<path
+				fill="#c00"
+				d="M0 465.4h767.9V512H0zm0-92.9h767.9v46.2H0zm0-93.2h766V326H0zM232.7 0h535.1v46.5H232.7zm0 186h535.1v46.8H232.7zm0-92.7h535.1v46.5H232.7z"
+			/>
+			<path
+				fill="#fff"
+				d="m166.3 177.5-50.7-31-50.4 31.3 18.7-50.9-50.3-31.4 62.3-.4 19.3-50.7L135 95h62.3l-50.1 31.7z"
+			/>
+		</g>
+	</svg>
+);
+export const CameroonFlag = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		xmlns-xlink="http://www.w3.org/1999/xlink"
+		id="flag-icons-cm"
+		viewBox="0 0 512 512"
+	>
+		<path fill="#007a5e" d="M0 0h170.7v512H0z" />
+		<path fill="#ce1126" d="M170.7 0h170.6v512H170.7z" />
+		<path fill="#fcd116" d="M341.3 0H512v512H341.3z" />
+		<g fill="#fcd116" transform="translate(256 256)scale(5.6889)">
+			<g id="cm-b">
+				<path id="cm-a" d="M0-8-2.5-.4 1.3.9z" />
+				<use
+					xlinkHref="#cm-a"
+					width="100%"
+					height="100%"
+					transform="scale(-1 1)"
+				/>
+			</g>
+			<use
+				xlinkHref="#cm-b"
+				width="100%"
+				height="100%"
+				transform="rotate(72)"
+			/>
+			<use
+				xlinkHref="#cm-b"
+				width="100%"
+				height="100%"
+				transform="rotate(144)"
+			/>
+			<use
+				xlinkHref="#cm-b"
+				width="100%"
+				height="100%"
+				transform="rotate(-144)"
+			/>
+			<use
+				xlinkHref="#cm-b"
+				width="100%"
+				height="100%"
+				transform="rotate(-72)"
+			/>
+		</g>
 	</svg>
 );

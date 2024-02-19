@@ -11,18 +11,30 @@ const config = {
 
 	theme: {
 		extend: {
+			borderWidth: {
+				CampaignCardBorderWidth: "0.3px",
+			},
+			borderColor: {
+				CampaignCardBorderColor: "#8D8B8B",
+			},
 			spacing: {
 				// PADDING (X & Y)
 				DSignupFormPadding: "3rem",
 				MSignupFormPadding: "1.5rem 1rem",
 				DSigninFormPadding: "1.5rem 3rem",
 				MSigninFormPadding: "1rem",
-				DFPwrdPadding: "1.5rem",
-				MFPwrdPadding: "1rem",
-				DSuccessPadding: "1.5rem",
-				MSuccessPadding: "1rem",
+				DAuthFlowPadding: "1.5rem",
+				DOverlayPadding: "2rem 1.5rem",
+				MOverlayPadding: "1.5rem",
+				MAuthFlowPadding: "1rem",
+				DOtpContainerPadding: "2.5rem 3.13rem",
+				MOtpContainerPadding: "1.5rem 1rem",
 				MLogoBannerPadding: "0.25rem",
 				DLogoBannerPadding: "1rem",
+				DBtnPadding: "1rem 1.5rem",
+				MBtnPadding: "0.75rem 1rem",
+				DInputPadding: "1rem",
+				MInputPadding: "1rem 0.5rem",
 				// GAP (X & Y)
 				DSignupFormGap: "1.5rem",
 				MSignupFormGap: "1rem",
@@ -62,6 +74,7 @@ const config = {
 				"@25": "15.625rem",
 				"@32.4": "20.25rem",
 				"@50.5": "31.5625rem",
+				AuthFlowGap: "1.5rem",
 			},
 			screens: {
 				"3xl": "2000px",
@@ -97,6 +110,12 @@ const config = {
 				background: "hsl(0 0% 100%)",
 
 				abeg: {
+					primary: "#008080",
+					text: "#484848",
+					formLabel: "#1B1818",
+					inputBorder: "rgba(124, 148, 107, 0.25)",
+					otpBorder: "rgba(0, 128, 128, 0.5)",
+
 					button: {
 						10: "#1C8384",
 						20: "#005E5F",
@@ -134,6 +153,12 @@ const config = {
 
 			height: {
 				"23": "6rem",
+				DInputField: "3.13rem",
+				MInputField: "2.9rem",
+			},
+			width: {
+				w80: "80%",
+				inputField: "3.13ren",
 			},
 
 			keyframes: {
