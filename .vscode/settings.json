@@ -1,13 +1,3 @@
 {
-  "githubPullRequests.ignoredPullRequestBranches": ["dev"],
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "prettier.requireConfig": true,
-
-  // Keeps indentation mechanism consistent with Prettier across all machines
-  "editor.tabSize": 2,
-  "editor.indentSize": "tabSize",
-  "editor.detectIndentation": false,
-  "editor.insertSpaces": true,
-  "cSpell.words": ["signin", "SITEKEY", "zustand"]
+	"cSpell.words": ["Abeg", "clsx", "signin", "signup", "zxcvbn"]
 }
