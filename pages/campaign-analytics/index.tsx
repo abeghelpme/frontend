@@ -37,10 +37,10 @@ const CampaignAnalytics = () => {
 					);
 				})}
 			</div>
-			<div className="flex flex-col gap-4 md:gap-8  px-4 py-8 md:p-8 text-[#484848] text-sm  md:text-base border-[0.3px] border-[#8D8B8B] rounded-xl text-opacity-80 bg-white">
-				<div className="flex justify-between  items-center border-b-[0.5px] border-opacity-80 pb-4 border-b-[#385796]">
+			<div className="flex flex-col gap-4 md:gap-8  px-4 py-8 md:p-8 text-abeg-text text-sm  md:text-base border-CampaignCardBorderWidth border-CampaignCardBorderColor rounded-xl text-opacity-80 bg-white">
+				<div className="flex justify-between  items-center border-b-[0.5px] border-opacity-80 pb-4 border-b-CampaignCardBorderColor">
 					<p className="text-lg font-semibold">Total donors so far</p>
-					<p className="p-2 flex justify-center items-center gap-2 border-[0.3px] border-[#484848] text-sm text-[#484848] rounded-lg">
+					<p className="p-2 flex justify-center items-center gap-2 border-CampaignCardBorderWidth border-abeg-text text-sm text-abeg-text rounded-lg">
 						Real time report
 					</p>
 				</div>

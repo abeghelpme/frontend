@@ -14,17 +14,17 @@ const Card = ({ title, amount = "0", analytics = "+ 0%" }: CardProps) => {
 	const [item, setItem] = useState("All item");
 
 	return (
-		<div className="text-[#484848] text-sm  md:text-base flex flex-col justify-center gap-3 lg:gap-4 p-4 w-full border-[0.3px] border-[#8D8B8B] rounded-xl h-[180px] text-opacity-80 bg-white">
+		<div className="text-abeg-text text-sm  md:text-base flex flex-col justify-center gap-3 lg:gap-4 p-4 w-full border-CampaignCardBorderWidth border-CampaignCardBorderColor rounded-xl h-[180px] text-opacity-80 bg-white">
 			<div className="flex relative gap-4 justify-center items-center">
 				<ReceiveIcon />
 				<p className="flex-1">Total {title}</p>
 				<DropdownMenu>
 					<DropdownMenuTrigger
 						asChild
-						className="border-[0.3px] border-[#484848] outline-none flex gap-2"
+						className="border-CampaignCardBorderWidth border-abeg-text border-opacity-50 outline-none flex gap-2"
 					>
 						<Button
-							className="flex justify-center items-center gap-2 text-[#484848] text-opacity-80"
+							className="flex justify-center items-center gap-2 text-abeg-text text-opacity-80"
 							size="sm"
 							variant="secondary"
 						>
@@ -36,7 +36,7 @@ const Card = ({ title, amount = "0", analytics = "+ 0%" }: CardProps) => {
 						<DropdownMenuRadioGroup
 							value={item}
 							onValueChange={setItem}
-							className="bg-white cursor-pointer text-[#484848]"
+							className="bg-white cursor-pointer text-abeg-text"
 						>
 							<DropdownMenuRadioItem value="All item">
 								All item
