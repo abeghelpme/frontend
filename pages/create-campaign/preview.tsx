@@ -1,4 +1,4 @@
-import { Heading } from "@/components/CreateCampaign";
+import { FormActionButton, Heading } from "@/components/CreateCampaign";
 import { getDateFromString } from "@/components/CreateCampaign/campaign-utils";
 import { Button } from "@/components/ui";
 import { useElementList } from "@/lib/hooks";
@@ -23,17 +23,9 @@ function Preview() {
 	const campaignDeadline = getDateFromString(stepTwoData.deadline);
 
 	return (
-		<div className="flex min-h-screen flex-col justify-between">
-			<header className="mx-auto flex w-[min(100%,48rem)] flex-col gap-0.8 px-2.4 pt-3.2 lg:w-full lg:px-10 lg:pt-4.8">
-				<Heading as="h1">Campaign Preview</Heading>
-
-				<p className="text-1.4 text-formBtn lg:text-2.4">
-					This is what your fundraiser campaign will look like to donors
-				</p>
-			</header>
-
+		<div className="flex min-h-screen flex-col items-center justify-between">
 			<main
-				className="mx-auto mt-3.2 flex flex-col bg-contours-old bg-cover px-2.4 pb-6.2 text-successText max-lg:max-w-[48rem] lg:px-10"
+				className="mt-4 flex flex-col bg-contours-old bg-cover px-2.4 pb-6.2 text-successText max-lg:max-w-[48rem] lg:mt-4.8 lg:px-10"
 				data-rem-reset
 			>
 				<section className="flex flex-col gap-0.8 lg:gap-3.2">
@@ -48,6 +40,7 @@ function Preview() {
 							className="aspect-[342/200] w-full min-w-[32rem] rounded-8 lg:h-[40rem] lg:rounded-10"
 							width={342}
 							height={200}
+							onLoad={() => URL.revokeObjectURL(imageUrls[0])}
 						/>
 
 						<article className="flex flex-col gap-2.8 px-2.4 py-3 lg:py-3.2">
@@ -131,12 +124,13 @@ function Preview() {
 									alt="extra campaign images"
 									width={250}
 									height={200}
+									onLoad={() => URL.revokeObjectURL(url)}
 								/>
 							)}
 						/>
 					</div>
 
-					<p className="text-2.4">
+					<p className="lg:text-2.4">
 						Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
 					</p>
 
@@ -170,20 +164,18 @@ function Preview() {
 				</section>
 			</main>
 
-			<footer className="mt-auto flex justify-end gap-0.8 border-t border-t-formBtn px-2.4 py-1.6 lg:gap-1.6 lg:px-10 lg:py-[2.65rem]">
-				<Button
+			<footer className="mt-auto flex w-full justify-end gap-0.8 border-t border-t-formBtn px-2.4 py-1.6 lg:gap-1.6 lg:px-10 lg:py-[2.65rem]">
+				<FormActionButton
+					type="button"
 					variant="secondary"
-					className="rounded-6 border-formBtn px-1.2 py-0.8 text-1.2 font-bold text-formBtn lg:px-2.4 lg:py-1.6 lg:text-1.4"
+					className="border-formBtn font-bold text-formBtn"
 				>
 					<Link href={"/create-campaign"}>Edit campaign</Link>
-				</Button>
+				</FormActionButton>
 
-				<Button
-					variant="primary"
-					className="rounded-6 bg-formBtn px-1.2 py-0.8 text-1.2 font-bold lg:px-2.4 lg:py-1.6 lg:text-1.4"
-				>
+				<FormActionButton type="button" className="bg-formBtn font-bold">
 					Create Campaign
-				</Button>
+				</FormActionButton>
 			</footer>
 		</div>
 	);

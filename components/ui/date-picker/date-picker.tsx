@@ -19,27 +19,25 @@ function DatePicker(props: DatePickerProps) {
 
 	const dateValue = getDateFromString(dateValueString);
 
-	const isValidDeadline = dateValue !== DATE_TOMORROW;
+	const isDateSelected = dateValueString !== "";
 
 	return (
 		<Popover.Root>
+			div
 			<Popover.Trigger asChild>
 				<Button
 					variant="secondary"
 					className={cn(
 						buttonVariants({ variant: "outline" }),
-						dateValueString === "" && "text-placeholder",
+						!isDateSelected && "text-placeholder",
 						className
 					)}
 				>
-					<span>
-						{isValidDeadline ? format(dateValue, "PPP") : placeholder}
-					</span>
+					<span>{isDateSelected ? format(dateValue, "PPP") : placeholder}</span>
 
 					<CalendarIcon className="aspect-square w-1.6" />
 				</Button>
 			</Popover.Trigger>
-
 			<Popover.Content className="w-auto p-0">
 				<Calendar
 					className="rounded-10 border border-unfocused p-1.2"
@@ -52,7 +50,7 @@ function DatePicker(props: DatePickerProps) {
 					onSelect={(date) => {
 						if (!date) return;
 
-						onChange(date.toISOString().split("T")[0]);
+						onChange(format(date, "MM-dd-yyyy"));
 					}}
 					initialFocus={true}
 					disabled={{ before: DATE_TOMORROW }}

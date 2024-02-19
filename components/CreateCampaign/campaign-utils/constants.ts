@@ -1,3 +1,5 @@
+import { add } from "date-fns";
+
 export const targetCountries = [
 	"Nigeria",
 	"Ghana",
@@ -15,6 +17,6 @@ export const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
 
 export const acceptedFilesString = allowedFileTypes.join(", ");
 
-export const DATE_TOMORROW = new Date(
-	new Date().setDate(new Date().getDate() + 1)
-);
+export const DATE_TODAY = new Date();
+
+export const DATE_TOMORROW = add(DATE_TODAY, { days: 1 });

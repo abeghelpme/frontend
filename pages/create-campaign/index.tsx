@@ -5,6 +5,7 @@ import {
 	StepTracker,
 	StepTwo,
 } from "@/components/CreateCampaign";
+import { cn } from "@/lib";
 import { STEP_DATA_KEY_LOOKUP, useFormStore } from "@/store/formStore";
 import { useEffect } from "react";
 
@@ -46,18 +47,42 @@ function CreateCampaignPage() {
 				<FormActionButton
 					type="button"
 					text="Go Back"
-					className="min-w-[7.8rem]"
+					className="min-w-[7.8rem] bg-formBtn"
 					disabled={currentStep === 1}
 					onClick={() => goToStep(currentStep - 1)}
 				/>
 
-				<FormActionButton
-					type="submit"
-					text="Continue"
-					targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
-					isLoading={formStatus.isSubmitting}
-					disabled={formStatus.isSubmitting}
-				/>
+				<div className="flex justify-end gap-0.8">
+					<FormActionButton
+						type="submit"
+						text="Continue"
+						className={cn("bg-formBtn", currentStep === 3 && "lg:hidden")}
+						targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+						isLoading={formStatus.isSubmitting}
+						disabled={formStatus.isSubmitting}
+					/>
+
+					{currentStep === 3 && (
+						<FormActionButton
+							type="submit"
+							text="Preview Campaign"
+							variant="secondary"
+							className={cn(
+								"border-formBtn font-bold text-formBtn",
+								"max-lg:hidden"
+							)}
+							targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+							isLoading={formStatus.isSubmitting}
+							disabled={formStatus.isSubmitting}
+						/>
+					)}
+
+					<FormActionButton
+						type="button"
+						text="Publish Campaign"
+						className="bg-formBtn max-lg:hidden"
+					/>
+				</div>
 			</footer>
 		</div>
 	);

@@ -73,7 +73,10 @@ function StepTwo() {
 					</li>
 
 					<li>
-						<label className="text-1.4 font-semibold lg:text-2">
+						<label
+							htmlFor="fundraiser"
+							className="text-1.4 font-semibold lg:text-2"
+						>
 							Who is fundraising?
 						</label>
 
@@ -124,7 +127,10 @@ function StepTwo() {
 					</li>
 
 					<li>
-						<label className="text-1.4 font-semibold lg:text-2">
+						<label
+							htmlFor="deadline"
+							className="text-1.4 font-semibold lg:text-2"
+						>
 							Campaign Deadline
 						</label>
 
