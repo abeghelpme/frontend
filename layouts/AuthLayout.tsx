@@ -1,4 +1,4 @@
-import { LogoBanner, PageMetaData } from "@/components/Shared";
+import { LogoBanner, PageMetaData } from "@/components/common";
 import type { AuthLayoutProps } from "@/interfaces";
 import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
 import Image from "next/image";
