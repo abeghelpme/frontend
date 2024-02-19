@@ -7,16 +7,19 @@ export { default as LogoBanner } from "./LogoBanner";
 export { default as NavBar } from "./NavBar";
 export { default as OtpInputDisplay } from "./OtpInputDisplay";
 export { default as Spinner } from "./Spinner";
+export { default as Success } from "./Success";
 export {
 	AbegHelpLogo,
 	ArrowDown,
 	ReceiveIcon,
 	NigeriaFlag,
-	LiberiaFlag,
 	CameroonFlag,
 	GambiaFlag,
 	GhanaFlag,
+	LiberiaFlag,
 	MaliFlag,
 } from "./svg";
-export { default as Success } from "./Success";
+export { default as DashboardTopNav } from "./DashboardTopNav";
+export { default as DashboardSidebarNav } from "./DashboardSidebarNav";
+export * from "./dashboardIcons";
 export { default as PageMetaData } from "./PageMetaData";

@@ -12,86 +12,39 @@ const config = {
 	theme: {
 		extend: {
 			spacing: {
-				0.3: "0.3rem",
-				0.4: "0.4rem",
-				0.8: "0.8rem",
-				1: "1rem",
-				1.2: "1.2rem",
-				1.3: "1.3rem",
-				1.4: "1.4rem",
-				1.5: "1.5rem",
-				1.6: "1.6rem",
-				1.9: "1.9rem",
-				2: "2rem",
-				2.2: "2.2rem",
-				2.3: "2.3rem",
-				2.4: "2.4rem",
-				2.6: "2.6rem",
-				2.8: "2.8rem",
-				3: "3rem",
-				3.2: "3.2rem",
-				3.4: "3.4rem",
-				4.8: "4.8rem",
-				5.5: "5.5rem",
-				6.2: "6.2rem",
-				7: "7rem",
-				10: "10rem",
-				21.3: "21.3rem",
+				// PADDING (X & Y)
+				DSignupFormPadding: "3rem",
+				MSignupFormPadding: "1.5rem 1rem",
+				DSigninFormPadding: "1.5rem 3rem",
+				MSigninFormPadding: "1rem",
+				DFPwrdPadding: "1.5rem",
+				MFPwrdPadding: "1rem",
+				DSuccessPadding: "1.5rem",
+				MSuccessPadding: "1rem",
+				MLogoBannerPadding: "0.25rem",
+				DLogoBannerPadding: "1rem",
+				// GAP (X & Y)
+				DSignupFormGap: "1.5rem",
+				MSignupFormGap: "1rem",
+				SuccessGap: "1.5rem",
 			},
-
-			borderRadius: {
-				6: "6px",
-				8: "8px",
-				10: "10px",
-			},
-
-			fontSize: {
-				1: "1rem",
-				1.2: "1.2rem",
-				1.4: "1.4rem",
-				1.6: "1.6rem",
-				2: "2rem",
-				2.4: "2.4rem",
-			},
-
 			screens: {
 				"3xl": "2000px",
 			},
-
-			height: {
-				"23": "6rem",
-			},
-
 			backgroundImage: {
 				contours: "url('/assets/images/shared/bg-contours.png')",
-				"contours-old": "url('/assets/images/shared/contours-old.png')",
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
-
 			boxShadow: {
-				"auth-layout-shadow": "0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
+				"auth-layout-shadow": " 0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
 			},
-
 			colors: {
 				text: "#1B1818",
 				successText: "#484848",
-				placeholder: "#8D8B8B",
-				unfocused: "#A8CCCC",
 				formBtn: "#008080",
-				semiWhite: "#E6EAEE",
 				validationMsg: "#268384",
-				popover: "hsl(0 0% 100%)",
-				"popover-foreground": "hsl(222.2 47.4% 11.2%)",
-				accent: "hsl(210 40% 96.1%)",
-				"accent-foreground": "hsl(222.2 47.4% 11.2%)",
-				input: "hsl(214.3 31.8% 91.4%)",
-				ring: "hsl(215 20.2% 65.1%)",
-				muted: "hsl(210 40% 96.1%)",
-				"muted-foreground": "hsl(215.4 16.3% 46.9%)",
-				background: "hsl(0 0% 100%)",
-
 				abeg: {
 					button: {
 						10: "#1C8384",
@@ -127,7 +80,9 @@ const config = {
 					},
 				},
 			},
-
+			height: {
+				"23": "6rem",
+			},
 			keyframes: {
 				"accordion-down": {
 					from: { height: "0" },
@@ -137,17 +92,10 @@ const config = {
 					from: { height: "var(--radix-accordion-content-height)" },
 					to: { height: "0" },
 				},
-				shake: {
-					"0%, 100%": { transform: "translateX(0rem)" },
-					"25%": { transform: "translateX(0.6rem)" },
-					"75%": { transform: "translateX(-0.6rem)" },
-				},
 			},
-
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
-				shake: "shake 0.2s ease-in-out 0s 3",
 			},
 		},
 	},

@@ -22,7 +22,14 @@ zxcvbnOptions.setOptions(options);
 export const checkPasswordStrength = (password: string) =>
 	zxcvbnAsync(password).then((response) => response.score);
 
-type FormType = "login" | "signup" | "resetPassword" | "forgotPassword";
+type FormType =
+	| "login"
+	| "signup"
+	| "resetPassword"
+	| "forgotPassword"
+	| "campaignStepOne"
+	| "campaignStepTwo"
+	| "campaignStepThree";
 
 const signUpSchema: z.ZodType<SignUpProps> = z
 	.object({
@@ -139,6 +146,35 @@ const resetPasswordSchema: z.ZodType<ResetPasswordProps> = z.object({
 		.max(50),
 });
 
+const campaignStepOneSchema = z.object({
+	categoryId: z.string().min(1, { message: "Select a category" }),
+	country: z.string().min(1, { message: "Select a country" }),
+	tags: z.array(z.string()),
+});
+
+const campaignStepTwoSchema = z.object({
+	title: z.string().min(3, { message: "Title must be at least 3 characters" }),
+	fundraiser: z.enum(["INDIVIDUAL", "BENEFICIARY"], {
+		errorMap: () => ({ message: "Select the fundraiser's target" }),
+	}),
+	goal: z.coerce
+		.number()
+		.min(5000, { message: "Goal must be at least 5,000 Naira" }),
+	deadline: z
+		.string()
+		.min(1, { message: "Choose a deadline for the campaign" }),
+});
+
+const campaignStepThreeSchema = z.object({
+	photos: z.array(z.custom<File>((file) => file instanceof File)).min(1, {
+		message: "Select at least one image (which would be the cover image)",
+	}),
+	story: z
+		.string()
+		.min(100, { message: "Story must be at least 100 characters" }),
+	storyHtml: z.string(),
+});
+
 export const zodValidator = (formType: FormType) => {
 	switch (formType) {
 		case "signup":
@@ -149,6 +185,12 @@ export const zodValidator = (formType: FormType) => {
 			return forgotPasswordSchema;
 		case "resetPassword":
 			return resetPasswordSchema;
+		case "campaignStepOne":
+			return campaignStepOneSchema;
+		case "campaignStepTwo":
+			return campaignStepTwoSchema;
+		case "campaignStepThree":
+			return campaignStepThreeSchema;
 		default:
 			return;
 	}

@@ -4,7 +4,7 @@ import { ClipboardIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
-import { CustomDialog, Loader } from "../Shared";
+import { CustomDialog, Loader } from "../common";
 import { Button, useToast } from "../ui";
 
 type AuthenticatorFirstStepProps = {

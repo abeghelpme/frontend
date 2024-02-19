@@ -5,7 +5,7 @@ import {
 	LiberiaFlag,
 	MaliFlag,
 	NigeriaFlag,
-} from "@/components/Shared";
+} from "@/components/common";
 import { ProgressBar } from "@/components/ui";
 
 type CountryData = {

@@ -5,7 +5,8 @@ export {
 	type LoginType,
 	type ResetPasswordType,
 	type SignUpType,
-} from './validators/validateWithZod'
+} from "./validators/validateWithZod";
 
-export {callApi} from './helpers/callApi'
-export {cn} from './helpers/cn'
+export { callApi } from "./helpers/callApi";
+export { cn } from "./helpers/cn";
+export { parseJSON } from "./helpers/parseJSON";
