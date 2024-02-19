@@ -4,5 +4,6 @@
 	"editor.codeActionsOnSave": {
 		"source.addMissingImports": "never"
 	},
-	"disableTsErrors.disableAllErrors": false
+
+	"tailwindCSS.rootFontSize": 16
 }

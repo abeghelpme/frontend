@@ -1,17 +1,17 @@
-import Placeholder from "@tiptap/extension-placeholder"
-import StarterKit from "@tiptap/starter-kit"
+import Placeholder from "@tiptap/extension-placeholder";
+import StarterKit from "@tiptap/starter-kit";
 
 const getEditorExtensions = (placeholder = "") => [
 	StarterKit.configure({
 		bulletList: {
 			HTMLAttributes: {
-				class: "list-disc px-1.6",
+				class: "list-disc px-@1.6",
 			},
 		},
 
 		orderedList: {
 			HTMLAttributes: {
-				class: "list-decimal marker:font-semibold px-1.4",
+				class: "list-decimal marker:font-semibold px-@1.4",
 			},
 		},
 
@@ -21,6 +21,6 @@ const getEditorExtensions = (placeholder = "") => [
 	}),
 
 	Placeholder.configure({ placeholder }),
-]
+];
 
-export { getEditorExtensions }
+export { getEditorExtensions };
