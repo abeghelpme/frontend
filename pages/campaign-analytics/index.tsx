@@ -24,7 +24,7 @@ const CampaignAnalytics = () => {
 		},
 	];
 	return (
-		<section className="flex flex-col gap-4 md:gap-8 p-4 md:p-6 justify-center min-h-screen">
+		<section className="flex min-h-screen flex-col justify-center gap-4 p-4 md:gap-8 md:p-6">
 			<div className="flex flex-col gap-4 md:flex-row">
 				{dummy.map((data, id) => {
 					return (
@@ -37,17 +37,17 @@ const CampaignAnalytics = () => {
 					);
 				})}
 			</div>
-			<div className="flex flex-col gap-4 md:gap-8  px-4 py-8 md:p-8 text-abeg-text text-sm  md:text-base border-CampaignCardBorderWidth border-CampaignCardBorderColor rounded-xl text-opacity-80 bg-white">
-				<div className="flex justify-between  items-center border-b-[0.5px] border-opacity-80 pb-4 border-b-CampaignCardBorderColor">
+			<div className="flex flex-col gap-4 rounded-xl  border-CampaignCardBorderWidth border-placeholder bg-white px-4 py-8  text-sm text-abeg-text text-opacity-80 md:gap-8 md:p-8 md:text-base">
+				<div className="flex items-center  justify-between border-b-[0.5px] border-b-placeholder border-opacity-80 pb-4">
 					<p className="text-lg font-semibold">Total donors so far</p>
-					<p className="p-2 flex justify-center items-center gap-2 border-CampaignCardBorderWidth border-abeg-text text-sm text-abeg-text rounded-lg">
+					<p className="flex items-center justify-center gap-2 rounded-lg border-CampaignCardBorderWidth border-abeg-text p-2 text-sm text-abeg-text">
 						Real time report
 					</p>
 				</div>
-				<div className="flex gap-8 md:gap-16 flex-col md:flex-row ">
+				<div className="flex flex-col gap-8 md:flex-row md:gap-16 ">
 					<WorldMap countries={["Nigeria", "Mali"]} />
-					<div className="flex flex-col gap-3 flex-1  ">
-						<p className=" text-2xl md:text-4xl font-semibold">10.8K</p>
+					<div className="flex flex-1 flex-col gap-3  ">
+						<p className=" text-2xl font-semibold md:text-4xl">10.8K</p>
 						<div className="flex flex-col gap-2">
 							<SingleCountryDonor countryName="Nigeria" progress={70} />
 							<SingleCountryDonor countryName="Ghana" progress={49} />

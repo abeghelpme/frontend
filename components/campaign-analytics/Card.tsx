@@ -14,29 +14,29 @@ const Card = ({ title, amount = "0", analytics = "+ 0%" }: CardProps) => {
 	const [item, setItem] = useState("All item");
 
 	return (
-		<div className="text-abeg-text text-sm  md:text-base flex flex-col justify-center gap-3 lg:gap-4 p-4 w-full border-CampaignCardBorderWidth border-CampaignCardBorderColor rounded-xl h-[180px] text-opacity-80 bg-white">
-			<div className="flex relative gap-4 justify-center items-center">
+		<div className="flex h-[180px]  w-full flex-col justify-center gap-3 rounded-xl border-CampaignCardBorderWidth border-placeholder bg-white p-4 text-sm text-abeg-text text-opacity-80 md:text-base lg:gap-4">
+			<div className="relative flex items-center justify-center gap-4">
 				<ReceiveIcon />
 				<p className="flex-1">Total {title}</p>
 				<DropdownMenu>
 					<DropdownMenuTrigger
 						asChild
-						className="border-CampaignCardBorderWidth border-abeg-text border-opacity-50 outline-none flex gap-2"
+						className="flex gap-2 border-CampaignCardBorderWidth border-abeg-text border-opacity-50 outline-none"
 					>
 						<Button
-							className="flex justify-center items-center gap-2 text-abeg-text text-opacity-80"
+							className="flex items-center justify-center gap-2 text-abeg-text text-opacity-80"
 							size="sm"
 							variant="secondary"
 						>
-							<p className="text-sm  md:text-base text-opacity-80">{item}</p>
+							<p className="text-sm  text-opacity-80 md:text-base">{item}</p>
 							<ArrowDown />
 						</Button>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent className="bg-white p-0 border-0 text-sm  md:text-base ">
+					<DropdownMenuContent className="border-0 bg-white p-0 text-sm  md:text-base ">
 						<DropdownMenuRadioGroup
 							value={item}
 							onValueChange={setItem}
-							className="bg-white cursor-pointer text-abeg-text"
+							className="cursor-pointer bg-white text-abeg-text"
 						>
 							<DropdownMenuRadioItem value="All item">
 								All item
@@ -51,7 +51,7 @@ const Card = ({ title, amount = "0", analytics = "+ 0%" }: CardProps) => {
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>
-			<div className="flex flex-col gap-2 mt-6">
+			<div className="mt-6 flex flex-col gap-2">
 				<p className="text-2xl md:text-[32px]">{amount}</p>
 				<p>{analytics}</p>
 			</div>
