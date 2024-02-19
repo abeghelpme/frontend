@@ -1,5 +1,5 @@
-import Placeholder from "@tiptap/extension-placeholder"
-import StarterKit from "@tiptap/starter-kit"
+import Placeholder from "@tiptap/extension-placeholder";
+import StarterKit from "@tiptap/starter-kit";
 
 const getEditorExtensions = (placeholder = "") => [
 	StarterKit.configure({
@@ -21,6 +21,6 @@ const getEditorExtensions = (placeholder = "") => [
 	}),
 
 	Placeholder.configure({ placeholder }),
-]
+];
 
-export { getEditorExtensions }
+export { getEditorExtensions };
