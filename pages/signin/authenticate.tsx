@@ -1,4 +1,4 @@
-import { OtpInputDisplay } from "@/components/shared";
+import { OtpInputDisplay } from "@/components/common";
 import { Button, useToast } from "@/components/ui";
 import { type ApiResponse, type User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";

@@ -1,4 +1,4 @@
-import { PlusButtonIcon } from "@/components/Shared";
+import { PlusButtonIcon } from "@/components/common";
 import { Button, ProgressBar } from "@/components/ui";
 import { DashBoardPageLayout } from "@/layouts/DashBoardPageLayout";
 import userImage from "@/public/assets/icons/dashboard/userIcon.svg";

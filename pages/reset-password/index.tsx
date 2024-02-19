@@ -1,4 +1,4 @@
-import { CloudFlareTurnStile } from "@/components/Shared";
+import { CloudFlareTurnStile } from "@/components/common";
 import { Button, Input, ProgressBar, useToast } from "@/components/ui";
 import { AuthLayout } from "@/layouts";
 import {

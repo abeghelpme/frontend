@@ -1,5 +1,5 @@
-import DashboardSidebarNav from "@/components/Shared/DashboardSidebarNav";
-import DashboardTopNav from "@/components/Shared/DashboardTopNav";
+import DashboardSidebarNav from "@/components/common/DashboardSidebarNav";
+import DashboardTopNav from "@/components/common/DashboardTopNav";
 import {
 	DashboardAnalytics,
 	DashboardSettings,

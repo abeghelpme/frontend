@@ -1,4 +1,4 @@
-import { Footer, NavBar } from "@/components/shared";
+import { Footer, NavBar } from "@/components/common";
 import type { BaseLayoutProps } from "@/interfaces";
 
 export const BaseLayout = ({ children }: BaseLayoutProps) => {

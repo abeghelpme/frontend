@@ -1,4 +1,4 @@
-import CloudflareTurnstile from "@/components/Shared/CloudflareTurnstile";
+import CloudflareTurnstile from "@/components/common/CloudflareTurnstile";
 import { Button, Input, useToast } from "@/components/ui";
 import { AuthLayout } from "@/layouts";
 import { type ForgotPasswordType, callApi, zodValidator } from "@/lib";
