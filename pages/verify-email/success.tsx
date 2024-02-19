@@ -1,4 +1,4 @@
-import { Success } from "@/components/Shared";
+import { Success } from "@/components/shared";
 import { AuthLayout } from "@/layouts";
 import Link from "next/link";
 

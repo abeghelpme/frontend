@@ -1,4 +1,4 @@
-import { CloudFlareTurnStile, CustomDialog } from "@/components/Shared";
+import { CloudFlareTurnStile, CustomDialog } from "@/components/shared";
 import { Button, Input, useToast } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
