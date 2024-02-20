@@ -18,9 +18,7 @@ export const AuthLayout = ({
 		<>
 			<PageMetaData title={title} content={content} />
 			<div
-				className={`relative flex min-h-full flex-col items-center gap-8 scroll-smooth md:gap-9 ${
-					formType === "signup" ? "py-7" : "py-12"
-				}`}
+				className={`relative flex min-h-full justify-center items-center py-14`}
 			>
 				{formType === "signup" && (
 					<Image
@@ -33,7 +31,7 @@ export const AuthLayout = ({
 
 				{!hasSuccess ? (
 					<div
-						className={`mx-auto my-auto w-[90%] space-y-6 scroll-smooth rounded-lg bg-white px-4 py-10 shadow-auth-layout-shadow md:mx-0 md:p-10 lg:py-7 ${
+						className={`mx-auto my-auto w-[90%] space-y-MSignupFormGap lg:space-y-DSignupFormGap rounded-lg bg-white p-MSignupFormPadding shadow-auth-layout-shadow md:mx-0 md:p-DSignupFormPadding ${
 							contentClass! ? contentClass : "max-w-[467px]"
 						}`}
 					>

@@ -25,8 +25,8 @@ const ButtonUI = (
 ) => {
 	const buttonClass = {
 		"bg-abeg-error-20": variant === "danger",
-		"border-abeg-green text-abeg-green border": variant === "secondary",
-		"bg-abeg-neutral-20": variant === "primary",
+		"border-abeg-primary text-abeg-primary border": variant === "secondary",
+		"bg-abeg-primary": variant === "primary",
 		"px-3": size === "sm",
 		"px-10": size === "lg",
 		"w-full": fullWidth,

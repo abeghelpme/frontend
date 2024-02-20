@@ -1,6 +1,6 @@
 import { setTimeout } from "timers";
 import { CloudFlareTurnStile } from "@/components/common";
-import { Button, Input, ProgressBar, useToast } from "@/components/ui";
+import { Button, Input, ProgressBar } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import { AuthLayout } from "@/layouts";
 import {
@@ -13,14 +13,14 @@ import { useCloudflareTurnstile } from "@/lib/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDeferredValue, useEffect, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
+let redirectTimeOut: NodeJS.Timeout;
 const SignUp = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
-	const { toast } = useToast();
-	const showModal = useRef(false);
 	const [message, setMessage] = useState<ApiResponse>({
 		status: "",
 		message: "",
@@ -28,14 +28,6 @@ const SignUp = () => {
 		data: undefined,
 	});
 
-	useEffect(() => {
-		const checkLS = () => {
-			if (!showModal.current) {
-				localStorage.setItem("skip-2Fa", "true");
-			}
-		};
-		checkLS();
-	}, []);
 	const router = useRouter();
 
 	const {
@@ -62,6 +54,8 @@ const SignUp = () => {
 		genStrength().catch((e) => {
 			console.log(e);
 		});
+
+		return () => redirectTimeOut && clearTimeout(redirectTimeOut);
 	}, [deferredPassword]);
 
 	const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
@@ -80,26 +74,24 @@ const SignUp = () => {
 		if (error) {
 			const castedError = error as ApiResponse;
 			setMessage(castedError);
-			window.scrollTo({
-				top: 0,
-				left: 0,
-				behavior: "smooth",
-			});
+			// window.scrollTo({
+			// 	top: 0,
+			// 	left: 0,
+			// 	behavior: 'smooth'
+			// });
 
-			toast({
-				title: castedError.status,
+			toast(castedError.status, {
 				description: castedError.message,
 				duration: 2000,
 			});
 			return;
 		} else {
-			toast({
-				title: "Success",
+			toast("Success", {
 				description: responseData?.message,
 				duration: 2000,
 			});
 			reset();
-			setTimeout(() => {
+			redirectTimeOut = setTimeout(() => {
 				void router.push({
 					pathname: "/signup/verification",
 					query: { signup: true, email: data.email.toLowerCase() },
@@ -107,13 +99,6 @@ const SignUp = () => {
 			}, 1500);
 		}
 	};
-	// if (user !== null) {
-	//   // // setTimeout(() => {}, 1000);
-	//   void router.back();
-	//   return (
-	//     <LoadingComp message={`You are already signed in. Redirecting back`} />
-	//   );
-	// }
 
 	return (
 		<AuthLayout
@@ -122,20 +107,18 @@ const SignUp = () => {
 			formType="signup"
 			heading="Welcome!"
 			greeting="Create your account"
-			contentClass="md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] 3xl:w-[29%]"
+			contentClass="md:w-[85%] md:max-w-wSignUpForm"
 			withHeader
 			hasSuccess={false}
 		>
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();
-
 					const response = checkBotStatus();
-
 					response && void handleSubmit(onSubmit)(event);
 				}}
 				action=""
-				className="flex flex-col gap-3"
+				className="flex flex-col gap-MSignupFormGap lg:gap-DSignupFormGap"
 			>
 				{message.message !== "" && !message.error ? (
 					<p
@@ -156,7 +139,7 @@ const SignUp = () => {
 						</ul>
 					)
 				)}
-				<div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
+				<div className="space-y-MSignupFormGap sm:grid sm:grid-cols-2 sm:gap-4 lg:gap-6 sm:space-y-0">
 					<div className="space-y-1">
 						<label htmlFor="firstName" className="text-sm font-medium">
 							First Name
@@ -215,7 +198,7 @@ const SignUp = () => {
 					)}
 				</div>
 
-				<div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
+				<div className="space-y-MSignupFormGap sm:grid sm:grid-cols-2 sm:gap-4 lg:gap-6 sm:space-y-0">
 					<div className="space-y-1">
 						<label htmlFor="password" className="mb-1 text-sm font-medium">
 							Password
@@ -313,10 +296,10 @@ const SignUp = () => {
 					onStatusChange={handleBotStatus}
 					ref={cfTurnStile}
 				/>
-				<div className="flex flex-col items-center space-y-5">
+				<div className="flex flex-col items-center space-y-MSignupFormGap lg:space-y-DSignupFormGap">
 					<Button
 						disabled={isSubmitting}
-						className="mt-6 bg-abeg-teal py-4 text-white md:w-[60%] lg:w-[55%] xl:w-[52%]"
+						className="bg-abeg-primary py-4 text-white md:w-[60%] lg:w-[55%] xl:w-[52%]"
 						fullWidth
 						loading={isSubmitting}
 					>

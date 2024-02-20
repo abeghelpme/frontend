@@ -22,7 +22,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
 			<div className="relative">
 				<input
 					className={cn(
-						"block w-full rounded-md border border-[#D0D5DD] bg-white px-3 py-3 text-sm text-abeg-neutral-10 outline-0 placeholder:text-sm placeholder:text-abeg-neutral-50 focus:border-abeg-green-20 disabled:border-[#D0D5DD] disabled:bg-[#F0F2F5]",
+						"block w-full rounded-md border border-[#D0D5DD] bg-white px-3 py-3 text-abeg-neutral-10 outline-0 placeholder:text-sm placeholder:text-abeg-neutral-50 focus:border-inputBorder disabled:border-[#D0D5DD] disabled:bg-[#F0F2F5]",
 						{
 							"pr-[32px]": type === "password",
 							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20":
