@@ -16,12 +16,6 @@ body:has([data-rem-reset]) {
 	justify-content: space-between;
 }
 
-.toastStyle {
-	background-color: #008080;
-	color: white;
-	font-size: 18px;
-}
-
 input[type='number'] {
 	-webkit-appearance: textfield;
 }
