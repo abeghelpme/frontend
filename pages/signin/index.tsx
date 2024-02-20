@@ -134,11 +134,11 @@ const Login = () => {
 						placeholder="Enter your email address"
 						className={`min-h-[45px] ${
 							errors.email &&
-							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+							"ring-abeg-error-20 placeholder:text-abeg-error-20 ring-2"
 						}`}
 					/>
 					{errors.email && (
-						<p className="text-sm text-abeg-teal">{errors.email.message}</p>
+						<p className="text-abeg-teal text-sm">{errors.email.message}</p>
 					)}
 				</div>
 				<div className="mt-4 space-y-1">
@@ -152,16 +152,16 @@ const Login = () => {
 						placeholder="Enter password"
 						className={`min-h-[45px] ${
 							errors.password &&
-							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+							"ring-abeg-error-20 placeholder:text-abeg-error-20 ring-2"
 						}`}
 					/>
 					{errors.password && (
-						<p className="text-sm text-abeg-teal">{errors.password.message}</p>
+						<p className="text-abeg-teal text-sm">{errors.password.message}</p>
 					)}
 				</div>
 				<Link
 					href="/forgot-password"
-					className="mt-2 inline-flex w-full justify-end text-sm font-semibold text-formBtn hover:underline"
+					className="textabeg-primary mt-2 inline-flex w-full justify-end text-sm font-semibold hover:underline"
 				>
 					Forgot Password?
 				</Link>
@@ -179,7 +179,7 @@ const Login = () => {
 								type="submit"
 								disabled={isSubmitting || success}
 								loading={isSubmitting}
-								className="mt-6 bg-formBtn py-4 text-white disabled:bg-gray-500 "
+								className="bgabeg-primary mt-6 py-4 text-white disabled:bg-gray-500 "
 								fullWidth
 							>
 								Sign in
@@ -199,7 +199,7 @@ const Login = () => {
 							</div>
 							<div className="mt-6 flex flex-col">
 								<Link
-									className="w-full rounded-md bg-formBtn py-4 text-sm font-semibold text-white"
+									className="bgabeg-primary w-full rounded-md py-4 text-sm font-semibold text-white"
 									href="/2fa"
 								>
 									Activate
@@ -209,7 +209,7 @@ const Login = () => {
 									type="submit"
 									disabled={isSubmitting}
 									onClick={handleOption}
-									className="mt-4 border border-formBtn py-4 text-abeg-teal disabled:bg-gray-500 disabled:text-white"
+									className="borderabeg-primary text-abeg-teal mt-4 border py-4 disabled:bg-gray-500 disabled:text-white"
 									fullWidth
 								>
 									Skip
@@ -219,7 +219,7 @@ const Login = () => {
 					</CustomDialog>
 					<p className="text-center text-sm">
 						Don&apos;t have an account?&nbsp;
-						<Link href="/signup" className="font-medium text-abeg-teal">
+						<Link href="/signup" className="text-abeg-teal font-medium">
 							Register
 						</Link>
 					</p>

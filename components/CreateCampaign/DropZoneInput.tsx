@@ -65,13 +65,13 @@ function DropZoneInput(props: DropZoneInputProps) {
 			onDragOver={handleDragOver}
 			onDragLeave={handleDragLeave}
 			className={cn(
-				"relative mt-@1.6 flex min-h-40 flex-col items-center justify-end rounded-[5px] border border-dashed border-formBtn py-@1.5 text-xs lg:min-h-60",
+				"mt-@1.6 borderabeg-primary py-@1.5 relative flex min-h-40 flex-col items-center justify-end rounded-[5px] border border-dashed text-xs lg:min-h-60",
 				isDragActive && "opacity-60"
 			)}
 		>
 			<Button
 				variant="primary"
-				className="rounded-md bg-formBtn p-@0.8 text-xs font-bold lg:rounded-lg lg:px-@2.6 lg:py-@1.3 lg:text-base"
+				className="bgabeg-primary p-@0.8 lg:px-@2.6 lg:py-@1.3 rounded-md text-xs font-bold lg:rounded-lg lg:text-base"
 				type="button"
 			>
 				Upload
@@ -86,7 +86,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 			/>
 
 			<div className="mt-@1.5 text-center text-xs lg:text-xs">
-				<p className="italic text-formBtn">
+				<p className="textabeg-primary italic">
 					Click to select files, or Drag {`'n'`} Drop
 				</p>
 

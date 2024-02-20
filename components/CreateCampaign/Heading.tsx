@@ -5,7 +5,7 @@ import type {
 } from "../../lib/helpers/campaign/polymorphism-helper";
 
 const semanticHeadings = {
-	h1: "font-semibold text-formBtn lg:text-xl.4",
+	h1: "font-semibold textabeg-primary lg:text-xl.4",
 	h2: "font-bold lg:text-xl.4",
 	h3: "font-bold lg:text-xl",
 };

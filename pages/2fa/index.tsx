@@ -107,7 +107,7 @@ const TwoFa = () => {
 						<h1 className="text-2xl font-semibold">
 							Set up two-factor authentication
 						</h1>
-						<p className="mt-6 text-text">
+						<p className="text-formLabel mt-6">
 							Add an extra layer of security to your account
 						</p>
 						<p className="mt-4">
@@ -134,7 +134,7 @@ const TwoFa = () => {
 												href={
 													"https://support.google.com/accounts/answer/1066447?hl=en&co=GENIE.Platform%3DiOS&oco=0"
 												}
-												className="font-medium text-abeg-green-50"
+												className="text-abeg-green-50 font-medium"
 											>
 												Google Authenticator
 											</Link>{" "}
@@ -148,7 +148,7 @@ const TwoFa = () => {
 											checked={selectedOption === "app"}
 											onChange={() => setSelectedOption("app")}
 											id="app"
-											className="ml-auto accent-abeg-teal"
+											className="accent-abeg-teal ml-auto"
 										/>
 									</div>
 								</label>
@@ -170,14 +170,14 @@ const TwoFa = () => {
 											checked={selectedOption === "email"}
 											onChange={() => setSelectedOption("email")}
 											id="email"
-											className="ml-auto accent-abeg-teal"
+											className="accent-abeg-teal ml-auto"
 										/>
 									</div>
 								</label>
 							</div>
 						</div>
 					</div>
-					<div className="border-t border-t-formBtn">
+					<div className="border-tabeg-primary border-t">
 						<div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
 							<CustomDialog
 								openDialog={openModal}
@@ -187,7 +187,7 @@ const TwoFa = () => {
 								}}
 								trigger={
 									<Button
-										className="w-fit bg-abeg-button-10 px-6 py-3 font-medium"
+										className="bg-abeg-button-10 w-fit px-6 py-3 font-medium"
 										onClick={(e) => void handleStep(e)}
 										loading={loading}
 									>
@@ -211,7 +211,7 @@ const TwoFa = () => {
 													type="submit"
 													disabled={loading}
 													onClick={(e) => void handleStep(e)}
-													className="p-0 text-base font-medium text-abeg-teal disabled:text-neutral-50"
+													className="text-abeg-teal p-0 text-base font-medium disabled:text-neutral-50"
 												>
 													resend it
 												</Button>
@@ -219,7 +219,7 @@ const TwoFa = () => {
 											<Button
 												className={`${
 													otp === "" && "cursor-not-allowed"
-												} block w-full rounded-md bg-formBtn py-4 font-semibold text-white`}
+												} bgabeg-primary block w-full rounded-md py-4 font-semibold text-white`}
 												fullWidth
 												type="submit"
 												onClick={(e) => otp !== "" && void handleSubmit(e)}

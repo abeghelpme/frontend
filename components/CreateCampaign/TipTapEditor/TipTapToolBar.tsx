@@ -12,7 +12,7 @@ type ToolBarProps = { editor: Editor };
 
 function TipTapToolBar({ editor }: ToolBarProps) {
 	return (
-		<div className="flex items-center gap-@0.8 text-successText/85">
+		<div className="gap-@0.8 flex items-center text-abeg-text/85">
 			<Toggle
 				pressed={editor.isActive("bold")}
 				onPressedChange={() => editor.chain().focus().toggleBold().run()}
