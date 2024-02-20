@@ -61,6 +61,21 @@ const config = {
 				abeg: {
 					primary: "#008080",
 					text: "#484848",
+					neutral: {
+						10: "#101E14",
+						20: "#344639",
+						30: "#4E5F53",
+						40: "#748178",
+						50: "#A1AAA4",
+						60: "#CDD6D0",
+						70: "#E3E8E5",
+						80: "#F4F5F5",
+					},
+					error: {
+						10: "#6A0101",
+						20: "#FC3131",
+						30: "#FEDCDC",
+						40: "#FFEBEB",
 				},
 
 				// Shadcn colors
