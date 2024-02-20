@@ -58,7 +58,6 @@ const config = {
 				formLabel: "#1B1818",
 				inputBorder: "rgba(124, 148, 107, 0.25)",
 				otpBorder: "rgba(0, 128, 128, 0.5)",
-
 				abeg: {
 					primary: "#008080",
 					text: "#484848",
@@ -82,8 +81,10 @@ const config = {
 				MInputField: "2.9rem",
 			},
 			width: {
-				w80: "80%",
 				w90: "90%",
+			},
+			maxWidth: {
+				wSignUpForm: "746px",
 			},
 			keyframes: {
 				"accordion-down": {

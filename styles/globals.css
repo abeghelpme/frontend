@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-	height: 100%;
-}
-
 /* html:has([data-rem-reset]) {
 	font-size: 62.5%;
 }
@@ -19,6 +14,12 @@ body:has([data-rem-reset]) {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+}
+
+.toastStyle {
+	background-color: #008080;
+	color: white;
+	font-size: 18px;
 }
 
 input[type='number'] {
