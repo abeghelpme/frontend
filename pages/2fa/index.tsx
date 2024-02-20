@@ -148,7 +148,7 @@ const TwoFa = () => {
 											checked={selectedOption === "app"}
 											onChange={() => setSelectedOption("app")}
 											id="app"
-											className="accent-abeg-teal ml-auto"
+											className="accent-abeg-primary ml-auto"
 										/>
 									</div>
 								</label>
@@ -170,7 +170,7 @@ const TwoFa = () => {
 											checked={selectedOption === "email"}
 											onChange={() => setSelectedOption("email")}
 											id="email"
-											className="accent-abeg-teal ml-auto"
+											className="accent-abeg-primary ml-auto"
 										/>
 									</div>
 								</label>
@@ -211,7 +211,7 @@ const TwoFa = () => {
 													type="submit"
 													disabled={loading}
 													onClick={(e) => void handleStep(e)}
-													className="text-abeg-teal p-0 text-base font-medium disabled:text-neutral-50"
+													className="text-abeg-primary p-0 text-base font-medium disabled:text-neutral-50"
 												>
 													resend it
 												</Button>
@@ -219,7 +219,7 @@ const TwoFa = () => {
 											<Button
 												className={`${
 													otp === "" && "cursor-not-allowed"
-												} bgabeg-primary block w-full rounded-md py-4 font-semibold text-white`}
+												} bg-abeg-primary block w-full rounded-md py-4 font-semibold text-white`}
 												fullWidth
 												type="submit"
 												onClick={(e) => otp !== "" && void handleSubmit(e)}

@@ -13,8 +13,6 @@ const config = {
 		extend: {
 			spacing: {
 				// PADDING (X & Y)
-				DSignupFormPadding: "3rem",
-				MSignupFormPadding: "1.5rem 1rem",
 				DSigninFormPadding: "1.5rem 3rem",
 				MSigninFormPadding: "1rem",
 				DAuthFlowPadding: "1.5rem",
@@ -23,16 +21,10 @@ const config = {
 				MOverlayPadding: "1.5rem",
 				DOtpContainerPadding: "2.5rem 3.13rem",
 				MOtpContainerPadding: "1.5rem 1rem",
-				MLogoBannerPadding: "0.25rem",
-				DLogoBannerPadding: "1rem",
 				DBtnPadding: "1rem 1.5rem",
 				MBtnPadding: "0.75rem 1rem",
 				DInputPadding: "1rem",
 				MInputPadding: "1rem 0.5rem",
-				// GAP (X & Y)
-				DSignupFormGap: "1.5rem",
-				MSignupFormGap: "1rem",
-				AuthFlowGap: "1.5rem",
 			},
 			screens: {
 				"3xl": "2000px",
@@ -76,6 +68,7 @@ const config = {
 						20: "#FC3131",
 						30: "#FEDCDC",
 						40: "#FFEBEB",
+					},
 				},
 
 				// Shadcn colors
@@ -99,7 +92,8 @@ const config = {
 				w90: "90%",
 			},
 			maxWidth: {
-				wSignUpForm: "746px",
+				wSignUpForm: "46.6rem",
+				wAuthFlow: "32rem",
 			},
 			keyframes: {
 				"accordion-down": {

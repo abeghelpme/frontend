@@ -49,7 +49,7 @@ function Preview() {
 							<div className="gap-@1.6 flex flex-col">
 								<Button
 									variant="primary"
-									className="bgabeg-primary px-@2.4 py-@1.2 w-full rounded-md text-xs font-bold lg:rounded-lg lg:text-base"
+									className="bg-abeg-primary px-@2.4 py-@1.2 w-full rounded-md text-xs font-bold lg:rounded-lg lg:text-base"
 								>
 									Donate to this campaign
 								</Button>
@@ -170,7 +170,7 @@ function Preview() {
 					<Link href={"/create-campaign"}>Edit campaign</Link>
 				</FormActionButton>
 
-				<FormActionButton type="button" className="bgabeg-primary font-bold">
+				<FormActionButton type="button" className="bg-abeg-primary font-bold">
 					Create Campaign
 				</FormActionButton>
 			</footer>

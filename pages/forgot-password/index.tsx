@@ -67,7 +67,7 @@ const ForgotPasswordPage = () => {
 
 					response && void handleSubmit(onSubmit)(event);
 				}}
-				className="flex flex-col gap-5"
+				className="flex flex-col gap-4"
 			>
 				<div className="space-y-2 text-center">
 					{" "}
@@ -79,7 +79,7 @@ const ForgotPasswordPage = () => {
 						instruction
 					</p>
 				</div>
-				<div className="mt-2 space-y-6">
+				<div className="mt-2">
 					<div className="space-y-1">
 						<label htmlFor="email" className="text-sm font-medium">
 							Email Address
@@ -96,7 +96,9 @@ const ForgotPasswordPage = () => {
 							}`}
 						/>
 						{errors.email && (
-							<p className="text-sm text-abeg-teal">{errors.email.message}</p>
+							<p className="text-sm text-abeg-primary">
+								{errors.email.message}
+							</p>
 						)}
 					</div>
 				</div>
@@ -108,11 +110,12 @@ const ForgotPasswordPage = () => {
 					<Button
 						disabled={isSubmitting}
 						loading={isSubmitting}
-						className="text-md bg-abeg-button-10 px-10 py-3 font-medium"
+						className=""
+						variant="primary"
 					>
 						Submit
 					</Button>
-					<Link href="/signin" className="text-sm text-abeg-teal">
+					<Link href="/signin" className="text-sm text-abeg-primary underline">
 						Back to sign in page
 					</Link>
 				</div>

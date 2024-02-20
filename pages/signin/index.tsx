@@ -1,4 +1,4 @@
-import { CloudFlareTurnStile, CustomDialog } from "@/components/common";
+import { CloudFlareTurnStile } from "@/components/common";
 import { Button, Input, useToast } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
@@ -48,11 +48,11 @@ const Login = () => {
 		reValidateMode: "onChange",
 	});
 
-	const handleOption = () => {
-		setSkip2FA("false");
-		setOpenModal(false);
-		void router.push("/create-campaign");
-	};
+	// const handleOption = () => {
+	// 	setSkip2FA('false');
+	// 	setOpenModal(false);
+	// 	void router.push('/create-campaign');
+	// };
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
 		const { data: responseData, error } = await callApi<ApiResponse<User>>(
@@ -88,7 +88,9 @@ const Login = () => {
 
 			reset();
 			if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
-				setOpenModal(true);
+				setTimeout(() => {
+					void router.push("/test");
+				}, 1000);
 				return;
 			} else {
 				setTimeout(() => {
@@ -138,7 +140,7 @@ const Login = () => {
 						}`}
 					/>
 					{errors.email && (
-						<p className="text-abeg-teal text-sm">{errors.email.message}</p>
+						<p className="text-abeg-primary text-sm">{errors.email.message}</p>
 					)}
 				</div>
 				<div className="mt-4 space-y-1">
@@ -156,7 +158,9 @@ const Login = () => {
 						}`}
 					/>
 					{errors.password && (
-						<p className="text-abeg-teal text-sm">{errors.password.message}</p>
+						<p className="text-abeg-primary text-sm">
+							{errors.password.message}
+						</p>
 					)}
 				</div>
 				<Link
@@ -170,8 +174,8 @@ const Login = () => {
 					ref={cfTurnStile}
 					onStatusChange={handleBotStatus}
 				/>
-				<div className="flex flex-col gap-3">
-					<CustomDialog
+				<div className="flex flex-col gap-6">
+					{/* <CustomDialog
 						openDialog={openModal}
 						setOpen={() => setOpenModal(openModal)}
 						trigger={
@@ -179,7 +183,7 @@ const Login = () => {
 								type="submit"
 								disabled={isSubmitting || success}
 								loading={isSubmitting}
-								className="bgabeg-primary mt-6 py-4 text-white disabled:bg-gray-500 "
+								className="bg-abeg-primary mt-6 py-4 text-white disabled:bg-gray-500 "
 								fullWidth
 							>
 								Sign in
@@ -187,19 +191,16 @@ const Login = () => {
 						}
 					>
 						<div className="text-center">
-							<h2 className="text-2xl font-semibold">
-								Keep your account safe!
-							</h2>
+							<h2 className="text-2xl font-semibold">Keep your account safe!</h2>
 							<div className="mt-3 space-y-2">
 								<p className="">Your safety is our number one priority</p>
 								<p className="">
-									Activate two-factor authentication and add an extra layer of
-									security to your account
+									Activate two-factor authentication and add an extra layer of security to your account
 								</p>
 							</div>
 							<div className="mt-6 flex flex-col">
 								<Link
-									className="bgabeg-primary w-full rounded-md py-4 text-sm font-semibold text-white"
+									className="bg-abeg-primary w-full rounded-md py-4 text-sm font-semibold text-white"
 									href="/2fa"
 								>
 									Activate
@@ -209,17 +210,30 @@ const Login = () => {
 									type="submit"
 									disabled={isSubmitting}
 									onClick={handleOption}
-									className="borderabeg-primary text-abeg-teal mt-4 border py-4 disabled:bg-gray-500 disabled:text-white"
+									className="borderabeg-primary text-abeg-primary mt-4 border py-4 disabled:bg-gray-500 disabled:text-white"
 									fullWidth
 								>
 									Skip
 								</Button>
 							</div>
 						</div>
-					</CustomDialog>
+					</CustomDialog> */}
+					<Button
+						type="submit"
+						disabled={isSubmitting || success}
+						loading={isSubmitting}
+						className="mt-6"
+						variant="primary"
+						fullWidth
+					>
+						Sign in
+					</Button>
 					<p className="text-center text-sm">
 						Don&apos;t have an account?&nbsp;
-						<Link href="/signup" className="text-abeg-teal font-medium">
+						<Link
+							href="/signup"
+							className="text-abeg-primary font-medium underline"
+						>
 							Register
 						</Link>
 					</p>

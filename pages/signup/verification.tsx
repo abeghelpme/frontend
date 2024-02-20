@@ -48,27 +48,29 @@ const VerificationPage = () => {
 			withHeader={false}
 			hasSuccess={false}
 		>
-			<div className="space-y-2 text-center">
-				<h1 className="text-xl font-semibold text-abeg-neutral-10 md:text-2xl">
-					Email Verification
-				</h1>
-				<p className="">
-					Please check your email for the verification link sent to you. Click
-					the link to verify your email
-				</p>
-				<div className="!mt-6 flex flex-col gap-2">
+			<div className="text-center">
+				<div className="mb-4 space-y-4">
+					<h1 className="text-xl font-semibold text-abeg-neutral-10 md:text-2xl">
+						Email Verification
+					</h1>
+					<p className="">
+						Please check your email for the verification link sent to you. Click
+						the link to verify your email
+					</p>
+				</div>
+				<div className="!mt-2 flex flex-col gap-2">
 					<p className="text-center text-sm">
 						Didn&apos;t get the email?{" "}
 						<span
 							onClick={() => void handleResendEmail()}
-							className="text-abeg-teal cursor-pointer"
+							className="text-abeg-primary cursor-pointer underline"
 						>
 							Resend
 						</span>
 					</p>
 					<Link
 						href="/signin"
-						className="bg-abeg-teal py-4 text-white rounded-md mt-2"
+						className="bg-abeg-primary py-4 text-white rounded-md mt-2"
 					>
 						Back to Sign in{" "}
 					</Link>

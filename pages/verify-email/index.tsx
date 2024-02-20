@@ -65,7 +65,7 @@ const VerificationPage = () => {
 						Please click on the button below to verify your email.
 					</p>
 					<Button
-						className="bgabeg-primary !mt-6 py-3"
+						className="bg-abeg-primary !mt-6 py-3"
 						onClick={() => void verifyEmail()}
 						fullWidth
 						loading={loading}

@@ -35,7 +35,7 @@ const ButtonUI = (
 	return (
 		<button
 			className={cn(
-				"rounded-lg px-5 py-2 text-sm font-medium text-white disabled:bg-abeg-neutral-50",
+				"rounded-lg px-4 py-3 md:py-4 md:px-5 text-sm font-medium text-white disabled:bg-abeg-neutral-50",
 				buttonClass,
 				className
 			)}

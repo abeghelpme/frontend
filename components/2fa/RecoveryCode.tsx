@@ -45,7 +45,7 @@ const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
 						<div className="flex flex-col items-center">
 							<span className="text-center font-semibold">{recoveryCode}</span>
 							<Button
-								className="text-abeg-teal mt-2 flex items-center  justify-center"
+								className="text-abeg-primary mt-2 flex items-center  justify-center"
 								onClick={() => void handleCopy()}
 							>
 								<ClipboardIcon aria-hidden="true" />

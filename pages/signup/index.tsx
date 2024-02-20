@@ -118,7 +118,7 @@ const SignUp = () => {
 					response && void handleSubmit(onSubmit)(event);
 				}}
 				action=""
-				className="flex flex-col gap-MSignupFormGap lg:gap-DSignupFormGap"
+				className="flex flex-col gap-4"
 			>
 				{message.message !== "" && !message.error ? (
 					<p
@@ -139,7 +139,7 @@ const SignUp = () => {
 						</ul>
 					)
 				)}
-				<div className="space-y-MSignupFormGap sm:grid sm:grid-cols-2 sm:gap-4 lg:gap-6 sm:space-y-0">
+				<div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 lg:gap-6 sm:space-y-0">
 					<div className="space-y-1">
 						<label htmlFor="firstName" className="text-sm font-medium">
 							First Name
@@ -154,7 +154,7 @@ const SignUp = () => {
 							errorField={errors.firstName}
 						/>
 						{errors.firstName && (
-							<p className="mt-2 text-sm text-abeg-teal">
+							<p className="mt-2 text-sm text-abeg-primary">
 								{errors.firstName.message}
 							</p>
 						)}
@@ -172,7 +172,7 @@ const SignUp = () => {
 							errorField={errors.lastName}
 						/>
 						{errors.lastName && (
-							<p className="mt-2 text-sm text-abeg-teal">
+							<p className="mt-2 text-sm text-abeg-primary">
 								{errors.lastName.message}
 							</p>
 						)}
@@ -192,13 +192,13 @@ const SignUp = () => {
 						errorField={errors.email}
 					/>
 					{errors.email && (
-						<p className="mt-2 text-sm text-abeg-teal">
+						<p className="mt-2 text-sm text-abeg-primary">
 							{errors.email.message}
 						</p>
 					)}
 				</div>
 
-				<div className="space-y-MSignupFormGap sm:grid sm:grid-cols-2 sm:gap-4 lg:gap-6 sm:space-y-0">
+				<div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 lg:gap-6 sm:space-y-0">
 					<div className="space-y-1">
 						<label htmlFor="password" className="mb-1 text-sm font-medium">
 							Password
@@ -239,7 +239,7 @@ const SignUp = () => {
 							</div>
 						)}
 						{errors.password && (
-							<p className="mt-2 text-sm text-abeg-teal">
+							<p className="mt-2 text-sm text-abeg-primary">
 								{errors.password.message}
 							</p>
 						)}
@@ -260,7 +260,7 @@ const SignUp = () => {
 							errorField={errors.confirmPassword}
 						/>
 						{errors.confirmPassword && (
-							<p className="text-sm text-abeg-teal">
+							<p className="text-sm text-abeg-primary">
 								{errors.confirmPassword.message}
 							</p>
 						)}
@@ -271,23 +271,23 @@ const SignUp = () => {
 						<Input
 							type="checkbox"
 							id="terms"
-							className="mt-1 h-[1.125rem] w-4 accent-abeg-teal md:w-5"
+							className="mt-1 h-[1.125rem] w-4 accent-abeg-primary md:w-5"
 							{...register("terms")}
 						/>
 						<label htmlFor="terms" className="text-sm md:text-base">
 							I agree to AbegHelp.me&apos;s{" "}
-							<Link href="" className="text-abeg-teal">
+							<Link href="" className="text-abeg-primary">
 								terms of service
 							</Link>{" "}
 							and{" "}
-							<Link href="" className="text-abeg-teal">
+							<Link href="" className="text-abeg-primary">
 								privacy notice
 							</Link>
 							.
 						</label>
 					</div>
 					{errors.terms && (
-						<p className="mt-2 text-sm text-abeg-teal">
+						<p className="mt-2 text-sm text-abeg-primary">
 							{errors.terms.message}
 						</p>
 					)}
@@ -296,10 +296,11 @@ const SignUp = () => {
 					onStatusChange={handleBotStatus}
 					ref={cfTurnStile}
 				/>
-				<div className="flex flex-col items-center space-y-MSignupFormGap lg:space-y-DSignupFormGap">
+				<div className="flex flex-col items-center space-y-4 lg:space-y-6">
 					<Button
 						disabled={isSubmitting}
-						className="bg-abeg-primary py-4 text-white md:w-[60%] lg:w-[55%] xl:w-[52%]"
+						className="mt-2"
+						variant="primary"
 						fullWidth
 						loading={isSubmitting}
 					>
@@ -307,7 +308,10 @@ const SignUp = () => {
 					</Button>
 					<p className="text-center text-sm">
 						Already have an account?&nbsp;
-						<Link href="/signin" className="font-medium text-abeg-teal">
+						<Link
+							href="/signin"
+							className="font-medium text-abeg-primary underline"
+						>
 							Login
 						</Link>
 					</p>

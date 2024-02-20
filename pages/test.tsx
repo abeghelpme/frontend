@@ -28,6 +28,6 @@ const Test = () => {
 
 export default Test;
 
-// Test.protect = true;
+Test.protect = true;
 
 Test.getLayout = AuthPagesLayout;

@@ -61,7 +61,7 @@ const SingleCountryDonor = ({ countryName, progress }: Country) => {
 				<div className="flex gap-2 justify-center items-center  ">
 					<ProgressBar
 						value={progress}
-						className="progress-filled:bg-abeg-teal"
+						className="progress-filled:bg-abeg-primary"
 					/>
 					<p className="text-sm font-normal">{progress}%</p>
 				</div>

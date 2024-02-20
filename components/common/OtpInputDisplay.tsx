@@ -34,7 +34,7 @@ const OtpInputDisplay = ({
 					onChange={setOtp}
 					numInputs={6}
 					containerStyle="flex justify-between gap-1"
-					inputStyle="!w-[15%] aspect-square border-[0.25px] border-[#0068FF]/10 focus:border-abeg-teal focus:border rounded-[3px] mt-6"
+					inputStyle="!w-[15%] aspect-square border-[0.25px] border-otpBorder focus:border-abeg-primary focus:border rounded-[3px] mt-6 shadow-otpInput"
 					inputType="number"
 					renderInput={(props) => <input {...props} />}
 				/>
@@ -45,7 +45,7 @@ const OtpInputDisplay = ({
         disabled={loading}
         loading={loading}
         onClick={(e) => void handleSubmit(e)}
-        className="text-white block bgabeg-primary font-semibold py-4 w-full rounded-md my-8"
+        className="text-white block bg-abeg-primary font-semibold py-4 w-full rounded-md my-8"
         fullWidth
       >
         Confirm
@@ -57,7 +57,7 @@ const OtpInputDisplay = ({
             type="submit"
             // disabled={isSubmitting}
             // onClick={handleOption}
-            className="text-abeg-teal font-medium"
+            className="text-abeg-primary font-medium"
           >
             resend it
           </button>

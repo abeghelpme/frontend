@@ -71,7 +71,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 		>
 			<Button
 				variant="primary"
-				className="bgabeg-primary p-@0.8 lg:px-@2.6 lg:py-@1.3 rounded-md text-xs font-bold lg:rounded-lg lg:text-base"
+				className="bg-abeg-primary p-@0.8 lg:px-@2.6 lg:py-@1.3 rounded-md text-xs font-bold lg:rounded-lg lg:text-base"
 				type="button"
 			>
 				Upload

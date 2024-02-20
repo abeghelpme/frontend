@@ -144,7 +144,7 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 										</span>
 										<button
 											type="button"
-											className="text-abeg-teal mt-2 flex items-center justify-center font-semibold"
+											className="text-abeg-primary mt-2 flex items-center justify-center font-semibold"
 											onClick={() => void handleCopy()}
 										>
 											<ClipboardIcon />
@@ -193,12 +193,12 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 								containerStyle={"flex relative gap-1  h-[2.5rem] "}
 								inputType="number"
 								inputStyle={
-									"  flex-1 h-full border outline-none shadow-md focus:ring-abeg-teal focus:ring-1"
+									"  flex-1 h-full border outline-none shadow-md focus:ring-abeg-primary focus:ring-1"
 								}
 								renderInput={(props) => <input {...props} />}
 							/>
 							<Button
-								className="bgabeg-primary mt-6 py-4 text-sm font-semibold"
+								className="bg-abeg-primary mt-6 py-4 text-sm font-semibold"
 								disabled={otp.length !== 6}
 								onClick={() => void handleOtpSubmit()}
 								loading={otpLoading}
