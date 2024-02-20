@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html,
 body {
 	height: 100%;
@@ -22,7 +21,7 @@ body:has([data-rem-reset]) {
 	justify-content: space-between;
 }
 
-input[type="number"] {
+input[type='number'] {
 	-webkit-appearance: textfield;
 }
 
@@ -38,7 +37,7 @@ input[type="number"] {
 	margin: 0;
 } */
 
-input[type="number"] {
+input[type='number'] {
 	-moz-appearance: textfield;
 	appearance: textfield;
 }
@@ -51,9 +50,7 @@ input::-webkit-inner-spin-button {
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-	transition:
-		background-color 600000s 0s,
-		color 600000s 0s;
+	transition: background-color 600000s 0s, color 600000s 0s;
 }
 
 input[data-autocompleted] {

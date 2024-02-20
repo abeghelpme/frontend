@@ -18,9 +18,9 @@ const config = {
 				DSigninFormPadding: "1.5rem 3rem",
 				MSigninFormPadding: "1rem",
 				DAuthFlowPadding: "1.5rem",
+				MAuthFlowPadding: "1rem",
 				DOverlayPadding: "2rem 1.5rem",
 				MOverlayPadding: "1.5rem",
-				MAuthFlowPadding: "1rem",
 				DOtpContainerPadding: "2.5rem 3.13rem",
 				MOtpContainerPadding: "1.5rem 1rem",
 				MLogoBannerPadding: "0.25rem",
@@ -57,39 +57,6 @@ const config = {
 					formLabel: "#1B1818",
 					inputBorder: "rgba(124, 148, 107, 0.25)",
 					otpBorder: "rgba(0, 128, 128, 0.5)",
-
-					button: {
-						10: "#1C8384",
-						20: "#005E5F",
-					},
-					teal: {
-						DEFAULT: "#268384",
-						10: "#2B908E",
-					},
-					green: {
-						DEFAULT: "#324823",
-						20: "#7C946B",
-						30: "#C9DDBB",
-						40: "#F4FAF0",
-						50: "#007004",
-						60: "#006004",
-					},
-					neutral: {
-						10: "#101E14",
-						20: "#344639",
-						30: "#4E5F53",
-						40: "#748178",
-						50: "#A1AAA4",
-						60: "#CDD6D0",
-						70: "#E3E8E5",
-						80: "#F4F5F5",
-					},
-					error: {
-						10: "#6A0101",
-						20: "#FC3131",
-						30: "#FEDCDC",
-						40: "#FFEBEB",
-					},
 				},
 			},
 
@@ -100,6 +67,7 @@ const config = {
 			},
 			width: {
 				w80: "80%",
+				w90: "90%",
 			},
 			keyframes: {
 				"accordion-down": {
