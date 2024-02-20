@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Home: WithPageLayout = () => {
 	return (
-		<main className="h-full flex flex-col gap-20 py-14 md:py-20 w-w90 mx-auto md:w-w80">
+		<main className="h-full flex flex-col py-14 md:py-20 w-w90 mx-auto md:w-w80">
 			<LogoBanner />
 			<div className="flex flex-1 lg:gap-12 xl:gap-24">
 				<Image
