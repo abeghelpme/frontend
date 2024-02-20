@@ -1,10 +1,10 @@
 import { LogoBanner } from "@/components/common";
 import type { WithPageLayout } from "@/interfaces";
-// import { BaseLayout } from '@/layouts';
 import bg from "@/public/assets/images/auth/auth-bg-jar.svg";
 import { useSession } from "@/store";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Home: WithPageLayout = () => {
 	return (
