@@ -92,7 +92,7 @@ function StepOne() {
 
 	return (
 		<section className="w-full">
-			<Heading as="h2" className="text-formBtn">
+			<Heading as="h2" className="textabeg-primary">
 				Create a campaign to fund your passion or cause.
 			</Heading>
 
@@ -104,7 +104,7 @@ function StepOne() {
 					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
-				<ol className="flex flex-col gap-@2.4">
+				<ol className="gap-@2.4 flex flex-col">
 					<li>
 						<label className="text-sm font-semibold lg:text-xl">
 							What best describes your fundraiser?
@@ -121,7 +121,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-@1.6 rounded-[10px] border-unfocused px-@0.8 py-@2.3 text-xs data-[placeholder]:text-placeholder lg:px-@1.6 lg:py-@3.4 lg:text-base"
+										className="mt-@1.6 border-unfocused px-@0.8 py-@2.3 data-[placeholder]:text-placeholder lg:px-@1.6 lg:py-@3.4 rounded-[10px] text-xs lg:text-base"
 									>
 										<Select.Value placeholder="Select what category best suit your fundraiser" />
 									</Select.Trigger>
@@ -159,7 +159,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-@1.6 rounded-[10px] border-unfocused px-@0.8 py-@2.3 text-xs data-[placeholder]:text-placeholder lg:px-@1.6 lg:py-@3.4 lg:text-base"
+										className="mt-@1.6 border-unfocused px-@0.8 py-@2.3 data-[placeholder]:text-placeholder lg:px-@1.6 lg:py-@3.4 rounded-[10px] text-xs lg:text-base"
 									>
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
@@ -189,38 +189,38 @@ function StepOne() {
 							Campaign Tags
 						</label>
 
-						<div className="mt-@1.6 flex items-center gap-@0.8">
+						<div className="mt-@1.6 gap-@0.8 flex items-center">
 							<input
 								ref={tagInputRef}
 								name="tags"
 								type="text"
 								placeholder="Add hashtags or search keywords to your campaign"
-								className="w-full rounded-[10px] border border-unfocused px-@0.8 py-@1.6 text-xs focus-visible:outline-formBtn lg:px-@1.6 lg:py-@2.2 lg:text-base"
+								className="border-unfocused px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border text-xs lg:text-base"
 								onKeyDown={handleAddTags}
 							/>
 
 							<Button
 								type="button"
 								variant="secondary"
-								className="rounded-md border-formBtn px-@1.2 py-@0.8 text-xs font-semibold text-formBtn lg:px-@2.8 lg:py-@1.2 lg:text-base"
+								className="borderabeg-primary px-@1.2 py-@0.8 textabeg-primary lg:px-@2.8 lg:py-@1.2 rounded-md text-xs font-semibold lg:text-base"
 								onClick={handleAddTags}
 							>
 								Add
 							</Button>
 						</div>
 
-						<div className="mt-@1.6 flex flex-col gap-@1.6">
-							<span className="text-xs text-formBtn">
+						<div className="mt-@1.6 gap-@1.6 flex flex-col">
+							<span className="textabeg-primary text-xs">
 								{stepOneData.tags.length}/5 tags
 							</span>
 
-							<ul className="flex flex-wrap gap-@0.8 text-xs font-medium text-formBtn">
+							<ul className="gap-@0.8 textabeg-primary flex flex-wrap text-xs font-medium">
 								<TagList
 									each={stepOneData.tags}
 									render={(tag) => (
 										<li
 											key={tag}
-											className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-formBtn bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
+											className="borderabeg-primary flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
 										>
 											<p>#{tag}</p>
 

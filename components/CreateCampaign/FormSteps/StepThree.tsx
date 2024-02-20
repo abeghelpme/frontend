@@ -62,7 +62,7 @@ function StepThree() {
 
 	return (
 		<section className="w-full">
-			<Heading as="h2" className="text-formBtn">
+			<Heading as="h2" className="textabeg-primary">
 				Your story matters and this is where it begins.
 			</Heading>
 
@@ -74,7 +74,7 @@ function StepThree() {
 					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
-				<ol className="flex flex-col gap-@2.4">
+				<ol className="gap-@2.4 flex flex-col">
 					<li>
 						<label className="text-sm font-semibold lg:text-xl">
 							Campaign Cover Image

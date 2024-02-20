@@ -5,6 +5,9 @@ import { buttonVariants } from "../button";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
+const IconRight = () => <ChevronRightIcon className="size-4" />;
+const IconLeft = () => <ChevronLeftIcon className="size-4" />;
+
 function Calendar(props: CalendarProps) {
 	const {
 		className,
@@ -15,10 +18,7 @@ function Calendar(props: CalendarProps) {
 
 	return (
 		<DayPicker
-			components={{
-				IconLeft: () => <ChevronLeftIcon className="size-4" />,
-				IconRight: () => <ChevronRightIcon className="size-4" />,
-			}}
+			components={{ IconLeft, IconRight }}
 			showOutsideDays={showOutsideDays}
 			className={cn("p-[1.2rem]", className)}
 			classNames={{
@@ -38,7 +38,7 @@ function Calendar(props: CalendarProps) {
 				head_cell:
 					"text-muted-foreground rounded-md w-@3.4 font-normal text-sm",
 				row: "flex w-full mt-@0.8",
-				cell: "size-@3.2 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+				cell: "size-@3.2 text-center text-xs p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
 				day: cn(
 					buttonVariants({ variant: "ghost" }),
 					"size-@3.2 p-0 font-normal aria-selected:opacity-100"

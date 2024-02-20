@@ -144,7 +144,7 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 										</span>
 										<button
 											type="button"
-											className="mt-2 flex items-center justify-center font-semibold text-abeg-teal"
+											className="text-abeg-teal mt-2 flex items-center justify-center font-semibold"
 											onClick={() => void handleCopy()}
 										>
 											<ClipboardIcon />
@@ -165,12 +165,12 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 					</li>
 				</ol>
 			</div>
-			<div className="border-t border-t-formBtn">
+			<div className="border-tabeg-primary border-t">
 				<div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
 					<CustomDialog
 						trigger={
 							<Button
-								className="w-fit bg-abeg-button-10 "
+								className="bg-abeg-button-10 w-fit "
 								size="sm"
 								disabled={data === undefined || QRCodeError}
 							>
@@ -198,7 +198,7 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 								renderInput={(props) => <input {...props} />}
 							/>
 							<Button
-								className="mt-6 bg-formBtn py-4 text-sm font-semibold"
+								className="bgabeg-primary mt-6 py-4 text-sm font-semibold"
 								disabled={otp.length !== 6}
 								onClick={() => void handleOtpSubmit()}
 								loading={otpLoading}

@@ -18,7 +18,7 @@ function StepTracker() {
 				<StepIndicator step={3} disabled={currentStep < 3} />
 			</div>
 
-			<div className="flex flex-col items-center justify-between gap-@3.2 text-xs text-formBtn lg:max-w-@21.3 lg:text-sm">
+			<div className="gap-@3.2 textabeg-primary lg:max-w-@21.3 flex flex-col items-center justify-between text-xs lg:text-sm">
 				<StepInformation
 					title="Basic Info"
 					description="Create a campaign to fund your passion or cause"

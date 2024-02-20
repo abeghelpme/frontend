@@ -45,7 +45,7 @@ const OtpInputDisplay = ({
         disabled={loading}
         loading={loading}
         onClick={(e) => void handleSubmit(e)}
-        className="text-white block bg-formBtn font-semibold py-4 w-full rounded-md my-8"
+        className="text-white block bgabeg-primary font-semibold py-4 w-full rounded-md my-8"
         fullWidth
       >
         Confirm

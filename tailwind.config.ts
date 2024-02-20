@@ -39,6 +39,7 @@ const config = {
 			},
 			backgroundImage: {
 				contours: "url('/assets/images/shared/bg-contours.png')",
+				"contours-old": "url('/assets/images/shared/contours-old.png')",
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
@@ -51,13 +52,27 @@ const config = {
 
 			colors: {
 				overlay: "rgba(72, 72, 72, 0.5)",
-				inputBorder: "rgba(124, 148, 107, 0.25)",
+				placeholder: "#8D8B8B",
+				unfocused: "#A8CCCC",
+				semiWhite: "#E6EAEE",
 				formLabel: "#1B1818",
+				inputBorder: "rgba(124, 148, 107, 0.25)",
 				otpBorder: "rgba(0, 128, 128, 0.5)",
 				abeg: {
 					primary: "#008080",
 					text: "#484848",
 				},
+
+				// Shadcn colors
+				popover: "hsl(0 0% 100%)",
+				"popover-foreground": "hsl(222.2 47.4% 11.2%)",
+				accent: "hsl(210 40% 96.1%)",
+				"accent-foreground": "hsl(222.2 47.4% 11.2%)",
+				input: "hsl(214.3 31.8% 91.4%)",
+				ring: "hsl(215 20.2% 65.1%)",
+				muted: "hsl(210 40% 96.1%)",
+				"muted-foreground": "hsl(215.4 16.3% 46.9%)",
+				background: "hsl(0 0% 100%)",
 			},
 
 			height: {
