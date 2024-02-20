@@ -1,18 +1,17 @@
 import twConfig from "@/tailwind.config";
 import clsx, { type ClassValue } from "clsx";
-import { extendTailwindMerge } from "tailwind-merge";
+import { extendTailwindMerge, twMerge } from "tailwind-merge";
 
-const themeObject = twConfig.theme.extend;
+// const themeObject = twConfig.theme.extend;
 
-const customTwMerge = extendTailwindMerge({
-	extend: {
-		theme: {
-			spacing: Object.keys(themeObject.spacing),
-		},
-	},
-});
+// const customTwMerge = extendTailwindMerge({
+// 	extend: {
+// 		theme: {
+// 			spacing: Object.keys(themeObject.spacing),
+// 		},
+// 	},
+// });
 
-const cn = (...classNames: ClassValue[]): string =>
-	customTwMerge(clsx(classNames));
+const cn = (...classNames: ClassValue[]): string => twMerge(clsx(classNames));
 
 export { cn };
