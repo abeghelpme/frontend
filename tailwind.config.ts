@@ -92,7 +92,8 @@ const config = {
 				w90: "90%",
 			},
 			maxWidth: {
-				wSignUpForm: "746px",
+				wSignUpForm: "46.6rem",
+				wAuthFlow: "32rem",
 			},
 			keyframes: {
 				"accordion-down": {

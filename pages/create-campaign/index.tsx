@@ -44,7 +44,7 @@ function CreateCampaignPage() {
 				<FormActionButton
 					type="button"
 					text="Go Back"
-					className="bgabeg-primary flex min-w-[4.875rem] justify-center"
+					className="bg-abeg-primary flex min-w-[4.875rem] justify-center"
 					disabled={currentStep === 1}
 					onClick={() => goToStep(currentStep - 1)}
 				/>
@@ -53,7 +53,7 @@ function CreateCampaignPage() {
 					<FormActionButton
 						type="submit"
 						text="Continue"
-						className={cn("bgabeg-primary", currentStep === 3 && "lg:hidden")}
+						className={cn("bg-abeg-primary", currentStep === 3 && "lg:hidden")}
 						targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
 						isLoading={formStatus.isSubmitting}
 						disabled={formStatus.isSubmitting}
@@ -77,7 +77,7 @@ function CreateCampaignPage() {
 						<FormActionButton
 							type="button"
 							text="Publish Campaign"
-							className="bgabeg-primary max-lg:hidden"
+							className="bg-abeg-primary max-lg:hidden"
 						/>
 					)}
 				</div>

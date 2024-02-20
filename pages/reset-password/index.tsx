@@ -149,7 +149,7 @@ const ResetPassword = () => {
 								</div>
 							)}
 							{errors.password && (
-								<div className="mt-2 text-sm text-abeg-teal">
+								<div className="mt-2 text-sm text-abeg-primary">
 									<h1>{errors.password.message}</h1>
 								</div>
 							)}
@@ -171,7 +171,7 @@ const ResetPassword = () => {
 								/>
 							</div>
 							{errors.confirmPassword && (
-								<div className="mt-2 text-sm text-abeg-teal">
+								<div className="mt-2 text-sm text-abeg-primary">
 									<h1>{errors.confirmPassword.message}</h1>
 								</div>
 							)}

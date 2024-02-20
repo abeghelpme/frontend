@@ -96,7 +96,9 @@ const ForgotPasswordPage = () => {
 							}`}
 						/>
 						{errors.email && (
-							<p className="text-sm text-abeg-teal">{errors.email.message}</p>
+							<p className="text-sm text-abeg-primary">
+								{errors.email.message}
+							</p>
 						)}
 					</div>
 				</div>
@@ -112,7 +114,7 @@ const ForgotPasswordPage = () => {
 					>
 						Submit
 					</Button>
-					<Link href="/signin" className="text-sm text-abeg-teal">
+					<Link href="/signin" className="text-sm text-abeg-primary">
 						Back to sign in page
 					</Link>
 				</div>

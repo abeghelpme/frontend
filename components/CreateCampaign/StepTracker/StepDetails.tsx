@@ -31,7 +31,7 @@ function StepIndicator(props: StepIndicatorProps) {
 
 			<span
 				className={cn(
-					"w-@2 bgabeg-primary grid aspect-square shrink-0 place-content-center rounded-full font-bold text-white",
+					"w-@2 bg-abeg-primary grid aspect-square shrink-0 place-content-center rounded-full font-bold text-white",
 					disabled && "bg-unfocused"
 				)}
 			>

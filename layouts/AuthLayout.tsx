@@ -32,7 +32,7 @@ export const AuthLayout = ({
 				{!hasSuccess ? (
 					<div
 						className={`mx-auto my-auto w-[90%] space-y-4 md:space-y-6 rounded-lg bg-white py-5 px-4 shadow-auth-layout-shadow md:mx-0 md:p-12 ${
-							contentClass! ? contentClass : "max-w-[467px]"
+							contentClass! ? contentClass : "max-w-wAuthFlow"
 						}`}
 					>
 						<LogoBanner />
