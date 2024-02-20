@@ -198,4 +198,4 @@ const AuthenticateUser = () => {
 export default AuthenticateUser;
 
 AuthenticateUser.getLayout = AuthPagesLayout;
-AuthenticateUser.protect = true;
+// AuthenticateUser.protect = true;
