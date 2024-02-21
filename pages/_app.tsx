@@ -18,6 +18,7 @@ interface ComponentWithPageLayout extends AppProps {
 
 export default function App({ Component, pageProps }: ComponentWithPageLayout) {
 	const { getSession } = useSession((state) => state);
+
 	const getLayout = Component.getLayout || ((page) => page);
 	useEffect(() => {
 		void (async () => {
@@ -29,17 +30,18 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
 	return (
 		<>
 			<style jsx global>{`
-				html {
-					font-family: ${manrope.style.fontFamily};
-					color: #484848;
-				}
-			`}</style>
+        html {
+          font-family: ${manrope.style.fontFamily};
+          color: #484848;
+        }
+      `}</style>
 			<NextNProgress color="#324823" />
 			{Component.protect === true ? (
 				<Auth>{getLayout(<Component {...pageProps} />)}</Auth>
 			) : (
 				getLayout(<Component {...pageProps} />)
 			)}
+
 			<Toaster />
 		</>
 	);

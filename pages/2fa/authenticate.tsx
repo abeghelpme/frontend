@@ -56,14 +56,13 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 				<p className="">{` Enter the 6 digits code we sent to ${email}`}</p>
 			}
 			bottomSection={
-				<div className="space-y-5">
+				<>
 					<Button
 						type="submit"
 						disabled={loading}
 						loading={loading}
 						onClick={(e) => void handleSubmit(e)}
-						className=""
-						variant="primary"
+						className="bg-abeg-primary my-8 block w-full rounded-md py-4 font-semibold text-white"
 						fullWidth
 					>
 						Confirm
@@ -75,7 +74,7 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 								type="submit"
 								disabled={resend.current}
 								onClick={() => void resendCode()}
-								className="text-abeg-primary !p-0 disabled:bg-transparent disabled:text-neutral-50"
+								className="text-abeg-primary p-0 font-medium disabled:bg-transparent disabled:text-neutral-50"
 							>
 								resend it
 							</Button>
@@ -85,7 +84,7 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 							backup codes.
 						</p>
 					</div>
-				</div>
+				</>
 			}
 		/>
 	);
@@ -107,8 +106,7 @@ const AuthApp = ({ otp, setOtp, handleSubmit, loading }: Props) => {
 					disabled={loading}
 					loading={loading}
 					onClick={(e) => void handleSubmit(e)}
-					className=""
-					variant="primary"
+					className="bg-abeg-primary mt-8 block w-full rounded-md py-4 font-semibold text-white"
 					fullWidth
 				>
 					Confirm
@@ -152,9 +150,24 @@ const AuthenticateUser = () => {
 				description: (data as { message: string }).message,
 				duration: 2000,
 			});
-			void router.push("/");
+			void router.push("/dashboard");
 		}
 	};
+	// if (castedUser === null) {
+	// 	setTimeout(() => {
+	// 		void router.push("/signin");
+	// 	}, 1000);
+	// 	return (
+	// 		<Loader message={`You are not signed in. Redirecting to sign in page`} />
+	// 	);
+	// } else if (castedUser?.twoFA.isVerified) {
+	// 	setTimeout(() => {
+	// 		void router.push("/");
+	// 	}, 1000);
+	// 	return (
+	// 		<Loader message={`You are already signed in. Redirecting to home page`} />
+	// 	);
+	// }
 	return (
 		<AuthLayout
 			title="Authenticate your Account!"
@@ -162,7 +175,7 @@ const AuthenticateUser = () => {
 			withHeader={false}
 			hasSuccess={false}
 		>
-			{castedUser?.twoFA.type !== "EMAIL" ? (
+			{castedUser?.twoFA.type === "EMAIL" ? (
 				<EmailAuth
 					email={castedUser?.email}
 					otp={otp}

@@ -32,7 +32,7 @@ function CreateCampaignPage() {
 
 	return (
 		<div className="flex min-h-screen flex-col justify-between max-lg:items-center">
-			<main className="gap-@3.2 bg-contours-old px-@2.4 pb-@5.5 pt-@3.2 lg:gap-@7 lg:px-@10 lg:pb-@10 lg:pt-@4.8 flex w-full shrink-0 flex-col bg-cover max-lg:max-w-[30rem] lg:flex-row lg:items-start">
+			<main className="gap-@3.2 px-@2.4 pb-@5.5 pt-@3.2 lg:gap-@7 lg:px-@10 lg:pb-@10 lg:pt-@4.8 flex w-full shrink-0 flex-col bg-contours-old bg-cover max-lg:max-w-[30rem] lg:flex-row lg:items-start">
 				<section className="gap-@1.2 lg:mt-@1.9 flex shrink-0">
 					<StepTracker />
 				</section>
@@ -40,11 +40,11 @@ function CreateCampaignPage() {
 				{STEP_COMPONENT_LOOKUP[currentStep]}
 			</main>
 
-			<footer className="border-tabeg-primary px-@2.4 py-@1.6 lg:px-@10 flex w-full items-center justify-between border-t lg:py-[1.65625rem]">
+			<footer className="border-t-abeg-primary px-@2.4 py-@1.6 lg:px-@10 flex w-full items-center justify-between border-t lg:py-[1.65625rem]">
 				<FormActionButton
 					type="button"
 					text="Go Back"
-					className="bg-abeg-primary flex min-w-[4.875rem] justify-center"
+					className="flex min-w-[4.875rem] justify-center bg-abeg-primary"
 					disabled={currentStep === 1}
 					onClick={() => goToStep(currentStep - 1)}
 				/>

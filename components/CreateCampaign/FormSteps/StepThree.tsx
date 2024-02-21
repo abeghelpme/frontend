@@ -8,6 +8,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import DropZoneInput from "../DropZoneInput";
 import ErrorParagraph from "../ErrorParagraph";
 import Heading from "../Heading";
@@ -55,6 +56,14 @@ function StepThree() {
 			formData
 		);
 
+		if (error) {
+			toast.error(error.status, {
+				description: error.message,
+			});
+
+			return;
+		}
+
 		if (dataInfo) {
 			void router.push("/create-campaign/preview");
 		}
@@ -76,7 +85,10 @@ function StepThree() {
 			>
 				<ol className="gap-@2.4 flex flex-col">
 					<li>
-						<label className="text-sm font-semibold lg:text-xl">
+						<label
+							htmlFor="photos"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							Campaign Cover Image
 						</label>
 
@@ -99,7 +111,7 @@ function StepThree() {
 					</li>
 
 					<li>
-						<label className="text-sm font-semibold lg:text-xl">
+						<label htmlFor="story" className="text-sm font-semibold lg:text-xl">
 							Campaign Story
 						</label>
 

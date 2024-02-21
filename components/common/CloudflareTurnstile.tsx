@@ -31,6 +31,8 @@ const CloudFlareTurnStileComp = (
 
 	return (
 		<Turnstile
+			rel="prefetch"
+			as="div"
 			ref={ref}
 			scriptOptions={{ defer: true }}
 			siteKey={SITEKEY}

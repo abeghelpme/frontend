@@ -64,7 +64,7 @@ const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
 					<Button
 						className="bg-abeg-button-10 w-fit "
 						size="sm"
-						onClick={() => void router.push("/create-campaign")}
+						onClick={() => void router.push("/dashboard")}
 					>
 						Got it!
 					</Button>

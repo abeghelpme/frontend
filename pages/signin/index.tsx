@@ -1,5 +1,5 @@
-import { CloudFlareTurnStile } from "@/components/common";
-import { Button, Input, useToast } from "@/components/ui";
+import { CloudFlareTurnStile, CustomDialog } from "@/components/common";
+import { Button, Input } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
@@ -10,32 +10,24 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const Login = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
 	const showModal = useRef(false);
 	const router = useRouter();
-	const { toast } = useToast();
 	const [openModal, setOpenModal] = useState(false);
 	const [success] = useState(false);
 	const [skip2FA, setSkip2FA] = useState("false");
 	const { user, updateUser } = useSession((state) => state);
 
 	useEffect(() => {
-		const checkLS = () => {
-			if (!showModal.current) {
-				const modal = localStorage.getItem("skip-2FA");
-				if (modal !== null) {
-					setSkip2FA(modal);
-				}
-				showModal.current = true;
-			} else {
-				localStorage.setItem("skip-2FA", skip2FA);
-			}
-		};
-		checkLS();
-	}, [skip2FA]);
+		const skipModal = localStorage.getItem("skip-2FA");
+		if (skipModal !== null) {
+			setSkip2FA("true");
+		}
+	}, []);
 
 	const {
 		register,
@@ -48,11 +40,11 @@ const Login = () => {
 		reValidateMode: "onChange",
 	});
 
-	// const handleOption = () => {
-	// 	setSkip2FA('false');
-	// 	setOpenModal(false);
-	// 	void router.push('/create-campaign');
-	// };
+	const handleOption = async () => {
+		await localStorage.setItem("skip-2FA", JSON.stringify(skip2FA));
+		await void router.push("/dashboard");
+		setOpenModal(false);
+	};
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
 		const { data: responseData, error } = await callApi<ApiResponse<User>>(
@@ -72,32 +64,30 @@ const Login = () => {
 					query: { signup: true, email: data.email.toLowerCase() },
 				});
 			}
-			return toast({
-				title: error.status as string,
+			return toast(error.status, {
 				description: error.message,
 				duration: 3000,
 			});
 		} else {
-			toast({
-				title: "Success",
+			toast("Success", {
 				description: (responseData as { message: string }).message,
 				duration: 3000,
 			});
 
-			updateUser(responseData?.data as User);
-
 			reset();
-			if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
-				setTimeout(() => {
-					void router.push("/test");
-				}, 1000);
-				return;
+			if (responseData?.data?.twoFA?.active === false) {
+				if (skip2FA === "true") {
+					router.push("/dashboard");
+				} else {
+					setOpenModal(true);
+					await router.push("/signin?redirect=false", undefined, {
+						shallow: true,
+					});
+				}
+				updateUser(responseData?.data as User);
 			} else {
-				setTimeout(() => {
-					void router.push("/signin/authenticate");
-				}, 1000);
+				router.push("/2fa/authenticate");
 			}
-			return;
 		}
 	};
 
@@ -136,11 +126,11 @@ const Login = () => {
 						placeholder="Enter your email address"
 						className={`min-h-[45px] ${
 							errors.email &&
-							"ring-abeg-error-20 placeholder:text-abeg-error-20 ring-2"
+							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
 					{errors.email && (
-						<p className="text-abeg-primary text-sm">{errors.email.message}</p>
+						<p className="text-sm text-abeg-primary">{errors.email.message}</p>
 					)}
 				</div>
 				<div className="mt-4 space-y-1">
@@ -154,11 +144,11 @@ const Login = () => {
 						placeholder="Enter password"
 						className={`min-h-[45px] ${
 							errors.password &&
-							"ring-abeg-error-20 placeholder:text-abeg-error-20 ring-2"
+							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
 					{errors.password && (
-						<p className="text-abeg-primary text-sm">
+						<p className="text-sm text-abeg-primary">
 							{errors.password.message}
 						</p>
 					)}
@@ -175,7 +165,7 @@ const Login = () => {
 					onStatusChange={handleBotStatus}
 				/>
 				<div className="flex flex-col gap-6">
-					{/* <CustomDialog
+					<CustomDialog
 						openDialog={openModal}
 						setOpen={() => setOpenModal(openModal)}
 						trigger={
@@ -183,7 +173,8 @@ const Login = () => {
 								type="submit"
 								disabled={isSubmitting || success}
 								loading={isSubmitting}
-								className="bg-abeg-primary mt-6 py-4 text-white disabled:bg-gray-500 "
+								variant="primary"
+								className="mt-6 disabled:bg-gray-500 "
 								fullWidth
 							>
 								Sign in
@@ -191,11 +182,14 @@ const Login = () => {
 						}
 					>
 						<div className="text-center">
-							<h2 className="text-2xl font-semibold">Keep your account safe!</h2>
+							<h2 className="text-2xl font-semibold">
+								Keep your account safe!
+							</h2>
 							<div className="mt-3 space-y-2">
 								<p className="">Your safety is our number one priority</p>
 								<p className="">
-									Activate two-factor authentication and add an extra layer of security to your account
+									Activate two-factor authentication and add an extra layer of
+									security to your account
 								</p>
 							</div>
 							<div className="mt-6 flex flex-col">
@@ -210,14 +204,14 @@ const Login = () => {
 									type="submit"
 									disabled={isSubmitting}
 									onClick={handleOption}
-									className="borderabeg-primary text-abeg-primary mt-4 border py-4 disabled:bg-gray-500 disabled:text-white"
+									className="border-abeg-primary text-abeg-primary mt-4 border py-4 disabled:bg-gray-500 disabled:text-white"
 									fullWidth
 								>
 									Skip
 								</Button>
 							</div>
 						</div>
-					</CustomDialog> */}
+					</CustomDialog>
 					<Button
 						type="submit"
 						disabled={isSubmitting || success}
@@ -232,7 +226,7 @@ const Login = () => {
 						Don&apos;t have an account?&nbsp;
 						<Link
 							href="/signup"
-							className="text-abeg-primary font-medium underline"
+							className="font-medium text-abeg-primary underline"
 						>
 							Register
 						</Link>

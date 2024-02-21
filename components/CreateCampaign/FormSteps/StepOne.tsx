@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import ErrorParagraph from "../ErrorParagraph";
 import Heading from "../Heading";
 
@@ -48,6 +49,14 @@ function StepOne() {
 		const { data: dataInfo, error } = await callApi<{
 			data: { _id: string };
 		}>("/campaign/create/one", data);
+
+		if (error) {
+			toast.error(error.status, {
+				description: error.message,
+			});
+
+			return;
+		}
 
 		if (dataInfo) {
 			setCampaignId(dataInfo.data._id);
@@ -106,7 +115,10 @@ function StepOne() {
 			>
 				<ol className="gap-@2.4 flex flex-col">
 					<li>
-						<label className="text-sm font-semibold lg:text-xl">
+						<label
+							htmlFor="categoryId"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							What best describes your fundraiser?
 						</label>
 
@@ -121,7 +133,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-@1.6 border-unfocused px-@0.8 py-@2.3 data-[placeholder]:text-placeholder lg:px-@1.6 lg:py-@3.4 rounded-[10px] text-xs lg:text-base"
+										className="mt-@1.6 px-@0.8 py-@2.3 lg:px-@1.6 lg:py-@3.4 rounded-[10px] border-unfocused text-xs data-[placeholder]:text-placeholder lg:text-base"
 									>
 										<Select.Value placeholder="Select what category best suit your fundraiser" />
 									</Select.Trigger>
@@ -144,7 +156,10 @@ function StepOne() {
 					</li>
 
 					<li>
-						<label className="text-sm font-semibold lg:text-xl">
+						<label
+							htmlFor="country"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							What country are you located?
 						</label>
 
@@ -159,7 +174,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-@1.6 border-unfocused px-@0.8 py-@2.3 data-[placeholder]:text-placeholder lg:px-@1.6 lg:py-@3.4 rounded-[10px] text-xs lg:text-base"
+										className="mt-@1.6 px-@0.8 py-@2.3 lg:px-@1.6 lg:py-@3.4 rounded-[10px] border-unfocused text-xs data-[placeholder]:text-placeholder lg:text-base"
 									>
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
@@ -195,7 +210,7 @@ function StepOne() {
 								name="tags"
 								type="text"
 								placeholder="Add hashtags or search keywords to your campaign"
-								className="border-unfocused px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border text-xs lg:text-base"
+								className="px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border border-unfocused text-xs lg:text-base"
 								onKeyDown={handleAddTags}
 							/>
 
