@@ -91,10 +91,6 @@ const Login = () => {
 		}
 	};
 
-	// if (user !== null) {
-	// 	void router.push("/");
-	// 	return <Loader message={`You are already signed in. Redirecting to home`} />;
-	// }
 	return (
 		<AuthLayout
 			title="Sign in to your account"
@@ -212,7 +208,7 @@ const Login = () => {
 							</div>
 						</div>
 					</CustomDialog>
-					<Button
+					{/* <Button
 						type="submit"
 						disabled={isSubmitting || success}
 						loading={isSubmitting}
@@ -221,7 +217,7 @@ const Login = () => {
 						fullWidth
 					>
 						Sign in
-					</Button>
+					</Button> */}
 					<p className="text-center text-sm">
 						Don&apos;t have an account?&nbsp;
 						<Link
