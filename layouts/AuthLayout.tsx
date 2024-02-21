@@ -1,13 +1,10 @@
 import { LogoBanner, PageMetaData } from "@/components/common";
 import type { AuthLayoutProps } from "@/interfaces";
-import authBgJar from "@/public/assets/images/auth/auth-bg-jar.svg";
-import Image from "next/image";
 
 export const AuthLayout = ({
 	children,
 	title,
 	content,
-	formType,
 	greeting,
 	heading,
 	withHeader,
@@ -20,18 +17,9 @@ export const AuthLayout = ({
 			<div
 				className={`relative flex min-h-svh justify-center items-center py-14`}
 			>
-				{formType === "signup" && (
-					<Image
-						src={authBgJar as string}
-						alt=""
-						priority
-						className="absolute inset-0 -z-[1] h-full w-full object-cover object-[75%]"
-					/>
-				)}
-
 				{!hasSuccess ? (
 					<div
-						className={`mx-auto my-auto w-[90%] space-y-4 md:space-y-6 rounded-lg bg-white py-5 px-4 shadow-auth-layout-shadow md:mx-0 md:p-12 ${
+						className={`mx-auto w-[90%] space-y-4 md:space-y-6 rounded-lg bg-white py-5 px-4 shadow-auth-layout-shadow md:mx-0 md:p-9 ${
 							contentClass! ? contentClass : "max-w-wAuthFlow"
 						}`}
 					>

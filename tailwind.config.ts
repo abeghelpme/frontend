@@ -13,10 +13,6 @@ const config = {
 		extend: {
 			spacing: {
 				// PADDING (X & Y)
-				DSigninFormPadding: "1.5rem 3rem",
-				MSigninFormPadding: "1rem",
-				DAuthFlowPadding: "1.5rem",
-				MAuthFlowPadding: "1rem",
 				DOverlayPadding: "2rem 1.5rem",
 				MOverlayPadding: "1.5rem",
 				DOtpContainerPadding: "2.5rem 3.13rem",
@@ -31,7 +27,7 @@ const config = {
 			},
 			backgroundImage: {
 				contours: "url('/assets/images/shared/bg-contours.png')",
-				"contours-old": "url('/assets/images/shared/contours-old.png')",
+				authBg: "url('/assets/images/auth/auth-bg-jar.svg')",
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
@@ -94,6 +90,7 @@ const config = {
 			maxWidth: {
 				wSignUpForm: "46.6rem",
 				wAuthFlow: "32rem",
+				wSuccess: "29.2rem",
 			},
 			keyframes: {
 				"accordion-down": {

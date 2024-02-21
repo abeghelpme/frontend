@@ -40,7 +40,7 @@ function CreateCampaignPage() {
 				{STEP_COMPONENT_LOOKUP[currentStep]}
 			</main>
 
-			<footer className="border-tabeg-primary px-@2.4 py-@1.6 lg:px-@10 flex w-full items-center justify-between border-t lg:py-[1.65625rem]">
+			<footer className="border-t-abeg-primary px-@2.4 py-@1.6 lg:px-@10 flex w-full items-center justify-between border-t lg:py-[1.65625rem]">
 				<FormActionButton
 					type="button"
 					text="Go Back"

@@ -1,7 +1,7 @@
 import { CloudFlareTurnStile } from "@/components/common";
 import { Button, Input, ProgressBar } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
-import { AuthLayout } from "@/layouts";
+import { AuthLayout, AuthPagesLayout } from "@/layouts";
 import {
 	type SignUpType,
 	callApi,
@@ -103,7 +103,6 @@ const SignUp = () => {
 		<AuthLayout
 			title="Create an Account!"
 			content="Create an Abeg Help account to start your crowdfunding!"
-			formType="signup"
 			heading="Welcome!"
 			greeting="Create your account"
 			contentClass="md:w-[85%] md:max-w-wSignUpForm"
@@ -323,3 +322,4 @@ const SignUp = () => {
 export default SignUp;
 
 SignUp.protect = true;
+SignUp.getLayout = AuthPagesLayout;

@@ -91,10 +91,6 @@ const Login = () => {
 		}
 	};
 
-	// if (user !== null) {
-	// 	void router.push("/");
-	// 	return <Loader message={`You are already signed in. Redirecting to home`} />;
-	// }
 	return (
 		<AuthLayout
 			title="Sign in to your account"
@@ -173,7 +169,8 @@ const Login = () => {
 								type="submit"
 								disabled={isSubmitting || success}
 								loading={isSubmitting}
-								className="bg-abeg-primary mt-6 py-4 text-white disabled:bg-gray-500 "
+								variant="primary"
+								className="mt-6 disabled:bg-gray-500 "
 								fullWidth
 							>
 								Sign in
@@ -203,7 +200,7 @@ const Login = () => {
 									type="submit"
 									disabled={isSubmitting}
 									onClick={handleOption}
-									className="borderabeg-primary text-abeg-primary mt-4 border py-4 disabled:bg-gray-500 disabled:text-white"
+									className="border-abeg-primary text-abeg-primary mt-4 border py-4 disabled:bg-gray-500 disabled:text-white"
 									fullWidth
 								>
 									Skip
@@ -211,6 +208,16 @@ const Login = () => {
 							</div>
 						</div>
 					</CustomDialog>
+					{/* <Button
+						type="submit"
+						disabled={isSubmitting || success}
+						loading={isSubmitting}
+						className="mt-6"
+						variant="primary"
+						fullWidth
+					>
+						Sign in
+					</Button> */}
 					<p className="text-center text-sm">
 						Don&apos;t have an account?&nbsp;
 						<Link
