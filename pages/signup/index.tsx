@@ -1,4 +1,3 @@
-import { setTimeout } from "timers";
 import { CloudFlareTurnStile } from "@/components/common";
 import { Button, Input, ProgressBar } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
@@ -139,7 +138,7 @@ const SignUp = () => {
 						</ul>
 					)
 				)}
-				<div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 lg:gap-6 sm:space-y-0">
+				<div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
 					<div className="space-y-1">
 						<label htmlFor="firstName" className="text-sm font-medium">
 							First Name
@@ -198,7 +197,7 @@ const SignUp = () => {
 					)}
 				</div>
 
-				<div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 lg:gap-6 sm:space-y-0">
+				<div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
 					<div className="space-y-1">
 						<label htmlFor="password" className="mb-1 text-sm font-medium">
 							Password

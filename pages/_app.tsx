@@ -40,6 +40,7 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
 			) : (
 				getLayout(<Component {...pageProps} />)
 			)}
+
 			<Toaster />
 		</>
 	);

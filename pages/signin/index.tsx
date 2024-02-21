@@ -1,5 +1,5 @@
 import { CloudFlareTurnStile } from "@/components/common";
-import { Button, Input, useToast } from "@/components/ui";
+import { Button, Input } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
@@ -10,13 +10,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const Login = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
 	const showModal = useRef(false);
 	const router = useRouter();
-	const { toast } = useToast();
 	const [openModal, setOpenModal] = useState(false);
 	const [success] = useState(false);
 	const [skip2FA, setSkip2FA] = useState("false");
@@ -72,14 +72,12 @@ const Login = () => {
 					query: { signup: true, email: data.email.toLowerCase() },
 				});
 			}
-			return toast({
-				title: error.status as string,
+			return toast(error.status, {
 				description: error.message,
 				duration: 3000,
 			});
 		} else {
-			toast({
-				title: "Success",
+			toast("Success", {
 				description: (responseData as { message: string }).message,
 				duration: 3000,
 			});
@@ -136,11 +134,11 @@ const Login = () => {
 						placeholder="Enter your email address"
 						className={`min-h-[45px] ${
 							errors.email &&
-							"ring-abeg-error-20 placeholder:text-abeg-error-20 ring-2"
+							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
 					{errors.email && (
-						<p className="text-abeg-primary text-sm">{errors.email.message}</p>
+						<p className="text-sm text-abeg-primary">{errors.email.message}</p>
 					)}
 				</div>
 				<div className="mt-4 space-y-1">
@@ -154,11 +152,11 @@ const Login = () => {
 						placeholder="Enter password"
 						className={`min-h-[45px] ${
 							errors.password &&
-							"ring-abeg-error-20 placeholder:text-abeg-error-20 ring-2"
+							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
 					{errors.password && (
-						<p className="text-abeg-primary text-sm">
+						<p className="text-sm text-abeg-primary">
 							{errors.password.message}
 						</p>
 					)}
@@ -232,7 +230,7 @@ const Login = () => {
 						Don&apos;t have an account?&nbsp;
 						<Link
 							href="/signup"
-							className="text-abeg-primary font-medium underline"
+							className="font-medium text-abeg-primary underline"
 						>
 							Register
 						</Link>
