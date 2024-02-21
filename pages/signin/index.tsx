@@ -1,4 +1,4 @@
-import { CloudFlareTurnStile } from "@/components/common";
+import { CloudFlareTurnStile, CustomDialog } from "@/components/common";
 import { Button, Input } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthLayout, AuthPagesLayout } from "@/layouts";
@@ -23,19 +23,11 @@ const Login = () => {
 	const { user, updateUser } = useSession((state) => state);
 
 	useEffect(() => {
-		const checkLS = () => {
-			if (!showModal.current) {
-				const modal = localStorage.getItem("skip-2FA");
-				if (modal !== null) {
-					setSkip2FA(modal);
-				}
-				showModal.current = true;
-			} else {
-				localStorage.setItem("skip-2FA", skip2FA);
-			}
-		};
-		checkLS();
-	}, [skip2FA]);
+		const skipModal = localStorage.getItem("skip-2FA");
+		if (skipModal !== null) {
+			setSkip2FA("true");
+		}
+	}, []);
 
 	const {
 		register,
@@ -48,11 +40,11 @@ const Login = () => {
 		reValidateMode: "onChange",
 	});
 
-	// const handleOption = () => {
-	// 	setSkip2FA('false');
-	// 	setOpenModal(false);
-	// 	void router.push('/create-campaign');
-	// };
+	const handleOption = async () => {
+		await localStorage.setItem("skip-2FA", JSON.stringify(skip2FA));
+		await void router.push("/dashboard");
+		setOpenModal(false);
+	};
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
 		const { data: responseData, error } = await callApi<ApiResponse<User>>(
@@ -82,20 +74,20 @@ const Login = () => {
 				duration: 3000,
 			});
 
-			updateUser(responseData?.data as User);
-
 			reset();
-			if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
-				setTimeout(() => {
-					void router.push("/test");
-				}, 1000);
-				return;
+			if (responseData?.data?.twoFA?.active === false) {
+				if (skip2FA === "true") {
+					router.push("/dashboard");
+				} else {
+					setOpenModal(true);
+					await router.push("/signin?redirect=false", undefined, {
+						shallow: true,
+					});
+				}
+				updateUser(responseData?.data as User);
 			} else {
-				setTimeout(() => {
-					void router.push("/signin/authenticate");
-				}, 1000);
+				router.push("/2fa/authenticate");
 			}
-			return;
 		}
 	};
 
@@ -173,7 +165,7 @@ const Login = () => {
 					onStatusChange={handleBotStatus}
 				/>
 				<div className="flex flex-col gap-6">
-					{/* <CustomDialog
+					<CustomDialog
 						openDialog={openModal}
 						setOpen={() => setOpenModal(openModal)}
 						trigger={
@@ -189,11 +181,14 @@ const Login = () => {
 						}
 					>
 						<div className="text-center">
-							<h2 className="text-2xl font-semibold">Keep your account safe!</h2>
+							<h2 className="text-2xl font-semibold">
+								Keep your account safe!
+							</h2>
 							<div className="mt-3 space-y-2">
 								<p className="">Your safety is our number one priority</p>
 								<p className="">
-									Activate two-factor authentication and add an extra layer of security to your account
+									Activate two-factor authentication and add an extra layer of
+									security to your account
 								</p>
 							</div>
 							<div className="mt-6 flex flex-col">
@@ -215,17 +210,7 @@ const Login = () => {
 								</Button>
 							</div>
 						</div>
-					</CustomDialog> */}
-					<Button
-						type="submit"
-						disabled={isSubmitting || success}
-						loading={isSubmitting}
-						className="mt-6"
-						variant="primary"
-						fullWidth
-					>
-						Sign in
-					</Button>
+					</CustomDialog>
 					<p className="text-center text-sm">
 						Don&apos;t have an account?&nbsp;
 						<Link

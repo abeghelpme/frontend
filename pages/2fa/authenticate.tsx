@@ -150,7 +150,7 @@ const AuthenticateUser = () => {
 				description: (data as { message: string }).message,
 				duration: 2000,
 			});
-			void router.push("/");
+			void router.push("/dashboard");
 		}
 	};
 	// if (castedUser === null) {

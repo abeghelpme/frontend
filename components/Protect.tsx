@@ -29,31 +29,34 @@ const Auth = ({ children }: { children: ReactNode }) => {
 		}, 1000);
 	};
 
-	if (isInaccessible && user) {
-		redirect("/");
-		return <Loader message="You are already signed in" />;
-	}
-
 	if (!isInaccessible && !user) {
-		redirect("/signin");
+		void router.push("/signin");
 		return <Loader message="You are not signed in" />;
 	}
 
 	if (user && (user as User).twoFA?.active) {
 		if (
 			!(user as User).twoFA?.isVerified &&
-			router.pathname !== "/signin/authenticate"
+			router.pathname !== "/2fa/authenticate"
 		) {
-			redirect("/signin/authenticate");
+			redirect("/2fa/authenticate");
 			return <Loader message="You need to verify your account" />;
 		}
 
 		if (
-			router.pathname.includes("/2fa") ||
-			(router.pathname.includes("/signin") && (user as User).twoFA?.isVerified)
+			router.pathname.includes("/2fa") &&
+			(user as User).twoFA?.isVerified === true
 		) {
 			redirect("/");
-			return <Loader message="2FA is already active!" />;
+			return <Loader message="2FA is already active or verified!" />;
+		}
+	}
+
+	if (isInaccessible && user) {
+		const { redirect } = router.query;
+		if (typeof redirect === "undefined" || redirect === "true") {
+			void router.push("/");
+			return <Loader message="You are already signed in" />;
 		}
 	}
 
