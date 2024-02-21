@@ -18,55 +18,26 @@ const OtpInputDisplay = ({
 	bottomSection,
 }: OtpProps) => {
 	return (
-		<div className="flex max-w-[467px] flex-col items-center text-sm md:text-base">
-			<div className="text-center">
-				<Image
-					src={authPadlock as string}
-					alt=""
-					className="mx-auto aspect-square w-[80px]"
-				/>
-				<h1 className="mb-4 mt-6 font-medium md:text-2xl">
-					Enter your verification code
-				</h1>
+		<div className="flex max-w-[467px] flex-col items-center text-sm md:text-base space-y-12">
+			<Image
+				src={authPadlock as string}
+				alt=""
+				className="mx-auto aspect-square w-[80px]"
+			/>
+			<div className="text-center space-y-8">
+				{/* <h1 className="mb-4 mt-6 font-medium md:text-2xl">Enter your verification code</h1> */}
 				{topSection}
 				<OTPInput
 					value={otp}
 					onChange={setOtp}
 					numInputs={6}
 					containerStyle="flex justify-between gap-1"
-					inputStyle="!w-[15%] aspect-square border-[0.25px] border-otpBorder focus:border-abeg-primary focus:border rounded-[3px] mt-6 shadow-otpInput"
+					inputStyle="!w-[15%] aspect-square border-[0.25px] border-otpBorder focus:border-abeg-primary focus:border rounded-[3px] shadow-otpInput"
 					inputType="number"
 					renderInput={(props) => <input {...props} />}
 				/>
 			</div>
 			{bottomSection}
-			{/* <Button
-        type="submit"
-        disabled={loading}
-        loading={loading}
-        onClick={(e) => void handleSubmit(e)}
-        className="text-white block bg-abeg-primary font-semibold py-4 w-full rounded-md my-8"
-        fullWidth
-      >
-        Confirm
-      </Button> */}
-			{/* <div className="space-y-3">
-        <p className="text-center">
-          Didn&apos;t get a code? We can&nbsp;
-          <button
-            type="submit"
-            // disabled={isSubmitting}
-            // onClick={handleOption}
-            className="text-abeg-primary font-medium"
-          >
-            resend it
-          </button>
-        </p>
-        <p className="text-center text-sm">
-          If you’re unable to receive a security code, use one of your backup
-          codes.
-        </p>
-      </div> */}
 		</div>
 	);
 };

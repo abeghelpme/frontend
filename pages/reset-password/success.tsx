@@ -9,8 +9,6 @@ const ResetPasswordSuccessPage = () => {
 			content="You have successfully Reset Password!"
 			withHeader={false}
 			hasSuccess
-			contentClass=""
-			formType="other"
 		>
 			<Success textContent="Password Reset Successful">
 				<Link

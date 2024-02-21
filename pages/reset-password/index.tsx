@@ -86,7 +86,6 @@ const ResetPassword = () => {
 		<AuthLayout
 			title="Reset Password"
 			content="Reset your Password! Follow the instructions on this page to reset your password!"
-			formType="other"
 			withHeader={false}
 			hasSuccess={false}
 		>

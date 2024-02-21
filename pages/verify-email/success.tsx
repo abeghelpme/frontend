@@ -1,5 +1,5 @@
 import { Success } from "@/components/common";
-import { AuthLayout } from "@/layouts";
+import { AuthLayout, AuthPagesLayout } from "@/layouts";
 import Link from "next/link";
 
 const VerifyEmailSuccessPage = () => {
@@ -9,8 +9,6 @@ const VerifyEmailSuccessPage = () => {
 			content="Your email was verified successfully! "
 			withHeader={false}
 			hasSuccess
-			contentClass=""
-			formType="signup"
 		>
 			{" "}
 			<Success textContent="Your email has been verified">
@@ -28,3 +26,4 @@ const VerifyEmailSuccessPage = () => {
 export default VerifyEmailSuccessPage;
 
 VerifyEmailSuccessPage.protect = true;
+VerifyEmailSuccessPage.getLayout = AuthPagesLayout;
