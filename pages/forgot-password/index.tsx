@@ -1,6 +1,6 @@
 import CloudflareTurnstile from "@/components/common/CloudflareTurnstile";
 import { Button, Input, useToast } from "@/components/ui";
-import { AuthLayout } from "@/layouts";
+import { AuthPagesLayout } from "@/layouts";
 import { type ForgotPasswordType, callApi, zodValidator } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -53,7 +53,7 @@ const ForgotPasswordPage = () => {
 	};
 
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Forgot Password"
 			content="Reset your password. Follow the instructions on this page to get your account back!"
 			withHeader={false}
@@ -119,7 +119,7 @@ const ForgotPasswordPage = () => {
 					</Link>
 				</div>
 			</form>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 

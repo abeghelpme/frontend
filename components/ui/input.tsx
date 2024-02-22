@@ -1,4 +1,9 @@
-import type { SignUpProps } from "@/interfaces";
+import type {
+	ForgotPasswordProps,
+	LoginProps,
+	ResetPasswordProps,
+	SignUpProps,
+} from "@/interfaces";
 import { cn } from "@/lib";
 import eye from "@/public/assets/icons/auth/eye.svg";
 import slashEye from "@/public/assets/icons/auth/slashEye.svg";
@@ -6,7 +11,13 @@ import Image from "next/image";
 import React, { forwardRef, useState, type MouseEventHandler } from "react";
 import type { FieldErrors } from "react-hook-form";
 
-type InputProps = { errorField?: FieldErrors<SignUpProps> | string };
+type InputProps = {
+	errorField?:
+		| FieldErrors<
+				SignUpProps | LoginProps | ResetPasswordProps | ForgotPasswordProps
+		  >
+		| string;
+};
 type TInputProps = InputProps & React.InputHTMLAttributes<HTMLInputElement>;
 
 const Input = forwardRef<HTMLInputElement, TInputProps>(
