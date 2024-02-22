@@ -101,7 +101,7 @@ function StepOne() {
 
 	return (
 		<section className="w-full">
-			<Heading as="h2" className="textabeg-primary">
+			<Heading as="h2" className="text-abeg-primary">
 				Create a campaign to fund your passion or cause.
 			</Heading>
 
@@ -217,7 +217,7 @@ function StepOne() {
 							<Button
 								type="button"
 								variant="secondary"
-								className="borderabeg-primary px-@1.2 py-@0.8 textabeg-primary lg:px-@2.8 lg:py-@1.2 rounded-md text-xs font-semibold lg:text-base"
+								className="borderabeg-primary px-@1.2 py-@0.8 lg:px-@2.8 lg:py-@1.2 rounded-md text-xs font-semibold text-abeg-primary lg:text-base"
 								onClick={handleAddTags}
 							>
 								Add
@@ -225,11 +225,11 @@ function StepOne() {
 						</div>
 
 						<div className="mt-@1.6 gap-@1.6 flex flex-col">
-							<span className="textabeg-primary text-xs">
+							<span className="text-xs text-abeg-primary">
 								{stepOneData.tags.length}/5 tags
 							</span>
 
-							<ul className="gap-@0.8 textabeg-primary flex flex-wrap text-xs font-medium">
+							<ul className="gap-@0.8 flex flex-wrap text-xs font-medium text-abeg-primary">
 								<TagList
 									each={stepOneData.tags}
 									render={(tag) => (

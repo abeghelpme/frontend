@@ -71,7 +71,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 		>
 			<Button
 				variant="primary"
-				className="bg-abeg-primary p-@0.8 lg:px-@2.6 lg:py-@1.3 rounded-md text-xs font-bold lg:rounded-lg lg:text-base"
+				className="p-@0.8 lg:px-@2.6 lg:py-@1.3 rounded-md bg-abeg-primary text-xs font-bold lg:rounded-lg lg:text-base"
 				type="button"
 			>
 				Upload
@@ -86,7 +86,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 			/>
 
 			<div className="mt-@1.5 text-center text-xs lg:text-xs">
-				<p className="textabeg-primary italic">
+				<p className="italic text-abeg-primary">
 					Click to select files, or Drag {`'n'`} Drop
 				</p>
 

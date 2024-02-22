@@ -71,7 +71,7 @@ function StepThree() {
 
 	return (
 		<section className="w-full">
-			<Heading as="h2" className="textabeg-primary">
+			<Heading as="h2" className="text-abeg-primary">
 				Your story matters and this is where it begins.
 			</Heading>
 

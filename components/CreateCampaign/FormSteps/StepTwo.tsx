@@ -52,7 +52,7 @@ function StepTwo() {
 
 	return (
 		<section>
-			<Heading as="h2" className="textabeg-primary">
+			<Heading as="h2" className="text-abeg-primary">
 				Share your funding goal and deadline
 			</Heading>
 
