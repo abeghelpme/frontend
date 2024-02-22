@@ -1,5 +1,5 @@
 import { DatePicker, Select } from "@/components/ui";
-import { callApi, zodValidator } from "@/lib";
+import { callApi, cn, zodValidator } from "@/lib";
 import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import ErrorParagraph from "../ErrorParagraph";
+import FormErrorMessage from "../FormErrorMessage";
 import Heading from "../Heading";
 
 function StepTwo() {
@@ -75,10 +75,15 @@ function StepTwo() {
 							id="title"
 							type="text"
 							placeholder="Give your campaign a catchy title that can resonate with donors"
-							className="mt-@1.6 px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border border-unfocused text-xs lg:text-base"
+							className={cn(
+								"mt-@1.6 px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border border-unfocused text-xs lg:text-base",
+
+								formState.errors.title &&
+									"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="title" />
+						<FormErrorMessage formState={formState} errorField="title" />
 					</li>
 
 					<li>
@@ -116,7 +121,7 @@ function StepTwo() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="fundraiser" />
+						<FormErrorMessage formState={formState} errorField="fundraiser" />
 					</li>
 
 					<li>
@@ -129,10 +134,15 @@ function StepTwo() {
 							id="goal"
 							type="number"
 							placeholder="Set a realistic target amount"
-							className="mt-@1.6 px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border border-unfocused text-xs lg:text-base"
+							className={cn(
+								"mt-@1.6 px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border border-unfocused text-xs lg:text-base",
+
+								formState.errors.goal &&
+									"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="goal" />
+						<FormErrorMessage formState={formState} errorField="goal" />
 					</li>
 
 					<li>
@@ -156,7 +166,7 @@ function StepTwo() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="deadline" />
+						<FormErrorMessage formState={formState} errorField="deadline" />
 					</li>
 				</ol>
 			</form>

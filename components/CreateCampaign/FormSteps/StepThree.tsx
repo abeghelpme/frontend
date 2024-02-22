@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import DropZoneInput from "../DropZoneInput";
-import ErrorParagraph from "../ErrorParagraph";
+import FormErrorMessage from "../FormErrorMessage";
 import Heading from "../Heading";
 import ImagePreview from "../ImagePreview";
 import TiptapEditor from "../TipTapEditor";
@@ -102,7 +102,7 @@ function StepThree() {
 										onChange={field.onChange}
 									/>
 
-									<ErrorParagraph formState={formState} errorField="photos" />
+									<FormErrorMessage formState={formState} errorField="photos" />
 
 									<ImagePreview value={field.value} onChange={field.onChange} />
 								</>
@@ -133,7 +133,7 @@ function StepThree() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="story" />
+						<FormErrorMessage formState={formState} errorField="story" />
 					</li>
 				</ol>
 			</form>

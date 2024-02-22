@@ -13,7 +13,7 @@ import { ChevronDownIcon } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import ErrorParagraph from "../ErrorParagraph";
+import FormErrorMessage from "../FormErrorMessage";
 import Heading from "../Heading";
 
 function StepOne() {
@@ -152,7 +152,7 @@ function StepOne() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField={"categoryId"} />
+						<FormErrorMessage formState={formState} errorField={"categoryId"} />
 					</li>
 
 					<li>
@@ -196,7 +196,7 @@ function StepOne() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField={"country"} />
+						<FormErrorMessage formState={formState} errorField={"country"} />
 					</li>
 
 					<li>
