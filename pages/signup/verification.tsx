@@ -1,5 +1,5 @@
 import { useToast } from "@/components/ui/use-toast";
-import { AuthLayout, AuthPagesLayout } from "@/layouts";
+import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -40,7 +40,7 @@ const VerificationPage = () => {
 	};
 
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Verify your email"
 			content="Verify your account to complete your registration process, check your email to complete this process!"
 			contentClass="md:w-[55%] max-w-wAuthFlow"
@@ -75,11 +75,10 @@ const VerificationPage = () => {
 					</Link>
 				</div>
 			</div>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 
 export default VerificationPage;
 
 VerificationPage.protect = true;
-VerificationPage.getLayout = AuthPagesLayout;

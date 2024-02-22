@@ -11,17 +11,6 @@ const config = {
 
 	theme: {
 		extend: {
-			spacing: {
-				// PADDING (X & Y)
-				DOverlayPadding: "2rem 1.5rem",
-				MOverlayPadding: "1.5rem",
-				DOtpContainerPadding: "2.5rem 3.13rem",
-				MOtpContainerPadding: "1.5rem 1rem",
-				DBtnPadding: "1rem 1.5rem",
-				MBtnPadding: "0.75rem 1rem",
-				DInputPadding: "1rem",
-				MInputPadding: "1rem 0.5rem",
-			},
 			screens: {
 				"3xl": "2000px",
 			},
@@ -37,13 +26,11 @@ const config = {
 				"auth-layout-shadow": " 0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
 				otpInput: "2px 4px 4px 0 rgba(139, 210, 189, 0.1)",
 			},
-
 			colors: {
 				overlay: "rgba(72, 72, 72, 0.5)",
 				placeholder: "#8D8B8B",
 				unfocused: "#A8CCCC",
 				semiWhite: "#E6EAEE",
-				formLabel: "#1B1818",
 				inputBorder: "rgba(124, 148, 107, 0.25)",
 				otpBorder: "rgba(0, 128, 128, 0.5)",
 				abeg: {
@@ -66,7 +53,6 @@ const config = {
 						40: "#FFEBEB",
 					},
 				},
-
 				// Shadcn colors
 				popover: "hsl(0 0% 100%)",
 				"popover-foreground": "hsl(222.2 47.4% 11.2%)",
@@ -88,7 +74,7 @@ const config = {
 				w90: "90%",
 			},
 			maxWidth: {
-				wSignUpForm: "46.6rem",
+				wSignUpForm: "52.9rem",
 				wAuthFlow: "32rem",
 				wSuccess: "29.2rem",
 			},

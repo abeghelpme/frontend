@@ -1,10 +1,10 @@
 import { Success } from "@/components/common";
-import { AuthLayout } from "@/layouts";
+import { AuthPagesLayout } from "@/layouts";
 import Link from "next/link";
 
 const ResetPasswordSuccessPage = () => {
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Success"
 			content="You have successfully Reset Password!"
 			withHeader={false}
@@ -18,7 +18,7 @@ const ResetPasswordSuccessPage = () => {
 					Sign in to continue
 				</Link>
 			</Success>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 

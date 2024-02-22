@@ -1,6 +1,6 @@
 import { CloudFlareTurnStile } from "@/components/common";
 import { Button, Input, ProgressBar, useToast } from "@/components/ui";
-import { AuthLayout } from "@/layouts";
+import { AuthPagesLayout } from "@/layouts";
 import {
 	type ResetPasswordType,
 	callApi,
@@ -83,7 +83,7 @@ const ResetPassword = () => {
 	};
 
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Reset Password"
 			content="Reset your Password! Follow the instructions on this page to reset your password!"
 			withHeader={false}
@@ -189,7 +189,7 @@ const ResetPassword = () => {
 					Submit
 				</Button>
 			</form>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 export default ResetPassword;

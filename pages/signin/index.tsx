@@ -1,7 +1,7 @@
 import { CloudFlareTurnStile, CustomDialog } from "@/components/common";
 import { Button, Input } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
-import { AuthLayout, AuthPagesLayout } from "@/layouts";
+import { AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
 import { useSession } from "@/store";
@@ -92,7 +92,7 @@ const Login = () => {
 	};
 
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Sign in to your account"
 			content="Sign in to your account to continue using Abeg Help!"
 			heading="Welcome back!"
@@ -229,7 +229,7 @@ const Login = () => {
 					</p>
 				</div>
 			</form>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 

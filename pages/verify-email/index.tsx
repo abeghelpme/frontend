@@ -1,5 +1,5 @@
 import { Button, useToast } from "@/components/ui";
-import { AuthLayout, AuthPagesLayout } from "@/layouts";
+import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -49,7 +49,7 @@ const VerificationPage = () => {
 	};
 
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Verify your email"
 			content="Verify your account to complete your registration process, check your email to complete this process!"
 			withHeader={false}
@@ -73,10 +73,9 @@ const VerificationPage = () => {
 					</Button>
 				</div>
 			</div>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 export default VerificationPage;
 
 VerificationPage.protect = true;
-VerificationPage.getLayout = AuthPagesLayout;

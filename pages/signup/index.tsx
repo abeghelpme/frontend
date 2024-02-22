@@ -1,7 +1,8 @@
 import { CloudFlareTurnStile } from "@/components/common";
+import FormErrorMessage from "@/components/common/FormErrorMessage";
 import { Button, Input, ProgressBar } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
-import { AuthLayout, AuthPagesLayout } from "@/layouts";
+import { AuthPagesLayout } from "@/layouts";
 import {
 	type SignUpType,
 	callApi,
@@ -100,7 +101,7 @@ const SignUp = () => {
 	};
 
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Create an Account!"
 			content="Create an Abeg Help account to start your crowdfunding!"
 			heading="Welcome!"
@@ -116,7 +117,7 @@ const SignUp = () => {
 					response && void handleSubmit(onSubmit)(event);
 				}}
 				action=""
-				className="flex flex-col gap-4"
+				className="flex flex-col gap-2 sm:gap-4 lg:gap-6"
 			>
 				{message.message !== "" && !message.error ? (
 					<p
@@ -137,9 +138,9 @@ const SignUp = () => {
 						</ul>
 					)
 				)}
-				<div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
+				<div className="space-y-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
 					<div className="space-y-1">
-						<label htmlFor="firstName" className="text-sm font-medium">
+						<label htmlFor="firstName" className="lg:text-lg font-medium">
 							First Name
 						</label>
 						<Input
@@ -151,14 +152,13 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.firstName}
 						/>
-						{errors.firstName && (
-							<p className="mt-2 text-sm text-abeg-primary">
-								{errors.firstName.message}
-							</p>
-						)}
+						<FormErrorMessage
+							errorMsg={errors.firstName?.message!}
+							error={errors.firstName!}
+						/>
 					</div>
 					<div className="space-y-1">
-						<label htmlFor="lastName" className="text-sm font-medium">
+						<label htmlFor="lastName" className="lg:text-lg font-medium">
 							Last Name
 						</label>
 						<Input
@@ -169,16 +169,15 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.lastName}
 						/>
-						{errors.lastName && (
-							<p className="mt-2 text-sm text-abeg-primary">
-								{errors.lastName.message}
-							</p>
-						)}
+						<FormErrorMessage
+							errorMsg={errors.lastName?.message!}
+							error={errors.lastName!}
+						/>
 					</div>
 				</div>
 
 				<div className="space-y-1">
-					<label htmlFor="email" className="text-sm font-medium">
+					<label htmlFor="email" className="lg:text-lg font-medium">
 						Email
 					</label>
 					<Input
@@ -189,16 +188,15 @@ const SignUp = () => {
 						{...register("email")}
 						errorField={errors.email}
 					/>
-					{errors.email && (
-						<p className="mt-2 text-sm text-abeg-primary">
-							{errors.email.message}
-						</p>
-					)}
+					<FormErrorMessage
+						errorMsg={errors.email?.message!}
+						error={errors.email!}
+					/>
 				</div>
 
-				<div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
+				<div className="space-y-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
 					<div className="space-y-1">
-						<label htmlFor="password" className="mb-1 text-sm font-medium">
+						<label htmlFor="password" className="mb-1 lg:text-lg font-medium">
 							Password
 						</label>
 						<Input
@@ -236,16 +234,15 @@ const SignUp = () => {
 								</p>
 							</div>
 						)}
-						{errors.password && (
-							<p className="mt-2 text-sm text-abeg-primary">
-								{errors.password.message}
-							</p>
-						)}
+						<FormErrorMessage
+							errorMsg={errors.password?.message!}
+							error={errors.password!}
+						/>
 					</div>
 					<div className="space-y-1">
 						<label
 							htmlFor="confirmPassword"
-							className="mb-1 text-sm font-medium"
+							className="mb-1 lg:text-lg font-medium"
 						>
 							Confirm Password
 						</label>
@@ -257,14 +254,13 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.confirmPassword}
 						/>
-						{errors.confirmPassword && (
-							<p className="text-sm text-abeg-primary">
-								{errors.confirmPassword.message}
-							</p>
-						)}
+						<FormErrorMessage
+							errorMsg={errors.confirmPassword?.message!}
+							error={errors.confirmPassword!}
+						/>
 					</div>
 				</div>
-				<div className="mt-2 flex flex-col">
+				<div className="flex flex-col">
 					<div className="flex w-full gap-2">
 						<Input
 							type="checkbox"
@@ -284,20 +280,19 @@ const SignUp = () => {
 							.
 						</label>
 					</div>
-					{errors.terms && (
-						<p className="mt-2 text-sm text-abeg-primary">
-							{errors.terms.message}
-						</p>
-					)}
+					<FormErrorMessage
+						errorMsg={errors.terms?.message!}
+						error={errors.terms!}
+					/>
 				</div>
 				<CloudFlareTurnStile
 					onStatusChange={handleBotStatus}
 					ref={cfTurnStile}
 				/>
-				<div className="flex flex-col items-center space-y-4 lg:space-y-6">
+				<div className="flex flex-col items-center space-y-6">
 					<Button
 						disabled={isSubmitting}
-						className="mt-2"
+						className=""
 						variant="primary"
 						fullWidth
 						loading={isSubmitting}
@@ -315,11 +310,10 @@ const SignUp = () => {
 					</p>
 				</div>
 			</form>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 
 export default SignUp;
 
 SignUp.protect = true;
-SignUp.getLayout = AuthPagesLayout;

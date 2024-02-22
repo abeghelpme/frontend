@@ -4,10 +4,7 @@ import Link from "next/link";
 
 const LogoBanner = () => {
 	return (
-		<Link
-			href="/"
-			className={`flex items-center justify-center gap-2 p-1 md:p-4`}
-		>
+		<Link href="/" className={`flex items-center justify-center gap-2 px-4`}>
 			<Image
 				className="aspect-square w-[24px] md:w-[32px]"
 				src={logo as string}
