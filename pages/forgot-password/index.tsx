@@ -94,7 +94,7 @@ const ForgotPasswordPage = () => {
 						/>
 					</div>
 				</div>
-				<CloudflareTurnstile
+				<CloudFlareTurnStile 
 					ref={cfTurnStile}
 					onStatusChange={handleBotStatus}
 				/>
