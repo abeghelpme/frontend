@@ -68,14 +68,12 @@ const Login = () => {
 					query: { signup: true, email: data.email.toLowerCase() },
 				});
 			}
-			return toast(error.status, {
+			return toast.error(error.status, {
 				description: error.message,
-				duration: 3000,
 			});
 		} else {
-			toast("Success", {
+			toast.success("Success", {
 				description: (responseData as { message: string }).message,
-				duration: 3000,
 			});
 
 			reset();
@@ -115,7 +113,7 @@ const Login = () => {
 				}}
 			>
 				<div className="space-y-1">
-					<label htmlFor="email" className="text-sm md:text-lg font-medium">
+					<label htmlFor="email" className="text-sm font-medium md:text-lg">
 						Email Address
 					</label>
 					<Input
@@ -134,8 +132,8 @@ const Login = () => {
 						errorMsg={errors.email?.message!}
 					/>
 				</div>
-				<div className="space-y-1 mt-2 md:mt-4">
-					<label htmlFor="password" className="text-sm md:text-lg font-medium">
+				<div className="mt-2 space-y-1 md:mt-4">
+					<label htmlFor="password" className="text-sm font-medium md:text-lg">
 						Password
 					</label>
 					<Input
@@ -155,7 +153,7 @@ const Login = () => {
 				</div>
 				<Link
 					href="/forgot-password"
-					className="text-abeg-primary inline-flex mb-4 w-full mt-2 justify-end text-sm font-semibold hover:underline md:text-base"
+					className="mb-4 mt-2 inline-flex w-full justify-end text-sm font-semibold text-abeg-primary hover:underline md:text-base"
 				>
 					Forgot Password?
 				</Link>
@@ -164,7 +162,7 @@ const Login = () => {
 					ref={cfTurnStile}
 					onStatusChange={handleBotStatus}
 				/>
-				<div className="flex flex-col gap-6 mt-6">
+				<div className="mt-6 flex flex-col gap-6">
 					<CustomDialog
 						openDialog={openModal}
 						setOpen={() => setOpenModal(openModal)}
@@ -194,7 +192,7 @@ const Login = () => {
 							</div>
 							<div className="mt-6 flex flex-col">
 								<Link
-									className="bg-abeg-primary w-full rounded-md py-4 text-sm font-semibold text-white"
+									className="w-full rounded-md bg-abeg-primary py-4 text-sm font-semibold text-white"
 									href="/2fa"
 								>
 									Activate
@@ -204,7 +202,7 @@ const Login = () => {
 									type="submit"
 									disabled={isSubmitting}
 									onClick={handleOption}
-									className="border-abeg-primary text-abeg-primary mt-4 border py-4 disabled:bg-gray-500 disabled:text-white"
+									className="mt-4 border border-abeg-primary py-4 text-abeg-primary disabled:bg-gray-500 disabled:text-white"
 									fullWidth
 								>
 									Skip

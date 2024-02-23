@@ -74,13 +74,13 @@ const SignUp = () => {
 		if (error) {
 			const castedError = error as ApiResponse;
 			setMessage(castedError);
-			toast(castedError.status, {
+			toast.error(castedError.status, {
 				description: castedError.message,
 				duration: 2000,
 			});
 			return;
 		} else {
-			toast("Success", {
+			toast.success("Success", {
 				description: responseData?.message,
 				duration: 2000,
 			});
@@ -136,7 +136,7 @@ const SignUp = () => {
 				)}
 				<div className="space-y-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
 					<div className="space-y-1">
-						<label htmlFor="firstName" className="lg:text-lg font-medium">
+						<label htmlFor="firstName" className="font-medium lg:text-lg">
 							First Name
 						</label>
 						<Input
@@ -154,7 +154,7 @@ const SignUp = () => {
 						/>
 					</div>
 					<div className="space-y-1">
-						<label htmlFor="lastName" className="lg:text-lg font-medium">
+						<label htmlFor="lastName" className="font-medium lg:text-lg">
 							Last Name
 						</label>
 						<Input
@@ -173,7 +173,7 @@ const SignUp = () => {
 				</div>
 
 				<div className="space-y-1">
-					<label htmlFor="email" className="lg:text-lg font-medium">
+					<label htmlFor="email" className="font-medium lg:text-lg">
 						Email
 					</label>
 					<Input
@@ -192,7 +192,7 @@ const SignUp = () => {
 
 				<div className="space-y-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
 					<div className="space-y-1">
-						<label htmlFor="password" className="mb-1 lg:text-lg font-medium">
+						<label htmlFor="password" className="mb-1 font-medium lg:text-lg">
 							Password
 						</label>
 						<Input
@@ -214,7 +214,7 @@ const SignUp = () => {
 					<div className="space-y-1">
 						<label
 							htmlFor="confirmPassword"
-							className="mb-1 lg:text-lg font-medium"
+							className="mb-1 font-medium lg:text-lg"
 						>
 							Confirm Password
 						</label>
@@ -240,7 +240,7 @@ const SignUp = () => {
 						<Input
 							type="checkbox"
 							id="terms"
-							className="md:h-6 md:w-6 rounded-lg hidden"
+							className="hidden rounded-lg md:h-6 md:w-6"
 							{...register("terms")}
 						/>
 						<p className="text-sm md:text-base">

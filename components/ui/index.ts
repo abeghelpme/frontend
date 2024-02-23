@@ -14,16 +14,6 @@ export {
 } from "./dialog";
 
 export {
-	Toast,
-	ToastAction,
-	ToastClose,
-	ToastDescription,
-	ToastProvider,
-	ToastTitle,
-	ToastViewport,
-} from "./toast";
-
-export {
 	DropdownMenu,
 	DropdownMenuTrigger,
 	DropdownMenuContent,
@@ -41,13 +31,10 @@ export {
 	DropdownMenuRadioGroup,
 } from "./dropdown-menu";
 
-export type { ToastActionElement, ToastProps } from "./toast";
-
-export { default as Toaster } from "./toaster";
-export { toast, useToast } from "./use-toast";
-
 export { default as Input } from "./input";
 export { default as ProgressBar } from "./progressbar";
+
+export { Toaster } from "./sonner";
 
 export { Select, SelectPrimitive } from "./select";
 export { DatePicker } from "./date-picker";

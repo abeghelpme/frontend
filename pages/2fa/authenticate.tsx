@@ -1,5 +1,5 @@
 import { OtpInputDisplay } from "@/components/common";
-import { Button, useToast } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { type ApiResponse, type User } from "@/interfaces";
 import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
@@ -12,6 +12,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { toast } from "sonner";
 
 type Props = {
 	email?: string;
@@ -21,7 +22,6 @@ type Props = {
 	handleSubmit: (e: FormEvent<HTMLButtonElement>) => void;
 };
 const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
-	const { toast } = useToast();
 	const resend = useRef(false);
 
 	const resendCode = async () => {
@@ -30,15 +30,13 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 		const { data, error } = await callApi<ApiResponse>("/auth/2fa/code/email");
 		if (error) {
 			resend.current = false;
-			return toast({
-				title: error.status as string,
+			toast.error(error.status, {
 				description: error.message,
 				duration: 2000,
 			});
 		} else {
 			resend.current = false;
-			toast({
-				title: "Success",
+			toast.success("Success", {
 				description: (data as { message: string }).message,
 				duration: 2000,
 			});
@@ -61,8 +59,8 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 						type="submit"
 						disabled={loading}
 						loading={loading}
-						onClick={(e) => void handleSubmit(e)}
-						className="bg-abeg-primary my-8 block w-full rounded-md py-4 font-semibold text-white"
+						onClick={(e) => handleSubmit(e)}
+						className="my-8 block w-full rounded-md bg-abeg-primary py-4 font-semibold text-white"
 						fullWidth
 					>
 						Confirm
@@ -74,7 +72,7 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 								type="submit"
 								disabled={resend.current}
 								onClick={() => void resendCode()}
-								className="text-abeg-primary p-0 font-medium disabled:bg-transparent disabled:text-neutral-50"
+								className="p-0 font-medium text-abeg-primary disabled:bg-transparent disabled:text-neutral-50"
 							>
 								resend it
 							</Button>
@@ -105,8 +103,8 @@ const AuthApp = ({ otp, setOtp, handleSubmit, loading }: Props) => {
 					type="submit"
 					disabled={loading}
 					loading={loading}
-					onClick={(e) => void handleSubmit(e)}
-					className="bg-abeg-primary mt-8 block w-full rounded-md py-4 font-semibold text-white"
+					onClick={(e) => handleSubmit(e)}
+					className="mt-8 block w-full rounded-md bg-abeg-primary py-4 font-semibold text-white"
 					fullWidth
 				>
 					Confirm
@@ -118,7 +116,6 @@ const AuthApp = ({ otp, setOtp, handleSubmit, loading }: Props) => {
 const AuthenticateUser = () => {
 	const [otp, setOtp] = useState("");
 	const [loading, setLoading] = useState(false);
-	const { toast } = useToast();
 	const { user, updateUser } = useSession((state) => state);
 	const router = useRouter();
 	const castedUser = user as User;
@@ -126,8 +123,7 @@ const AuthenticateUser = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (otp === "")
-			return toast({
-				title: "Error",
+			return toast.error("Error", {
 				description: "Please enter a valid code",
 				duration: 1500,
 			});
@@ -137,16 +133,14 @@ const AuthenticateUser = () => {
 		});
 		if (error) {
 			setLoading(false);
-			return toast({
-				title: error.status as string,
+			toast.error(error.status, {
 				description: error.message,
 				duration: 2000,
 			});
 		} else {
 			updateUser(data?.data as User);
 			setLoading(false);
-			toast({
-				title: "Success",
+			toast.success("Success", {
 				description: (data as { message: string }).message,
 				duration: 2000,
 			});

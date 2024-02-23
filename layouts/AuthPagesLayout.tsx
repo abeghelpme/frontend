@@ -12,12 +12,12 @@ export const AuthPagesLayout = ({
 	hasSuccess,
 }: AuthLayoutProps) => {
 	return (
-		<main className="h-full bg-authBg bg-cover bg-no-repeat flex min-h-svh justify-center relative items-center py-14 before:bg-black/25 before:absolute before:w-full before:h-full ">
+		<main className="relative flex h-full min-h-svh items-center justify-center bg-authBg bg-cover bg-no-repeat py-14 before:absolute before:inset-0 before:bg-black/25">
 			<PageMetaData title={title} content={content} />
 			{!hasSuccess ? (
 				<div
 					className={`mx-auto w-w90
-           space-y-4 md:space-y-6 rounded-lg bg-white/50 backdrop-blur-lg border-abeg-primary py-5 px-4   shadow-auth-layout-shadow md:mx-0 md:p-9 lg:p-12 ${
+           space-y-4 rounded-lg border-abeg-primary bg-white/50 px-4 py-5 shadow-auth-layout-shadow backdrop-blur-lg   md:mx-0 md:space-y-6 md:p-9 lg:p-12 ${
 							contentClass! ? contentClass : "md:max-w-wAuthFlow"
 						}`}
 				>

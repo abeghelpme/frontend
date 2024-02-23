@@ -12,19 +12,32 @@ function Preview() {
 	const { For: ImageFileList } = useElementList();
 	const { For: TagList } = useElementList();
 
-	const { stepOneData, stepTwoData, stepThreeData } = useFormStore(
-		(state) => state
-	);
+	const { stepOneData, stepTwoData, stepThreeData, fundraiserCategories } =
+		useFormStore((state) => state);
+
+	const campaignCategory = fundraiserCategories.find(
+		(category) => category.id === stepOneData.categoryId
+	)?.name;
+
+	const campaignDeadline = getDateFromString(stepTwoData.deadline);
 
 	const imageUrls = stepThreeData.photos.map((file) =>
 		URL.createObjectURL(file)
 	);
 
-	const campaignDeadline = getDateFromString(stepTwoData.deadline);
-
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-between">
-			<main className="bg-contours-old px-@2.4 pb-@6.2 text-abeg-text lg:mt-@4.8 lg:px-@10 mt-4 flex flex-col bg-cover max-lg:max-w-[48rem]">
+			<header className="gap-@0.8 px-@2.4 pt-@3.2 lg:pt-@4.8 mx-auto flex w-full flex-col max-lg:max-w-[30rem]">
+				<Heading as="h1" className="text-abeg-primary">
+					Campaign Preview
+				</Heading>
+
+				<p className="text-sm text-abeg-primary">
+					This is what your fundraiser campaign will look like to donors
+				</p>
+			</header>
+
+			<main className="bg-contours-old px-@2.4 pb-@6.2 lg:mt-@4.8 lg:px-@10 mt-4 flex flex-col bg-cover text-abeg-text max-lg:max-w-[30rem]">
 				<section className="gap-@0.8 lg:gap-@3.2 flex flex-col">
 					<Heading as="h2" className="text-xl lg:text-3xl">
 						{stepTwoData.title}
@@ -43,20 +56,20 @@ function Preview() {
 						<article className="gap-@2.8 px-@2.4 lg:py-@3.2 flex flex-col py-3">
 							<div>
 								<p className="lg:text-xl.4">₦ {stepTwoData.goal} goal</p>
-								<span className="mt-@0.8 bg-semiWhite block h-[0.6rem] rounded-lg" />
+								<span className="mt-@0.8 block h-[0.6rem] rounded-lg bg-semiWhite" />
 							</div>
 
 							<div className="gap-@1.6 flex flex-col">
 								<Button
 									variant="primary"
-									className="bg-abeg-primary px-@2.4 py-@1.2 w-full rounded-md text-xs font-bold lg:rounded-lg lg:text-base"
+									className="px-@2.4 py-@1.2 w-full rounded-md bg-abeg-primary text-xs font-bold lg:rounded-lg lg:text-base"
 								>
 									Donate to this campaign
 								</Button>
 
 								<Button
 									variant="secondary"
-									className="borderabeg-primary px-@2.4 py-@1.2 textabeg-primary w-full rounded-md text-xs font-bold lg:rounded-lg lg:text-base"
+									className="borderabeg-primary px-@2.4 py-@1.2 w-full rounded-md text-xs font-bold text-abeg-primary lg:rounded-lg lg:text-base"
 								>
 									Share this campaign
 								</Button>
@@ -86,15 +99,15 @@ function Preview() {
 				<section className="mt-@0.8 lg:mt-@2.4 lg:max-w-[71.7rem]">
 					<Heading
 						as="h3"
-						className="gap-@1.6 border-b-placeholder p-@0.8 flex border-b"
+						className="gap-@1.6 p-@0.8 flex border-b border-b-placeholder"
 					>
 						Category:
-						<span className="font-normal">{stepOneData.categoryId}</span>
+						<span className="font-normal">{campaignCategory}</span>
 					</Heading>
 
 					<Heading
 						as="h3"
-						className="mt-@1.2 border-b-placeholder p-@0.8 lg:mt-@2.4 border-b"
+						className="mt-@1.2 p-@0.8 lg:mt-@2.4 border-b border-b-placeholder"
 					>
 						Story
 					</Heading>
@@ -107,7 +120,7 @@ function Preview() {
 					/>
 				</section>
 
-				<section className="mt-@2.4 gap-@2.4 border-b-placeholder pb-@1.6 flex flex-col border-b lg:max-w-[71.7rem]">
+				<section className="mt-@2.4 gap-@2.4 pb-@1.6 flex flex-col border-b border-b-placeholder lg:max-w-[71.7rem]">
 					<Heading as="h2">See more pictures below:</Heading>
 
 					<div className="gap-@2.3 flex flex-col items-center">
@@ -153,7 +166,7 @@ function Preview() {
 
 						<Button
 							variant="secondary"
-							className="mt-@2.4 borderabeg-primary px-@1.6 py-@1.2 textabeg-primary lg:mt-@3.2 lg:px-@2.4 lg:py-@1.6 rounded-md text-sm font-bold lg:text-base"
+							className="mt-@2.4 borderabeg-primary px-@1.6 py-@1.2 lg:mt-@3.2 lg:px-@2.4 lg:py-@1.6 rounded-md text-sm font-bold text-abeg-primary lg:text-base"
 						>
 							Reach out
 						</Button>
@@ -165,7 +178,7 @@ function Preview() {
 				<FormActionButton
 					type="button"
 					variant="secondary"
-					className="borderabeg-primary textabeg-primary font-bold"
+					className="borderabeg-primary font-bold text-abeg-primary"
 				>
 					<Link href={"/create-campaign"}>Edit campaign</Link>
 				</FormActionButton>
