@@ -1,6 +1,6 @@
-import { CloudFlareTurnStile } from "@/components/common";
-import FormErrorMessage from "@/components/common/FormErrorMessage";
-import { Button, Input, ProgressBar } from "@/components/ui";
+import { CloudFlareTurnStile, FormErrorMessage } from "@/components/common";
+import { CheckedIcon, UncheckedIcon } from "@/components/common/svg";
+import { Button, Input } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import { AuthPagesLayout } from "@/layouts";
 import {
@@ -10,6 +10,7 @@ import {
 	zodValidator,
 } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
+import useWatchInput from "@/lib/hooks/useWatchInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -17,7 +18,6 @@ import { useDeferredValue, useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-let redirectTimeOut: NodeJS.Timeout;
 const SignUp = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
@@ -27,35 +27,35 @@ const SignUp = () => {
 		error: undefined,
 		data: undefined,
 	});
-
 	const router = useRouter();
 
 	const {
 		register,
 		handleSubmit,
 		reset,
-		formState: { errors, isSubmitting },
+		control,
 		watch,
+		formState: { errors, isSubmitting },
 	} = useForm<SignUpType>({
 		resolver: zodResolver(zodValidator("signup")!),
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
 
-	const password = watch("password", "");
-
+	const isChecked = useWatchInput({ control, inputType: "terms" });
+	const password = useWatchInput({ control, inputType: "password" });
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
+	const genStrength = async () => {
+		const passwordStrength = await checkPasswordStrength(
+			deferredPassword as string
+		);
+		setResult(passwordStrength);
+	};
 	useEffect(() => {
-		const genStrength = async () => {
-			const passwordStrength = await checkPasswordStrength(deferredPassword);
-			setResult(passwordStrength);
-		};
 		genStrength().catch((e) => {
 			console.log(e);
 		});
-
-		return () => redirectTimeOut && clearTimeout(redirectTimeOut);
 	}, [deferredPassword]);
 
 	const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
@@ -74,12 +74,6 @@ const SignUp = () => {
 		if (error) {
 			const castedError = error as ApiResponse;
 			setMessage(castedError);
-			// window.scrollTo({
-			// 	top: 0,
-			// 	left: 0,
-			// 	behavior: 'smooth'
-			// });
-
 			toast(castedError.status, {
 				description: castedError.message,
 				duration: 2000,
@@ -91,21 +85,23 @@ const SignUp = () => {
 				duration: 2000,
 			});
 			reset();
-			redirectTimeOut = setTimeout(() => {
-				void router.push({
-					pathname: "/signup/verification",
-					query: { signup: true, email: data.email.toLowerCase() },
-				});
-			}, 1500);
+			void router.push({
+				pathname: "/signup/verification",
+				query: {
+					title: "Email Verification",
+					email: data.email.toLowerCase(),
+					type: "verification",
+					endpoint: "resend-verification",
+				},
+			});
 		}
 	};
 
 	return (
 		<AuthPagesLayout
 			title="Create an Account!"
-			content="Create an Abeg Help account to start your crowdfunding!"
-			heading="Welcome!"
-			greeting="Create your account"
+			content="Create an Abeg Help account to start crowdfunding!"
+			heading="Create your account!"
 			contentClass="md:w-[85%] md:max-w-wSignUpForm"
 			withHeader
 			hasSuccess={false}
@@ -207,32 +203,8 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.password}
 						/>
-						{password.length > 0 && (
-							<div>
-								<ProgressBar
-									value={result * 25}
-									className={`${
-										result < 2
-											? "progress-filled:bg-red-500"
-											: result === 2
-											  ? "progress-filled:bg-yellow-500"
-											  : "progress-filled:bg-green-500"
-									}`}
-								/>
-								<p
-									className={`${
-										result < 2
-											? "text-text-red"
-											: result === 2
-											  ? "text-yellow-500"
-											  : "text-green-500"
-									} text-sm`}
-								>
-									<span className="text-black">Password strength:</span>
-									&nbsp;
-									{result < 2 ? "Weak" : result === 2 ? "Medium" : "Strong"}
-								</p>
-							</div>
+						{(password as string).length > 0 && (
+							<FormErrorMessage isForPasswordStrength result={result} />
 						)}
 						<FormErrorMessage
 							errorMsg={errors.password?.message!}
@@ -260,25 +232,27 @@ const SignUp = () => {
 						/>
 					</div>
 				</div>
-				<div className="flex flex-col">
-					<div className="flex w-full gap-2">
+				<div className="flex flex-col justify-center">
+					<div className="flex w-full gap-1">
+						<label htmlFor="terms">
+							{isChecked ? <CheckedIcon /> : <UncheckedIcon />}
+						</label>
 						<Input
 							type="checkbox"
 							id="terms"
-							className="mt-1 h-[1.125rem] w-4 accent-abeg-primary md:w-5"
+							className="md:h-6 md:w-6 rounded-lg hidden"
 							{...register("terms")}
 						/>
-						<label htmlFor="terms" className="text-sm md:text-base">
+						<p className="text-sm md:text-base">
 							I agree to AbegHelp.me&apos;s{" "}
 							<Link href="" className="text-abeg-primary">
 								terms of service
 							</Link>{" "}
 							and{" "}
 							<Link href="" className="text-abeg-primary">
-								privacy notice
+								privacy notice.
 							</Link>
-							.
-						</label>
+						</p>
 					</div>
 					<FormErrorMessage
 						errorMsg={errors.terms?.message!}
@@ -299,7 +273,7 @@ const SignUp = () => {
 					>
 						Sign up
 					</Button>
-					<p className="text-center text-sm">
+					<p className="text-center text-sm md:text-base">
 						Already have an account?&nbsp;
 						<Link
 							href="/signin"

@@ -67,8 +67,8 @@ const config = {
 
 			height: {
 				"23": "6rem",
-				DInputField: "3.13rem",
-				MInputField: "2.9rem",
+				DInputField: "3.25rem",
+				MInputField: "3.13rem",
 			},
 			width: {
 				w90: "90%",
@@ -76,7 +76,6 @@ const config = {
 			maxWidth: {
 				wSignUpForm: "52.9rem",
 				wAuthFlow: "32rem",
-				wSuccess: "29.2rem",
 			},
 			keyframes: {
 				"accordion-down": {

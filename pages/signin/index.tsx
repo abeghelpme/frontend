@@ -1,4 +1,8 @@
-import { CloudFlareTurnStile, CustomDialog } from "@/components/common";
+import {
+	CloudFlareTurnStile,
+	CustomDialog,
+	FormErrorMessage,
+} from "@/components/common";
 import { Button, Input } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthPagesLayout } from "@/layouts";
@@ -111,7 +115,7 @@ const Login = () => {
 				}}
 			>
 				<div className="space-y-1">
-					<label htmlFor="email" className="text-sm font-medium">
+					<label htmlFor="email" className="text-sm font-medium md:text-lg">
 						Email Address
 					</label>
 					<Input
@@ -125,12 +129,13 @@ const Login = () => {
 							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
-					{errors.email && (
-						<p className="text-sm text-abeg-primary">{errors.email.message}</p>
-					)}
+					<FormErrorMessage
+						error={errors.email!}
+						errorMsg={errors.email?.message!}
+					/>
 				</div>
-				<div className="mt-4 space-y-1">
-					<label htmlFor="password" className="text-sm font-medium">
+				<div className="mt-2 space-y-1 md:mt-4">
+					<label htmlFor="password" className="text-sm font-medium md:text-lg">
 						Password
 					</label>
 					<Input
@@ -143,15 +148,14 @@ const Login = () => {
 							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
-					{errors.password && (
-						<p className="text-sm text-abeg-primary">
-							{errors.password.message}
-						</p>
-					)}
+					<FormErrorMessage
+						error={errors.password!}
+						errorMsg={errors.password?.message!}
+					/>
 				</div>
 				<Link
 					href="/forgot-password"
-					className="mt-2 inline-flex w-full justify-end text-sm font-semibold text-abeg-primary hover:underline"
+					className="mb-4 mt-2 inline-flex w-full justify-end text-sm font-semibold text-abeg-primary hover:underline md:text-base"
 				>
 					Forgot Password?
 				</Link>
@@ -160,7 +164,7 @@ const Login = () => {
 					ref={cfTurnStile}
 					onStatusChange={handleBotStatus}
 				/>
-				<div className="flex flex-col gap-6">
+				<div className="mt-6 flex flex-col gap-6">
 					<CustomDialog
 						openDialog={openModal}
 						setOpen={() => setOpenModal(openModal)}
@@ -170,7 +174,7 @@ const Login = () => {
 								disabled={isSubmitting || success}
 								loading={isSubmitting}
 								variant="primary"
-								className="mt-6 disabled:bg-gray-500 "
+								className="disabled:bg-gray-500 "
 								fullWidth
 							>
 								Sign in
@@ -218,7 +222,7 @@ const Login = () => {
 					>
 						Sign in
 					</Button> */}
-					<p className="text-center text-sm">
+					<p className="text-center text-sm md:text-base">
 						Don&apos;t have an account?&nbsp;
 						<Link
 							href="/signup"
@@ -235,5 +239,4 @@ const Login = () => {
 
 export default Login;
 
-Login.getLayout = AuthPagesLayout;
 Login.protect = true;

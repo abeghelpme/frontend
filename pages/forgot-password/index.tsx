@@ -1,4 +1,4 @@
-import CloudflareTurnstile from "@/components/common/CloudflareTurnstile";
+import { CloudFlareTurnStile, FormErrorMessage } from "@/components/common";
 import { Button, Input, useToast } from "@/components/ui";
 import { AuthPagesLayout } from "@/layouts";
 import { type ForgotPasswordType, callApi, zodValidator } from "@/lib";
@@ -46,17 +46,25 @@ const ForgotPasswordPage = () => {
 				duration: 3000,
 			});
 			reset();
-			setTimeout(() => {
-				void router.push("/signin");
-			}, 2000);
+			void router.push({
+				pathname: "/signup/verification",
+				query: {
+					title: "Check your email",
+					email: data.email.toLowerCase(),
+					type: "password reset",
+					endpoint: "auth/password/forgot",
+				},
+			});
 		}
 	};
 
 	return (
 		<AuthPagesLayout
+			heading="Forgot Password"
+			greeting="Reset your password. Follow the instructions on this page to get your account back!"
 			title="Forgot Password"
 			content="Reset your password. Follow the instructions on this page to get your account back!"
-			withHeader={false}
+			withHeader
 			hasSuccess={false}
 		>
 			<form
@@ -66,21 +74,11 @@ const ForgotPasswordPage = () => {
 
 					response && void handleSubmit(onSubmit)(event);
 				}}
-				className="flex flex-col gap-4"
+				className="flex flex-col gap-4 md:gap-6"
 			>
-				<div className="space-y-2 text-center">
-					{" "}
-					<h1 className="text-xl font-semibold text-abeg-neutral-10 md:text-2xl">
-						Forgot Password?
-					</h1>
-					<p className="md:text-lg">
-						Enter your registered email to receive your password reset
-						instruction
-					</p>
-				</div>
 				<div className="mt-2">
 					<div className="space-y-1">
-						<label htmlFor="email" className="text-sm font-medium">
+						<label htmlFor="email" className="text-sm font-medium md:text-lg">
 							Email Address
 						</label>
 						<Input
@@ -94,14 +92,13 @@ const ForgotPasswordPage = () => {
 								"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 							}`}
 						/>
-						{errors.email && (
-							<p className="text-sm text-abeg-primary">
-								{errors.email.message}
-							</p>
-						)}
+						<FormErrorMessage
+							error={errors}
+							errorMsg={errors.email?.message!}
+						/>
 					</div>
 				</div>
-				<CloudflareTurnstile
+				<CloudFlareTurnStile
 					ref={cfTurnStile}
 					onStatusChange={handleBotStatus}
 				/>
@@ -114,7 +111,10 @@ const ForgotPasswordPage = () => {
 					>
 						Submit
 					</Button>
-					<Link href="/signin" className="text-sm text-abeg-primary underline">
+					<Link
+						href="/signin"
+						className="text-sm text-abeg-primary underline font-semibold md:text-base"
+					>
 						Back to sign in page
 					</Link>
 				</div>
