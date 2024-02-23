@@ -32,12 +32,14 @@ export const useSession = createWithEqualityFn<Session>(
 			});
 		},
 		updateUser: (data: User) => set({ user: data }),
-		clearSession: () => {
+		clearSession: async () => {
 			set((state) => ({
 				...initialState,
 				loading: false,
 				isFirstMount: state.isFirstMount,
 			}));
+
+			await callApi("/auth/signout");
 
 			const currentPageUrl = window.location.pathname;
 			if (
