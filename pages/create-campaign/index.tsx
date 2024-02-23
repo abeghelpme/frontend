@@ -32,31 +32,28 @@ function CreateCampaignPage() {
 
 	return (
 		<div className="flex min-h-screen flex-col justify-between max-lg:items-center">
-			<main
-				className="flex w-[min(100%,48rem)] shrink-0 flex-col gap-3.2 bg-contours-old bg-cover px-2.4 pb-5.5 pt-3.2 lg:w-full lg:flex-row lg:items-start lg:gap-7 lg:px-10 lg:pb-10 lg:pt-4.8"
-				data-rem-reset
-			>
-				<section className="flex shrink-0 gap-1.2 lg:mt-1.9">
+			<main className="gap-@3.2 px-@2.4 pb-@5.5 pt-@3.2 lg:gap-@7 lg:px-@10 lg:pb-@10 lg:pt-@4.8 bg-contours-old flex w-full shrink-0 flex-col bg-cover max-lg:max-w-[30rem] lg:flex-row lg:items-start">
+				<section className="gap-@1.2 lg:mt-@1.9 flex shrink-0">
 					<StepTracker />
 				</section>
 
 				{STEP_COMPONENT_LOOKUP[currentStep]}
 			</main>
 
-			<footer className="flex w-full items-center justify-between border-t border-t-formBtn px-2.4 py-1.6 lg:px-10 lg:py-[2.65rem]">
+			<footer className="px-@2.4 py-@1.6 lg:px-@10 flex w-full items-center justify-between border-t border-t-abeg-primary lg:py-[1.65625rem]">
 				<FormActionButton
 					type="button"
 					text="Go Back"
-					className="min-w-[7.8rem] bg-formBtn"
+					className="flex min-w-[4.875rem] justify-center bg-abeg-primary"
 					disabled={currentStep === 1}
 					onClick={() => goToStep(currentStep - 1)}
 				/>
 
-				<div className="flex justify-end gap-0.8">
+				<div className="gap-@0.8 flex justify-end">
 					<FormActionButton
 						type="submit"
 						text="Continue"
-						className={cn("bg-formBtn", currentStep === 3 && "lg:hidden")}
+						className={cn("bg-abeg-primary", currentStep === 3 && "lg:hidden")}
 						targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
 						isLoading={formStatus.isSubmitting}
 						disabled={formStatus.isSubmitting}
@@ -67,21 +64,22 @@ function CreateCampaignPage() {
 							type="submit"
 							text="Preview Campaign"
 							variant="secondary"
-							className={cn(
-								"border-formBtn font-bold text-formBtn",
-								"max-lg:hidden"
-							)}
+							className={
+								"borderabeg-primary font-bold text-abeg-primary max-lg:hidden"
+							}
 							targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
 							isLoading={formStatus.isSubmitting}
 							disabled={formStatus.isSubmitting}
 						/>
 					)}
 
-					<FormActionButton
-						type="button"
-						text="Publish Campaign"
-						className="bg-formBtn max-lg:hidden"
-					/>
+					{currentStep === 3 && (
+						<FormActionButton
+							type="button"
+							text="Publish Campaign"
+							className="bg-abeg-primary max-lg:hidden"
+						/>
+					)}
 				</div>
 			</footer>
 		</div>

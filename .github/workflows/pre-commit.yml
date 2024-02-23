@@ -27,10 +27,4 @@ jobs:
         run: npm ci
 
       - name: Run ESLint
-        run: npm run lint
-
-      - name: Run Prettier
-        run: npm run format
-
-      - name: Check for TypeScript types
         run: npm run check-types

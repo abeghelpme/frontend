@@ -1,25 +1,21 @@
 import { ClipboardIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/router";
-import { Button, useToast } from "../ui";
+import { toast } from "sonner";
+import { Button } from "../ui";
 
 const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
 	const router = useRouter();
-	const { toast } = useToast();
 
 	const handleCopy = async () => {
 		try {
 			await navigator.clipboard.writeText(recoveryCode as string).then(() => {
-				toast({
-					title: "Success",
+				toast.success("Success", {
 					description: "Key copied to clipboard",
-					duration: 3000,
 				});
 			});
-		} catch (err) {
-			toast({
-				title: "Error",
+		} catch {
+			toast.error("Error", {
 				description: "Could not copy",
-				duration: 3000,
 			});
 		}
 	};
@@ -45,7 +41,7 @@ const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
 						<div className="flex flex-col items-center">
 							<span className="text-center font-semibold">{recoveryCode}</span>
 							<Button
-								className="mt-2 flex items-center justify-center  text-abeg-teal"
+								className="mt-2 flex items-center justify-center  text-abeg-primary"
 								onClick={() => void handleCopy()}
 							>
 								<ClipboardIcon aria-hidden="true" />
@@ -59,12 +55,12 @@ const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
 					</p>
 				</div>
 			</div>
-			<div className="border-t border-t-formBtn">
+			<div className="border-tabeg-primary border-t">
 				<div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
 					<Button
-						className="w-fit bg-abeg-button-10 "
+						className="bg-abeg-button-10 w-fit "
 						size="sm"
-						onClick={() => void router.push("/create-campaign")}
+						onClick={() => void router.push("/dashboard")}
 					>
 						Got it!
 					</Button>

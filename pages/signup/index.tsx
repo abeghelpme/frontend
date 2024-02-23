@@ -1,8 +1,8 @@
-import { setTimeout } from "timers";
-import { CloudFlareTurnStile } from "@/components/common";
-import { Button, Input, ProgressBar, useToast } from "@/components/ui";
+import { CloudFlareTurnStile, FormErrorMessage } from "@/components/common";
+import { CheckedIcon, UncheckedIcon } from "@/components/common/svg";
+import { Button, Input } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
-import { AuthLayout } from "@/layouts";
+import { AuthPagesLayout } from "@/layouts";
 import {
 	type SignUpType,
 	callApi,
@@ -10,55 +10,49 @@ import {
 	zodValidator,
 } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
+import useWatchInput from "@/lib/hooks/useWatchInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDeferredValue, useEffect, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const SignUp = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
-	const { toast } = useToast();
-	const showModal = useRef(false);
 	const [message, setMessage] = useState<ApiResponse>({
 		status: "",
 		message: "",
 		error: undefined,
 		data: undefined,
 	});
-
-	useEffect(() => {
-		const checkLS = () => {
-			if (!showModal.current) {
-				localStorage.setItem("skip-2Fa", "true");
-			}
-		};
-		checkLS();
-	}, []);
 	const router = useRouter();
 
 	const {
 		register,
 		handleSubmit,
 		reset,
-		formState: { errors, isSubmitting },
+		control,
 		watch,
+		formState: { errors, isSubmitting },
 	} = useForm<SignUpType>({
 		resolver: zodResolver(zodValidator("signup")!),
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
 
-	const password = watch("password", "");
-
+	const isChecked = useWatchInput({ control, inputType: "terms" });
+	const password = useWatchInput({ control, inputType: "password" });
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
+	const genStrength = async () => {
+		const passwordStrength = await checkPasswordStrength(
+			deferredPassword as string
+		);
+		setResult(passwordStrength);
+	};
 	useEffect(() => {
-		const genStrength = async () => {
-			const passwordStrength = await checkPasswordStrength(deferredPassword);
-			setResult(passwordStrength);
-		};
 		genStrength().catch((e) => {
 			console.log(e);
 		});
@@ -80,62 +74,46 @@ const SignUp = () => {
 		if (error) {
 			const castedError = error as ApiResponse;
 			setMessage(castedError);
-			window.scrollTo({
-				top: 0,
-				left: 0,
-				behavior: "smooth",
-			});
-
-			toast({
-				title: castedError.status,
+			toast.error(castedError.status, {
 				description: castedError.message,
 				duration: 2000,
 			});
 			return;
 		} else {
-			toast({
-				title: "Success",
+			toast.success("Success", {
 				description: responseData?.message,
 				duration: 2000,
 			});
 			reset();
-			setTimeout(() => {
-				void router.push({
-					pathname: "/signup/verification",
-					query: { signup: true, email: data.email.toLowerCase() },
-				});
-			}, 1500);
+			void router.push({
+				pathname: "/signup/verification",
+				query: {
+					title: "Email Verification",
+					email: data.email.toLowerCase(),
+					type: "verification",
+					endpoint: "resend-verification",
+				},
+			});
 		}
 	};
-	// if (user !== null) {
-	//   // // setTimeout(() => {}, 1000);
-	//   void router.back();
-	//   return (
-	//     <LoadingComp message={`You are already signed in. Redirecting back`} />
-	//   );
-	// }
 
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Create an Account!"
-			content="Create an Abeg Help account to start your crowdfunding!"
-			formType="signup"
-			heading="Welcome!"
-			greeting="Create your account"
-			contentClass="md:w-[85%] lg:w-[65%] xl:w-[52%] 2xl:w-[45%] 3xl:w-[29%]"
+			content="Create an Abeg Help account to start crowdfunding!"
+			heading="Create your account!"
+			contentClass="md:w-[85%] md:max-w-wSignUpForm"
 			withHeader
 			hasSuccess={false}
 		>
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();
-
 					const response = checkBotStatus();
-
 					response && void handleSubmit(onSubmit)(event);
 				}}
 				action=""
-				className="flex flex-col gap-3"
+				className="flex flex-col gap-2 sm:gap-4 lg:gap-6"
 			>
 				{message.message !== "" && !message.error ? (
 					<p
@@ -156,9 +134,9 @@ const SignUp = () => {
 						</ul>
 					)
 				)}
-				<div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
+				<div className="space-y-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
 					<div className="space-y-1">
-						<label htmlFor="firstName" className="text-sm font-medium">
+						<label htmlFor="firstName" className="font-medium lg:text-lg">
 							First Name
 						</label>
 						<Input
@@ -170,14 +148,13 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.firstName}
 						/>
-						{errors.firstName && (
-							<p className="mt-2 text-sm text-abeg-teal">
-								{errors.firstName.message}
-							</p>
-						)}
+						<FormErrorMessage
+							errorMsg={errors.firstName?.message!}
+							error={errors.firstName!}
+						/>
 					</div>
 					<div className="space-y-1">
-						<label htmlFor="lastName" className="text-sm font-medium">
+						<label htmlFor="lastName" className="font-medium lg:text-lg">
 							Last Name
 						</label>
 						<Input
@@ -188,16 +165,15 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.lastName}
 						/>
-						{errors.lastName && (
-							<p className="mt-2 text-sm text-abeg-teal">
-								{errors.lastName.message}
-							</p>
-						)}
+						<FormErrorMessage
+							errorMsg={errors.lastName?.message!}
+							error={errors.lastName!}
+						/>
 					</div>
 				</div>
 
 				<div className="space-y-1">
-					<label htmlFor="email" className="text-sm font-medium">
+					<label htmlFor="email" className="font-medium lg:text-lg">
 						Email
 					</label>
 					<Input
@@ -208,16 +184,15 @@ const SignUp = () => {
 						{...register("email")}
 						errorField={errors.email}
 					/>
-					{errors.email && (
-						<p className="mt-2 text-sm text-abeg-teal">
-							{errors.email.message}
-						</p>
-					)}
+					<FormErrorMessage
+						errorMsg={errors.email?.message!}
+						error={errors.email!}
+					/>
 				</div>
 
-				<div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
+				<div className="space-y-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
 					<div className="space-y-1">
-						<label htmlFor="password" className="mb-1 text-sm font-medium">
+						<label htmlFor="password" className="mb-1 font-medium lg:text-lg">
 							Password
 						</label>
 						<Input
@@ -228,43 +203,18 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.password}
 						/>
-						{password.length > 0 && (
-							<div>
-								<ProgressBar
-									value={result * 25}
-									className={`${
-										result < 2
-											? "progress-filled:bg-red-500"
-											: result === 2
-											  ? "progress-filled:bg-yellow-500"
-											  : "progress-filled:bg-green-500"
-									}`}
-								/>
-								<p
-									className={`${
-										result < 2
-											? "text-text-red"
-											: result === 2
-											  ? "text-yellow-500"
-											  : "text-green-500"
-									} text-sm`}
-								>
-									<span className="text-black">Password strength:</span>
-									&nbsp;
-									{result < 2 ? "Weak" : result === 2 ? "Medium" : "Strong"}
-								</p>
-							</div>
+						{(password as string).length > 0 && (
+							<FormErrorMessage isForPasswordStrength result={result} />
 						)}
-						{errors.password && (
-							<p className="mt-2 text-sm text-abeg-teal">
-								{errors.password.message}
-							</p>
-						)}
+						<FormErrorMessage
+							errorMsg={errors.password?.message!}
+							error={errors.password!}
+						/>
 					</div>
 					<div className="space-y-1">
 						<label
 							htmlFor="confirmPassword"
-							className="mb-1 text-sm font-medium"
+							className="mb-1 font-medium lg:text-lg"
 						>
 							Confirm Password
 						</label>
@@ -276,61 +226,65 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.confirmPassword}
 						/>
-						{errors.confirmPassword && (
-							<p className="text-sm text-abeg-teal">
-								{errors.confirmPassword.message}
-							</p>
-						)}
+						<FormErrorMessage
+							errorMsg={errors.confirmPassword?.message!}
+							error={errors.confirmPassword!}
+						/>
 					</div>
 				</div>
-				<div className="mt-2 flex flex-col">
-					<div className="flex w-full gap-2">
+				<div className="flex flex-col justify-center">
+					<div className="flex w-full gap-1">
+						<label htmlFor="terms">
+							{isChecked ? <CheckedIcon /> : <UncheckedIcon />}
+						</label>
 						<Input
 							type="checkbox"
 							id="terms"
-							className="mt-1 h-[1.125rem] w-4 accent-abeg-teal md:w-5"
+							className="hidden rounded-lg md:h-6 md:w-6"
 							{...register("terms")}
 						/>
-						<label htmlFor="terms" className="text-sm md:text-base">
+						<p className="text-sm md:text-base">
 							I agree to AbegHelp.me&apos;s{" "}
-							<Link href="" className="text-abeg-teal">
+							<Link href="" className="text-abeg-primary">
 								terms of service
 							</Link>{" "}
 							and{" "}
-							<Link href="" className="text-abeg-teal">
-								privacy notice
+							<Link href="" className="text-abeg-primary">
+								privacy notice.
 							</Link>
-							.
-						</label>
-					</div>
-					{errors.terms && (
-						<p className="mt-2 text-sm text-abeg-teal">
-							{errors.terms.message}
 						</p>
-					)}
+					</div>
+					<FormErrorMessage
+						errorMsg={errors.terms?.message!}
+						error={errors.terms!}
+					/>
 				</div>
 				<CloudFlareTurnStile
 					onStatusChange={handleBotStatus}
 					ref={cfTurnStile}
 				/>
-				<div className="flex flex-col items-center space-y-5">
+				<div className="flex flex-col items-center space-y-6">
 					<Button
 						disabled={isSubmitting}
-						className="mt-6 bg-abeg-teal py-4 text-white md:w-[60%] lg:w-[55%] xl:w-[52%]"
+						className=""
+						variant="primary"
 						fullWidth
 						loading={isSubmitting}
 					>
 						Sign up
 					</Button>
-					<p className="text-center text-sm">
+					<p className="text-center text-sm md:text-base">
 						Already have an account?&nbsp;
-						<Link href="/signin" className="font-medium text-abeg-teal">
+						<Link
+							href="/signin"
+							className="font-medium text-abeg-primary underline"
+						>
 							Login
 						</Link>
 					</p>
 				</div>
 			</form>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 

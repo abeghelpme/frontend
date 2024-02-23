@@ -1,7 +1,11 @@
-import { CloudFlareTurnStile, CustomDialog } from "@/components/common";
-import { Button, Input, useToast } from "@/components/ui";
+import {
+	CloudFlareTurnStile,
+	CustomDialog,
+	FormErrorMessage,
+} from "@/components/common";
+import { Button, Input } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
-import { AuthLayout, AuthPagesLayout } from "@/layouts";
+import { AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
 import { useSession } from "@/store";
@@ -10,32 +14,24 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const Login = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
 	const showModal = useRef(false);
 	const router = useRouter();
-	const { toast } = useToast();
 	const [openModal, setOpenModal] = useState(false);
 	const [success] = useState(false);
 	const [skip2FA, setSkip2FA] = useState("false");
 	const { user, updateUser } = useSession((state) => state);
 
 	useEffect(() => {
-		const checkLS = () => {
-			if (!showModal.current) {
-				const modal = localStorage.getItem("skip-2FA");
-				if (modal !== null) {
-					setSkip2FA(modal);
-				}
-				showModal.current = true;
-			} else {
-				localStorage.setItem("skip-2FA", skip2FA);
-			}
-		};
-		checkLS();
-	}, [skip2FA]);
+		const skipModal = localStorage.getItem("skip-2FA");
+		if (skipModal !== null) {
+			setSkip2FA("true");
+		}
+	}, []);
 
 	const {
 		register,
@@ -48,10 +44,10 @@ const Login = () => {
 		reValidateMode: "onChange",
 	});
 
-	const handleOption = () => {
-		setSkip2FA("false");
+	const handleOption = async () => {
+		await localStorage.setItem("skip-2FA", JSON.stringify(skip2FA));
+		await void router.push("/dashboard");
 		setOpenModal(false);
-		void router.push("/create-campaign");
 	};
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
@@ -72,39 +68,33 @@ const Login = () => {
 					query: { signup: true, email: data.email.toLowerCase() },
 				});
 			}
-			return toast({
-				title: error.status as string,
+			return toast.error(error.status, {
 				description: error.message,
-				duration: 3000,
 			});
 		} else {
-			toast({
-				title: "Success",
+			toast.success("Success", {
 				description: (responseData as { message: string }).message,
-				duration: 3000,
 			});
 
-			updateUser(responseData?.data as User);
-
 			reset();
-			if (responseData?.data?.twoFA?.active === false && !isSubmitting) {
-				setOpenModal(true);
-				return;
+			if (responseData?.data?.twoFA?.active === false) {
+				if (skip2FA === "true") {
+					router.push("/dashboard");
+				} else {
+					setOpenModal(true);
+					await router.push("/signin?redirect=false", undefined, {
+						shallow: true,
+					});
+				}
+				updateUser(responseData?.data as User);
 			} else {
-				setTimeout(() => {
-					void router.push("/signin/authenticate");
-				}, 1000);
+				router.push("/2fa/authenticate");
 			}
-			return;
 		}
 	};
 
-	// if (user !== null) {
-	// 	void router.push("/");
-	// 	return <Loader message={`You are already signed in. Redirecting to home`} />;
-	// }
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Sign in to your account"
 			content="Sign in to your account to continue using Abeg Help!"
 			heading="Welcome back!"
@@ -123,7 +113,7 @@ const Login = () => {
 				}}
 			>
 				<div className="space-y-1">
-					<label htmlFor="email" className="text-sm font-medium">
+					<label htmlFor="email" className="text-sm font-medium md:text-lg">
 						Email Address
 					</label>
 					<Input
@@ -137,12 +127,13 @@ const Login = () => {
 							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
-					{errors.email && (
-						<p className="text-sm text-abeg-teal">{errors.email.message}</p>
-					)}
+					<FormErrorMessage
+						error={errors.email!}
+						errorMsg={errors.email?.message!}
+					/>
 				</div>
-				<div className="mt-4 space-y-1">
-					<label htmlFor="password" className="text-sm font-medium">
+				<div className="mt-2 space-y-1 md:mt-4">
+					<label htmlFor="password" className="text-sm font-medium md:text-lg">
 						Password
 					</label>
 					<Input
@@ -155,13 +146,14 @@ const Login = () => {
 							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
-					{errors.password && (
-						<p className="text-sm text-abeg-teal">{errors.password.message}</p>
-					)}
+					<FormErrorMessage
+						error={errors.password!}
+						errorMsg={errors.password?.message!}
+					/>
 				</div>
 				<Link
 					href="/forgot-password"
-					className="mt-2 inline-flex w-full justify-end text-sm font-semibold text-formBtn hover:underline"
+					className="mb-4 mt-2 inline-flex w-full justify-end text-sm font-semibold text-abeg-primary hover:underline md:text-base"
 				>
 					Forgot Password?
 				</Link>
@@ -170,7 +162,7 @@ const Login = () => {
 					ref={cfTurnStile}
 					onStatusChange={handleBotStatus}
 				/>
-				<div className="flex flex-col gap-3">
+				<div className="mt-6 flex flex-col gap-6">
 					<CustomDialog
 						openDialog={openModal}
 						setOpen={() => setOpenModal(openModal)}
@@ -179,7 +171,8 @@ const Login = () => {
 								type="submit"
 								disabled={isSubmitting || success}
 								loading={isSubmitting}
-								className="mt-6 bg-formBtn py-4 text-white disabled:bg-gray-500 "
+								variant="primary"
+								className="disabled:bg-gray-500 "
 								fullWidth
 							>
 								Sign in
@@ -199,7 +192,7 @@ const Login = () => {
 							</div>
 							<div className="mt-6 flex flex-col">
 								<Link
-									className="w-full rounded-md bg-formBtn py-4 text-sm font-semibold text-white"
+									className="w-full rounded-md bg-abeg-primary py-4 text-sm font-semibold text-white"
 									href="/2fa"
 								>
 									Activate
@@ -209,7 +202,7 @@ const Login = () => {
 									type="submit"
 									disabled={isSubmitting}
 									onClick={handleOption}
-									className="mt-4 border border-formBtn py-4 text-abeg-teal disabled:bg-gray-500 disabled:text-white"
+									className="mt-4 border border-abeg-primary py-4 text-abeg-primary disabled:bg-gray-500 disabled:text-white"
 									fullWidth
 								>
 									Skip
@@ -217,19 +210,31 @@ const Login = () => {
 							</div>
 						</div>
 					</CustomDialog>
-					<p className="text-center text-sm">
+					{/* <Button
+						type="submit"
+						disabled={isSubmitting || success}
+						loading={isSubmitting}
+						className="mt-6"
+						variant="primary"
+						fullWidth
+					>
+						Sign in
+					</Button> */}
+					<p className="text-center text-sm md:text-base">
 						Don&apos;t have an account?&nbsp;
-						<Link href="/signup" className="font-medium text-abeg-teal">
+						<Link
+							href="/signup"
+							className="font-medium text-abeg-primary underline"
+						>
 							Register
 						</Link>
 					</p>
 				</div>
 			</form>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 
 export default Login;
 
-Login.getLayout = AuthPagesLayout;
 Login.protect = true;

@@ -1,6 +1,6 @@
-import { DATE_TOMORROW } from "@/components/CreateCampaign/campaign-utils/constants";
-import { getDateFromString } from "@/components/CreateCampaign/campaign-utils/getDateFromString";
 import { cn } from "@/lib";
+import { DATE_TOMORROW } from "@/lib/helpers/campaign/constants";
+import { getDateFromString } from "@/lib/helpers/campaign/getDateFromString";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import Button, { buttonVariants } from "../button";
@@ -35,15 +35,15 @@ function DatePicker(props: DatePickerProps) {
 				>
 					<span>{isDateSelected ? format(dateValue, "PPP") : placeholder}</span>
 
-					<CalendarIcon className="aspect-square w-1.6" />
+					<CalendarIcon className="aspect-square w-@1.6" />
 				</Button>
 			</Popover.Trigger>
 			<Popover.Content className="w-auto p-0">
 				<Calendar
-					className="rounded-10 border border-unfocused p-1.2"
+					className="rounded-[10px] border border-unfocused p-@1.2"
 					classNames={{
 						cell: "hover:scale-[1.03]",
-						button: "font-medium text-[1.26rem]",
+						button: "font-medium text-[0.7875rem]",
 					}}
 					mode="single"
 					selected={dateValue}

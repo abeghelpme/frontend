@@ -2,10 +2,11 @@ import type { ApiResponse } from "@/interfaces";
 import { callApi } from "@/lib";
 import { ClipboardIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
+import { toast } from "sonner";
 import { CustomDialog, Loader } from "../common";
-import { Button, useToast } from "../ui";
+import { Button } from "../ui";
 
 type AuthenticatorFirstStepProps = {
 	setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -17,49 +18,46 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 	const [QRCodeError, setQRCodeError] = useState(false);
 	const [otpLoading, setOtpLoading] = useState(false);
 	const [data, setData] = useState<ApiResponse>();
-	const { toast } = useToast();
 	const [otp, setOtp] = useState("");
 
 	// get qr code or secret
 	useEffect(() => {
 		const setup2fa = async () => {
-			const { data, error } = await callApi<ApiResponse>("/auth/2fa/setup", {
-				twoFactorType: "APP",
-			});
-			if (data) {
-				setData(data);
+			const { data: dataInfo, error } = await callApi<ApiResponse>(
+				"/auth/2fa/setup",
+				{
+					twoFactorType: "APP",
+				}
+			);
+
+			if (dataInfo) {
+				setData(dataInfo);
 				setIsQRCodeLoading(false);
 				setQRCodeError(false);
 			}
 			if (error) {
-				toast({
-					title: error.status as string,
+				toast.error(error.status, {
 					description: error.message,
-					duration: 3000,
 				});
 				setQRCodeError(true);
 				setIsQRCodeLoading(false);
 			}
 		};
 		void setup2fa();
-	}, [toast, isQRCodeLoading]);
+	}, [isQRCodeLoading]);
 
 	const handleCopy = async () => {
 		try {
 			await navigator.clipboard
 				.writeText(data?.data?.secret as string)
 				.then(() => {
-					toast({
-						title: "Success",
+					toast.success("Success", {
 						description: "Key copied to clipboard",
-						duration: 3000,
 					});
 				});
-		} catch (err) {
-			toast({
-				title: "Error",
+		} catch {
+			toast.error("Error", {
 				description: "Could not copy",
-				duration: 3000,
 			});
 		}
 	};
@@ -68,20 +66,22 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 	const handleOtpSubmit = async () => {
 		setOtpLoading(true);
 
-		const { data, error } = await callApi<ApiResponse>("/auth/2fa/complete", {
-			token: otp,
-			twoFactorType: "APP",
-		});
+		const { data: dataInfo, error } = await callApi<ApiResponse>(
+			"/auth/2fa/complete",
+			{
+				token: otp,
+				twoFactorType: "APP",
+			}
+		);
 
-		if (data) {
+		if (dataInfo) {
 			localStorage.setItem("show-modal", "false");
 			setStep(2);
-			recoveryCode.current = data?.data?.recoveryCode as string;
+			recoveryCode.current = dataInfo.data?.recoveryCode as string;
 			setOtpLoading(false);
 		}
 		if (error) {
-			toast({
-				title: error.status as string,
+			toast.error(error.status, {
 				description: error.message,
 				duration: 2000,
 			});
@@ -144,7 +144,7 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 										</span>
 										<button
 											type="button"
-											className="mt-2 flex items-center justify-center font-semibold text-abeg-teal"
+											className="mt-2 flex items-center justify-center font-semibold text-abeg-primary"
 											onClick={() => void handleCopy()}
 										>
 											<ClipboardIcon />
@@ -165,12 +165,12 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 					</li>
 				</ol>
 			</div>
-			<div className="border-t border-t-formBtn">
+			<div className="border-tabeg-primary border-t">
 				<div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
 					<CustomDialog
 						trigger={
 							<Button
-								className="w-fit bg-abeg-button-10 "
+								className="bg-abeg-button-10 w-fit "
 								size="sm"
 								disabled={data === undefined || QRCodeError}
 							>
@@ -189,16 +189,16 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 								value={otp}
 								onChange={setOtp}
 								numInputs={6}
-								renderSeparator={<span></span>}
+								renderSeparator={<span />}
 								containerStyle={"flex relative gap-1  h-[2.5rem] "}
 								inputType="number"
 								inputStyle={
-									"  flex-1 h-full border outline-none shadow-md focus:ring-abeg-teal focus:ring-1"
+									"  flex-1 h-full border outline-none shadow-md focus:ring-abeg-primary focus:ring-1"
 								}
 								renderInput={(props) => <input {...props} />}
 							/>
 							<Button
-								className="mt-6 bg-formBtn py-4 text-sm font-semibold"
+								className="mt-6 bg-abeg-primary py-4 text-sm font-semibold"
 								disabled={otp.length !== 6}
 								onClick={() => void handleOtpSubmit()}
 								loading={otpLoading}

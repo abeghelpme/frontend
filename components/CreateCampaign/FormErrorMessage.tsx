@@ -8,19 +8,20 @@ type ErrorParagraphProps<TStepData extends FieldValues> = {
 	errorField: keyof TStepData;
 };
 
-function ErrorParagraph<TStepData extends FieldValues>(
+function FormErrorMessage<TStepData extends FieldValues>(
 	props: ErrorParagraphProps<TStepData>
 ) {
 	const { className, formState, errorField } = props;
 
 	const paragraphRef = useRef<HTMLParagraphElement>(null);
 	const message = formState.errors[errorField]?.message as string | undefined;
+	const animationClass = "animate-shake";
 
 	useEffect(() => {
 		if (!paragraphRef.current) return;
-		if (paragraphRef.current.classList.contains("animate-shake")) return;
+		if (paragraphRef.current.classList.contains(animationClass)) return;
 
-		paragraphRef.current.classList.add("animate-shake");
+		paragraphRef.current.classList.add(animationClass);
 	}, [formState.submitCount]);
 
 	if (!message) {
@@ -31,16 +32,16 @@ function ErrorParagraph<TStepData extends FieldValues>(
 		<p
 			ref={paragraphRef}
 			className={cn(
-				"text-[1.1rem] font-medium mt-1.2 ml-0.4 italic text-red-400",
+				"ml-@0.4 mt-@1.2 text-[1.1rem] font-medium italic text-red-400",
 				className
 			)}
-			onAnimationEnd={() => {
-				paragraphRef.current?.classList.remove("animate-shake");
-			}}
+			onAnimationEnd={() =>
+				paragraphRef.current?.classList.remove(animationClass)
+			}
 		>
 			*{message}
 		</p>
 	);
 }
 
-export default ErrorParagraph;
+export default FormErrorMessage;

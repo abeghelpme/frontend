@@ -5,7 +5,6 @@ export interface BaseLayoutProps {
 }
 
 export interface AuthLayoutProps extends BaseLayoutProps {
-	formType?: "signup" | "other";
 	greeting?: string;
 	heading?: string;
 	contentClass?: string;

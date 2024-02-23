@@ -1,5 +1,6 @@
 import { DatePicker, Select } from "@/components/ui";
-import { callApi, zodValidator } from "@/lib";
+import { callApi, cn, zodValidator } from "@/lib";
+import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
 	type StepTwoData,
@@ -8,9 +9,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
-import ErrorParagraph from "../ErrorParagraph";
+import { toast } from "sonner";
+import FormErrorMessage from "../FormErrorMessage";
 import Heading from "../Heading";
-import { useWatchFormStatus } from "./useWatchFormStatus";
 
 function StepTwo() {
 	const {
@@ -35,6 +36,14 @@ function StepTwo() {
 			data: { _id: string };
 		}>(`/campaign/create/two`, { ...data, campaignId });
 
+		if (error) {
+			toast.error(error.status, {
+				description: error.message,
+			});
+
+			return;
+		}
+
 		if (dataInfo) {
 			setCampaignId(dataInfo.data._id);
 			goToStep(currentStep + 1);
@@ -43,21 +52,21 @@ function StepTwo() {
 
 	return (
 		<section>
-			<Heading as="h2" className="text-formBtn">
+			<Heading as="h2" className="text-abeg-primary">
 				Share your funding goal and deadline
 			</Heading>
 
 			<form
 				id={STEP_DATA_KEY_LOOKUP[currentStep]}
-				className="mt-3.2"
+				className="mt-@3.2"
 				onSubmit={(event) => {
 					event.preventDefault();
 					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
-				<ol className="flex flex-col gap-2.4">
+				<ol className="gap-@2.4 flex flex-col">
 					<li>
-						<label htmlFor="title" className="text-1.4 font-semibold lg:text-2">
+						<label htmlFor="title" className="text-sm font-semibold lg:text-xl">
 							Campaign Title
 						</label>
 
@@ -66,16 +75,21 @@ function StepTwo() {
 							id="title"
 							type="text"
 							placeholder="Give your campaign a catchy title that can resonate with donors"
-							className="mt-1.6 w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1.2 focus-visible:outline-formBtn lg:px-1.6 lg:py-2.2 lg:text-1.6"
+							className={cn(
+								"mt-@1.6 px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border border-unfocused text-xs lg:text-base",
+
+								formState.errors.title &&
+									"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="title" />
+						<FormErrorMessage formState={formState} errorField="title" />
 					</li>
 
 					<li>
 						<label
 							htmlFor="fundraiser"
-							className="text-1.4 font-semibold lg:text-2"
+							className="text-sm font-semibold lg:text-xl"
 						>
 							Who is fundraising?
 						</label>
@@ -92,7 +106,7 @@ function StepTwo() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1.2 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
+										className="mt-@1.6 px-@0.8 py-@2.3 lg:px-@1.6 lg:py-@3.4 rounded-[10px] border-unfocused text-xs data-[placeholder]:text-placeholder lg:text-base"
 									>
 										<Select.Value placeholder="Specify who is fundraising" />
 									</Select.Trigger>
@@ -107,11 +121,11 @@ function StepTwo() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="fundraiser" />
+						<FormErrorMessage formState={formState} errorField="fundraiser" />
 					</li>
 
 					<li>
-						<label htmlFor="goal" className="text-1.4 font-semibold lg:text-2">
+						<label htmlFor="goal" className="text-sm font-semibold lg:text-xl">
 							Campaign Goal
 						</label>
 
@@ -120,16 +134,21 @@ function StepTwo() {
 							id="goal"
 							type="number"
 							placeholder="Set a realistic target amount"
-							className="mt-1.6 w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1.2 focus-visible:outline-formBtn lg:px-1.6 lg:py-2.2 lg:text-1.6"
+							className={cn(
+								"mt-@1.6 px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border border-unfocused text-xs lg:text-base",
+
+								formState.errors.goal &&
+									"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="goal" />
+						<FormErrorMessage formState={formState} errorField="goal" />
 					</li>
 
 					<li>
 						<label
 							htmlFor="deadline"
-							className="text-1.4 font-semibold lg:text-2"
+							className="text-sm font-semibold lg:text-xl"
 						>
 							Campaign Deadline
 						</label>
@@ -139,7 +158,7 @@ function StepTwo() {
 							name="deadline"
 							render={({ field }) => (
 								<DatePicker
-									className="mt-1.6 w-full justify-between rounded-10 border border-unfocused px-0.8 py-2.3 text-1.2 lg:px-1.6 lg:py-3.4 lg:text-1.6"
+									className="mt-@1.6 px-@0.8 py-@2.3 lg:px-@1.6 lg:py-@3.4 w-full justify-between rounded-[10px] border border-unfocused text-xs lg:text-base"
 									placeholder="Specify the end date for your campaign"
 									dateValueString={field.value}
 									onChange={field.onChange}
@@ -147,7 +166,7 @@ function StepTwo() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="deadline" />
+						<FormErrorMessage formState={formState} errorField="deadline" />
 					</li>
 				</ol>
 			</form>

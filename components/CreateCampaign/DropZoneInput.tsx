@@ -1,10 +1,10 @@
 import { cn } from "@/lib";
-import { useToggle } from "@/lib/hooks/useToggle";
+import { acceptedFilesString, validateFiles } from "@/lib/helpers/campaign";
+import { useToggle } from "@/lib/hooks";
 import { useFormStore } from "@/store/formStore";
 import type { ChangeEvent, DragEvent } from "react";
-import { Button, toast } from "../ui";
-import { validateFiles } from "./campaign-utils";
-import { acceptedFilesString } from "./campaign-utils/constants";
+import { toast } from "sonner";
+import { Button } from "../ui";
 
 type DropZoneInputProps = {
 	value: File[];
@@ -29,11 +29,8 @@ function DropZoneInput(props: DropZoneInputProps) {
 				: (event as ChangeEvent<HTMLInputElement>).target.files;
 
 		if (fileList === null) {
-			toast({
-				title: "Error",
+			toast.error("Error", {
 				description: "No file selected",
-				duration: 3000,
-				variant: "destructive",
 			});
 
 			return;
@@ -66,13 +63,13 @@ function DropZoneInput(props: DropZoneInputProps) {
 			onDragOver={handleDragOver}
 			onDragLeave={handleDragLeave}
 			className={cn(
-				"relative mt-1.6 flex min-h-[16.1rem] lg:min-h-[24.2rem] flex-col items-center justify-end rounded-[5px] border border-dashed border-formBtn py-1.5 text-1",
+				"mt-@1.6 borderabeg-primary py-@1.5 relative flex min-h-40 flex-col items-center justify-end rounded-[5px] border border-dashed text-xs lg:min-h-60",
 				isDragActive && "opacity-60"
 			)}
 		>
 			<Button
 				variant="primary"
-				className=" bg-formBtn p-0.8 text-1.2 font-bold lg:text-1.6 lg:px-2.6 lg:py-1.3"
+				className="p-@0.8 lg:px-@2.6 lg:py-@1.3 rounded-md bg-abeg-primary text-xs font-bold lg:rounded-lg lg:text-base"
 				type="button"
 			>
 				Upload
@@ -86,12 +83,12 @@ function DropZoneInput(props: DropZoneInputProps) {
 				multiple
 			/>
 
-			<div className="mt-1.5 text-center text-1 lg:text-1.2">
-				<p className="italic text-formBtn">
+			<div className="mt-@1.5 text-center text-xs lg:text-xs">
+				<p className="italic text-abeg-primary">
 					Click to select files, or Drag {`'n'`} Drop
 				</p>
 
-				<p className="mt-0.3">Support files; PDF, JPG, CSV </p>
+				<p className="mt-@0.3">Support files; PDF, JPG, CSV </p>
 
 				<p className="text-abeg-green">Not more than 5mb</p>
 			</div>

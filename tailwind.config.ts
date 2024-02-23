@@ -11,73 +11,31 @@ const config = {
 
 	theme: {
 		extend: {
-			borderWidth: {
-				CampaignCardBorderWidth: "0.3px",
-			},
-			borderColor: {
-				CampaignCardBorderColor: "#8D8B8B",
-			},
-			spacing: {
-				// PADDING (X & Y)
-				DSignupFormPadding: "3rem",
-				MSignupFormPadding: "1.5rem 1rem",
-				DSigninFormPadding: "1.5rem 3rem",
-				MSigninFormPadding: "1rem",
-				DAuthFlowPadding: "1.5rem",
-				DOverlayPadding: "2rem 1.5rem",
-				MOverlayPadding: "1.5rem",
-				MAuthFlowPadding: "1rem",
-				DOtpContainerPadding: "2.5rem 3.13rem",
-				MOtpContainerPadding: "1.5rem 1rem",
-				MLogoBannerPadding: "0.25rem",
-				DLogoBannerPadding: "1rem",
-				DBtnPadding: "1rem 1.5rem",
-				MBtnPadding: "0.75rem 1rem",
-				DInputPadding: "1rem",
-				MInputPadding: "1rem 0.5rem",
-				// GAP (X & Y)
-				DSignupFormGap: "1.5rem",
-				MSignupFormGap: "1rem",
-				AuthFlowGap: "1.5rem",
-			},
 			screens: {
 				"3xl": "2000px",
 			},
 			backgroundImage: {
 				contours: "url('/assets/images/shared/bg-contours.png')",
+				authBg: "url('/assets/images/auth/auth-bg-jar.svg')",
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
+
 			boxShadow: {
 				"auth-layout-shadow": " 0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
 				otpInput: "2px 4px 4px 0 rgba(139, 210, 189, 0.1)",
 			},
 			colors: {
 				overlay: "rgba(72, 72, 72, 0.5)",
+				placeholder: "#8D8B8B",
+				unfocused: "#A8CCCC",
+				semiWhite: "#E6EAEE",
+				inputBorder: "rgba(124, 148, 107, 0.25)",
+				otpBorder: "rgba(0, 128, 128, 0.5)",
 				abeg: {
 					primary: "#008080",
 					text: "#484848",
-					formLabel: "#1B1818",
-					inputBorder: "rgba(124, 148, 107, 0.25)",
-					otpBorder: "rgba(0, 128, 128, 0.5)",
-
-					button: {
-						10: "#1C8384",
-						20: "#005E5F",
-					},
-					teal: {
-						DEFAULT: "#268384",
-						10: "#2B908E",
-					},
-					green: {
-						DEFAULT: "#324823",
-						20: "#7C946B",
-						30: "#C9DDBB",
-						40: "#F4FAF0",
-						50: "#007004",
-						60: "#006004",
-					},
 					neutral: {
 						10: "#101E14",
 						20: "#344639",
@@ -95,15 +53,29 @@ const config = {
 						40: "#FFEBEB",
 					},
 				},
+				// Shadcn colors
+				popover: "hsl(0 0% 100%)",
+				"popover-foreground": "hsl(222.2 47.4% 11.2%)",
+				accent: "hsl(210 40% 96.1%)",
+				"accent-foreground": "hsl(222.2 47.4% 11.2%)",
+				input: "hsl(214.3 31.8% 91.4%)",
+				ring: "hsl(215 20.2% 65.1%)",
+				muted: "hsl(210 40% 96.1%)",
+				"muted-foreground": "hsl(215.4 16.3% 46.9%)",
+				background: "hsl(0 0% 100%)",
 			},
+
 			height: {
 				"23": "6rem",
-				DInputField: "3.13rem",
-				MInputField: "2.9rem",
+				DInputField: "3.25rem",
+				MInputField: "3.13rem",
 			},
 			width: {
-				w80: "80%",
-				inputField: "3.13ren",
+				w90: "90%",
+			},
+			maxWidth: {
+				wSignUpForm: "52.9rem",
+				wAuthFlow: "32rem",
 			},
 			keyframes: {
 				"accordion-down": {

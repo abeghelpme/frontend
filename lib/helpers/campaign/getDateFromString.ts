@@ -1,4 +1,4 @@
-import { DATE_TOMORROW } from "@/components/CreateCampaign/campaign-utils/constants";
+import { DATE_TOMORROW } from "@/lib/helpers/campaign/constants";
 
 /* eslint-disable no-console */
 const getDateFromString = (dateString: string, fallback = DATE_TOMORROW) => {

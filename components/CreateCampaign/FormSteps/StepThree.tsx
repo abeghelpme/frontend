@@ -1,4 +1,5 @@
 import { callApi, zodValidator } from "@/lib";
+import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
 	type StepThreeData,
@@ -7,12 +8,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import DropZoneInput from "../DropZoneInput";
-import ErrorParagraph from "../ErrorParagraph";
+import FormErrorMessage from "../FormErrorMessage";
 import Heading from "../Heading";
 import ImagePreview from "../ImagePreview";
 import TiptapEditor from "../TipTapEditor";
-import { useWatchFormStatus } from "./useWatchFormStatus";
 
 function StepThree() {
 	const {
@@ -43,40 +44,47 @@ function StepThree() {
 
 		formData.set("story", data.story);
 		formData.set("storyHtml", data.storyHtml);
-
-		data.photos.forEach((imageFile) => {
-			formData.append("photos", imageFile);
-		});
-
 		formData.set("campaignId", campaignId);
+		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
 		const { data: dataInfo, error } = await callApi(
 			`/campaign/create/three`,
 			formData
 		);
 
-		if (dataInfo) {
+		if (error) {
+			toast.error(error.status, {
+				description: error.message,
+			});
+
+			return;
 		}
-		void router.push("/create-campaign/preview");
+
+		if (dataInfo) {
+			void router.push("/create-campaign/preview");
+		}
 	};
 
 	return (
 		<section className="w-full">
-			<Heading as="h2" className="text-formBtn">
+			<Heading as="h2" className="text-abeg-primary">
 				Your story matters and this is where it begins.
 			</Heading>
 
 			<form
 				id={STEP_DATA_KEY_LOOKUP[3]}
-				className="mt-3.2 lg:mt-4.8"
+				className="mt-@3.2 lg:mt-@4.8"
 				onSubmit={(event) => {
 					event.preventDefault();
 					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
-				<ol className="gap-2.4 flex flex-col">
+				<ol className="gap-@2.4 flex flex-col">
 					<li>
-						<label className="text-1.4 lg:text-2 font-semibold">
+						<label
+							htmlFor="photos"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							Campaign Cover Image
 						</label>
 
@@ -90,7 +98,7 @@ function StepThree() {
 										onChange={field.onChange}
 									/>
 
-									<ErrorParagraph formState={formState} errorField="photos" />
+									<FormErrorMessage formState={formState} errorField="photos" />
 
 									<ImagePreview value={field.value} onChange={field.onChange} />
 								</>
@@ -99,11 +107,11 @@ function StepThree() {
 					</li>
 
 					<li>
-						<label className="text-1.4 lg:text-2 font-semibold">
+						<label htmlFor="story" className="text-sm font-semibold lg:text-xl">
 							Campaign Story
 						</label>
 
-						<p className="my-1.6 text-1.2 lg:text-1.6">
+						<p className="my-@1.6 text-xs lg:text-base">
 							A detailed description of the campaign, outlining the need for
 							funding and how the funds will be used.
 						</p>
@@ -121,7 +129,7 @@ function StepThree() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="story" />
+						<FormErrorMessage formState={formState} errorField="story" />
 					</li>
 				</ol>
 			</form>

@@ -1,17 +1,38 @@
+import { LogoBanner } from "@/components/common";
 import type { WithPageLayout } from "@/interfaces";
-import { BaseLayout } from "@/layouts";
-import { useSession } from "@/store";
+import bg from "@/public/assets/images/auth/auth-bg-jar.svg";
+import Image from "next/image";
 import Link from "next/link";
 
 const Home: WithPageLayout = () => {
-	const { user } = useSession((state) => state);
-
-	console.log(user);
 	return (
-		<BaseLayout>
-			<Link href="/test"> Go to test </Link>
-			<h1>WELCOME TO ABEG HELP!!</h1>
-		</BaseLayout>
+		<main className="h-full flex flex-col py-14 md:py-20 w-w90 mx-auto md:w-4/5">
+			<LogoBanner />
+			<div className="flex flex-1 lg:gap-12 xl:gap-24">
+				<Image
+					src={bg}
+					alt=""
+					className="hidden lg:block lg:w-1/2 object-cover"
+				/>
+				<div className="space-y-8 w-full text-center md:w-1/2 md:mx-auto flex flex-col justify-center">
+					<h1 className="text-2xl">Get Started</h1>
+					<div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 lg:w-w80 mx-auto">
+						<Link
+							href="/signup"
+							className="w-full py-3 px-6 bg-abeg-primary text-white rounded-lg"
+						>
+							Sign up
+						</Link>
+						<Link
+							href="/signin"
+							className="w-full py-3 px-6 bg-abeg-primary text-white rounded-lg"
+						>
+							Sign in
+						</Link>
+					</div>
+				</div>
+			</div>
+		</main>
 	);
 };
 

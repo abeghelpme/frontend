@@ -19,7 +19,7 @@ function StepIndicator(props: StepIndicatorProps) {
 	const Separator = (
 		<hr
 			className={cn(
-				"my-0.4 border-formBtn basis-full border border-dashed",
+				"my-@0.4 borderabeg-primary basis-full border border-dashed",
 				disabled && "border-unfocused"
 			)}
 		/>
@@ -31,7 +31,7 @@ function StepIndicator(props: StepIndicatorProps) {
 
 			<span
 				className={cn(
-					"bg-formBtn grid aspect-square w-2 shrink-0 place-content-center rounded-full font-bold text-white",
+					"w-@2 bg-abeg-primary grid aspect-square shrink-0 place-content-center rounded-full font-bold text-white",
 					disabled && "bg-unfocused"
 				)}
 			>
@@ -48,7 +48,7 @@ function StepInformation({
 }: StepInfoProps) {
 	return (
 		<article className={cn("w-full", disabled && "text-unfocused")}>
-			<h4 className="text-1.2 lg:text-2 font-medium">{title}</h4>
+			<h4 className="text-xs font-medium lg:text-xl">{title}</h4>
 
 			<p>{description}</p>
 		</article>

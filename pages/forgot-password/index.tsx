@@ -1,16 +1,16 @@
 import CloudflareTurnstile from "@/components/common/CloudflareTurnstile";
-import { Button, Input, useToast } from "@/components/ui";
-import { AuthLayout } from "@/layouts";
+import { Button, Input } from "@/components/ui";
+import { AuthPagesLayout } from "@/layouts";
 import { type ForgotPasswordType, callApi, zodValidator } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const ForgotPasswordPage = () => {
 	const router = useRouter();
-	const { toast } = useToast();
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
 
@@ -34,30 +34,33 @@ const ForgotPasswordPage = () => {
 		);
 
 		if (error) {
-			return toast({
-				title: error.status.toString(),
+			toast.error(error.status, {
 				description: error.message,
-				duration: 3000,
 			});
 		} else {
-			toast({
-				title: "Success",
+			toast.success("Success", {
 				description: (responseData as { message: string }).message,
-				duration: 3000,
 			});
 			reset();
-			setTimeout(() => {
-				void router.push("/signin");
-			}, 2000);
+			void router.push({
+				pathname: "/signup/verification",
+				query: {
+					title: "Check your email",
+					email: data.email.toLowerCase(),
+					type: "password reset",
+					endpoint: "auth/password/forgot",
+				},
+			});
 		}
 	};
 
 	return (
-		<AuthLayout
+		<AuthPagesLayout
+			heading="Forgot Password"
+			greeting="Reset your password. Follow the instructions on this page to get your account back!"
 			title="Forgot Password"
 			content="Reset your password. Follow the instructions on this page to get your account back!"
-			formType="other"
-			withHeader={false}
+			withHeader
 			hasSuccess={false}
 		>
 			<form
@@ -67,7 +70,7 @@ const ForgotPasswordPage = () => {
 
 					response && void handleSubmit(onSubmit)(event);
 				}}
-				className="flex flex-col gap-5"
+				className="flex flex-col gap-4"
 			>
 				<div className="space-y-2 text-center">
 					{" "}
@@ -79,9 +82,9 @@ const ForgotPasswordPage = () => {
 						instruction
 					</p>
 				</div>
-				<div className="mt-2 space-y-6">
+				<div className="mt-2">
 					<div className="space-y-1">
-						<label htmlFor="email" className="text-sm font-medium">
+						<label htmlFor="email" className="text-sm font-medium md:text-lg">
 							Email Address
 						</label>
 						<Input
@@ -96,7 +99,9 @@ const ForgotPasswordPage = () => {
 							}`}
 						/>
 						{errors.email && (
-							<p className="text-sm text-abeg-teal">{errors.email.message}</p>
+							<p className="text-sm text-abeg-primary">
+								{errors.email.message}
+							</p>
 						)}
 					</div>
 				</div>
@@ -108,16 +113,17 @@ const ForgotPasswordPage = () => {
 					<Button
 						disabled={isSubmitting}
 						loading={isSubmitting}
-						className="text-md bg-abeg-button-10 px-10 py-3 font-medium"
+						className=""
+						variant="primary"
 					>
 						Submit
 					</Button>
-					<Link href="/signin" className="text-sm text-abeg-teal">
+					<Link href="/signin" className="text-sm text-abeg-primary underline">
 						Back to sign in page
 					</Link>
 				</div>
 			</form>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 

@@ -1,6 +1,7 @@
 import { Button, Select } from "@/components/ui";
 import { callApi, zodValidator } from "@/lib";
-import { useElementList } from "@/lib/hooks";
+import { targetCountries, validateTagValue } from "@/lib/helpers/campaign";
+import { useElementList, useWatchFormStatus } from "@/lib/hooks";
 import { CrossIcon } from "@/public/assets/icons/campaign";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -11,11 +12,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
-import ErrorParagraph from "../ErrorParagraph";
+import { toast } from "sonner";
+import FormErrorMessage from "../FormErrorMessage";
 import Heading from "../Heading";
-import { validateTagValue } from "../campaign-utils";
-import { targetCountries } from "../campaign-utils/constants";
-import { useWatchFormStatus } from "./useWatchFormStatus";
 
 function StepOne() {
 	const tagInputRef = useRef<HTMLInputElement>(null);
@@ -50,6 +49,14 @@ function StepOne() {
 		const { data: dataInfo, error } = await callApi<{
 			data: { _id: string };
 		}>("/campaign/create/one", data);
+
+		if (error) {
+			toast.error(error.status, {
+				description: error.message,
+			});
+
+			return;
+		}
 
 		if (dataInfo) {
 			setCampaignId(dataInfo.data._id);
@@ -94,21 +101,24 @@ function StepOne() {
 
 	return (
 		<section className="w-full">
-			<Heading as="h2" className="text-formBtn">
+			<Heading as="h2" className="text-abeg-primary">
 				Create a campaign to fund your passion or cause.
 			</Heading>
 
 			<form
 				id={STEP_DATA_KEY_LOOKUP[currentStep]}
-				className="mt-3.2"
+				className="mt-@3.2"
 				onSubmit={(event) => {
 					event.preventDefault();
 					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
-				<ol className="flex flex-col gap-2.4">
+				<ol className="gap-@2.4 flex flex-col">
 					<li>
-						<label className="text-1.4 font-semibold lg:text-2">
+						<label
+							htmlFor="categoryId"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							What best describes your fundraiser?
 						</label>
 
@@ -123,7 +133,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
+										className="mt-@1.6 px-@0.8 py-@2.3 lg:px-@1.6 lg:py-@3.4 rounded-[10px] border-unfocused text-xs data-[placeholder]:text-placeholder lg:text-base"
 									>
 										<Select.Value placeholder="Select what category best suit your fundraiser" />
 									</Select.Trigger>
@@ -142,11 +152,14 @@ function StepOne() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField={"categoryId"} />
+						<FormErrorMessage formState={formState} errorField={"categoryId"} />
 					</li>
 
 					<li>
-						<label className="text-1.4 font-semibold lg:text-2">
+						<label
+							htmlFor="country"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							What country are you located?
 						</label>
 
@@ -161,7 +174,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-1.6 rounded-10 border-unfocused px-0.8 py-2.3 text-1 data-[placeholder]:text-placeholder lg:px-1.6 lg:py-3.4 lg:text-1.6"
+										className="mt-@1.6 px-@0.8 py-@2.3 lg:px-@1.6 lg:py-@3.4 rounded-[10px] border-unfocused text-xs data-[placeholder]:text-placeholder lg:text-base"
 									>
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
@@ -183,46 +196,46 @@ function StepOne() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField={"country"} />
+						<FormErrorMessage formState={formState} errorField={"country"} />
 					</li>
 
 					<li>
-						<label htmlFor="tags" className="text-1.4 font-semibold lg:text-2">
+						<label htmlFor="tags" className="text-sm font-semibold lg:text-xl">
 							Campaign Tags
 						</label>
 
-						<div className="mt-1.6 flex items-center gap-0.8">
+						<div className="mt-@1.6 gap-@0.8 flex items-center">
 							<input
 								ref={tagInputRef}
 								name="tags"
 								type="text"
 								placeholder="Add hashtags or search keywords to your campaign"
-								className="w-full rounded-10 border border-unfocused px-0.8 py-1.6 text-1 focus-visible:outline-formBtn lg:px-1.6 lg:py-2.2 lg:text-1.6"
+								className="px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border border-unfocused text-xs lg:text-base"
 								onKeyDown={handleAddTags}
 							/>
 
 							<Button
 								type="button"
 								variant="secondary"
-								className="rounded-6 border-formBtn px-1.2 py-0.8 text-1.2 font-semibold text-formBtn lg:px-2.8 lg:py-1.2 lg:text-1.6"
+								className="borderabeg-primary px-@1.2 py-@0.8 lg:px-@2.8 lg:py-@1.2 rounded-md text-xs font-semibold text-abeg-primary lg:text-base"
 								onClick={handleAddTags}
 							>
 								Add
 							</Button>
 						</div>
 
-						<div className="mt-1.6 flex flex-col gap-1.6">
-							<span className="text-1.2 text-formBtn">
+						<div className="mt-@1.6 gap-@1.6 flex flex-col">
+							<span className="text-xs text-abeg-primary">
 								{stepOneData.tags.length}/5 tags
 							</span>
 
-							<ul className="flex flex-wrap gap-0.8 text-1.2 font-medium text-formBtn">
+							<ul className="gap-@0.8 flex flex-wrap text-xs font-medium text-abeg-primary">
 								<TagList
 									each={stepOneData.tags}
 									render={(tag) => (
 										<li
 											key={tag}
-											className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-formBtn bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
+											className="borderabeg-primary flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
 										>
 											<p>#{tag}</p>
 
@@ -231,7 +244,7 @@ function StepOne() {
 												type="button"
 												onClick={handleRemoveTags(tag)}
 											>
-												<CrossIcon className="size-1" />
+												<CrossIcon className="size-@1" />
 											</button>
 										</li>
 									)}

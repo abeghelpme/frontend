@@ -5,6 +5,9 @@ import { buttonVariants } from "../button";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
+const IconRight = () => <ChevronRightIcon className="size-4" />;
+const IconLeft = () => <ChevronLeftIcon className="size-4" />;
+
 function Calendar(props: CalendarProps) {
 	const {
 		className,
@@ -15,34 +18,30 @@ function Calendar(props: CalendarProps) {
 
 	return (
 		<DayPicker
-			components={{
-				IconLeft: () => <ChevronLeftIcon className="size-[1.6rem]" />,
-				IconRight: () => <ChevronRightIcon className="size-[1.6rem]" />,
-			}}
+			components={{ IconLeft, IconRight }}
 			showOutsideDays={showOutsideDays}
 			className={cn("p-[1.2rem]", className)}
 			classNames={{
-				months:
-					"flex flex-col sm:flex-row space-y-[1.6rem] sm:space-x-[1.6rem] sm:space-y-0",
-				month: "space-y-[1.6rem]",
-				caption: "flex justify-center pt-[0.4rem] relative items-center",
-				caption_label: "text-[1.2rem] font-medium",
-				nav: "space-x-[0.4rem] flex items-center",
+				months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+				month: "space-y-4",
+				caption: "flex justify-center pt-@0.4 relative items-center",
+				caption_label: "text-xs font-medium",
+				nav: "space-x-@0.4 flex items-center",
 				nav_button: cn(
 					buttonVariants({ variant: "outline" }),
-					"size-[2.8rem] bg-transparent p-0 opacity-50 hover:opacity-100"
+					"size-@2.8 bg-transparent p-0 opacity-50 hover:opacity-100"
 				),
-				nav_button_previous: "absolute left-[0.4rem]",
-				nav_button_next: "absolute right-[0.4rem]",
-				table: "w-full border-collapse space-y-[0.4rem]",
+				nav_button_previous: "absolute left-@0.4",
+				nav_button_next: "absolute right-@0.4",
+				table: "w-full border-collapse space-y-@0.4",
 				head_row: "flex",
 				head_cell:
-					"text-muted-foreground rounded-md w-[3.4rem] font-normal text-[1.4rem]",
-				row: "flex w-full mt-[0.8rem]",
-				cell: "size-[3.2rem] text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+					"text-muted-foreground rounded-md w-@3.4 font-normal text-sm",
+				row: "flex w-full mt-@0.8",
+				cell: "size-@3.2 text-center text-xs p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
 				day: cn(
 					buttonVariants({ variant: "ghost" }),
-					"size-[3.2rem] p-0 font-normal aria-selected:opacity-100"
+					"size-@3.2 p-0 font-normal aria-selected:opacity-100"
 				),
 				day_range_end: "day-range-end",
 				day_selected:

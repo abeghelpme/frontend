@@ -1,6 +1,6 @@
-import { CloudFlareTurnStile } from "@/components/common";
-import { Button, Input, ProgressBar, useToast } from "@/components/ui";
-import { AuthLayout } from "@/layouts";
+import { CloudFlareTurnStile, FormErrorMessage } from "@/components/common";
+import { Button, Input } from "@/components/ui";
+import { AuthPagesLayout } from "@/layouts";
 import {
 	type ResetPasswordType,
 	callApi,
@@ -12,10 +12,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useDeferredValue, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const ResetPassword = () => {
 	const router = useRouter();
-	const { toast } = useToast();
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
 
@@ -49,12 +49,11 @@ const ResetPassword = () => {
 	}, [deferredPassword]);
 
 	const onSubmit = async (data: ResetPasswordType) => {
-		if (!token)
-			return toast({
-				title: "Request Failed",
+		if (!token) {
+			return toast.error("Request Failed", {
 				description: "Incomplete data provided",
-				duration: 3000,
 			});
+		}
 		const { data: responseData, error } = await callApi(
 			"/auth/password/reset",
 			{
@@ -65,16 +64,13 @@ const ResetPassword = () => {
 		);
 
 		if (error) {
-			return toast({
-				title: error.status as string,
+			toast.error(error.status, {
 				description: error.message,
 				duration: 3000,
 			});
 		} else {
-			toast({
-				title: "Success",
+			toast.success("Success", {
 				description: (responseData as { message: string }).message,
-				duration: 3000,
 			});
 			setTimeout(() => {
 				void router.push("/reset-password/success");
@@ -83,11 +79,11 @@ const ResetPassword = () => {
 	};
 
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Reset Password"
+			heading="Reset Password"
 			content="Reset your Password! Follow the instructions on this page to reset your password!"
-			formType="other"
-			withHeader={false}
+			withHeader
 			hasSuccess={false}
 		>
 			<form
@@ -100,7 +96,6 @@ const ResetPassword = () => {
 				className="flex flex-col"
 			>
 				<div className="space-y-6">
-					<h1 className="text-center text-2xl font-semibold">Reset Password</h1>
 					<div className="space-y-4">
 						<div className="space-y-1">
 							<label htmlFor="password" className="font-medium">
@@ -118,41 +113,12 @@ const ResetPassword = () => {
 								/>
 							</div>
 							{password.length > 0 && (
-								<div>
-									<ProgressBar
-										value={result * 25}
-										className={`${
-											result < 2
-												? "progress-filled:bg-red-500"
-												: result >= 2 && result <= 3
-												  ? "progress-filled:bg-yellow-500"
-												  : "progress-filled:bg-green-500"
-										}`}
-									/>
-									<p
-										className={`${
-											result <= 2
-												? "text-text-red"
-												: result >= 2 && result <= 3
-												  ? "text-yellow-500"
-												  : "text-green-500"
-										} text-sm`}
-									>
-										<span className="text-black">Password strength:</span>
-										&nbsp;
-										{result < 2
-											? "Weak"
-											: result >= 2 && result <= 3
-											  ? "Medium"
-											  : "Strong"}
-									</p>
-								</div>
+								<FormErrorMessage isForPasswordStrength result={result} />
 							)}
-							{errors.password && (
-								<div className="mt-2 text-sm text-abeg-teal">
-									<h1>{errors.password.message}</h1>
-								</div>
-							)}
+							<FormErrorMessage
+								error={errors}
+								errorMsg={errors.password?.message!}
+							/>
 						</div>
 
 						<div className="space-y-1">
@@ -170,11 +136,10 @@ const ResetPassword = () => {
 									type="password"
 								/>
 							</div>
-							{errors.confirmPassword && (
-								<div className="mt-2 text-sm text-abeg-teal">
-									<h1>{errors.confirmPassword.message}</h1>
-								</div>
-							)}
+							<FormErrorMessage
+								error={errors}
+								errorMsg={errors.confirmPassword?.message!}
+							/>
 						</div>
 					</div>
 				</div>
@@ -185,12 +150,12 @@ const ResetPassword = () => {
 				<Button
 					disabled={isSubmitting}
 					loading={isSubmitting}
-					className="text-md mt-6 bg-abeg-button-10 px-10 py-3 font-medium"
+					className="text-md bg-abeg-button-10 mt-6 px-10 py-3 font-medium"
 				>
 					Submit
 				</Button>
 			</form>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 export default ResetPassword;

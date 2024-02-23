@@ -1,6 +1,6 @@
 import { RecoveryCode } from "@/components/2fa";
 import { CustomDialog, OtpInputDisplay } from "@/components/common";
-import { Button, useToast } from "@/components/ui";
+import { Button } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { callApi } from "@/lib";
 
@@ -11,10 +11,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
+import { toast } from "sonner";
 
 const TwoFa = () => {
 	const router = useRouter();
-	const { toast } = useToast();
 	const [selectedOption, setSelectedOption] = useState("app");
 	const [step, setStep] = useState(1);
 	const [openModal, setOpenModal] = useState(false);
@@ -35,20 +35,16 @@ const TwoFa = () => {
 			});
 
 			if (data) {
-				toast({
-					title: "Success",
+				toast.success("Success", {
 					description: data.message,
-					duration: 3000,
 				});
 				setOpenModal(true);
 				setLoading(false);
 			}
 			if (error) {
 				setLoading(false);
-				toast({
-					title: "Error",
+				toast.error("Error", {
 					description: error.message,
-					duration: 3000,
 				});
 			}
 		}
@@ -59,8 +55,7 @@ const TwoFa = () => {
 		setLoading(true);
 		if (otp.length < 6) {
 			setLoading(false);
-			return toast({
-				title: "Error",
+			return toast.error("Error", {
 				description: "Please enter a valid code",
 				duration: 1500,
 			});
@@ -72,15 +67,13 @@ const TwoFa = () => {
 
 		if (error) {
 			setLoading(false);
-			return toast({
-				title: error.status as string,
+			toast.error(error.status, {
 				description: error.message,
 				duration: 3000,
 			});
 		} else {
 			setLoading(false);
-			toast({
-				title: "Success",
+			toast.success("Success", {
 				description: (data as { message: string }).message,
 				duration: 1500,
 			});
@@ -99,7 +92,7 @@ const TwoFa = () => {
 				alt=""
 				role="presentation"
 				priority
-				className="absolute inset-0 -z-[1] h-full w-full object-cover object-[75%]"
+				className="absolute inset-0 z-[-1] size-full object-cover object-[75%]"
 			/>
 			{step === 1 ? (
 				<>
@@ -107,7 +100,7 @@ const TwoFa = () => {
 						<h1 className="text-2xl font-semibold">
 							Set up two-factor authentication
 						</h1>
-						<p className="mt-6 text-text">
+						<p className="text-formLabel mt-6">
 							Add an extra layer of security to your account
 						</p>
 						<p className="mt-4">
@@ -134,7 +127,7 @@ const TwoFa = () => {
 												href={
 													"https://support.google.com/accounts/answer/1066447?hl=en&co=GENIE.Platform%3DiOS&oco=0"
 												}
-												className="font-medium text-abeg-green-50"
+												className="text-abeg-green-50 font-medium"
 											>
 												Google Authenticator
 											</Link>{" "}
@@ -148,7 +141,7 @@ const TwoFa = () => {
 											checked={selectedOption === "app"}
 											onChange={() => setSelectedOption("app")}
 											id="app"
-											className="ml-auto accent-abeg-teal"
+											className="ml-auto accent-abeg-primary"
 										/>
 									</div>
 								</label>
@@ -170,14 +163,14 @@ const TwoFa = () => {
 											checked={selectedOption === "email"}
 											onChange={() => setSelectedOption("email")}
 											id="email"
-											className="ml-auto accent-abeg-teal"
+											className="ml-auto accent-abeg-primary"
 										/>
 									</div>
 								</label>
 							</div>
 						</div>
 					</div>
-					<div className="border-t border-t-formBtn">
+					<div className="border-tabeg-primary border-t">
 						<div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
 							<CustomDialog
 								openDialog={openModal}
@@ -187,7 +180,7 @@ const TwoFa = () => {
 								}}
 								trigger={
 									<Button
-										className="w-fit bg-abeg-button-10 px-6 py-3 font-medium"
+										className="bg-abeg-button-10 w-fit px-6 py-3 font-medium"
 										onClick={(e) => void handleStep(e)}
 										loading={loading}
 									>
@@ -199,9 +192,7 @@ const TwoFa = () => {
 									otp={otp}
 									setOtp={setOtp}
 									topSection={
-										<>
-											<p className="">{`Enter the 6 digits code we sent to ${castedUser?.email}`}</p>
-										</>
+										<p>{`Enter the 6 digits code we sent to ${castedUser?.email}`}</p>
 									}
 									bottomSection={
 										<div className="mt-6 flex w-full flex-col gap-10">
@@ -211,7 +202,7 @@ const TwoFa = () => {
 													type="submit"
 													disabled={loading}
 													onClick={(e) => void handleStep(e)}
-													className="p-0 text-base font-medium text-abeg-teal disabled:text-neutral-50"
+													className="p-0 text-base font-medium text-abeg-primary disabled:text-neutral-50"
 												>
 													resend it
 												</Button>
@@ -219,7 +210,7 @@ const TwoFa = () => {
 											<Button
 												className={`${
 													otp === "" && "cursor-not-allowed"
-												} block w-full rounded-md bg-formBtn py-4 font-semibold text-white`}
+												} block w-full rounded-md bg-abeg-primary py-4 font-semibold text-white`}
 												fullWidth
 												type="submit"
 												onClick={(e) => otp !== "" && void handleSubmit(e)}

@@ -1,4 +1,4 @@
-import type { targetCountries } from "@/components/CreateCampaign/campaign-utils/constants";
+import type { targetCountries } from "@/lib/helpers/campaign/constants";
 
 export type StepOneData = {
 	categoryId: string;

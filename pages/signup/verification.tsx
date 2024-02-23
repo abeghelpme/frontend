@@ -1,80 +1,74 @@
-import { useToast } from "@/components/ui/use-toast";
-import { AuthLayout } from "@/layouts";
+import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const VerificationPage = () => {
 	const router = useRouter();
-	const { toast } = useToast();
-	const [queryParam, setQueryParam] = useState("");
+	const [queryParams, setQueryParams] = useState<null | Record<string, string>>(
+		null
+	);
 	useEffect(() => {
-		setQueryParam(router.query.email as string);
-		console.log(queryParam, router);
+		if (router) {
+			setQueryParams(router.query as Record<string, string>);
+		}
 	}, [router]);
 
 	const handleResendEmail = async () => {
-		if (!queryParam)
-			return toast({
-				title: "Request Failed",
-				description: "No email provided",
+		if (!queryParams?.endpoint || !queryParams?.email) {
+			return toast.error("Request Failed", {
+				description: "An error occurred! Please try again",
 			});
-		const { data, error } = await callApi("/auth/resend-verification", {
-			email: queryParam,
+		}
+
+		const { data, error } = await callApi(`/auth/${queryParams.endpoint}`, {
+			email: queryParams.email,
 		});
 
 		if (error) {
-			return toast({
-				title: error.status as string,
+			toast.error(error.status, {
 				description: error.message,
-				duration: 3000,
 			});
 		} else {
-			toast({
-				title: "Success",
+			toast.error("Success", {
 				description: (data as { message: string }).message,
-				duration: 3000,
 			});
 		}
 	};
 
 	return (
-		<AuthLayout
+		<AuthPagesLayout
 			title="Verify your email"
-			content="Verify your account to complete your registration process, check your email to complete this process!"
-			contentClass="md:w-[55%] lg:w-[50%] xl:w-[35%] 2xl:w-[30%]"
-			formType="signup"
-			withHeader={false}
+			heading={queryParams?.title}
+			greeting={`Please click the ${queryParams?.type} link sent to your email to proceed`}
+			content={queryParams?.title || "Verification"}
+			contentClass="md:w-[55%] max-w-wAuthFlow"
+			withHeader
 			hasSuccess={false}
 		>
-			<div className="space-y-2 text-center">
-				<h1 className="text-xl font-semibold text-abeg-neutral-10 md:text-2xl">
-					Email Verification
-				</h1>
-				<p className="">
-					Please check your email for the verification link sent to you. Click
-					the link to verify your email
-				</p>
-				<div className="!mt-6 flex flex-col gap-2">
-					<p className="text-center text-sm">
+			<div className="text-center">
+				<p className="mb-4" />
+				<div className="!mt-2 flex flex-col gap-2">
+					<p className="text-center text-sm md:text-base">
 						Didn&apos;t get the email?{" "}
 						<span
 							onClick={() => void handleResendEmail()}
-							className="text-abeg-teal cursor-pointer"
+							className="cursor-pointer text-abeg-primary underline"
 						>
 							Resend
 						</span>
 					</p>
 					<Link
 						href="/signin"
-						className="bg-abeg-teal py-4 text-white rounded-md mt-2"
+						className="mt-2 rounded-md bg-abeg-primary py-4 text-white"
 					>
 						Back to Sign in{" "}
 					</Link>
 				</div>
 			</div>
-		</AuthLayout>
+		</AuthPagesLayout>
 	);
 };
 
