@@ -1,6 +1,6 @@
 import { CloudFlareTurnStile } from "@/components/common";
 import FormErrorMessage from "@/components/common/FormErrorMessage";
-import { Button, Input, ProgressBar } from "@/components/ui";
+import { Button, Input } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import { AuthPagesLayout } from "@/layouts";
 import {
@@ -10,10 +10,11 @@ import {
 	zodValidator,
 } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
+import useWatchInput from "@/lib/hooks/useWatchInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDeferredValue, useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -27,34 +28,33 @@ const SignUp = () => {
 		error: undefined,
 		data: undefined,
 	});
-
+	const passwordRef = useRef<HTMLInputElement | null>(null!);
 	const router = useRouter();
 
 	const {
 		register,
 		handleSubmit,
 		reset,
+		control,
 		formState: { errors, isSubmitting },
-		watch,
 	} = useForm<SignUpType>({
 		resolver: zodResolver(zodValidator("signup")!),
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
-
-	const password = watch("password", "");
-
+	const password = useWatchInput({ control, inputType: "password" });
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
+	const genStrength = async () => {
+		const passwordStrength = await checkPasswordStrength(
+			deferredPassword as string
+		);
+		setResult(passwordStrength);
+	};
 	useEffect(() => {
-		const genStrength = async () => {
-			const passwordStrength = await checkPasswordStrength(deferredPassword);
-			setResult(passwordStrength);
-		};
 		genStrength().catch((e) => {
 			console.log(e);
 		});
-
 		return () => redirectTimeOut && clearTimeout(redirectTimeOut);
 	}, [deferredPassword]);
 
@@ -74,12 +74,6 @@ const SignUp = () => {
 		if (error) {
 			const castedError = error as ApiResponse;
 			setMessage(castedError);
-			// window.scrollTo({
-			// 	top: 0,
-			// 	left: 0,
-			// 	behavior: 'smooth'
-			// });
-
 			toast(castedError.status, {
 				description: castedError.message,
 				duration: 2000,
@@ -103,7 +97,7 @@ const SignUp = () => {
 	return (
 		<AuthPagesLayout
 			title="Create an Account!"
-			content="Create an Abeg Help account to start your crowdfunding!"
+			content="Create an Abeg Help account to start crowdfunding!"
 			heading="Welcome!"
 			greeting="Create your account"
 			contentClass="md:w-[85%] md:max-w-wSignUpForm"
@@ -207,32 +201,8 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.password}
 						/>
-						{password.length > 0 && (
-							<div>
-								<ProgressBar
-									value={result * 25}
-									className={`${
-										result < 2
-											? "progress-filled:bg-red-500"
-											: result === 2
-											  ? "progress-filled:bg-yellow-500"
-											  : "progress-filled:bg-green-500"
-									}`}
-								/>
-								<p
-									className={`${
-										result < 2
-											? "text-text-red"
-											: result === 2
-											  ? "text-yellow-500"
-											  : "text-green-500"
-									} text-sm`}
-								>
-									<span className="text-black">Password strength:</span>
-									&nbsp;
-									{result < 2 ? "Weak" : result === 2 ? "Medium" : "Strong"}
-								</p>
-							</div>
+						{(password as string).length > 0 && (
+							<FormErrorMessage isForPasswordStrength result={result} />
 						)}
 						<FormErrorMessage
 							errorMsg={errors.password?.message!}
@@ -289,7 +259,7 @@ const SignUp = () => {
 					onStatusChange={handleBotStatus}
 					ref={cfTurnStile}
 				/>
-				<div className="flex flex-col items-center space-y-6">
+				<div className="flex flex-col items-center space-y-6 text-sm md:text-base">
 					<Button
 						disabled={isSubmitting}
 						className=""
