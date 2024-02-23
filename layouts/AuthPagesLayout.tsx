@@ -12,7 +12,7 @@ export const AuthPagesLayout = ({
 	hasSuccess,
 }: AuthLayoutProps) => {
 	return (
-		<main className="h-full bg-authBg  bg-cover bg-no-repeat flex min-h-svh justify-center relative items-center py-14 before:bg-black/25 before:absolute before:w-full before:h-full ">
+		<main className="h-full bg-authBg bg-cover bg-no-repeat flex min-h-svh justify-center relative items-center py-14 before:bg-black/25 before:absolute before:w-full before:h-full ">
 			<PageMetaData title={title} content={content} />
 			{!hasSuccess ? (
 				<div
