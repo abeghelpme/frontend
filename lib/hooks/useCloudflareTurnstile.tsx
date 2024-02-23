@@ -1,9 +1,8 @@
-import { useToast } from "@/components/ui";
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
 
 const useCloudflareTurnstile = () => {
-	const { toast } = useToast();
 	const [botStatus, setBotStatus] = useState<"success" | "error" | "idle">(
 		"idle"
 	);
@@ -14,10 +13,8 @@ const useCloudflareTurnstile = () => {
 
 	const checkBotStatus = () => {
 		if (botStatus !== "success") {
-			toast({
-				title: "Error",
+			toast.error("Error", {
 				description: "Please complete the bot verification",
-				duration: 3000,
 			});
 			return;
 		}

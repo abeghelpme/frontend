@@ -1,13 +1,12 @@
-import { useToast } from "@/components/ui/use-toast";
 import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const VerificationPage = () => {
 	const router = useRouter();
-	const { toast } = useToast();
 	const [queryParams, setQueryParams] = useState<null | Record<string, string>>(
 		null
 	);
@@ -19,8 +18,7 @@ const VerificationPage = () => {
 
 	const handleResendEmail = async () => {
 		if (!queryParams?.endpoint || !queryParams?.email) {
-			return toast({
-				title: "Request Failed",
+			return toast.error("Request Failed", {
 				description: "An error occurred! Please try again",
 			});
 		}
@@ -30,16 +28,12 @@ const VerificationPage = () => {
 		});
 
 		if (error) {
-			return toast({
-				title: error.status as string,
+			toast.error(error.status, {
 				description: error.message,
-				duration: 3000,
 			});
 		} else {
-			toast({
-				title: "Success",
+			toast.error("Success", {
 				description: (data as { message: string }).message,
-				duration: 3000,
 			});
 		}
 	};
@@ -55,20 +49,20 @@ const VerificationPage = () => {
 			hasSuccess={false}
 		>
 			<div className="text-center">
-				<p className="mb-4"></p>
+				<p className="mb-4" />
 				<div className="!mt-2 flex flex-col gap-2">
 					<p className="text-center text-sm md:text-base">
 						Didn&apos;t get the email?{" "}
 						<span
 							onClick={() => void handleResendEmail()}
-							className="text-abeg-primary cursor-pointer underline"
+							className="cursor-pointer text-abeg-primary underline"
 						>
 							Resend
 						</span>
 					</p>
 					<Link
 						href="/signin"
-						className="bg-abeg-primary py-4 text-white rounded-md mt-2"
+						className="mt-2 rounded-md bg-abeg-primary py-4 text-white"
 					>
 						Back to Sign in{" "}
 					</Link>

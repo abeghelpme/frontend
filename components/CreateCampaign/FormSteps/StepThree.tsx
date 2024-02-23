@@ -44,12 +44,8 @@ function StepThree() {
 
 		formData.set("story", data.story);
 		formData.set("storyHtml", data.storyHtml);
-
-		data.photos.forEach((imageFile) => {
-			formData.append("photos", imageFile);
-		});
-
 		formData.set("campaignId", campaignId);
+		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
 		const { data: dataInfo, error } = await callApi(
 			`/campaign/create/three`,
