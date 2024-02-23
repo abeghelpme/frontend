@@ -14,7 +14,7 @@ import useWatchInput from "@/lib/hooks/useWatchInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDeferredValue, useEffect, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -46,9 +46,7 @@ const SignUp = () => {
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
 	const genStrength = async () => {
-		const passwordStrength = await checkPasswordStrength(
-			deferredPassword
-		);
+		const passwordStrength = await checkPasswordStrength(deferredPassword);
 		setResult(passwordStrength);
 	};
 	useEffect(() => {
@@ -202,7 +200,7 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.password}
 						/>
-						{(password).length > 0 && (
+						{password.length > 0 && (
 							<FormErrorMessage isForPasswordStrength result={result} />
 						)}
 						<FormErrorMessage
