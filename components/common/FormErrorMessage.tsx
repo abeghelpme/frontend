@@ -48,7 +48,12 @@ const FormErrorMessage = memo(
 					</p>
 				</div>
 			);
-		} else return error && <p className="text-abeg-primary">{errorMsg}</p>;
+		} else
+			return (
+				error && (
+					<p className="text-abeg-error-20 text-xs md:text-base">{errorMsg}</p>
+				)
+			);
 	}
 );
 

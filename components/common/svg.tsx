@@ -237,3 +237,46 @@ export const CameroonFlag = () => (
 		</g>
 	</svg>
 );
+
+export const CheckedIcon = () => (
+	<svg
+		width="24"
+		height="24"
+		viewBox="0 0 24 25"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path
+			d="M9 22.5015H15C20 22.5015 22 20.5015 22 15.5015V9.50146C22 4.50146 20 2.50146 15 2.50146H9C4 2.50146 2 4.50146 2 9.50146V15.5015C2 20.5015 4 22.5015 9 22.5015Z"
+			stroke="#008080"
+			stroke-width="1.5"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+		<path
+			d="M7.75 12.5014L10.58 15.3314L16.25 9.67139"
+			stroke="#008080"
+			stroke-width="1.5"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+	</svg>
+);
+
+export const UncheckedIcon = () => (
+	<svg
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path
+			d="M9.3 21H14.7C19.2 21 21 19.2 21 14.7V9.3C21 4.8 19.2 3 14.7 3H9.3C4.8 3 3 4.8 3 9.3V14.7C3 19.2 4.8 21 9.3 21Z"
+			stroke="#008080"
+			stroke-width="1.5"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+	</svg>
+);

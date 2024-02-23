@@ -46,9 +46,15 @@ const ForgotPasswordPage = () => {
 				duration: 3000,
 			});
 			reset();
-			setTimeout(() => {
-				void router.push("/signin");
-			}, 2000);
+			void router.push({
+				pathname: "/signup/verification",
+				query: {
+					title: "Check your email",
+					email: data.email.toLowerCase(),
+					type: "password reset",
+					endpoint: "auth/password/forgot",
+				},
+			});
 		}
 	};
 
@@ -100,7 +106,7 @@ const ForgotPasswordPage = () => {
 					<Button
 						disabled={isSubmitting}
 						loading={isSubmitting}
-						className="md:text-lg"
+						className=""
 						variant="primary"
 					>
 						Submit
