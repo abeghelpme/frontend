@@ -1,5 +1,4 @@
-import { CloudFlareTurnStile } from "@/components/common";
-import FormErrorMessage from "@/components/common/FormErrorMessage";
+import { CloudFlareTurnStile, FormErrorMessage } from "@/components/common";
 import { Button, Input } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import { AuthPagesLayout } from "@/layouts";
@@ -230,12 +229,12 @@ const SignUp = () => {
 						/>
 					</div>
 				</div>
-				<div className="flex flex-col">
+				<div className="flex flex-col justify-center">
 					<div className="flex w-full gap-2">
 						<Input
 							type="checkbox"
 							id="terms"
-							className="mt-1 h-[1.125rem] w-4 accent-abeg-primary md:w-5"
+							className="md:h-6 md:w-6 bg-transparent rounded-lg"
 							{...register("terms")}
 						/>
 						<label htmlFor="terms" className="text-sm md:text-base">
@@ -269,7 +268,7 @@ const SignUp = () => {
 					>
 						Sign up
 					</Button>
-					<p className="text-center text-sm">
+					<p className="text-center text-sm md:text-base">
 						Already have an account?&nbsp;
 						<Link
 							href="/signin"

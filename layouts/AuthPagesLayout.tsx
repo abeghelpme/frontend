@@ -24,7 +24,7 @@ export const AuthPagesLayout = ({
 					<LogoBanner />
 					{withHeader && (
 						<div className="space-y-2 text-center">
-							<h1 className="font-semibold md:text-2xl">{heading}</h1>
+							<h1 className="md:text-2xl">{heading}</h1>
 							<p className="text-sm md:text-lg">{greeting}</p>
 						</div>
 					)}

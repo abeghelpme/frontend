@@ -1,6 +1,5 @@
-import { CloudFlareTurnStile } from "@/components/common";
-import FormErrorMessage from "@/components/common/FormErrorMessage";
-import { Button, Input, ProgressBar, useToast } from "@/components/ui";
+import { CloudFlareTurnStile, FormErrorMessage } from "@/components/common";
+import { Button, Input, useToast } from "@/components/ui";
 import { AuthPagesLayout } from "@/layouts";
 import {
 	type ResetPasswordType,

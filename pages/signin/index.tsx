@@ -1,5 +1,8 @@
-import { CloudFlareTurnStile, CustomDialog } from "@/components/common";
-import FormErrorMessage from "@/components/common/FormErrorMessage";
+import {
+	CloudFlareTurnStile,
+	CustomDialog,
+	FormErrorMessage,
+} from "@/components/common";
 import { Button, Input } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthPagesLayout } from "@/layouts";
