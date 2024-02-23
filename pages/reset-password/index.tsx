@@ -25,16 +25,17 @@ const ResetPassword = () => {
 	}, [router]);
 	const {
 		handleSubmit,
+		control,
 		register,
-		formState: { errors, isSubmitting },
 		watch,
+		formState: { errors, isSubmitting },
 	} = useForm<ResetPasswordType>({
 		resolver: zodResolver(zodValidator("resetPassword")!),
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
 
-	const password: string = watch("password", "");
+	const password = watch("password", "");
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
 

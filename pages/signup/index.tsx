@@ -14,7 +14,7 @@ import useWatchInput from "@/lib/hooks/useWatchInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDeferredValue, useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -34,7 +34,6 @@ const SignUp = () => {
 		handleSubmit,
 		reset,
 		control,
-		watch,
 		formState: { errors, isSubmitting },
 	} = useForm<SignUpType>({
 		resolver: zodResolver(zodValidator("signup")!),
@@ -43,12 +42,12 @@ const SignUp = () => {
 	});
 
 	const isChecked = useWatchInput({ control, inputType: "terms" });
-	const password = useWatchInput({ control, inputType: "password" });
+	const password = useWatchInput({ control, inputType: "password" }) as string;
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
 	const genStrength = async () => {
 		const passwordStrength = await checkPasswordStrength(
-			deferredPassword as string
+			deferredPassword
 		);
 		setResult(passwordStrength);
 	};
@@ -203,7 +202,7 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.password}
 						/>
-						{(password as string).length > 0 && (
+						{(password).length > 0 && (
 							<FormErrorMessage isForPasswordStrength result={result} />
 						)}
 						<FormErrorMessage
@@ -263,7 +262,7 @@ const SignUp = () => {
 					onStatusChange={handleBotStatus}
 					ref={cfTurnStile}
 				/>
-				<div className="flex flex-col items-center space-y-6">
+				<div className="flex flex-col items-center space-y-6 text-sm md:text-base">
 					<Button
 						disabled={isSubmitting}
 						className=""
