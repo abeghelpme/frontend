@@ -4,7 +4,7 @@ import {
 	StepThree,
 	StepTracker,
 	StepTwo,
-} from "@/components/CreateCampaign";
+} from "@/components/create-campaign";
 import { cn } from "@/lib";
 import { STEP_DATA_KEY_LOOKUP, useFormStore } from "@/store/formStore";
 import { useEffect } from "react";
@@ -60,25 +60,25 @@ function CreateCampaignPage() {
 					/>
 
 					{currentStep === 3 && (
-						<FormActionButton
-							type="submit"
-							text="Preview Campaign"
-							variant="secondary"
-							className={
-								"borderabeg-primary font-bold text-abeg-primary max-lg:hidden"
-							}
-							targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
-							isLoading={formStatus.isSubmitting}
-							disabled={formStatus.isSubmitting}
-						/>
-					)}
+						<>
+							<FormActionButton
+								type="submit"
+								text="Preview Campaign"
+								variant="secondary"
+								className={
+									"borderabeg-primary font-bold text-abeg-primary max-lg:hidden"
+								}
+								targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+								isLoading={formStatus.isSubmitting}
+								disabled={formStatus.isSubmitting}
+							/>
 
-					{currentStep === 3 && (
-						<FormActionButton
-							type="button"
-							text="Publish Campaign"
-							className="bg-abeg-primary max-lg:hidden"
-						/>
+							<FormActionButton
+								type="button" // TODO - Replace with action for publishing campaigns
+								text="Publish Campaign"
+								className="bg-abeg-primary max-lg:hidden"
+							/>
+						</>
 					)}
 				</div>
 			</footer>

@@ -1,4 +1,4 @@
-import { FormActionButton, Heading } from "@/components/CreateCampaign";
+import { FormActionButton, Heading } from "@/components/create-campaign";
 import { Button } from "@/components/ui";
 import { getDateFromString } from "@/lib/helpers/campaign";
 import { useElementList } from "@/lib/hooks";
