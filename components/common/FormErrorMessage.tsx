@@ -16,7 +16,6 @@ const FormErrorMessage = memo(
 		isForPasswordStrength,
 		result,
 	}: FormErrorMessageProps) => {
-		// console.log('rerender');
 		if (isForPasswordStrength && result) {
 			return (
 				<div>
