@@ -58,7 +58,7 @@ const VerificationPage = () => {
 					</p>
 				</div>
 				<div className="!mt-2 flex flex-col gap-2">
-					<p className="text-center text-sm">
+					<p className="text-center text-sm md:text-base">
 						Didn&apos;t get the email?{" "}
 						<span
 							onClick={() => void handleResendEmail()}

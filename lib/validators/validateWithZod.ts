@@ -14,8 +14,11 @@ const options = {
 		...zxcvbnCommonPackage.dictionary,
 		...zxcvbnEnPackage.dictionary,
 	},
+	translations: {
+		...zxcvbnEnPackage.translations,
+	},
 	graphs: zxcvbnCommonPackage.adjacencyGraphs,
-	useLevenshteinDistance: true,
+	// useLevenshteinDistance: true
 };
 zxcvbnOptions.setOptions(options);
 
@@ -38,15 +41,18 @@ const signUpSchema: z.ZodType<SignUpProps> = z
 			.min(2, { message: "First Name is required" })
 			.max(50, { message: "First Name must be less than 50 characters" })
 			.transform((value) => {
-				return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+				return (
+					value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+				).trim();
 			}),
 		lastName: z
 			.string()
 			.min(2, { message: "Last Name is required" })
 			.max(50, { message: "Last Name must be less than 50 characters" })
 			.transform((value) => {
-				// With this we don't have to force the user to type in sentence case we do the transformation implicitly since name is not something sensitive we don't have to force the user to type in a particular case which seems inconvenient to me before
-				return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+				return (
+					value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+				).trim();
 			}),
 		email: z
 			.string()
@@ -54,6 +60,9 @@ const signUpSchema: z.ZodType<SignUpProps> = z
 			.email({ message: "Invalid email address" })
 			.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
 				message: "Enter a valid email",
+			})
+			.transform((value) => {
+				return value.toLowerCase().trim();
 			}),
 		terms: z.boolean().refine((value) => value === true, {
 			message: "Please accept the terms before proceeding",
@@ -61,6 +70,13 @@ const signUpSchema: z.ZodType<SignUpProps> = z
 		password: z
 			.string()
 			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
 			.max(50)
 			.transform((value, ctx) => {
 				const options = {
@@ -72,23 +88,28 @@ const signUpSchema: z.ZodType<SignUpProps> = z
 						...zxcvbnEnPackage.translations,
 					},
 					graphs: zxcvbnCommonPackage.adjacencyGraphs,
-					useLevenshteinDistance: true,
+					// useLevenshteinDistance: true
 				};
 				zxcvbnOptions.setOptions(options);
 				const testedResult = zxcvbn(value);
 
 				if (testedResult.score < 3) {
-					testedResult.feedback.suggestions.map((issue) =>
+					testedResult.feedback.suggestions.map((issue) => {
 						ctx.addIssue({
 							code: z.ZodIssueCode.custom,
 							message: issue,
-						})
-					);
+						});
+					});
 				}
 
-				return value;
+				return value.trim();
 			}),
-		confirmPassword: z.string().min(6, { message: "Passwords must match" }),
+		confirmPassword: z
+			.string()
+			.min(6, { message: "Passwords must match" })
+			.transform((value) => {
+				return value.trim();
+			}),
 	})
 	.refine((data) => data.password === data.confirmPassword, {
 		message: "Passwords do not match",
@@ -103,11 +124,17 @@ const loginSchema: z.ZodType<LoginProps> = z.object({
 		.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
 			message: "Enter a valid email",
 		})
-		.email({ message: "Invalid email address" }),
+		.email({ message: "Invalid email address" })
+		.transform((value) => {
+			return value.toLowerCase().trim();
+		}),
 	password: z
 		.string()
 		.min(6, { message: "Password must be at least 6 characters" })
-		.max(50),
+		.max(50)
+		.transform((value) => {
+			return value.trim();
+		}),
 });
 
 const forgotPasswordSchema: z.ZodType<ForgotPasswordProps> = z.object({
@@ -117,7 +144,10 @@ const forgotPasswordSchema: z.ZodType<ForgotPasswordProps> = z.object({
 		.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
 			message: "Enter a valid email",
 		})
-		.email({ message: "Invalid email address" }),
+		.email({ message: "Invalid email address" })
+		.transform((value) => {
+			return value.toLocaleLowerCase().trim();
+		}),
 });
 
 const resetPasswordSchema: z.ZodType<ResetPasswordProps> = z.object({
@@ -131,7 +161,33 @@ const resetPasswordSchema: z.ZodType<ResetPasswordProps> = z.object({
 					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
 			}
 		)
-		.max(50),
+		.max(50)
+		.transform((value, ctx) => {
+			const options = {
+				dictionary: {
+					...zxcvbnCommonPackage.dictionary,
+					...zxcvbnEnPackage.dictionary,
+				},
+				translations: {
+					...zxcvbnEnPackage.translations,
+				},
+				graphs: zxcvbnCommonPackage.adjacencyGraphs,
+				// useLevenshteinDistance: true
+			};
+			zxcvbnOptions.setOptions(options);
+			const testedResult = zxcvbn(value);
+
+			if (testedResult.score < 3) {
+				testedResult.feedback.suggestions.map((issue) => {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: issue,
+					});
+				});
+			}
+
+			return value.trim();
+		}),
 	confirmPassword: z
 		.string()
 		.min(6, { message: "Password must be at least 6 characters" })
@@ -142,7 +198,10 @@ const resetPasswordSchema: z.ZodType<ResetPasswordProps> = z.object({
 					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
 			}
 		)
-		.max(50),
+		.max(50)
+		.transform((value) => {
+			return value.trim();
+		}),
 });
 
 const campaignStepOneSchema = z.object({

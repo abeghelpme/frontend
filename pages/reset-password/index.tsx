@@ -1,6 +1,6 @@
 import { CloudFlareTurnStile } from "@/components/common";
 import FormErrorMessage from "@/components/common/FormErrorMessage";
-import { Button, Input, ProgressBar, useToast } from "@/components/ui";
+import { Button, Input, useToast } from "@/components/ui";
 import { AuthPagesLayout } from "@/layouts";
 import {
 	type ResetPasswordType,
@@ -26,16 +26,17 @@ const ResetPassword = () => {
 	}, [router]);
 	const {
 		handleSubmit,
+		control,
 		register,
-		formState: { errors, isSubmitting },
 		watch,
+		formState: { errors, isSubmitting },
 	} = useForm<ResetPasswordType>({
 		resolver: zodResolver(zodValidator("resetPassword")!),
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
 
-	const password: string = watch("password", "");
+	const password = watch("password", "");
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
 

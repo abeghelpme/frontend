@@ -30,7 +30,7 @@ const ForgotPasswordPage = () => {
 		const { data: responseData, error } = await callApi(
 			"/auth/password/forgot",
 			{
-				email: data.email,
+				email: data.email.trim(),
 			}
 		);
 

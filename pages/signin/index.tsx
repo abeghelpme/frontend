@@ -48,6 +48,7 @@ const Login = () => {
 	};
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
+		console.log(data);
 		const { data: responseData, error } = await callApi<ApiResponse<User>>(
 			"/auth/signin",
 			{
@@ -150,12 +151,14 @@ const Login = () => {
 						errorMsg={errors.password?.message!}
 					/>
 				</div>
-				<Link
-					href="/forgot-password"
-					className="text-abeg-primary inline-flex mb-4 w-full mt-2 justify-end text-sm font-semibold hover:underline md:text-base"
-				>
-					Forgot Password?
-				</Link>
+				<div className="flex mb-4 mt-2 justify-end ">
+					<Link
+						href="/forgot-password"
+						className="text-abeg-primary text-sm font-semibold hover:underline md:text-base"
+					>
+						Forgot Password?
+					</Link>
+				</div>
 
 				<CloudFlareTurnStile
 					ref={cfTurnStile}

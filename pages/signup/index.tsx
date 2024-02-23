@@ -42,13 +42,11 @@ const SignUp = () => {
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
-	const password = useWatchInput({ control, inputType: "password" });
+	const password = useWatchInput({ control, inputType: "password" }) as string;
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
 	const genStrength = async () => {
-		const passwordStrength = await checkPasswordStrength(
-			deferredPassword as string
-		);
+		const passwordStrength = await checkPasswordStrength(deferredPassword);
 		setResult(passwordStrength);
 	};
 	useEffect(() => {
@@ -201,7 +199,7 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.password}
 						/>
-						{(password as string).length > 0 && (
+						{password.length > 0 && (
 							<FormErrorMessage isForPasswordStrength result={result} />
 						)}
 						<FormErrorMessage
