@@ -1,4 +1,4 @@
-import {FormErrorMessage,CloudflareTurnstile} from "@/components/common";
+import {FormErrorMessage,CloudFlareTurnStile } from "@/components/common";
 import { Button, Input } from "@/components/ui";
 import { AuthPagesLayout } from "@/layouts";
 import { type ForgotPasswordType, callApi, zodValidator } from "@/lib";
