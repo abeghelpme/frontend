@@ -4,7 +4,7 @@ import {
 	StepThree,
 	StepTracker,
 	StepTwo,
-} from "@/components/CreateCampaign";
+} from "@/components/create-campaign";
 import { cn } from "@/lib";
 import { STEP_DATA_KEY_LOOKUP, useFormStore } from "@/store/formStore";
 import { useEffect } from "react";
@@ -32,7 +32,7 @@ function CreateCampaignPage() {
 
 	return (
 		<div className="flex min-h-screen flex-col justify-between max-lg:items-center">
-			<main className="gap-@3.2 px-@2.4 pb-@5.5 pt-@3.2 lg:gap-@7 lg:px-@10 lg:pb-@10 lg:pt-@4.8 flex w-full shrink-0 flex-col bg-contours-old bg-cover max-lg:max-w-[30rem] lg:flex-row lg:items-start">
+			<main className="gap-@3.2 px-@2.4 pb-@5.5 pt-@3.2 lg:gap-@7 lg:px-@10 lg:pb-@10 lg:pt-@4.8 bg-contours-old flex w-full shrink-0 flex-col bg-cover max-lg:max-w-[30rem] lg:flex-row lg:items-start">
 				<section className="gap-@1.2 lg:mt-@1.9 flex shrink-0">
 					<StepTracker />
 				</section>
@@ -40,7 +40,7 @@ function CreateCampaignPage() {
 				{STEP_COMPONENT_LOOKUP[currentStep]}
 			</main>
 
-			<footer className="border-t-abeg-primary px-@2.4 py-@1.6 lg:px-@10 flex w-full items-center justify-between border-t lg:py-[1.65625rem]">
+			<footer className="px-@2.4 py-@1.6 lg:px-@10 flex w-full items-center justify-between border-t border-t-abeg-primary lg:py-[1.65625rem]">
 				<FormActionButton
 					type="button"
 					text="Go Back"
@@ -60,25 +60,25 @@ function CreateCampaignPage() {
 					/>
 
 					{currentStep === 3 && (
-						<FormActionButton
-							type="submit"
-							text="Preview Campaign"
-							variant="secondary"
-							className={
-								"borderabeg-primary textabeg-primary font-bold max-lg:hidden"
-							}
-							targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
-							isLoading={formStatus.isSubmitting}
-							disabled={formStatus.isSubmitting}
-						/>
-					)}
+						<>
+							<FormActionButton
+								type="submit"
+								text="Preview Campaign"
+								variant="secondary"
+								className={
+									"borderabeg-primary font-bold text-abeg-primary max-lg:hidden"
+								}
+								targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+								isLoading={formStatus.isSubmitting}
+								disabled={formStatus.isSubmitting}
+							/>
 
-					{currentStep === 3 && (
-						<FormActionButton
-							type="button"
-							text="Publish Campaign"
-							className="bg-abeg-primary max-lg:hidden"
-						/>
+							<FormActionButton
+								type="button" // TODO - Replace with action for publishing campaigns
+								text="Publish Campaign"
+								className="bg-abeg-primary max-lg:hidden"
+							/>
+						</>
 					)}
 				</div>
 			</footer>

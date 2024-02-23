@@ -11,7 +11,8 @@ type MergePropsWithAsProp<
 	TProps,
 > = AsProp<TElement> & TProps;
 
-type OtherValidProps<TElement extends React.ElementType, TProps> = Omit<
+// Get all other primitive element props by Omit the result of MergedProps from React.ComponentPropsWithoutRef
+type GetOtherPrimitiveProps<TElement extends React.ElementType, TProps> = Omit<
 	React.ComponentPropsWithoutRef<TElement>,
 	keyof MergePropsWithAsProp<TElement, TProps>
 >;
@@ -19,8 +20,10 @@ type OtherValidProps<TElement extends React.ElementType, TProps> = Omit<
 export type PolymorphicProps<
 	TElement extends React.ElementType,
 	TProps extends Record<string, unknown> = AsProp<TElement>,
-> = MergePropsWithAsProp<TElement, TProps> & OtherValidProps<TElement, TProps>;
+> = MergePropsWithAsProp<TElement, TProps> &
+	GetOtherPrimitiveProps<TElement, TProps>;
 
+// For Components with Ref Prop
 export type PolymorphicPropsWithRef<
 	TElement extends React.ElementType,
 	TProps extends Record<string, unknown> = AsProp<TElement>,

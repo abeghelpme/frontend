@@ -60,7 +60,7 @@ function ImagePreview(props: ImagePreviewProps) {
 								/>
 
 								{isCoverImage && (
-									<span className="textabeg-primary absolute left-[50%] top-0.5 block translate-x-[-50%] text-xs font-bold">
+									<span className="absolute left-[50%] top-0.5 block translate-x-[-50%] text-xs font-bold text-abeg-primary">
 										*Cover image
 									</span>
 								)}

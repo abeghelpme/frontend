@@ -1,5 +1,5 @@
-import { CloudFlareTurnStile } from "@/components/common";
-import FormErrorMessage from "@/components/common/FormErrorMessage";
+import { CloudFlareTurnStile, FormErrorMessage } from "@/components/common";
+import { CheckedIcon, UncheckedIcon } from "@/components/common/svg";
 import { Button, Input } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import { AuthPagesLayout } from "@/layouts";
@@ -18,7 +18,6 @@ import { useDeferredValue, useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-let redirectTimeOut: NodeJS.Timeout;
 const SignUp = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
@@ -28,7 +27,6 @@ const SignUp = () => {
 		error: undefined,
 		data: undefined,
 	});
-	const passwordRef = useRef<HTMLInputElement | null>(null!);
 	const router = useRouter();
 
 	const {
@@ -42,18 +40,21 @@ const SignUp = () => {
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
+
+	const isChecked = useWatchInput({ control, inputType: "terms" });
 	const password = useWatchInput({ control, inputType: "password" }) as string;
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
 	const genStrength = async () => {
-		const passwordStrength = await checkPasswordStrength(deferredPassword);
+		const passwordStrength = await checkPasswordStrength(
+			deferredPassword
+		);
 		setResult(passwordStrength);
 	};
 	useEffect(() => {
 		genStrength().catch((e) => {
 			console.log(e);
 		});
-		return () => redirectTimeOut && clearTimeout(redirectTimeOut);
 	}, [deferredPassword]);
 
 	const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
@@ -72,23 +73,26 @@ const SignUp = () => {
 		if (error) {
 			const castedError = error as ApiResponse;
 			setMessage(castedError);
-			toast(castedError.status, {
+			toast.error(castedError.status, {
 				description: castedError.message,
 				duration: 2000,
 			});
 			return;
 		} else {
-			toast("Success", {
+			toast.success("Success", {
 				description: responseData?.message,
 				duration: 2000,
 			});
 			reset();
-			redirectTimeOut = setTimeout(() => {
-				void router.push({
-					pathname: "/signup/verification",
-					query: { signup: true, email: data.email.toLowerCase() },
-				});
-			}, 1500);
+			void router.push({
+				pathname: "/signup/verification",
+				query: {
+					title: "Email Verification",
+					email: data.email.toLowerCase(),
+					type: "verification",
+					endpoint: "resend-verification",
+				},
+			});
 		}
 	};
 
@@ -96,8 +100,7 @@ const SignUp = () => {
 		<AuthPagesLayout
 			title="Create an Account!"
 			content="Create an Abeg Help account to start crowdfunding!"
-			heading="Welcome!"
-			greeting="Create your account"
+			heading="Create your account!"
 			contentClass="md:w-[85%] md:max-w-wSignUpForm"
 			withHeader
 			hasSuccess={false}
@@ -132,7 +135,7 @@ const SignUp = () => {
 				)}
 				<div className="space-y-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
 					<div className="space-y-1">
-						<label htmlFor="firstName" className="lg:text-lg font-medium">
+						<label htmlFor="firstName" className="font-medium lg:text-lg">
 							First Name
 						</label>
 						<Input
@@ -150,7 +153,7 @@ const SignUp = () => {
 						/>
 					</div>
 					<div className="space-y-1">
-						<label htmlFor="lastName" className="lg:text-lg font-medium">
+						<label htmlFor="lastName" className="font-medium lg:text-lg">
 							Last Name
 						</label>
 						<Input
@@ -169,7 +172,7 @@ const SignUp = () => {
 				</div>
 
 				<div className="space-y-1">
-					<label htmlFor="email" className="lg:text-lg font-medium">
+					<label htmlFor="email" className="font-medium lg:text-lg">
 						Email
 					</label>
 					<Input
@@ -188,7 +191,7 @@ const SignUp = () => {
 
 				<div className="space-y-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:gap-6">
 					<div className="space-y-1">
-						<label htmlFor="password" className="mb-1 lg:text-lg font-medium">
+						<label htmlFor="password" className="mb-1 font-medium lg:text-lg">
 							Password
 						</label>
 						<Input
@@ -199,7 +202,7 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.password}
 						/>
-						{password.length > 0 && (
+						{(password).length > 0 && (
 							<FormErrorMessage isForPasswordStrength result={result} />
 						)}
 						<FormErrorMessage
@@ -210,7 +213,7 @@ const SignUp = () => {
 					<div className="space-y-1">
 						<label
 							htmlFor="confirmPassword"
-							className="mb-1 lg:text-lg font-medium"
+							className="mb-1 font-medium lg:text-lg"
 						>
 							Confirm Password
 						</label>
@@ -228,25 +231,27 @@ const SignUp = () => {
 						/>
 					</div>
 				</div>
-				<div className="flex flex-col">
-					<div className="flex w-full gap-2">
+				<div className="flex flex-col justify-center">
+					<div className="flex w-full gap-1">
+						<label htmlFor="terms">
+							{isChecked ? <CheckedIcon /> : <UncheckedIcon />}
+						</label>
 						<Input
 							type="checkbox"
 							id="terms"
-							className="mt-1 h-[1.125rem] w-4 accent-abeg-primary md:w-5"
+							className="hidden rounded-lg md:h-6 md:w-6"
 							{...register("terms")}
 						/>
-						<label htmlFor="terms" className="text-sm md:text-base">
+						<p className="text-sm md:text-base">
 							I agree to AbegHelp.me&apos;s{" "}
 							<Link href="" className="text-abeg-primary">
 								terms of service
 							</Link>{" "}
 							and{" "}
 							<Link href="" className="text-abeg-primary">
-								privacy notice
+								privacy notice.
 							</Link>
-							.
-						</label>
+						</p>
 					</div>
 					<FormErrorMessage
 						errorMsg={errors.terms?.message!}
@@ -267,7 +272,7 @@ const SignUp = () => {
 					>
 						Sign up
 					</Button>
-					<p className="text-center text-sm">
+					<p className="text-center text-sm md:text-base">
 						Already have an account?&nbsp;
 						<Link
 							href="/signin"

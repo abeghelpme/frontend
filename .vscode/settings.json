@@ -1,5 +1,14 @@
 {
-	"cSpell.words": ["Abeg", "clsx", "signin", "signup", "zxcvbn"],
+	"cSpell.words": [
+		"Abeg",
+		"clsx",
+		"Didn",
+		"hookform",
+		"signin",
+		"signup",
+		"sonner",
+		"zxcvbn"
+	],
 
 	"editor.codeActionsOnSave": {
 		"source.addMissingImports": "never"

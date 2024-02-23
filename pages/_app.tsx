@@ -1,5 +1,5 @@
 import Auth from "@/components/Protect";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui";
 import { useSession } from "@/store";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";

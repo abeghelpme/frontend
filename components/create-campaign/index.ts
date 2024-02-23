@@ -1,4 +1,4 @@
-export { default as ErrorParagraph } from "./ErrorParagraph";
+export { default as FormErrorMessage } from "./FormErrorMessage";
 export { default as FormActionButton } from "./FormActionButton";
 export { default as StepOne } from "./FormSteps/StepOne";
 export { default as StepThree } from "./FormSteps/StepThree";

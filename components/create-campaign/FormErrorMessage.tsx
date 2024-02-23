@@ -8,7 +8,7 @@ type ErrorParagraphProps<TStepData extends FieldValues> = {
 	errorField: keyof TStepData;
 };
 
-function ErrorParagraph<TStepData extends FieldValues>(
+function FormErrorMessage<TStepData extends FieldValues>(
 	props: ErrorParagraphProps<TStepData>
 ) {
 	const { className, formState, errorField } = props;
@@ -44,4 +44,4 @@ function ErrorParagraph<TStepData extends FieldValues>(
 	);
 }
 
-export default ErrorParagraph;
+export default FormErrorMessage;

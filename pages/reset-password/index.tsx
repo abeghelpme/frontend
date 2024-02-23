@@ -1,6 +1,5 @@
-import { CloudFlareTurnStile } from "@/components/common";
-import FormErrorMessage from "@/components/common/FormErrorMessage";
-import { Button, Input, useToast } from "@/components/ui";
+import { CloudFlareTurnStile, FormErrorMessage } from "@/components/common";
+import { Button, Input } from "@/components/ui";
 import { AuthPagesLayout } from "@/layouts";
 import {
 	type ResetPasswordType,
@@ -13,10 +12,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useDeferredValue, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const ResetPassword = () => {
 	const router = useRouter();
-	const { toast } = useToast();
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
 
@@ -51,12 +50,11 @@ const ResetPassword = () => {
 	}, [deferredPassword]);
 
 	const onSubmit = async (data: ResetPasswordType) => {
-		if (!token)
-			return toast({
-				title: "Request Failed",
+		if (!token) {
+			return toast.error("Request Failed", {
 				description: "Incomplete data provided",
-				duration: 3000,
 			});
+		}
 		const { data: responseData, error } = await callApi(
 			"/auth/password/reset",
 			{
@@ -67,16 +65,13 @@ const ResetPassword = () => {
 		);
 
 		if (error) {
-			return toast({
-				title: error.status as string,
+			toast.error(error.status, {
 				description: error.message,
 				duration: 3000,
 			});
 		} else {
-			toast({
-				title: "Success",
+			toast.success("Success", {
 				description: (responseData as { message: string }).message,
-				duration: 3000,
 			});
 			setTimeout(() => {
 				void router.push("/reset-password/success");
@@ -156,7 +151,7 @@ const ResetPassword = () => {
 				<Button
 					disabled={isSubmitting}
 					loading={isSubmitting}
-					className="text-md mt-6 bg-abeg-button-10 px-10 py-3 font-medium"
+					className="text-md bg-abeg-button-10 mt-6 px-10 py-3 font-medium"
 				>
 					Submit
 				</Button>

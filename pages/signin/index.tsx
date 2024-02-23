@@ -1,5 +1,8 @@
-import { CloudFlareTurnStile, CustomDialog } from "@/components/common";
-import FormErrorMessage from "@/components/common/FormErrorMessage";
+import {
+	CloudFlareTurnStile,
+	CustomDialog,
+	FormErrorMessage,
+} from "@/components/common";
 import { Button, Input } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthPagesLayout } from "@/layouts";
@@ -66,14 +69,12 @@ const Login = () => {
 					query: { signup: true, email: data.email.toLowerCase() },
 				});
 			}
-			return toast(error.status, {
+			return toast.error(error.status, {
 				description: error.message,
-				duration: 3000,
 			});
 		} else {
-			toast("Success", {
+			toast.success("Success", {
 				description: (responseData as { message: string }).message,
-				duration: 3000,
 			});
 
 			reset();
@@ -194,7 +195,7 @@ const Login = () => {
 							</div>
 							<div className="mt-6 flex flex-col">
 								<Link
-									className="bg-abeg-primary w-full rounded-md py-4 text-sm font-semibold text-white"
+									className="w-full rounded-md bg-abeg-primary py-4 text-sm font-semibold text-white"
 									href="/2fa"
 								>
 									Activate
@@ -204,7 +205,7 @@ const Login = () => {
 									type="submit"
 									disabled={isSubmitting}
 									onClick={handleOption}
-									className="border-abeg-primary text-abeg-primary mt-4 border py-4 disabled:bg-gray-500 disabled:text-white"
+									className="mt-4 border border-abeg-primary py-4 text-abeg-primary disabled:bg-gray-500 disabled:text-white"
 									fullWidth
 								>
 									Skip

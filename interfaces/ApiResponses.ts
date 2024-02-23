@@ -18,13 +18,9 @@ export type User = {
 	createdAt: string;
 };
 
-export type ApiResponse<T = { [key: string]: unknown }> = {
+export type ApiResponse<T = Record<string, unknown>> = {
 	status: string;
 	message: string;
-	error?:
-		| {
-				[key: string]: string[];
-		  }
-		| string;
+	error?: Record<string, string[]> | string;
 	data?: T;
 };

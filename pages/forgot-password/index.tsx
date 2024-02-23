@@ -8,10 +8,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const ForgotPasswordPage = () => {
 	const router = useRouter();
-	const { toast } = useToast();
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
 
@@ -35,21 +35,23 @@ const ForgotPasswordPage = () => {
 		);
 
 		if (error) {
-			return toast({
-				title: error.status.toString(),
+			toast.error(error.status, {
 				description: error.message,
-				duration: 3000,
 			});
 		} else {
-			toast({
-				title: "Success",
+			toast.success("Success", {
 				description: (responseData as { message: string }).message,
-				duration: 3000,
 			});
 			reset();
-			setTimeout(() => {
-				void router.push("/signin");
-			}, 2000);
+			void router.push({
+				pathname: "/signup/verification",
+				query: {
+					title: "Check your email",
+					email: data.email.toLowerCase(),
+					type: "password reset",
+					endpoint: "auth/password/forgot",
+				},
+			});
 		}
 	};
 

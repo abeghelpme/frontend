@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import DropZoneInput from "../DropZoneInput";
-import ErrorParagraph from "../ErrorParagraph";
+import FormErrorMessage from "../FormErrorMessage";
 import Heading from "../Heading";
 import ImagePreview from "../ImagePreview";
 import TiptapEditor from "../TipTapEditor";
@@ -44,12 +44,8 @@ function StepThree() {
 
 		formData.set("story", data.story);
 		formData.set("storyHtml", data.storyHtml);
-
-		data.photos.forEach((imageFile) => {
-			formData.append("photos", imageFile);
-		});
-
 		formData.set("campaignId", campaignId);
+		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
 		const { data: dataInfo, error } = await callApi(
 			`/campaign/create/three`,
@@ -71,7 +67,7 @@ function StepThree() {
 
 	return (
 		<section className="w-full">
-			<Heading as="h2" className="textabeg-primary">
+			<Heading as="h2" className="text-abeg-primary">
 				Your story matters and this is where it begins.
 			</Heading>
 
@@ -102,7 +98,7 @@ function StepThree() {
 										onChange={field.onChange}
 									/>
 
-									<ErrorParagraph formState={formState} errorField="photos" />
+									<FormErrorMessage formState={formState} errorField="photos" />
 
 									<ImagePreview value={field.value} onChange={field.onChange} />
 								</>
@@ -133,7 +129,7 @@ function StepThree() {
 							)}
 						/>
 
-						<ErrorParagraph formState={formState} errorField="story" />
+						<FormErrorMessage formState={formState} errorField="story" />
 					</li>
 				</ol>
 			</form>
