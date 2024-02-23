@@ -1,9 +1,4 @@
-import type {
-	ForgotPasswordProps,
-	LoginProps,
-	ResetPasswordProps,
-	SignUpProps,
-} from "@/interfaces";
+import type { SignUpProps } from "@/interfaces";
 import { cn } from "@/lib";
 import eye from "@/public/assets/icons/auth/eye.svg";
 import slashEye from "@/public/assets/icons/auth/slashEye.svg";
@@ -12,11 +7,7 @@ import React, { forwardRef, useState, type MouseEventHandler } from "react";
 import type { FieldErrors } from "react-hook-form";
 
 type InputProps = {
-	errorField?:
-		| FieldErrors<
-				SignUpProps | LoginProps | ResetPasswordProps | ForgotPasswordProps
-		  >
-		| string;
+	errorField?: FieldErrors<SignUpProps> | string;
 };
 type TInputProps = InputProps & React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -33,9 +24,10 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
 			<div className="relative">
 				<input
 					className={cn(
-						"block w-full rounded-md border border-[#D0D5DD] bg-white px-3 py-3 text-abeg-neutral-10 outline-0 placeholder:text-sm placeholder:text-abeg-neutral-50 focus:border-inputBorder disabled:border-[#D0D5DD] disabled:bg-[#F0F2F5]",
+						"block w-full rounded-md border border-inputBorder bg-white px-3 py-3 text-abeg-neutral-10 outline-0 placeholder:text-sm placeholder:text-abeg-neutral-50 focus:border-inputBorder disabled:border-[#D0D5DD] disabled:bg-[#F0F2F5] ",
 						{
 							"pr-[32px]": type === "password",
+							// 'md:h-DInputField h-MInputField': type !== 'checkbox' || type !== 'radio',
 							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20":
 								errorField,
 						},

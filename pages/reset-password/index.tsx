@@ -1,4 +1,5 @@
 import { CloudFlareTurnStile } from "@/components/common";
+import FormErrorMessage from "@/components/common/FormErrorMessage";
 import { Button, Input, ProgressBar, useToast } from "@/components/ui";
 import { AuthPagesLayout } from "@/layouts";
 import {
@@ -85,8 +86,9 @@ const ResetPassword = () => {
 	return (
 		<AuthPagesLayout
 			title="Reset Password"
+			heading="Reset Password"
 			content="Reset your Password! Follow the instructions on this page to reset your password!"
-			withHeader={false}
+			withHeader
 			hasSuccess={false}
 		>
 			<form
@@ -99,7 +101,6 @@ const ResetPassword = () => {
 				className="flex flex-col"
 			>
 				<div className="space-y-6">
-					<h1 className="text-center text-2xl font-semibold">Reset Password</h1>
 					<div className="space-y-4">
 						<div className="space-y-1">
 							<label htmlFor="password" className="font-medium">
@@ -117,41 +118,12 @@ const ResetPassword = () => {
 								/>
 							</div>
 							{password.length > 0 && (
-								<div>
-									<ProgressBar
-										value={result * 25}
-										className={`${
-											result < 2
-												? "progress-filled:bg-red-500"
-												: result >= 2 && result <= 3
-												  ? "progress-filled:bg-yellow-500"
-												  : "progress-filled:bg-green-500"
-										}`}
-									/>
-									<p
-										className={`${
-											result <= 2
-												? "text-text-red"
-												: result >= 2 && result <= 3
-												  ? "text-yellow-500"
-												  : "text-green-500"
-										} text-sm`}
-									>
-										<span className="text-black">Password strength:</span>
-										&nbsp;
-										{result < 2
-											? "Weak"
-											: result >= 2 && result <= 3
-											  ? "Medium"
-											  : "Strong"}
-									</p>
-								</div>
+								<FormErrorMessage isForPasswordStrength result={result} />
 							)}
-							{errors.password && (
-								<div className="mt-2 text-sm text-abeg-primary">
-									<h1>{errors.password.message}</h1>
-								</div>
-							)}
+							<FormErrorMessage
+								error={errors}
+								errorMsg={errors.password?.message!}
+							/>
 						</div>
 
 						<div className="space-y-1">
@@ -169,11 +141,10 @@ const ResetPassword = () => {
 									type="password"
 								/>
 							</div>
-							{errors.confirmPassword && (
-								<div className="mt-2 text-sm text-abeg-primary">
-									<h1>{errors.confirmPassword.message}</h1>
-								</div>
-							)}
+							<FormErrorMessage
+								error={errors}
+								errorMsg={errors.confirmPassword?.message!}
+							/>
 						</div>
 					</div>
 				</div>

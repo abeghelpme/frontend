@@ -50,7 +50,6 @@ const signUpSchema: z.ZodType<SignUpProps> = z
 			}),
 		email: z
 			.string()
-
 			.min(2, { message: "Email is required" })
 			.email({ message: "Invalid email address" })
 			.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {

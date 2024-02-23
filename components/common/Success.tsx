@@ -9,7 +9,7 @@ type SuccessProps = {
 const Success = ({ children, textContent }: SuccessProps) => {
 	return (
 		// add glassmorphism here too
-		<div className="mx-auto w-w90 max-w-wSuccess rounded-md bg-white p-6 shadow-auth-layout-shadow sm:w-1/2">
+		<div className="mx-auto w-w90 max-w-wAuthFlow rounded-md bg-white p-6 shadow-auth-layout-shadow sm:w-1/2">
 			<Player
 				autoplay
 				loop
