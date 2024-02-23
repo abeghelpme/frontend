@@ -68,14 +68,12 @@ const Login = () => {
 					query: { signup: true, email: data.email.toLowerCase() },
 				});
 			}
-			return toast(error.status, {
+			return toast.error(error.status, {
 				description: error.message,
-				duration: 3000,
 			});
 		} else {
-			toast("Success", {
+			toast.success("Success", {
 				description: (responseData as { message: string }).message,
-				duration: 3000,
 			});
 
 			reset();
