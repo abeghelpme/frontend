@@ -12,33 +12,33 @@ type ToolBarProps = { editor: Editor };
 
 function TipTapToolBar({ editor }: ToolBarProps) {
 	return (
-		<div className="gap-@0.8 flex items-center text-abeg-text/85">
+		<div className="flex items-center gap-2 text-abeg-text/85">
 			<Toggle
 				pressed={editor.isActive("bold")}
 				onPressedChange={() => editor.chain().focus().toggleBold().run()}
 			>
-				<BoldIcon className="size-@2 lg:size-@2.4" />
+				<BoldIcon className="size-5 lg:size-6" />
 			</Toggle>
 
 			<Toggle
 				pressed={editor.isActive("italic")}
 				onPressedChange={() => editor.chain().focus().toggleItalic().run()}
 			>
-				<ItalicIcon className="size-@2 lg:size-@2.4" />
+				<ItalicIcon className="size-5 lg:size-6" />
 			</Toggle>
 
 			<Toggle
 				pressed={editor.isActive("bulletList")}
 				onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
 			>
-				<ListIcon className="size-@2 lg:size-@2.4" />
+				<ListIcon className="size-5 lg:size-6" />
 			</Toggle>
 
 			<Toggle
 				pressed={editor.isActive("orderedList")}
 				onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
 			>
-				<ListOrderedIcon className="size-@2 lg:size-@2.4" />
+				<ListOrderedIcon className="size-5 lg:size-6" />
 			</Toggle>
 
 			<button
@@ -46,7 +46,7 @@ function TipTapToolBar({ editor }: ToolBarProps) {
 				className="flex active:scale-110"
 				onClick={() => editor.commands.deleteSelection()}
 			>
-				<Trash2Icon className="size-@2 lg:size-@2.4" />
+				<Trash2Icon className="size-5 lg:size-6" />
 			</button>
 		</div>
 	);

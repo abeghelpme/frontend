@@ -108,18 +108,18 @@ const config = {
 			addComponents({
 				".custom-scrollbar": {
 					"&::-webkit-scrollbar": {
-						width: "1rem",
+						width: "10px",
 					},
 
 					"&::-webkit-scrollbar-track": {
 						backgroundColor: "hsl(0, 0%, 76%)",
-						borderRadius: "1rem 1rem 0 0",
+						borderRadius: "10px 10px 0 0",
 					},
 
 					"&::-webkit-scrollbar-thumb": {
-						backgroundColor: theme("colors.formBtn"),
+						backgroundColor: theme("colors.abeg.primary"),
 						border: "1px solid hsl(0, 0%, 76%)",
-						borderRadius: "1rem",
+						borderRadius: "10px",
 					},
 				},
 			});
