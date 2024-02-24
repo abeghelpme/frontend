@@ -11,7 +11,6 @@ export const AuthPagesLayout = ({
 	contentClass,
 	hasSuccess,
 }: AuthLayoutProps) => {
-	// before:absolute before:inset-0 before:bg-black/25
 	return (
 		<main className="relative flex h-full min-h-svh items-center justify-center bg-authBg bg-cover bg-no-repeat py-14 ">
 			<PageMetaData title={title} content={content} />

@@ -150,59 +150,64 @@ const forgotPasswordSchema: z.ZodType<ForgotPasswordProps> = z.object({
 		}),
 });
 
-const resetPasswordSchema: z.ZodType<ResetPasswordProps> = z.object({
-	password: z
-		.string()
-		.min(6, { message: "Password must be at least 6 characters" })
-		.regex(
-			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
-			{
-				message:
-					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-			}
-		)
-		.max(50)
-		.transform((value, ctx) => {
-			const options = {
-				dictionary: {
-					...zxcvbnCommonPackage.dictionary,
-					...zxcvbnEnPackage.dictionary,
-				},
-				translations: {
-					...zxcvbnEnPackage.translations,
-				},
-				graphs: zxcvbnCommonPackage.adjacencyGraphs,
-				// useLevenshteinDistance: true
-			};
-			zxcvbnOptions.setOptions(options);
-			const testedResult = zxcvbn(value);
+const resetPasswordSchema: z.ZodType<ResetPasswordProps> = z
+	.object({
+		password: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value, ctx) => {
+				const options = {
+					dictionary: {
+						...zxcvbnCommonPackage.dictionary,
+						...zxcvbnEnPackage.dictionary,
+					},
+					translations: {
+						...zxcvbnEnPackage.translations,
+					},
+					graphs: zxcvbnCommonPackage.adjacencyGraphs,
+					// useLevenshteinDistance: true
+				};
+				zxcvbnOptions.setOptions(options);
+				const testedResult = zxcvbn(value);
 
-			if (testedResult.score < 3) {
-				testedResult.feedback.suggestions.map((issue) => {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
-						message: issue,
+				if (testedResult.score < 3) {
+					testedResult.feedback.suggestions.map((issue) => {
+						ctx.addIssue({
+							code: z.ZodIssueCode.custom,
+							message: issue,
+						});
 					});
-				});
-			}
+				}
 
-			return value.trim();
-		}),
-	confirmPassword: z
-		.string()
-		.min(6, { message: "Password must be at least 6 characters" })
-		.regex(
-			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
-			{
-				message:
-					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-			}
-		)
-		.max(50)
-		.transform((value) => {
-			return value.trim();
-		}),
-});
+				return value.trim();
+			}),
+		confirmPassword: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value) => {
+				return value.trim();
+			}),
+	})
+	.refine((data) => data.password === data.confirmPassword, {
+		message: "Passwords do not match",
+		path: ["confirmPassword"],
+	});
 
 const campaignStepOneSchema = z.object({
 	categoryId: z.string().min(1, { message: "Select a category" }),

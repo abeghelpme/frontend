@@ -23,3 +23,4 @@ const ResetPasswordSuccessPage = () => {
 };
 
 export default ResetPasswordSuccessPage;
+ResetPasswordSuccessPage.protect = true;

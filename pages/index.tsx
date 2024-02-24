@@ -1,3 +1,4 @@
+import { PageMetaData } from "@/components/common";
 import { Button } from "@/components/ui";
 import type { WithPageLayout } from "@/interfaces";
 import { callApi } from "@/lib";
@@ -52,53 +53,59 @@ const InactiveLogoBanner = ({
 const Home: WithPageLayout = () => {
 	const { user, clearSession } = useSession();
 	return (
-		<main className="min-h-svh w-w90 mx-auto lg:w-full lg:ml-0 flex flex-1 lg:gap-12 xl:gap-24">
-			<div className="hidden lg:block after:absolute lg:w-3/5 xl:w-[70%] after:inset-0 after:bg-[#00000080] relative">
-				<Image src={bg} alt="" className="object-cover w-full h-full" />
-			</div>
-			<div className="w-full text-center md:w-1/2 md:mx-auto lg:w-[30%] lg:mr-[10%] xl:mr-[5%] lg:ml-0 md:max-w-wAuthFlo flex flex-col pt-14 lg:pt-0">
-				<div className="lg:absolute top-12 left-7">
-					<InactiveLogoBanner fill color="abeg-primary" />
+		<>
+			<PageMetaData
+				title="AbegHelp | Home"
+				content="Get started with AbegHelp.me"
+			/>
+			<main className="min-h-svh w-w90 mx-auto lg:w-full lg:ml-0 flex flex-1 lg:gap-12 xl:gap-24">
+				<div className="hidden lg:block after:absolute lg:w-3/5 xl:w-[70%] after:inset-0 after:bg-[#00000080] relative">
+					<Image src={bg} alt="" className="object-cover w-full h-full" />
 				</div>
-				<div className="mt-[10rem] lg:my-auto">
-					{!user ? (
-						<>
-							<h1 className="text-2xl mb-8 lg:mb-16 lg:text-4xl font-bold">
-								Get Started
-							</h1>
-							<div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-								<Link
-									href="/signup"
-									className="w-full py-3 px-6 bg-abeg-primary text-white rounded-lg"
-								>
-									Sign up
-								</Link>
-								<Link
-									href="/signin"
-									className="w-full py-3 px-6 bg-abeg-primary text-white rounded-lg"
-								>
-									Sign in
-								</Link>
-							</div>
-							<div className="mt-[10rem]">
-								<InactiveLogoBanner isBottom />
-							</div>
-						</>
-					) : (
-						<Button
-							variant="danger"
-							onClick={async () => {
-								const { data, error } = await callApi("/auth/signout");
-								clearSession();
-							}}
-							className="w-fit mx-auto"
-						>
-							Signout
-						</Button>
-					)}
+				<div className="w-full text-center md:w-1/2 md:mx-auto lg:w-[30%] lg:mr-[10%] xl:mr-[5%] lg:ml-0 md:max-w-wAuthFlo flex flex-col pt-14 lg:pt-0">
+					<div className="lg:absolute top-12 left-7">
+						<InactiveLogoBanner fill color="abeg-primary" />
+					</div>
+					<div className="mt-[10rem] lg:my-auto">
+						{!user ? (
+							<>
+								<h1 className="text-2xl mb-8 lg:mb-16 lg:text-4xl font-bold">
+									Get Started
+								</h1>
+								<div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+									<Link
+										href="/signup"
+										className="w-full py-3 px-6 bg-abeg-primary text-white rounded-lg"
+									>
+										Sign up
+									</Link>
+									<Link
+										href="/signin"
+										className="w-full py-3 px-6 bg-abeg-primary text-white rounded-lg"
+									>
+										Sign in
+									</Link>
+								</div>
+								<div className="mt-[10rem]">
+									<InactiveLogoBanner isBottom />
+								</div>
+							</>
+						) : (
+							<Button
+								variant="danger"
+								onClick={async () => {
+									const { data, error } = await callApi("/auth/signout");
+									clearSession();
+								}}
+								className="w-fit mx-auto"
+							>
+								Signout
+							</Button>
+						)}
+					</div>
 				</div>
-			</div>
-		</main>
+			</main>
+		</>
 	);
 };
 
