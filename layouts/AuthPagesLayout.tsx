@@ -15,7 +15,7 @@ export const AuthPagesLayout = ({
 	return (
 		<main className="relative flex h-full min-h-svh items-center justify-center bg-authBg bg-cover bg-no-repeat py-14 ">
 			<PageMetaData title={title} content={content} />
-			<div className="w-full z-10">
+			<div className="w-full z-10 flex flex-col items-center justify-center">
 				{!hasSuccess ? (
 					<div
 						className={`mx-auto w-w90
