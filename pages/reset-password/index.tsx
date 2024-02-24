@@ -151,6 +151,7 @@ const ResetPassword = () => {
 				<Button
 					disabled={isSubmitting}
 					loading={isSubmitting}
+					variant="primary"
 					className="text-md bg-abeg-button-10 mt-6 px-10 py-3 font-medium"
 				>
 					Submit

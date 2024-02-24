@@ -39,8 +39,6 @@ export const useSession = createWithEqualityFn<Session>(
 				isFirstMount: state.isFirstMount,
 			}));
 
-			await callApi("/auth/signout");
-
 			const currentPageUrl = window.location.pathname;
 			if (
 				currentPageUrl !== "/signin" &&

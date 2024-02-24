@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui";
 import type { WithPageLayout } from "@/interfaces";
+import { callApi } from "@/lib";
 import { useSession } from "@/store";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -30,7 +31,7 @@ const Home: WithPageLayout = () => {
 							className="flex-1"
 							onClick={() => router.push("/signup")}
 						>
-							Log in
+							Sign up{" "}
 						</Button>
 						<Button
 							variant="primary"
@@ -78,7 +79,10 @@ const Home: WithPageLayout = () => {
 				<div className="w-1/2 bg-red-500 flex items-center justify-center">
 					<Button
 						variant="primary"
-						onClick={() => clearSession()}
+						onClick={async () => {
+							const { data, error } = await callApi("/auth/signout");
+							clearSession();
+						}}
 						className="w-[20vw]"
 					>
 						Signout
