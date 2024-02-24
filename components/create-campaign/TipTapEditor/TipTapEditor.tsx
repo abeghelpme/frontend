@@ -40,13 +40,13 @@ function TiptapEditor(props: EditorProps) {
 	}
 
 	return (
-		<div className="focus-within:outline-@2 gap-@0.8 border-unfocused p-@1.6 focus-within:outlineabeg-primary flex min-h-44 flex-col justify-between rounded-md border lg:min-h-48">
+		<div className="focus-within:outline-5 focus-within:outlineabeg-primary flex min-h-44 flex-col justify-between gap-2 rounded-md border border-unfocused p-4 lg:min-h-48">
 			<EditorContent
 				editor={editor}
-				className="[&_p.is-editor-empty:first-child]:before:text-placeholder text-xs lg:text-base [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:absolute [&_p.is-editor-empty:first-child]:before:left-0 [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"
+				className="text-xs lg:text-base [&_p.is-editor-empty:first-child]:before:pointer-events-none [&_p.is-editor-empty:first-child]:before:absolute [&_p.is-editor-empty:first-child]:before:left-0 [&_p.is-editor-empty:first-child]:before:text-placeholder [&_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"
 			/>
 
-			<div className="gap-@0.8 lg:gap-@4.8 flex flex-col lg:flex-row lg:items-center lg:justify-between">
+			<div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
 				<TipTapToolBar editor={editor} />
 
 				<p className="text-xs opacity-70 lg:text-base">

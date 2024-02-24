@@ -11,9 +11,10 @@ type HeadingProps<TElement extends HeadingElementsType> = Required<
 >;
 
 const semanticHeadings = {
-	h1: "font-semibold lg:text-xl.4",
-	h2: "font-bold lg:text-xl.4",
-	h3: "font-bold lg:text-xl",
+	h1: "font-bold text-base lg:text-2xl",
+	h2: "font-bold text-base lg:text-2xl",
+	h3: "font-bold text-base lg:text-xl",
+	h4: "font-medium text-xs lg:text-xl",
 };
 
 function Heading<TElement extends HeadingElementsType = "h1">(
