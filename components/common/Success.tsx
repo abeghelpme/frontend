@@ -8,7 +8,7 @@ type SuccessProps = {
 
 const Success = ({ children, textContent }: SuccessProps) => {
 	return (
-		<div className="mx-auto w-w90 max-w-wAuthFlow rounded-md bg-white/50  p-6 backdrop-blur-lg shadow-auth-layout-shadow sm:w-1/2">
+		<div className="mx-auto w-w90 max-w-wAuthFlow rounded-md bg-white/50 backdrop-blur-lg p-6 shadow-auth-layout-shadow">
 			<Player
 				autoplay
 				loop

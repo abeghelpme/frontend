@@ -120,3 +120,4 @@ const ForgotPasswordPage = () => {
 };
 
 export default ForgotPasswordPage;
+ForgotPasswordPage.protect = true;

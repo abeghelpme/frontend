@@ -29,7 +29,7 @@ const Login = () => {
 	useEffect(() => {
 		const skipModal = localStorage.getItem("skip-2FA");
 		if (skipModal !== null) {
-			setSkip2FA("true");
+			setSkip2FA(skipModal);
 		}
 	}, []);
 
@@ -43,15 +43,17 @@ const Login = () => {
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
-
+	console.log(skip2FA);
 	const handleOption = async () => {
-		await localStorage.setItem("skip-2FA", JSON.stringify(skip2FA));
+		await localStorage.setItem(
+			"skip-2FA",
+			JSON.stringify(skip2FA === "false" && "true")
+		);
 		await void router.push("/dashboard");
 		setOpenModal(false);
 	};
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-		console.log(data);
 		const { data: responseData, error } = await callApi<ApiResponse<User>>(
 			"/auth/signin",
 			{
@@ -229,7 +231,7 @@ const Login = () => {
 							href="/signup"
 							className="font-medium text-abeg-primary underline"
 						>
-							Register
+							Sign up
 						</Link>
 					</p>
 				</div>

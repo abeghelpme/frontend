@@ -276,7 +276,7 @@ const SignUp = () => {
 							href="/signin"
 							className="font-medium text-abeg-primary underline"
 						>
-							Login
+							Sign in
 						</Link>
 					</p>
 				</div>
