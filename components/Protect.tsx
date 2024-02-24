@@ -19,6 +19,8 @@ const Auth = ({ children }: { children: ReactNode }) => {
 		"/signup/verification",
 		"/verify-email",
 		"/verify-email/success",
+		// "/reset-password",
+		"/forgot-password",
 	];
 
 	const isInaccessible = noAuthRoutes.includes(router.pathname);

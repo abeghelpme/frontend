@@ -24,4 +24,4 @@ const VerifyEmailSuccessPage = () => {
 
 export default VerifyEmailSuccessPage;
 
-VerifyEmailSuccessPage.protect = true;
+// VerifyEmailSuccessPage.protect = true;

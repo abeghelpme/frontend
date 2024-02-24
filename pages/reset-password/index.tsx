@@ -25,16 +25,17 @@ const ResetPassword = () => {
 	}, [router]);
 	const {
 		handleSubmit,
+		control,
 		register,
-		formState: { errors, isSubmitting },
 		watch,
+		formState: { errors, isSubmitting },
 	} = useForm<ResetPasswordType>({
 		resolver: zodResolver(zodValidator("resetPassword")!),
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
 
-	const password: string = watch("password", "");
+	const password = watch("password", "");
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
 
@@ -142,20 +143,24 @@ const ResetPassword = () => {
 							/>
 						</div>
 					</div>
+
+					<CloudFlareTurnStile
+						ref={cfTurnStile}
+						onStatusChange={handleBotStatus}
+					/>
+					<Button
+						disabled={isSubmitting}
+						loading={isSubmitting}
+						className="md:text-lg "
+						fullWidth
+						variant="primary"
+					>
+						Submit
+					</Button>
 				</div>
-				<CloudFlareTurnStile
-					ref={cfTurnStile}
-					onStatusChange={handleBotStatus}
-				/>
-				<Button
-					disabled={isSubmitting}
-					loading={isSubmitting}
-					className="text-md bg-abeg-button-10 mt-6 px-10 py-3 font-medium"
-				>
-					Submit
-				</Button>
 			</form>
 		</AuthPagesLayout>
 	);
 };
 export default ResetPassword;
+ResetPassword.protect = true;

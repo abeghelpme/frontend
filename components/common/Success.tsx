@@ -8,12 +8,11 @@ type SuccessProps = {
 
 const Success = ({ children, textContent }: SuccessProps) => {
 	return (
-		// add glassmorphism here too
-		<div className="mx-auto w-w90 max-w-wAuthFlow rounded-md bg-white p-6 shadow-auth-layout-shadow sm:w-1/2">
+		<div className="mx-auto w-w90 max-w-wAuthFlow rounded-md bg-white/50 backdrop-blur-lg p-6 shadow-auth-layout-shadow">
 			<Player
 				autoplay
 				loop
-				src="https://lottie.host/a60494de-7c09-4dbd-b016-97035289ba6a/4FRd7uct0G.json"
+				src="https://lottie.host/93bf3dac-15f5-42b4-a224-deaf8748cb5b/FZJMtsnjYZ.json"
 				style={{ height: "200px", width: "200px" }}
 			/>
 			<div className="mb-5 text-center">
