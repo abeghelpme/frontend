@@ -1,4 +1,4 @@
-import {FormErrorMessage,CloudFlareTurnStile } from "@/components/common";
+import { CloudFlareTurnStile, FormErrorMessage } from "@/components/common";
 import { Button, Input } from "@/components/ui";
 import { AuthPagesLayout } from "@/layouts";
 import { type ForgotPasswordType, callApi, zodValidator } from "@/lib";
@@ -94,7 +94,7 @@ const ForgotPasswordPage = () => {
 						/>
 					</div>
 				</div>
-				<CloudFlareTurnStile 
+				<CloudFlareTurnStile
 					ref={cfTurnStile}
 					onStatusChange={handleBotStatus}
 				/>
