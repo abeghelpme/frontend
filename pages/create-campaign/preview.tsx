@@ -26,57 +26,57 @@ function Preview() {
 	);
 
 	return (
-		<div className="flex min-h-screen flex-col items-center justify-between">
-			<header className="gap-@0.8 px-@2.4 pt-@3.2 lg:pt-@4.8 mx-auto flex w-full flex-col max-lg:max-w-[30rem]">
+		<div className="mt-8 flex min-h-screen flex-col items-center justify-between lg:mt-12">
+			<header className="mx-auto flex w-full flex-col gap-2 px-6 max-lg:max-w-[480px] lg:px-28 lg:text-2xl">
 				<Heading as="h1" className="text-abeg-primary">
 					Campaign Preview
 				</Heading>
 
-				<p className="text-sm text-abeg-primary">
+				<p className="text-abeg-primary">
 					This is what your fundraiser campaign will look like to donors
 				</p>
 			</header>
 
-			<main className="bg-contours-old px-@2.4 pb-@6.2 lg:mt-@4.8 lg:px-@10 mt-4 flex flex-col bg-cover text-abeg-text max-lg:max-w-[30rem]">
-				<section className="gap-@0.8 lg:gap-@3.2 flex flex-col">
-					<Heading as="h2" className="text-xl lg:text-3xl">
+			<main className="bg-contours-old mt-4 flex flex-col bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:mt-12 lg:px-28">
+				<section className="flex flex-col gap-2 lg:gap-8">
+					<Heading as="h2" className="text-xl lg:text-[32px]">
 						{stepTwoData.title}
 					</Heading>
 
-					<div className="gap-@0.8 lg:gap-@1.8 flex flex-col lg:flex-row">
+					<div className="flex flex-col gap-2 lg:flex-row lg:gap-5">
 						<Image
 							src={imageUrls[0] ?? "/"}
 							alt="campaign cover image"
-							className="aspect-[342/200] w-full min-w-[32rem] rounded-lg lg:h-[40rem] lg:rounded-[10px]"
+							className="aspect-[342/200] w-full min-w-[320px] rounded-lg lg:h-[400px] lg:rounded-[10px]"
 							width={342}
 							height={200}
 							onLoad={() => URL.revokeObjectURL(imageUrls[0])}
 						/>
 
-						<article className="gap-@2.8 px-@2.4 lg:py-@3.2 flex flex-col py-3">
+						<article className="flex flex-col gap-7 px-6 py-3 lg:py-8">
 							<div>
 								<p className="lg:text-xl.4">₦ {stepTwoData.goal} goal</p>
-								<span className="mt-@0.8 block h-[0.6rem] rounded-lg bg-semiWhite" />
+								<span className="mt-2 block h-[0.6rem] rounded-lg bg-semiWhite" />
 							</div>
 
-							<div className="gap-@1.6 flex flex-col">
+							<div className="flex flex-col gap-4">
 								<Button
 									variant="primary"
-									className="px-@2.4 py-@1.2 w-full rounded-md bg-abeg-primary text-xs font-bold lg:rounded-lg lg:text-base"
+									className="w-full rounded-md bg-abeg-primary px-6 py-3 text-xs font-bold lg:rounded-lg lg:text-base"
 								>
 									Donate to this campaign
 								</Button>
 
 								<Button
 									variant="secondary"
-									className="borderabeg-primary px-@2.4 py-@1.2 w-full rounded-md text-xs font-bold text-abeg-primary lg:rounded-lg lg:text-base"
+									className="w-full rounded-md border-abeg-primary px-6 py-3 text-xs font-bold text-abeg-primary lg:rounded-lg lg:text-base"
 								>
 									Share this campaign
 								</Button>
 							</div>
 
-							<div className="gap-@0.8 flex items-start text-xs lg:text-base">
-								<MoneyIcon className="mt-@0.4 lg:mt-@0.8 lg:size-@2.4 shrink-0" />
+							<div className="flex items-start gap-2 text-xs lg:text-base">
+								<MoneyIcon className="mt-1 shrink-0 lg:mt-2 lg:size-6" />
 
 								<p>
 									Be the first to donate to this fundraiser, every penny donated
@@ -84,8 +84,8 @@ function Preview() {
 								</p>
 							</div>
 
-							<div className="gap-@0.8 flex items-center text-xs lg:text-base">
-								<DummyAvatar className={"lg:size-@3.2 shrink-0"} />
+							<div className="flex items-center gap-2 text-xs lg:text-base">
+								<DummyAvatar className={"shrink-0 lg:size-8"} />
 
 								<p>
 									{stepTwoData.fundraiser || "Anonymous"} is in charge of this
@@ -96,10 +96,10 @@ function Preview() {
 					</div>
 				</section>
 
-				<section className="mt-@0.8 lg:mt-@2.4 lg:max-w-[71.7rem]">
+				<section className="mt-2 lg:mt-6 lg:max-w-[71.7rem]">
 					<Heading
 						as="h3"
-						className="gap-@1.6 p-@0.8 flex border-b border-b-placeholder"
+						className="flex gap-4 border-b border-b-placeholder p-2"
 					>
 						Category:
 						<span className="font-normal">{campaignCategory}</span>
@@ -107,29 +107,29 @@ function Preview() {
 
 					<Heading
 						as="h3"
-						className="mt-@1.2 p-@0.8 lg:mt-@2.4 border-b border-b-placeholder"
+						className="mt-3 border-b border-b-placeholder p-2 lg:mt-6"
 					>
 						Story
 					</Heading>
 
 					<div
-						className="mt-@2.4 min-h-@7 lg:text-xl"
+						className="mt-6 min-h-16 lg:text-xl"
 						dangerouslySetInnerHTML={{
 							__html: stepThreeData.storyHtml,
 						}}
 					/>
 				</section>
 
-				<section className="mt-@2.4 gap-@2.4 pb-@1.6 flex flex-col border-b border-b-placeholder lg:max-w-[71.7rem]">
+				<section className="mt-6 flex flex-col gap-6 border-b border-b-placeholder pb-4 lg:max-w-[71.7rem]">
 					<Heading as="h2">See more pictures below:</Heading>
 
-					<div className="gap-@2.3 flex flex-col items-center">
+					<div className="flex flex-col items-center gap-6">
 						<ImageFileList
 							each={imageUrls.slice(1)}
 							render={(url = "/") => (
 								<Image
 									key={url}
-									className="h-@20 w-@25 lg:h-@32.4 lg:w-@50.5 rounded-md object-cover"
+									className="h-52 w-64 rounded-md object-cover lg:h-80 lg:w-[32rem]"
 									src={url}
 									alt="extra campaign images"
 									width={250}
@@ -144,7 +144,7 @@ function Preview() {
 						Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
 					</p>
 
-					<ul className="grid-cols-@2 gap-y-@2.4 grid justify-items-center gap-x-0 lg:grid-cols-3">
+					<ul className="grid grid-cols-5 justify-items-center gap-x-0 gap-y-6 lg:grid-cols-3">
 						<TagList
 							each={stepOneData.tags}
 							render={(tag) => (
@@ -154,8 +154,8 @@ function Preview() {
 					</ul>
 				</section>
 
-				<section className="mt-@3.2 gap-@1.6 lg:mt-@4.8 flex items-start lg:max-w-[71.7rem]">
-					<DummyAvatar className="size-@4.8 lg:size-[8.2rem]" />
+				<section className="mt-8 flex items-start gap-4 lg:mt-12 lg:max-w-[71.7rem]">
+					<DummyAvatar className="size-12 lg:size-[8.2rem]" />
 
 					<div>
 						<p className="flex flex-col lg:text-xl">
@@ -166,7 +166,7 @@ function Preview() {
 
 						<Button
 							variant="secondary"
-							className="mt-@2.4 borderabeg-primary px-@1.6 py-@1.2 lg:mt-@3.2 lg:px-@2.4 lg:py-@1.6 rounded-md text-sm font-bold text-abeg-primary lg:text-base"
+							className="mt-6 rounded-md border-abeg-primary px-4 py-3 text-sm font-bold text-abeg-primary lg:mt-8 lg:px-6 lg:py-4 lg:text-base"
 						>
 							Reach out
 						</Button>
@@ -174,11 +174,11 @@ function Preview() {
 				</section>
 			</main>
 
-			<footer className="gap-@0.8 border-tabeg-primary px-@2.4 py-@1.6 lg:gap-@1.6 lg:px-@10 mt-auto flex w-full justify-end border-t lg:py-[2.65rem]">
+			<footer className="lpx-6 mt-auto flex w-full justify-end gap-2 border-t border-t-abeg-primary px-6 py-4 lg:gap-4 lg:px-[100px] lg:py-6">
 				<FormActionButton
 					type="button"
 					variant="secondary"
-					className="borderabeg-primary font-bold text-abeg-primary"
+					className="border-abeg-primary font-bold text-abeg-primary"
 				>
 					<Link href={"/create-campaign"}>Edit campaign</Link>
 				</FormActionButton>

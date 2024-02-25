@@ -19,4 +19,4 @@ export const acceptedFilesString = allowedFileTypes.join(", ");
 
 export const DATE_TODAY = new Date();
 
-export const DATE_TOMORROW = add(DATE_TODAY, { days: 1 });
+export const DATE_NEXT_TOMORROW = add(DATE_TODAY, { days: 2 });

@@ -1,6 +1,7 @@
 import { cn } from "@/lib";
 import { TickIcon } from "@/public/assets/icons/campaign";
 import type { FormStore } from "@/store/formStore";
+import Heading from "../Heading";
 
 type StepIndicatorProps = {
 	step: FormStore["currentStep"];
@@ -19,7 +20,7 @@ function StepIndicator(props: StepIndicatorProps) {
 	const Separator = (
 		<hr
 			className={cn(
-				"my-@0.4 borderabeg-primary basis-full border border-dashed",
+				"my-1 basis-full border border-dashed border-abeg-primary",
 				disabled && "border-unfocused"
 			)}
 		/>
@@ -31,7 +32,7 @@ function StepIndicator(props: StepIndicatorProps) {
 
 			<span
 				className={cn(
-					"w-@2 bg-abeg-primary grid aspect-square shrink-0 place-content-center rounded-full font-bold text-white",
+					"grid aspect-square w-5 shrink-0 place-content-center rounded-full bg-abeg-primary font-bold text-white",
 					disabled && "bg-unfocused"
 				)}
 			>
@@ -48,7 +49,7 @@ function StepInformation({
 }: StepInfoProps) {
 	return (
 		<article className={cn("w-full", disabled && "text-unfocused")}>
-			<h4 className="text-xs font-medium lg:text-xl">{title}</h4>
+			<Heading as="h4">{title}</Heading>
 
 			<p>{description}</p>
 		</article>

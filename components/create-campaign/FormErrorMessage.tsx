@@ -1,6 +1,6 @@
 import { cn } from "@/lib";
 import { useEffect, useRef } from "react";
-import { type FieldValues, type FormState } from "react-hook-form";
+import type { FieldValues, FormState } from "react-hook-form";
 
 type ErrorParagraphProps<TStepData extends FieldValues> = {
 	className?: string;
@@ -32,7 +32,7 @@ function FormErrorMessage<TStepData extends FieldValues>(
 		<p
 			ref={paragraphRef}
 			className={cn(
-				"ml-@0.4 mt-@1.2 text-[1.1rem] font-medium italic text-red-400",
+				"ml-1 mt-3 text-[1.1rem] font-medium italic text-red-400",
 				className
 			)}
 			onAnimationEnd={() =>
