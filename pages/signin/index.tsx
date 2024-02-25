@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const Login = () => {
+const SignIn = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
 	const showModal = useRef(false);
@@ -239,6 +239,6 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default SignIn;
 
-Login.protect = true;
+SignIn.protect = true;

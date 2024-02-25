@@ -87,3 +87,4 @@ function CreateCampaignPage() {
 }
 
 export default CreateCampaignPage;
+CreateCampaignPage.protect = true;
