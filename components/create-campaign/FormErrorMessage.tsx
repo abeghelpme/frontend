@@ -32,7 +32,7 @@ function FormErrorMessage<TStepData extends FieldValues>(
 		<p
 			ref={paragraphRef}
 			className={cn(
-				"ml-1 mt-3 text-[1.1rem] font-medium italic text-red-400",
+				"ml-1 mt-3 text-xs font-medium italic text-red-400 lg:text-base",
 				className
 			)}
 			onAnimationEnd={() =>

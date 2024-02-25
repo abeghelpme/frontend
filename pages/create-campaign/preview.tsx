@@ -40,14 +40,16 @@ function Preview() {
 			<main className="bg-contours-old mt-4 flex flex-col bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:mt-12 lg:px-28">
 				<section className="flex flex-col gap-2 lg:gap-8">
 					<Heading as="h2" className="text-xl lg:text-[32px]">
-						{stepTwoData.title}
+						{`${stepTwoData.title[0].toUpperCase()}${stepTwoData.title.slice(
+							1
+						)}`}
 					</Heading>
 
 					<div className="flex flex-col gap-2 lg:flex-row lg:gap-5">
 						<Image
 							src={imageUrls[0] ?? "/"}
 							alt="campaign cover image"
-							className="aspect-[342/200] w-full min-w-[320px] rounded-lg lg:h-[400px] lg:rounded-[10px]"
+							className="aspect-[342/200] w-full min-w-[320px] rounded-lg object-cover lg:h-[400px] lg:max-w-[717px] lg:rounded-[10px]"
 							width={342}
 							height={200}
 							onLoad={() => URL.revokeObjectURL(imageUrls[0])}
@@ -96,62 +98,61 @@ function Preview() {
 					</div>
 				</section>
 
-				<section className="mt-2 lg:mt-6 lg:max-w-[71.7rem]">
-					<Heading
-						as="h3"
-						className="flex gap-4 border-b border-b-placeholder p-2"
-					>
-						Category:
-						<span className="font-normal">{campaignCategory}</span>
-					</Heading>
+				<section className="mt-2 flex flex-col gap-6 lg:mt-6 lg:max-w-[717px]">
+					<article>
+						<Heading
+							as="h3"
+							className="flex gap-4 border-b border-b-placeholder p-2"
+						>
+							Category:
+							<span className="font-normal">{campaignCategory}</span>
+						</Heading>
 
-					<Heading
-						as="h3"
-						className="mt-3 border-b border-b-placeholder p-2 lg:mt-6"
-					>
-						Story
-					</Heading>
+						<Heading
+							as="h3"
+							className="mt-3 border-b border-b-placeholder p-2 lg:mt-6"
+						>
+							Story
+						</Heading>
 
-					<div
-						className="mt-6 min-h-16 lg:text-xl"
-						dangerouslySetInnerHTML={{
-							__html: stepThreeData.storyHtml,
-						}}
-					/>
-				</section>
-
-				<section className="mt-6 flex flex-col gap-6 border-b border-b-placeholder pb-4 lg:max-w-[71.7rem]">
-					<Heading as="h2">See more pictures below:</Heading>
-
-					<div className="flex flex-col items-center gap-6">
-						<ImageFileList
-							each={imageUrls.slice(1)}
-							render={(url = "/") => (
-								<Image
-									key={url}
-									className="h-52 w-64 rounded-md object-cover lg:h-80 lg:w-[32rem]"
-									src={url}
-									alt="extra campaign images"
-									width={250}
-									height={200}
-									onLoad={() => URL.revokeObjectURL(url)}
-								/>
-							)}
+						<div
+							className="mt-6 min-h-16 lg:text-xl"
+							dangerouslySetInnerHTML={{
+								__html: stepThreeData.storyHtml,
+							}}
 						/>
-					</div>
+					</article>
 
-					<p className="lg:text-xl.4">
-						Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
-					</p>
-
-					<ul className="grid grid-cols-5 justify-items-center gap-x-0 gap-y-6 lg:grid-cols-3">
-						<TagList
-							each={stepOneData.tags}
-							render={(tag) => (
-								<li className="font-medium lg:text-xl">#{tag}</li>
-							)}
-						/>
-					</ul>
+					<article className="flex flex-col gap-6 border-b border-b-placeholder pb-4">
+						<Heading as="h2">See more pictures below:</Heading>
+						<div className="flex flex-col items-center gap-6">
+							<ImageFileList
+								each={imageUrls.slice(1)}
+								render={(url = "/") => (
+									<Image
+										key={url}
+										className="h-52 w-64 rounded-md object-cover lg:h-80 lg:w-[32rem]"
+										src={url}
+										alt="extra campaign images"
+										width={250}
+										height={200}
+										onLoad={() => URL.revokeObjectURL(url)}
+									/>
+								)}
+							/>
+						</div>
+						<p className="lg:text-xl.4">
+							Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
+						</p>
+						<ul className="grid grid-cols-5 justify-items-center gap-x-0 gap-y-6 lg:grid-cols-3">
+							<TagList
+								each={stepOneData.tags}
+								render={(tag) => (
+									<li className="font-medium lg:text-xl">#{tag}</li>
+								)}
+							/>
+						</ul>
+					</article>
 				</section>
 
 				<section className="mt-8 flex items-start gap-4 lg:mt-12 lg:max-w-[71.7rem]">

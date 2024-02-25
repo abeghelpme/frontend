@@ -76,10 +76,10 @@ function StepTwo() {
 							type="text"
 							placeholder="Give your campaign a catchy title that can resonate with donors"
 							className={cn(
-								"focus-visible:outlineabeg-primary mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs lg:p-4  lg:text-base",
+								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4  lg:text-base",
 
 								formState.errors.title &&
-									"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+									"border-abeg-error-20 placeholder:text-abeg-error-20 focus-visible:outline-abeg-error-20"
 							)}
 						/>
 
@@ -135,10 +135,10 @@ function StepTwo() {
 							type="number"
 							placeholder="Set a realistic target amount"
 							className={cn(
-								"focus-visible:outlineabeg-primary mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs lg:p-4  lg:text-base",
+								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4  lg:text-base",
 
 								formState.errors.goal &&
-									"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+									"border-abeg-error-20 placeholder:text-abeg-error-20 focus-visible:outline-abeg-error-20"
 							)}
 						/>
 

@@ -37,7 +37,7 @@ function FormActionButton(props: FormActionButtonProps) {
 			type={type}
 			variant={variant}
 			className={cn(
-				"md:text-smte flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold md:rounded-lg md:px-6 md:py-4 md:font-bold",
+				"md:text-smte flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold md:px-3 md:py-2 md:text-xs lg:rounded-lg lg:px-6 lg:py-4 lg:font-bold",
 				disabled && "cursor-not-allowed bg-unfocused",
 				className
 			)}

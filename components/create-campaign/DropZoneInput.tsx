@@ -4,7 +4,6 @@ import { useToggle } from "@/lib/hooks";
 import { useFormStore } from "@/store/formStore";
 import type { ChangeEvent, DragEvent } from "react";
 import { toast } from "sonner";
-import { Button } from "../ui";
 
 type DropZoneInputProps = {
 	value: File[];
@@ -67,13 +66,12 @@ function DropZoneInput(props: DropZoneInputProps) {
 				isDragActive && "opacity-60"
 			)}
 		>
-			<Button
-				variant="primary"
-				className="rounded-md bg-abeg-primary p-2 text-xs font-bold lg:rounded-lg lg:px-6 lg:py-[0.8125rem] lg:text-base"
+			<button
+				className="rounded-md bg-abeg-primary p-2 text-xs font-bold text-white lg:rounded-lg lg:px-6 lg:py-[13px] lg:text-base"
 				type="button"
 			>
 				Upload
-			</Button>
+			</button>
 
 			<input
 				className="absolute inset-0 cursor-pointer opacity-0"

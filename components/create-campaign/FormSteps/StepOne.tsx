@@ -210,18 +210,17 @@ function StepOne() {
 								name="tags"
 								type="text"
 								placeholder="Add hashtags or search keywords to your campaign"
-								className="focus-visible:outlineabeg-primary w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs lg:p-4 lg:text-base"
+								className="w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4 lg:text-base"
 								onKeyDown={handleAddTags}
 							/>
 
-							<Button
+							<button
 								type="button"
-								variant="secondary"
-								className="rounded-md border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base"
+								className="rounded-md border border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base"
 								onClick={handleAddTags}
 							>
 								Add
-							</Button>
+							</button>
 						</div>
 
 						<div className="mt-4 flex flex-col gap-4">
