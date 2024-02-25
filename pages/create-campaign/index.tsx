@@ -32,7 +32,7 @@ function CreateCampaignPage() {
 
 	return (
 		<div className="flex min-h-screen flex-col justify-between max-lg:items-center">
-			<main className="bg-contours-old flex w-full shrink-0 flex-col gap-8 bg-cover px-6 pb-14 pt-8 max-lg:max-w-[30rem] lg:flex-row lg:items-start lg:gap-16 lg:px-28 lg:pb-28 lg:pt-12">
+			<main className="flex w-full shrink-0 flex-col gap-8 bg-cover px-6 pb-14 pt-8 max-lg:max-w-[30rem] lg:flex-row lg:items-start lg:gap-16 lg:px-28 lg:pb-28 lg:pt-12">
 				<section className="flex shrink-0 gap-3 lg:mt-5">
 					<StepTracker />
 				</section>

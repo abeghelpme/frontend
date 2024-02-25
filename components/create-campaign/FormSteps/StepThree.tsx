@@ -1,4 +1,5 @@
-import { callApi, zodValidator } from "@/lib";
+import { zodValidator } from "@/lib";
+import { callBackendApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -47,10 +48,7 @@ function StepThree() {
 		formData.set("campaignId", campaignId);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
-		const { data: dataInfo, error } = await callApi(
-			`/campaign/create/three`,
-			formData
-		);
+		const { error } = await callBackendApi(`/campaign/create/three`, formData);
 
 		if (error) {
 			toast.error(error.status, {
@@ -60,9 +58,7 @@ function StepThree() {
 			return;
 		}
 
-		if (dataInfo) {
-			void router.push("/create-campaign/preview");
-		}
+		void router.push("/create-campaign/preview");
 	};
 
 	return (

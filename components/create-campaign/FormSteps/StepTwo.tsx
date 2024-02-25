@@ -1,5 +1,6 @@
 import { DatePicker, Select } from "@/components/ui";
-import { callApi, cn, zodValidator } from "@/lib";
+import { cn, zodValidator } from "@/lib";
+import { callBackendApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -32,9 +33,10 @@ function StepTwo() {
 	const onFormSubmit = async (data: StepTwoData) => {
 		setData({ step: 2, data });
 
-		const { data: dataInfo, error } = await callApi<{
-			data: { _id: string };
-		}>(`/campaign/create/two`, { ...data, campaignId });
+		const { data: dataInfo, error } = await callBackendApi<{ _id: string }>(
+			`/campaign/create/two`,
+			{ ...data, campaignId }
+		);
 
 		if (error) {
 			toast.error(error.status, {
@@ -44,7 +46,7 @@ function StepTwo() {
 			return;
 		}
 
-		if (dataInfo) {
+		if (dataInfo.data) {
 			setCampaignId(dataInfo.data._id);
 			goToStep(currentStep + 1);
 		}
@@ -79,7 +81,7 @@ function StepTwo() {
 								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4  lg:text-base",
 
 								formState.errors.title &&
-									"border-abeg-error-20 placeholder:text-abeg-error-20 focus-visible:outline-abeg-error-20"
+									"border-abeg-error-20 focus-visible:outline-abeg-error-20"
 							)}
 						/>
 
@@ -138,7 +140,7 @@ function StepTwo() {
 								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4  lg:text-base",
 
 								formState.errors.goal &&
-									"border-abeg-error-20 placeholder:text-abeg-error-20 focus-visible:outline-abeg-error-20"
+									"border-abeg-error-20 focus-visible:outline-abeg-error-20"
 							)}
 						/>
 

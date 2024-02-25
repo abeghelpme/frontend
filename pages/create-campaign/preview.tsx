@@ -1,8 +1,10 @@
 import { FormActionButton, Heading } from "@/components/create-campaign";
 import { Button } from "@/components/ui";
+import type { User } from "@/interfaces";
 import { getDateFromString } from "@/lib/helpers/campaign";
 import { useElementList } from "@/lib/hooks";
 import { DummyAvatar, MoneyIcon } from "@/public/assets/icons/campaign";
+import { useSession } from "@/store";
 import { useFormStore } from "@/store/formStore";
 import { format } from "date-fns";
 import Image from "next/image";
@@ -19,6 +21,13 @@ function Preview() {
 		(category) => category.id === stepOneData.categoryId
 	)?.name;
 
+	const { user } = useSession((state) => state);
+
+	const fundraiserTarget =
+		stepTwoData.fundraiser === "INDIVIDUAL"
+			? `${(user as User).firstName} ${(user as User).lastName}`
+			: stepTwoData.fundraiser;
+
 	const campaignDeadline = getDateFromString(stepTwoData.deadline);
 
 	const imageUrls = stepThreeData.photos.map((file) =>
@@ -27,7 +36,7 @@ function Preview() {
 
 	return (
 		<div className="mt-8 flex min-h-screen flex-col items-center justify-between lg:mt-12">
-			<header className="mx-auto flex w-full flex-col gap-2 px-6 max-lg:max-w-[480px] lg:px-28 lg:text-2xl">
+			<header className="flex w-full flex-col gap-2 px-6 max-lg:max-w-[480px] lg:px-28 lg:text-2xl">
 				<Heading as="h1" className="text-abeg-primary">
 					Campaign Preview
 				</Heading>
@@ -37,7 +46,7 @@ function Preview() {
 				</p>
 			</header>
 
-			<main className="bg-contours-old mt-4 flex flex-col bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:mt-12 lg:px-28">
+			<main className="mt-4 flex flex-col bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:mt-12 lg:px-28">
 				<section className="flex flex-col gap-2 lg:gap-8">
 					<Heading as="h2" className="text-xl lg:text-[32px]">
 						{`${stepTwoData.title[0].toUpperCase()}${stepTwoData.title.slice(
@@ -89,10 +98,7 @@ function Preview() {
 							<div className="flex items-center gap-2 text-xs lg:text-base">
 								<DummyAvatar className={"shrink-0 lg:size-8"} />
 
-								<p>
-									{stepTwoData.fundraiser || "Anonymous"} is in charge of this
-									fundraiser.
-								</p>
+								<p>{fundraiserTarget} is in charge of this fundraiser.</p>
 							</div>
 						</article>
 					</div>
@@ -144,7 +150,7 @@ function Preview() {
 						<p className="lg:text-xl.4">
 							Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
 						</p>
-						<ul className="grid grid-cols-5 justify-items-center gap-x-0 gap-y-6 lg:grid-cols-3">
+						<ul className="grid grid-cols-2 justify-items-center gap-x-0 gap-y-6 lg:grid-cols-3">
 							<TagList
 								each={stepOneData.tags}
 								render={(tag, index) => (
@@ -165,8 +171,7 @@ function Preview() {
 
 					<div>
 						<p className="flex flex-col lg:text-xl">
-							{stepTwoData.fundraiser === "INDIVIDUAL" ? "You" : "Anonymous"}{" "}
-							are in in charge of this fundraiser.
+							{fundraiserTarget} is in charge of this fundraiser.
 							<span className="mt-8">{stepOneData.country}</span>
 						</p>
 
