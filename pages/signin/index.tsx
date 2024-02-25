@@ -43,7 +43,7 @@ const Login = () => {
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
-	console.log(skip2FA);
+
 	const handleOption = async () => {
 		await localStorage.setItem(
 			"skip-2FA",
@@ -71,7 +71,7 @@ const Login = () => {
 					query: { signup: true, email: data.email.toLowerCase() },
 				});
 			}
-			return toast.error(error.status, {
+			toast.error(error.status, {
 				description: error.message,
 			});
 		} else {
@@ -116,7 +116,7 @@ const Login = () => {
 				}}
 			>
 				<div className="space-y-1">
-					<label htmlFor="email" className="text-sm md:text-lg font-medium">
+					<label htmlFor="email" className="text-sm font-medium md:text-lg">
 						Email Address
 					</label>
 					<Input
@@ -135,8 +135,8 @@ const Login = () => {
 						errorMsg={errors.email?.message!}
 					/>
 				</div>
-				<div className="space-y-1 mt-2 md:mt-4">
-					<label htmlFor="password" className="text-sm md:text-lg font-medium">
+				<div className="mt-2 space-y-1 md:mt-4">
+					<label htmlFor="password" className="text-sm font-medium md:text-lg">
 						Password
 					</label>
 					<Input
@@ -154,10 +154,10 @@ const Login = () => {
 						errorMsg={errors.password?.message!}
 					/>
 				</div>
-				<div className="flex mb-4 mt-2 justify-end ">
+				<div className="mb-4 mt-2 flex justify-end ">
 					<Link
 						href="/forgot-password"
-						className="text-abeg-primary text-sm font-semibold hover:underline md:text-base"
+						className="text-sm font-semibold text-abeg-primary hover:underline md:text-base"
 					>
 						Forgot Password?
 					</Link>
@@ -167,7 +167,7 @@ const Login = () => {
 					ref={cfTurnStile}
 					onStatusChange={handleBotStatus}
 				/>
-				<div className="flex flex-col gap-6 mt-6">
+				<div className="mt-6 flex flex-col gap-6">
 					<CustomDialog
 						openDialog={openModal}
 						setOpen={() => setOpenModal(openModal)}
