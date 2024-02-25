@@ -79,7 +79,6 @@ const Login = () => {
 			});
 
 			reset();
-			updateUser(responseData?.data as User);
 			if (responseData?.data?.twoFA?.active === false) {
 				if (skip2FA === "true") {
 					router.push("/dashboard");
@@ -89,6 +88,7 @@ const Login = () => {
 						shallow: true,
 					});
 				}
+				updateUser(responseData?.data as User);
 			} else {
 				router.push("/2fa/authenticate");
 			}

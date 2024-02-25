@@ -19,7 +19,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
 		"/signup/verification",
 		"/verify-email",
 		"/verify-email/success",
-		// "/reset-password",
+		"/reset-password",
 		"/forgot-password",
 	];
 
