@@ -163,4 +163,4 @@ const ResetPassword = () => {
 	);
 };
 export default ResetPassword;
-ResetPassword.protect = true;
+// ResetPassword.protect = true;
