@@ -147,8 +147,13 @@ function Preview() {
 						<ul className="grid grid-cols-5 justify-items-center gap-x-0 gap-y-6 lg:grid-cols-3">
 							<TagList
 								each={stepOneData.tags}
-								render={(tag) => (
-									<li className="font-medium lg:text-xl">#{tag}</li>
+								render={(tag, index) => (
+									<li
+										key={`${tag}-${index}`}
+										className="font-medium lg:text-xl"
+									>
+										#{tag}
+									</li>
 								)}
 							/>
 						</ul>
