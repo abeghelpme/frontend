@@ -7,7 +7,7 @@ import {
 	Logo,
 	MenuIcon,
 	NotificationIcon,
-	PlusButtonIcon,
+	PlusIcon,
 } from "./dashboardIcons";
 
 type TopNavProps = {
@@ -32,7 +32,7 @@ const DashboardTopNav = ({ toggleSidebar }: TopNavProps) => {
 			<div className="flex items-center md:gap-2 md:divide-x-2 md:divide-gray-300">
 				<Button className="md:flex hidden flex-1 items-center rounded-md bg-teal-700 p-2">
 					<span className="pr-2">
-						<PlusButtonIcon />
+						<PlusIcon />
 					</span>
 					<span>Create Campaign</span>
 				</Button>

@@ -87,7 +87,6 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 		/>
 	);
 };
-
 const AuthApp = ({ otp, setOtp, handleSubmit, loading }: Props) => {
 	return (
 		<OtpInputDisplay
@@ -135,16 +134,16 @@ const AuthenticateUser = () => {
 			setLoading(false);
 			toast.error(error.status, {
 				description: error.message,
-				duration: 2000,
+				duration: 1500,
 			});
 		} else {
 			updateUser(data?.data as User);
 			setLoading(false);
 			toast.success("Success", {
 				description: (data as { message: string }).message,
-				duration: 2000,
+				duration: 1500,
 			});
-			void router.push("/dashboard");
+			router.push("/dashboard");
 		}
 	};
 	return (
@@ -176,4 +175,4 @@ const AuthenticateUser = () => {
 
 export default AuthenticateUser;
 
-AuthenticateUser.protect = true;
+// AuthenticateUser.protect = true;
