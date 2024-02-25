@@ -33,7 +33,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
 
 		setTimeout(() => {
 			void router.push(route);
-		}, 1000);
+		}, 500);
 	};
 
 	if (isInaccessible && user) {
@@ -44,7 +44,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
 		}
 	}
 	if (!isInaccessible && !user) {
-		void router.push("/signin");
+		redirect("/signin", "You are not signed in");
 		return <Loader message="You are not signed in" />;
 	}
 
