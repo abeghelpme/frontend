@@ -32,6 +32,7 @@ const config = {
 				unfocused: "#A8CCCC",
 				semiWhite: "#E6EAEE",
 				inputBorder: "rgba(124, 148, 107, 0.25)",
+				headerDivider: "#D4D4D4",
 				otpBorder: "rgba(0, 128, 128, 0.5)",
 				abeg: {
 					primary: "#008080",

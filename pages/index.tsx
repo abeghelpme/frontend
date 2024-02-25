@@ -60,7 +60,12 @@ const Home: WithPageLayout = () => {
 			/>
 			<main className="min-h-svh w-w90 mx-auto lg:w-full lg:ml-0 flex flex-1 lg:gap-12 xl:gap-24">
 				<div className="hidden lg:block after:absolute lg:w-3/5 xl:w-[70%] after:inset-0 after:bg-[#00000080] relative">
-					<Image src={bg} alt="" className="object-cover w-full h-full" />
+					<Image
+						src={bg}
+						alt=""
+						priority
+						className="object-cover w-full h-full"
+					/>
 				</div>
 				<div className="w-full text-center md:w-1/2 md:mx-auto lg:w-[30%] lg:mr-[10%] xl:mr-[5%] lg:ml-0 md:max-w-wAuthFlo flex flex-col pt-14 lg:pt-0">
 					<div className="lg:absolute top-12 left-7">

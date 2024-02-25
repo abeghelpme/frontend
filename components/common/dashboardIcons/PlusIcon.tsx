@@ -1,4 +1,4 @@
-const PlusButtonIcon = () => (
+const PlusIcon = () => (
 	<svg
 		width="12"
 		height="12"
@@ -12,4 +12,4 @@ const PlusButtonIcon = () => (
 		/>
 	</svg>
 );
-export default PlusButtonIcon;
+export default PlusIcon;
