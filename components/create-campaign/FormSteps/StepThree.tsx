@@ -67,19 +67,19 @@ function StepThree() {
 
 	return (
 		<section className="w-full">
-			<Heading as="h2" className="text-abeg-primary">
+			<Heading as="h1" className="text-abeg-primary">
 				Your story matters and this is where it begins.
 			</Heading>
 
 			<form
 				id={STEP_DATA_KEY_LOOKUP[3]}
-				className="mt-@3.2 lg:mt-@4.8"
+				className="mt-8 lg:mt-12"
 				onSubmit={(event) => {
 					event.preventDefault();
 					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
-				<ol className="gap-@2.4 flex flex-col">
+				<ol className="flex flex-col gap-6">
 					<li>
 						<label
 							htmlFor="photos"
@@ -111,7 +111,7 @@ function StepThree() {
 							Campaign Story
 						</label>
 
-						<p className="my-@1.6 text-xs lg:text-base">
+						<p className="my-4 text-xs lg:text-base">
 							A detailed description of the campaign, outlining the need for
 							funding and how the funds will be used.
 						</p>

@@ -35,7 +35,7 @@ function ImagePreview(props: ImagePreviewProps) {
 	return (
 		<ul
 			className={cn(
-				"mt-@1.3 custom-scrollbar relative max-h-[14rem] divide-y divide-gray-600 overflow-y-auto overscroll-y-contain rounded-md border border-gray-600",
+				"custom-scrollbar relative mt-[13px] max-h-[130px] divide-y divide-gray-600 overflow-y-auto overscroll-y-contain rounded-md border border-gray-600",
 				imageFiles.length === 0 && "hidden"
 			)}
 		>
@@ -47,12 +47,12 @@ function ImagePreview(props: ImagePreviewProps) {
 					return (
 						<li
 							key={file.name}
-							className="px-@1 py-@0.8 flex items-center justify-between text-xs"
+							className="flex items-center justify-between p-2 text-xs"
 						>
-							<div className="gap-@0.8 flex min-w-0 items-center">
+							<div className="flex min-w-0 items-center gap-2">
 								<Image
 									src={imageUrls[index]}
-									className="size-[4rem] shrink-0 rounded-md object-cover"
+									className="size-[40px] shrink-0 rounded-md object-cover"
 									width={40}
 									height={40}
 									alt="thumbnail"

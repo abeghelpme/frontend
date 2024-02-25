@@ -13,6 +13,7 @@ type ForProps<TArray extends unknown[]> =
 function For<TArrayProp extends unknown[]>(props: ForProps<TArrayProp>) {
 	const { each: listOfItems, render, children } = props;
 
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (listOfItems == null) {
 		return [];
 	}

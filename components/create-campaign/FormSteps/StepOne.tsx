@@ -101,19 +101,19 @@ function StepOne() {
 
 	return (
 		<section className="w-full">
-			<Heading as="h2" className="text-abeg-primary">
+			<Heading as="h1" className="text-abeg-primary">
 				Create a campaign to fund your passion or cause.
 			</Heading>
 
 			<form
 				id={STEP_DATA_KEY_LOOKUP[currentStep]}
-				className="mt-@3.2"
+				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();
 					void handleSubmit(onFormSubmit)(event);
 				}}
 			>
-				<ol className="gap-@2.4 flex flex-col">
+				<ol className="flex flex-col gap-6">
 					<li>
 						<label
 							htmlFor="categoryId"
@@ -133,7 +133,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-@1.6 px-@0.8 py-@2.3 lg:px-@1.6 lg:py-@3.4 rounded-[10px] border-unfocused text-xs data-[placeholder]:text-placeholder lg:text-base"
+										className="mt-4 h-[50px] rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px]  lg:px-4 lg:text-base"
 									>
 										<Select.Value placeholder="Select what category best suit your fundraiser" />
 									</Select.Trigger>
@@ -174,7 +174,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-@1.6 px-@0.8 py-@2.3 lg:px-@1.6 lg:py-@3.4 rounded-[10px] border-unfocused text-xs data-[placeholder]:text-placeholder lg:text-base"
+										className="mt-4 h-[50px] rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px] lg:px-4 lg:text-base"
 									>
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
@@ -204,38 +204,38 @@ function StepOne() {
 							Campaign Tags
 						</label>
 
-						<div className="mt-@1.6 gap-@0.8 flex items-center">
+						<div className="mt-4 flex items-center gap-2">
 							<input
 								ref={tagInputRef}
 								name="tags"
 								type="text"
 								placeholder="Add hashtags or search keywords to your campaign"
-								className="px-@0.8 py-@1.6 focus-visible:outlineabeg-primary lg:px-@1.6 lg:py-@2.2 w-full rounded-[10px] border border-unfocused text-xs lg:text-base"
+								className="focus-visible:outlineabeg-primary w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs lg:p-4 lg:text-base"
 								onKeyDown={handleAddTags}
 							/>
 
 							<Button
 								type="button"
 								variant="secondary"
-								className="borderabeg-primary px-@1.2 py-@0.8 lg:px-@2.8 lg:py-@1.2 rounded-md text-xs font-semibold text-abeg-primary lg:text-base"
+								className="rounded-md border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base"
 								onClick={handleAddTags}
 							>
 								Add
 							</Button>
 						</div>
 
-						<div className="mt-@1.6 gap-@1.6 flex flex-col">
+						<div className="mt-4 flex flex-col gap-4">
 							<span className="text-xs text-abeg-primary">
 								{stepOneData.tags.length}/5 tags
 							</span>
 
-							<ul className="gap-@0.8 flex flex-wrap text-xs font-medium text-abeg-primary">
+							<ul className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary">
 								<TagList
 									each={stepOneData.tags}
 									render={(tag) => (
 										<li
 											key={tag}
-											className="borderabeg-primary flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
+											className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
 										>
 											<p>#{tag}</p>
 
@@ -244,7 +244,7 @@ function StepOne() {
 												type="button"
 												onClick={handleRemoveTags(tag)}
 											>
-												<CrossIcon className="size-@1" />
+												<CrossIcon className="size-2.5" />
 											</button>
 										</li>
 									)}
