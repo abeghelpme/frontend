@@ -16,13 +16,13 @@ import ImagePreview from "../ImagePreview";
 import TiptapEditor from "../TipTapEditor";
 
 function StepThree() {
+	const router = useRouter();
+
 	const {
 		campaignId,
 		stepThreeData,
 		actions: { setData },
 	} = useFormStore((state) => state);
-
-	const router = useRouter();
 
 	const {
 		control,
@@ -37,7 +37,7 @@ function StepThree() {
 
 	useWatchFormStatus(formState);
 
-	const onFormSubmit = async (data: StepThreeData) => {
+	const onSubmit = async (data: StepThreeData) => {
 		setData({ step: 3, data });
 
 		const formData = new FormData();
@@ -76,7 +76,7 @@ function StepThree() {
 				className="mt-8 lg:mt-12"
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onFormSubmit)(event);
+					void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-6">

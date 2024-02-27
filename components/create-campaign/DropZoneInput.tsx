@@ -44,6 +44,12 @@ function DropZoneInput(props: DropZoneInputProps) {
 		setData({ step: 3, data: { photos: newFileState } });
 
 		onChange(newFileState);
+
+		toast.success("Success", {
+			description: `Uploaded ${validFilesArray.length} file${
+				validFilesArray.length > 1 ? "s" : ""
+			}!`,
+		});
 	};
 
 	const handleDragOver = (event: DragEvent<HTMLDivElement>) => {

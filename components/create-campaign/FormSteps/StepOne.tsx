@@ -1,6 +1,10 @@
-import { Button, Select } from "@/components/ui";
-import { callApi, zodValidator } from "@/lib";
-import { targetCountries, validateTagValue } from "@/lib/helpers/campaign";
+import { Select } from "@/components/ui";
+import { zodValidator } from "@/lib";
+import {
+	callBackendApi,
+	targetCountries,
+	validateTagValue,
+} from "@/lib/helpers/campaign";
 import { useElementList, useWatchFormStatus } from "@/lib/hooks";
 import { CrossIcon } from "@/public/assets/icons/campaign";
 import {
@@ -43,12 +47,13 @@ function StepOne() {
 
 	useWatchFormStatus(formState);
 
-	const onFormSubmit = async (data: StepOneData) => {
+	const onSubmit = async (data: StepOneData) => {
 		setData({ step: 1, data });
 
-		const { data: dataInfo, error } = await callApi<{
-			data: { _id: string };
-		}>("/campaign/create/one", data);
+		const { data: dataInfo, error } = await callBackendApi<{ _id: string }>(
+			`/campaign/create/one`,
+			data
+		);
 
 		if (error) {
 			toast.error(error.status, {
@@ -58,7 +63,7 @@ function StepOne() {
 			return;
 		}
 
-		if (dataInfo) {
+		if (dataInfo.data) {
 			setCampaignId(dataInfo.data._id);
 			goToStep(currentStep + 1);
 		}
@@ -110,7 +115,7 @@ function StepOne() {
 				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onFormSubmit)(event);
+					void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-6">
@@ -231,9 +236,9 @@ function StepOne() {
 							<ul className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary">
 								<TagList
 									each={stepOneData.tags}
-									render={(tag) => (
+									render={(tag, index) => (
 										<li
-											key={tag}
+											key={`${tag}-${index}`}
 											className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
 										>
 											<p>#{tag}</p>

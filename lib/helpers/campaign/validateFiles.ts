@@ -1,17 +1,20 @@
 import { toast } from "sonner";
 import {
-	MAX_FILES_QUANTITY,
+	MAX_FILE_QUANTITY,
 	MAX_FILE_SIZE,
 	acceptedFilesString,
 	allowedFileTypes,
 } from "./constants";
 
-const isFileUnique = (fileArray: File[], file: File) => {
-	return fileArray.every((fileItem) => fileItem.name !== file.name);
-};
-
-const validateFiles = (newFileList: FileList, exisitingFileArray?: File[]) => {
+const validateFiles = (
+	newFileList: FileList,
+	exisitingFileArray: File[] = []
+) => {
 	const validFilesArray: File[] = [];
+
+	const isFileUnique = (file: File) => {
+		return exisitingFileArray.every((fileItem) => fileItem.name !== file.name);
+	};
 
 	for (const file of newFileList) {
 		if (!allowedFileTypes.includes(file.type)) {
@@ -30,22 +33,27 @@ const validateFiles = (newFileList: FileList, exisitingFileArray?: File[]) => {
 			continue;
 		}
 
-		if (!exisitingFileArray) {
-			validFilesArray.push(file);
+		if (!isFileUnique(file)) {
+			toast.error("Error", {
+				description: `File: "${file.name}" has already been selected`,
+			});
+
 			continue;
 		}
 
-		if (!isFileUnique(exisitingFileArray, file)) continue;
+		const isMaxFileQuantityReached =
+			validFilesArray.length === MAX_FILE_QUANTITY ||
+			exisitingFileArray.length + validFilesArray.length === MAX_FILE_QUANTITY;
+
+		if (isMaxFileQuantityReached) {
+			toast.error("Error", {
+				description: `Cannot upload more than ${MAX_FILE_QUANTITY} files`,
+			});
+
+			return validFilesArray;
+		}
 
 		validFilesArray.push(file);
-	}
-
-	if (validFilesArray.length > MAX_FILES_QUANTITY) {
-		toast.error("Error", {
-			description: `Cannot upload more than ${MAX_FILES_QUANTITY} files`,
-		});
-
-		return validFilesArray.slice(0, MAX_FILES_QUANTITY);
 	}
 
 	return validFilesArray;

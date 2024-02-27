@@ -5,8 +5,8 @@ import type {
 } from "@/lib/helpers/polymorphism-helper";
 
 // eslint-disable-next-line no-use-before-define
-type HeadingElementsType = keyof typeof semanticHeadings;
-type HeadingProps<TElement extends HeadingElementsType> = Required<
+type HeadingElements = keyof typeof semanticHeadings;
+type HeadingProps<TElement extends HeadingElements> = Required<
 	AsProp<TElement>
 >;
 
@@ -17,7 +17,7 @@ const semanticHeadings = {
 	h4: "font-medium text-xs lg:text-xl",
 };
 
-function Heading<TElement extends HeadingElementsType = "h1">(
+function Heading<TElement extends HeadingElements = "h1">(
 	props: PolymorphicProps<TElement, HeadingProps<TElement>>
 ) {
 	const {

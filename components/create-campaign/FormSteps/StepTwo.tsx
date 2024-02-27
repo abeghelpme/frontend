@@ -29,7 +29,7 @@ function StepTwo() {
 
 	useWatchFormStatus(formState);
 
-	const onFormSubmit = async (data: StepTwoData) => {
+	const onSubmit = async (data: StepTwoData) => {
 		setData({ step: 2, data });
 
 		const { data: dataInfo, error } = await callApi<{
@@ -61,7 +61,7 @@ function StepTwo() {
 				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onFormSubmit)(event);
+					void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-6">
