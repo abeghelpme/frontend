@@ -13,7 +13,7 @@ export const assertENV = (
 	return variable;
 };
 
-// typeof assertions
+// ypeof assertions
 export const isArray = (value: unknown): value is unknown[] =>
 	Array.isArray(value);
 
