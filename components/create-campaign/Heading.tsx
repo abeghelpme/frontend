@@ -1,14 +1,12 @@
 import { cn } from "@/lib";
-import type {
-	AsProp,
-	PolymorphicProps,
-} from "@/lib/helpers/polymorphism-helper";
+import type { PolymorphicProps, RequiredAsProp } from "@/lib/type-helpers/polymorphism-helper";
 
 // eslint-disable-next-line no-use-before-define
 type HeadingElements = keyof typeof semanticHeadings;
-type HeadingProps<TElement extends HeadingElements> = Required<
-	AsProp<TElement>
->;
+type HeadingProps<TElement extends HeadingElements> = RequiredAsProp<TElement> & {
+	children: React.ReactNode;
+	className?: string;
+};
 
 const semanticHeadings = {
 	h1: "font-bold text-base lg:text-2xl",
@@ -20,12 +18,7 @@ const semanticHeadings = {
 function Heading<TElement extends HeadingElements = "h1">(
 	props: PolymorphicProps<TElement, HeadingProps<TElement>>
 ) {
-	const {
-		as: HeadingElement = "h1",
-		children,
-		className,
-		...restOfProps
-	} = props;
+	const { as: HeadingElement = "h1", children, className, ...restOfProps } = props;
 
 	const HEADING_CLASSES = cn(semanticHeadings[HeadingElement], className);
 

@@ -18,8 +18,7 @@ const config = {
 				contours: "url('/assets/images/shared/bg-contours.png')",
 				authBg: "url('/assets/images/auth/auth-bg-jar.svg')",
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-				"gradient-conic":
-					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+				"gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
 
 			boxShadow: {
@@ -30,6 +29,7 @@ const config = {
 			colors: {
 				overlay: "rgba(72, 72, 72, 0.5)",
 				placeholder: "#8D8B8B",
+				lightGreen: "#D3E5E5",
 				unfocused: "#A8CCCC",
 				semiWhite: "#E6EAEE",
 				inputBorder: "rgba(124, 148, 107, 0.25)",
@@ -121,11 +121,7 @@ const config = {
 		require("@tailwindcss/typography"),
 		plugin(function ({ addVariant, addComponents, theme }) {
 			addVariant("progress-unfilled", ["&::-webkit-progress-bar", "&"]);
-			addVariant("progress-filled", [
-				"&::-webkit-progress-value",
-				"&::-moz-progress-bar",
-				"&",
-			]);
+			addVariant("progress-filled", ["&::-webkit-progress-value", "&::-moz-progress-bar", "&"]);
 
 			addComponents({
 				".custom-scrollbar": {

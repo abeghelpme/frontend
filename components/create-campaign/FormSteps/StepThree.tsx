@@ -1,11 +1,8 @@
+import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import { callBackendApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
-import {
-	STEP_DATA_KEY_LOOKUP,
-	type StepThreeData,
-	useFormStore,
-} from "@/store/formStore";
+import { STEP_DATA_KEY_LOOKUP, type StepThreeData, useFormStore } from "@/store/formStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
@@ -20,9 +17,9 @@ function StepThree() {
 	const router = useRouter();
 
 	const {
-		campaignId,
+		campaignInfo,
 		stepThreeData,
-		actions: { setData },
+		actions: { setData, setCampaignInfo },
 	} = useFormStore((state) => state);
 
 	const {
@@ -31,7 +28,7 @@ function StepThree() {
 		formState,
 		setValue: setFormValue,
 	} = useForm({
-		mode: "onTouched",
+		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepThree")!),
 		defaultValues: stepThreeData,
 	});
@@ -45,10 +42,12 @@ function StepThree() {
 
 		formData.set("story", data.story);
 		formData.set("storyHtml", data.storyHtml);
-		formData.set("campaignId", campaignId);
+		formData.set("campaignId", campaignInfo.id);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
-		const { error } = await callBackendApi(`/campaign/create/three`, formData);
+		const { data: dataInfo, error } = await callBackendApi<
+			Pick<Campaign, "url" | "_id" | "creator">
+		>(`/campaign/create/three`, formData);
 
 		if (error) {
 			toast.error(error.status, {
@@ -58,6 +57,13 @@ function StepThree() {
 			return;
 		}
 
+		if (!dataInfo.data) return;
+
+		setCampaignInfo({
+			id: dataInfo.data._id,
+			creator: dataInfo.data.creator,
+			url: dataInfo.data.url,
+		});
 		void router.push("/create-campaign/preview");
 	};
 
@@ -77,10 +83,7 @@ function StepThree() {
 			>
 				<ol className="flex flex-col gap-6">
 					<li>
-						<label
-							htmlFor="photos"
-							className="text-sm font-semibold lg:text-xl"
-						>
+						<label htmlFor="photos" className="text-sm font-semibold lg:text-xl">
 							Campaign Cover Image
 						</label>
 
@@ -89,10 +92,7 @@ function StepThree() {
 							name="photos"
 							render={({ field }) => (
 								<>
-									<DropZoneInput
-										value={field.value}
-										onChange={field.onChange}
-									/>
+									<DropZoneInput value={field.value} onChange={field.onChange} />
 
 									<FormErrorMessage formState={formState} errorField="photos" />
 
@@ -108,8 +108,8 @@ function StepThree() {
 						</label>
 
 						<p className="my-4 text-xs lg:text-base">
-							A detailed description of the campaign, outlining the need for
-							funding and how the funds will be used.
+							A detailed description of the campaign, outlining the need for funding and how
+							the funds will be used.
 						</p>
 
 						<Controller

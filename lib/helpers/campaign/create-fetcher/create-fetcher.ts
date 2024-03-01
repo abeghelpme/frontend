@@ -1,4 +1,4 @@
-import { isObject } from "../../global-type-helpers";
+import { isObject } from "@/lib/type-helpers";
 import type {
 	AbegErrorResponse,
 	AbegSuccessResponse,
@@ -8,9 +8,7 @@ import type {
 } from "./create-fetcher.types";
 import { getResponseData } from "./create-fetcher.utils";
 
-const createFetcher = <TBaseData, TBaseError>(
-	baseConfig: BaseRequestConfig
-) => {
+const createFetcher = <TBaseData, TBaseError>(baseConfig: BaseRequestConfig) => {
 	const {
 		baseURL,
 		timeout,
@@ -22,26 +20,26 @@ const createFetcher = <TBaseData, TBaseError>(
 
 	const abortControllerStore = new Map<`/${string}`, AbortController>();
 
-	// Overloads for better TypeScript DX
-	async function callBackendApi<TData = TBaseData, TError = TBaseError>(
+	// Overload 1
+	async function callApi<TData = TBaseData, TError = TBaseError>(
 		url: `/${string}`
 	): CallApiResult<TData, TError>;
 
-	async function callBackendApi<TData = TBaseData, TError = TBaseError>(
+	// Overload 2
+	async function callApi<TData = TBaseData, TError = TBaseError>(
 		url: `/${string}`,
 		bodyData: Record<string, unknown> | FormData
 	): CallApiResult<TData, TError>;
 
-	async function callBackendApi<TData = TBaseData, TError = TBaseError>(
+	// Overload 3
+	async function callApi<TData = TBaseData, TError = TBaseError>(
 		url: `/${string}`,
 		bodyData: Record<string, unknown> | FormData,
 		signal: AbortSignal
 	): CallApiResult<TData, TError>;
 
 	// Implementation
-	async function callBackendApi<TData = TBaseData, TError = TBaseError>(
-		...params: CallApiParams
-	) {
+	async function callApi<TData = TBaseData, TError = TBaseError>(...params: CallApiParams) {
 		const [url, bodyData, signal] = params;
 
 		const prevController = abortControllerStore.get(url);
@@ -55,7 +53,10 @@ const createFetcher = <TBaseData, TBaseError>(
 
 		const timeoutId =
 			typeof timeout === "number"
-				? window.setTimeout(() => controller.abort(), timeout)
+				? setTimeout(() => {
+						controller.abort();
+						throw new Error(`Request timed out after ${timeout}ms`, { cause: "Timeout" });
+					}, timeout)
 				: null;
 
 		try {
@@ -69,7 +70,7 @@ const createFetcher = <TBaseData, TBaseError>(
 					? {
 							"content-type": "application/json",
 							accept: "application/json",
-					  }
+						}
 					: undefined,
 
 				...restOfBaseConfig,
@@ -77,8 +78,7 @@ const createFetcher = <TBaseData, TBaseError>(
 
 			// Response has http errors
 			if (!response.ok) {
-				const errorResponse =
-					await getResponseData<AbegErrorResponse<TError>>(response);
+				const errorResponse = await getResponseData<AbegErrorResponse<TError>>(response);
 
 				await onResponseError?.({
 					...response,
@@ -101,10 +101,13 @@ const createFetcher = <TBaseData, TBaseError>(
 
 			// Exhaustive error handling for request failures
 		} catch (error) {
-			if (error instanceof DOMException && error.name === "AbortError") {
-				// eslint-disable-next-line no-console
+			if (
+				error instanceof DOMException &&
+				error.name === "AbortError" &&
+				error.cause === "Timeout"
+			) {
 				console.info(
-					`%cAbortError: Request to ${url} timed out after ${timeout}ms`,
+					`%cAbortError: ${error.message}`,
 					"color: red; font-weight: 500; font-size: 14px;"
 				);
 
@@ -112,7 +115,7 @@ const createFetcher = <TBaseData, TBaseError>(
 					data: null,
 					error: {
 						status: "Error",
-						message: `Request timed out after ${timeout}ms`,
+						message: error.message,
 					},
 				};
 			}
@@ -121,19 +124,18 @@ const createFetcher = <TBaseData, TBaseError>(
 				data: null,
 				error: {
 					status: "Error",
-					message:
-						(error as { message?: string }).message ?? defaultErrorMessage,
+					message: (error as { message?: string }).message ?? defaultErrorMessage,
 				},
 			};
 
 			// Clean up the timeout and remove the now unneeded AbortController from store
 		} finally {
 			abortControllerStore.delete(url);
-			timeoutId !== null && window.clearTimeout(timeoutId);
+			timeoutId !== null && clearTimeout(timeoutId);
 		}
 	}
 
-	return callBackendApi;
+	return callApi;
 };
 
 export { createFetcher };

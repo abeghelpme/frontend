@@ -1,28 +1,22 @@
 import { cn } from "@/lib";
+import type { ForwardedRefType } from "@/lib/type-helpers";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
 
-interface ButtonProps extends React.ComponentPropsWithRef<"button"> {
+type ButtonProps = {
 	className?: string;
 	fullWidth?: boolean;
 	children: React.ReactNode;
 	loading?: boolean;
 	size?: "sm" | "base" | "lg";
 	variant?: "primary" | "secondary" | "danger";
-}
+} & React.ComponentPropsWithRef<"button">
 
 const ButtonUI = (
-	{
-		className,
-		children,
-		fullWidth,
-		variant,
-		size,
-		loading,
-		...props
-	}: ButtonProps,
-	ref: React.ForwardedRef<HTMLButtonElement>
+	props: ButtonProps,
+	ref: ForwardedRefType<HTMLButtonElement>
 ) => {
+	const{ className, children, fullWidth, variant, size, loading = false, ...restOfProps } = props;
 	const buttonClass = {
 		"bg-abeg-error-20": variant === "danger",
 		"border-abeg-primary text-abeg-primary border": variant === "secondary",
@@ -35,18 +29,18 @@ const ButtonUI = (
 	return (
 		<button
 			className={cn(
-				"rounded-lg px-4 py-3 md:py-4 md:px-5 text-sm md:text-base font-medium text-white disabled:bg-abeg-neutral-50",
+				"rounded-lg px-4 py-3 text-sm font-medium text-white disabled:bg-abeg-neutral-50",
 				buttonClass,
 				className
 			)}
 			ref={ref}
-			{...props}
+			{...restOfProps}
 		>
-			{loading! ? (
+			{loading ? (
 				<div role="status" className="flex items-center justify-center gap-2">
 					<svg
 						aria-hidden="true"
-						className="h-5 w-5 animate-spin fill-blue-500 text-gray-200"
+						className="size-5 animate-spin fill-blue-500 text-gray-200"
 						viewBox="0 0 100 101"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
@@ -80,12 +74,9 @@ export const buttonVariants = cva(
 		variants: {
 			variant: {
 				default: "bg-primary text-primary-foreground hover:bg-primary/90",
-				destructive:
-					"bg-destructive text-destructive-foreground hover:bg-destructive/90",
-				outline:
-					"border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-				secondary:
-					"bg-secondary text-secondary-foreground hover:bg-secondary/80",
+				destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+				outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+				secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
 				ghost: "hover:bg-accent hover:text-accent-foreground",
 				link: "text-primary underline-offset-4 hover:underline",
 			},

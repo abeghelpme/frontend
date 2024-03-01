@@ -1,19 +1,12 @@
 import { cn } from "@/lib";
+import type { ForwardedRefType, InferProps } from "@/lib/type-helpers";
 import * as TogglePrimitive from "@radix-ui/react-toggle";
 import { type VariantProps, cva } from "class-variance-authority";
 import { forwardRef } from "react";
 
-type ForwardedRefType<TComponent extends React.ElementType> =
-	React.ForwardedRef<React.ElementRef<TComponent>>;
+type ToggleProps = InferProps<typeof TogglePrimitive.Root> & VariantProps<typeof toggleVariants>;
 
-type TogglePropsType<TComponent extends React.ElementType> =
-	React.ComponentPropsWithoutRef<TComponent> &
-		VariantProps<typeof toggleVariants>;
-
-function Toggle(
-	props: TogglePropsType<typeof TogglePrimitive.Root>,
-	ref: ForwardedRefType<typeof TogglePrimitive.Root>
-) {
+function Toggle(props: ToggleProps, ref: ForwardedRefType<typeof TogglePrimitive.Root>) {
 	const { className, variant, size, ...restOfProps } = props;
 
 	return (

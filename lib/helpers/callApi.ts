@@ -1,7 +1,8 @@
 import { useSession } from "@/store";
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
 import { toast } from "sonner";
-import { assertENV, isObject } from "./global-type-helpers";
+import { isObject } from "../type-helpers";
+import { assertENV } from "../type-helpers/assert";
 
 const BACKEND_API = assertENV(process.env.NEXT_PUBLIC_BACKEND_URL, {
 	message: "Please add the NEXT_PUBLIC_BACKEND_API variable to your .env file",
@@ -35,7 +36,7 @@ export const callApi = async <T>(
 				? {
 						"Content-Type": "application/json",
 						Accept: "application/json",
-				  }
+					}
 				: { "Content-Type": "multipart/form-data" },
 			cancelToken: source.token,
 		});
@@ -45,7 +46,7 @@ export const callApi = async <T>(
 		let apiError: ApiError | undefined;
 
 		if (axios.isCancel(error)) {
-			console.log("Request canceled", error.message);
+			console.info("Request canceled", error.message);
 		}
 
 		if (axios.isAxiosError(error) && error.response) {

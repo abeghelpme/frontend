@@ -1,4 +1,6 @@
+import type { Campaign } from "@/interfaces/Campaign";
 import type { targetCountries } from "@/lib/helpers/campaign/constants";
+import type { PrettyOmit } from "@/lib/type-helpers";
 
 export type StepOneData = {
 	categoryId: string;
@@ -19,11 +21,6 @@ export type StepThreeData = {
 	storyHtml: string;
 };
 
-type FormStatus = {
-	isValid: boolean;
-	isSubmitting: boolean;
-};
-
 type SetDataParams =
 	| { step: 1; data: Partial<StepOneData> }
 	| { step: 2; data: Partial<StepTwoData> }
@@ -32,26 +29,33 @@ type SetDataParams =
 export type FormStore = {
 	currentStep: SetDataParams["step"];
 
-	campaignId: string;
+	formStatus: {
+		isValid: boolean;
+		isSubmitting: boolean;
+	};
 
-	fundraiserCategories: Array<{ id: string; name: string }>;
-
-	formStatus: FormStatus;
 	stepOneData: StepOneData;
 	stepTwoData: StepTwoData;
 	stepThreeData: StepThreeData;
 
+	campaignInfo: {
+		id: string;
+		url: string;
+		creator: PrettyOmit<Campaign["creator"], "_id">;
+		categories: Array<{ id: string; name: string }>;
+	};
+
 	actions: {
 		goToStep: (newStep: number) => void;
 
-		setCampaignId: (campaignId: string) => void;
+		setCampaignInfo: (newInfo: Partial<FormStore["campaignInfo"]>) => void;
 
 		setData: ({ step, data }: SetDataParams) => void;
 
-		setFormStatus: (newFormStatus: Partial<FormStatus>) => void;
+		setFormStatus: (newFormStatus: Partial<FormStore["formStatus"]>) => void;
 
-		initializeFormData: () => Promise<void>;
+		initializeFormData: (queryParam?: string) => Promise<void>;
 
-		getFundraiserCategories: () => Promise<void>;
+		initializeCategories: () => Promise<void>;
 	};
 };

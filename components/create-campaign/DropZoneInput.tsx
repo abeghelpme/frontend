@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui";
 import { cn } from "@/lib";
 import { acceptedFilesString, validateFiles } from "@/lib/helpers/campaign";
 import { useToggle } from "@/lib/hooks";
@@ -17,9 +18,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 	const { setData } = useFormStore((state) => state.actions);
 
-	const handleImageUpload = (
-		event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>
-	) => {
+	const handleImageUpload = (event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>) => {
 		event.type === "drop" && toggleIsDragActive(false);
 
 		const fileList =
@@ -72,12 +71,13 @@ function DropZoneInput(props: DropZoneInputProps) {
 				isDragActive && "opacity-60"
 			)}
 		>
-			<button
-				className="rounded-md bg-abeg-primary p-2 text-xs font-bold text-white lg:rounded-lg lg:px-6 lg:py-[13px] lg:text-base"
+			<Button
+				variant="primary"
+				className="rounded-md p-2 text-xs font-bold lg:rounded-lg lg:px-6 lg:py-[13px] lg:text-base"
 				type="button"
 			>
 				Upload
-			</button>
+			</Button>
 
 			<input
 				className="absolute inset-0 cursor-pointer opacity-0"
@@ -88,9 +88,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 			/>
 
 			<div className="mt-[0.9375rem] text-center text-xs lg:text-xs">
-				<p className="italic text-abeg-primary">
-					Click to select files, or Drag {`'n'`} Drop
-				</p>
+				<p className="italic text-abeg-primary">Click to select files, or Drag {`'n'`} Drop</p>
 
 				<p className="mt-1">Support files; PDF, JPG, CSV </p>
 

@@ -1,36 +1,37 @@
-import {
-	Dialog as DialogComp,
-	DialogClose,
-	DialogContent,
-	DialogTrigger,
-} from "@/components/ui";
+import { Dialog } from "@/components/ui";
+import { cn } from "@/lib";
+import type { DialogProps } from "@radix-ui/react-dialog";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
-import { type ReactNode, type SetStateAction } from "react";
+import type { ReactNode } from "react";
 
-type DialogProps = {
+type CustomDialogProps = {
 	children: ReactNode;
 	trigger: ReactNode;
-	openDialog?: boolean;
-	setOpen?: (value: SetStateAction<boolean>) => void;
+	isOpen?: boolean;
+	classNames?: {
+		content?: string;
+	};
+	onOpenChange?: DialogProps["onOpenChange"];
 };
 
-const CustomDialog = ({
-	children,
-	trigger,
-	openDialog,
-	setOpen,
-}: DialogProps) => {
+function CustomDialog(props: CustomDialogProps) {
+	const { children, classNames, trigger, isOpen, onOpenChange } = props;
+
 	return (
-		<DialogComp open={openDialog} onOpenChange={setOpen}>
-			<DialogTrigger asChild>{trigger}</DialogTrigger>
-			<DialogContent className="px-4 pt-9 md:px-6 lg:px-8">
+		<Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
+			<Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+
+			<Dialog.Content className={cn("px-4 pt-9 md:px-6 lg:px-8", classNames?.content)}>
 				{children}
-				<DialogClose className="dar:ring-offset-zinc-950 dar:focus:ring-zinc-300 dar:data-[state=open]:text-zinc-400 absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-zinc-100 data-[state=open]:text-zinc-500 dark:data-[state=open]:bg-zinc-800">
-					<CrossCircledIcon className="h-5 w-5" />
+
+				<Dialog.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-zinc-100 data-[state=open]:text-zinc-500 dark:ring-offset-zinc-950 dark:focus:ring-zinc-300 dark:data-[state=open]:bg-zinc-800 dark:data-[state=open]:text-zinc-400">
+					<CrossCircledIcon className="size-5" />
+
 					<span className="sr-only">Close</span>
-				</DialogClose>
-			</DialogContent>
-		</DialogComp>
+				</Dialog.Close>
+			</Dialog.Content>
+		</Dialog.Root>
 	);
-};
+}
+
 export default CustomDialog;

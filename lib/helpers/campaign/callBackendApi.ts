@@ -1,7 +1,7 @@
 import { useSession } from "@/store";
 import { toast } from "sonner";
-import { assertENV } from "../global-type-helpers";
-import { createFetcher } from "./create-fetcher/create-fetcher";
+import { assertENV } from "../../type-helpers/assert";
+import { createFetcher } from "./create-fetcher";
 
 const BACKEND_API = assertENV(process.env.NEXT_PUBLIC_BACKEND_URL, {
 	message: "Please add the NEXT_PUBLIC_BACKEND_API variable to your .env file",

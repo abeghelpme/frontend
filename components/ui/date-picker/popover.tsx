@@ -1,15 +1,10 @@
 import { cn } from "@/lib";
+import type { ForwardedRefType, InferProps } from "@/lib/type-helpers";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { forwardRef } from "react";
 
-export type ForwardedRefType<TComponent extends React.ElementType> =
-	React.ForwardedRef<React.ElementRef<TComponent>>;
-
-export type PopoverPropsType<TComponent extends React.ElementType> =
-	React.ComponentPropsWithoutRef<TComponent>;
-
 function PopoverContent(
-	props: PopoverPropsType<typeof PopoverPrimitive.Content>,
+	props: InferProps<typeof PopoverPrimitive.Content>,
 	ref: ForwardedRefType<typeof PopoverPrimitive.Content>
 ) {
 	const { className, align = "center", sideOffset = 4, ...restOfProps } = props;

@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import { Loader } from "./common";
+
 const Auth = ({ children }: { children: ReactNode }) => {
 	const { user, loading } = useSession((state) => state);
 
 	const router = useRouter();
 
-	if (loading || !router.pathname)
-		return <Loader message="Validating auth status..." />;
+	if (loading || !router.pathname) return <Loader message="Validating auth status..." />;
 
 	//  inaccessible routes when user is authenticated
 	const noAuthRoutes = [
@@ -49,18 +49,12 @@ const Auth = ({ children }: { children: ReactNode }) => {
 	}
 
 	if (user && (user as User).twoFA?.active) {
-		if (
-			!(user as User).twoFA?.isVerified &&
-			router.pathname !== "/2fa/authenticate"
-		) {
+		if (!(user as User).twoFA?.isVerified && router.pathname !== "/2fa/authenticate") {
 			redirect("/2fa/authenticate", "You need to verify your account");
 			return <Loader message="You need to verify your account" />;
 		}
 
-		if (
-			router.pathname.includes("/2fa") &&
-			(user as User).twoFA?.isVerified === true
-		) {
+		if (router.pathname.includes("/2fa") && (user as User).twoFA?.isVerified === true) {
 			redirect("/", "2FA is already active or verified!");
 			return <Loader message="2FA is already active or verified!" />;
 		}

@@ -1,17 +1,10 @@
 import { Select } from "@/components/ui";
+import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
-import {
-	callBackendApi,
-	targetCountries,
-	validateTagValue,
-} from "@/lib/helpers/campaign";
+import { callBackendApi, targetCountries, validateTagValue } from "@/lib/helpers/campaign";
 import { useElementList, useWatchFormStatus } from "@/lib/hooks";
 import { CrossIcon } from "@/public/assets/icons/campaign";
-import {
-	STEP_DATA_KEY_LOOKUP,
-	type StepOneData,
-	useFormStore,
-} from "@/store/formStore";
+import { STEP_DATA_KEY_LOOKUP, type StepOneData, useFormStore } from "@/store/formStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, useRef } from "react";
@@ -25,9 +18,9 @@ function StepOne() {
 
 	const {
 		currentStep,
-		fundraiserCategories,
 		stepOneData,
-		actions: { goToStep, setData, setCampaignId },
+		campaignInfo,
+		actions: { goToStep, setData, setCampaignInfo },
 	} = useFormStore((state) => state);
 
 	const { For: TagList } = useElementList();
@@ -40,7 +33,7 @@ function StepOne() {
 		handleSubmit,
 		setValue: setFormValue,
 	} = useForm({
-		mode: "onTouched",
+		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepOne")!),
 		defaultValues: stepOneData,
 	});
@@ -50,7 +43,7 @@ function StepOne() {
 	const onSubmit = async (data: StepOneData) => {
 		setData({ step: 1, data });
 
-		const { data: dataInfo, error } = await callBackendApi<{ _id: string }>(
+		const { data: dataInfo, error } = await callBackendApi<Pick<Campaign, "_id" | "creator">>(
 			`/campaign/create/one`,
 			data
 		);
@@ -63,15 +56,16 @@ function StepOne() {
 			return;
 		}
 
-		if (dataInfo.data) {
-			setCampaignId(dataInfo.data._id);
-			goToStep(currentStep + 1);
-		}
+		if (!dataInfo.data) return;
+
+		setCampaignInfo({
+			id: dataInfo.data._id,
+			creator: dataInfo.data.creator,
+		});
+		goToStep(currentStep + 1);
 	};
 
-	const handleAddTags = (
-		event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>
-	) => {
+	const handleAddTags = (event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => {
 		const isEnterKey = (event as KeyboardEvent).key === "Enter";
 
 		if (event.type === "keydown" && !isEnterKey) return;
@@ -80,10 +74,7 @@ function StepOne() {
 			event.preventDefault();
 		}
 
-		const validTag = validateTagValue(
-			stepOneData.tags,
-			tagInputRef.current?.value
-		);
+		const validTag = validateTagValue(stepOneData.tags, tagInputRef.current?.value);
 
 		if (!validTag) return;
 
@@ -120,10 +111,7 @@ function StepOne() {
 			>
 				<ol className="flex flex-col gap-6">
 					<li>
-						<label
-							htmlFor="categoryId"
-							className="text-sm font-semibold lg:text-xl"
-						>
+						<label htmlFor="categoryId" className="text-sm font-semibold lg:text-xl">
 							What best describes your fundraiser?
 						</label>
 
@@ -145,7 +133,7 @@ function StepOne() {
 
 									<Select.Content>
 										<CategoryList
-											each={fundraiserCategories}
+											each={campaignInfo.categories}
 											render={(category) => (
 												<Select.Item key={category.id} value={category.id}>
 													{category.name}
@@ -161,10 +149,7 @@ function StepOne() {
 					</li>
 
 					<li>
-						<label
-							htmlFor="country"
-							className="text-sm font-semibold lg:text-xl"
-						>
+						<label htmlFor="country" className="text-sm font-semibold lg:text-xl">
 							What country are you located?
 						</label>
 
@@ -188,10 +173,7 @@ function StepOne() {
 										<CountryList
 											each={targetCountries}
 											render={(country) => (
-												<Select.Item
-													key={country}
-													value={country.toUpperCase()}
-												>
+												<Select.Item key={country} value={country.toUpperCase()}>
 													{country}
 												</Select.Item>
 											)}

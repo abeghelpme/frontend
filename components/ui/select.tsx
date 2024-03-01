@@ -1,17 +1,12 @@
 import { cn } from "@/lib";
+import type { ForwardedRefType, InferProps } from "@/lib/type-helpers";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { forwardRef } from "react";
 
-type ForwardedRefType<TComponent extends React.ElementType> =
-	React.ForwardedRef<React.ElementRef<TComponent>>;
-
-type SelectPropsType<TComponent extends React.ElementType> =
-	React.ComponentPropsWithoutRef<TComponent>;
-
 function SelectTrigger(
-	props: SelectPropsType<typeof SelectPrimitive.Trigger> & {
+	props: InferProps<typeof SelectPrimitive.Trigger> & {
 		icon?: React.JSX.Element;
 	},
 	ref: ForwardedRefType<typeof SelectPrimitive.Trigger>
@@ -37,7 +32,7 @@ function SelectTrigger(
 }
 
 function SelectScrollUpButton(
-	props: SelectPropsType<typeof SelectPrimitive.ScrollUpButton>,
+	props: InferProps<typeof SelectPrimitive.ScrollUpButton>,
 	ref: ForwardedRefType<typeof SelectPrimitive.ScrollUpButton>
 ) {
 	const { className, ...restOfProps } = props;
@@ -45,10 +40,7 @@ function SelectScrollUpButton(
 	return (
 		<SelectPrimitive.ScrollUpButton
 			ref={ref}
-			className={cn(
-				"flex cursor-default items-center justify-center py-1",
-				className
-			)}
+			className={cn("flex cursor-default items-center justify-center py-1", className)}
 			{...restOfProps}
 		>
 			<ChevronUpIcon />
@@ -57,7 +49,7 @@ function SelectScrollUpButton(
 }
 
 function SelectScrollDownButton(
-	props: SelectPropsType<typeof SelectPrimitive.ScrollDownButton>,
+	props: InferProps<typeof SelectPrimitive.ScrollDownButton>,
 	ref: ForwardedRefType<typeof SelectPrimitive.ScrollDownButton>
 ) {
 	const { className, ...restOfProps } = props;
@@ -65,10 +57,7 @@ function SelectScrollDownButton(
 	return (
 		<SelectPrimitive.ScrollDownButton
 			ref={ref}
-			className={cn(
-				"flex cursor-default items-center justify-center py-1",
-				className
-			)}
+			className={cn("flex cursor-default items-center justify-center py-1", className)}
 			{...restOfProps}
 		>
 			<ChevronDownIcon />
@@ -77,7 +66,7 @@ function SelectScrollDownButton(
 }
 
 function SelectContent(
-	props: SelectPropsType<typeof SelectPrimitive.Content>,
+	props: InferProps<typeof SelectPrimitive.Content>,
 	ref: ForwardedRefType<typeof SelectPrimitive.Content>
 ) {
 	const { className, children, position = "popper", ...restOfProps } = props;
@@ -117,7 +106,7 @@ function SelectContent(
 }
 
 function SelectLabel(
-	props: SelectPropsType<typeof SelectPrimitive.Label>,
+	props: InferProps<typeof SelectPrimitive.Label>,
 	ref: ForwardedRefType<typeof SelectPrimitive.Label>
 ) {
 	const { className, ...restOfProps } = props;
@@ -132,7 +121,7 @@ function SelectLabel(
 }
 
 function SelectItem(
-	props: SelectPropsType<typeof SelectPrimitive.Item>,
+	props: InferProps<typeof SelectPrimitive.Item>,
 	ref: ForwardedRefType<typeof SelectPrimitive.Item>
 ) {
 	const { className, children, ...restOfProps } = props;
@@ -141,7 +130,7 @@ function SelectItem(
 		<SelectPrimitive.Item
 			ref={ref}
 			className={cn(
-				"relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-xs outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+				"relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-[25px] pr-2 text-xs outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
 				className
 			)}
 			{...restOfProps}
@@ -158,7 +147,7 @@ function SelectItem(
 }
 
 function SelectSeparator(
-	props: SelectPropsType<typeof SelectPrimitive.Separator>,
+	props: InferProps<typeof SelectPrimitive.Separator>,
 	ref: ForwardedRefType<typeof SelectPrimitive.Separator>
 ) {
 	const { className, ...restOfProps } = props;

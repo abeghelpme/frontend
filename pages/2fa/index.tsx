@@ -97,16 +97,13 @@ const TwoFa = () => {
 			{step === 1 ? (
 				<>
 					<div className="md:px-[10% mx-auto mt-[3.5rem] w-full px-[5%] md:w-[80%] md:px-0 lg:max-w-[1000px]">
-						<h1 className="text-2xl font-semibold">
-							Set up two-factor authentication
-						</h1>
+						<h1 className="text-2xl font-semibold">Set up two-factor authentication</h1>
 						<p className="text-formLabel mt-6">
 							Add an extra layer of security to your account
 						</p>
 						<p className="mt-4">
-							Two&#8209;factor authentication protects your account by requiring
-							an additional code when you log in on a device that we don&apos;t
-							recognize.
+							Two&#8209;factor authentication protects your account by requiring an additional
+							code when you log in on a device that we don&apos;t recognize.
 						</p>
 						<div className="mt-[3rem] space-y-8">
 							<h2 className="text-xl font-semibold">
@@ -131,8 +128,8 @@ const TwoFa = () => {
 											>
 												Google Authenticator
 											</Link>{" "}
-											app if you don&apos;t have one. It will generate a code
-											that you&apos;ll enter when you log in.
+											app if you don&apos;t have one. It will generate a code that
+											you&apos;ll enter when you log in.
 										</p>
 										<input
 											type="radio"
@@ -146,11 +143,7 @@ const TwoFa = () => {
 									</div>
 								</label>
 								<hr className="my-4 border-b" />
-								<label
-									htmlFor="email"
-									aria-label="Set up with email"
-									className="space-y-2"
-								>
+								<label htmlFor="email" aria-label="Set up with email" className="space-y-2">
 									<h3 className=" font-semibold">Email Address</h3>
 									<div className="flex items-center gap-2 ">
 										<p className="balancedText md:text-lg">
@@ -173,8 +166,8 @@ const TwoFa = () => {
 					<div className="border-tabeg-primary border-t">
 						<div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
 							<CustomDialog
-								openDialog={openModal}
-								setOpen={() => {
+								isOpen={openModal}
+								onOpenChange={() => {
 									setOpenModal(false);
 									setOtp("");
 								}}
