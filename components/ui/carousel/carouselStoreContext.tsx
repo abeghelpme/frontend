@@ -18,12 +18,14 @@ const [Provider, useCarouselContext] = createCustomContext<CarouselStoreApi>({
 });
 
 // Provider Component
-export function CarouselContextProvider<TImages extends ImagesType = ImagesType>(
-	props: CarouselProviderProps<TImages>
-) {
+export function CarouselContextProvider<
+	TImages extends ImagesType = ImagesType,
+>(props: CarouselProviderProps<TImages>) {
 	const { children, images, onSlideBtnClick } = props;
 
-	const [carouselStore] = useState(() => createCarouselStore({ images, onSlideBtnClick }));
+	const [carouselStore] = useState(() =>
+		createCarouselStore({ images, onSlideBtnClick })
+	);
 
 	return <Provider value={carouselStore}>{children}</Provider>;
 }

@@ -23,9 +23,12 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 	// get qr code or secret
 	useEffect(() => {
 		const setup2fa = async () => {
-			const { data: dataInfo, error } = await callApi<ApiResponse>("/auth/2fa/setup", {
-				twoFactorType: "APP",
-			});
+			const { data: dataInfo, error } = await callApi<ApiResponse>(
+				"/auth/2fa/setup",
+				{
+					twoFactorType: "APP",
+				}
+			);
 
 			if (dataInfo) {
 				setData(dataInfo);
@@ -45,11 +48,13 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 
 	const handleCopy = async () => {
 		try {
-			await navigator.clipboard.writeText(data?.data?.secret as string).then(() => {
-				toast.success("Success", {
-					description: "Key copied to clipboard",
+			await navigator.clipboard
+				.writeText(data?.data?.secret as string)
+				.then(() => {
+					toast.success("Success", {
+						description: "Key copied to clipboard",
+					});
 				});
-			});
 		} catch {
 			toast.error("Error", {
 				description: "Could not copy",
@@ -61,10 +66,13 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 	const handleOtpSubmit = async () => {
 		setOtpLoading(true);
 
-		const { data: dataInfo, error } = await callApi<ApiResponse>("/auth/2fa/complete", {
-			token: otp,
-			twoFactorType: "APP",
-		});
+		const { data: dataInfo, error } = await callApi<ApiResponse>(
+			"/auth/2fa/complete",
+			{
+				token: otp,
+				twoFactorType: "APP",
+			}
+		);
 
 		if (dataInfo) {
 			localStorage.setItem("show-modal", "false");
@@ -92,15 +100,17 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 					<li className="flex flex-col gap-2">
 						<h2 className="font-semibold">1. Download an authentication app</h2>
 						<p>
-							We recommend downloading Google Authenticator app if you don&apos;t have one
-							installed yet.
+							We recommend downloading Google Authenticator app if you
+							don&apos;t have one installed yet.
 						</p>
 					</li>
 					<li className="flex flex-col gap-2">
-						<h2 className="font-semibold">2. Scan this QR code or copy the key.</h2>
+						<h2 className="font-semibold">
+							2. Scan this QR code or copy the key.
+						</h2>
 						<p>
-							Scan this QR code in the authentication app or copy key and paste it in the
-							authentication app to generate your verification code
+							Scan this QR code in the authentication app or copy key and paste
+							it in the authentication app to generate your verification code
 						</p>
 						<div className="flex min-h-[12rem] items-center">
 							{isQRCodeLoading ? (
@@ -148,9 +158,9 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 					<li className="flex flex-col gap-4">
 						<h2 className="font-semibold">3. Copy and enter 6-digit code</h2>
 						<p>
-							After the QR code has been scanned or the key has been entered, your
-							authentication app will generate a 6-digit code. Copy the code and click on the
-							Next button to enter it.
+							After the QR code has been scanned or the key has been entered,
+							your authentication app will generate a 6-digit code. Copy the
+							code and click on the Next button to enter it.
 						</p>
 					</li>
 				</ol>

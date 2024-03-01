@@ -2,7 +2,11 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import { callBackendApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
-import { STEP_DATA_KEY_LOOKUP, type StepThreeData, useFormStore } from "@/store/formStore";
+import {
+	STEP_DATA_KEY_LOOKUP,
+	type StepThreeData,
+	useFormStore,
+} from "@/store/formStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
@@ -83,7 +87,10 @@ function StepThree() {
 			>
 				<ol className="flex flex-col gap-6">
 					<li>
-						<label htmlFor="photos" className="text-sm font-semibold lg:text-xl">
+						<label
+							htmlFor="photos"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							Campaign Cover Image
 						</label>
 
@@ -92,7 +99,10 @@ function StepThree() {
 							name="photos"
 							render={({ field }) => (
 								<>
-									<DropZoneInput value={field.value} onChange={field.onChange} />
+									<DropZoneInput
+										value={field.value}
+										onChange={field.onChange}
+									/>
 
 									<FormErrorMessage formState={formState} errorField="photos" />
 
@@ -108,8 +118,8 @@ function StepThree() {
 						</label>
 
 						<p className="my-4 text-xs lg:text-base">
-							A detailed description of the campaign, outlining the need for funding and how
-							the funds will be used.
+							A detailed description of the campaign, outlining the need for
+							funding and how the funds will be used.
 						</p>
 
 						<Controller

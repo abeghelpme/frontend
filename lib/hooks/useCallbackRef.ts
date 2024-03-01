@@ -4,7 +4,9 @@ import type { CallbackFn } from "../type-helpers/global-type-helpers";
 
 const useIsoMorpicEffect = isServer ? useEffect : useLayoutEffect;
 
-const useCallbackRef = <TParams, TResult>(callbackFn: CallbackFn<TParams, TResult>) => {
+const useCallbackRef = <TParams, TResult>(
+	callbackFn: CallbackFn<TParams, TResult>
+) => {
 	const callbackRef = useRef(callbackFn);
 
 	useIsoMorpicEffect(() => {
@@ -12,7 +14,10 @@ const useCallbackRef = <TParams, TResult>(callbackFn: CallbackFn<TParams, TResul
 	}, [callbackFn]);
 
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-	const savedCallback = useCallback((...params: TParams[]) => callbackRef.current?.(...params), []);
+	const savedCallback = useCallback(
+		(...params: TParams[]) => callbackRef.current?.(...params),
+		[]
+	);
 
 	return savedCallback;
 };

@@ -11,11 +11,14 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 
 	return (
 		<Carousel.Root images={images}>
-			<Carousel.Content classNames={{ scrollContainer: "rounded-lg lg:rounded-[10px]" }}>
+			<Carousel.Content
+				classNames={{ scrollContainer: "rounded-lg lg:rounded-[10px]" }}
+			>
 				<Carousel.Button
 					type="prev"
 					classNames={{
-						iconContainer: "top-[calc(100%_+_8px)] lg:top-[calc(100%_+_16px)] left-[24px]",
+						iconContainer:
+							"top-[calc(100%_+_8px)] lg:top-[calc(100%_+_16px)] left-[24px]",
 						icon: "size-5 lg:size-6",
 					}}
 				/>
@@ -23,7 +26,8 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 				<Carousel.Button
 					type="next"
 					classNames={{
-						iconContainer: "top-[calc(100%_+_8px)] lg:top-[calc(100%_+_16px)] right-[24px]",
+						iconContainer:
+							"top-[calc(100%_+_8px)] lg:top-[calc(100%_+_16px)] right-[24px]",
 						icon: "size-5 lg:size-6",
 					}}
 				/>

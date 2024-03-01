@@ -6,14 +6,20 @@ import { callBackendApi, getDateFromString } from "@/lib/helpers/campaign";
 import { useCopyToClipboard } from "@/lib/hooks";
 import { DummyAvatar, MoneyIcon } from "@/public/assets/icons/campaign";
 import { format } from "date-fns";
-import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import type {
+	GetStaticPaths,
+	GetStaticProps,
+	InferGetStaticPropsType,
+} from "next";
 import { toast } from "sonner";
 
 export const getStaticPaths = (async () => {
 	// const { data, error } = await callBackendApi<Campaign[]>(
 	// 	`/campaign/all?limit=100&status=published` // remove published to test in development
 	// );
-	const { data, error } = await callBackendApi<Campaign[]>("/campaign/all?limit=100");
+	const { data, error } = await callBackendApi<Campaign[]>(
+		"/campaign/all?limit=100"
+	);
 
 	if (error || !data.data) {
 		return {
@@ -22,7 +28,9 @@ export const getStaticPaths = (async () => {
 		};
 	}
 
-	const campaignData = data.data.filter((campaign) => campaign.status !== "Draft");
+	const campaignData = data.data.filter(
+		(campaign) => campaign.status !== "Draft"
+	);
 
 	const paths = campaignData.map((campaign) => ({
 		params: { shortId: campaign.url.split("/c/")[1] },
@@ -34,10 +42,12 @@ export const getStaticPaths = (async () => {
 	};
 }) satisfies GetStaticPaths;
 
-export const getStaticProps = (async function (context) {
-	const { shortId } = context.params as { shortId: string; };
+export const getStaticProps = async function (context) {
+	const { shortId } = context.params as { shortId: string };
 
-	const { data, error } = await callBackendApi<Campaign>(`/campaign/one/${shortId}`);
+	const { data, error } = await callBackendApi<Campaign>(
+		`/campaign/one/${shortId}`
+	);
 
 	if (error || !data.data) {
 		return {
@@ -48,9 +58,11 @@ export const getStaticProps = (async function (context) {
 	return {
 		props: { campaign: data.data },
 	};
-}) satisfies GetStaticProps<{ campaign: Campaign }>;
+} satisfies GetStaticProps<{ campaign: Campaign }>;
 
-function CampaignView({ campaign }: InferGetStaticPropsType<typeof getStaticProps>) {
+function CampaignView({
+	campaign,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
 	const { copyToClipboard } = useCopyToClipboard();
 
 	const fundraiserTarget =
@@ -105,8 +117,8 @@ function CampaignView({ campaign }: InferGetStaticPropsType<typeof getStaticProp
 							<MoneyIcon className="mt-1 shrink-0 lg:mt-2 lg:size-6" />
 
 							<p>
-								Be the first to donate to this fundraiser, every penny donated will go a long
-								way
+								Be the first to donate to this fundraiser, every penny donated
+								will go a long way
 							</p>
 						</div>
 
@@ -120,12 +132,18 @@ function CampaignView({ campaign }: InferGetStaticPropsType<typeof getStaticProp
 			</section>
 
 			<section className="mt-2 lg:mt-16 lg:max-w-[717px]">
-				<Heading as="h3" className="flex gap-4 border-b border-b-placeholder p-2">
+				<Heading
+					as="h3"
+					className="flex gap-4 border-b border-b-placeholder p-2"
+				>
 					Category:
 					<span className="font-normal">{campaign.category.name}</span>
 				</Heading>
 
-				<Heading as="h3" className="mt-3 border-b border-b-placeholder p-2 lg:mt-6">
+				<Heading
+					as="h3"
+					className="mt-3 border-b border-b-placeholder p-2 lg:mt-6"
+				>
 					Story
 				</Heading>
 

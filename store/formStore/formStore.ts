@@ -34,7 +34,6 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 							: previousInfo.creator,
 
 						...restOfNewInfo,
-
 					},
 				});
 			},
@@ -54,7 +53,9 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 			},
 
 			initializeFormData: async (queryParam = "limit=1") => {
-				const { data, error } = await callBackendApi<Campaign[]>(`/campaign/all?${queryParam}`);
+				const { data, error } = await callBackendApi<Campaign[]>(
+					`/campaign/all?${queryParam}`
+				);
 
 				if (error) return;
 
@@ -100,7 +101,9 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 
 			initializeCategories: async () => {
 				const { data, error } =
-					await callBackendApi<FormStore["campaignInfo"]["categories"]>("/campaign/category");
+					await callBackendApi<FormStore["campaignInfo"]["categories"]>(
+						"/campaign/category"
+					);
 
 				if (error) return;
 
@@ -121,7 +124,9 @@ export const useInitFormStore = create<FormStore>()(
 	})
 );
 
-export const useFormStore = <TResult>(selector: SelectorFn<FormStore, TResult>) => {
+export const useFormStore = <TResult>(
+	selector: SelectorFn<FormStore, TResult>
+) => {
 	const state = useInitFormStore(useShallow(selector));
 
 	return state;

@@ -10,7 +10,12 @@ const IconRight = () => <ChevronRightIcon className="size-4" />;
 const IconLeft = () => <ChevronLeftIcon className="size-4" />;
 
 function Calendar(props: CalendarProps) {
-	const { className, classNames, showOutsideDays = true, ...restOfProps } = props;
+	const {
+		className,
+		classNames,
+		showOutsideDays = true,
+		...restOfProps
+	} = props;
 
 	return (
 		<DayPicker
@@ -45,7 +50,8 @@ function Calendar(props: CalendarProps) {
 				day_outside:
 					"day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
 				day_disabled: "text-muted-foreground opacity-50",
-				day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+				day_range_middle:
+					"aria-selected:bg-accent aria-selected:text-accent-foreground",
 				day_hidden: "invisible",
 				...classNames,
 			}}

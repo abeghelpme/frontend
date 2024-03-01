@@ -3,7 +3,11 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { cn, zodValidator } from "@/lib";
 import { callBackendApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
-import { STEP_DATA_KEY_LOOKUP, type StepTwoData, useFormStore } from "@/store/formStore";
+import {
+	STEP_DATA_KEY_LOOKUP,
+	type StepTwoData,
+	useFormStore,
+} from "@/store/formStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
@@ -30,10 +34,9 @@ function StepTwo() {
 	const onSubmit = async (data: StepTwoData) => {
 		setData({ step: 2, data });
 
-		const { data: dataInfo, error } = await callBackendApi<Pick<Campaign, "_id" | "creator">>(
-			`/campaign/create/two`,
-			{ ...data, campaignId: campaignInfo.id }
-		);
+		const { data: dataInfo, error } = await callBackendApi<
+			Pick<Campaign, "_id" | "creator">
+		>(`/campaign/create/two`, { ...data, campaignId: campaignInfo.id });
 
 		if (error) {
 			toast.error(error.status, {
@@ -89,7 +92,10 @@ function StepTwo() {
 					</li>
 
 					<li>
-						<label htmlFor="fundraiser" className="text-sm font-semibold lg:text-xl">
+						<label
+							htmlFor="fundraiser"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							Who is fundraising?
 						</label>
 
@@ -112,7 +118,9 @@ function StepTwo() {
 
 									<Select.Content id="category">
 										<Select.Item value="INDIVIDUAL">For Myself</Select.Item>
-										<Select.Item value="BENEFICIARY">For Someone else</Select.Item>
+										<Select.Item value="BENEFICIARY">
+											For Someone else
+										</Select.Item>
 									</Select.Content>
 								</Select.Root>
 							)}
@@ -143,7 +151,10 @@ function StepTwo() {
 					</li>
 
 					<li>
-						<label htmlFor="deadline" className="text-sm font-semibold lg:text-xl">
+						<label
+							htmlFor="deadline"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							Campaign Deadline
 						</label>
 

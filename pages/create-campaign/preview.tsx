@@ -15,7 +15,8 @@ import { toast } from "sonner";
 void useInitFormStore.getState().actions.initializeFormData();
 
 function Preview() {
-	const { stepOneData, stepTwoData, stepThreeData, campaignInfo } = useFormStore((state) => state);
+	const { stepOneData, stepTwoData, stepThreeData, campaignInfo } =
+		useFormStore((state) => state);
 	const { For: ImageFileList } = useElementList();
 	const { For: TagList } = useElementList();
 	const { copyToClipboard } = useCopyToClipboard();
@@ -30,7 +31,10 @@ function Preview() {
 			? `${campaignInfo.creator.firstName} ${campaignInfo.creator.lastName}`
 			: "BENEFICIARY";
 
-	const campaignDeadline = getDateFromString(stepTwoData.deadline, DATE_NEXT_TOMORROW);
+	const campaignDeadline = getDateFromString(
+		stepTwoData.deadline,
+		DATE_NEXT_TOMORROW
+	);
 
 	const imageUrls =
 		stepThreeData.photos.length > 0
@@ -38,7 +42,8 @@ function Preview() {
 			: ["/"];
 
 	// eslint-disable-next-line unicorn/consistent-function-scoping
-	const handleRevokeUrl = (imageUrl: string) => () => URL.revokeObjectURL(imageUrl);
+	const handleRevokeUrl = (imageUrl: string) => () =>
+		URL.revokeObjectURL(imageUrl);
 
 	const handleShareLink = () => {
 		copyToClipboard(campaignInfo.url);
@@ -66,7 +71,9 @@ function Preview() {
 				<section className="flex flex-col gap-2 lg:gap-8">
 					<Heading as="h2" className="text-xl lg:text-[32px]">
 						{stepTwoData.title[0]
-							? `${stepTwoData.title[0].toUpperCase()}${stepTwoData.title.slice(1)}`
+							? `${stepTwoData.title[0].toUpperCase()}${stepTwoData.title.slice(
+									1
+							  )}`
 							: "No Title"}
 					</Heading>
 
@@ -107,8 +114,8 @@ function Preview() {
 								<MoneyIcon className="mt-1 shrink-0 lg:mt-2 lg:size-6" />
 
 								<p>
-									Be the first to donate to this fundraiser, every penny donated will go a
-									long way
+									Be the first to donate to this fundraiser, every penny donated
+									will go a long way
 								</p>
 							</div>
 
@@ -123,12 +130,18 @@ function Preview() {
 
 				<section className="mt-2 flex flex-col gap-6 lg:mt-6 lg:max-w-[717px]">
 					<article>
-						<Heading as="h3" className="flex gap-4 border-b border-b-placeholder p-2">
+						<Heading
+							as="h3"
+							className="flex gap-4 border-b border-b-placeholder p-2"
+						>
 							Category:
 							<span className="font-normal">{campaignCategory}</span>
 						</Heading>
 
-						<Heading as="h3" className="mt-3 border-b border-b-placeholder p-2 lg:mt-6">
+						<Heading
+							as="h3"
+							className="mt-3 border-b border-b-placeholder p-2 lg:mt-6"
+						>
 							Story
 						</Heading>
 
@@ -168,7 +181,10 @@ function Preview() {
 							<TagList
 								each={stepOneData.tags}
 								render={(tag, index) => (
-									<li key={`${tag}-${index}`} className="font-medium lg:text-xl">
+									<li
+										key={`${tag}-${index}`}
+										className="font-medium lg:text-xl"
+									>
 										#{tag}
 									</li>
 								)}
@@ -210,7 +226,10 @@ function Preview() {
 						content: "gap-0 max-lg:max-w-[331px] p-6",
 					}}
 					trigger={
-						<FormActionButton type="button" className="bg-abeg-primary font-bold">
+						<FormActionButton
+							type="button"
+							className="bg-abeg-primary font-bold"
+						>
 							Create Campaign
 						</FormActionButton>
 					}

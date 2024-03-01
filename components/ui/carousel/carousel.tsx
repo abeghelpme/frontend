@@ -11,7 +11,10 @@ import type {
 	CarouselItemWrapperProps,
 	OtherCarouselProps,
 } from "./carousel.types";
-import { CarouselContextProvider, useCarouselStore } from "./carouselStoreContext";
+import {
+	CarouselContextProvider,
+	useCarouselStore,
+} from "./carouselStoreContext";
 import { useCarouselOptions } from "./useCarouselOptions";
 
 // TODO -  Add dragging and swiping support
@@ -37,7 +40,10 @@ function CarouselContent<TElement extends React.ElementType = "article">(
 	return (
 		<HtmlElement
 			data-id="Carousel"
-			className={cn("relative size-full touch-none select-none", classNames.base)}
+			className={cn(
+				"relative size-full touch-none select-none",
+				classNames.base
+			)}
 			onMouseEnter={pauseAutoSlide}
 			onMouseLeave={resumeAutoSlide}
 		>
@@ -66,11 +72,16 @@ function CarouselButton(props: CarouselButtonsProps) {
 		iconContainer: { prev: "left-[7px]", next: "right-[7px]" },
 	};
 
-	const DefaultIcon = type === "prev" ? ChevronLeftCircleIcon : ChevronRightCircleIcon;
+	const DefaultIcon =
+		type === "prev" ? ChevronLeftCircleIcon : ChevronRightCircleIcon;
 
 	return (
 		<button
-			className={cn("absolute z-40 h-full w-[90px]", semanticVariants.base[type], classNames.base)}
+			className={cn(
+				"absolute z-40 h-full w-[90px]",
+				semanticVariants.base[type],
+				classNames.base
+			)}
 			onClick={nextOrPreviousSlide}
 		>
 			<span
@@ -86,7 +97,9 @@ function CarouselButton(props: CarouselButtonsProps) {
 	);
 }
 
-function CarouselItemWrapper<TArray extends unknown[]>(props: CarouselItemWrapperProps<TArray>) {
+function CarouselItemWrapper<TArray extends unknown[]>(
+	props: CarouselItemWrapperProps<TArray>
+) {
 	const { each, render, className } = props;
 
 	const { For: ItemList } = useElementList();
@@ -96,7 +109,10 @@ function CarouselItemWrapper<TArray extends unknown[]>(props: CarouselItemWrappe
 	return (
 		<ul
 			data-id="Carousel Image Wrapper"
-			className={cn("flex w-full shrink-0 [transition:transform_800ms_ease]", className)}
+			className={cn(
+				"flex w-full shrink-0 [transition:transform_800ms_ease]",
+				className
+			)}
 			style={{
 				transform: `translate3d(-${currentSlide * 100}%, 0, 0)`,
 			}}
@@ -108,7 +124,14 @@ function CarouselItemWrapper<TArray extends unknown[]>(props: CarouselItemWrappe
 
 function CarouselItem({ children, className }: OtherCarouselProps) {
 	return (
-		<li className={cn("flex w-full shrink-0 snap-center justify-center", className)}>{children}</li>
+		<li
+			className={cn(
+				"flex w-full shrink-0 snap-center justify-center",
+				className
+			)}
+		>
+			{children}
+		</li>
 	);
 }
 
@@ -131,10 +154,16 @@ function CarouselIndicatorWrapper<TArray extends unknown[]>(
 	return (
 		<div
 			data-id="Carousel Indicators"
-			className={cn("absolute top-[-25px] z-[5] flex w-full justify-center", classNames.base)}
+			className={cn(
+				"absolute top-[-25px] z-[5] flex w-full justify-center",
+				classNames.base
+			)}
 		>
 			<span
-				className={cn("flex items-center justify-center gap-4", classNames.indicatorContainer)}
+				className={cn(
+					"flex items-center justify-center gap-4",
+					classNames.indicatorContainer
+				)}
 			>
 				<IndicatorList each={images} render={render} />
 			</span>

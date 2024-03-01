@@ -10,7 +10,11 @@ type CarouselOptions = {
 };
 
 const useCarouselOptions = (options: CarouselOptions = {}) => {
-	const { hasAutoSlide = false, autoSlideInterval = 5000, shouldPauseOnHover = false } = options;
+	const {
+		hasAutoSlide = false,
+		autoSlideInterval = 5000,
+		shouldPauseOnHover = false,
+	} = options;
 
 	const { nextSlide } = useCarouselStore((state) => state.actions);
 
@@ -23,9 +27,13 @@ const useCarouselOptions = (options: CarouselOptions = {}) => {
 		intervalDuration: shouldAutoSlide ? autoSlideInterval : null,
 	});
 
-	const pauseAutoSlide = useCallbackRef(() => shouldPauseOnHover && setIsPaused(true));
+	const pauseAutoSlide = useCallbackRef(
+		() => shouldPauseOnHover && setIsPaused(true)
+	);
 
-	const resumeAutoSlide = useCallbackRef(() => shouldPauseOnHover && setIsPaused(false));
+	const resumeAutoSlide = useCallbackRef(
+		() => shouldPauseOnHover && setIsPaused(false)
+	);
 
 	return { pauseAutoSlide, resumeAutoSlide };
 };

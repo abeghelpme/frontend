@@ -18,7 +18,9 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 	const { setData } = useFormStore((state) => state.actions);
 
-	const handleImageUpload = (event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>) => {
+	const handleImageUpload = (
+		event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>
+	) => {
 		event.type === "drop" && toggleIsDragActive(false);
 
 		const fileList =
@@ -88,7 +90,9 @@ function DropZoneInput(props: DropZoneInputProps) {
 			/>
 
 			<div className="mt-[0.9375rem] text-center text-xs lg:text-xs">
-				<p className="italic text-abeg-primary">Click to select files, or Drag {`'n'`} Drop</p>
+				<p className="italic text-abeg-primary">
+					Click to select files, or Drag {`'n'`} Drop
+				</p>
 
 				<p className="mt-1">Support files; PDF, JPG, CSV </p>
 

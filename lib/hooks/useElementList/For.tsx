@@ -16,7 +16,9 @@ type ForPropsPartTwo<TArray extends unknown[]> = {
 	render: RenderPropFn<TArray>;
 };
 
-type ForProps<TArray extends unknown[]> = ForPropsPartOne<TArray> | ForPropsPartTwo<TArray>;
+type ForProps<TArray extends unknown[]> =
+	| ForPropsPartOne<TArray>
+	| ForPropsPartTwo<TArray>;
 
 function For<TArray extends unknown[]>(props: ForProps<TArray>) {
 	const { each: listOfItems, render, children } = props;

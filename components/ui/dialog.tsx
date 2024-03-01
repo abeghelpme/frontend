@@ -47,25 +47,37 @@ function DialogContent(
 	);
 }
 
-function DialogHeader(props: InferProps<HTMLDivElement>, ref: ForwardedRefType<HTMLDivElement>) {
+function DialogHeader(
+	props: InferProps<HTMLDivElement>,
+	ref: ForwardedRefType<HTMLDivElement>
+) {
 	const { className, ...restOfProps } = props;
 
 	return (
 		<div
 			ref={ref}
-			className={cn("flex flex-col space-y-1.5 text-center sm:text-left", className)}
+			className={cn(
+				"flex flex-col space-y-1.5 text-center sm:text-left",
+				className
+			)}
 			{...restOfProps}
 		/>
 	);
 }
 
-function DialogFooter(props: InferProps<HTMLDivElement>, ref: ForwardedRefType<HTMLDivElement>) {
+function DialogFooter(
+	props: InferProps<HTMLDivElement>,
+	ref: ForwardedRefType<HTMLDivElement>
+) {
 	const { className, ...restOfProps } = props;
 
 	return (
 		<div
 			ref={ref}
-			className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)}
+			className={cn(
+				"flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+				className
+			)}
 			{...restOfProps}
 		/>
 	);
@@ -80,7 +92,10 @@ function DialogTitle(
 	return (
 		<DialogPrimitive.Title
 			ref={ref}
-			className={cn("text-lg font-semibold leading-none tracking-tight", className)}
+			className={cn(
+				"text-lg font-semibold leading-none tracking-tight",
+				className
+			)}
 			{...restOfProps}
 		/>
 	);

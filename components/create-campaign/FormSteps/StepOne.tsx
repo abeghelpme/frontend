@@ -1,10 +1,18 @@
 import { Select } from "@/components/ui";
 import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
-import { callBackendApi, targetCountries, validateTagValue } from "@/lib/helpers/campaign";
+import {
+	callBackendApi,
+	targetCountries,
+	validateTagValue,
+} from "@/lib/helpers/campaign";
 import { useElementList, useWatchFormStatus } from "@/lib/hooks";
 import { CrossIcon } from "@/public/assets/icons/campaign";
-import { STEP_DATA_KEY_LOOKUP, type StepOneData, useFormStore } from "@/store/formStore";
+import {
+	STEP_DATA_KEY_LOOKUP,
+	type StepOneData,
+	useFormStore,
+} from "@/store/formStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, useRef } from "react";
@@ -43,10 +51,9 @@ function StepOne() {
 	const onSubmit = async (data: StepOneData) => {
 		setData({ step: 1, data });
 
-		const { data: dataInfo, error } = await callBackendApi<Pick<Campaign, "_id" | "creator">>(
-			`/campaign/create/one`,
-			data
-		);
+		const { data: dataInfo, error } = await callBackendApi<
+			Pick<Campaign, "_id" | "creator">
+		>(`/campaign/create/one`, data);
 
 		if (error) {
 			toast.error(error.status, {
@@ -65,7 +72,9 @@ function StepOne() {
 		goToStep(currentStep + 1);
 	};
 
-	const handleAddTags = (event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => {
+	const handleAddTags = (
+		event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>
+	) => {
 		const isEnterKey = (event as KeyboardEvent).key === "Enter";
 
 		if (event.type === "keydown" && !isEnterKey) return;
@@ -74,7 +83,10 @@ function StepOne() {
 			event.preventDefault();
 		}
 
-		const validTag = validateTagValue(stepOneData.tags, tagInputRef.current?.value);
+		const validTag = validateTagValue(
+			stepOneData.tags,
+			tagInputRef.current?.value
+		);
 
 		if (!validTag) return;
 
@@ -111,7 +123,10 @@ function StepOne() {
 			>
 				<ol className="flex flex-col gap-6">
 					<li>
-						<label htmlFor="categoryId" className="text-sm font-semibold lg:text-xl">
+						<label
+							htmlFor="categoryId"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							What best describes your fundraiser?
 						</label>
 
@@ -149,7 +164,10 @@ function StepOne() {
 					</li>
 
 					<li>
-						<label htmlFor="country" className="text-sm font-semibold lg:text-xl">
+						<label
+							htmlFor="country"
+							className="text-sm font-semibold lg:text-xl"
+						>
 							What country are you located?
 						</label>
 
@@ -173,7 +191,10 @@ function StepOne() {
 										<CountryList
 											each={targetCountries}
 											render={(country) => (
-												<Select.Item key={country} value={country.toUpperCase()}>
+												<Select.Item
+													key={country}
+													value={country.toUpperCase()}
+												>
 													{country}
 												</Select.Item>
 											)}

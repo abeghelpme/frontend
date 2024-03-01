@@ -68,7 +68,9 @@ function CreateCampaignPage() {
 								type="submit"
 								text="Preview Campaign"
 								variant="secondary"
-								className={"border-abeg-primary font-bold text-abeg-primary max-lg:hidden"}
+								className={
+									"border-abeg-primary font-bold text-abeg-primary max-lg:hidden"
+								}
 								targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
 								isLoading={formStatus.isSubmitting}
 								disabled={formStatus.isSubmitting}

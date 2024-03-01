@@ -1,6 +1,10 @@
 import type { PrettyOmit } from "@/lib/type-helpers";
 import { createStore } from "zustand";
-import type { CarouselProviderProps, CarouselStore, ImagesType } from "./carousel.types";
+import type {
+	CarouselProviderProps,
+	CarouselStore,
+	ImagesType,
+} from "./carousel.types";
 
 // CarouselStore Creation
 const createCarouselStore = <TImages extends ImagesType>(

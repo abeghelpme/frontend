@@ -8,7 +8,9 @@ import type {
 } from "./create-fetcher.types";
 import { getResponseData } from "./create-fetcher.utils";
 
-const createFetcher = <TBaseData, TBaseError>(baseConfig: BaseRequestConfig) => {
+const createFetcher = <TBaseData, TBaseError>(
+	baseConfig: BaseRequestConfig
+) => {
 	const {
 		baseURL,
 		timeout,
@@ -39,7 +41,9 @@ const createFetcher = <TBaseData, TBaseError>(baseConfig: BaseRequestConfig) => 
 	): CallApiResult<TData, TError>;
 
 	// Implementation
-	async function callApi<TData = TBaseData, TError = TBaseError>(...params: CallApiParams) {
+	async function callApi<TData = TBaseData, TError = TBaseError>(
+		...params: CallApiParams
+	) {
 		const [url, bodyData, signal] = params;
 
 		const prevController = abortControllerStore.get(url);
@@ -55,8 +59,10 @@ const createFetcher = <TBaseData, TBaseError>(baseConfig: BaseRequestConfig) => 
 			typeof timeout === "number"
 				? setTimeout(() => {
 						controller.abort();
-						throw new Error(`Request timed out after ${timeout}ms`, { cause: "Timeout" });
-					}, timeout)
+						throw new Error(`Request timed out after ${timeout}ms`, {
+							cause: "Timeout",
+						});
+				  }, timeout)
 				: null;
 
 		try {
@@ -70,7 +76,7 @@ const createFetcher = <TBaseData, TBaseError>(baseConfig: BaseRequestConfig) => 
 					? {
 							"content-type": "application/json",
 							accept: "application/json",
-						}
+					  }
 					: undefined,
 
 				...restOfBaseConfig,
@@ -78,7 +84,8 @@ const createFetcher = <TBaseData, TBaseError>(baseConfig: BaseRequestConfig) => 
 
 			// Response has http errors
 			if (!response.ok) {
-				const errorResponse = await getResponseData<AbegErrorResponse<TError>>(response);
+				const errorResponse =
+					await getResponseData<AbegErrorResponse<TError>>(response);
 
 				await onResponseError?.({
 					...response,
@@ -124,7 +131,8 @@ const createFetcher = <TBaseData, TBaseError>(baseConfig: BaseRequestConfig) => 
 				data: null,
 				error: {
 					status: "Error",
-					message: (error as { message?: string }).message ?? defaultErrorMessage,
+					message:
+						(error as { message?: string }).message ?? defaultErrorMessage,
 				},
 			};
 

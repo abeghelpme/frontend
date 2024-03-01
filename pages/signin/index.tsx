@@ -1,4 +1,8 @@
-import { CloudFlareTurnStile, CustomDialog, FormErrorMessage } from "@/components/common";
+import {
+	CloudFlareTurnStile,
+	CustomDialog,
+	FormErrorMessage,
+} from "@/components/common";
 import { Button, Input } from "@/components/ui";
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthPagesLayout } from "@/layouts";
@@ -13,7 +17,8 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const SignIn = () => {
-	const { cfTurnStile, checkBotStatus, handleBotStatus } = useCloudflareTurnstile();
+	const { cfTurnStile, checkBotStatus, handleBotStatus } =
+		useCloudflareTurnstile();
 	const showModal = useRef(false);
 	const router = useRouter();
 	const [openModal, setOpenModal] = useState(false);
@@ -39,16 +44,22 @@ const SignIn = () => {
 		reValidateMode: "onChange",
 	});
 	const handleOption = async () => {
-		await localStorage.setItem("skip-2FA", JSON.stringify(skip2FA === "false" && "true"));
+		await localStorage.setItem(
+			"skip-2FA",
+			JSON.stringify(skip2FA === "false" && "true")
+		);
 		await void router.push("/dashboard");
 		setOpenModal(false);
 	};
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-		const { data: responseData, error } = await callApi<ApiResponse<User>>("/auth/signin", {
-			email: data.email,
-			password: data.password,
-		});
+		const { data: responseData, error } = await callApi<ApiResponse<User>>(
+			"/auth/signin",
+			{
+				email: data.email,
+				password: data.password,
+			}
+		);
 
 		if (error) {
 			const email = (error?.error as string)?.split(":")?.[1];
@@ -114,10 +125,14 @@ const SignIn = () => {
 						id="email"
 						placeholder="Enter your email address"
 						className={`min-h-[45px] ${
-							errors.email && "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+							errors.email &&
+							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
-					<FormErrorMessage error={errors.email!} errorMsg={errors.email?.message!} />
+					<FormErrorMessage
+						error={errors.email!}
+						errorMsg={errors.email?.message!}
+					/>
 				</div>
 				<div className="mt-2 space-y-1 md:mt-4">
 					<label htmlFor="password" className="text-sm font-medium md:text-lg">
@@ -129,10 +144,14 @@ const SignIn = () => {
 						id="password"
 						placeholder="Enter password"
 						className={`min-h-[45px] ${
-							errors.password && "ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+							errors.password &&
+							"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 						}`}
 					/>
-					<FormErrorMessage error={errors.password!} errorMsg={errors.password?.message!} />
+					<FormErrorMessage
+						error={errors.password!}
+						errorMsg={errors.password?.message!}
+					/>
 				</div>
 				<div className="mb-4 mt-2 flex justify-end ">
 					<Link
@@ -143,7 +162,10 @@ const SignIn = () => {
 					</Link>
 				</div>
 
-				<CloudFlareTurnStile ref={cfTurnStile} onStatusChange={handleBotStatus} />
+				<CloudFlareTurnStile
+					ref={cfTurnStile}
+					onStatusChange={handleBotStatus}
+				/>
 				<div className="mt-6 flex flex-col gap-6">
 					<CustomDialog
 						isOpen={openModal}
@@ -162,12 +184,14 @@ const SignIn = () => {
 						}
 					>
 						<div className="text-center">
-							<h2 className="text-2xl font-semibold">Keep your account safe!</h2>
+							<h2 className="text-2xl font-semibold">
+								Keep your account safe!
+							</h2>
 							<div className="mt-3 space-y-2">
 								<p className="">Your safety is our number one priority</p>
 								<p className="">
-									Activate two-factor authentication and add an extra layer of security to
-									your account
+									Activate two-factor authentication and add an extra layer of
+									security to your account
 								</p>
 							</div>
 							<div className="mt-6 flex flex-col">
@@ -202,7 +226,10 @@ const SignIn = () => {
 					</Button> */}
 					<p className="text-center text-sm md:text-base">
 						Don&apos;t have an account?&nbsp;
-						<Link href="/signup" className="font-medium text-abeg-primary underline">
+						<Link
+							href="/signup"
+							className="font-medium text-abeg-primary underline"
+						>
 							Sign up
 						</Link>
 					</p>

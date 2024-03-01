@@ -4,9 +4,13 @@ import * as TogglePrimitive from "@radix-ui/react-toggle";
 import { type VariantProps, cva } from "class-variance-authority";
 import { forwardRef } from "react";
 
-type ToggleProps = InferProps<typeof TogglePrimitive.Root> & VariantProps<typeof toggleVariants>;
+type ToggleProps = InferProps<typeof TogglePrimitive.Root> &
+	VariantProps<typeof toggleVariants>;
 
-function Toggle(props: ToggleProps, ref: ForwardedRefType<typeof TogglePrimitive.Root>) {
+function Toggle(
+	props: ToggleProps,
+	ref: ForwardedRefType<typeof TogglePrimitive.Root>
+) {
 	const { className, variant, size, ...restOfProps } = props;
 
 	return (

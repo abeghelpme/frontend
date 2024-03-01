@@ -28,7 +28,9 @@ const Success = ({ children, description, classNames }: SuccessProps) => {
 				src="https://lottie.host/93bf3dac-15f5-42b4-a224-deaf8748cb5b/FZJMtsnjYZ.json"
 			/>
 			<div className="mb-5 text-center">
-				<h1 className={cn("text-xl font-medium", classNames?.heading)}>Success!</h1>
+				<h1 className={cn("text-xl font-medium", classNames?.heading)}>
+					Success!
+				</h1>
 				<p className={classNames?.description}>{description}</p>
 			</div>
 			{children}

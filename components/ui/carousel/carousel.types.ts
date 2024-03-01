@@ -23,9 +23,8 @@ export type CarouselStore<TImages extends ImagesType = DefaultImagesType> = {
 	};
 };
 
-export type CarouselStoreApi<TImages extends ImagesType = ImagesType> = StoreApi<
-	CarouselStore<TImages>
->;
+export type CarouselStoreApi<TImages extends ImagesType = ImagesType> =
+	StoreApi<CarouselStore<TImages>>;
 
 export type CarouselProviderProps<TImages extends ImagesType> = {
 	children: React.ReactNode;
@@ -72,15 +71,20 @@ type CarouselWrapperProps<TArray extends unknown[]> = {
 	render: RenderPropFn<TArray>;
 };
 
-export type CarouselItemWrapperProps<TArray extends unknown[]> = CarouselWrapperProps<TArray> & {
+export type CarouselItemWrapperProps<TArray extends unknown[]> =
+	CarouselWrapperProps<TArray> & {
+		className?: string;
+	};
+
+export type CarouselIndicatorWrapperProps<TArray extends unknown[]> =
+	CarouselWrapperProps<TArray> & {
+		classNames?: {
+			base?: string;
+			indicatorContainer?: string;
+		};
+	};
+
+export type OtherCarouselProps = {
+	children: React.ReactNode;
 	className?: string;
 };
-
-export type CarouselIndicatorWrapperProps<TArray extends unknown[]> = CarouselWrapperProps<TArray> & {
-	classNames?: {
-		base?: string;
-		indicatorContainer?: string;
-	};
-};
-
-export type OtherCarouselProps = { children: React.ReactNode; className?: string };

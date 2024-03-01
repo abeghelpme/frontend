@@ -16,7 +16,8 @@ const useAnimationInterval = (options: AnimationOptions) => {
 	const savedCallback = useCallbackRef(callbackFn);
 
 	// prettier-ignore
-	const smoothAnimation = useCallback((timeStamp: DOMHighResTimeStamp) => {
+	const smoothAnimation = useCallback(
+		(timeStamp: DOMHighResTimeStamp) => {
 			if (startTimeStampRef.current === null) {
 				startTimeStampRef.current = Math.floor(timeStamp);
 			}

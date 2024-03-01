@@ -36,7 +36,7 @@ export const callApi = async <T>(
 				? {
 						"Content-Type": "application/json",
 						Accept: "application/json",
-					}
+				  }
 				: { "Content-Type": "multipart/form-data" },
 			cancelToken: source.token,
 		});
