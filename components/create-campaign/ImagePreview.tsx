@@ -64,6 +64,7 @@ function ImagePreview(props: ImagePreviewProps) {
 										*Cover image
 									</span>
 								)}
+
 								<p className="truncate">{file.name}</p>
 							</div>
 

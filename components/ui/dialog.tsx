@@ -13,7 +13,7 @@ function DialogOverlay(
 		<DialogPrimitive.Overlay
 			ref={ref}
 			className={cn(
-				"fixed inset-0 z-50 bg-white/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 dark:bg-zinc-950/80",
+				"fixed inset-0 z-30 bg-white/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 dark:bg-zinc-950/80",
 				className
 			)}
 			{...restOfprops}
@@ -36,7 +36,7 @@ function DialogContent(
 			<DialogPrimitive.Content
 				ref={ref}
 				className={cn(
-					"dar:border-zinc-800 dar:bg-zinc-950 fixed left-[50%] top-[50%] z-50 mx-auto grid w-[90%] max-w-[467px] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border border-zinc-200 bg-white py-8 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
+					"fixed left-[50%] top-[50%] z-50 mx-auto grid w-[90%] max-w-[467px] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border border-zinc-200 bg-white py-8 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] dark:border-zinc-800 dark:bg-zinc-950",
 					className
 				)}
 				{...restOfprops}

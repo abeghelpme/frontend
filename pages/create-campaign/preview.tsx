@@ -1,6 +1,6 @@
 import { CustomDialog, Success } from "@/components/common";
 import { FormActionButton, Heading } from "@/components/create-campaign";
-import { Button } from "@/components/ui";
+import { Button, ProgressBar } from "@/components/ui";
 import { DATE_NEXT_TOMORROW, getDateFromString } from "@/lib/helpers/campaign";
 import { useCopyToClipboard, useElementList } from "@/lib/hooks";
 import { DummyAvatar, MoneyIcon } from "@/public/assets/icons/campaign";
@@ -48,7 +48,7 @@ function Preview() {
 	const handleShareLink = () => {
 		copyToClipboard(campaignInfo.url);
 
-		toast.success("Link copied to clipboard", {
+		toast.success("Campaign link copied to clipboard!", {
 			duration: 1500,
 		});
 
@@ -67,8 +67,8 @@ function Preview() {
 				</p>
 			</header>
 
-			<main className="mt-4 flex flex-col bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:mt-12 lg:px-28">
-				<section className="flex flex-col gap-2 lg:gap-8">
+			<main className="mt-4 bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:mt-12 lg:px-28">
+				<section className="space-y-2 lg:space-y-8">
 					<Heading as="h2" className="text-xl lg:text-[32px]">
 						{stepTwoData.title[0]
 							? `${stepTwoData.title[0].toUpperCase()}${stepTwoData.title.slice(
@@ -87,42 +87,50 @@ function Preview() {
 							onLoad={handleRevokeUrl(imageUrls[0])}
 						/>
 
-						<article className="flex flex-col gap-7 px-6 py-3 lg:py-8">
-							<div>
-								<p className="lg:text-xl.4">₦ {stepTwoData.goal} goal</p>
-								<span className="mt-2 block h-[0.6rem] rounded-lg bg-semiWhite" />
+						<article className="space-y-7 px-6 py-3 lg:py-8">
+							<div className="space-y-2">
+								<p className="lg:text-2xl">₦ {stepTwoData.goal} goal</p>
+
+								<ProgressBar
+									value={0}
+									className="progress-unfilled:h-1 progress-unfilled:rounded-lg progress-unfilled:bg-lightGreen progress-filled:rounded-lg progress-filled:bg-abeg-primary"
+								/>
 							</div>
 
-							<div className="flex flex-col gap-4">
+							<div className="space-y-4">
 								<Button
 									variant="primary"
-									className="w-full rounded-md bg-abeg-primary px-6 py-3 text-xs font-bold lg:rounded-lg lg:text-base"
+									className="w-full rounded-md bg-abeg-primary py-3 text-xs font-bold lg:rounded-lg lg:text-base"
 								>
 									Donate to this campaign
 								</Button>
 
 								<Button
 									variant="secondary"
-									className="w-full rounded-md border-abeg-primary px-6 py-3 text-xs font-bold text-abeg-primary lg:rounded-lg lg:text-base"
+									className="w-full rounded-md border-abeg-primary py-3 text-xs font-bold text-abeg-primary lg:rounded-lg lg:text-base"
 									onClick={handleShareLink}
 								>
 									Share this campaign
 								</Button>
 							</div>
 
-							<div className="flex items-start gap-2 text-xs lg:text-base">
-								<MoneyIcon className="mt-1 shrink-0 lg:mt-2 lg:size-6" />
+							<div className="space-y-7">
+								<figure className="flex items-start gap-[12px] text-xs lg:gap-4 lg:text-base">
+									<MoneyIcon className="mt-1 shrink-0 lg:mt-2 lg:size-6" />
 
-								<p>
-									Be the first to donate to this fundraiser, every penny donated
-									will go a long way
-								</p>
-							</div>
+									<figcaption>
+										Be the first to donate to this fundraiser, every penny
+										donated will go a long way
+									</figcaption>
+								</figure>
 
-							<div className="flex items-center gap-2 text-xs lg:text-base">
-								<DummyAvatar className={"shrink-0 lg:size-8"} />
+								<figure className="flex items-center gap-2 text-xs lg:text-base">
+									<DummyAvatar className={"shrink-0 lg:size-8"} />
 
-								<p>{fundraiserTarget} is in charge of this fundraiser.</p>
+									<figcaption>
+										{fundraiserTarget} is in charge of this fundraiser.
+									</figcaption>
+								</figure>
 							</div>
 						</article>
 					</div>
@@ -177,15 +185,12 @@ function Preview() {
 							Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
 						</p>
 
-						<ul className="grid grid-cols-2 justify-items-center gap-x-0 gap-y-6 lg:grid-cols-3">
+						<ul className="grid grid-cols-2 gap-x-0 gap-y-6 text-sm font-medium lg:grid-cols-3 lg:text-xl">
 							<TagList
 								each={stepOneData.tags}
 								render={(tag, index) => (
-									<li
-										key={`${tag}-${index}`}
-										className="font-medium lg:text-xl"
-									>
-										#{tag}
+									<li key={`${tag}-${index}`} className="flex min-w-0">
+										#<p className="truncate">{tag}</p>
 									</li>
 								)}
 							/>
@@ -267,3 +272,4 @@ function Preview() {
 }
 
 export default Preview;
+Preview.protect = true;
