@@ -174,7 +174,7 @@ const TwoFa = () => {
 						<div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
 							<CustomDialog
 								isOpen={openModal}
-								onOpenChange={() => {
+								setIsOpen={() => {
 									setOpenModal(false);
 									setOtp("");
 								}}

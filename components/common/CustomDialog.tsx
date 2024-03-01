@@ -11,14 +11,14 @@ type CustomDialogProps = {
 	classNames?: {
 		content?: string;
 	};
-	onOpenChange?: DialogProps["onOpenChange"];
+	setIsOpen?: DialogProps["onOpenChange"];
 };
 
 function CustomDialog(props: CustomDialogProps) {
-	const { children, classNames, trigger, isOpen, onOpenChange } = props;
+	const { children, classNames, trigger, isOpen, setIsOpen } = props;
 
 	return (
-		<Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
+		<Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
 			<Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
 
 			<Dialog.Content

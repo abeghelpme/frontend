@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const SignIn = () => {
+const Login = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
 	const showModal = useRef(false);
@@ -169,7 +169,7 @@ const SignIn = () => {
 				<div className="mt-6 flex flex-col gap-6">
 					<CustomDialog
 						isOpen={openModal}
-						onOpenChange={setOpenModal}
+						setIsOpen={() => setOpenModal(openModal)}
 						trigger={
 							<Button
 								type="submit"
@@ -239,6 +239,6 @@ const SignIn = () => {
 	);
 };
 
-export default SignIn;
+export default Login;
 
-SignIn.protect = true;
+Login.protect = true;
