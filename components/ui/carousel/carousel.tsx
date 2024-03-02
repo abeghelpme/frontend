@@ -2,7 +2,6 @@ import { cn } from "@/lib";
 import { useElementList } from "@/lib/hooks";
 import type { PolymorphicProps } from "@/lib/type-helpers";
 import { ChevronLeftCircleIcon, ChevronRightCircleIcon } from "lucide-react";
-import { useEffect, useRef } from "react";
 import type {
 	CarouselButtonsProps,
 	CarouselContentProps,

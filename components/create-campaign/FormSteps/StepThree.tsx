@@ -15,7 +15,7 @@ import DropZoneInput from "../DropZoneInput";
 import FormErrorMessage from "../FormErrorMessage";
 import Heading from "../Heading";
 import ImagePreview from "../ImagePreview";
-import TiptapEditor from "../TipTapEditor";
+import { TipTapEditor } from "../TipTapEditor";
 
 function StepThree() {
 	const router = useRouter();
@@ -126,7 +126,7 @@ function StepThree() {
 							control={control}
 							name="storyHtml"
 							render={({ field }) => (
-								<TiptapEditor
+								<TipTapEditor
 									placeholder="Write a compelling story that would arouse the interest of donors..."
 									setFormValue={setFormValue}
 									editorContent={field.value}
