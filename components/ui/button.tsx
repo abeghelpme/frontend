@@ -8,6 +8,7 @@ type ButtonProps = {
 	fullWidth?: boolean;
 	children: React.ReactNode;
 	loading?: boolean;
+	usage?: "auth";
 	size?: "sm" | "base" | "lg";
 	variant?: "primary" | "secondary" | "danger";
 } & React.ComponentPropsWithRef<"button">;
@@ -21,16 +22,19 @@ const ButtonUI = (
 		children,
 		fullWidth,
 		variant,
+		usage,
 		size,
 		loading = false,
 		...restOfProps
 	} = props;
+
 	const buttonClass = {
 		"bg-abeg-error-20": variant === "danger",
 		"border-abeg-primary text-abeg-primary border": variant === "secondary",
 		"bg-abeg-primary": variant === "primary",
 		"px-3": size === "sm",
 		"px-10": size === "lg",
+		"md:py-4 md:px-5 text-sm md:text-base": usage === "auth",
 		"w-full": fullWidth,
 	};
 

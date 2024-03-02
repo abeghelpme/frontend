@@ -40,10 +40,7 @@ function CarouselContent<TElement extends React.ElementType = "article">(
 	return (
 		<HtmlElement
 			data-id="Carousel"
-			className={cn(
-				"relative size-full touch-none select-none",
-				classNames.base
-			)}
+			className={cn("relative w-full touch-none select-none", classNames.base)}
 			onMouseEnter={pauseAutoSlide}
 			onMouseLeave={resumeAutoSlide}
 		>

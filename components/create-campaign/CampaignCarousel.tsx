@@ -4,15 +4,21 @@ import { Carousel } from "../ui/carousel";
 
 type CampaignCarouselProps = {
 	images: Campaign["images"];
+	classNames?: {
+		base?: string;
+	};
 };
 
 const CampaignCarousel = (props: CampaignCarouselProps) => {
-	const { images } = props;
+	const { images, classNames } = props;
 
 	return (
 		<Carousel.Root images={images}>
 			<Carousel.Content
-				classNames={{ scrollContainer: "rounded-lg lg:rounded-[10px]" }}
+				classNames={{
+					base: classNames?.base,
+					scrollContainer: "rounded-lg lg:rounded-[10px]",
+				}}
 			>
 				<Carousel.Button
 					type="prev"
@@ -39,7 +45,7 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 								src={image.secureUrl}
 								blurDataURL={image.blurHash}
 								alt="campaign image"
-								className="aspect-[342/200] w-full rounded-lg object-cover lg:h-[400px] lg:max-w-[717px] lg:rounded-[10px]"
+								className="aspect-[342/200] w-full object-cover lg:h-[400px]"
 								width={342}
 								height={200}
 								priority={true}

@@ -57,7 +57,7 @@ function Preview() {
 
 	return (
 		<div className="mt-8 flex min-h-screen flex-col items-center justify-between lg:mt-12">
-			<header className="flex w-full flex-col gap-2 px-6 max-lg:max-w-[480px] lg:px-28 lg:text-2xl">
+			<header className="flex w-full flex-col gap-2 px-6 max-lg:max-w-[480px] lg:px-[100px] lg:text-2xl">
 				<Heading as="h1" className="text-abeg-primary">
 					Campaign Preview
 				</Heading>
@@ -67,17 +67,17 @@ function Preview() {
 				</p>
 			</header>
 
-			<main className="mt-4 bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:mt-12 lg:px-28">
-				<section className="space-y-2 lg:space-y-8">
+			<main className="mt-8 bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:mt-12 lg:px-[100px]">
+				<section>
 					<Heading as="h2" className="text-xl lg:text-[32px]">
-						{stepTwoData.title[0]
+						{stepTwoData.title?.[0]
 							? `${stepTwoData.title[0].toUpperCase()}${stepTwoData.title.slice(
 									1
 							  )}`
 							: "No Title"}
 					</Heading>
 
-					<div className="flex flex-col gap-2 lg:flex-row lg:gap-5">
+					<div className="mt-2 flex flex-col gap-2 lg:mt-8 lg:flex-row lg:gap-5">
 						<Image
 							src={imageUrls[0]}
 							alt="campaign cover image"
@@ -88,12 +88,12 @@ function Preview() {
 						/>
 
 						<article className="space-y-7 px-6 py-3 lg:py-8">
-							<div className="space-y-2">
+							<div>
 								<p className="lg:text-2xl">₦ {stepTwoData.goal} goal</p>
 
 								<ProgressBar
 									value={0}
-									className="progress-unfilled:h-1 progress-unfilled:rounded-lg progress-unfilled:bg-lightGreen progress-filled:rounded-lg progress-filled:bg-abeg-primary"
+									className="mt-2 progress-unfilled:h-1 progress-unfilled:rounded-lg progress-unfilled:bg-lightGreen progress-filled:rounded-lg progress-filled:bg-abeg-primary"
 								/>
 							</div>
 
@@ -199,7 +199,7 @@ function Preview() {
 				</section>
 
 				<section className="mt-8 flex items-start gap-4 lg:mt-12 lg:max-w-[717px]">
-					<DummyAvatar className="size-12 lg:size-[8.2rem]" />
+					<DummyAvatar className="size-12 lg:size-[82px]" />
 
 					<div>
 						<p className="flex flex-col lg:text-xl">
