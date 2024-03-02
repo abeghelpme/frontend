@@ -68,7 +68,7 @@ function CampaignView({
 
 	const fundraiserTarget =
 		campaign.fundraiser === "INDIVIDUAL"
-			? `${campaign.creator.firstName} ${campaign.creator.lastName}`
+			? `${campaign?.creator?.firstName} ${campaign?.creator?.lastName}`
 			: "BENEFICIARY";
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
