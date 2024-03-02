@@ -173,8 +173,8 @@ const TwoFa = () => {
 					<div className="border-tabeg-primary border-t">
 						<div className="mx-auto flex w-full justify-end px-[5%] py-6 md:w-[80%] md:px-0 md:py-7 lg:max-w-[1000px]">
 							<CustomDialog
-								openDialog={openModal}
-								setOpen={() => {
+								isOpen={openModal}
+								setIsOpen={() => {
 									setOpenModal(false);
 									setOtp("");
 								}}

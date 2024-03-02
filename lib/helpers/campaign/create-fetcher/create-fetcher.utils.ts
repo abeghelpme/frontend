@@ -1,3 +1,4 @@
+// eslint-disable-next-line require-await
 export const getResponseData = async <TResponse>(response: Response) => {
-	return (await response.json()) as TResponse;
+	return response.json() as TResponse;
 };

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import { Loader } from "./common";
+
 const Auth = ({ children }: { children: ReactNode }) => {
 	const { user, loading } = useSession((state) => state);
 

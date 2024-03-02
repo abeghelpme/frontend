@@ -1,7 +1,8 @@
 import { Select } from "@/components/ui";
+import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import {
-	callBackendApi,
+	callApi,
 	targetCountries,
 	validateTagValue,
 } from "@/lib/helpers/campaign";
@@ -25,9 +26,9 @@ function StepOne() {
 
 	const {
 		currentStep,
-		fundraiserCategories,
 		stepOneData,
-		actions: { goToStep, setData, setCampaignId },
+		campaignInfo,
+		actions: { goToStep, setData, setCampaignInfo },
 	} = useFormStore((state) => state);
 
 	const { For: TagList } = useElementList();
@@ -40,20 +41,19 @@ function StepOne() {
 		handleSubmit,
 		setValue: setFormValue,
 	} = useForm({
-		mode: "onTouched",
+		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepOne")!),
 		defaultValues: stepOneData,
 	});
 
 	useWatchFormStatus(formState);
 
-	const onFormSubmit = async (data: StepOneData) => {
+	const onSubmit = async (data: StepOneData) => {
 		setData({ step: 1, data });
 
-		const { data: dataInfo, error } = await callBackendApi<{ _id: string }>(
-			`/campaign/create/one`,
-			data
-		);
+		const { data: dataInfo, error } = await callApi<
+			Pick<Campaign, "_id" | "creator">
+		>(`/campaign/create/one`, data);
 
 		if (error) {
 			toast.error(error.status, {
@@ -63,10 +63,13 @@ function StepOne() {
 			return;
 		}
 
-		if (dataInfo.data) {
-			setCampaignId(dataInfo.data._id);
-			goToStep(currentStep + 1);
-		}
+		if (!dataInfo.data) return;
+
+		setCampaignInfo({
+			id: dataInfo.data._id,
+			creator: dataInfo.data.creator,
+		});
+		goToStep(currentStep + 1);
 	};
 
 	const handleAddTags = (
@@ -115,7 +118,7 @@ function StepOne() {
 				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onFormSubmit)(event);
+					void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-6">
@@ -145,7 +148,7 @@ function StepOne() {
 
 									<Select.Content>
 										<CategoryList
-											each={fundraiserCategories}
+											each={campaignInfo.categories}
 											render={(category) => (
 												<Select.Item key={category.id} value={category.id}>
 													{category.name}

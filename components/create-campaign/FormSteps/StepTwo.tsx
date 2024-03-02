@@ -1,6 +1,7 @@
 import { DatePicker, Select } from "@/components/ui";
+import type { Campaign } from "@/interfaces/Campaign";
 import { cn, zodValidator } from "@/lib";
-import { callBackendApi } from "@/lib/helpers/campaign";
+import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -17,26 +18,25 @@ import Heading from "../Heading";
 function StepTwo() {
 	const {
 		currentStep,
-		campaignId,
+		campaignInfo,
 		stepTwoData,
-		actions: { setData, goToStep, setCampaignId },
+		actions: { setData, goToStep, setCampaignInfo },
 	} = useFormStore((state) => state);
 
 	const { control, formState, register, handleSubmit } = useForm({
-		mode: "onTouched",
+		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepTwo")!),
 		defaultValues: stepTwoData,
 	});
 
 	useWatchFormStatus(formState);
 
-	const onFormSubmit = async (data: StepTwoData) => {
+	const onSubmit = async (data: StepTwoData) => {
 		setData({ step: 2, data });
 
-		const { data: dataInfo, error } = await callBackendApi<{ _id: string }>(
-			`/campaign/create/two`,
-			{ ...data, campaignId }
-		);
+		const { data: dataInfo, error } = await callApi<
+			Pick<Campaign, "_id" | "creator">
+		>(`/campaign/create/two`, { ...data, campaignId: campaignInfo.id });
 
 		if (error) {
 			toast.error(error.status, {
@@ -46,10 +46,13 @@ function StepTwo() {
 			return;
 		}
 
-		if (dataInfo.data) {
-			setCampaignId(dataInfo.data._id);
-			goToStep(currentStep + 1);
-		}
+		if (!dataInfo.data) return;
+
+		setCampaignInfo({
+			id: dataInfo.data._id,
+			creator: dataInfo.data.creator,
+		});
+		goToStep(currentStep + 1);
 	};
 
 	return (
@@ -63,7 +66,7 @@ function StepTwo() {
 				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onFormSubmit)(event);
+					void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-6">

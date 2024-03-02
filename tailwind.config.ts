@@ -30,6 +30,7 @@ const config = {
 			colors: {
 				overlay: "rgba(72, 72, 72, 0.5)",
 				placeholder: "#8D8B8B",
+				lightGreen: "#D3E5E5",
 				unfocused: "#A8CCCC",
 				semiWhite: "#E6EAEE",
 				inputBorder: "rgba(124, 148, 107, 0.25)",
