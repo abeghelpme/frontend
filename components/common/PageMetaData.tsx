@@ -10,7 +10,7 @@ interface MetaDataProps {
 const PageMetaData = ({ title, content }: MetaDataProps) => {
 	return (
 		<Head>
-			<title>Abeg Help | {title}</title>
+			<title>{`Abeg Help | ${title}`}</title>
 			<meta name="description" content={content} />
 		</Head>
 	);

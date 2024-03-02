@@ -29,13 +29,16 @@ const config = {
 				"auth-layout-shadow": " 0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
 				otpInput: "2px 4px 4px 0 rgba(139, 210, 189, 0.1)",
 			},
+
 			colors: {
 				overlay: "rgba(72, 72, 72, 0.5)",
 				placeholder: "#8D8B8B",
 				unfocused: "#A8CCCC",
 				semiWhite: "#E6EAEE",
 				inputBorder: "rgba(124, 148, 107, 0.25)",
+				headerDivider: "#D4D4D4",
 				otpBorder: "rgba(0, 128, 128, 0.5)",
+
 				abeg: {
 					primary: "#008080",
 					text: "#484848",
@@ -56,16 +59,27 @@ const config = {
 						40: "#FFEBEB",
 					},
 				},
+
 				// Shadcn colors
-				popover: "hsl(0 0% 100%)",
+				background: "hsl(0 0% 100%)",
+				foreground: "hsl(222.2 47.4% 11.2%)",
+				popover: "theme(colors.background)",
+				primary: "hsl(222.2 47.4% 11.2%)",
+				"primary-foreground": "hsl(210 40% 98%)",
 				"popover-foreground": "hsl(222.2 47.4% 11.2%)",
 				accent: "hsl(210 40% 96.1%)",
 				"accent-foreground": "hsl(222.2 47.4% 11.2%)",
 				input: "hsl(214.3 31.8% 91.4%)",
+				border: "hsl(214.3 31.8% 91.4%)",
 				ring: "hsl(215 20.2% 65.1%)",
 				muted: "hsl(210 40% 96.1%)",
 				"muted-foreground": "hsl(215.4 16.3% 46.9%)",
-				background: "hsl(0 0% 100%)",
+				"success-bg": "hsl(150 100% 6%)",
+				"success-text": "hsl(150 100% 90%)",
+				"success-border": "hsl(147 100% 12%)",
+				"error-bg": "hsl(358 76% 10%)",
+				"error-text": "hsl(358 100% 81%)",
+				"error-border": "hsl(357 89% 16%)",
 			},
 
 			height: {
@@ -89,10 +103,18 @@ const config = {
 					from: { height: "var(--radix-accordion-content-height)" },
 					to: { height: "0" },
 				},
+
+				shake: {
+					"0%, 100%": { transform: "translateX(0rem)" },
+					"25%": { transform: "translateX(0.6rem)" },
+					"75%": { transform: "translateX(-0.6rem)" },
+				},
 			},
+
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
+				shake: "shake 0.2s ease-in-out 0s 3",
 			},
 		},
 	},
@@ -111,18 +133,18 @@ const config = {
 			addComponents({
 				".custom-scrollbar": {
 					"&::-webkit-scrollbar": {
-						width: "1rem",
+						width: "10px",
 					},
 
 					"&::-webkit-scrollbar-track": {
 						backgroundColor: "hsl(0, 0%, 76%)",
-						borderRadius: "1rem 1rem 0 0",
+						borderRadius: "10px 10px 0 0",
 					},
 
 					"&::-webkit-scrollbar-thumb": {
-						backgroundColor: theme("colors.formBtn"),
+						backgroundColor: theme("colors.abeg.primary"),
 						border: "1px solid hsl(0, 0%, 76%)",
-						borderRadius: "1rem",
+						borderRadius: "10px",
 					},
 				},
 			});

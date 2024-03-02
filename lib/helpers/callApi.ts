@@ -1,5 +1,6 @@
 import { useSession } from "@/store";
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
+import { toast } from "sonner";
 import { assertENV, isObject } from "./global-type-helpers";
 
 const BACKEND_API = assertENV(process.env.NEXT_PUBLIC_BACKEND_URL, {
@@ -53,6 +54,11 @@ export const callApi = async <T>(
 
 			if (error.response.status === 401) {
 				useSession.getState().clearSession();
+			}
+			if (error.response.status === 429) {
+				toast.error("Too may requests!", {
+					description: error.message,
+				});
 			}
 		} else {
 			if (error instanceof Error) {

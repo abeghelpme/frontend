@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const Login = () => {
+const SignIn = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
 	const showModal = useRef(false);
@@ -29,7 +29,7 @@ const Login = () => {
 	useEffect(() => {
 		const skipModal = localStorage.getItem("skip-2FA");
 		if (skipModal !== null) {
-			setSkip2FA("true");
+			setSkip2FA(skipModal);
 		}
 	}, []);
 
@@ -43,9 +43,11 @@ const Login = () => {
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
-
 	const handleOption = async () => {
-		await localStorage.setItem("skip-2FA", JSON.stringify(skip2FA));
+		await localStorage.setItem(
+			"skip-2FA",
+			JSON.stringify(skip2FA === "false" && "true")
+		);
 		await void router.push("/dashboard");
 		setOpenModal(false);
 	};
@@ -68,7 +70,7 @@ const Login = () => {
 					query: { signup: true, email: data.email.toLowerCase() },
 				});
 			}
-			return toast.error(error.status, {
+			toast.error(error.status, {
 				description: error.message,
 			});
 		} else {
@@ -151,12 +153,14 @@ const Login = () => {
 						errorMsg={errors.password?.message!}
 					/>
 				</div>
-				<Link
-					href="/forgot-password"
-					className="mb-4 mt-2 inline-flex w-full justify-end text-sm font-semibold text-abeg-primary hover:underline md:text-base"
-				>
-					Forgot Password?
-				</Link>
+				<div className="mb-4 mt-2 flex justify-end ">
+					<Link
+						href="/forgot-password"
+						className="text-sm font-semibold text-abeg-primary hover:underline md:text-base"
+					>
+						Forgot Password?
+					</Link>
+				</div>
 
 				<CloudFlareTurnStile
 					ref={cfTurnStile}
@@ -226,7 +230,7 @@ const Login = () => {
 							href="/signup"
 							className="font-medium text-abeg-primary underline"
 						>
-							Register
+							Sign up
 						</Link>
 					</p>
 				</div>
@@ -235,6 +239,6 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default SignIn;
 
-Login.protect = true;
+SignIn.protect = true;

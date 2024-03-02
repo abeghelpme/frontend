@@ -11,13 +11,13 @@ const validateTagValue = (tagsArray: string[], newTag: string | undefined) => {
 		return;
 	}
 
-	if (tagsArray.includes(newTag)) {
-		toast.error("Error", {
-			description: "Tag already exists",
-		});
+	// if (tagsArray.includes(newTag)) {
+	// 	toast.error("Error", {
+	// 		description: "Tag already exists",
+	// 	});
 
-		return;
-	}
+	// 	return;
+	// } // NOTE - Removed this check for now, it's unnecesary
 
 	if (tagsArray.length >= 5) {
 		toast.error("Error", {

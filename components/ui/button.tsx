@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
 
 interface ButtonProps extends React.ComponentPropsWithRef<"button"> {
-	className: string;
+	className?: string;
 	fullWidth?: boolean;
 	children: React.ReactNode;
 	loading?: boolean;

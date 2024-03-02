@@ -1,4 +1,4 @@
-import CloudflareTurnstile from "@/components/common/CloudflareTurnstile";
+import { CloudFlareTurnStile, FormErrorMessage } from "@/components/common";
 import { Button, Input } from "@/components/ui";
 import { AuthPagesLayout } from "@/layouts";
 import { type ForgotPasswordType, callApi, zodValidator } from "@/lib";
@@ -29,7 +29,7 @@ const ForgotPasswordPage = () => {
 		const { data: responseData, error } = await callApi(
 			"/auth/password/forgot",
 			{
-				email: data.email,
+				email: data.email.trim(),
 			}
 		);
 
@@ -70,18 +70,8 @@ const ForgotPasswordPage = () => {
 
 					response && void handleSubmit(onSubmit)(event);
 				}}
-				className="flex flex-col gap-4"
+				className="flex flex-col gap-4 md:gap-6"
 			>
-				<div className="space-y-2 text-center">
-					{" "}
-					<h1 className="text-xl font-semibold text-abeg-neutral-10 md:text-2xl">
-						Forgot Password?
-					</h1>
-					<p className="md:text-lg">
-						Enter your registered email to receive your password reset
-						instruction
-					</p>
-				</div>
 				<div className="mt-2">
 					<div className="space-y-1">
 						<label htmlFor="email" className="text-sm font-medium md:text-lg">
@@ -98,14 +88,13 @@ const ForgotPasswordPage = () => {
 								"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 							}`}
 						/>
-						{errors.email && (
-							<p className="text-sm text-abeg-primary">
-								{errors.email.message}
-							</p>
-						)}
+						<FormErrorMessage
+							error={errors}
+							errorMsg={errors.email?.message!}
+						/>
 					</div>
 				</div>
-				<CloudflareTurnstile
+				<CloudFlareTurnStile
 					ref={cfTurnStile}
 					onStatusChange={handleBotStatus}
 				/>
@@ -113,12 +102,15 @@ const ForgotPasswordPage = () => {
 					<Button
 						disabled={isSubmitting}
 						loading={isSubmitting}
-						className=""
+						className="md:text-lg"
 						variant="primary"
 					>
 						Submit
 					</Button>
-					<Link href="/signin" className="text-sm text-abeg-primary underline">
+					<Link
+						href="/signin"
+						className="text-sm text-abeg-primary underline font-semibold md:text-base"
+					>
 						Back to sign in page
 					</Link>
 				</div>
@@ -128,3 +120,4 @@ const ForgotPasswordPage = () => {
 };
 
 export default ForgotPasswordPage;
+// ForgotPasswordPage.protect = true;

@@ -34,7 +34,6 @@ const SignUp = () => {
 		handleSubmit,
 		reset,
 		control,
-		watch,
 		formState: { errors, isSubmitting },
 	} = useForm<SignUpType>({
 		resolver: zodResolver(zodValidator("signup")!),
@@ -43,13 +42,11 @@ const SignUp = () => {
 	});
 
 	const isChecked = useWatchInput({ control, inputType: "terms" });
-	const password = useWatchInput({ control, inputType: "password" });
+	const password = useWatchInput({ control, inputType: "password" }) as string;
 	const [result, setResult] = useState<number>(0);
 	const deferredPassword = useDeferredValue(password);
 	const genStrength = async () => {
-		const passwordStrength = await checkPasswordStrength(
-			deferredPassword as string
-		);
+		const passwordStrength = await checkPasswordStrength(deferredPassword);
 		setResult(passwordStrength);
 	};
 	useEffect(() => {
@@ -203,7 +200,7 @@ const SignUp = () => {
 							className={`min-h-[45px]`}
 							errorField={errors.password}
 						/>
-						{(password as string).length > 0 && (
+						{password.length > 0 && (
 							<FormErrorMessage isForPasswordStrength result={result} />
 						)}
 						<FormErrorMessage
@@ -263,7 +260,7 @@ const SignUp = () => {
 					onStatusChange={handleBotStatus}
 					ref={cfTurnStile}
 				/>
-				<div className="flex flex-col items-center space-y-6">
+				<div className="flex flex-col items-center space-y-6 text-sm md:text-base">
 					<Button
 						disabled={isSubmitting}
 						className=""
@@ -279,7 +276,7 @@ const SignUp = () => {
 							href="/signin"
 							className="font-medium text-abeg-primary underline"
 						>
-							Login
+							Sign in
 						</Link>
 					</p>
 				</div>

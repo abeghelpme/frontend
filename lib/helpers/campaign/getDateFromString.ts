@@ -1,9 +1,9 @@
-import { DATE_TOMORROW } from "@/lib/helpers/campaign/constants";
+import { DATE_TODAY } from "@/lib/helpers/campaign/constants";
 
 /* eslint-disable no-console */
-const getDateFromString = (dateString: string, fallback = DATE_TOMORROW) => {
+const getDateFromString = (dateString: string, fallback = DATE_TODAY) => {
 	if (dateString === "") {
-		console.error(
+		console.warn(
 			"getDateFromString: Value is an empty string, returning fallback date"
 		);
 		return fallback;
@@ -12,7 +12,7 @@ const getDateFromString = (dateString: string, fallback = DATE_TOMORROW) => {
 	const date = new Date(dateString);
 
 	if (Number.isNaN(date.getTime())) {
-		console.error(
+		console.warn(
 			`getDateFromString: Invalid date string '${dateString}', returning fallback date`
 		);
 		return fallback;

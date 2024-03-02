@@ -59,6 +59,7 @@ const VerificationPage = () => {
 					</p>
 					<Button
 						className="!mt-6"
+						variant="primary"
 						onClick={() => void verifyEmail()}
 						fullWidth
 						loading={loading}

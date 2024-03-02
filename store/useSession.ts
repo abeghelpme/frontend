@@ -32,7 +32,7 @@ export const useSession = createWithEqualityFn<Session>(
 			});
 		},
 		updateUser: (data: User) => set({ user: data }),
-		clearSession: () => {
+		clearSession: async () => {
 			set((state) => ({
 				...initialState,
 				loading: false,

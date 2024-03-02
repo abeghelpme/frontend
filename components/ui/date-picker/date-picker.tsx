@@ -1,9 +1,9 @@
 import { cn } from "@/lib";
-import { DATE_TOMORROW } from "@/lib/helpers/campaign/constants";
+import { DATE_NEXT_TOMORROW } from "@/lib/helpers/campaign/constants";
 import { getDateFromString } from "@/lib/helpers/campaign/getDateFromString";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import Button, { buttonVariants } from "../button";
+import { buttonVariants } from "../button";
 import Calendar from "./calender";
 import { Popover } from "./popover";
 
@@ -23,10 +23,8 @@ function DatePicker(props: DatePickerProps) {
 
 	return (
 		<Popover.Root>
-			div
 			<Popover.Trigger asChild>
-				<Button
-					variant="secondary"
+				<button
 					className={cn(
 						buttonVariants({ variant: "outline" }),
 						!isDateSelected && "text-placeholder",
@@ -35,15 +33,15 @@ function DatePicker(props: DatePickerProps) {
 				>
 					<span>{isDateSelected ? format(dateValue, "PPP") : placeholder}</span>
 
-					<CalendarIcon className="aspect-square w-@1.6" />
-				</Button>
+					<CalendarIcon className="aspect-square w-4" />
+				</button>
 			</Popover.Trigger>
 			<Popover.Content className="w-auto p-0">
 				<Calendar
-					className="rounded-[10px] border border-unfocused p-@1.2"
+					className="rounded-[10px] border border-unfocused p-3"
 					classNames={{
 						cell: "hover:scale-[1.03]",
-						button: "font-medium text-[0.7875rem]",
+						button: "font-medium text-xs",
 					}}
 					mode="single"
 					selected={dateValue}
@@ -53,7 +51,7 @@ function DatePicker(props: DatePickerProps) {
 						onChange(format(date, "MM-dd-yyyy"));
 					}}
 					initialFocus={true}
-					disabled={{ before: DATE_TOMORROW }}
+					disabled={{ before: DATE_NEXT_TOMORROW }}
 				/>
 			</Popover.Content>
 		</Popover.Root>

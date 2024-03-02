@@ -1,4 +1,4 @@
-import { PlusButtonIcon } from "@/components/common";
+import { PlusIcon } from "@/components/common";
 import { Button, ProgressBar } from "@/components/ui";
 import { DashBoardPageLayout } from "@/layouts/DashBoardPageLayout";
 import userImage from "@/public/assets/icons/dashboard/userIcon.svg";
@@ -108,7 +108,7 @@ const dashboard = () => {
 					</div>
 					<Button className="md:hidden flex items-center rounded-md bg-teal-700 p-3  text-md">
 						<span className="pr-2">
-							<PlusButtonIcon />
+							<PlusIcon />
 						</span>
 						Create Campaign
 					</Button>
@@ -267,3 +267,4 @@ const dashboard = () => {
 	);
 };
 export default dashboard;
+dashboard.protect = true;
