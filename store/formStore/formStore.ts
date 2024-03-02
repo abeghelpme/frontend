@@ -1,6 +1,6 @@
 import type { Campaign } from "@/interfaces/Campaign";
 import { omitKeys } from "@/lib";
-import { callBackendApi } from "@/lib/helpers/campaign";
+import { callApi } from "@/lib/helpers/campaign";
 import { type StateCreator, create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
@@ -53,7 +53,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 			},
 
 			initializeFormData: async (queryParam = "limit=1") => {
-				const { data, error } = await callBackendApi<Campaign[]>(
+				const { data, error } = await callApi<Campaign[]>(
 					`/campaign/all?${queryParam}`
 				);
 
@@ -101,7 +101,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 
 			initializeCategories: async () => {
 				const { data, error } =
-					await callBackendApi<FormStore["campaignInfo"]["categories"]>(
+					await callApi<FormStore["campaignInfo"]["categories"]>(
 						"/campaign/category"
 					);
 

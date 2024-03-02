@@ -2,7 +2,7 @@ import { DonorSection, Heading } from "@/components/create-campaign";
 import CampaignCarousel from "@/components/create-campaign/CampaignCarousel";
 import { Button, ProgressBar } from "@/components/ui";
 import type { Campaign } from "@/interfaces/Campaign";
-import { callBackendApi, getDateFromString } from "@/lib/helpers/campaign";
+import { callApi, getDateFromString } from "@/lib/helpers/campaign";
 import { useCopyToClipboard, useElementList } from "@/lib/hooks";
 import {
 	DonorIcon,
@@ -21,9 +21,7 @@ export const getStaticPaths = (async () => {
 	// const { data, error } = await callBackendApi<Campaign[]>(
 	// 	`/campaign/all?limit=100&status=published` // remove published to test in development
 	// );
-	const { data, error } = await callBackendApi<Campaign[]>(
-		"/campaign/all?limit=100"
-	);
+	const { data, error } = await callApi<Campaign[]>("/campaign/all?limit=100");
 
 	if (error || !data.data) {
 		return {
@@ -49,9 +47,7 @@ export const getStaticPaths = (async () => {
 export const getStaticProps = async function (context) {
 	const { shortId } = context.params as { shortId: string };
 
-	const { data, error } = await callBackendApi<Campaign>(
-		`/campaign/one/${shortId}`
-	);
+	const { data, error } = await callApi<Campaign>(`/campaign/one/${shortId}`);
 
 	if (error || !data.data) {
 		return {

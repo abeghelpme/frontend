@@ -1,6 +1,6 @@
 import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
-import { callBackendApi } from "@/lib/helpers/campaign";
+import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -49,7 +49,7 @@ function StepThree() {
 		formData.set("campaignId", campaignInfo.id);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
-		const { data: dataInfo, error } = await callBackendApi<
+		const { data: dataInfo, error } = await callApi<
 			Pick<Campaign, "url" | "_id" | "creator">
 		>(`/campaign/create/three`, formData);
 

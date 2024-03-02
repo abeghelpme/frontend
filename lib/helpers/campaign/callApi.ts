@@ -7,7 +7,7 @@ const BACKEND_API = assertENV(process.env.NEXT_PUBLIC_BACKEND_URL, {
 	message: "Please add the NEXT_PUBLIC_BACKEND_API variable to your .env file",
 });
 
-const callBackendApi = createFetcher({
+const callApi = createFetcher({
 	baseURL: BACKEND_API,
 	timeout: 60000, // Set timeout to 60 seconds
 	credentials: "include",
@@ -25,4 +25,4 @@ const callBackendApi = createFetcher({
 	},
 });
 
-export { callBackendApi };
+export { callApi };

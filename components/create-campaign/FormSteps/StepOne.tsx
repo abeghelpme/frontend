@@ -2,7 +2,7 @@ import { Select } from "@/components/ui";
 import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import {
-	callBackendApi,
+	callApi,
 	targetCountries,
 	validateTagValue,
 } from "@/lib/helpers/campaign";
@@ -51,7 +51,7 @@ function StepOne() {
 	const onSubmit = async (data: StepOneData) => {
 		setData({ step: 1, data });
 
-		const { data: dataInfo, error } = await callBackendApi<
+		const { data: dataInfo, error } = await callApi<
 			Pick<Campaign, "_id" | "creator">
 		>(`/campaign/create/one`, data);
 

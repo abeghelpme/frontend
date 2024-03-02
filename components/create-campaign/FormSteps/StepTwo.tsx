@@ -1,7 +1,7 @@
 import { DatePicker, Select } from "@/components/ui";
 import type { Campaign } from "@/interfaces/Campaign";
 import { cn, zodValidator } from "@/lib";
-import { callBackendApi } from "@/lib/helpers/campaign";
+import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -34,7 +34,7 @@ function StepTwo() {
 	const onSubmit = async (data: StepTwoData) => {
 		setData({ step: 2, data });
 
-		const { data: dataInfo, error } = await callBackendApi<
+		const { data: dataInfo, error } = await callApi<
 			Pick<Campaign, "_id" | "creator">
 		>(`/campaign/create/two`, { ...data, campaignId: campaignInfo.id });
 
