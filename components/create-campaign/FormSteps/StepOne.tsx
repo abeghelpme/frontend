@@ -88,7 +88,7 @@ function StepOne() {
 
 		if (!validTag) return;
 
-		const newTagState = [...stepOneData.tags, validTag];
+		const newTagState = [...stepOneData.tags, `#${validTag}`];
 
 		setData({ step: 1, data: { tags: newTagState } });
 
@@ -98,7 +98,7 @@ function StepOne() {
 	};
 
 	const handleRemoveTags = (tag: string) => () => {
-		const newTagState = stepOneData.tags.filter((t) => t !== tag);
+		const newTagState = stepOneData.tags.filter((tagItem) => tagItem !== tag);
 
 		setData({ step: 1, data: { tags: newTagState } });
 
@@ -242,7 +242,7 @@ function StepOne() {
 											key={`${tag}-${index}`}
 											className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
 										>
-											<p>#{tag}</p>
+											<p>{tag}</p>
 
 											<button
 												className="transition-transform duration-100 active:scale-[1.12]"

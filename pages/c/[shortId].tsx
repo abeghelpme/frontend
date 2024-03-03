@@ -20,11 +20,7 @@ export const getStaticPaths = (async () => {
 		};
 	}
 
-	const campaignData = data.data.filter(
-		(campaign) => campaign.status !== "Draft"
-	);
-
-	const paths = campaignData.map((campaign) => ({
+	const paths = data.data.map((campaign) => ({
 		params: { shortId: campaign.url.split("/c/")[1] },
 	}));
 

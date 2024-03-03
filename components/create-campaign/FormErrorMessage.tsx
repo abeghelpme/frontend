@@ -15,10 +15,12 @@ function FormErrorMessage<TStepData extends FieldValues>(
 
 	const paragraphRef = useRef<HTMLParagraphElement>(null);
 	const message = formState.errors[errorField]?.message as string | undefined;
+
 	const animationClass = "animate-shake";
 
 	useEffect(() => {
 		if (!paragraphRef.current) return;
+
 		if (paragraphRef.current.classList.contains(animationClass)) return;
 
 		paragraphRef.current.classList.add(animationClass);

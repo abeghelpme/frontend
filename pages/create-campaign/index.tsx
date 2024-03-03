@@ -63,23 +63,15 @@ function CreateCampaignPage() {
 					/>
 
 					{currentStep === 3 && (
-						<>
-							<FormActionButton
-								type="submit"
-								text="Create campaign"
-								variant="primary"
-								className={"bg-abeg-primary font-bold max-lg:hidden"}
-								targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
-								isLoading={formStatus.isSubmitting}
-								disabled={formStatus.isSubmitting}
-							/>
-
-							{/* <FormActionButton
-								type="button" // TODO - Replace with action for publishing campaigns
-								text="Publish Campaign"
-								className="bg-abeg-primary max-lg:hidden"
-							/> */}
-						</>
+						<FormActionButton
+							type="submit"
+							text="Create campaign"
+							variant="primary"
+							className={"bg-abeg-primary font-bold max-lg:hidden"}
+							targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+							isLoading={formStatus.isSubmitting}
+							disabled={formStatus.isSubmitting}
+						/>
 					)}
 				</div>
 			</footer>

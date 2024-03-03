@@ -46,9 +46,9 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 				set({ [dataKey]: { ...previousData, ...newData } });
 			},
 
-			initializeFormData: async (queryParam = "limit=1") => {
+			initializeFormData: async (queryParam = "limit=10") => {
 				const { data, error } = await callApi<Campaign[]>(
-					`/campaign/all?${queryParam}`
+					`/campaign/all?${queryParam}&status=Draft`
 				);
 
 				if (error) return;
@@ -56,6 +56,12 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 				if (!data.data) return;
 
 				const { setData, setCampaignInfo } = get().actions;
+
+				if (data.data.length === 0) {
+					set({ currentStep: 3 });
+
+					return;
+				}
 
 				const campaign = data.data[0];
 

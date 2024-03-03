@@ -59,6 +59,15 @@ function Preview() {
 					Publish Campaign
 				</FormActionButton>
 
+				<FormActionButton
+					variant="secondary"
+					type="button"
+					className="w-[20vw] border-abeg-primary font-bold text-abeg-primary"
+					onClick={() => void router.push("/create-campaign")}
+				>
+					Edit Campaign
+				</FormActionButton>
+
 				<Heading as="h2" className="mt-8 text-xl lg:text-[32px]">
 					{`${campaignInfo.title[0].toUpperCase()}${campaignInfo.title.slice(
 						1
