@@ -1,5 +1,5 @@
 import type { Campaign } from "@/interfaces/Campaign";
-import { callApi, getDateFromString } from "@/lib/helpers/campaign";
+import { getDateFromString } from "@/lib/helpers/campaign";
 import { useCopyToClipboard, useElementList } from "@/lib/hooks";
 import {
 	DonorIcon,
@@ -70,16 +70,6 @@ function PreviewComponent({ campaign }: { campaign: Campaign }) {
 		toast.success("Campaign link copied to clipboard!", {
 			duration: 1500,
 		});
-	};
-
-	const handlePublish = async () => {
-		const { error } = await callApi<Campaign>("/campaign/publish", {
-			campaignId: campaign._id,
-		});
-
-		if (error) {
-			toast.error(error.message);
-		}
 	};
 
 	const exeerpt = /^([\S\s]{1,150}[!.?])/.exec(campaign.story)?.[0];

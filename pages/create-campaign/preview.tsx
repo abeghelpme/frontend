@@ -1,5 +1,7 @@
 import { FormActionButton, Heading } from "@/components/create-campaign";
 import PreviewComponent from "@/components/create-campaign/PreviewComponent";
+import type { Campaign } from "@/interfaces/Campaign";
+import { callApi } from "@/lib/helpers/campaign";
 import { useFormStore } from "@/store/formStore";
 import { useInitFormStore } from "@/store/formStore/formStore";
 import { useRouter } from "next/router";
@@ -18,6 +20,20 @@ function Preview() {
 			void router.push("/create-campaign");
 		}
 	}, [campaignInfo.status, router]);
+
+	const handlePublish = async () => {
+		const { error } = await callApi<Campaign>("/campaign/publish", {
+			campaignId: campaignInfo._id,
+		});
+
+		if (error) {
+			toast.error(error.message);
+			return;
+		}
+
+		toast.success("Campaign published successfully");
+		void router.push(`/${campaignInfo.shortId}`);
+	};
 
 	return (
 		<div className="mt-8 flex flex-col items-center gap-2 lg:mt-12 lg:gap-7">
@@ -38,7 +54,7 @@ function Preview() {
 				<FormActionButton
 					type="button"
 					className="w-[20vw] bg-abeg-primary font-bold"
-					onClick={() => {}}
+					onClick={() => void handlePublish()}
 				>
 					Publish Campaign
 				</FormActionButton>
