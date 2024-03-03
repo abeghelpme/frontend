@@ -1,5 +1,4 @@
 import type { Campaign } from "@/interfaces/Campaign";
-import { omitKeys } from "@/lib";
 import { callApi } from "@/lib/helpers/campaign";
 import { type StateCreator, create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -21,19 +20,14 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 
 			setCampaignInfo: (newInfo) => {
 				const { campaignInfo: previousInfo } = get();
-				const { creator, url, ...restOfNewInfo } = newInfo;
 
 				set({
 					campaignInfo: {
 						...previousInfo,
-
-						url: url ? url.split(".me/")[1] : previousInfo.url,
-
-						creator: creator
-							? omitKeys(creator as Campaign["creator"], ["_id"])
-							: previousInfo.creator,
-
-						...restOfNewInfo,
+						...newInfo,
+						shortId: newInfo.url
+							? newInfo.url.split(".me/")[1]
+							: previousInfo.shortId,
 					},
 				});
 			},
@@ -65,11 +59,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 
 				const campaign = data.data[0];
 
-				setCampaignInfo({
-					id: campaign._id,
-					url: campaign.url,
-					creator: campaign.creator,
-				});
+				setCampaignInfo(campaign);
 
 				setData({
 					step: 1,

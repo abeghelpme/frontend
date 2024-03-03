@@ -4,19 +4,14 @@ export const initialFormState = {
 	currentStep: 1,
 
 	campaignInfo: {
-		id: "",
-		url: "",
-		creator: {
-			firstName: "",
-			lastName: "",
-		},
+		shortId: "",
 		categories: [
 			{
 				id: "65b0576bb36c6a968d892a52",
 				name: "Health and Wellness",
 			},
 		],
-	},
+	} as FormStore["campaignInfo"],
 
 	formStatus: {
 		isValid: true,

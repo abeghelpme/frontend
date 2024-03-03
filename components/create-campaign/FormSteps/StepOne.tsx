@@ -51,9 +51,10 @@ function StepOne() {
 	const onSubmit = async (data: StepOneData) => {
 		setData({ step: 1, data });
 
-		const { data: dataInfo, error } = await callApi<
-			Pick<Campaign, "_id" | "creator">
-		>(`/campaign/create/one`, data);
+		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
+			`/campaign/create/one`,
+			data
+		);
 
 		if (error) {
 			toast.error(error.status, {
@@ -65,10 +66,7 @@ function StepOne() {
 
 		if (!dataInfo.data) return;
 
-		setCampaignInfo({
-			id: dataInfo.data._id,
-			creator: dataInfo.data.creator,
-		});
+		setCampaignInfo(dataInfo.data);
 		goToStep(currentStep + 1);
 	};
 

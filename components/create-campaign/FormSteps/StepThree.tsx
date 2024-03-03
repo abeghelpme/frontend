@@ -46,12 +46,13 @@ function StepThree() {
 
 		formData.set("story", data.story);
 		formData.set("storyHtml", data.storyHtml);
-		formData.set("campaignId", campaignInfo.id);
+		formData.set("campaignId", campaignInfo._id);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
-		const { data: dataInfo, error } = await callApi<
-			Pick<Campaign, "url" | "_id" | "creator">
-		>(`/campaign/create/three`, formData);
+		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
+			`/campaign/create/three`,
+			formData
+		);
 
 		if (error) {
 			toast.error(error.status, {
@@ -63,11 +64,7 @@ function StepThree() {
 
 		if (!dataInfo.data) return;
 
-		setCampaignInfo({
-			id: dataInfo.data._id,
-			creator: dataInfo.data.creator,
-			url: dataInfo.data.url,
-		});
+		setCampaignInfo(dataInfo.data);
 		void router.push("/create-campaign/preview");
 	};
 

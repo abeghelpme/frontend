@@ -1,6 +1,5 @@
 import type { Campaign } from "@/interfaces/Campaign";
 import type { targetCountries } from "@/lib/helpers/campaign/constants";
-import type { PrettyOmit } from "@/lib/type-helpers";
 
 export type StepOneData = {
 	categoryId: string;
@@ -38,10 +37,8 @@ export type FormStore = {
 	stepTwoData: StepTwoData;
 	stepThreeData: StepThreeData;
 
-	campaignInfo: {
-		id: string;
-		url: string;
-		creator: PrettyOmit<Campaign["creator"], "_id">;
+	campaignInfo: Campaign & {
+		shortId: string;
 		categories: Array<{ id: string; name: string }>;
 	};
 
