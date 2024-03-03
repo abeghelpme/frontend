@@ -18,10 +18,9 @@ import type {
 import { toast } from "sonner";
 
 export const getStaticPaths = (async () => {
-	// const { data, error } = await callBackendApi<Campaign[]>(
-	// 	`/campaign/all?limit=100&status=published` // remove published to test in development
-	// );
-	const { data, error } = await callApi<Campaign[]>("/campaign/all?limit=100");
+	const { data, error } = await callApi<Campaign[]>(
+		"/campaign/all?limit=100&isPublished=true"
+	);
 
 	if (error || !data.data) {
 		return {
@@ -68,7 +67,7 @@ function CampaignView({
 
 	const fundraiserTarget =
 		campaign.fundraiser === "INDIVIDUAL"
-			? `${campaign?.creator?.firstName} ${campaign?.creator?.lastName}`
+			? `${campaign.creator.firstName} ${campaign.creator.lastName}`
 			: "BENEFICIARY";
 
 	const campaignDeadline = getDateFromString(campaign.deadline);

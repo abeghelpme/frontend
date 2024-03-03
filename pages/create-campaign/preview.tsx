@@ -1,18 +1,59 @@
-import { CustomDialog, Success } from "@/components/common";
+import { CustomDialog, PageMetaData } from "@/components/common";
 import { FormActionButton, Heading } from "@/components/create-campaign";
 import { Button, ProgressBar } from "@/components/ui";
-import { DATE_NEXT_TOMORROW, getDateFromString } from "@/lib/helpers/campaign";
+import type { Campaign } from "@/interfaces/Campaign";
+import {
+	DATE_NEXT_TOMORROW,
+	callApi,
+	getDateFromString,
+} from "@/lib/helpers/campaign";
 import { useCopyToClipboard, useElementList } from "@/lib/hooks";
-import { DummyAvatar, MoneyIcon } from "@/public/assets/icons/campaign";
+import {
+	DummyAvatar,
+	MoneyIcon,
+	whatsappIcon,
+	xIcon,
+} from "@/public/assets/icons/campaign";
 import { useFormStore } from "@/store/formStore";
 import { useInitFormStore } from "@/store/formStore/formStore";
 import { format } from "date-fns";
+import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { toast } from "sonner";
 
 void useInitFormStore.getState().actions.initializeFormData();
+
+function generateTweet(
+	campaignTitle: string,
+	campaignUrl: string,
+	hashtags: string[]
+) {
+	const queryParams = new URLSearchParams();
+
+	queryParams.append(
+		"text",
+		`Abeg help donate to my campaign:
+${campaignTitle}
+${hashtags.length > 0 && hashtags.join(", ")}`
+	);
+
+	queryParams.append("url", campaignUrl);
+	queryParams.append("via", "abeghelpme");
+
+	return `https://twitter.com/intent/tweet?${queryParams.toString()}`;
+}
+
+function generateWhatsAppMessage(campaignTitle: string, campaignUrl: string) {
+	const queryParams = new URLSearchParams();
+
+	queryParams.append(
+		"text",
+		`Abeg help donate to my campaign:\n${campaignTitle}\n${campaignUrl}`
+	);
+
+	return `https://wa.me/?${queryParams.toString()}`;
+}
 
 function Preview() {
 	const { stepOneData, stepTwoData, stepThreeData, campaignInfo } =
@@ -20,7 +61,6 @@ function Preview() {
 	const { For: ImageFileList } = useElementList();
 	const { For: TagList } = useElementList();
 	const { copyToClipboard } = useCopyToClipboard();
-	const router = useRouter();
 
 	const campaignCategory = campaignInfo.categories.find(
 		(category) => category.id === stepOneData.categoryId
@@ -46,17 +86,34 @@ function Preview() {
 		URL.revokeObjectURL(imageUrl);
 
 	const handleShareLink = () => {
-		copyToClipboard(campaignInfo.url);
+		copyToClipboard(`https://abeghelp.me/${campaignInfo.url}`);
 
 		toast.success("Campaign link copied to clipboard!", {
 			duration: 1500,
 		});
-
-		void router.push(`/${campaignInfo.url}`, undefined, { shallow: true });
 	};
+
+	const handlePublish = async () => {
+		const { data, error } = await callApi<Campaign>("/campaign/publish", {
+			campaignId: campaignInfo.id,
+		});
+
+		if (error) {
+			toast.error(error.message);
+		}
+	};
+
+	const exeerpt = /^([\S\s]{1,150}[!.?])/.exec(stepThreeData.story)?.[0];
 
 	return (
 		<div className="mt-8 flex min-h-screen flex-col items-center justify-between lg:mt-12">
+			<PageMetaData
+				title={stepTwoData.title}
+				content={exeerpt ?? ""}
+				image={imageUrls[0]}
+				url={`https://abeghelp.me/${campaignInfo.url}`}
+			/>
+
 			<header className="flex w-full flex-col gap-2 px-6 max-lg:max-w-[480px] lg:px-[100px] lg:text-2xl">
 				<Heading as="h1" className="text-abeg-primary">
 					Campaign Preview
@@ -65,6 +122,19 @@ function Preview() {
 				<p className="text-abeg-primary">
 					This is what your fundraiser campaign will look like to donors
 				</p>
+
+				<p className="text-xl text-abeg-error-20">
+					Note: Your campaign will become visible to donors once published and
+					cannot be edited after!
+				</p>
+
+				<FormActionButton
+					type="button"
+					className="w-[20vw] bg-abeg-primary font-bold"
+					onClick={() => {}}
+				>
+					Publish Campaign
+				</FormActionButton>
 			</header>
 
 			<main className="mt-8 bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:mt-12 lg:px-[100px]">
@@ -105,13 +175,83 @@ function Preview() {
 									Donate to this campaign
 								</Button>
 
-								<Button
-									variant="secondary"
-									className="w-full rounded-md border-abeg-primary py-3 text-xs font-bold text-abeg-primary lg:rounded-lg lg:text-base"
-									onClick={handleShareLink}
+								<CustomDialog
+									classNames={{
+										content: "gap-0 max-lg:max-w-[476] p-12 md:p-12",
+									}}
+									trigger={
+										<Button
+											variant="secondary"
+											className="w-full rounded-md border-abeg-primary py-3 text-xs font-bold text-abeg-primary lg:rounded-lg lg:text-base"
+										>
+											Share this campaign
+										</Button>
+									}
 								>
-									Share this campaign
-								</Button>
+									<p className="text-center">
+										Spread the word, share your campaign with friends, family,
+										and the world. Every share brings us one step closer to
+										making a difference
+									</p>
+
+									<div className="mt-6 flex w-full items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
+										<div className="flex w-full gap-1">
+											<LinkIcon className="size-5" />
+											<p>{`https://abeghelp.me/${campaignInfo.url}`}</p>
+										</div>
+
+										<button
+											className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
+											onClick={handleShareLink}
+										>
+											<FilesIcon className="size-4" />
+											Copy link
+										</button>
+									</div>
+
+									<div className="mt-6 flex w-full items-center justify-between gap-4 text-base">
+										<hr className="my-1 basis-full border border-placeholder" />
+										<p className="shrink-0">or share on</p>
+										<hr className="my-1 basis-full border border-placeholder" />
+									</div>
+
+									<div className="mt-6 flex w-full items-center justify-between">
+										<Link
+											href={generateTweet(
+												stepTwoData.title,
+												`https://abeghelp.me/${campaignInfo.url}`,
+												stepOneData.tags
+											)}
+											target="_blank"
+											className="flex w-full items-center gap-2"
+										>
+											<Image
+												src={xIcon as string}
+												width={32}
+												height={32}
+												alt=""
+											/>
+											Twitter (X)
+										</Link>
+
+										<Link
+											href={generateWhatsAppMessage(
+												stepTwoData.title,
+												`https://abeghelp.me/${campaignInfo.url}`
+											)}
+											target="_blank"
+											className="flex w-full items-center justify-end gap-2"
+										>
+											<Image
+												src={whatsappIcon as string}
+												width={32}
+												height={32}
+												alt=""
+											/>
+											Whatsapp
+										</Link>
+									</div>
+								</CustomDialog>
 							</div>
 
 							<div className="space-y-7">
@@ -216,57 +356,6 @@ function Preview() {
 					</div>
 				</section>
 			</main>
-
-			<footer className="lpx-6 mt-auto flex w-full justify-end gap-2 border-t border-t-abeg-primary px-6 py-4 lg:gap-4 lg:px-[100px] lg:py-6">
-				<FormActionButton
-					type="button"
-					variant="secondary"
-					className="border-abeg-primary font-bold text-abeg-primary"
-				>
-					<Link href={"/create-campaign"}>Edit campaign</Link>
-				</FormActionButton>
-
-				<CustomDialog
-					classNames={{
-						content: "gap-0 max-lg:max-w-[331px] p-6",
-					}}
-					trigger={
-						<FormActionButton
-							type="button"
-							className="bg-abeg-primary font-bold"
-						>
-							Create Campaign
-						</FormActionButton>
-					}
-				>
-					<Success
-						description="You have successfully created a campaign!"
-						classNames={{
-							wrapper: "p-0",
-							heading: "text-sm font-bold lg:text-base",
-							description: "text-xs lg:text-base",
-							lottiePlayer: "max-lg:size-[100px]",
-						}}
-					/>
-
-					<Button
-						variant="primary"
-						className="mt-6 text-sm font-bold lg:text-base"
-						fullWidth
-						onClick={handleShareLink}
-					>
-						Share Campaign
-					</Button>
-
-					<Button
-						variant="secondary"
-						className="mt-2 font-bold md:text-sm lg:text-base"
-						fullWidth
-					>
-						<Link href={"/dashboard"}>Skip</Link>
-					</Button>
-				</CustomDialog>
-			</footer>
 		</div>
 	);
 }

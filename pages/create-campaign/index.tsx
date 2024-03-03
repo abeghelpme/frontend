@@ -66,21 +66,19 @@ function CreateCampaignPage() {
 						<>
 							<FormActionButton
 								type="submit"
-								text="Preview Campaign"
-								variant="secondary"
-								className={
-									"border-abeg-primary font-bold text-abeg-primary max-lg:hidden"
-								}
+								text="Create campaign"
+								variant="primary"
+								className={"bg-abeg-primary font-bold max-lg:hidden"}
 								targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
 								isLoading={formStatus.isSubmitting}
 								disabled={formStatus.isSubmitting}
 							/>
 
-							<FormActionButton
+							{/* <FormActionButton
 								type="button" // TODO - Replace with action for publishing campaigns
 								text="Publish Campaign"
 								className="bg-abeg-primary max-lg:hidden"
-							/>
+							/> */}
 						</>
 					)}
 				</div>
