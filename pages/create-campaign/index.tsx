@@ -5,6 +5,7 @@ import {
 	StepTracker,
 	StepTwo,
 } from "@/components/create-campaign";
+import { AuthenticatedUserLayout } from "@/layouts";
 import { cn } from "@/lib";
 import { STEP_DATA_KEY_LOOKUP, useFormStore } from "@/store/formStore";
 import { useInitFormStore } from "@/store/formStore/formStore";
@@ -34,50 +35,55 @@ function CreateCampaignPage() {
 	}, [currentStep]);
 
 	return (
-		<div className="flex min-h-screen flex-col justify-between max-lg:items-center">
-			<main className="flex w-full shrink-0 flex-col gap-8 bg-cover px-6 pb-14 pt-8 max-lg:max-w-[30rem] lg:flex-row lg:items-start lg:gap-16 lg:px-28 lg:pb-28 lg:pt-12">
+		<AuthenticatedUserLayout
+			footer={
+				<div className="flex w-full items-center justify-between">
+					<FormActionButton
+						type="button"
+						text="Go Back"
+						className="min-w-[78px] bg-abeg-primary"
+						disabled={currentStep === 1}
+						onClick={() => goToStep(currentStep - 1)}
+					/>
+
+					<div className="flex justify-end gap-2">
+						<FormActionButton
+							type="submit"
+							text="Continue"
+							className={cn(
+								"bg-abeg-primary",
+								currentStep === 3 && "lg:hidden"
+							)}
+							targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+							isLoading={formStatus.isSubmitting}
+							disabled={formStatus.isSubmitting}
+						/>
+
+						{currentStep === 3 && (
+							<FormActionButton
+								type="submit"
+								text="Create campaign"
+								variant="primary"
+								className={"bg-abeg-primary font-bold max-lg:hidden"}
+								targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+								isLoading={formStatus.isSubmitting}
+								disabled={formStatus.isSubmitting}
+							/>
+						)}
+					</div>
+				</div>
+			}
+		>
+			<div className="flex w-full shrink-0 flex-col gap-8 bg-cover pt-8 max-lg:max-w-[30rem] lg:flex-row lg:items-start lg:gap-16">
 				<section className="flex shrink-0 gap-3 lg:mt-5">
 					<StepTracker />
 				</section>
 
 				{STEP_COMPONENT_LOOKUP[currentStep]}
-			</main>
-
-			<footer className="flex w-full items-center justify-between border-t border-t-abeg-primary px-6 py-4 lg:px-[100px] lg:py-6">
-				<FormActionButton
-					type="button"
-					text="Go Back"
-					className="min-w-[78px] bg-abeg-primary"
-					disabled={currentStep === 1}
-					onClick={() => goToStep(currentStep - 1)}
-				/>
-
-				<div className="flex justify-end gap-2">
-					<FormActionButton
-						type="submit"
-						text="Continue"
-						className={cn("bg-abeg-primary", currentStep === 3 && "lg:hidden")}
-						targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
-						isLoading={formStatus.isSubmitting}
-						disabled={formStatus.isSubmitting}
-					/>
-
-					{currentStep === 3 && (
-						<FormActionButton
-							type="submit"
-							text="Create campaign"
-							variant="primary"
-							className={"bg-abeg-primary font-bold max-lg:hidden"}
-							targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
-							isLoading={formStatus.isSubmitting}
-							disabled={formStatus.isSubmitting}
-						/>
-					)}
-				</div>
-			</footer>
-		</div>
+			</div>
+		</AuthenticatedUserLayout>
 	);
 }
 
 export default CreateCampaignPage;
-CreateCampaignPage.protect = true;
+// CreateCampaignPage.protect = true;
