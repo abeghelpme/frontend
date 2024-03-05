@@ -1,10 +1,10 @@
+import { Button } from "@/components/ui";
 import { cn } from "@/lib";
 import { acceptedFilesString, validateFiles } from "@/lib/helpers/campaign";
 import { useToggle } from "@/lib/hooks";
 import { useFormStore } from "@/store/formStore";
 import type { ChangeEvent, DragEvent } from "react";
 import { toast } from "sonner";
-import { Button } from "../ui";
 
 type DropZoneInputProps = {
 	value: File[];
@@ -45,6 +45,12 @@ function DropZoneInput(props: DropZoneInputProps) {
 		setData({ step: 3, data: { photos: newFileState } });
 
 		onChange(newFileState);
+
+		toast.success("Success", {
+			description: `Uploaded ${validFilesArray.length} file${
+				validFilesArray.length > 1 ? "s" : ""
+			}!`,
+		});
 	};
 
 	const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
@@ -69,7 +75,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 		>
 			<Button
 				variant="primary"
-				className="rounded-md bg-abeg-primary p-2 text-xs font-bold lg:rounded-lg lg:px-6 lg:py-[0.8125rem] lg:text-base"
+				className="rounded-md p-2 text-xs font-bold lg:rounded-lg lg:px-6 lg:py-[13px] lg:text-base"
 				type="button"
 			>
 				Upload

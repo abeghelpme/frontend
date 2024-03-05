@@ -4,7 +4,8 @@ import { DATE_TODAY } from "@/lib/helpers/campaign/constants";
 const getDateFromString = (dateString: string, fallback = DATE_TODAY) => {
 	if (dateString === "") {
 		console.warn(
-			"getDateFromString: Value is an empty string, returning fallback date"
+			"GetDateFromString:",
+			"Value is an empty string, returning fallback date"
 		);
 		return fallback;
 	}

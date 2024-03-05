@@ -1,5 +1,7 @@
 import { DatePicker, Select } from "@/components/ui";
-import { callApi, cn, zodValidator } from "@/lib";
+import type { Campaign } from "@/interfaces/Campaign";
+import { cn, zodValidator } from "@/lib";
+import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -16,25 +18,29 @@ import Heading from "../Heading";
 function StepTwo() {
 	const {
 		currentStep,
-		campaignId,
+		campaignInfo,
 		stepTwoData,
-		actions: { setData, goToStep, setCampaignId },
+		actions: { setData, goToStep, setCampaignInfo },
 	} = useFormStore((state) => state);
 
 	const { control, formState, register, handleSubmit } = useForm({
-		mode: "onTouched",
+		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepTwo")!),
 		defaultValues: stepTwoData,
 	});
 
 	useWatchFormStatus(formState);
 
-	const onFormSubmit = async (data: StepTwoData) => {
+	const onSubmit = async (data: StepTwoData) => {
 		setData({ step: 2, data });
 
-		const { data: dataInfo, error } = await callApi<{
-			data: { _id: string };
-		}>(`/campaign/create/two`, { ...data, campaignId });
+		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
+			`/campaign/create/two`,
+			{
+				...data,
+				campaignId: campaignInfo._id,
+			}
+		);
 
 		if (error) {
 			toast.error(error.status, {
@@ -44,10 +50,10 @@ function StepTwo() {
 			return;
 		}
 
-		if (dataInfo) {
-			setCampaignId(dataInfo.data._id);
-			goToStep(currentStep + 1);
-		}
+		if (!dataInfo.data) return;
+
+		setCampaignInfo(dataInfo.data);
+		goToStep(currentStep + 1);
 	};
 
 	return (
@@ -61,7 +67,7 @@ function StepTwo() {
 				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onFormSubmit)(event);
+					void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-6">
@@ -76,10 +82,10 @@ function StepTwo() {
 							type="text"
 							placeholder="Give your campaign a catchy title that can resonate with donors"
 							className={cn(
-								"focus-visible:outlineabeg-primary mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs lg:p-4  lg:text-base",
+								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4  lg:text-base",
 
 								formState.errors.title &&
-									"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+									"border-abeg-error-20 focus-visible:outline-abeg-error-20"
 							)}
 						/>
 
@@ -135,10 +141,10 @@ function StepTwo() {
 							type="number"
 							placeholder="Set a realistic target amount"
 							className={cn(
-								"focus-visible:outlineabeg-primary mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs lg:p-4  lg:text-base",
+								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4  lg:text-base",
 
 								formState.errors.goal &&
-									"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+									"border-abeg-error-20 focus-visible:outline-abeg-error-20"
 							)}
 						/>
 

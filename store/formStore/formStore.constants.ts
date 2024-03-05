@@ -3,11 +3,15 @@ import type { FormStore } from "./formStore.types";
 export const initialFormState = {
 	currentStep: 1,
 
-	campaignId: "",
-
-	fundraiserCategories: [
-		{ id: "65b0576bb36c6a968d892a52", name: "Sample Category" },
-	],
+	campaignInfo: {
+		shortId: "",
+		categories: [
+			{
+				id: "65b0576bb36c6a968d892a52",
+				name: "Health and Wellness",
+			},
+		],
+	} as FormStore["campaignInfo"],
 
 	formStatus: {
 		isValid: true,

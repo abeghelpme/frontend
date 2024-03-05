@@ -35,7 +35,7 @@ function ImagePreview(props: ImagePreviewProps) {
 	return (
 		<ul
 			className={cn(
-				"custom-scrollbar relative mt-[13px] max-h-[130px] divide-y divide-gray-600 overflow-y-auto overscroll-y-contain rounded-md border border-gray-600",
+				"custom-scrollbar relative mt-[13px] max-h-[140px] divide-y divide-gray-600 overflow-y-auto overscroll-y-contain rounded-md border border-gray-600",
 				imageFiles.length === 0 && "hidden"
 			)}
 		>
@@ -64,6 +64,7 @@ function ImagePreview(props: ImagePreviewProps) {
 										*Cover image
 									</span>
 								)}
+
 								<p className="truncate">{file.name}</p>
 							</div>
 

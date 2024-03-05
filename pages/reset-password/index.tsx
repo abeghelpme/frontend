@@ -143,24 +143,21 @@ const ResetPassword = () => {
 							/>
 						</div>
 					</div>
-
-					<CloudFlareTurnStile
-						ref={cfTurnStile}
-						onStatusChange={handleBotStatus}
-					/>
-					<Button
-						disabled={isSubmitting}
-						loading={isSubmitting}
-						className="md:text-lg "
-						fullWidth
-						variant="primary"
-					>
-						Submit
-					</Button>
 				</div>
+				<CloudFlareTurnStile
+					ref={cfTurnStile}
+					onStatusChange={handleBotStatus}
+				/>
+				<Button
+					disabled={isSubmitting}
+					loading={isSubmitting}
+					className="mt-6"
+					variant="primary"
+				>
+					Submit
+				</Button>
 			</form>
 		</AuthPagesLayout>
 	);
 };
 export default ResetPassword;
-ResetPassword.protect = true;

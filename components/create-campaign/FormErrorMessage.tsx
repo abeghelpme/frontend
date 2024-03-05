@@ -15,10 +15,12 @@ function FormErrorMessage<TStepData extends FieldValues>(
 
 	const paragraphRef = useRef<HTMLParagraphElement>(null);
 	const message = formState.errors[errorField]?.message as string | undefined;
+
 	const animationClass = "animate-shake";
 
 	useEffect(() => {
 		if (!paragraphRef.current) return;
+
 		if (paragraphRef.current.classList.contains(animationClass)) return;
 
 		paragraphRef.current.classList.add(animationClass);
@@ -32,7 +34,7 @@ function FormErrorMessage<TStepData extends FieldValues>(
 		<p
 			ref={paragraphRef}
 			className={cn(
-				"ml-1 mt-3 text-[1.1rem] font-medium italic text-red-400",
+				"ml-1 mt-3 text-xs font-medium italic text-red-400 lg:text-base",
 				className
 			)}
 			onAnimationEnd={() =>

@@ -153,7 +153,7 @@ const AuthenticateUser = () => {
 			withHeader={false}
 			hasSuccess={false}
 		>
-			{castedUser?.twoFA.type === "EMAIL" ? (
+			{castedUser?.twoFA?.type === "EMAIL" ? (
 				<EmailAuth
 					email={castedUser?.email}
 					otp={otp}
@@ -174,5 +174,3 @@ const AuthenticateUser = () => {
 };
 
 export default AuthenticateUser;
-
-// AuthenticateUser.protect = true;

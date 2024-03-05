@@ -1,4 +1,5 @@
-import { callApi } from "@/lib";
+import type { Campaign } from "@/interfaces/Campaign";
+import { callApi } from "@/lib/helpers/campaign";
 import { type StateCreator, create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
@@ -17,10 +18,18 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 				set({ currentStep: newStep as FormStore["currentStep"] });
 			},
 
-			setCampaignId: (campaignId) => {
-				if (get().campaignId === campaignId) return;
+			setCampaignInfo: (newInfo) => {
+				const { campaignInfo: previousInfo } = get();
 
-				set({ campaignId });
+				set({
+					campaignInfo: {
+						...previousInfo,
+						...newInfo,
+						shortId: newInfo.url
+							? newInfo.url.split(".me/")[1]
+							: previousInfo.shortId,
+					},
+				});
 			},
 
 			setFormStatus: (newFormStatus) => {
@@ -37,36 +46,84 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 				set({ [dataKey]: { ...previousData, ...newData } });
 			},
 
-			initializeFormData: async () => {
-				const { data, error } = await callApi("/campaign/create/one");
+			initializeFormData: async (queryParam = "limit=10") => {
+				const { data, error } = await callApi<Campaign[]>(
+					`/campaign/all?${queryParam}&status=Draft`
+				);
+
+				if (error) return;
+
+				if (!data.data) return;
+
+				const { setData, setCampaignInfo } = get().actions;
+
+				if (data.data.length === 0) {
+					set({ currentStep: 3 });
+
+					return;
+				}
+
+				const campaign = data.data[0];
+
+				setCampaignInfo(campaign);
+
+				setData({
+					step: 1,
+					data: {
+						categoryId: campaign.category._id,
+						country: campaign.country,
+						tags: campaign.tags,
+					},
+				});
+
+				setData({
+					step: 2,
+					data: {
+						title: campaign.title,
+						deadline: campaign.deadline,
+						fundraiser: campaign.fundraiser,
+						goal: campaign.goal,
+					},
+				});
+
+				setData({
+					step: 3,
+					data: {
+						story: campaign.story,
+						storyHtml: campaign.storyHtml,
+					},
+				});
 			},
 
-			getFundraiserCategories: async () => {
-				const { data, error } = await callApi<{
-					data: Array<{
-						id: string;
-						name: string;
-					}>;
-				}>("/campaign/category");
+			initializeCategories: async () => {
+				const { data, error } =
+					await callApi<FormStore["campaignInfo"]["categories"]>(
+						"/campaign/category"
+					);
 
-				if (data) {
-					set({ fundraiserCategories: data.data });
-				}
+				if (error) return;
+
+				if (!data.data) return;
+
+				const { setCampaignInfo } = get().actions;
+
+				setCampaignInfo({ categories: data.data });
 			},
 		},
 	}) satisfies FormStore;
 
-const useInitFormStore = create<FormStore>()(
+export const useInitFormStore = create<FormStore>()(
 	persist(devtools(stateObjectFn, { name: "formStore" }), {
 		name: "campaignFormStore",
-		partialize: ({ currentStep, campaignId }) => ({ currentStep, campaignId }),
+
+		partialize: ({ currentStep }) => ({ currentStep }),
 	})
 );
 
-const useFormStore = <TResult>(selector: SelectorFn<FormStore, TResult>) => {
+export const useFormStore = <TResult>(
+	selector: SelectorFn<FormStore, TResult>
+) => {
 	const state = useInitFormStore(useShallow(selector));
 
 	return state;
 };
-
-export { useFormStore };

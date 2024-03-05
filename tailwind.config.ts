@@ -30,6 +30,7 @@ const config = {
 			colors: {
 				overlay: "rgba(72, 72, 72, 0.5)",
 				placeholder: "#8D8B8B",
+				lightGreen: "#D3E5E5",
 				unfocused: "#A8CCCC",
 				semiWhite: "#E6EAEE",
 				inputBorder: "rgba(124, 148, 107, 0.25)",
@@ -100,10 +101,18 @@ const config = {
 					from: { height: "var(--radix-accordion-content-height)" },
 					to: { height: "0" },
 				},
+
+				shake: {
+					"0%, 100%": { transform: "translateX(0rem)" },
+					"25%": { transform: "translateX(0.6rem)" },
+					"75%": { transform: "translateX(-0.6rem)" },
+				},
 			},
+
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
+				shake: "shake 0.2s ease-in-out 0s 3",
 			},
 		},
 	},

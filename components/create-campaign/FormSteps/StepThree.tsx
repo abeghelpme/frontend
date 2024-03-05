@@ -1,4 +1,6 @@
-import { callApi, zodValidator } from "@/lib";
+import type { Campaign } from "@/interfaces/Campaign";
+import { zodValidator } from "@/lib";
+import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
 import {
 	STEP_DATA_KEY_LOOKUP,
@@ -13,16 +15,16 @@ import DropZoneInput from "../DropZoneInput";
 import FormErrorMessage from "../FormErrorMessage";
 import Heading from "../Heading";
 import ImagePreview from "../ImagePreview";
-import TiptapEditor from "../TipTapEditor";
+import { TipTapEditor } from "../TipTapEditor";
 
 function StepThree() {
-	const {
-		campaignId,
-		stepThreeData,
-		actions: { setData },
-	} = useFormStore((state) => state);
-
 	const router = useRouter();
+
+	const {
+		campaignInfo,
+		stepThreeData,
+		actions: { setData, setCampaignInfo },
+	} = useFormStore((state) => state);
 
 	const {
 		control,
@@ -30,24 +32,24 @@ function StepThree() {
 		formState,
 		setValue: setFormValue,
 	} = useForm({
-		mode: "onTouched",
+		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepThree")!),
 		defaultValues: stepThreeData,
 	});
 
 	useWatchFormStatus(formState);
 
-	const onFormSubmit = async (data: StepThreeData) => {
+	const onSubmit = async (data: StepThreeData) => {
 		setData({ step: 3, data });
 
 		const formData = new FormData();
 
 		formData.set("story", data.story);
 		formData.set("storyHtml", data.storyHtml);
-		formData.set("campaignId", campaignId);
+		formData.set("campaignId", campaignInfo._id);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
-		const { data: dataInfo, error } = await callApi(
+		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
 			`/campaign/create/three`,
 			formData
 		);
@@ -60,9 +62,10 @@ function StepThree() {
 			return;
 		}
 
-		if (dataInfo) {
-			void router.push("/create-campaign/preview");
-		}
+		if (!dataInfo.data) return;
+
+		setCampaignInfo(dataInfo.data);
+		void router.push("/create-campaign/preview");
 	};
 
 	return (
@@ -76,7 +79,7 @@ function StepThree() {
 				className="mt-8 lg:mt-12"
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onFormSubmit)(event);
+					void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-6">
@@ -120,7 +123,7 @@ function StepThree() {
 							control={control}
 							name="storyHtml"
 							render={({ field }) => (
-								<TiptapEditor
+								<TipTapEditor
 									placeholder="Write a compelling story that would arouse the interest of donors..."
 									setFormValue={setFormValue}
 									editorContent={field.value}

@@ -168,8 +168,8 @@ const Login = () => {
 				/>
 				<div className="mt-6 flex flex-col gap-6">
 					<CustomDialog
-						openDialog={openModal}
-						setOpen={() => setOpenModal(openModal)}
+						isOpen={openModal}
+						setIsOpen={() => setOpenModal(openModal)}
 						trigger={
 							<Button
 								type="submit"

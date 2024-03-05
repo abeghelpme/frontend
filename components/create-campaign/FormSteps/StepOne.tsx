@@ -1,6 +1,11 @@
-import { Button, Select } from "@/components/ui";
-import { callApi, zodValidator } from "@/lib";
-import { targetCountries, validateTagValue } from "@/lib/helpers/campaign";
+import { Select } from "@/components/ui";
+import type { Campaign } from "@/interfaces/Campaign";
+import { zodValidator } from "@/lib";
+import {
+	callApi,
+	targetCountries,
+	validateTagValue,
+} from "@/lib/helpers/campaign";
 import { useElementList, useWatchFormStatus } from "@/lib/hooks";
 import { CrossIcon } from "@/public/assets/icons/campaign";
 import {
@@ -21,9 +26,9 @@ function StepOne() {
 
 	const {
 		currentStep,
-		fundraiserCategories,
 		stepOneData,
-		actions: { goToStep, setData, setCampaignId },
+		campaignInfo,
+		actions: { goToStep, setData, setCampaignInfo },
 	} = useFormStore((state) => state);
 
 	const { For: TagList } = useElementList();
@@ -36,19 +41,20 @@ function StepOne() {
 		handleSubmit,
 		setValue: setFormValue,
 	} = useForm({
-		mode: "onTouched",
+		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepOne")!),
 		defaultValues: stepOneData,
 	});
 
 	useWatchFormStatus(formState);
 
-	const onFormSubmit = async (data: StepOneData) => {
+	const onSubmit = async (data: StepOneData) => {
 		setData({ step: 1, data });
 
-		const { data: dataInfo, error } = await callApi<{
-			data: { _id: string };
-		}>("/campaign/create/one", data);
+		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
+			`/campaign/create/one`,
+			data
+		);
 
 		if (error) {
 			toast.error(error.status, {
@@ -58,10 +64,10 @@ function StepOne() {
 			return;
 		}
 
-		if (dataInfo) {
-			setCampaignId(dataInfo.data._id);
-			goToStep(currentStep + 1);
-		}
+		if (!dataInfo.data) return;
+
+		setCampaignInfo(dataInfo.data);
+		goToStep(currentStep + 1);
 	};
 
 	const handleAddTags = (
@@ -82,7 +88,7 @@ function StepOne() {
 
 		if (!validTag) return;
 
-		const newTagState = [...stepOneData.tags, validTag];
+		const newTagState = [...stepOneData.tags, `#${validTag}`];
 
 		setData({ step: 1, data: { tags: newTagState } });
 
@@ -92,7 +98,7 @@ function StepOne() {
 	};
 
 	const handleRemoveTags = (tag: string) => () => {
-		const newTagState = stepOneData.tags.filter((t) => t !== tag);
+		const newTagState = stepOneData.tags.filter((tagItem) => tagItem !== tag);
 
 		setData({ step: 1, data: { tags: newTagState } });
 
@@ -110,7 +116,7 @@ function StepOne() {
 				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onFormSubmit)(event);
+					void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-6">
@@ -140,7 +146,7 @@ function StepOne() {
 
 									<Select.Content>
 										<CategoryList
-											each={fundraiserCategories}
+											each={campaignInfo.categories}
 											render={(category) => (
 												<Select.Item key={category.id} value={category.id}>
 													{category.name}
@@ -210,18 +216,17 @@ function StepOne() {
 								name="tags"
 								type="text"
 								placeholder="Add hashtags or search keywords to your campaign"
-								className="focus-visible:outlineabeg-primary w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs lg:p-4 lg:text-base"
+								className="w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4 lg:text-base"
 								onKeyDown={handleAddTags}
 							/>
 
-							<Button
+							<button
 								type="button"
-								variant="secondary"
-								className="rounded-md border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base"
+								className="rounded-md border border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base"
 								onClick={handleAddTags}
 							>
 								Add
-							</Button>
+							</button>
 						</div>
 
 						<div className="mt-4 flex flex-col gap-4">
@@ -232,12 +237,12 @@ function StepOne() {
 							<ul className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary">
 								<TagList
 									each={stepOneData.tags}
-									render={(tag) => (
+									render={(tag, index) => (
 										<li
-											key={tag}
+											key={`${tag}-${index}`}
 											className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
 										>
-											<p>#{tag}</p>
+											<p>{tag}</p>
 
 											<button
 												className="transition-transform duration-100 active:scale-[1.12]"
