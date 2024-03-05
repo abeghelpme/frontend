@@ -16,67 +16,64 @@ import {
 	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from "@/components/ui";
+import type { User } from "@/interfaces";
+import { callApi } from "@/lib";
+import { useSession } from "@/store";
 import { type ReactNode } from "react";
 type AuthenticatedUserLayoutProps = {
-	page?: "dashboard" | "campaign" | "2fa";
+	page?: "dashboard" | "other";
 	children: ReactNode;
-	step?: number | string;
+	footer?: ReactNode;
 };
 export const AuthenticatedUserLayout = ({
 	page,
 	children,
-	step,
+	footer,
 }: AuthenticatedUserLayoutProps) => {
+	const { user, clearSession } = useSession((state) => state);
+	const castedUser = user as User;
 	return (
 		<>
-			<header className="flex items-center gap-10 py-4 lg:py-7 px-[5%] lg:px-[7%] xl:px-[10%] justify-between border-b border-b-abeg-primary">
-				{page !== "dashboard" ? (
-					<LogoBanner />
+			<header className="sticky top-0 left-0 bg-white z-10 flex items-center gap-10 py-4 lg:py-7 px-[5%] lg:px-[7%] xl:px-[10%] justify-between border-b border-b-abeg-primary">
+				<LogoBanner />
+				{/* {page !== 'dashboard' ? (
 				) : (
 					<div className="">
 						<p className="font-semibold">Hi, FirstName👋</p>
 						<p className="">
 							{step == 1
-								? "Here is an overview of your campaign✨."
+								? 'Here is an overview of your campaign✨.'
 								: step == 2
-								  ? "Here is an overview of your campaign activities✨."
-								  : "Here are your recent updates✨."}
+								? 'Here is an overview of your campaign activities✨.'
+								: 'Here are your recent updates✨.'}
 						</p>
 					</div>
-				)}
+				)} */}
+
 				<div className="flex items-center gap-3">
 					<Button
-						variant="primary"
-						className="lg:flex items-center gap-2 !text-sm !py-3 !px-2 mr-1 hidden"
-					>
-						<PlusIcon />
-						Create Campaign
-					</Button>
-					<Button
-						className={`!p-0 !pr-2 md:!px-4 !rounded-none  ${
-							page === "dashboard"
-								? "lg:border-x border-r border-r-headerDivider"
-								: "border-r border-r-headerDivider"
-						}`}
+						className={`!p-0 !pr-2 md:!px-4 !rounded-none lg:border-r border-r border-r-headerDivider`}
 					>
 						<NotificationIcon />
 					</Button>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<div className="flex items-center gap-2 md:gap-0">
+							<div className="flex items-center gap-2 md:gap-0 cursor-pointer">
 								<Avatar />
 								<Button className="!p-0 !px-1 !text-black !rounded-none hidden md:block ml-4 mr-2">
-									First Name
+									{castedUser?.firstName || "First Name"}
 								</Button>
-								<ArrowDown />
+								<span className="cursor-pointer" aria-hidden>
+									<ArrowDown />
+								</span>
 							</div>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent className="w-56" align="end" forceMount>
 							<DropdownMenuLabel className="font-normal">
 								<div className="flex flex-col space-y-1">
-									<p className="text-sm font-medium leading-none">shadcn</p>
+									<p className="text-sm font-medium leading-none">Profile</p>
 									<p className="text-xs leading-none text-muted-foreground">
-										m@example.com
+										{castedUser?.email || "m@example.com"}
 									</p>
 								</div>
 							</DropdownMenuLabel>
@@ -86,8 +83,8 @@ export const AuthenticatedUserLayout = ({
 									Profile
 									<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
 								</DropdownMenuItem>
-								<DropdownMenuItem className="">
-									<Button className="flex items-center gap-2 !text-sm !py-3 !px-2 mr-1 lg:hidden">
+								<DropdownMenuItem className="lg:hidden">
+									<Button className="flex items-center gap-2 !text-sm !py-3 !px-2 mr-1">
 										<PlusIcon />
 										Create Campaign
 									</Button>
@@ -100,7 +97,16 @@ export const AuthenticatedUserLayout = ({
 							</DropdownMenuGroup>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>
-								Log out
+								<Button
+									variant="danger"
+									onClick={async () => {
+										const { data, error } = await callApi("/auth/signout");
+										clearSession();
+									}}
+									className="w-3/4 "
+								>
+									Signout
+								</Button>
 								<DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
 							</DropdownMenuItem>
 						</DropdownMenuContent>
@@ -108,8 +114,14 @@ export const AuthenticatedUserLayout = ({
 				</div>
 			</header>
 			<aside className=""></aside>
-			<main className="">{children}</main>
-			<footer className=""></footer>
+			<main className="flex-1 h-full px-[5%] lg:px-[7%] xl:px-[10%]">
+				{children}
+			</main>
+			{page !== "dashboard" && (
+				<footer className="mt-20 border-t px-[5%] lg:px-[7%] xl:px-[10%] border-t-abeg-primary py-4 md:py-7">
+					{footer}
+				</footer>
+			)}
 		</>
 	);
 };
