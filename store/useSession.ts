@@ -6,7 +6,7 @@ import { createWithEqualityFn } from "zustand/traditional";
 interface Session {
 	isFirstMount: boolean;
 	loading: boolean;
-	user: unknown;
+	user: null | User;
 	clearSession: () => void;
 	updateUser: (data: User) => void;
 	getSession: (isInitialLoad?: boolean) => Promise<void>;
@@ -27,7 +27,7 @@ export const useSession = createWithEqualityFn<Session>(
 			}
 			const { data } = await callApi<ApiResponse>("/auth/session");
 			set({
-				...(data?.data && { user: data?.data }),
+				...(data?.data && { user: data?.data as User }),
 				loading: false,
 			});
 		},
