@@ -48,7 +48,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 				set({ [dataKey]: { ...previousData, ...newData } });
 			},
 
-			initializeFormData: async (queryParam = "limit=10") => {
+			initializeFormData: async (queryParam = "limit=1") => {
 				const user = useSession.getState().user as User;
 
 				const { data, error } = await callApi<Campaign[]>(
