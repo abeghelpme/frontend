@@ -7,6 +7,7 @@ import {
 } from "@/components/create-campaign";
 import { cn } from "@/lib";
 import { STEP_DATA_KEY_LOOKUP, useFormStore } from "@/store/formStore";
+import { useInitFormStore } from "@/store/formStore/formStore";
 import { useEffect } from "react";
 
 const STEP_COMPONENT_LOOKUP = {
@@ -14,6 +15,8 @@ const STEP_COMPONENT_LOOKUP = {
 	2: <StepTwo />,
 	3: <StepThree />,
 };
+
+void useInitFormStore.getState().actions.initializeFormData();
 
 function CreateCampaignPage() {
 	const {
@@ -44,7 +47,7 @@ function CreateCampaignPage() {
 				<FormActionButton
 					type="button"
 					text="Go Back"
-					className="flex min-w-[78px] justify-center bg-abeg-primary"
+					className="min-w-[78px] bg-abeg-primary"
 					disabled={currentStep === 1}
 					onClick={() => goToStep(currentStep - 1)}
 				/>
@@ -60,25 +63,15 @@ function CreateCampaignPage() {
 					/>
 
 					{currentStep === 3 && (
-						<>
-							<FormActionButton
-								type="submit"
-								text="Preview Campaign"
-								variant="secondary"
-								className={
-									"border-abeg-primary font-bold text-abeg-primary max-lg:hidden"
-								}
-								targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
-								isLoading={formStatus.isSubmitting}
-								disabled={formStatus.isSubmitting}
-							/>
-
-							<FormActionButton
-								type="button" // TODO - Replace with action for publishing campaigns
-								text="Publish Campaign"
-								className="bg-abeg-primary max-lg:hidden"
-							/>
-						</>
+						<FormActionButton
+							type="submit"
+							text="Create campaign"
+							variant="primary"
+							className={"bg-abeg-primary font-bold max-lg:hidden"}
+							targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+							isLoading={formStatus.isSubmitting}
+							disabled={formStatus.isSubmitting}
+						/>
 					)}
 				</div>
 			</footer>

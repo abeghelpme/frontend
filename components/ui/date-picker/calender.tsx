@@ -1,9 +1,10 @@
 import { cn } from "@/lib";
+import type { InferProps } from "@/lib/type-helpers";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { DayPicker } from "react-day-picker";
 import { buttonVariants } from "../button";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+export type CalendarProps = InferProps<typeof DayPicker>;
 
 const IconRight = () => <ChevronRightIcon className="size-4" />;
 const IconLeft = () => <ChevronLeftIcon className="size-4" />;
@@ -45,8 +46,7 @@ function Calendar(props: CalendarProps) {
 				day_range_end: "day-range-end",
 				day_selected:
 					"bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-				day_today:
-					"bg-accent text-muted-foreground aria-selected:bg-accent aria-selected:text-muted-foreground",
+				day_today: "bg-accent text-muted-foreground",
 				day_outside:
 					"day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
 				day_disabled: "text-muted-foreground opacity-50",

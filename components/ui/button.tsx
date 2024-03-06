@@ -1,52 +1,58 @@
 import { cn } from "@/lib";
+import type { ForwardedRefType } from "@/lib/type-helpers";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
 
-interface ButtonProps extends React.ComponentPropsWithRef<"button"> {
+type ButtonProps = {
 	className?: string;
 	fullWidth?: boolean;
 	children: React.ReactNode;
 	loading?: boolean;
+	usage?: "auth";
 	size?: "sm" | "base" | "lg";
 	variant?: "primary" | "secondary" | "danger";
-}
+} & React.ComponentPropsWithRef<"button">;
 
 const ButtonUI = (
-	{
+	props: ButtonProps,
+	ref: ForwardedRefType<HTMLButtonElement>
+) => {
+	const {
 		className,
 		children,
 		fullWidth,
 		variant,
+		usage,
 		size,
-		loading,
-		...props
-	}: ButtonProps,
-	ref: React.ForwardedRef<HTMLButtonElement>
-) => {
+		loading = false,
+		...restOfProps
+	} = props;
+
 	const buttonClass = {
 		"bg-abeg-error-20": variant === "danger",
 		"border-abeg-primary text-abeg-primary border": variant === "secondary",
 		"bg-abeg-primary": variant === "primary",
 		"px-3": size === "sm",
 		"px-10": size === "lg",
+		"md:py-4 md:px-5 text-sm md:text-base": usage === "auth",
 		"w-full": fullWidth,
 	};
 
 	return (
 		<button
 			className={cn(
-				"rounded-lg px-4 py-3 md:py-4 md:px-5 text-sm md:text-base font-medium text-white disabled:bg-abeg-neutral-50",
+				"rounded-lg px-4 py-3 text-sm font-medium text-white disabled:bg-abeg-neutral-50",
 				buttonClass,
 				className
 			)}
 			ref={ref}
-			{...props}
+			{...restOfProps}
 		>
-			{loading! ? (
+			{loading ? (
 				<div role="status" className="flex items-center justify-center gap-2">
 					<svg
 						aria-hidden="true"
-						className="h-5 w-5 animate-spin fill-blue-500 text-gray-200"
+						className="size-5 animate-spin fill-blue-500 text-gray-200"
 						viewBox="0 0 100 101"
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"

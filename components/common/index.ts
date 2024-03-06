@@ -1,4 +1,5 @@
 //SHARED
+export { default as Avatar } from "./Avatar";
 export { default as CloudFlareTurnStile } from "./CloudflareTurnstile";
 export { default as CustomDialog } from "./CustomDialog";
 export { default as DashboardSidebarNav } from "./DashboardSidebarNav";

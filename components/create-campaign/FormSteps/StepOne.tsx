@@ -1,7 +1,8 @@
 import { Select } from "@/components/ui";
+import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import {
-	callBackendApi,
+	callApi,
 	targetCountries,
 	validateTagValue,
 } from "@/lib/helpers/campaign";
@@ -25,9 +26,9 @@ function StepOne() {
 
 	const {
 		currentStep,
-		fundraiserCategories,
 		stepOneData,
-		actions: { goToStep, setData, setCampaignId },
+		campaignInfo,
+		actions: { goToStep, setData, setCampaignInfo },
 	} = useFormStore((state) => state);
 
 	const { For: TagList } = useElementList();
@@ -40,17 +41,17 @@ function StepOne() {
 		handleSubmit,
 		setValue: setFormValue,
 	} = useForm({
-		mode: "onTouched",
+		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepOne")!),
 		defaultValues: stepOneData,
 	});
 
 	useWatchFormStatus(formState);
 
-	const onFormSubmit = async (data: StepOneData) => {
+	const onSubmit = async (data: StepOneData) => {
 		setData({ step: 1, data });
 
-		const { data: dataInfo, error } = await callBackendApi<{ _id: string }>(
+		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
 			`/campaign/create/one`,
 			data
 		);
@@ -63,10 +64,10 @@ function StepOne() {
 			return;
 		}
 
-		if (dataInfo.data) {
-			setCampaignId(dataInfo.data._id);
-			goToStep(currentStep + 1);
-		}
+		if (!dataInfo.data) return;
+
+		setCampaignInfo(dataInfo.data);
+		goToStep(currentStep + 1);
 	};
 
 	const handleAddTags = (
@@ -87,7 +88,7 @@ function StepOne() {
 
 		if (!validTag) return;
 
-		const newTagState = [...stepOneData.tags, validTag];
+		const newTagState = [...stepOneData.tags, `#${validTag}`];
 
 		setData({ step: 1, data: { tags: newTagState } });
 
@@ -97,7 +98,7 @@ function StepOne() {
 	};
 
 	const handleRemoveTags = (tag: string) => () => {
-		const newTagState = stepOneData.tags.filter((t) => t !== tag);
+		const newTagState = stepOneData.tags.filter((tagItem) => tagItem !== tag);
 
 		setData({ step: 1, data: { tags: newTagState } });
 
@@ -115,7 +116,7 @@ function StepOne() {
 				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();
-					void handleSubmit(onFormSubmit)(event);
+					void handleSubmit(onSubmit)(event);
 				}}
 			>
 				<ol className="flex flex-col gap-6">
@@ -145,7 +146,7 @@ function StepOne() {
 
 									<Select.Content>
 										<CategoryList
-											each={fundraiserCategories}
+											each={campaignInfo.categories}
 											render={(category) => (
 												<Select.Item key={category.id} value={category.id}>
 													{category.name}
@@ -241,7 +242,7 @@ function StepOne() {
 											key={`${tag}-${index}`}
 											className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
 										>
-											<p>#{tag}</p>
+											<p>{tag}</p>
 
 											<button
 												className="transition-transform duration-100 active:scale-[1.12]"

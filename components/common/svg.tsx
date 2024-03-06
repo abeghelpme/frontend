@@ -113,7 +113,7 @@ export const NigeriaFlag = () => (
 		id="flag-icons-ng"
 		viewBox="0 0 512 512"
 	>
-		<g fill-rule="evenodd" stroke-width="1pt">
+		<g fill-rule="evenodd" strokeWidth="1pt">
 			<path fill="#fff" d="M0 0h512v512H0z" />
 			<path fill="#008753" d="M341.3 0H512v512H341.3zM0 0h170.7v512H0z" />
 		</g>
@@ -125,7 +125,7 @@ export const GambiaFlag = () => (
 		id="flag-icons-gm"
 		viewBox="0 0 512 512"
 	>
-		<g fill-rule="evenodd" stroke-width="1pt">
+		<g fill-rule="evenodd" strokeWidth="1pt">
 			<path fill="red" d="M0 0h512v170.7H0z" />
 			<path fill="#fff" d="M0 170.7h512V199H0z" />
 			<path fill="#009" d="M0 199.1h512V313H0z" />
@@ -255,7 +255,7 @@ export const CheckedIcon = () => (
 		<path
 			d="M7.75 12.5014L10.58 15.3314L16.25 9.67139"
 			stroke="#008080"
-			stroke-width="1.5"
+			strokeWidth="1.5"
 			strokeLinecap="round"
 			strokeLinejoin="round"
 		/>
@@ -273,7 +273,7 @@ export const UncheckedIcon = () => (
 		<path
 			d="M9.3 21H14.7C19.2 21 21 19.2 21 14.7V9.3C21 4.8 19.2 3 14.7 3H9.3C4.8 3 3 4.8 3 9.3V14.7C3 19.2 4.8 21 9.3 21Z"
 			stroke="#008080"
-			stroke-width="1.5"
+			strokeWidth="1.5"
 			strokeLinecap="round"
 			strokeLinejoin="round"
 		/>

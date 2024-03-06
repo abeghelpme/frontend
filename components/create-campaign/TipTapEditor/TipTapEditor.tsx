@@ -1,7 +1,7 @@
 import { getEditorExtensions } from "@/lib/helpers/campaign";
 import type { StepThreeData } from "@/store/formStore";
 import { EditorContent, useEditor } from "@tiptap/react";
-import DOMPurify from "isomorphic-dompurify";
+import { sanitize } from "isomorphic-dompurify";
 import type { UseFormSetValue } from "react-hook-form";
 import TipTapToolBar from "./TipTapToolBar";
 
@@ -18,6 +18,10 @@ function TiptapEditor(props: EditorProps) {
 	const editor = useEditor({
 		extensions: getEditorExtensions(placeholder),
 
+		parseOptions: {
+			preserveWhitespace: "full",
+		},
+
 		editorProps: {
 			attributes: {
 				class:
@@ -28,8 +32,12 @@ function TiptapEditor(props: EditorProps) {
 		content: editorContent,
 
 		onUpdate: (options) => {
-			const purifiedContent = DOMPurify.sanitize(options.editor.getHTML());
-			onChange(purifiedContent);
+			const purifiedHTML = sanitize(options.editor.getHTML()).replaceAll(
+				"<p></p>",
+				`<p><br class="ProseMirror-trailingBreak"><p>`
+			);
+
+			onChange(purifiedHTML);
 
 			setFormValue("story", options.editor.getText());
 		},

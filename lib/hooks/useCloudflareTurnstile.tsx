@@ -28,4 +28,4 @@ const useCloudflareTurnstile = () => {
 		checkBotStatus,
 	};
 };
-export default useCloudflareTurnstile;
+export { useCloudflareTurnstile };

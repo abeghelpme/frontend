@@ -10,10 +10,10 @@ const ResetPasswordSuccessPage = () => {
 			withHeader={false}
 			hasSuccess
 		>
-			<Success textContent="Password Reset Successful">
+			<Success description="Password Reset Successful">
 				<Link
 					href="/signin"
-					className="bg-abeg-primary mt-6 block w-full rounded-md p-3 text-center text-sm font-semibold text-white md:rounded-lg md:text-base"
+					className="mt-6 block w-full rounded-md bg-abeg-primary p-3 text-center text-sm font-semibold text-white md:rounded-lg md:text-base"
 				>
 					Sign in to continue
 				</Link>
