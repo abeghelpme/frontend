@@ -1,9 +1,11 @@
+import type { User } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib/helpers/campaign";
 import { type StateCreator, create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
 import type { SelectorFn } from "../store-types";
+import { useSession } from "../useSession";
 import { STEP_DATA_KEY_LOOKUP, initialFormState } from "./formStore.constants";
 import type { FormStore } from "./formStore.types";
 
@@ -47,8 +49,10 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 			},
 
 			initializeFormData: async (queryParam = "limit=10") => {
+				const user = useSession.getState().user as User;
+
 				const { data, error } = await callApi<Campaign[]>(
-					`/campaign/all?${queryParam}&status=Draft`
+					`/campaign/user/${user._id}?${queryParam}&status=Draft`
 				);
 
 				if (error) return;
