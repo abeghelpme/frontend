@@ -58,8 +58,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) =>
 				const { setData, setCampaignInfo } = get().actions;
 
 				if (data.data.length === 0) {
-					set({ currentStep: 3 });
-
+					set({ currentStep: 1 });
 					return;
 				}
 
