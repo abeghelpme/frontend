@@ -23,4 +23,6 @@ export {
 	MaliFlag,
 	NigeriaFlag,
 	ReceiveIcon,
+	AbegHelpLogoWhite,
+	FilterIcon,
 } from "./svg";
