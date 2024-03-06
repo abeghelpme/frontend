@@ -29,19 +29,13 @@ const Countries: CountriesMap = {
 		coordinates: [13.4432, 15.3101],
 	},
 };
-// TODO:
-// Nigeria, Ghana, Mali, Liberia, Cameroon, Gambia
-// select instead of dropdown menu
-// Arbitrary values
-// Make worldmap a component with a worldmap geojson in the world map folder THIS THROWS A BUG:
-// make use of svg for the countries flag
 
 const WorldMap = ({ countries }: { countries?: string[] }) => {
 	return (
 		<>
 			<ComposableMap
 				projectionConfig={{ scale: 250 }}
-				className="aspect-video w-[100%] md:w-[70%] lg:w-[50%]"
+				className="aspect-video w-[100%] lg:w-[50%] "
 			>
 				<Geographies geography="/assets/worldmap.json">
 					{({ geographies }) =>
