@@ -134,7 +134,6 @@ export const GambiaFlag = () => (
 		</g>
 	</svg>
 );
-// Nigeria, Ghana, Mali, Liberia, Cameroon, Gambia
 
 export const GhanaFlag = () => (
 	<svg
@@ -280,3 +279,52 @@ export const UncheckedIcon = () => (
 		/>
 	</svg>
 );
+
+export const AbegHelpLogoWhite = () => {
+	return (
+		<svg
+			width="36"
+			height="36"
+			viewBox="0 0 36 36"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<rect width="35.9987" height="36.0001" rx="6" fill="#F5F3F3" />
+			<path
+				fill-rule="evenodd"
+				clip-rule="evenodd"
+				d="M29.001 27.8356C25.3338 21.2539 21.6577 14.6802 17.9723 8.11426C14.3122 14.6861 10.645 21.2553 6.9707 27.822C10.6292 26.0425 14.2874 24.2542 17.9451 22.457C21.6278 24.2442 25.3042 26.046 28.9739 27.8627L29.001 27.8356ZM24.2659 23.3264C22.1826 19.5764 20.0866 15.8366 17.9773 12.1075L11.7295 23.2992L11.7567 23.3264C13.8231 22.3091 15.8922 21.2948 17.9637 20.284C20.0584 21.32 22.1544 22.3523 24.2523 23.3807C24.28 23.3672 24.2846 23.349 24.2659 23.3264Z"
+				fill="#008080"
+			/>
+		</svg>
+	);
+};
+
+export const FilterIcon = () => {
+	return (
+		<svg
+			width="20"
+			height="20"
+			viewBox="0 0 20 20"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M4.50065 1.75H15.5007C16.4173 1.75 17.1673 2.5 17.1673 3.41667V5.25C17.1673 5.91667 16.7507 6.75 16.334 7.16667L12.7507 10.3333C12.2507 10.75 11.9173 11.5833 11.9173 12.25V15.8333C11.9173 16.3333 11.584 17 11.1673 17.25L10.0007 18C8.91732 18.6667 7.41732 17.9167 7.41732 16.5833V12.1667C7.41732 11.5833 7.08398 10.8333 6.75065 10.4167L3.58398 7.08333C3.16732 6.66667 2.83398 5.91667 2.83398 5.41667V3.5C2.83398 2.5 3.58398 1.75 4.50065 1.75Z"
+				stroke="#484848"
+				stroke-width="1.5"
+				stroke-miterlimit="10"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M9.10833 1.75L5 8.33333"
+				stroke="#484848"
+				stroke-width="1.5"
+				stroke-miterlimit="10"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		</svg>
+	);
+};
