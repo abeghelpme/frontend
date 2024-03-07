@@ -2,16 +2,19 @@ import { FormActionButton, Heading } from "@/components/create-campaign";
 import PreviewComponent from "@/components/create-campaign/PreviewComponent";
 import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib/helpers/campaign";
+import { useSession } from "@/store";
 import { useFormStore } from "@/store/formStore";
-import { useInitFormStore } from "@/store/formStore/formStore";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-void useInitFormStore.getState().actions.initializeFormData();
-
 function Preview() {
-	const { campaignInfo } = useFormStore((state) => state);
+	const { user } = useSession((state) => state);
+
+	const {
+		campaignInfo,
+		actions: { initializeFormData },
+	} = useFormStore((state) => state);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -19,7 +22,10 @@ function Preview() {
 			toast.error("Campaign is incomplete");
 			void router.push("/create-campaign");
 		}
-	}, [campaignInfo.status, router]);
+		if (user) {
+			initializeFormData(user._id);
+		}
+	}, [campaignInfo.status, router, user]);
 
 	const handlePublish = async () => {
 		const { error } = await callApi<Campaign>("/campaign/publish", {
