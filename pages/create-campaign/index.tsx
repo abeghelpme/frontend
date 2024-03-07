@@ -6,8 +6,8 @@ import {
 	StepTwo,
 } from "@/components/create-campaign";
 import { cn } from "@/lib";
-import { useSession } from "@/store";
 import { STEP_DATA_KEY_LOOKUP, useFormStore } from "@/store/formStore";
+import { useInitFormStore } from "@/store/formStore/formStore";
 import { useEffect } from "react";
 
 const STEP_COMPONENT_LOOKUP = {
@@ -16,26 +16,23 @@ const STEP_COMPONENT_LOOKUP = {
 	3: <StepThree />,
 };
 
-function CreateCampaignPage() {
-	const { user } = useSession((state) => state);
+void useInitFormStore.getState().actions.initializeFormData("asd");
 
+function CreateCampaignPage() {
 	const {
 		currentStep,
 		formStatus,
 
-		actions: { goToStep, initializeFormData },
+		actions: { goToStep },
 	} = useFormStore((state) => state);
 
 	useEffect(() => {
-		if (user) {
-			initializeFormData(user._id);
-		}
 		window.scrollTo({
 			top: 0,
 			left: 0,
 			behavior: "smooth",
 		});
-	}, [currentStep, user]);
+	}, [currentStep]);
 
 	return (
 		<div className="flex min-h-screen flex-col justify-between max-lg:items-center">

@@ -1,4 +1,4 @@
-import { useSession } from "@/store";
+import { useInitSession } from "@/store/useSession";
 import { toast } from "sonner";
 import { assertENV } from "../../type-helpers/assert";
 import { createFetcher } from "./create-fetcher";
@@ -12,14 +12,14 @@ const callApi = createFetcher({
 	timeout: 60000, // Set timeout to 60 seconds
 	credentials: "include",
 
-	onResponseError: (response) => {
-		if (response.status === 401) {
-			useSession.getState().clearSession();
+	onResponseError: (error) => {
+		if (error.status === 401) {
+			useInitSession.getState().actions.clearSession();
 		}
 
-		if (response.status === 429) {
+		if (error.status === 429) {
 			toast.error("Too may requests!", {
-				description: response.message,
+				description: error.response.message,
 			});
 		}
 	},
