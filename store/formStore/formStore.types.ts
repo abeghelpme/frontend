@@ -51,7 +51,7 @@ export type FormStore = {
 
 		setFormStatus: (newFormStatus: Partial<FormStore["formStatus"]>) => void;
 
-		initializeFormData: (queryParam?: string) => Promise<void>;
+		initializeFormData: (userId: string, queryParam?: string) => Promise<void>;
 
 		initializeCategories: () => Promise<void>;
 	};
