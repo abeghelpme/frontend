@@ -120,7 +120,14 @@ const config = {
 	plugins: [
 		require("tailwindcss-animate"),
 		require("@tailwindcss/typography"),
-		plugin(function ({ addVariant, addComponents, theme }) {
+		plugin(function ({ addUtilities, addVariant, addComponents, theme }) {
+			const newUtilities = {
+				".hide-scrollbar::-webkit-scrollbar": {
+					display: "none",
+				},
+			};
+			addUtilities(newUtilities);
+
 			addVariant("progress-unfilled", ["&::-webkit-progress-bar", "&"]);
 			addVariant("progress-filled", [
 				"&::-webkit-progress-value",
