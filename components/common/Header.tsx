@@ -1,0 +1,85 @@
+"use client";
+import closeIcon from "@/public/assets/images/landing-page/close-circle.svg";
+import menuIcon from "@/public/assets/images/landing-page/menu.svg";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { Button } from "../ui";
+import LogoBanner from "./LogoBanner";
+
+const Header = () => {
+	const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+
+	const toggleMobileNav = () => {
+		setMobileNavOpen(!isMobileNavOpen);
+	};
+
+	const navLinks = [
+		{ name: "How it works", url: "/howitworks" },
+		{ name: "Explore Campaigns", url: "/explore" },
+		{ name: "About", url: "/about" },
+	];
+
+	return (
+		<header className="bg-abeg-primary text-white  lg:py-7 px-5 md:px-20">
+			<div className="hidden lg:flex lg:justify-between items-center">
+				<LogoBanner className="text-white font-normal" />
+				<nav className="text-lg">
+					<ul className="lg:flex-row lg:justify-between lg:space-x-10">
+						{navLinks.map((link, index) => (
+							<Link key={index} href={link.url}>
+								{link.name}
+							</Link>
+						))}
+					</ul>
+				</nav>
+				<div className="md:flex gap-2">
+					<Button className="bg-transparent border-2 border-white px-8 font-semibold text-md">
+						Sign In
+					</Button>
+					<Button className="bg-white text-abeg-primary font-semibold text-md">
+						Start Fundraiser
+					</Button>
+				</div>
+			</div>
+
+			<div className="lg:hidden flex justify-between">
+				<LogoBanner className="text-white font-normal" />
+				<Button onClick={toggleMobileNav}>
+					<Image src={menuIcon} alt="menu icon" width={35} height={35} />
+				</Button>
+			</div>
+
+			{/* Mobile Navigation Menu */}
+			{isMobileNavOpen && (
+				<div className="lg:hidden fixed z-50 top-0 left-0 w-full h-full bg-white text-abeg-primary font-medium flex flex-col space-y-10 text-2xl py-10 px-5 md:items-center md:justify-center">
+					{/* Close button for mobile nav */}
+					<div className="flex md:absolute md:top-20 md:right-20 justify-end">
+						<Button onClick={toggleMobileNav} className="text-abeg-primary">
+							<Image src={closeIcon} alt="menu icon" width={70} height={70} />
+						</Button>
+					</div>
+
+					{navLinks.map((link, index) => (
+						<div>
+							<Link key={index} href={link.url}>
+								{link.name}
+							</Link>
+						</div>
+					))}
+
+					<div className="space-y-5 md:flex md:flex-col justify-center">
+						<Button className="bg-transparent border-2 border-abeg-primary text-abeg-primary px-8 font-semibold text-md mt-4 w-full md:w-80">
+							Sign In
+						</Button>
+						<Button className="bg-abeg-primary px-8 font-semibold text-md mt-2 w-full md:w-80">
+							Start Fundraiser
+						</Button>
+					</div>
+				</div>
+			)}
+		</header>
+	);
+};
+
+export default Header;

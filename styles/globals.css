@@ -4,7 +4,7 @@
 
 html,
 body {
-	height: 100%;
+  height: 100%;
 }
 /* html:has([data-rem-reset]) {
 	font-size: 62.5%;
@@ -14,16 +14,19 @@ body:has([data-rem-reset]) {
 	font-size: 1.6rem;
 } */
 #__next {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-input[type='number'] {
-	-webkit-appearance: textfield;
+input[type="number"] {
+  -webkit-appearance: textfield;
 }
 
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 /* Remove the inner spinner */
 /* input[type="number"]::-webkit-inner-spin-button {
 	-webkit-appearance: none;
@@ -36,26 +39,26 @@ input[type='number'] {
 	margin: 0;
 } */
 
-input[type='number'] {
-	-moz-appearance: textfield;
-	appearance: textfield;
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-	transition: background-color 600000s 0s, color 600000s 0s;
+  transition: background-color 600000s 0s, color 600000s 0s;
 }
 
 input[data-autocompleted] {
-	background-color: transparent !important;
+  background-color: transparent !important;
 }
 
 .balancedText {
-	text-wrap: balance;
+  text-wrap: balance;
 }
