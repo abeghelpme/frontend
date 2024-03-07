@@ -1,29 +1,38 @@
 import { Button, ProgressBar } from "@/components/ui";
 import { BaseLayout } from "@/layouts";
-import avatar1 from "@/public/assets/images/landing-page/avatar1.svg";
-import avatar2 from "@/public/assets/images/landing-page/avatar2.svg";
-import avatar3 from "@/public/assets/images/landing-page/avatar3.svg";
-import createCampaignCard1 from "@/public/assets/images/landing-page/create-campaign-image1.png";
-import createCampaignCard2 from "@/public/assets/images/landing-page/create-campaign-image2.png";
-import createCampaignCard3 from "@/public/assets/images/landing-page/create-campaign-image3.png";
-import crowFund from "@/public/assets/images/landing-page/crowd-fund.svg";
-import dropbox from "@/public/assets/images/landing-page/dropbox.svg";
-import envato from "@/public/assets/images/landing-page/envato.svg";
-import globalCommunity from "@/public/assets/images/landing-page/global-community.svg";
-import google from "@/public/assets/images/landing-page/google.svg";
-import happyPeople from "@/public/assets/images/landing-page/happy-people.png";
-import hero from "@/public/assets/images/landing-page/hero.svg";
-import joinUs from "@/public/assets/images/landing-page/join-us.png";
-import netfix from "@/public/assets/images/landing-page/netflix.svg";
-import senville from "@/public/assets/images/landing-page/senville.svg";
-import testimonial2 from "@/public/assets/images/landing-page/testimonial-image1.png";
-import testimonial1 from "@/public/assets/images/landing-page/testimonial-image3.png";
-import timeCamp from "@/public/assets/images/landing-page/timecamp.svg";
+import {
+	avatar1,
+	avatar2,
+	avatar3,
+	createCampaignImage1,
+	createCampaignImage2,
+	createCampaignImage3,
+	crowdFund,
+	dropbox,
+	envato,
+	globalCommunity,
+	google,
+	happyPeople,
+	hero,
+	joinnUs,
+	netflix,
+	senville,
+	testimonialImage1,
+	testimonialImage2,
+	timeCamp,
+} from "@/public/assets/images/landing-page";
 import Image from "next/image";
 import { useState } from "react";
 
 const HomePage = () => {
-	const trustedPioneers = [timeCamp, senville, google, dropbox, netfix, envato]; // Trusted Pioneers images
+	const trustedPioneers = [
+		timeCamp,
+		senville,
+		google,
+		dropbox,
+		netflix,
+		envato,
+	]; // Trusted Pioneers images
 
 	// State to manage the visibility of each question's answer
 	const [expanded, setExpanded] = useState<boolean[]>([]);
@@ -93,19 +102,19 @@ const HomePage = () => {
 
 	const testimonials = [
 		{
-			image: testimonial1,
+			image: testimonialImage1,
 			name: "Jonathan Doe",
 			greeting: "Thanks AHM",
 			text: "Join the effortless way to fundraise and make a difference and empower your cause with Abeghelp.me",
 		},
 		{
-			image: testimonial2,
+			image: testimonialImage2,
 			name: "Sandra Doe",
 			greeting: "Thanks AHM",
 			text: "Join the effortless way to fundraise and make a difference and empower your cause with Abeghelp.me",
 		},
 		{
-			image: testimonial1,
+			image: testimonialImage1,
 			name: "William Doe",
 			greeting: "Thanks AHM",
 			text: "Join the effortless way to fundraise and make a difference and empower your cause with Abeghelp.me",
@@ -115,25 +124,25 @@ const HomePage = () => {
 	const campaignCard = [
 		{
 			index: 1,
-			image: createCampaignCard1,
+			image: createCampaignImage1,
 			heading: "Create Your Campaign",
 			text: "Share your vision. In just a few clicks, set up your fundraising page and tell us what you're passionate about.",
 		},
 		{
 			index: 2,
-			image: createCampaignCard2,
+			image: createCampaignImage2,
 			heading: "Share you story",
 			text: "Spread the word with our easy sharing tools. Reach out to friends, family, and beyond.",
 		},
 		{
 			index: 3,
-			image: createCampaignCard3,
+			image: createCampaignImage3,
 			heading: "Collect Donations",
 			text: "See generosity in action. Our secure platform makes donating simple, so you can focus on your cause.",
 		},
 		{
 			index: 4,
-			image: createCampaignCard1,
+			image: createCampaignImage1,
 			heading: "Be Happy",
 			text: "Change lives With the funds raised, take the steps to turn your dream project into reality.",
 		},
@@ -286,7 +295,12 @@ const HomePage = () => {
 								</div>
 							</div>
 							<div className="flex gap-5 items-start">
-								<Image src={crowFund} alt="hero image" width={50} height={50} />
+								<Image
+									src={crowdFund}
+									alt="hero image"
+									width={50}
+									height={50}
+								/>
 								<div className="space-y-2">
 									<h1 className="font-bold text-xl">Crowd Funding</h1>
 									<p className="text-gray-400">
@@ -325,7 +339,7 @@ const HomePage = () => {
 							</div>
 						</div>
 					</div>
-					<Image src={joinUs} alt="hero image" width={600} height={600} />
+					<Image src={joinnUs} alt="hero image" width={600} height={600} />
 				</div>
 				<div>
 					<h1 className="hidden md-block font-bold text-5xl text-center px-32">

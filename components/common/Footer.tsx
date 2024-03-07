@@ -1,40 +1,42 @@
-import facebook from "@/public/assets/images/landing-page/Facebook.svg";
-import instagram from "@/public/assets/images/landing-page/Instagram.svg";
-import linkedIn from "@/public/assets/images/landing-page/LinkedIn.svg";
-import twitter from "@/public/assets/images/landing-page/Twitter.svg";
-import youtube from "@/public/assets/images/landing-page/YouTube.svg";
-import joinUs from "@/public/assets/images/landing-page/joinUs.svg";
+import {
+	facebook,
+	instagram,
+	joinUs,
+	linkedIn,
+	twitter,
+	youtube,
+} from "@/public/assets/images/landing-page";
 import Image from "next/image";
 import Link from "next/link";
 import LogoBanner from "./LogoBanner";
 
+const socialIcons = [
+	{ icon: facebook, url: "https://www.facebook.com/" },
+	{ icon: twitter, url: "https://twitter.com/" },
+	{ icon: instagram, url: "https://www.instagram.com/" },
+	{ icon: linkedIn, url: "https://www.linkedin.com/" },
+	{ icon: youtube, url: "https://www.youtube.com/" },
+];
+
+const siteMapLinks = [
+	{ name: "About", url: "/about" },
+	{ name: "How it works", url: "/how-it-works" },
+	{ name: "Testimonials", url: "/testimonials" },
+	{ name: "Partners", url: "/partners" },
+	{ name: "FAQ's", url: "/faq" },
+];
+
+const joinUsLinks = [
+	{ name: "Sponsoships", url: "/sponsorships" },
+	{ name: "Volunteers", url: "/volunteers" },
+	{ name: "Careers", url: "/careers" },
+];
+
+const contactUsLinks = [
+	{ name: "Support@abeghelp.me", url: "mailto:support@abeghelp.me" },
+	{ name: "(+234) 876 - 5432 - 109)", url: "tel:+2348765432109" },
+];
 const Footer = () => {
-	const socialIcons = [
-		{ icon: facebook, url: "https://www.facebook.com/" },
-		{ icon: twitter, url: "https://twitter.com/" },
-		{ icon: instagram, url: "https://www.instagram.com/" },
-		{ icon: linkedIn, url: "https://www.linkedin.com/" },
-		{ icon: youtube, url: "https://www.youtube.com/" },
-	];
-
-	const siteMapLinks = [
-		{ name: "About", url: "/about" },
-		{ name: "How it works", url: "/how-it-works" },
-		{ name: "Testimonials", url: "/testimonials" },
-		{ name: "Partners", url: "/partners" },
-		{ name: "FAQ's", url: "/faq" },
-	];
-
-	const joinUsLinks = [
-		{ name: "Sponsoships", url: "/sponsorships" },
-		{ name: "Volunteers", url: "/volunteers" },
-		{ name: "Careers", url: "/careers" },
-	];
-
-	const contactUsLinks = [
-		{ name: "Support@abeghelp.me", url: "mailto:support@abeghelp.me" },
-		{ name: "(+234) 876 - 5432 - 109)", url: "tel:+2348765432109" },
-	];
 	return (
 		<footer className="bg-primary text-white p-10 md:p-20 space-y-5 divide-y-2 divide-gray-400">
 			<div className="md:flex justify-between items-center pb-5 md:pb-0">

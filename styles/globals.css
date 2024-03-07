@@ -24,9 +24,6 @@ input[type="number"] {
   -webkit-appearance: textfield;
 }
 
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
 /* Remove the inner spinner */
 /* input[type="number"]::-webkit-inner-spin-button {
 	-webkit-appearance: none;

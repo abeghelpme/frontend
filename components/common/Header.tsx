@@ -1,24 +1,18 @@
 "use client";
-import closeIcon from "@/public/assets/images/landing-page/close-circle.svg";
-import menuIcon from "@/public/assets/images/landing-page/menu.svg";
+import { useToggle } from "@/lib/hooks";
+import { closeIcon, menuIcon } from "@/public/assets/images/landing-page";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { Button } from "../ui";
 import LogoBanner from "./LogoBanner";
 
+const navLinks = [
+	{ name: "How it works", url: "/howitworks" },
+	{ name: "Explore Campaigns", url: "/explore" },
+	{ name: "About", url: "/about" },
+];
 const Header = () => {
-	const [isMobileNavOpen, setMobileNavOpen] = useState(false);
-
-	const toggleMobileNav = () => {
-		setMobileNavOpen(!isMobileNavOpen);
-	};
-
-	const navLinks = [
-		{ name: "How it works", url: "/howitworks" },
-		{ name: "Explore Campaigns", url: "/explore" },
-		{ name: "About", url: "/about" },
-	];
+	const [isMobileNavOpen, toggleMobileNav] = useToggle(false);
 
 	return (
 		<header className="bg-abeg-primary text-white  lg:py-7 px-5 md:px-20">
@@ -45,7 +39,7 @@ const Header = () => {
 
 			<div className="lg:hidden flex justify-between">
 				<LogoBanner className="text-white font-normal" />
-				<Button onClick={toggleMobileNav}>
+				<Button onClick={() => toggleMobileNav()}>
 					<Image src={menuIcon} alt="menu icon" width={35} height={35} />
 				</Button>
 			</div>
@@ -55,7 +49,10 @@ const Header = () => {
 				<div className="lg:hidden fixed z-50 top-0 left-0 w-full h-full bg-white text-abeg-primary font-medium flex flex-col space-y-10 text-2xl py-10 px-5 md:items-center md:justify-center">
 					{/* Close button for mobile nav */}
 					<div className="flex md:absolute md:top-20 md:right-20 justify-end">
-						<Button onClick={toggleMobileNav} className="text-abeg-primary">
+						<Button
+							onClick={() => toggleMobileNav()}
+							className="text-abeg-primary"
+						>
 							<Image src={closeIcon} alt="menu icon" width={70} height={70} />
 						</Button>
 					</div>
