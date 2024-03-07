@@ -20,6 +20,7 @@ import type { User } from "@/interfaces";
 import { callApi } from "@/lib";
 import { useSession } from "@/store";
 import { type ReactNode } from "react";
+
 type AuthenticatedUserLayoutProps = {
 	page?: "dashboard" | "other";
 	children: ReactNode;
@@ -30,7 +31,10 @@ export const AuthenticatedUserLayout = ({
 	children,
 	footer,
 }: AuthenticatedUserLayoutProps) => {
-	const { user, clearSession } = useSession((state) => state);
+	const {
+		user,
+		actions: { clearSession },
+	} = useSession((state) => state);
 	const castedUser = user as User;
 	return (
 		<>

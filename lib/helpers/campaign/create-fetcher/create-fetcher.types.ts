@@ -42,13 +42,15 @@ export type BaseRequestConfig = Pick<RequestInit, "headers" | "credentials"> & {
 	/**
 	 * Intercept the response and perform some action before it is returned.
 	 */
-	onResponse?: (responseObj: Response) => Promise<void> | void;
+	onResponse?: (response: Response) => Promise<void> | void;
 
 	/**
 	 * Intercept the response and perform some action when an http error occurs.
 	 */
-	onResponseError?: (
-		responseObj: Response & { message: AbegErrorResponse["message"] }
+	onResponseError?: <TError>(
+		errorResponseObj: Response & {
+			response: AbegErrorResponse<TError>;
+		}
 	) => Promise<void> | void;
 };
 

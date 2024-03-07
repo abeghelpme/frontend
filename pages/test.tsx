@@ -7,7 +7,11 @@ import { useRouter } from "next/router";
 
 const Test = () => {
 	const router = useRouter();
-	const { user, clearSession } = useSession((state) => state);
+	const {
+		user,
+		actions: { clearSession },
+	} = useSession((state) => state);
+
 	const logOut = async () => {
 		const { data, error } = await callApi("/auth/signout");
 
@@ -17,7 +21,7 @@ const Test = () => {
 		}
 	};
 	return (
-		<div className="flex items-center justify-center gap-4 flex-col h-full">
+		<div className="flex h-full flex-col items-center justify-center gap-4">
 			<p className="text-2xl">Welcome {(user as User)?.firstName}</p>
 			<Button onClick={logOut} className="bg-red-500">
 				Logout
