@@ -2,7 +2,7 @@ import facebook from "@/public/assets/images/landing-page/Facebook.svg";
 import instagram from "@/public/assets/images/landing-page/Instagram.svg";
 import linkedIn from "@/public/assets/images/landing-page/LinkedIn.svg";
 import twitter from "@/public/assets/images/landing-page/Twitter.svg";
-import youtube from "@/public/assets/images/landing-page/Youtube.svg";
+import youtube from "@/public/assets/images/landing-page/YouTube.svg";
 import joinUs from "@/public/assets/images/landing-page/joinUs.svg";
 import Image from "next/image";
 import Link from "next/link";
