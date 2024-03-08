@@ -78,9 +78,17 @@ function CampaignView({ campaign }: CampaignViewProps) {
 					description: excerpt,
 					...(campaign.images.length > 0 && {
 						images: campaign.images.map((image) => {
-							return { url: image?.secureUrl };
+							return {
+								url: image?.secureUrl,
+								width: 800,
+								height: 600,
+								alt: campaign.title,
+							};
 						}),
 					}),
+				}}
+				twitter={{
+					cardType: "summary_large_image",
 				}}
 			/>
 
