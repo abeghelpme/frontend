@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { CustomDialog, PageMetaData } from "../common";
+import { CustomDialog } from "../common";
 import { Button, ProgressBar } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
 import DonorSection from "./DonorSection";
@@ -35,17 +35,8 @@ function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
-	const exeerpt = /^([\S\s]{1,150}[!.?])/.exec(campaign.story)?.[0] ?? "";
-
 	return (
 		<>
-			<PageMetaData
-				title={campaign.title}
-				content={exeerpt}
-				image={campaign.images[0].secureUrl}
-				url={campaign.url}
-			/>
-
 			<main className="flex flex-col bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:flex-row-reverse lg:gap-5 lg:px-[100px]">
 				<section>
 					<CampaignCarousel
@@ -218,7 +209,7 @@ function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 								each={campaign.tags}
 								render={(tag, index) => (
 									<li key={`${tag}-${index}`} className="flex min-w-0">
-										#<p className="truncate">{tag}</p>
+										<p className="truncate">{tag}</p>
 									</li>
 								)}
 							/>
