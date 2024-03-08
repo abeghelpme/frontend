@@ -22,25 +22,25 @@ const createFetcher = <TBaseData, TBaseError>(
 
 	const abortControllerStore = new Map<`/${string}`, AbortController>();
 
-	// Overload 1
+	// == Overload 1
 	async function callApi<TData = TBaseData, TError = TBaseError>(
 		url: `/${string}`
 	): CallApiResult<TData, TError>;
 
-	// Overload 2
+	// == Overload 2
 	async function callApi<TData = TBaseData, TError = TBaseError>(
 		url: `/${string}`,
 		bodyData: Record<string, unknown> | FormData
 	): CallApiResult<TData, TError>;
 
-	// Overload 3
+	// == Overload 3
 	async function callApi<TData = TBaseData, TError = TBaseError>(
 		url: `/${string}`,
 		bodyData: Record<string, unknown> | FormData,
 		signal: AbortSignal
 	): CallApiResult<TData, TError>;
 
-	// Implementation
+	// == Implementation
 	async function callApi<TData = TBaseData, TError = TBaseError>(
 		...params: CallApiParams
 	) {
@@ -82,15 +82,12 @@ const createFetcher = <TBaseData, TBaseError>(
 				...restOfBaseConfig,
 			});
 
-			// Response has http errors
+			// == Response has http errors
 			if (!response.ok) {
 				const errorResponse =
 					await getResponseData<AbegErrorResponse<TError>>(response);
 
-				await onResponseError?.({
-					...response,
-					message: errorResponse.message,
-				});
+				await onResponseError?.({ ...response, response: errorResponse });
 
 				return {
 					data: null,
@@ -98,7 +95,7 @@ const createFetcher = <TBaseData, TBaseError>(
 				};
 			}
 
-			// Response was successful
+			// == Response was successful
 			await onResponse?.(response);
 
 			return {
@@ -106,7 +103,7 @@ const createFetcher = <TBaseData, TBaseError>(
 				error: null,
 			};
 
-			// Exhaustive error handling for request failures
+			// == Exhaustive error handling for request failures
 		} catch (error) {
 			if (
 				error instanceof DOMException &&
@@ -136,7 +133,7 @@ const createFetcher = <TBaseData, TBaseError>(
 				},
 			};
 
-			// Clean up the timeout and remove the now unneeded AbortController from store
+			// == Clean up the timeout and remove the now unneeded AbortController from store
 		} finally {
 			abortControllerStore.delete(url);
 			timeoutId !== null && clearTimeout(timeoutId);

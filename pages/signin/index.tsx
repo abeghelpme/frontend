@@ -24,7 +24,10 @@ const Login = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [success] = useState(false);
 	const [skip2FA, setSkip2FA] = useState("false");
-	const { user, updateUser } = useSession((state) => state);
+	const {
+		user,
+		actions: { updateUser },
+	} = useSession((state) => state);
 
 	useEffect(() => {
 		const skipModal = localStorage.getItem("skip-2FA");

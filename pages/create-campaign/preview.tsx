@@ -1,20 +1,20 @@
-import { FormActionButton, Heading } from "@/components/create-campaign";
-import PreviewComponent from "@/components/create-campaign/PreviewComponent";
+import {
+	CampaignOutlook,
+	FormActionButton,
+	Heading,
+} from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib/helpers/campaign";
-import { useSession } from "@/store";
-import { useFormStore } from "@/store/formStore";
+import { useFormStore, useInitFormStore } from "@/store/formStore";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-function Preview() {
-	const { user } = useSession((state) => state);
+void useInitFormStore.getState().actions.initializeFormData("asd");
 
-	const {
-		campaignInfo,
-		actions: { initializeFormData },
-	} = useFormStore((state) => state);
+function PreviewCampaignPage() {
+	const { campaignInfo } = useFormStore((state) => state);
+
 	const router = useRouter();
 
 	useEffect(() => {
@@ -22,10 +22,8 @@ function Preview() {
 			toast.error("Campaign is incomplete");
 			void router.push("/create-campaign");
 		}
-		if (user) {
-			initializeFormData(user._id);
-		}
-	}, [campaignInfo.status, router, user]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [campaignInfo.status]);
 
 	const handlePublish = async () => {
 		const { error } = await callApi<Campaign>("/campaign/publish", {
@@ -57,22 +55,24 @@ function Preview() {
 					cannot be edited after!
 				</p>
 
-				<FormActionButton
-					type="button"
-					className="w-[20vw] bg-abeg-primary font-bold"
-					onClick={() => void handlePublish()}
-				>
-					Publish Campaign
-				</FormActionButton>
+				<div className="flex gap-5">
+					<FormActionButton
+						type="button"
+						className="w-[20vw] bg-abeg-primary font-bold"
+						onClick={() => void handlePublish()}
+					>
+						Publish Campaign
+					</FormActionButton>
 
-				<FormActionButton
-					variant="secondary"
-					type="button"
-					className="w-[20vw] border-abeg-primary font-bold text-abeg-primary"
-					onClick={() => void router.push("/create-campaign")}
-				>
-					Edit Campaign
-				</FormActionButton>
+					<FormActionButton
+						variant="secondary"
+						type="button"
+						className="w-[20vw] border-abeg-primary font-bold text-abeg-primary"
+						onClick={() => void router.push("/create-campaign")}
+					>
+						Edit Campaign
+					</FormActionButton>
+				</div>
 
 				<Heading as="h2" className="mt-8 text-xl lg:text-[32px]">
 					{`${campaignInfo.title[0].toUpperCase()}${campaignInfo.title.slice(
@@ -81,10 +81,10 @@ function Preview() {
 				</Heading>
 			</header>
 
-			<PreviewComponent campaign={campaignInfo} />
+			<CampaignOutlook campaign={campaignInfo} />
 		</div>
 	);
 }
 
-export default Preview;
-Preview.protect = true;
+export default PreviewCampaignPage;
+PreviewCampaignPage.protect = true;

@@ -1,6 +1,7 @@
 import Auth from "@/components/Protect";
 import { Toaster } from "@/components/ui";
 import { useSession } from "@/store";
+import { useInitSession } from "@/store/useSession";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Manrope } from "next/font/google";
@@ -17,9 +18,12 @@ interface ComponentWithPageLayout extends AppProps {
 }
 
 export default function App({ Component, pageProps }: ComponentWithPageLayout) {
-	const { getSession } = useSession((state) => state);
+	const {
+		actions: { getSession },
+	} = useSession((state) => state);
 
-	const getLayout = Component.getLayout || ((page) => page);
+	const getLayout = Component.getLayout ?? ((page) => page);
+
 	useEffect(() => {
 		void (async () => {
 			await getSession(true);
@@ -30,11 +34,11 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
 	return (
 		<>
 			<style jsx global>{`
-        html {
-          font-family: ${manrope.style.fontFamily};
-          color: #484848;
-        }
-      `}</style>
+				html {
+					font-family: ${manrope.style.fontFamily};
+					color: #484848;
+				}
+			`}</style>
 			<NextNProgress color="#324823" />
 			{Component.protect === true ? (
 				<Auth>{getLayout(<Component {...pageProps} />)}</Auth>

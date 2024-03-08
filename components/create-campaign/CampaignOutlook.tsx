@@ -1,6 +1,6 @@
 import type { Campaign } from "@/interfaces/Campaign";
 import { getDateFromString } from "@/lib/helpers/campaign";
-import { useCopyToClipboard, useElementList } from "@/lib/hooks";
+import { useElementList, useShareCampaign } from "@/lib/hooks";
 import {
 	DonorIcon,
 	DummyAvatar,
@@ -12,50 +12,21 @@ import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { toast } from "sonner";
 import { CustomDialog, PageMetaData } from "../common";
 import { Button, ProgressBar } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
 import DonorSection from "./DonorSection";
 import Heading from "./Heading";
 
-const generateTweet = (
-	campaignTitle: string,
-	campaignUrl: string,
-	hashtags: string[]
-) => {
-	const queryParams = new URLSearchParams();
-
-	queryParams.append(
-		"text",
-		`Abeg help donate to my campaign:
-${campaignTitle}
-${hashtags.length > 0 && hashtags.join(", ")}`
-	);
-
-	queryParams.append("url", campaignUrl);
-	queryParams.append("via", "abeghelpme");
-
-	return `https://twitter.com/intent/tweet?${queryParams.toString()}`;
+type CampaignOutlookProps = {
+	campaign: Campaign;
 };
 
-const generateWhatsAppMessage = (
-	campaignTitle: string,
-	campaignUrl: string
-) => {
-	const queryParams = new URLSearchParams();
-
-	queryParams.append(
-		"text",
-		`Abeg help donate to my campaign:\n${campaignTitle}\n${campaignUrl}`
-	);
-
-	return `https://wa.me/?${queryParams.toString()}`;
-};
-
-function PreviewComponent({ campaign }: { campaign: Campaign }) {
-	const { copyToClipboard } = useCopyToClipboard();
+function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 	const { For: TagList } = useElementList();
+
+	const { generateTweet, generateWhatsAppMessage, handleShareLink } =
+		useShareCampaign();
 
 	const fundraiserTarget =
 		campaign.fundraiser === "INDIVIDUAL"
@@ -64,21 +35,13 @@ function PreviewComponent({ campaign }: { campaign: Campaign }) {
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
-	const handleShareLink = () => {
-		copyToClipboard(campaign.url);
-
-		toast.success("Campaign link copied to clipboard!", {
-			duration: 1500,
-		});
-	};
-
-	const exeerpt = /^([\S\s]{1,150}[!.?])/.exec(campaign.story)?.[0];
+	const exeerpt = /^([\S\s]{1,150}[!.?])/.exec(campaign.story)?.[0] ?? "";
 
 	return (
 		<>
 			<PageMetaData
 				title={campaign.title}
-				content={exeerpt ?? ""}
+				content={exeerpt}
 				image={campaign.images[0].secureUrl}
 				url={campaign.url}
 			/>
@@ -140,7 +103,7 @@ function PreviewComponent({ campaign }: { campaign: Campaign }) {
 
 									<button
 										className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
-										onClick={handleShareLink}
+										onClick={handleShareLink(campaign.url)}
 									>
 										<FilesIcon className="size-4" />
 										Copy link
@@ -286,4 +249,4 @@ function PreviewComponent({ campaign }: { campaign: Campaign }) {
 		</>
 	);
 }
-export default PreviewComponent;
+export default CampaignOutlook;

@@ -1,5 +1,5 @@
 import { Heading } from "@/components/create-campaign";
-import PreviewComponent from "@/components/create-campaign/PreviewComponent";
+import { CampaignOutlook } from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib/helpers/campaign";
 import type {
@@ -30,10 +30,12 @@ export const getStaticPaths = (async () => {
 	};
 }) satisfies GetStaticPaths;
 
-export const getStaticProps = async function (context) {
+export const getStaticProps = (async (context) => {
 	const { shortId } = context.params as { shortId: string };
 
 	const { data, error } = await callApi<Campaign>(`/campaign/one/${shortId}`);
+
+	console.log(data?.data);
 
 	if (error || !data.data) {
 		return {
@@ -44,11 +46,11 @@ export const getStaticProps = async function (context) {
 	return {
 		props: { campaign: data.data },
 	};
-} satisfies GetStaticProps<{ campaign: Campaign }>;
+}) satisfies GetStaticProps<{ campaign: Campaign }>;
 
-function CampaignView({
-	campaign,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+type CampaignViewProps = InferGetStaticPropsType<typeof getStaticProps>;
+
+function CampaignView({ campaign }: CampaignViewProps) {
 	return (
 		<div className="mt-8 flex flex-col items-center gap-2 lg:mt-12 lg:gap-7">
 			<header className="w-full px-6 max-lg:max-w-[480px] lg:px-[100px]">
@@ -57,9 +59,9 @@ function CampaignView({
 				</Heading>
 			</header>
 
-			<PreviewComponent campaign={campaign} />
+			<CampaignOutlook campaign={campaign} />
 		</div>
 	);
 }
 
-export default CampaignView;
+export default CampaignOutlook;
