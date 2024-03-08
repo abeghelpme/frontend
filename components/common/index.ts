@@ -2,8 +2,6 @@
 export { default as Avatar } from "./Avatar";
 export { default as CloudFlareTurnStile } from "./CloudflareTurnstile";
 export { default as CustomDialog } from "./CustomDialog";
-export { default as DashboardSidebarNav } from "./DashboardSidebarNav";
-export { default as DashboardTopNav } from "./DashboardTopNav";
 export { default as Footer } from "./Footer";
 export { default as FormErrorMessage } from "./FormErrorMessage";
 export { default as Loader } from "./Loader";

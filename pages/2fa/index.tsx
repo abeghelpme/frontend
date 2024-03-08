@@ -143,7 +143,6 @@ const TwoFa = () => {
 					</CustomDialog>
 				</div>
 			}
-			page="other"
 		>
 			<div className="relative flex min-h-full flex-col justify-between">
 				{step === 1 ? (

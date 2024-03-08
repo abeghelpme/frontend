@@ -2,7 +2,7 @@ import {
 	ArrowDown,
 	Avatar,
 	LogoBanner,
-	NotificationIcon,
+	Notification,
 	PlusIcon,
 } from "@/components/common";
 import {
@@ -21,12 +21,12 @@ import { callApi } from "@/lib";
 import { useSession } from "@/store";
 import { type ReactNode } from "react";
 type AuthenticatedUserLayoutProps = {
-	page?: "dashboard" | "other";
+	isDashboard?: boolean;
 	children: ReactNode;
 	footer?: ReactNode;
 };
 export const AuthenticatedUserLayout = ({
-	page,
+	isDashboard,
 	children,
 	footer,
 }: AuthenticatedUserLayoutProps) => {
@@ -34,27 +34,13 @@ export const AuthenticatedUserLayout = ({
 	const castedUser = user as User;
 	return (
 		<>
-			<header className="sticky top-0 left-0 bg-white z-10 flex items-center gap-10 py-4 lg:py-7 px-[5%] lg:px-[7%] xl:px-[10%] justify-between border-b border-b-abeg-primary">
+			<header className="sticky top-0 left-0 bg-white z-10 flex items-center gap-10 py-6 px-[5%] lg:px-[7%] xl:px-[10%] justify-between border-b border-b-abeg-primary">
 				<LogoBanner />
-				{/* {page !== 'dashboard' ? (
-				) : (
-					<div className="">
-						<p className="font-semibold">Hi, FirstName👋</p>
-						<p className="">
-							{step == 1
-								? 'Here is an overview of your campaign✨.'
-								: step == 2
-								? 'Here is an overview of your campaign activities✨.'
-								: 'Here are your recent updates✨.'}
-						</p>
-					</div>
-				)} */}
-
 				<div className="flex items-center gap-3">
 					<Button
 						className={`!p-0 !pr-2 md:!px-4 !rounded-none lg:border-r border-r border-r-headerDivider`}
 					>
-						<NotificationIcon />
+						<Notification />
 					</Button>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
@@ -113,11 +99,10 @@ export const AuthenticatedUserLayout = ({
 					</DropdownMenu>
 				</div>
 			</header>
-			<aside className=""></aside>
 			<main className="flex-1 h-full px-[5%] lg:px-[7%] xl:px-[10%]">
 				{children}
 			</main>
-			{page !== "dashboard" && (
+			{!isDashboard && (
 				<footer className="mt-20 border-t px-[5%] lg:px-[7%] xl:px-[10%] border-t-abeg-primary py-4 md:py-7">
 					{footer}
 				</footer>
