@@ -1,4 +1,3 @@
-import { PageMetaData } from "@/components/common";
 import { Button, ProgressBar } from "@/components/ui";
 import { BaseLayout } from "@/layouts";
 import {
@@ -150,11 +149,6 @@ const HomePage = () => {
 	];
 	return (
 		<BaseLayout>
-			<PageMetaData
-				title="Start your journey into fundraising with ease"
-				content="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
-				url="https://abeghelp.me"
-			/>{" "}
 			<div
 				className="flex items-center md:py-10 lg:h-screen"
 				style={{

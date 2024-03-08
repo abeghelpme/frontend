@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { CustomDialog, PageMetaData } from "../common";
+import { CustomDialog } from "../common";
 import { Button, ProgressBar } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
 import DonorSection from "./DonorSection";
@@ -35,31 +35,8 @@ function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
-	// Take the first 200 characters of the campaign story
-	const first200Chars = campaign.story.substring(0, 200);
-
-	// Find the last punctuation mark within the first 200 characters
-	const lastPunctuationIndex = Math.max(
-		first200Chars.lastIndexOf("."),
-		first200Chars.lastIndexOf("!"),
-		first200Chars.lastIndexOf("?")
-	);
-
-	// If a punctuation mark is found, use the substring from the start of the story to the last punctuation mark as the excerpt
-	// If no punctuation mark is found, use the first 200 characters as the excerpt
-	const excerpt =
-		lastPunctuationIndex !== -1
-			? first200Chars.substring(0, lastPunctuationIndex + 1)
-			: first200Chars;
 	return (
 		<>
-			<PageMetaData
-				title={campaign.title}
-				content={excerpt}
-				image={campaign.images[0].secureUrl}
-				url={campaign.url}
-			/>
-
 			<main className="flex flex-col bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:flex-row-reverse lg:gap-5 lg:px-[100px]">
 				<section>
 					<CampaignCarousel
