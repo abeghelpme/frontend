@@ -37,7 +37,7 @@ const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
 					</div>
 				}
 			>
-				<div className="mx-auto mt-[3.5rem] flex w-full flex-col gap-8 px-[5%] md:w-[80%] md:px-0 lg:max-w-[1000px]">
+				<div className="mx-auto mt-8 flex w-full flex-col gap-8">
 					<h1 className="balancedText text-lg font-semibold md:text-2xl">
 						Two-factor authentication is enabled
 					</h1>

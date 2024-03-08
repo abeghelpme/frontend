@@ -302,4 +302,4 @@ const dashboard = () => {
 	);
 };
 export default dashboard;
-// dashboard.protect = true;
+dashboard.protect = true;

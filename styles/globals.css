@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+/* html,
 body {
 	height: 100%;
-}
+} */
 /* html:has([data-rem-reset]) {
 	font-size: 62.5%;
 }
@@ -14,6 +14,7 @@ body:has([data-rem-reset]) {
 	font-size: 1.6rem;
 } */
 #__next {
+	min-height: 100svh;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
