@@ -1,104 +1,102 @@
 import { Dashboard, PlusIcon } from "@/components/common";
-import { Button, ProgressBar } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { AuthenticatedUserLayout } from "@/layouts";
-import userImage from "@/public/assets/icons/dashboard/UserIcon.svg";
-import dashboardImage from "@/public/assets/images/dashboard/dashboardImage.png";
-import Image from "next/image";
+// import userImage from "@/public/assets/icons/dashboard/UserIcon.svg";
 import Link from "next/link";
 
 const dashboard = () => {
-	const campaignData = [
-		{
-			image: userImage,
-			name: "Jane Doe",
-			email: "Janedoe12@gmail.com",
-			time: "4 mins",
-			amount: "+300,000",
-		},
-		{
-			image: userImage,
-			name: "Jane Doe",
-			email: "Janedoe12@gmail.com",
-			time: "4 mins",
-			amount: "+300,000",
-		},
-		{
-			image: userImage,
-			name: "Jane Doe",
-			email: "Janedoe12@gmail.com",
-			time: "4 mins",
-			amount: "+300,000",
-		},
-		{
-			image: userImage,
-			name: "Jane Doe",
-			email: "Janedoe12@gmail.com",
-			time: "4 mins",
-			amount: "+300,000",
-		},
-		{
-			image: userImage,
-			name: "Jane Doe",
-			email: "Janedoe12@gmail.com",
-			time: "4 mins",
-			amount: "+300,000",
-		},
-		{
-			image: userImage,
-			name: "Jane Doe",
-			email: "Janedoe12@gmail.com",
-			time: "4 mins",
-			amount: "+300,000",
-		},
-	];
+	// const campaignData = [
+	// 	{
+	// 		image: userImage,
+	// 		name: "Jane Doe",
+	// 		email: "Janedoe12@gmail.com",
+	// 		time: "4 mins",
+	// 		amount: "+300,000",
+	// 	},
+	// 	{
+	// 		image: userImage,
+	// 		name: "Jane Doe",
+	// 		email: "Janedoe12@gmail.com",
+	// 		time: "4 mins",
+	// 		amount: "+300,000",
+	// 	},
+	// 	{
+	// 		image: userImage,
+	// 		name: "Jane Doe",
+	// 		email: "Janedoe12@gmail.com",
+	// 		time: "4 mins",
+	// 		amount: "+300,000",
+	// 	},
+	// 	{
+	// 		image: userImage,
+	// 		name: "Jane Doe",
+	// 		email: "Janedoe12@gmail.com",
+	// 		time: "4 mins",
+	// 		amount: "+300,000",
+	// 	},
+	// 	{
+	// 		image: userImage,
+	// 		name: "Jane Doe",
+	// 		email: "Janedoe12@gmail.com",
+	// 		time: "4 mins",
+	// 		amount: "+300,000",
+	// 	},
+	// 	{
+	// 		image: userImage,
+	// 		name: "Jane Doe",
+	// 		email: "Janedoe12@gmail.com",
+	// 		time: "4 mins",
+	// 		amount: "+300,000",
+	// 	},
+	// ];
 
-	const encouragements = [
-		{
-			image: userImage,
-			name: "Jane Doe",
-			email: "Janedoe12@gmail.com",
-			comment:
-				"You're doing such important work in raising awareness and support for this cause. Keep up the amazing effort!",
-		},
-		{
-			image: userImage,
-			name: "Jane Doe",
-			email: "Janedoe12@gmail.com",
-			comment:
-				"You're doing such important work in raising awareness and support for this cause. Keep up the amazing effort!",
-		},
-		{
-			image: userImage,
-			name: "Jane Doe",
-			email: "Janedoe12@gmail.com",
-			comment:
-				"You're doing such important work in raising awareness and support for this cause. Keep up the amazing effort!",
-		},
-	];
+	// const encouragements = [
+	// 	{
+	// 		image: userImage,
+	// 		name: "Jane Doe",
+	// 		email: "Janedoe12@gmail.com",
+	// 		comment:
+	// 			"You're doing such important work in raising awareness and support for this cause. Keep up the amazing effort!",
+	// 	},
+	// 	{
+	// 		image: userImage,
+	// 		name: "Jane Doe",
+	// 		email: "Janedoe12@gmail.com",
+	// 		comment:
+	// 			"You're doing such important work in raising awareness and support for this cause. Keep up the amazing effort!",
+	// 	},
+	// 	{
+	// 		image: userImage,
+	// 		name: "Jane Doe",
+	// 		email: "Janedoe12@gmail.com",
+	// 		comment:
+	// 			"You're doing such important work in raising awareness and support for this cause. Keep up the amazing effort!",
+	// 	},
+	// ];
 
-	const otherCampaigns = [
-		{
-			image: dashboardImage,
-			title: "Bringing Dental Care to Undeserved Communities",
-			name: "Locs Designer",
-			proffession: "Health and Welness",
-			amountRaised: "$2,000,000",
-		},
-		{
-			image: dashboardImage,
-			title: "Bringing Dental Care to Undeserved Communities",
-			name: "Locs Designer",
-			proffession: "Health and Welness",
-			amountRaised: "$2,000,000",
-		},
-		{
-			image: dashboardImage,
-			title: "Bringing Dental Care to Undeserved Communities",
-			name: "Locs Designer",
-			proffession: "Health and Welness",
-			amountRaised: "$2,000,000",
-		},
-	];
+	// const otherCampaigns = [
+	// 	{
+	// 		image: dashboardImage,
+	// 		title: "Bringing Dental Care to Undeserved Communities",
+	// 		name: "Locs Designer",
+	// 		proffession: "Health and Welness",
+	// 		amountRaised: "$2,000,000",
+	// 	},
+	// 	{
+	// 		image: dashboardImage,
+	// 		title: "Bringing Dental Care to Undeserved Communities",
+	// 		name: "Locs Designer",
+	// 		proffession: "Health and Welness",
+	// 		amountRaised: "$2,000,000",
+	// 	},
+	// 	{
+	// 		image: dashboardImage,
+	// 		title: "Bringing Dental Care to Undeserved Communities",
+	// 		name: "Locs Designer",
+	// 		proffession: "Health and Welness",
+	// 		amountRaised: "$2,000,000",
+	// 	},
+	// ];
 	return (
 		// <DashBoardPageLayout>
 		<AuthenticatedUserLayout isDashboard>
@@ -134,7 +132,7 @@ const dashboard = () => {
 					</Button>
 				</div>
 			</section>
-			<div className="min-h-screen  justify-center p-5 md:text-sm mb-10">
+			{/* <div className="min-h-screen  justify-center p-5 md:text-sm mb-10">
 				<div className="space-y-5 mb-5">
 					<div className="md:hidden">
 						<h1 className="text-lg font-semibold"> Hi, Locs Designer👋</h1>
@@ -296,7 +294,7 @@ const dashboard = () => {
 						))}
 					</div>
 				</section>
-			</div>
+			</div> */}
 		</AuthenticatedUserLayout>
 		// </DashBoardPageLayout>
 	);
