@@ -1,9 +1,10 @@
-import { PlusIcon } from "@/components/common";
+import { Dashboard, PlusIcon } from "@/components/common";
 import { Button, ProgressBar } from "@/components/ui";
-import { DashBoardPageLayout } from "@/layouts/DashBoardPageLayout";
-import userImage from "@/public/assets/icons/dashboard/userIcon.svg";
+import { AuthenticatedUserLayout } from "@/layouts";
+import userImage from "@/public/assets/icons/dashboard/UserIcon.svg";
 import dashboardImage from "@/public/assets/images/dashboard/dashboardImage.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const dashboard = () => {
 	const campaignData = [
@@ -99,7 +100,40 @@ const dashboard = () => {
 		},
 	];
 	return (
-		<DashBoardPageLayout>
+		// <DashBoardPageLayout>
+		<AuthenticatedUserLayout isDashboard>
+			<section className="flex flex-col gap-6">
+				<div className="">
+					{/* {page !== 'dashboard' ? (
+					) : (
+						<div className="">
+							<p className="font-semibold">Hi, FirstName👋</p>
+							<p className="">
+								{step == 1
+									? 'Here is an overview of your campaign✨.'
+									: step == 2
+									? 'Here is an overview of your campaign activities✨.'
+									: 'Here are your recent updates✨.'}
+							</p>
+						</div>
+					)} */}
+					<Link
+						href={"/create-campaign"}
+						className="md:flex items-center p-2 hidden rounded-md bg-white text-abeg-primary px-3"
+					>
+						<span className="pr-2">
+							<PlusIcon />
+						</span>
+
+						<span>Create Campaign</span>
+					</Link>
+				</div>
+				<div className="border-b-2 border-b-white flex gap-12">
+					<Button>
+						<Dashboard />
+					</Button>
+				</div>
+			</section>
 			<div className="min-h-screen  justify-center p-5 md:text-sm mb-10">
 				<div className="space-y-5 mb-5">
 					<div className="md:hidden">
@@ -263,7 +297,8 @@ const dashboard = () => {
 					</div>
 				</section>
 			</div>
-		</DashBoardPageLayout>
+		</AuthenticatedUserLayout>
+		// </DashBoardPageLayout>
 	);
 };
 export default dashboard;

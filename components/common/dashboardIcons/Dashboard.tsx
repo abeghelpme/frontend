@@ -1,4 +1,4 @@
-const DashboardIcon = () => (
+const Dashboard = () => (
 	<svg
 		width="18"
 		height="18"
@@ -12,4 +12,4 @@ const DashboardIcon = () => (
 		/>
 	</svg>
 );
-export default DashboardIcon;
+export default Dashboard;

@@ -1,5 +1,5 @@
-import DashboardSidebarNav from "@/components/common/DashboardSidebarNav";
-import DashboardTopNav from "@/components/common/DashboardTopNav";
+// import DashboardSidebarNav from '@/components/common/DashboardSidebarNav';
+// import DashboardTopNav from "@/components/common/DashboardTopNav";
 import {
 	DashboardAnalytics,
 	DashboardSettings,
@@ -44,13 +44,11 @@ export const DashBoardPageLayout = function getLayout({
 	return (
 		<main className="relative min-h-full scroll-smooth">
 			<div className="relative flex">
-				<DashboardSidebarNav
+				{/* <DashboardSidebarNav
 					isSidebarOpen={isSidebarOpen}
 					onSidebarItemClick={handleSidebarItemClick}
-				/>
+				/> */}
 				<div className="flex-1 overflow-y-auto">
-					<DashboardTopNav toggleSidebar={toggleSidebar} />
-
 					<section>{renderSelectedComponent()}</section>
 				</div>
 			</div>

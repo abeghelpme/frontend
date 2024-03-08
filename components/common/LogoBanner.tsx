@@ -6,7 +6,7 @@ const LogoBanner = ({ className }: { className?: string }) => {
 	return (
 		<Link href="/" className={`flex items-center justify-center gap-2`}>
 			<Image
-				className="aspect-square w-6"
+				className="aspect-square w-6 md:w-10"
 				src={logo as string}
 				priority
 				alt="logo"
