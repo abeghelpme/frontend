@@ -106,7 +106,7 @@ const signUpSchema: z.ZodType<SignUpProps> = z
 			}),
 		confirmPassword: z
 			.string()
-			.min(6, { message: "Passwords must match" })
+			.min(6, { message: "Password must be more than 6 characters" })
 			.transform((value) => {
 				return value.trim();
 			}),
@@ -130,8 +130,6 @@ const loginSchema: z.ZodType<LoginProps> = z.object({
 		}),
 	password: z
 		.string()
-		.min(6, { message: "Password must be at least 6 characters" })
-		.max(50)
 		.transform((value) => {
 			return value.trim();
 		}),
