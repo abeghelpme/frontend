@@ -43,7 +43,7 @@ export const getStaticProps = (async (context) => {
 
 	return {
 		props: { campaign: data.data },
-		revalidate: 60,
+		revalidate: 15 * 60, // 15 minutes in seconds
 	};
 }) satisfies GetStaticProps<{ campaign: Campaign }>;
 
