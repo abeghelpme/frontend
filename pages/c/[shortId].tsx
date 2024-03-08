@@ -43,6 +43,7 @@ export const getStaticProps = (async (context) => {
 
 	return {
 		props: { campaign: data.data },
+		revalidate: 60,
 	};
 }) satisfies GetStaticProps<{ campaign: Campaign }>;
 
