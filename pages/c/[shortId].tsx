@@ -1,5 +1,4 @@
-import { Heading } from "@/components/create-campaign";
-import { CampaignOutlook } from "@/components/create-campaign";
+import { CampaignOutlook, Heading } from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib/helpers/campaign";
 import type {
@@ -10,7 +9,7 @@ import type {
 
 export const getStaticPaths = (async () => {
 	const { data, error } = await callApi<Campaign[]>(
-		"/campaign/all?limit=100&isPublished=true"
+		"/campaign/all?limit=100&isPublished=true&status=Approved"
 	);
 
 	if (error || !data.data) {
@@ -34,8 +33,6 @@ export const getStaticProps = (async (context) => {
 	const { shortId } = context.params as { shortId: string };
 
 	const { data, error } = await callApi<Campaign>(`/campaign/one/${shortId}`);
-
-	console.log(data?.data);
 
 	if (error || !data.data) {
 		return {
@@ -64,4 +61,4 @@ function CampaignView({ campaign }: CampaignViewProps) {
 	);
 }
 
-export default CampaignOutlook;
+export default CampaignView;

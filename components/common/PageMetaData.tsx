@@ -1,6 +1,5 @@
 import Head from "next/head";
 // import type { ReactNode } from "react";
-
 interface MetaDataProps {
 	// children: ReactNode,
 	title: string;

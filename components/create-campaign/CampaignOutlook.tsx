@@ -35,13 +35,13 @@ function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
-	const exeerpt = /^([\S\s]{1,150}[!.?])/.exec(campaign.story)?.[0] ?? "";
+	const excerpt = /^([\S\s]{1,150}[!.?])/.exec(campaign.story)?.[0] ?? "";
 
 	return (
 		<>
 			<PageMetaData
 				title={campaign.title}
-				content={exeerpt}
+				content={excerpt}
 				image={campaign.images[0].secureUrl}
 				url={campaign.url}
 			/>
