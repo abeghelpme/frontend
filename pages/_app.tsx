@@ -20,14 +20,14 @@ interface ComponentWithPageLayout extends AppProps {
 const SEOCONFIG: DefaultSeoProps = {
 	defaultTitle: "Start your journey into fundraising with ease",
 	titleTemplate: "AbegHelp |'%s",
+	description:
+		"Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
 	canonical: "https://www.abeghelp.me/",
 	openGraph: {
 		type: "website",
 		locale: "en_IE",
 		url: "https://www.abeghelp.me/",
 		siteName: "AbegHelp",
-		description:
-			"Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
 	},
 	twitter: {
 		handle: "@abeghelpme",
