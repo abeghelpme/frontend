@@ -1,3 +1,4 @@
+import { PageMetaData } from "@/components/common";
 import { Button, ProgressBar } from "@/components/ui";
 import { BaseLayout } from "@/layouts";
 import {
@@ -105,19 +106,19 @@ const HomePage = () => {
 			image: testimonialImage1,
 			name: "Jonathan Doe",
 			greeting: "Thanks AHM",
-			text: "Join the effortless way to fundraise and make a difference and empower your cause with Abeghelp.me",
+			text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
 		},
 		{
 			image: testimonialImage2,
 			name: "Sandra Doe",
 			greeting: "Thanks AHM",
-			text: "Join the effortless way to fundraise and make a difference and empower your cause with Abeghelp.me",
+			text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
 		},
 		{
 			image: testimonialImage1,
 			name: "William Doe",
 			greeting: "Thanks AHM",
-			text: "Join the effortless way to fundraise and make a difference and empower your cause with Abeghelp.me",
+			text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
 		},
 	];
 
@@ -149,6 +150,11 @@ const HomePage = () => {
 	];
 	return (
 		<BaseLayout>
+			<PageMetaData
+				title="Start your journey into fundraising with ease"
+				content="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
+				url="https://abeghelp.me"
+			/>{" "}
 			<div
 				className="flex items-center md:py-10 lg:h-screen"
 				style={{
@@ -163,7 +169,7 @@ const HomePage = () => {
 							Start your journey into fundraising with ease
 						</h1>
 						<p className="pr-10 text-lg text-gray-50 md:pr-5">
-							Join the effortless way to fundraise and make a difference and
+							Join the effortless way to raise funds and make a difference and
 							empower your cause with Abeghelp.me
 						</p>
 						<div className="flex space-x-10 py-5 md:pt-20">
@@ -184,7 +190,6 @@ const HomePage = () => {
 					/>
 				</div>
 			</div>
-
 			<div className="px-5 pb-10 pt-10 md:px-20 md:pt-20">
 				<div className="w-full space-y-5 md:justify-between lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
 					<div className="space-y-5 md:pr-20">
@@ -195,8 +200,8 @@ const HomePage = () => {
 					</div>
 					<div className="w-full flex-1 items-center justify-between gap-10 lg:flex lg:pl-20 xl:w-1/3">
 						<p className="text-2xl text-gray-500">
-							Join the effortless way to fundraise <br /> and make a difference
-							and empower <br /> your cause with Abeghelp.me
+							Join the effortless way to raise funds <br /> and make a
+							difference and empower <br /> your cause with Abeghelp.me
 						</p>
 						<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
 							Explore campaigns
@@ -289,7 +294,7 @@ const HomePage = () => {
 								<div className="space-y-2">
 									<h1 className="text-xl font-bold">Global Community</h1>
 									<p className="text-gray-400">
-										Join the effortless way to fundraise and make a difference
+										Join the effortless way to raise funds and make a difference
 										and empower your cause with Abeghelp.me
 									</p>
 								</div>
@@ -304,7 +309,7 @@ const HomePage = () => {
 								<div className="space-y-2">
 									<h1 className="text-xl font-bold">Crowd Funding</h1>
 									<p className="text-gray-400">
-										Join the effortless way to fundraise and make a difference
+										Join the effortless way to raise funds and make a difference
 										and empower your cause with Abeghelp.me
 									</p>
 								</div>
