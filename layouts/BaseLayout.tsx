@@ -1,11 +1,11 @@
-import { Footer, NavBar } from "@/components/common";
+import { Footer, Header } from "@/components/common";
 import type { BaseLayoutProps } from "@/interfaces";
 
 export const BaseLayout = ({ children }: BaseLayoutProps) => {
 	return (
 		<>
-			<NavBar />
-			<main className={`relative h-full bg-contours bg-cover bg-no-repeat`}>
+			<Header />
+			<main>
 				{/* <Image
         src={bgContours}
         alt=""

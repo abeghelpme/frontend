@@ -115,7 +115,10 @@ const AuthApp = ({ otp, setOtp, handleSubmit, loading }: Props) => {
 const AuthenticateUser = () => {
 	const [otp, setOtp] = useState("");
 	const [loading, setLoading] = useState(false);
-	const { user, updateUser } = useSession((state) => state);
+	const {
+		user,
+		actions: { updateUser },
+	} = useSession((state) => state);
 	const router = useRouter();
 	const castedUser = user as User;
 

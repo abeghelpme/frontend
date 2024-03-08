@@ -1,4 +1,4 @@
-import { useSession } from "@/store";
+import { useInitSession } from "@/store/useSession";
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
 import { toast } from "sonner";
 import { isObject } from "../type-helpers";
@@ -54,7 +54,7 @@ export const callApi = async <T>(
 			// avoid handling errors on the signin and signup pages
 
 			if (error.response.status === 401) {
-				useSession.getState().clearSession();
+				useInitSession.getState().actions.clearSession();
 			}
 			if (error.response.status === 429) {
 				toast.error("Too may requests!", {

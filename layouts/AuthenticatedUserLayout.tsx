@@ -30,7 +30,10 @@ export const AuthenticatedUserLayout = ({
 	children,
 	footer,
 }: AuthenticatedUserLayoutProps) => {
-	const { user, clearSession } = useSession((state) => state);
+	const {
+		user,
+		actions: { clearSession },
+	} = useSession((state) => state);
 	const castedUser = user as User;
 	return (
 		<>

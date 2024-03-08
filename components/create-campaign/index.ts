@@ -6,3 +6,5 @@ export { default as StepTwo } from "./FormSteps/StepTwo";
 export { default as Heading } from "./Heading";
 export { default as DonorSection } from "./DonorSection";
 export { default as StepTracker } from "./StepTracker/StepTracker";
+export { default as CampaignOutlook } from "./CampaignOutlook";
+export { default as CampaignCarousel } from "./CampaignCarousel";

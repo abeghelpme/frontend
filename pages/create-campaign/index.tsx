@@ -17,12 +17,13 @@ const STEP_COMPONENT_LOOKUP = {
 	3: <StepThree />,
 };
 
-void useInitFormStore.getState().actions.initializeFormData();
+void useInitFormStore.getState().actions.initializeFormData("asd");
 
 function CreateCampaignPage() {
 	const {
 		currentStep,
 		formStatus,
+
 		actions: { goToStep },
 	} = useFormStore((state) => state);
 
