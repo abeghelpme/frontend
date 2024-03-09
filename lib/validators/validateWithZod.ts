@@ -128,11 +128,9 @@ const loginSchema: z.ZodType<LoginProps> = z.object({
 		.transform((value) => {
 			return value.toLowerCase().trim();
 		}),
-	password: z
-		.string()
-		.transform((value) => {
-			return value.trim();
-		}),
+	password: z.string().transform((value) => {
+		return value.trim();
+	}),
 });
 
 const forgotPasswordSchema: z.ZodType<ForgotPasswordProps> = z.object({

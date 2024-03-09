@@ -20,6 +20,17 @@ export {
 	DropdownMenuRadioGroup,
 } from "./dropdown-menu";
 
+export {
+	Table,
+	TableHeader,
+	TableBody,
+	TableFooter,
+	TableHead,
+	TableRow,
+	TableCell,
+	TableCaption,
+} from "./table";
+
 export { default as Input } from "./input";
 export { default as ProgressBar } from "./progressbar";
 

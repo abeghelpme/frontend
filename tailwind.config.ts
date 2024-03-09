@@ -11,6 +11,9 @@ const config = {
 
 	theme: {
 		extend: {
+			borderWidth: {
+				CampaignCardBorderWidth: "0.3px",
+			},
 			screens: {
 				"3xl": "2000px",
 			},
