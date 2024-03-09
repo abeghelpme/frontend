@@ -34,7 +34,7 @@ function TiptapEditor(props: EditorProps) {
 		onUpdate: (options) => {
 			const purifiedHTML = sanitize(options.editor.getHTML()).replaceAll(
 				"<p></p>",
-				`<p><br class="ProseMirror-trailingBreak"><p>`
+				`<br>`
 			);
 
 			onChange(purifiedHTML);

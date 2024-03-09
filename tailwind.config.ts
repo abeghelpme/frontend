@@ -75,6 +75,8 @@ const config = {
 				ring: "hsl(215 20.2% 65.1%)",
 				muted: "hsl(210 40% 96.1%)",
 				"muted-foreground": "hsl(215.4 16.3% 46.9%)",
+
+				// Sonner toast colors
 				"success-bg": "hsl(150 100% 6%)",
 				"success-text": "hsl(150 100% 90%)",
 				"success-border": "hsl(147 100% 12%)",

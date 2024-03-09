@@ -17,7 +17,7 @@ const STEP_COMPONENT_LOOKUP = {
 	3: <StepThree />,
 };
 
-void useInitFormStore.getState().actions.initializeFormData("asd");
+void useInitFormStore.getState().actions.initializeFormData();
 
 function CreateCampaignPage() {
 	const {

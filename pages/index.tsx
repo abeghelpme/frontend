@@ -263,7 +263,7 @@ const HomePage = () => {
 									20M
 								</h1>
 								<p className="flex text-center text-xl font-light">
-									More than 20M naira donated everyday
+									More than 20M naira donated every day
 								</p>
 							</div>
 						</div>
@@ -389,7 +389,7 @@ const HomePage = () => {
 								Urgent Fundraisers
 							</h1>
 							<p className="text-xl text-gray-500">
-								Join our community of change makers and make an impact today
+								Join our community of change-makers and make an impact today
 							</p>
 						</div>
 						<Button className="border border-gray-500 font-semibold text-gray-500 outline-none">
@@ -444,7 +444,7 @@ const HomePage = () => {
 				<div className="mt-10">
 					<p className="text-xl text-gray-500">Wanna know more?</p>
 					<h1 className="mb-10 mt-5 text-4xl font-bold md:mb-20 md:text-5xl">
-						Freequently asked questions
+						Frequently asked questions
 					</h1>
 					{faqData.map((item, index) => (
 						<div key={index} className="mb-4 space-y-2 bg-white p-4">

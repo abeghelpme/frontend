@@ -11,12 +11,13 @@ const Toaster = (props: ToasterProps) => {
 			theme={theme as ToasterProps["theme"]}
 			className="toaster group"
 			position="bottom-right"
-			closeButton={true}
 			duration={3000}
+			closeButton={true}
+			pauseWhenPageIsHidden={true}
 			toastOptions={{
 				classNames: {
 					toast:
-						"group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
+						"group toast max-lg:mx-auto max-lg:group-[.toaster]:max-w-[356px] group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
 					success:
 						"group success data-[type=success]:group-[.toaster]:bg-success-bg data-[type=success]:group-[.toaster]:text-success-text data-[type=success]border-success-border",
 					error:

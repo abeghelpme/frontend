@@ -46,7 +46,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
 			set({ [dataKey]: { ...previousData, ...newData } });
 		},
 
-		initializeFormData: async (userId2, queryParam = "") => {
+		initializeFormData: async (queryParam = "") => {
 			await useInitSession.getState().actions.getSession();
 
 			const userId = useInitSession.getState().user?._id;

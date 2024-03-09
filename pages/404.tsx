@@ -1,32 +1,54 @@
+import { Button } from "@/components/ui";
+import { BaseLayout } from "@/layouts";
+import ErrorImage from "@/public/assets/images/error-pages/404.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+``;
 
 const NotFound = () => {
+	const router = useRouter();
+
 	return (
-		<main className="flex min-h-screen flex-col-reverse items-center justify-center bg-abeg-neutral-60 px-4 lg:flex-row">
-			<section className="relative  flex flex-col items-center justify-start gap-4 lg:w-1/2 lg:justify-center">
-				<p className="text-2xl font-bold">Oooops!</p>
-				<p className="text-center text-lg font-semibold">
-					We can&apos;t seem to find the page you are looking for
-				</p>
-				<Link
-					href="/"
-					className="rounded-lg bg-abeg-neutral-20 px-5 py-2 text-sm font-medium text-white"
-				>
-					Go Home
-				</Link>
-			</section>
-			<section className="relative flex h-[15rem] w-full items-center justify-center md:h-[30rem] lg:w-1/2">
-				<Image
-					src="/404.webp"
-					alt=""
-					sizes="(min-width: 808px) 50vw, 100vw"
-					priority
-					fill
-					className="h-auto w-full"
-				/>
-			</section>
-		</main>
+		<BaseLayout>
+			<div className="flex px-5  items-center min-h-screen items-center justify-center">
+				<div className="relative flex flex-col max-w-wSignUpForm flex-1 h-full w-full items-center gap-4  justify-center">
+					<Image
+						src={ErrorImage}
+						alt=""
+						height={400}
+						role="presentation"
+						sizes="(min-width: 808px) 50vw, 100vw"
+						priority
+						className="w-full max-h-[25rem]"
+					/>
+					<h2 className="text-3xl  md:text-6xl font-bold text-abeg-primary leading-relaxed">
+						Well this is embarrassing
+					</h2>
+					<p className="text-abeg-primary text-md self-start  md:self-center  md:text-3xl">
+						Seems we can’t find what you’re looking for.
+					</p>
+					<div className="w-full flex flex-col md:flex-row justify-center gap-4">
+						<Button
+							size="lg"
+							variant="secondary"
+							className=" font-semibold text-md rounded-md px-16"
+							onClick={() => router.back()}
+						>
+							Go back
+						</Button>
+						<Button
+							size="lg"
+							variant="primary"
+							className=" font-semibold text-md rounded-md"
+							onClick={() => router.push("/")}
+						>
+							Take me home
+						</Button>
+					</div>
+				</div>
+			</div>
+		</BaseLayout>
 	);
 };
 export default NotFound;
