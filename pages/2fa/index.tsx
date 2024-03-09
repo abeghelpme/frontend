@@ -29,7 +29,6 @@ const TwoFa = () => {
 			void router.push("/2fa/app");
 		} else {
 			setLoading({ ...loading, resend: true });
-			setLoading({ ...loading, resend: true });
 			e.preventDefault();
 			const { data, error } = await callApi<ApiResponse>("/auth/2fa/setup", {
 				twoFactorType: "EMAIL",
@@ -40,7 +39,6 @@ const TwoFa = () => {
 					description: data.message,
 				});
 				setOpenModal(true);
-				setLoading({ ...loading, resend: false });
 				setLoading({ ...loading, resend: false });
 			}
 			if (error) {
@@ -57,9 +55,6 @@ const TwoFa = () => {
 
 		setLoading({ ...loading, otp: true });
 		console.log(loading.otp);
-
-		setLoading({ ...loading, otp: true });
-		console.log(loading.otp);
 		if (otp.length < 6) {
 			setLoading({ ...loading, otp: false });
 			return toast.error("Error", {
@@ -73,7 +68,6 @@ const TwoFa = () => {
 		});
 
 		if (error) {
-			setLoading({ ...loading, otp: false });
 			setLoading({ ...loading, otp: false });
 			toast.error(error.status, {
 				description: error.message,
