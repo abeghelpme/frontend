@@ -122,7 +122,7 @@ const DonationTable = () => {
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>
-			<div className="max-h-96 overflow-auto text-sm font-semibold">
+			<div className="max-h-96 overflow-auto scrollbar-hide text-sm font-semibold">
 				<Table>
 					<TableHeader className="border-t-[0.3px] border-placeholder border-opacity-50">
 						<TableRow className="text-base text-abeg-text font-medium ">

@@ -1,3 +1,4 @@
+import { DonationChart } from "@/components/campaign-analytics";
 import { ArrowDown } from "@/components/common";
 import {
 	DropdownMenu,
@@ -7,7 +8,6 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui";
 import { useState } from "react";
-import DonationChart from "./DonationChart";
 
 const DonationStatsPanel = () => {
 	const [item, setItem] = useState("");

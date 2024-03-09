@@ -51,7 +51,7 @@ const CampaignAnalytics = () => {
 					<WorldMap countries={["Nigeria", "Mali"]} />
 					<div className="flex flex-1 flex-col gap-3  ">
 						<p className=" text-2xl font-semibold md:text-4xl">10.8K</p>
-						<div className="flex flex-col gap-2 pr-4 max-h-96 overflow-auto">
+						<div className="flex flex-col gap-2 pr-4 max-h-96 overflow-auto scrollbar-hide">
 							<SingleCountryDonor countryName="Nigeria" progress={70} />
 							<SingleCountryDonor countryName="Ghana" progress={49} />
 							<SingleCountryDonor countryName="Liberia" progress={30} />

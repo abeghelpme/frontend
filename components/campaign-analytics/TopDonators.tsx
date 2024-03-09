@@ -1,4 +1,4 @@
-import SingleTopDonor from "./SingleTopDonor";
+import { SingleTopDonor } from "@/components/campaign-analytics";
 
 const dummyData = [
 	{
@@ -39,7 +39,7 @@ const TopDonators = () => {
 			<p className="border-b-CampaignCardBorderWidth border-b-placeholder border-opacity-80 pb-4 text-lg font-semibold">
 				Top Donors
 			</p>
-			<div className="flex flex-col gap-6 max-h-96 overflow-auto">
+			<div className="flex flex-col gap-6 max-h-96 overflow-auto scrollbar-hide">
 				{dummyData.map((data, id) => {
 					return (
 						<SingleTopDonor
