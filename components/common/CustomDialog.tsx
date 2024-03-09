@@ -8,6 +8,7 @@ type CustomDialogProps = {
 	children: ReactNode;
 	trigger?: ReactNode;
 	isOpen?: boolean;
+	hasCloseButton?: boolean;
 	classNames?: {
 		content?: string;
 	};
@@ -15,7 +16,14 @@ type CustomDialogProps = {
 };
 
 function CustomDialog(props: CustomDialogProps) {
-	const { children, classNames, trigger, isOpen, setIsOpen } = props;
+	const {
+		children,
+		classNames,
+		trigger,
+		isOpen,
+		setIsOpen,
+		hasCloseButton = true,
+	} = props;
 
 	return (
 		<Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
@@ -26,11 +34,13 @@ function CustomDialog(props: CustomDialogProps) {
 			>
 				{children}
 
-				<Dialog.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-zinc-100 data-[state=open]:text-zinc-500 dark:ring-offset-zinc-950 dark:focus:ring-zinc-300 dark:data-[state=open]:bg-zinc-800 dark:data-[state=open]:text-zinc-400">
-					<CrossCircledIcon className="size-7" />
+				{hasCloseButton && (
+					<Dialog.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-zinc-100 data-[state=open]:text-zinc-500 ">
+						<CrossCircledIcon className="size-7" />
 
-					<span className="sr-only">Close</span>
-				</Dialog.Close>
+						<span className="sr-only">Close</span>
+					</Dialog.Close>
+				)}
 			</Dialog.Content>
 		</Dialog.Root>
 	);
