@@ -7,6 +7,7 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib/helpers/campaign";
 import { useFormStore, useInitFormStore } from "@/store/formStore";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -75,54 +76,55 @@ function PreviewCampaignPage() {
 					description: excerpt,
 					...(campaignInfo.images.length > 0 && {
 						images: campaignInfo.images.map((image) => {
-							return { url: image?.secureUrl };
+							return { url: image.secureUrl };
 						}),
 					}),
 				}}
 			/>
-			<div className="mt-8 flex flex-col items-center gap-2 lg:mt-12 lg:gap-7">
-				<header className="flex w-full flex-col gap-2 px-6 max-lg:max-w-[480px] lg:px-[100px] lg:text-2xl">
-					<Heading as="h1" className="text-abeg-primary">
-						Campaign Preview
-					</Heading>
 
-					<p className="text-abeg-primary">
-						This is what your fundraiser campaign will look like to donors
-					</p>
+			<CampaignOutlook
+				campaign={campaignInfo}
+				HeaderSlot={
+					<div className="flex flex-col gap-2 lg:text-2xl">
+						<Heading as="h1" className="text-abeg-primary">
+							Campaign Preview
+						</Heading>
 
-					<p className="text-xl text-abeg-error-20">
-						Note: Your campaign will become visible to donors once published and
-						cannot be edited after!
-					</p>
+						<p className="text-abeg-primary">
+							This is what your fundraiser campaign will look like to donors
+						</p>
 
-					<div className="flex gap-5">
-						<FormActionButton
-							type="button"
-							className="w-[20vw] bg-abeg-primary font-bold"
-							onClick={() => void handlePublish()}
-						>
-							Publish Campaign
-						</FormActionButton>
+						<p className="text-abeg-error-20 lg:text-xl">
+							Note: Your campaign will become visible to donors once published
+							and cannot be edited after!
+						</p>
 
-						<FormActionButton
-							variant="secondary"
-							type="button"
-							className="w-[20vw] border-abeg-primary font-bold text-abeg-primary"
-							onClick={() => void router.push("/create-campaign")}
-						>
-							Edit Campaign
-						</FormActionButton>
+						<div className="flex gap-5">
+							<FormActionButton
+								type="button"
+								className="bg-abeg-primary font-bold"
+								onClick={() => void handlePublish()}
+							>
+								Publish Campaign
+							</FormActionButton>
+
+							<FormActionButton
+								variant="secondary"
+								type="button"
+								className="border-abeg-primary font-bold text-abeg-primary"
+							>
+								<Link href={"/create-campaign"}> Edit Campaign</Link>
+							</FormActionButton>
+						</div>
+
+						<Heading as="h2" className="mt-8 text-xl lg:text-[32px]">
+							{`${campaignInfo.title[0].toUpperCase()}${campaignInfo.title.slice(
+								1
+							)}`}
+						</Heading>
 					</div>
-
-					<Heading as="h2" className="mt-8 text-xl lg:text-[32px]">
-						{`${campaignInfo.title[0].toUpperCase()}${campaignInfo.title.slice(
-							1
-						)}`}
-					</Heading>
-				</header>
-
-				<CampaignOutlook campaign={campaignInfo} />
-			</div>
+				}
+			/>
 		</>
 	);
 }
