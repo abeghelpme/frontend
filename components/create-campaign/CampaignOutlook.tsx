@@ -68,7 +68,7 @@ function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 
 						<CustomDialog
 							classNames={{
-								content: "gap-0 p-12 md:p-12",
+								content: "gap-0 p-12 md:p-12 max-w-[500px]",
 							}}
 							trigger={
 								<Button
