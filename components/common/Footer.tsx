@@ -20,16 +20,16 @@ const socialIcons = [
 
 const siteMapLinks = [
 	{ name: "About", url: "/about" },
-	{ name: "How it works", url: "/how-it-works" },
-	{ name: "Testimonials", url: "/testimonials" },
-	{ name: "Partners", url: "/partners" },
-	{ name: "FAQ's", url: "/faq" },
+	{ name: "How it works", url: "/create-campaign" },
+	{ name: "Testimonials", url: "/create-campaign" },
+	{ name: "Partners", url: "/create-campaign" },
+	{ name: "FAQ's", url: "/create-campaign" },
 ];
 
 const joinUsLinks = [
-	{ name: "Sponsoships", url: "/sponsorships" },
-	{ name: "Volunteers", url: "/volunteers" },
-	{ name: "Careers", url: "/careers" },
+	{ name: "Sponsoships", url: "/create-campaign" },
+	{ name: "Volunteers", url: "/create-campaign" },
+	{ name: "Careers", url: "/create-campaign" },
 ];
 
 const contactUsLinks = [
