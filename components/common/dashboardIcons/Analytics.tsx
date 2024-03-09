@@ -1,4 +1,4 @@
-const AnalyticsChartIcon = () => (
+const Analytics = () => (
 	<svg
 		width="20"
 		height="20"
@@ -48,4 +48,4 @@ const AnalyticsChartIcon = () => (
 		/>
 	</svg>
 );
-export default AnalyticsChartIcon;
+export default Analytics;

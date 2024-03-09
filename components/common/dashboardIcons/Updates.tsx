@@ -1,4 +1,4 @@
-const UpdatesIcon = () => (
+const Updates = () => (
 	<svg
 		width="20"
 		height="20"
@@ -23,4 +23,4 @@ const UpdatesIcon = () => (
 		/>
 	</svg>
 );
-export default UpdatesIcon;
+export default Updates;

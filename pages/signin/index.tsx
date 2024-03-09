@@ -70,7 +70,13 @@ const Login = () => {
 			if (email) {
 				void router.push({
 					pathname: "/signup/verification",
-					query: { signup: true, email: data.email.toLowerCase() },
+					query: {
+						signup: true,
+						email: data.email.toLowerCase(),
+						title: "Email Verification",
+						type: "verification",
+						endpoint: "resend-verification",
+					},
 				});
 			}
 			toast.error(error.status, {
@@ -82,7 +88,6 @@ const Login = () => {
 			});
 
 			reset();
-			updateUser(responseData?.data as User);
 			if (responseData?.data?.twoFA?.active === false) {
 				if (skip2FA === "true") {
 					router.push("/dashboard");
@@ -92,6 +97,8 @@ const Login = () => {
 						shallow: true,
 					});
 				}
+
+				updateUser(responseData?.data as User);
 			} else {
 				router.push("/2fa/authenticate");
 			}

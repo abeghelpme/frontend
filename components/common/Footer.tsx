@@ -65,7 +65,7 @@ const Footer = () => {
 						</div>
 						<div>
 							<p className="text-md font-extralight text-center md:text-start">
-								“Join the effortless way to fundraise and make adifference and
+								“Join the effortless way to raise funds and make adifference and
 								empower your cause with Abeghelp.me”
 							</p>
 						</div>

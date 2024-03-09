@@ -1,4 +1,4 @@
-const NotificationIcon = () => (
+const Notification = () => (
 	<svg
 		width="24"
 		height="24"
@@ -29,4 +29,4 @@ const NotificationIcon = () => (
 		/>
 	</svg>
 );
-export default NotificationIcon;
+export default Notification;
