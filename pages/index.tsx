@@ -22,21 +22,223 @@ import {
 	timeCamp,
 } from "@/public/assets/images/landing-page";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import { useState } from "react";
 
+// FAQ data (questions and answers)
+const faqData = [
+	{
+		question: "How does AbegHelp.me work?",
+		answer: (
+			<>
+				<p>Here&apos;s how fundraising on AbegHelp.me works:</p>
+				<p>
+					To get started, just tap the &apos;Start fundraiser&apos; button.
+					After a few questions to help set up your fundraiser, you&apos;ll then
+					write your fundraising story. Next, you&apos;ll customize your
+					fundraiser, adding details to let potential donors understand your
+					cause.
+				</p>
+				<p>
+					Once your fundraiser is live, you can always add additional photos and
+					videos or lower or raise your goal anytime. The best way to raise
+					funds is by sharing your fundraiser. Call family, text friends,
+					message coworkers, or post your fundraiser link on social media to
+					help you reach your fundraising goal.
+				</p>
+				<p>
+					If you need us, we&apos;ll be there every step of the way with
+					fundraising tips and support. Ready to get started? Start a
+					AbegHelp.me fundraiser today!
+				</p>
+			</>
+		),
+	},
+	{
+		question: "What can I raise money for?",
+		answer: (
+			<>
+				<p>
+					We see people use AbegHelp.me to raise money for themselves, friends
+					and family, or even complete strangers in random acts of kindness.
+					People raise money for just about everything, including medical
+					expenses, education costs, volunteer programs, youth sports, funerals
+					& memorials, and even animals & pets.
+				</p>
+
+				<p>
+					We&apos;re always amazed at the ways people use AbegHelp.me to raise
+					money. Check out some recent success stories, or see how AbegHelp.me
+					works.
+				</p>
+			</>
+		),
+	},
+	{
+		question: "How does AbegHelp.me keep fundraisers safe?",
+		answer: (
+			<>
+				<p>
+					AbegHelp.me features the very best in secure payment encryption
+					technology. Your donors&apos; online payments are safe, and your money
+					is stored securely until you&apos;re ready to request a withdrawal via
+					electronic bank transfer.
+				</p>
+			</>
+		),
+	},
+	{
+		question: "Can a friend withdraw the money I raise for them?",
+		answer: (
+			<>
+				<p>
+					Yes. AbegHelp.me makes it easy for another friend or family member to
+					securely access the funds you have raised. Through AbegHelp.me, they
+					will receive direct access to the money you have raised. Please note:
+					You will not be able to enter their bank information during the
+					withdrawal process; they will need to do this themselves.
+				</p>
+			</>
+		),
+	},
+	{
+		question: "Are there any deadlines or time limits?",
+		answer: (
+			<>
+				<p>
+					While there are important withdrawals deadlines you&apos;ll need to
+					observe to avoid donations being refunded to donors, your fundraiser
+					will remain live until you choose to turn off donations or remove the
+					fundraiser altogether. Most organizers leave their fundraisers active
+					indefinitely to refer back to the kind comments and support they
+					received.
+				</p>
+			</>
+		),
+	},
+	{
+		question: "What if I do not reach my goal?",
+		answer: (
+			<>
+				<p>
+					No problem. Reaching your goal is not required. With AbegHelp.me, you
+					keep each and every donation you receive. Your fundraiser will be able
+					to accept donations even after your goal is reached. Once the goal is
+					reached, the progress meter on your fundraiser will show that you have
+					received more than your goal amount. If you&apos;d like to continue
+					raising money, you can keep your fundraiser running for as long as
+					you&apos;d like.
+				</p>
+			</>
+		),
+	},
+	{
+		question: "How do I get donations?",
+		answer: (
+			<>
+				<p>
+					AbegHelp.me provides an easy way to raise money from your friends,
+					family, and online community. Our platform makes it simple to share
+					your fundraiser in a variety of ways to bring in donations, track your
+					progress, and post updates to engage your community.
+				</p>
+			</>
+		),
+	},
+	{
+		question: "Is my country supported?",
+		answer: (
+			<>
+				<p>
+					We are currently supporting 17 African countries. We are working on
+					expanding our support to more countries.
+				</p>
+			</>
+		),
+	},
+];
+
+const urgentFundraisers = [
+	{
+		image: happyPeople,
+		title: "Bringing Dental Care to Undeserved Communities",
+		name: "Locs Designer",
+		proffession: "Health and Welness",
+		amountRaised: "$2,000,000",
+	},
+	{
+		image: happyPeople,
+		title: "Bringing Dental Care to Undeserved Communities",
+		name: "Locs Designer",
+		proffession: "Health and Welness",
+		amountRaised: "$2,000,000",
+	},
+	{
+		image: happyPeople,
+		title: "Bringing Dental Care to Undeserved Communities",
+		name: "Locs Designer",
+		proffession: "Health and Welness",
+		amountRaised: "$2,000,000",
+	},
+	{
+		image: happyPeople,
+		title: "Bringing Dental Care to Undeserved Communities",
+		name: "Locs Designer",
+		proffession: "Health and Welness",
+		amountRaised: "$2,000,000",
+	},
+];
+
+const testimonials = [
+	{
+		image: testimonialImage1,
+		name: "Jonathan Doe",
+		greeting: "Thanks AHM",
+		text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
+	},
+	{
+		image: testimonialImage2,
+		name: "Sandra Doe",
+		greeting: "Thanks AHM",
+		text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
+	},
+	{
+		image: testimonialImage1,
+		name: "William Doe",
+		greeting: "Thanks AHM",
+		text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
+	},
+];
+
+const campaignCard = [
+	{
+		index: 1,
+		image: createCampaignImage1,
+		heading: "Create Your Campaign",
+		text: "Share your vision. In just a few clicks, set up your fundraising page and tell us what you're passionate about.",
+	},
+	{
+		index: 2,
+		image: createCampaignImage2,
+		heading: "Share you story",
+		text: "Spread the word with our easy sharing tools. Reach out to friends, family, and beyond.",
+	},
+	{
+		index: 3,
+		image: createCampaignImage3,
+		heading: "Collect Donations",
+		text: "See generosity in action. Our secure platform makes donating simple, so you can focus on your cause.",
+	},
+	{
+		index: 4,
+		image: createCampaignImage1,
+		heading: "Be Happy",
+		text: "Change lives With the funds raised, take the steps to turn your dream project into reality.",
+	},
+];
+const trustedPioneers = [timeCamp, senville, google, dropbox, netflix, envato]; // Trusted Pioneers images
+
 const HomePage = () => {
-	const router = useRouter();
-
-	const trustedPioneers = [
-		timeCamp,
-		senville,
-		google,
-		dropbox,
-		netflix,
-		envato,
-	]; // Trusted Pioneers images
-
 	// State to manage the visibility of each question's answer
 	const [expanded, setExpanded] = useState<boolean[]>([]);
 
@@ -48,129 +250,6 @@ const HomePage = () => {
 		});
 	};
 
-	// FAQ data (questions and answers)
-	const faqData = [
-		{
-			question: "How does AbegHelp.me work?",
-			answer: `<p>Here&apos;s how fundraising on AbegHelp.me works:</p>
-
-<p>To get started, just tap the &apos;Start fundraiser&apos; button. After a few questions to help set up your fundraiser, you&apos;ll then write your fundraising story. Next, you&apos;ll customize your fundraiser, adding details to let potential donors understand your cause.</p>
-
-<p>Once your fundraiser is live, you can always add additional photos and videos or lower or raise your goal anytime. The best way to raise funds is by sharing your fundraiser. Call family, text friends, message coworkers, or post your fundraiser link on social media to help you reach your fundraising goal.</p?
-
-<p>If you need us, we&apos;ll be there every step of the way with fundraising tips and support. Ready to get started? Start a AbegHelp.me fundraiser today!</p>`,
-		},
-		{
-			question: "What can I raise money for?",
-			answer: `<p>We see people use AbegHelp.me to raise money for themselves, friends and family, or even complete strangers in random acts of kindness. People raise money for just about everything, including medical expenses, education costs, volunteer programs, youth sports, funerals & memorials, and even animals & pets.</p>
-
-<p>We&apos;re always amazed at the ways people use AbegHelp.me to raise money. Check out some recent success stories, or see how AbegHelp.me works.</p>`,
-		},
-		{
-			question: "How does AbegHelp.me keep fundraisers safe?",
-			answer: `<p>AbegHelp.me features the very best in secure payment encryption technology. Your donors&apos; online payments are safe, and your money is stored securely until you&apos;re ready to request a withdrawal via electronic bank transfer.</p>`,
-		},
-		{
-			question: "Can a friend withdraw the money I raise for them?",
-			answer: `<p>Yes. AbegHelp.me makes it easy for another friend or family member to securely access the funds you have raised. Through AbegHelp.me, they will receive direct access to the money you have raised. Please note: You will not be able to enter their bank information during the withdrawal process; they will need to do this themselves.</p>`,
-		},
-		{
-			question: "Are there any deadlines or time limits?",
-			answer: `<p>While there are important withdrawals deadlines you&apos;ll need to observe to avoid donations being refunded to donors, your fundraiser will remain live until you choose to turn off donations or remove the fundraiser altogether. Most organizers leave their fundraisers active indefinitely to refer back to the kind comments and support they received.</p>`,
-		},
-		{
-			question: "What if I do not reach my goal?",
-			answer: `<p>No problem. Reaching your goal is not required. With AbegHelp.me, you keep each and every donation you receive. Your fundraiser will be able to accept donations even after your goal is reached. Once the goal is reached, the progress meter on your fundraiser will show that you have received more than your goal amount. If you&apos;d like to continue raising money, you can keep your fundraiser running for as long as you&apos;d like.</p>`,
-		},
-		{
-			question: "How do I get donations?",
-			answer: `
-AbegHelp.me provides an easy way to raise money from your friends, family, and online community. Our platform makes it simple to share your fundraiser in a variety of ways to bring in donations, track your progress, and post updates to engage your community.`,
-		},
-		{
-			question: "Is my country supported?",
-			answer: `<p>We are currently supporting 17 African countries. We are working on expanding our support to more countries.</p>`,
-		},
-	];
-
-	const urgentFundraisers = [
-		{
-			image: happyPeople,
-			title: "Bringing Dental Care to Undeserved Communities",
-			name: "Locs Designer",
-			proffession: "Health and Welness",
-			amountRaised: "$2,000,000",
-		},
-		{
-			image: happyPeople,
-			title: "Bringing Dental Care to Undeserved Communities",
-			name: "Locs Designer",
-			proffession: "Health and Welness",
-			amountRaised: "$2,000,000",
-		},
-		{
-			image: happyPeople,
-			title: "Bringing Dental Care to Undeserved Communities",
-			name: "Locs Designer",
-			proffession: "Health and Welness",
-			amountRaised: "$2,000,000",
-		},
-		{
-			image: happyPeople,
-			title: "Bringing Dental Care to Undeserved Communities",
-			name: "Locs Designer",
-			proffession: "Health and Welness",
-			amountRaised: "$2,000,000",
-		},
-	];
-
-	const testimonials = [
-		{
-			image: testimonialImage1,
-			name: "Jonathan Doe",
-			greeting: "Thanks AHM",
-			text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
-		},
-		{
-			image: testimonialImage2,
-			name: "Sandra Doe",
-			greeting: "Thanks AHM",
-			text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
-		},
-		{
-			image: testimonialImage1,
-			name: "William Doe",
-			greeting: "Thanks AHM",
-			text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
-		},
-	];
-
-	const campaignCard = [
-		{
-			index: 1,
-			image: createCampaignImage1,
-			heading: "Create Your Campaign",
-			text: "Share your vision. In just a few clicks, set up your fundraising page and tell us what you're passionate about.",
-		},
-		{
-			index: 2,
-			image: createCampaignImage2,
-			heading: "Share you story",
-			text: "Spread the word with our easy sharing tools. Reach out to friends, family, and beyond.",
-		},
-		{
-			index: 3,
-			image: createCampaignImage3,
-			heading: "Collect Donations",
-			text: "See generosity in action. Our secure platform makes donating simple, so you can focus on your cause.",
-		},
-		{
-			index: 4,
-			image: createCampaignImage1,
-			heading: "Be Happy",
-			text: "Change lives With the funds raised, take the steps to turn your dream project into reality.",
-		},
-	];
 	return (
 		<BaseLayout>
 			<div
@@ -191,17 +270,11 @@ AbegHelp.me provides an easy way to raise money from your friends, family, and o
 							empower your cause with Abeghelp.me
 						</p>
 						<div className="flex space-x-10 py-5 md:pt-20">
-							<Button
-								className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none"
-								onClick={() => void router.push("/create-campaign")}
-							>
-								Start fundraiser
+							<Button className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none">
+								<Link href="/create-campaign">Start fundraiser</Link>
 							</Button>
-							<Button
-								className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none"
-								onClick={() => void router.push("/create-campaign")}
-							>
-								Donate now
+							<Button className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none">
+								<Link href="/create-campaign">Donate now</Link>
 							</Button>
 						</div>
 					</div>
@@ -228,11 +301,8 @@ AbegHelp.me provides an easy way to raise money from your friends, family, and o
 							Join the effortless way to raise funds <br /> and make a
 							difference and empower <br /> your cause with Abeghelp.me
 						</p>
-						<Button
-							className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none"
-							onClick={() => void router.push("/create-campaign")}
-						>
-							Explore campaigns
+						<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
+							<Link href="/create-campaign">Explore campaigns</Link>
 						</Button>
 					</div>
 				</div>
@@ -426,11 +496,8 @@ AbegHelp.me provides an easy way to raise money from your friends, family, and o
 								Join our community of change makers and make an impact today
 							</p>
 						</div>
-						<Button
-							className="border border-gray-500 font-semibold text-gray-500 outline-none"
-							onClick={() => void router.push("/create-campaign")}
-						>
-							Explore campaigns
+						<Button className="border border-gray-500 font-semibold text-gray-500 outline-none">
+							<Link href="/create-campaign">Explore campaigns</Link>
 						</Button>
 					</div>
 
@@ -499,10 +566,7 @@ AbegHelp.me provides an easy way to raise money from your friends, family, and o
 								</span>
 							</div>
 							{expanded[index] && (
-								<p
-									className="pt-5 space-y-5 text-xl"
-									dangerouslySetInnerHTML={{ __html: item.answer }}
-								></p>
+								<div className="pt-5 space-y-5 text-xl"> {item.answer}</div>
 							)}
 							<div className="mt-2 border-t-2 border-gray-300"></div>
 						</div>
