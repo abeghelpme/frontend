@@ -3,7 +3,6 @@ import { useToggle } from "@/lib/hooks";
 import { closeIcon, menuIcon } from "@/public/assets/images/landing-page";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { Button } from "../ui";
 import LogoBanner from "./LogoBanner";
 
@@ -14,7 +13,6 @@ const navLinks = [
 ];
 const Header = () => {
 	const [isMobileNavOpen, toggleMobileNav] = useToggle(false);
-	const router = useRouter();
 
 	return (
 		<header className="bg-abeg-primary text-white  lg:py-7 px-5 md:px-20">
@@ -30,24 +28,18 @@ const Header = () => {
 					</ul>
 				</nav>
 				<div className="md:flex gap-2">
-					<Button
-						className="bg-transparent border-2 border-white px-8 font-semibold text-md"
-						onClick={() => void router.push("/signin")}
-					>
-						Sign In
+					<Button className="bg-transparent border-2 border-white px-8 font-semibold text-md">
+						<Link href="/signin">Sign In</Link>
 					</Button>
-					<Button
-						className="bg-white text-abeg-primary font-semibold text-md"
-						onClick={() => void router.push("/create-campaign")}
-					>
-						Start Fundraiser
+					<Button className="bg-white text-abeg-primary font-semibold text-md">
+						<Link href="/create-campaign"> Start Fundraiser</Link>
 					</Button>
 				</div>
 			</div>
 
 			<div className="lg:hidden flex justify-between">
 				<LogoBanner className="text-white font-normal" />
-				<Button onClick={() => toggleMobileNav()}>
+				<Button onClick={toggleMobileNav}>
 					<Image src={menuIcon} alt="menu icon" width={35} height={35} />
 				</Button>
 			</div>
