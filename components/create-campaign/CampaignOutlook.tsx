@@ -20,9 +20,11 @@ import Heading from "./Heading";
 
 type CampaignOutlookProps = {
 	campaign: Campaign;
+	HeaderSlot: React.ReactNode;
 };
 
-function CampaignOutlook({ campaign }: CampaignOutlookProps) {
+function CampaignOutlook(props: CampaignOutlookProps) {
+	const { campaign, HeaderSlot } = props;
 	const { For: TagList } = useElementList();
 
 	const { generateTweet, generateWhatsAppMessage, handleShareLink } =
@@ -36,9 +38,11 @@ function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
 	return (
-		<>
-			<main className="flex flex-col bg-cover px-6 pb-16 text-abeg-text max-lg:max-w-[480px] lg:flex-row-reverse lg:gap-5 lg:px-[100px]">
-				<section>
+		<div className="mt-8 flex flex-col items-center gap-2 px-6 pb-16 max-lg:mx-auto max-lg:max-w-[480px] lg:mt-12 lg:gap-7 lg:px-[100px]">
+			<header className="w-full">{HeaderSlot}</header>
+
+			<main className="flex flex-col text-abeg-text lg:flex-row-reverse lg:gap-5 ">
+				<section className="lg:max-w-[505px]">
 					<CampaignCarousel
 						images={campaign.images}
 						classNames={{ base: "lg:hidden" }}
@@ -69,7 +73,7 @@ function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 
 							<CustomDialog
 								classNames={{
-									content: "gap-0 p-12 md:p-12",
+									content: "gap-0 p-12 md:p-12 max-w-[500px]",
 								}}
 								trigger={
 									<Button
@@ -155,8 +159,7 @@ function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 
 							<figure className="flex items-center gap-[10px] text-sm lg:text-base">
 								<DonorIcon className="shrink-0" />
-
-								<figcaption>235,567 total donors</figcaption>
+								<figcaption>0 total donors</figcaption>
 							</figure>
 
 							<figure className="flex items-center gap-2 text-sm lg:text-base">
@@ -194,7 +197,7 @@ function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 						</Heading>
 
 						<div
-							className="mt-6 min-h-16 lg:text-xl"
+							className="mt-6 min-h-16 text-justify lg:text-xl"
 							dangerouslySetInnerHTML={{
 								__html: campaign.storyHtml,
 							}}
@@ -237,7 +240,8 @@ function CampaignOutlook({ campaign }: CampaignOutlookProps) {
 					</article>
 				</section>
 			</main>
-		</>
+		</div>
 	);
 }
+
 export default CampaignOutlook;

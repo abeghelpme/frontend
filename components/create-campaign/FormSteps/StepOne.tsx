@@ -53,7 +53,10 @@ function StepOne() {
 
 		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
 			`/campaign/create/one`,
-			data
+			{
+				...data,
+				campaignId: campaignInfo._id,
+			}
 		);
 
 		if (error) {
@@ -230,11 +233,11 @@ function StepOne() {
 						</div>
 
 						<div className="mt-4 flex flex-col gap-4">
-							<span className="text-xs text-abeg-primary">
+							<span className="text-xs text-abeg-primary lg:text-sm">
 								{stepOneData.tags.length}/5 tags
 							</span>
 
-							<ul className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary">
+							<ul className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary lg:text-base">
 								<TagList
 									each={stepOneData.tags}
 									render={(tag, index) => (
