@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-void useInitFormStore.getState().actions.initializeFormData("asd");
+void useInitFormStore.getState().actions.initializeFormData();
 
 function PreviewCampaignPage() {
 	const { campaignInfo } = useFormStore((state) => state);
@@ -19,12 +19,18 @@ function PreviewCampaignPage() {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (campaignInfo.status === "Draft") {
-			toast.error("Campaign is incomplete");
+		if (!campaignInfo.status || campaignInfo.status === "Draft") {
+			toast.error("Error", {
+				description: "Please complete the campaign before previewing",
+				id: "incomplete",
+				duration: 2000,
+			});
+
 			void router.push("/create-campaign");
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [campaignInfo.status]);
+	}, [campaignInfo.status, router]);
+
+	if (!campaignInfo.status || campaignInfo.status === "Draft") return null;
 
 	const handlePublish = async () => {
 		const { error } = await callApi<Campaign>("/campaign/publish", {
