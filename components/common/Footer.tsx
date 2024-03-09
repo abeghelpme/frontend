@@ -27,9 +27,9 @@ const siteMapLinks = [
 ];
 
 const joinUsLinks = [
-	{ name: "Sponsoships", url: "/create-campaign" },
-	{ name: "Volunteers", url: "/create-campaign" },
-	{ name: "Careers", url: "/create-campaign" },
+	{ name: "Sponsorships", url: "/sponsorships" },
+	{ name: "Volunteers", url: "/volunteers" },
+	{ name: "Careers", url: "/careers" },
 ];
 
 const contactUsLinks = [

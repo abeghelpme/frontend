@@ -70,7 +70,13 @@ const Login = () => {
 			if (email) {
 				void router.push({
 					pathname: "/signup/verification",
-					query: { signup: true, email: data.email.toLowerCase() },
+					query: {
+						signup: true,
+						email: data.email.toLowerCase(),
+						title: "Email Verification",
+						type: "verification",
+						endpoint: "resend-verification",
+					},
 				});
 			}
 			toast.error(error.status, {

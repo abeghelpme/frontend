@@ -57,10 +57,7 @@ const Header = () => {
 				<div className="lg:hidden fixed z-50 top-0 left-0 w-full h-full bg-white text-abeg-primary font-medium flex flex-col space-y-5 text-2xl py-10 px-5 md:items-center md:justify-center">
 					{/* Close button for mobile nav */}
 					<div className="flex md:absolute md:top-20 md:right-20 justify-end">
-						<Button
-							onClick={() => toggleMobileNav()}
-							className="text-abeg-primary"
-						>
+						<Button onClick={toggleMobileNav} className="text-abeg-primary">
 							<Image src={closeIcon} alt="menu icon" width={70} height={70} />
 						</Button>
 					</div>

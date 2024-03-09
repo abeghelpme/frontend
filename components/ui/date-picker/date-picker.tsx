@@ -17,7 +17,7 @@ type DatePickerProps = {
 function DatePicker(props: DatePickerProps) {
 	const { placeholder, dateValueString = "", className, onChange } = props;
 
-	const dateValue = getDateFromString(dateValueString);
+	const dateValue = getDateFromString(dateValueString, DATE_NEXT_TOMORROW);
 
 	const isDateSelected = dateValueString !== "";
 

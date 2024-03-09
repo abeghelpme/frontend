@@ -93,15 +93,14 @@ function CampaignView({ campaign }: CampaignViewProps) {
 				}}
 			/>
 
-			<div className="mt-8 flex flex-col items-center gap-2 lg:mt-12 lg:gap-7">
-				<header className="w-full px-6 max-lg:max-w-[480px] lg:px-[100px]">
+			<CampaignOutlook
+				campaign={campaign}
+				HeaderSlot={
 					<Heading as="h1" className="text-xl lg:text-[32px]">
 						{`${campaign.title[0].toUpperCase()}${campaign.title.slice(1)}`}
 					</Heading>
-				</header>
-
-				<CampaignOutlook campaign={campaign} />
-			</div>
+				}
+			/>
 		</>
 	);
 }
