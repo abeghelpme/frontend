@@ -1,3 +1,4 @@
+import { Loader } from "@/components/common";
 import { CampaignOutlook, Heading } from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib/helpers/campaign";
@@ -7,6 +8,7 @@ import type {
 	InferGetStaticPropsType,
 } from "next";
 import { NextSeo } from "next-seo";
+import { useRouter } from "next/router";
 
 export const getStaticPaths = (async () => {
 	const { data, error } = await callApi<Campaign[]>(
@@ -49,6 +51,12 @@ export const getStaticProps = (async (context) => {
 type CampaignViewProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 function CampaignView({ campaign }: CampaignViewProps) {
+	const router = useRouter();
+
+	if (router.isFallback) {
+		return <Loader message="Generating page please wait..." />;
+	}
+
 	// Take the first 200 characters of the campaign story
 	const first200Chars = campaign.story.substring(0, 200);
 
