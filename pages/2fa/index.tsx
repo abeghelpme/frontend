@@ -29,18 +29,15 @@ const TwoFa = () => {
 			void router.push("/2fa/app");
 		} else {
 			setLoading({ ...loading, resend: true });
-			setLoading({ ...loading, resend: true });
 			e.preventDefault();
 			const { data, error } = await callApi<ApiResponse>("/auth/2fa/setup", {
 				twoFactorType: "EMAIL",
 			});
-
 			if (data) {
 				toast.success("Success", {
 					description: data.message,
 				});
 				setOpenModal(true);
-				setLoading({ ...loading, resend: false });
 				setLoading({ ...loading, resend: false });
 			}
 			if (error) {
@@ -54,12 +51,7 @@ const TwoFa = () => {
 
 	const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-
 		setLoading({ ...loading, otp: true });
-		console.log(loading.otp);
-
-		setLoading({ ...loading, otp: true });
-		console.log(loading.otp);
 		if (otp.length < 6) {
 			setLoading({ ...loading, otp: false });
 			return toast.error("Error", {
@@ -74,12 +66,12 @@ const TwoFa = () => {
 
 		if (error) {
 			setLoading({ ...loading, otp: false });
-			setLoading({ ...loading, otp: false });
 			toast.error(error.status, {
 				description: error.message,
 				duration: 3000,
 			});
 		} else {
+			setOpenModal(false);
 			setLoading({ ...loading, otp: false });
 			toast.success("Success", {
 				description: (data as { message: string }).message,
@@ -88,7 +80,7 @@ const TwoFa = () => {
 			recoveryCodeRef.current = data?.data?.recoveryCode as string;
 			setTimeout(() => {
 				setStep(2);
-			}, 1000);
+			}, 700);
 		}
 	};
 
@@ -96,57 +88,68 @@ const TwoFa = () => {
 		<AuthenticatedUserLayout
 			footer={
 				<div className="mx-auto flex w-full justify-end">
-					<CustomDialog
-						isOpen={openModal}
-						setIsOpen={() => {
-							setOpenModal(false);
-							setOtp("");
-						}}
-						trigger={
-							<Button
-								variant="primary"
-								className="w-fit !px-6"
-								onClick={(e) => void handleStep(e)}
-								loading={loading.otp}
-							>
-								NEXT
-							</Button>
-						}
-					>
-						<OtpInputDisplay
-							otp={otp}
-							setOtp={setOtp}
-							topSection={
-								<p>{`Enter the 6 digits code we sent to ${castedUser?.email}`}</p>
+					{step === 1 ? (
+						<CustomDialog
+							isOpen={openModal}
+							setIsOpen={() => {
+								setOpenModal(false);
+								setOtp("");
+							}}
+							trigger={
+								<Button
+									variant="primary"
+									className="w-fit !px-6"
+									onClick={(e) => void handleStep(e)}
+									loading={loading.otp}
+								>
+									NEXT
+								</Button>
 							}
-							bottomSection={
-								<div className="mt-8 flex w-full flex-col gap-12 lg:gap-14">
-									<p className="text-center">
-										Didn&apos;t get a code? We can&nbsp;
+						>
+							<OtpInputDisplay
+								otp={otp}
+								setOtp={setOtp}
+								topSection={
+									<p>{`Enter the 6 digits code we sent to ${castedUser?.email}`}</p>
+								}
+								bottomSection={
+									<div className="mt-8 flex w-full flex-col gap-12 lg:gap-14">
+										<p className="text-center">
+											Didn&apos;t get a code? We can&nbsp;
+											<Button
+												type="submit"
+												disabled={loading.resend}
+												onClick={(e) => otp === "" && void handleStep(e)}
+												className="!p-0 !text-sm md:!text-base font-medium text-abeg-primary disabled:text-gray-500 disabled:!bg-transparent disabled:cursor-not-allowed"
+											>
+												resend it
+											</Button>
+										</p>
 										<Button
+											className={`${
+												otp === "" && "cursor-not-allowed"
+											} block w-full rounded-md bg-abeg-primary py-4 font-semibold text-white`}
+											fullWidth
 											type="submit"
-											disabled={loading.resend}
-											onClick={(e) => otp === "" && void handleStep(e)}
-											className="!p-0 !text-sm md:!text-base font-medium text-abeg-primary disabled:text-gray-500 disabled:!bg-transparent disabled:cursor-not-allowed"
+											onClick={(e) => void handleSubmit(e)}
+											loading={loading.otp}
 										>
-											resend it
+											Complete
 										</Button>
-									</p>
-									<Button
-										className={`${
-											otp === "" && "cursor-not-allowed"
-										} block w-full rounded-md bg-abeg-primary py-4 font-semibold text-white`}
-										fullWidth
-										type="submit"
-										onClick={(e) => void handleSubmit(e)}
-										loading={loading.otp}
-									>
-										Complete
-									</Button>
-								</div>
-							}
-						/>
-					</CustomDialog>
+									</div>
+								}
+							/>
+						</CustomDialog>
+					) : (
+						<Button
+							variant="primary"
+							className="w-fit !px-6"
+							size="sm"
+							onClick={() => void router.push("/create-campaign")}
+						>
+							Got it!
+						</Button>
+					)}
 				</div>
 			}
 		>

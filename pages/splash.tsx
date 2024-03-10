@@ -11,11 +11,7 @@ const InactiveLogoBanner = ({
 	fill,
 	color,
 	isBottom,
-}: {
-	fill?: boolean;
-	color?: string;
-	isBottom?: boolean;
-}) => {
+}: { fill?: boolean; color?: string; isBottom?: boolean }) => {
 	return (
 		<div className="flex items-center justify-center space-x-2">
 			<svg

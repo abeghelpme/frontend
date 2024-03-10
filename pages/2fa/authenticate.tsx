@@ -1,17 +1,11 @@
-import { OtpInputDisplay } from "@/components/common";
+import { Loader, OtpInputDisplay } from "@/components/common";
 import { Button } from "@/components/ui";
 import { type ApiResponse, type User } from "@/interfaces";
 import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import { useSession } from "@/store";
 import { useRouter } from "next/router";
-import {
-	type Dispatch,
-	type FormEvent,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { type Dispatch, type FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 type Props = {
@@ -22,20 +16,20 @@ type Props = {
 	handleSubmit: (e: FormEvent<HTMLButtonElement>) => void;
 };
 const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
-	const resend = useRef(false);
+	const [resend, setResend] = useState(false);
 
 	const resendCode = async () => {
 		// e.preventDefault();
-		resend.current = true;
+		setResend(true);
 		const { data, error } = await callApi<ApiResponse>("/auth/2fa/code/email");
 		if (error) {
-			resend.current = false;
+			setResend(false);
 			toast.error(error.status, {
 				description: error.message,
 				duration: 2000,
 			});
 		} else {
-			resend.current = false;
+			setResend(false);
 			toast.success("Success", {
 				description: (data as { message: string }).message,
 				duration: 2000,
@@ -70,9 +64,9 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 							Didn&apos;t get a code? We can&nbsp;
 							<Button
 								type="submit"
-								disabled={resend.current}
+								disabled={resend}
 								onClick={() => void resendCode()}
-								className="p-0 font-medium text-abeg-primary disabled:bg-transparent disabled:text-neutral-50"
+								className="p-0 font-medium text-abeg-primary !bg-transparent disabled:text-abeg-neutral-50"
 							>
 								resend it
 							</Button>
@@ -112,15 +106,47 @@ const AuthApp = ({ otp, setOtp, handleSubmit, loading }: Props) => {
 		/>
 	);
 };
+
 const AuthenticateUser = () => {
 	const [otp, setOtp] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [showPage, setShowPage] = useState(true);
 	const {
 		user,
+		loading: apiProgress,
 		actions: { updateUser },
 	} = useSession((state) => state);
 	const router = useRouter();
 	const castedUser = user as User;
+
+	const [params, setParams] = useState({
+		type: "",
+		email: "",
+	});
+
+	useEffect(() => {
+		setParams({
+			type: router.query.type as string,
+			email: router.query.email as string,
+		});
+		if (params.type || user) {
+			setShowPage(false);
+		}
+		if (!apiProgress) setShowPage(false);
+	}, [params.type, apiProgress, user]);
+
+	if (showPage) {
+		return <Loader message="Validating auth status..." />;
+	}
+
+	if (!showPage) {
+		if (!apiProgress && !user && !params.type) {
+			setTimeout(() => router.push("/signin"), 1000);
+			return (
+				<Loader message="You are not signed in. Redirecting to sign in page" />
+			);
+		}
+	}
 
 	const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -149,6 +175,7 @@ const AuthenticateUser = () => {
 			router.push("/dashboard");
 		}
 	};
+
 	return (
 		<AuthPagesLayout
 			title="Authenticate your Account!"
@@ -156,9 +183,9 @@ const AuthenticateUser = () => {
 			withHeader={false}
 			hasSuccess={false}
 		>
-			{castedUser?.twoFA?.type === "EMAIL" ? (
+			{params.type === "EMAIL" || castedUser?.twoFA?.type === "EMAIL" ? (
 				<EmailAuth
-					email={castedUser?.email}
+					email={params.email || castedUser?.email}
 					otp={otp}
 					setOtp={setOtp}
 					handleSubmit={(e) => void handleSubmit(e)}
@@ -177,3 +204,4 @@ const AuthenticateUser = () => {
 };
 
 export default AuthenticateUser;
+// AuthenticateUser.protect = true;
