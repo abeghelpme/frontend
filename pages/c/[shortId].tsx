@@ -26,7 +26,7 @@ export const getStaticPaths = (async () => {
 
 	return {
 		paths,
-		fallback: "blocking",
+		fallback: true,
 	};
 }) satisfies GetStaticPaths;
 
@@ -34,7 +34,6 @@ export const getStaticProps = (async (context) => {
 	const { shortId } = context.params as { shortId: string };
 
 	const { data, error } = await callApi<Campaign>(`/campaign/one/${shortId}`);
-
 	if (error || !data.data) {
 		return {
 			notFound: true,
@@ -43,7 +42,7 @@ export const getStaticProps = (async (context) => {
 
 	return {
 		props: { campaign: data.data },
-		revalidate: 15 * 60, // 15 minutes in seconds
+		revalidate: 60, // 60 seconds
 	};
 }) satisfies GetStaticProps<{ campaign: Campaign }>;
 
