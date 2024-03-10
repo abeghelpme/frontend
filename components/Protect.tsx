@@ -29,7 +29,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
 	const redirect = (route: string, message: string) => {
 		toast.error("Page access denied!", {
 			description: message,
-			duration: 2000,
+			duration: 1000,
 		});
 
 		setTimeout(() => {
@@ -54,8 +54,8 @@ const Auth = ({ children }: { children: ReactNode }) => {
 			!(user as User).twoFA?.isVerified &&
 			router.pathname !== "/2fa/authenticate"
 		) {
-			redirect("/2fa/authenticate", "You need to verify your account");
-			return <Loader message="You need to verify your account" />;
+			redirect("/2fa/authenticate", "You need to verify 2FA");
+			return <Loader message="You need to verify 2FA" />;
 		}
 
 		if (

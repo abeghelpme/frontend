@@ -1,6 +1,7 @@
-import type { ApiResponse } from "@/interfaces";
+import type { ApiResponse, User } from "@/interfaces";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { callApi } from "@/lib";
+import { useSession } from "@/store";
 import { ClipboardIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -19,6 +20,7 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 	const [otpLoading, setOtpLoading] = useState(false);
 	const [data, setData] = useState<ApiResponse>();
 	const [otp, setOtp] = useState("");
+	const { user } = useSession((state) => state);
 
 	// get qr code or secret
 	useEffect(() => {
@@ -74,7 +76,10 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 		);
 
 		if (dataInfo) {
-			localStorage.setItem("show-modal", "false");
+			localStorage.setItem(
+				`skip-2FA-${(user as User)?._id}`,
+				JSON.stringify(true)
+			);
 			setStep(2);
 			recoveryCode.current = dataInfo.data?.recoveryCode as string;
 			setOtpLoading(false);

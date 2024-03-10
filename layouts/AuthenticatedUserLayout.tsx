@@ -13,12 +13,12 @@ import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
-	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from "@/components/ui";
 import type { User } from "@/interfaces";
 import { callApi } from "@/lib";
 import { useSession } from "@/store";
+import Link from "next/link";
 import { type ReactNode } from "react";
 type AuthenticatedUserLayoutProps = {
 	isDashboard?: boolean;
@@ -35,6 +35,7 @@ export const AuthenticatedUserLayout = ({
 		actions: { clearSession },
 	} = useSession((state) => state);
 	const castedUser = user as User;
+	const initials = castedUser?.firstName[0] + castedUser?.lastName[0];
 	return (
 		<>
 			<header className="sticky top-0 left-0 bg-white z-10 flex items-center gap-10 py-6 px-[5%] lg:px-[7%] xl:px-[10%] justify-between border-b border-b-abeg-primary">
@@ -48,7 +49,7 @@ export const AuthenticatedUserLayout = ({
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<div className="flex items-center gap-2 md:gap-0 cursor-pointer">
-								<Avatar />
+								<Avatar initials={initials} />
 								<Button className="!p-0 !px-1 !text-black !rounded-none hidden md:block ml-4 mr-2">
 									{castedUser?.firstName || "First Name"}
 								</Button>
@@ -69,20 +70,20 @@ export const AuthenticatedUserLayout = ({
 							<DropdownMenuSeparator />
 							<DropdownMenuGroup>
 								<DropdownMenuItem>
-									Profile
-									<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+									<Link href="/dashboard" className="">
+										Dashboard
+									</Link>
 								</DropdownMenuItem>
+								<DropdownMenuItem>Settings</DropdownMenuItem>
 								<DropdownMenuItem className="lg:hidden">
-									<Button className="flex items-center gap-2 !text-sm !py-3 !px-2 mr-1">
+									<Link
+										href="/dashboard"
+										className="flex w-full items-center bg-abeg-primary rounded-md gap-2 text-sm py-2 px-2"
+									>
 										<PlusIcon />
 										Create Campaign
-									</Button>
+									</Link>
 								</DropdownMenuItem>
-								<DropdownMenuItem>
-									Settings
-									<DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-								</DropdownMenuItem>
-								<DropdownMenuItem>New Team</DropdownMenuItem>
 							</DropdownMenuGroup>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>
@@ -92,11 +93,11 @@ export const AuthenticatedUserLayout = ({
 										const { data, error } = await callApi("/auth/signout");
 										clearSession();
 									}}
-									className="w-3/4 "
+									fullWidth
+									className="!py-2"
 								>
 									Signout
 								</Button>
-								<DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
