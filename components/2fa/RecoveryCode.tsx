@@ -1,20 +1,17 @@
+import { useCopyToClipboard } from "@/lib/hooks";
 import { ClipboardIcon } from "@radix-ui/react-icons";
 import { toast } from "sonner";
 import { Button } from "../ui";
 
 const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
-	const handleCopy = async () => {
-		try {
-			await navigator.clipboard.writeText(recoveryCode as string).then(() => {
-				toast.success("Success", {
-					description: "Key copied to clipboard",
-				});
-			});
-		} catch {
-			toast.error("Error", {
-				description: "Could not copy",
-			});
-		}
+	const { copyToClipboard } = useCopyToClipboard();
+
+	const handleCopy = () => {
+		copyToClipboard(recoveryCode as string);
+
+		toast.success("Success", {
+			description: "Key copied to clipboard",
+		});
 	};
 
 	return (
@@ -38,7 +35,7 @@ const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
 						<span className="text-center font-semibold">{recoveryCode}</span>
 						<Button
 							className="mt-2 flex items-center justify-center gap-1 text-abeg-primary"
-							onClick={() => void handleCopy()}
+							onClick={handleCopy}
 						>
 							<ClipboardIcon aria-hidden="true" />
 							<span>Copy Key</span>
