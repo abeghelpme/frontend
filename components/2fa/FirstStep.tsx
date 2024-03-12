@@ -1,6 +1,7 @@
 import type { ApiResponse, User } from "@/interfaces";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { callApi } from "@/lib";
+import { useCopyToClipboard } from "@/lib/hooks";
 import { useSession } from "@/store";
 import { ClipboardIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
@@ -20,6 +21,7 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 	const [otpLoading, setOtpLoading] = useState(false);
 	const [data, setData] = useState<ApiResponse>();
 	const [otp, setOtp] = useState("");
+	const { copyToClipboard } = useCopyToClipboard();
 	const { user } = useSession((state) => state);
 
 	// get qr code or secret
@@ -48,20 +50,12 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 		void setup2fa();
 	}, [isQRCodeLoading]);
 
-	const handleCopy = async () => {
-		try {
-			await navigator.clipboard
-				.writeText(data?.data?.secret as string)
-				.then(() => {
-					toast.success("Success", {
-						description: "Key copied to clipboard",
-					});
-				});
-		} catch {
-			toast.error("Error", {
-				description: "Could not copy",
-			});
-		}
+	const handleCopy = () => {
+		copyToClipboard(data?.data?.secret as string);
+
+		toast.success("Success", {
+			description: "Key copied to clipboard",
+		});
 	};
 
 	const handleOtpSubmit = async () => {
@@ -120,7 +114,7 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 									</p>
 								}
 								bottomSection={
-									<div className="mt-12 lg:mt-20 flex w-full">
+									<div className="mt-12 flex w-full lg:mt-20">
 										<Button
 											className={`${
 												otp === "" && "cursor-not-allowed"
@@ -139,7 +133,7 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 					</div>
 				}
 			>
-				<div className="mx-auto lg:mt-10 mt-8 w-full">
+				<div className="mx-auto mt-8 w-full lg:mt-10">
 					<h1 className="text-lg font-semibold md:text-2xl">
 						Setting up your two-factor authentication
 					</h1>
@@ -195,7 +189,7 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 											<button
 												type="button"
 												className="mt-2 flex items-center justify-center font-semibold text-abeg-primary"
-												onClick={() => void handleCopy()}
+												onClick={handleCopy}
 											>
 												<ClipboardIcon />
 												<span>Copy Key</span>

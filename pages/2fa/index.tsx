@@ -75,6 +75,7 @@ const TwoFa = () => {
 			});
 		} else {
 			setOpenModal(false);
+			setOpenModal(false);
 			setLoading({ ...loading, otp: false });
 			toast.success("Success", {
 				description: (data as { message: string }).message,

@@ -24,6 +24,7 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 		const { data, error } = await callApi<ApiResponse>("/auth/2fa/code/email");
 		if (error) {
 			setResend(false);
+			setResend(false);
 			toast.error(error.status, {
 				description: error.message,
 				duration: 2000,
@@ -202,4 +203,5 @@ const AuthenticateUser = () => {
 };
 
 export default AuthenticateUser;
+// AuthenticateUser.protect = true;
 // AuthenticateUser.protect = true;
