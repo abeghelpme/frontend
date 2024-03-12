@@ -12,7 +12,7 @@ import { useSession } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -26,7 +26,7 @@ const Login = () => {
 	const [skip2FA, setSkip2FA] = useState<string | boolean>(false);
 	const {
 		user,
-		actions: { updateUser },
+		actions: { updateUser, clearSession },
 	} = useSession((state) => state);
 
 	const {
@@ -39,6 +39,7 @@ const Login = () => {
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
+
 	const handleSkip2fa = () => {
 		localStorage.setItem(`skip-2FA-${user?._id}`, JSON.stringify(true));
 		void router.push("/dashboard");

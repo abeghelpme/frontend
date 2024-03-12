@@ -21,7 +21,10 @@ const TwoFa = () => {
 	});
 	const [otp, setOtp] = useState("");
 	const recoveryCodeRef = useRef<string | null>(null);
-	const { user } = useSession((state) => state);
+	const {
+		user,
+		actions: { clearSession },
+	} = useSession((state) => state);
 	const castedUser = user as User;
 
 	const handleStep = async (e: React.FormEvent<HTMLButtonElement>) => {
@@ -145,7 +148,20 @@ const TwoFa = () => {
 							variant="primary"
 							className="w-fit !px-6"
 							size="sm"
-							onClick={() => void router.push("/create-campaign")}
+							onClick={
+								() => {
+									toast.success("Success", {
+										description: "Sign in to verify 2FA",
+										duration: 2000,
+									});
+
+									void router.push("/signin");
+								}
+								// void router.push({
+								// 	pathname: '/signin',
+								// 	query: { verified: true }
+								// })
+							}
 						>
 							Got it!
 						</Button>

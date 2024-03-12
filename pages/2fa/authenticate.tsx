@@ -129,18 +129,15 @@ const AuthenticateUser = () => {
 			type: router.query.type as string,
 			email: router.query.email as string,
 		});
-		if (params.type || user) {
-			setShowPage(false);
-		}
-		if (!apiProgress) setShowPage(false);
+		!apiProgress && setShowPage(false);
 	}, [params.type, apiProgress, user]);
 
 	if (showPage) {
 		return <Loader message="Validating auth status..." />;
 	}
 
-	if (!showPage) {
-		if (!apiProgress && !user && !params.type) {
+	if (!apiProgress) {
+		if (!params.type && !user) {
 			setTimeout(() => router.push("/signin"), 1000);
 			return (
 				<Loader message="You are not signed in. Redirecting to sign in page" />
@@ -159,6 +156,7 @@ const AuthenticateUser = () => {
 		const { data, error } = await callApi<ApiResponse>("/auth/2fa/verify", {
 			token: String(otp),
 		});
+
 		if (error) {
 			setLoading(false);
 			toast.error(error.status, {
