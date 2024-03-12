@@ -35,7 +35,7 @@ export const getStaticPaths = (async () => {
 export const getStaticProps = (async (context) => {
 	const { shortId } = context.params as { shortId: string };
 
-	const { data, error } = await callApi<Campaign>(`/campaign/one/${shortId}`);
+	const { data, error } = await callApi<Campaign>(`/campaign/one/${shortId || ""}`);
 	if (error || !data.data) {
 		return {
 			notFound: true,
