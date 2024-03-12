@@ -1,3 +1,4 @@
+import { Loader } from "@/components/common";
 import { CampaignOutlook, Heading } from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib/helpers/campaign";
@@ -7,6 +8,7 @@ import type {
 	InferGetStaticPropsType,
 } from "next";
 import { NextSeo } from "next-seo";
+import { useRouter } from "next/router";
 
 export const getStaticPaths = (async () => {
 	const { data, error } = await callApi<Campaign[]>(
@@ -26,7 +28,7 @@ export const getStaticPaths = (async () => {
 
 	return {
 		paths,
-		fallback: "blocking",
+		fallback: true,
 	};
 }) satisfies GetStaticPaths;
 
@@ -34,7 +36,6 @@ export const getStaticProps = (async (context) => {
 	const { shortId } = context.params as { shortId: string };
 
 	const { data, error } = await callApi<Campaign>(`/campaign/one/${shortId}`);
-
 	if (error || !data.data) {
 		return {
 			notFound: true,
@@ -43,13 +44,19 @@ export const getStaticProps = (async (context) => {
 
 	return {
 		props: { campaign: data.data },
-		revalidate: 15 * 60, // 15 minutes in seconds
+		revalidate: 60, // 60 seconds
 	};
 }) satisfies GetStaticProps<{ campaign: Campaign }>;
 
 type CampaignViewProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 function CampaignView({ campaign }: CampaignViewProps) {
+	const router = useRouter();
+
+	if (router.isFallback) {
+		return <Loader message="Generating page please wait..." />;
+	}
+
 	// Take the first 200 characters of the campaign story
 	const first200Chars = campaign.story.substring(0, 200);
 
