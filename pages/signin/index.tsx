@@ -26,7 +26,7 @@ const Login = () => {
 	const [skip2FA, setSkip2FA] = useState<string | boolean>(false);
 	const {
 		user,
-		actions: { updateUser },
+		actions: { updateUser, clearSession },
 	} = useSession((state) => state);
 
 	const {
