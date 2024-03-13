@@ -144,12 +144,12 @@ const AuthenticateUser = () => {
 				<Loader message="You are not signed in. Redirecting to sign in page" />
 			);
 		}
-		if (params.type && !user) {
-			setTimeout(() => router.push("/signin"), 1000);
-			return (
-				<Loader message="You are not signed in. Redirecting to sign in page" />
-			);
-		}
+		// if (params.type && !user) {
+		// 	setTimeout(() => router.push("/signin"), 1000);
+		// 	return (
+		// 		<Loader message="You are not signed in. Redirecting to sign in page" />
+		// 	);
+		// }
 	}
 
 	const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
