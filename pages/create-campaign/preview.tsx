@@ -4,6 +4,7 @@ import {
 	Heading,
 } from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
+import { AuthenticatedUserLayout } from "@/layouts";
 import { callApi } from "@/lib/helpers/campaign";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
 import { useFormStore, useInitFormStore } from "@/store/formStore";
@@ -51,7 +52,7 @@ function PreviewCampaignPage() {
 	const excerpt = generateExcerpt(campaignInfo.story);
 
 	return (
-		<>
+		<AuthenticatedUserLayout>
 			<NextSeo
 				title={campaignInfo.title}
 				description={excerpt}
@@ -107,7 +108,7 @@ function PreviewCampaignPage() {
 					</Heading>
 				</CampaignOutlook.Header>
 			</CampaignOutlook>
-		</>
+		</AuthenticatedUserLayout>
 	);
 }
 

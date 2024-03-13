@@ -1,6 +1,7 @@
 import { Loader } from "@/components/common";
 import { CampaignOutlook, Heading } from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
+import { AuthenticatedUserLayout } from "@/layouts";
 import { callApi } from "@/lib/helpers/campaign";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
 import type {
@@ -60,7 +61,7 @@ function CampaignView({ campaign }: CampaignViewProps) {
 	const excerpt = generateExcerpt(campaign.story);
 
 	return (
-		<>
+		<AuthenticatedUserLayout>
 			<NextSeo
 				title={campaign.title}
 				description={excerpt}
@@ -92,7 +93,7 @@ function CampaignView({ campaign }: CampaignViewProps) {
 					</Heading>
 				</CampaignOutlook.Header>
 			</CampaignOutlook>
-		</>
+		</AuthenticatedUserLayout>
 	);
 }
 
