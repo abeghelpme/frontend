@@ -52,7 +52,7 @@ function PreviewCampaignPage() {
 	const excerpt = generateExcerpt(campaignInfo.story);
 
 	return (
-		<AuthenticatedUserLayout>
+		<AuthenticatedUserLayout isDashboard>
 			<NextSeo
 				title={campaignInfo.title}
 				description={excerpt}

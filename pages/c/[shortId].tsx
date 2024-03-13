@@ -61,7 +61,7 @@ function CampaignView({ campaign }: CampaignViewProps) {
 	const excerpt = generateExcerpt(campaign.story);
 
 	return (
-		<AuthenticatedUserLayout>
+		<AuthenticatedUserLayout isDashboard>
 			<NextSeo
 				title={campaign.title}
 				description={excerpt}
