@@ -2,11 +2,19 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
+<<<<<<< HEAD
 import { type StepThreeData, initialFormState, useFormStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+=======
+import { STEP_DATA_KEY_LOOKUP } from "@/store/formStore";
+import { useCampaignForm } from "@/store/useCampaignForm";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/router";
+import { Controller, type UseFormSetValue, useForm } from "react-hook-form";
+>>>>>>> 25e901c (refactor)
 import { toast } from "sonner";
 import DropZoneInput from "../DropZoneInput";
 import FormErrorMessage from "../FormErrorMessage";
@@ -18,11 +26,21 @@ function StepThree() {
 	const router = useRouter();
 
 	const {
+<<<<<<< HEAD
 		currentStep,
 		currentCampaign,
 		formStepData,
 		actions: { updateFormData, updateCurrentCampaign },
 	} = useFormStore((state) => state);
+=======
+		values,
+		localImages,
+		fileBlobs,
+		actions: { updateValues, updateInitialValues },
+	} = useCampaignForm((state) => state);
+
+	const currentStep = values.currentStep ?? 3;
+>>>>>>> 25e901c (refactor)
 
 	const {
 		control,
@@ -34,7 +52,11 @@ function StepThree() {
 	} = useForm({
 		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepThree")!),
+<<<<<<< HEAD
 		defaultValues: formStepData,
+=======
+		defaultValues: { ...values, blobs: fileBlobs },
+>>>>>>> 25e901c (refactor)
 	});
 
 	useEffect(() => {
@@ -45,6 +67,7 @@ function StepThree() {
 
 	useWatchFormStatus(formState);
 
+<<<<<<< HEAD
 	const onSubmit = async (data: StepThreeData) => {
 		updateFormData(data);
 
@@ -54,6 +77,21 @@ function StepThree() {
 		formData.set("storyHtml", data.storyHtml);
 		formData.set("campaignId", currentCampaign._id);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
+=======
+	const onSubmit = async (data: Partial<Campaign>) => {
+		const formData = new FormData();
+
+		formData.set("story", data.story ?? "");
+		formData.set("storyHtml", data.storyHtml ?? "");
+		formData.set("campaignId", values._id ?? "");
+		data.photos &&
+			data.photos.forEach((image) => {
+				const blob = new Blob([JSON.stringify(image)], {
+					type: "application/json",
+				});
+				formData.append("photos", blob);
+			});
+>>>>>>> 25e901c (refactor)
 
 		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
 			`/campaign/create/three`,
@@ -70,9 +108,14 @@ function StepThree() {
 
 		if (!dataInfo.data) return;
 
+<<<<<<< HEAD
 		updateCurrentCampaign(dataInfo.data);
 		updateFormData(initialFormState.formStepData);
 		void router.push("/dashboard");
+=======
+		updateInitialValues(dataInfo.data);
+		void router.push("/create-campaign/preview");
+>>>>>>> 25e901c (refactor)
 	};
 
 	return (
@@ -100,7 +143,7 @@ function StepThree() {
 
 						<Controller
 							control={control}
-							name="photos"
+							name="blobs"
 							render={({ field }) => (
 								<>
 									<DropZoneInput
@@ -110,7 +153,7 @@ function StepThree() {
 
 									<FormErrorMessage formState={formState} errorField="photos" />
 
-									<ImagePreview value={field.value} onChange={field.onChange} />
+									<ImagePreview value={localImages} onChange={field.onChange} />
 								</>
 							)}
 						/>
@@ -132,8 +175,18 @@ function StepThree() {
 							render={({ field }) => (
 								<TipTapEditor
 									placeholder="Write a compelling story that would arouse the interest of donors..."
+<<<<<<< HEAD
 									editorContent={field.value}
 									setFormValue={setFormValue}
+=======
+									setFormValue={
+										setFormValue as UseFormSetValue<{
+											blobs?: File[];
+											story: string;
+										}>
+									}
+									editorContent={field.value || ""}
+>>>>>>> 25e901c (refactor)
 									onChange={field.onChange}
 								/>
 							)}

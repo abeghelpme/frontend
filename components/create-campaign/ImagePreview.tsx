@@ -1,17 +1,27 @@
 import { cn } from "@/lib";
 import { useElementList } from "@/lib/hooks";
+<<<<<<< HEAD
 import { type StepThreeData, useFormStore } from "@/store";
+=======
+import { useInitCampaignForm } from "@/store/useCampaignForm";
+>>>>>>> 25e901c (refactor)
 import { Trash2Icon } from "lucide-react";
 import Image from "next/image";
 
 type ImagePreviewProps = {
+<<<<<<< HEAD
 	value: StepThreeData["photos"];
 	onChange: (files: StepThreeData["photos"]) => void;
+=======
+	value: string[];
+	onChange: (files: string[]) => void;
+>>>>>>> 25e901c (refactor)
 };
 
 function ImagePreview(props: ImagePreviewProps) {
 	const { value: imageFiles, onChange } = props;
 
+<<<<<<< HEAD
 	const { updateFormData } = useFormStore((state) => state.actions);
 
 	const { For: ImagePreviewList } = useElementList();
@@ -42,6 +52,18 @@ function ImagePreview(props: ImagePreviewProps) {
 
 			onChange(updatedFileState);
 		};
+=======
+	const { For: ImagePreviewList } = useElementList();
+
+	const handleRemoveImage = (image: string) => () => {
+		const filteredImages = imageFiles.filter((img) => img !== image);
+		useInitCampaignForm.setState({
+			...useInitCampaignForm.getState(),
+			localImages: filteredImages,
+		});
+		onChange(filteredImages);
+	};
+>>>>>>> 25e901c (refactor)
 
 	return (
 		<ul
@@ -57,17 +79,28 @@ function ImagePreview(props: ImagePreviewProps) {
 
 					return (
 						<li
+<<<<<<< HEAD
 							key={file instanceof File ? file.name : file}
+=======
+							key={file}
+>>>>>>> 25e901c (refactor)
 							className="flex items-center justify-between p-2 text-xs"
 						>
 							<div className="flex min-w-0 items-center gap-2">
 								<Image
+<<<<<<< HEAD
 									src={imageUrls[index]}
 									className="size-[50px] shrink-0 rounded-md object-cover"
 									width={50}
 									height={50}
 									fetchPriority="high"
 									priority
+=======
+									src={file}
+									className="size-[40px] shrink-0 rounded-md object-cover"
+									width={40}
+									height={40}
+>>>>>>> 25e901c (refactor)
 									alt="thumbnail"
 								/>
 

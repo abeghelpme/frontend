@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import { useFormStore } from "@/store";
 import { StepIndicator, StepInformation } from "./StepDetails";
 
 function StepTracker() {
 	const { currentStep } = useFormStore((state) => state);
+=======
+import { useCampaignForm } from "@/store/useCampaignForm";
+import { StepIndicator, StepInformation } from "./StepDetails";
+
+function StepTracker() {
+	const currentStep = useCampaignForm((state) => state.values.currentStep || 1);
+>>>>>>> 25e901c (refactor)
 
 	return (
 		<>
