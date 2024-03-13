@@ -1,4 +1,5 @@
 import type { Campaign } from "@/interfaces/Campaign";
+import { cn } from "@/lib";
 import { getDateFromString } from "@/lib/helpers/campaign";
 import { useElementList, useShareCampaign } from "@/lib/hooks";
 import {
@@ -19,12 +20,12 @@ import DonorSection from "./DonorSection";
 import Heading from "./Heading";
 
 type CampaignOutlookProps = {
+	children?: React.ReactNode;
 	campaign: Campaign;
-	HeaderSlot: React.ReactNode;
 };
 
 function CampaignOutlook(props: CampaignOutlookProps) {
-	const { campaign, HeaderSlot } = props;
+	const { campaign, children } = props;
 	const { For: TagList } = useElementList();
 
 	const { generateTweet, generateWhatsAppMessage, handleShareLink } =
@@ -39,7 +40,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	return (
 		<div className="mt-8 flex flex-col items-center gap-2 px-6 pb-16 max-lg:mx-auto max-lg:max-w-[480px] lg:mt-12 lg:gap-7 lg:px-[100px]">
-			<header className="w-full">{HeaderSlot}</header>
+			{children}
 
 			<main className="flex flex-col text-abeg-text lg:flex-row-reverse lg:gap-5 ">
 				<section className="lg:max-w-[505px]">
@@ -243,5 +244,16 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 		</div>
 	);
 }
+
+type CampaignHeaderProps = {
+	children: React.ReactNode;
+	className?: string;
+};
+
+function CampaignOutlookHeader({ children, className }: CampaignHeaderProps) {
+	return <header className={cn("w-full", className)}>{children}</header>;
+}
+
+CampaignOutlook.Header = CampaignOutlookHeader;
 
 export default CampaignOutlook;

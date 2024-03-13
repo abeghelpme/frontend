@@ -2,6 +2,7 @@ import { Loader } from "@/components/common";
 import { CampaignOutlook, Heading } from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib/helpers/campaign";
+import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
 import type {
 	GetStaticPaths,
 	GetStaticProps,
@@ -15,19 +16,18 @@ export const getStaticPaths = (async () => {
 		"/campaign/all?limit=100&isPublished=true&status=Approved"
 	);
 
-	if (error || !data.data) {
+	if (error || !data.data || data.data.length === 0) {
 		return {
 			paths: [],
 			fallback: "blocking",
 		};
 	}
 
-	const paths = data.data.map((campaign) => ({
-		params: { shortId: campaign?.url.split("/c/")[1] },
-	}));
-
 	return {
-		paths,
+		paths: data.data.map((campaign) => ({
+			params: { shortId: campaign.url.split("/c/")[1] },
+		})),
+
 		fallback: true,
 	};
 }) satisfies GetStaticPaths;
@@ -57,22 +57,7 @@ function CampaignView({ campaign }: CampaignViewProps) {
 		return <Loader message="Generating page please wait..." />;
 	}
 
-	// Take the first 200 characters of the campaign story
-	const first200Chars = campaign.story.substring(0, 200);
-
-	// Find the last punctuation mark within the first 200 characters
-	const lastPunctuationIndex = Math.max(
-		first200Chars.lastIndexOf("."),
-		first200Chars.lastIndexOf("!"),
-		first200Chars.lastIndexOf("?")
-	);
-
-	// If a punctuation mark is found, use the substring from the start of the story to the last punctuation mark as the excerpt
-	// If no punctuation mark is found, use the first 200 characters as the excerpt
-	const excerpt =
-		lastPunctuationIndex !== -1
-			? first200Chars.substring(0, lastPunctuationIndex + 1)
-			: first200Chars;
+	const excerpt = generateExcerpt(campaign.story);
 
 	return (
 		<>
@@ -87,7 +72,7 @@ function CampaignView({ campaign }: CampaignViewProps) {
 					...(campaign.images.length > 0 && {
 						images: campaign.images.map((image) => {
 							return {
-								url: image?.secureUrl,
+								url: image.secureUrl,
 								width: 800,
 								height: 600,
 								alt: campaign.title,
@@ -100,14 +85,13 @@ function CampaignView({ campaign }: CampaignViewProps) {
 				}}
 			/>
 
-			<CampaignOutlook
-				campaign={campaign}
-				HeaderSlot={
+			<CampaignOutlook campaign={campaign}>
+				<CampaignOutlook.Header>
 					<Heading as="h1" className="text-xl lg:text-[32px]">
 						{`${campaign.title[0].toUpperCase()}${campaign.title.slice(1)}`}
 					</Heading>
-				}
-			/>
+				</CampaignOutlook.Header>
+			</CampaignOutlook>
 		</>
 	);
 }
