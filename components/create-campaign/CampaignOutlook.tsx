@@ -40,9 +40,9 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	return (
 		<div className="mt-8 flex flex-col items-center gap-2 px-6 pb-16 max-lg:mx-auto max-lg:max-w-[480px] lg:mt-12 lg:gap-7 lg:px-[100px]">
-			{children}
-
 			<main className="flex flex-col text-abeg-text lg:flex-row-reverse lg:gap-5 ">
+				{children}
+
 				<section className="lg:max-w-[505px]">
 					<CampaignCarousel
 						images={campaign.images}
