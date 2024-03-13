@@ -18,6 +18,7 @@ const STEP_COMPONENT_LOOKUP = {
 };
 
 void useInitFormStore.getState().actions.initializeFormData();
+void useInitFormStore.getState().actions.initializeCategories();
 
 function CreateCampaignPage() {
 	const {

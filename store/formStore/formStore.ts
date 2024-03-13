@@ -55,9 +55,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
 				`/campaign/user/${userId}?limit=1&status=Draft${queryParam}`
 			);
 
-			if (error) return;
-
-			if (!data.data) return;
+			if (error || !data.data) return;
 
 			const { setData, setCampaignInfo } = get().actions;
 
@@ -104,9 +102,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
 					"/campaign/category"
 				);
 
-			if (error) return;
-
-			if (!data.data) return;
+			if (error || !data.data) return;
 
 			const { setCampaignInfo } = get().actions;
 
