@@ -97,7 +97,10 @@ function PreviewCampaignPage() {
 						</FormActionButton>
 					</div>
 
-					<Heading as="h2" className="mt-8 text-xl lg:text-[32px]">
+					<Heading
+						as="h2"
+						className="mt-8 text-xl text-abeg-text lg:text-[32px]"
+					>
 						{`${campaignInfo.title[0].toUpperCase()}${campaignInfo.title.slice(
 							1
 						)}`}
