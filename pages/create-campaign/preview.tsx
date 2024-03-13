@@ -75,7 +75,7 @@ function PreviewCampaignPage() {
 
 					<p>This is what your fundraiser campaign will look like to donors</p>
 
-					<p className="text-abeg-error-20 lg:text-xl">
+					<p className="font-semibold lg:text-xl">
 						Note: Your campaign will become visible to donors once published and
 						cannot be edited after!
 					</p>
