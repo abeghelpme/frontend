@@ -1,9 +1,10 @@
 import type { ApiResponse, User } from "@/interfaces";
+import type { SessionData } from "@/interfaces/ApiResponses";
 import { callApi } from "@/lib";
-import { isBrowser, isServer } from "@/lib/constants";
 import { create } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import type { SelectorFn } from "./store-types";
+import { useInitCampaignStore } from "./useCampaign";
 
 type Session = {
 	isFirstMount: boolean;
@@ -32,10 +33,14 @@ export const useInitSession = create<Session>()((set, get) => ({
 				set({ isFirstMount: true });
 			}
 
-			const { data } = await callApi<ApiResponse>("/auth/session");
+			const { data } = await callApi<ApiResponse<SessionData>>("/auth/session");
+
+			useInitCampaignStore
+				.getState()
+				.actions.updateCampaign(data?.data?.campaigns ?? []);
 
 			set({
-				...(data?.data && { user: data.data as User }),
+				...(data?.data && { user: data.data.user as User }),
 				loading: false,
 			});
 		},
@@ -48,8 +53,6 @@ export const useInitSession = create<Session>()((set, get) => ({
 				loading: false,
 				isFirstMount: state.isFirstMount,
 			}));
-
-			if (!isBrowser) return;
 
 			const currentPageUrl = window.location.pathname;
 

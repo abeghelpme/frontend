@@ -1,10 +1,9 @@
-import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib/helpers/campaign";
 import { type StateCreator, create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { devtools } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
 import type { SelectorFn } from "../store-types";
-import { useInitSession } from "../useSession";
+import { useInitCampaignStore } from "../useCampaign";
 import { STEP_DATA_KEY_LOOKUP, initialFormState } from "./formStore.constants";
 import type { FormStore } from "./formStore.types";
 
@@ -47,53 +46,37 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
 		},
 
 		initializeFormData: async (queryParam = "") => {
-			await useInitSession.getState().actions.getSession();
+			const currentCampaign = useInitCampaignStore.getState().campaigns?.[0];
 
-			const userId = useInitSession.getState().user?._id;
-
-			const { data, error } = await callApi<Campaign[]>(
-				`/campaign/user/${userId}?limit=1&status=Draft${queryParam}`
-			);
-
-			if (error || !data.data) return;
-
-			const { setData, setCampaignInfo } = get().actions;
-
-			if (data.data.length === 0) {
+			if (!currentCampaign) {
 				set({ currentStep: 1 });
 				return;
 			}
+			console.log(currentCampaign);
+			if (currentCampaign && currentCampaign.status === "Draft") {
+				const { setData, setCampaignInfo } = get().actions;
 
-			const campaign = data.data[0];
+				setCampaignInfo(currentCampaign);
 
-			setCampaignInfo(campaign);
-
-			setData({
-				step: 1,
-				data: {
-					categoryId: campaign.category._id,
-					country: campaign.country,
-					tags: campaign.tags,
-				},
-			});
-
-			setData({
-				step: 2,
-				data: {
-					title: campaign.title,
-					deadline: campaign.deadline,
-					fundraiser: campaign.fundraiser,
-					goal: campaign.goal,
-				},
-			});
-
-			setData({
-				step: 3,
-				data: {
-					story: campaign.story,
-					storyHtml: campaign.storyHtml,
-				},
-			});
+				set({
+					stepOneData: {
+						categoryId: currentCampaign.category._id,
+						country: currentCampaign.country,
+						tags: currentCampaign.tags,
+					},
+					stepTwoData: {
+						title: currentCampaign.title,
+						deadline: currentCampaign.deadline,
+						fundraiser: currentCampaign.fundraiser,
+						goal: currentCampaign.goal,
+					},
+					stepThreeData: {
+						story: currentCampaign.story,
+						storyHtml: currentCampaign.storyHtml,
+						photos: [],
+					},
+				});
+			}
 		},
 
 		initializeCategories: async () => {
@@ -111,11 +94,7 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
 });
 
 export const useInitFormStore = create<FormStore>()(
-	persist(devtools(stateObjectFn, { name: "formStore" }), {
-		name: "campaignFormStore",
-
-		partialize: ({ currentStep }) => ({ currentStep }),
-	})
+	devtools(stateObjectFn, { name: "formStore" })
 );
 
 export const useFormStore = <TResult>(

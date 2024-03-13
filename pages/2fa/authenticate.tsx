@@ -1,9 +1,10 @@
 import { Loader, OtpInputDisplay } from "@/components/common";
 import { Button } from "@/components/ui";
 import { type ApiResponse, type User } from "@/interfaces";
+import type { SessionData } from "@/interfaces/ApiResponses";
 import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
-import { useSession } from "@/store";
+import { useCampaign, useSession } from "@/store";
 import { useRouter } from "next/router";
 import { type Dispatch, type FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -117,6 +118,9 @@ const AuthenticateUser = () => {
 		loading: apiProgress,
 		actions: { updateUser },
 	} = useSession((state) => state);
+	const {
+		actions: { updateCampaign },
+	} = useCampaign((state) => state);
 	const router = useRouter();
 	const castedUser = user as User;
 
@@ -154,9 +158,12 @@ const AuthenticateUser = () => {
 				duration: 1500,
 			});
 		setLoading(true);
-		const { data, error } = await callApi<ApiResponse>("/auth/2fa/verify", {
-			token: String(otp),
-		});
+		const { data, error } = await callApi<ApiResponse<SessionData>>(
+			"/auth/2fa/verify",
+			{
+				token: String(otp),
+			}
+		);
 
 		if (error) {
 			setLoading(false);
@@ -165,13 +172,17 @@ const AuthenticateUser = () => {
 				duration: 1500,
 			});
 		} else {
-			updateUser(data?.data as User);
-			setLoading(false);
-			toast.success("Success", {
-				description: (data as { message: string }).message,
-				duration: 1500,
-			});
-			router.push("/dashboard");
+			if (data?.data) {
+				const { user, campaigns } = data.data;
+				updateUser(user as User);
+				updateCampaign(campaigns);
+				setLoading(false);
+				toast.success("Success", {
+					description: (data as { message: string }).message,
+					duration: 1500,
+				});
+				router.push(campaigns.length > 0 ? "/dashboard" : "/create-campaign");
+			}
 		}
 	};
 

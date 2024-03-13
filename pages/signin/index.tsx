@@ -4,11 +4,12 @@ import {
 	FormErrorMessage,
 } from "@/components/common";
 import { Button, Input } from "@/components/ui";
-import type { ApiResponse, User } from "@/interfaces";
+import type { ApiResponse } from "@/interfaces";
+import type { SessionData } from "@/interfaces/ApiResponses";
 import { AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
-import { useSession } from "@/store";
+import { useCampaign, useSession } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -30,6 +31,10 @@ const Login = () => {
 	} = useSession((state) => state);
 
 	const {
+		actions: { updateCampaign },
+	} = useCampaign((state) => state);
+
+	const {
 		register,
 		handleSubmit,
 		reset,
@@ -46,13 +51,12 @@ const Login = () => {
 	};
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-		const { data: responseData, error } = await callApi<ApiResponse<User>>(
-			"/auth/signin",
-			{
-				email: data.email,
-				password: data.password,
-			}
-		);
+		const { data: responseData, error } = await callApi<
+			ApiResponse<SessionData>
+		>("/auth/signin", {
+			email: data.email,
+			password: data.password,
+		});
 		if (error) {
 			const email = (error?.error as string)?.split(":")?.[1];
 			if (email) {
@@ -72,29 +76,36 @@ const Login = () => {
 			});
 		} else {
 			toast.success("Success", {
-				description: (responseData as { message: string }).message,
+				description: responseData?.message,
 			});
-			reset();
-			if (responseData?.data?.twoFA?.active === false) {
-				const skipModal = localStorage.getItem(
-					`skip-2FA-${responseData?.data?._id}`
-				);
-				if (skipModal === "true") {
-					router.push("/dashboard");
+
+			if (responseData?.data) {
+				const { user, campaigns } = responseData?.data;
+
+				if (user.twoFA.active === false) {
+					const skipModal = localStorage.getItem(`skip-2FA-${user._id}`);
+					if (skipModal === "true") {
+						router.push(
+							campaigns.length > 0 ? "/dashboard" : "/create-campaign"
+						);
+					} else {
+						setOpenModal(true);
+						await router.push("/signin?redirect=false", undefined, {
+							shallow: true,
+						});
+					}
+					// populate store with initial data
+					updateUser(user);
+					updateCampaign(campaigns);
 				} else {
-					setOpenModal(true);
-					await router.push("/signin?redirect=false", undefined, {
-						shallow: true,
+					router.push({
+						pathname: "/2fa/authenticate",
+						query: { type: user.twoFA.type, email: data?.email },
 					});
 				}
-				updateUser(responseData?.data as User);
-			} else {
-				router.push({
-					pathname: "/2fa/authenticate",
-					query: { type: responseData?.data?.twoFA?.type, email: data?.email },
-				});
 			}
 		}
+		reset();
 	};
 
 	return (
@@ -243,4 +254,4 @@ const Login = () => {
 
 export default Login;
 
-// Login.protect = true;
+Login.protect = true;
