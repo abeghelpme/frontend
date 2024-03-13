@@ -16,7 +16,7 @@ const OtpInputDisplay = ({
 	bottomSection,
 }: OtpProps) => {
 	return (
-		<div className="flex max-w-[467px] flex-col items-center text-sm md:text-base">
+		<div className="flex max-w-[467px] flex-col items-center text-sm md:text-base mx-auto">
 			<div className="text-center space-y-8">
 				<h1 className="mb-4 font-medium text-base md:text-2xl">
 					Enter your verification code
