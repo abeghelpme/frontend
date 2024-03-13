@@ -151,7 +151,7 @@ function StepOne() {
 										<CategoryList
 											each={campaignInfo.categories}
 											render={(category) => (
-												<Select.Item key={category.id} value={category.id}>
+												<Select.Item key={category._id} value={category._id}>
 													{category.name}
 												</Select.Item>
 											)}

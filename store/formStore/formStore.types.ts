@@ -39,7 +39,7 @@ export type FormStore = {
 
 	campaignInfo: Campaign & {
 		shortId: string;
-		categories: Array<{ id: string; name: string }>;
+		categories: Array<{ _id: string; name: string }>;
 	};
 
 	actions: {
