@@ -5,12 +5,7 @@ export const initialFormState = {
 
 	campaignInfo: {
 		shortId: "",
-		categories: [
-			{
-				id: "65b0576bb36c6a968d892a52",
-				name: "Health and Wellness",
-			},
-		],
+		categories: [] as FormStore["campaignInfo"]["categories"],
 	} as FormStore["campaignInfo"],
 
 	formStatus: {
