@@ -39,10 +39,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
 	return (
-		<main className="mx-auto mt-8 flex max-w-[480px] flex-col items-center gap-2 px-6 pb-16 text-abeg-text lg:mt-12 lg:max-w-max lg:gap-7 lg:px-[100px]">
+		<div className="mx-auto mt-8 flex max-w-[480px] flex-col items-center gap-2 px-6 pb-16 text-abeg-text lg:mt-12 lg:max-w-max lg:gap-7 lg:px-[100px]">
 			{children}
 
-			<div className="flex flex-col lg:flex-row-reverse lg:gap-5 ">
+			<main className="flex flex-col lg:flex-row-reverse lg:gap-5">
 				<section className="lg:max-w-[505px]">
 					<CampaignCarousel
 						images={campaign.images}
@@ -216,8 +216,8 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						</div>
 					</article>
 				</section>
-			</div>
-		</main>
+			</main>
+		</div>
 	);
 }
 
