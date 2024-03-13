@@ -9,7 +9,7 @@ const generateExcerpt = (story: string) => {
 		first200Chars.lastIndexOf("?")
 	);
 
-	// If a punctuation mark is found, use the substring from the start of the story to the last punctuation mark (inclusive) as the excerpt
+	// If a punctuation mark is found, use the substring from the start of the story to the last punctuation mark(inclusive) as the excerpt
 	// If no punctuation mark is found, use the first 200 characters as the excerpt
 	const excerpt =
 		lastPunctuationIndex !== -1
