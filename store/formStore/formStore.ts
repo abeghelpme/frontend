@@ -97,10 +97,9 @@ const stateObjectFn: StateCreator<FormStore> = (set, get) => ({
 		},
 
 		initializeCategories: async () => {
-			const { data, error } =
-				await callApi<FormStore["campaignInfo"]["categories"]>(
-					"/campaign/category"
-				);
+			const { data, error } = await callApi<
+				FormStore["campaignInfo"]["categories"]
+			>("/campaign/categories");
 
 			if (error || !data.data) return;
 
