@@ -214,5 +214,3 @@ const AuthenticateUser = () => {
 };
 
 export default AuthenticateUser;
-// AuthenticateUser.protect = true;
-// AuthenticateUser.protect = true;

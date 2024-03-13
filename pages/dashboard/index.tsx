@@ -1,54 +1,68 @@
-import { Dashboard, PlusIcon } from "@/components/common";
-import { Button } from "@/components/ui";
+import {
+	AnalyticsIcon,
+	ArrowDown,
+	DashboardIcon,
+	PlusIcon,
+} from "@/components/common";
+import {
+	Button,
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+	ProgressBar,
+} from "@/components/ui";
 import { AuthenticatedUserLayout } from "@/layouts";
-// import userImage from "@/public/assets/icons/dashboard/UserIcon.svg";
+import userImage from "@/public/assets/icons/dashboard/userIcon.svg";
+import Image from "next/image";
 import Link from "next/link";
 
-const dashboard = () => {
-	// const campaignData = [
-	// 	{
-	// 		image: userImage,
-	// 		name: "Jane Doe",
-	// 		email: "Janedoe12@gmail.com",
-	// 		time: "4 mins",
-	// 		amount: "+300,000",
-	// 	},
-	// 	{
-	// 		image: userImage,
-	// 		name: "Jane Doe",
-	// 		email: "Janedoe12@gmail.com",
-	// 		time: "4 mins",
-	// 		amount: "+300,000",
-	// 	},
-	// 	{
-	// 		image: userImage,
-	// 		name: "Jane Doe",
-	// 		email: "Janedoe12@gmail.com",
-	// 		time: "4 mins",
-	// 		amount: "+300,000",
-	// 	},
-	// 	{
-	// 		image: userImage,
-	// 		name: "Jane Doe",
-	// 		email: "Janedoe12@gmail.com",
-	// 		time: "4 mins",
-	// 		amount: "+300,000",
-	// 	},
-	// 	{
-	// 		image: userImage,
-	// 		name: "Jane Doe",
-	// 		email: "Janedoe12@gmail.com",
-	// 		time: "4 mins",
-	// 		amount: "+300,000",
-	// 	},
-	// 	{
-	// 		image: userImage,
-	// 		name: "Jane Doe",
-	// 		email: "Janedoe12@gmail.com",
-	// 		time: "4 mins",
-	// 		amount: "+300,000",
-	// 	},
-	// ];
+const Dashboard = () => {
+	const campaignData = [
+		{
+			image: userImage,
+			name: "Jane Doe",
+			email: "Janedoe12@gmail.com",
+			time: "4 mins",
+			amount: "+300,000",
+		},
+		{
+			image: userImage,
+			name: "Jane Doe",
+			email: "Janedoe12@gmail.com",
+			time: "4 mins",
+			amount: "+300,000",
+		},
+		{
+			image: userImage,
+			name: "Jane Doe",
+			email: "Janedoe12@gmail.com",
+			time: "4 mins",
+			amount: "+300,000",
+		},
+		{
+			image: userImage,
+			name: "Jane Doe",
+			email: "Janedoe12@gmail.com",
+			time: "4 mins",
+			amount: "+300,000",
+		},
+		{
+			image: userImage,
+			name: "Jane Doe",
+			email: "Janedoe12@gmail.com",
+			time: "4 mins",
+			amount: "+300,000",
+		},
+		{
+			image: userImage,
+			name: "Jane Doe",
+			email: "Janedoe12@gmail.com",
+			time: "4 mins",
+			amount: "+300,000",
+		},
+	];
 
 	// const encouragements = [
 	// 	{
@@ -79,57 +93,160 @@ const dashboard = () => {
 	// 		image: dashboardImage,
 	// 		title: "Bringing Dental Care to Undeserved Communities",
 	// 		name: "Locs Designer",
-	// 		proffession: "Health and Welness",
+	// 		profession: "Health and Wellness",
 	// 		amountRaised: "$2,000,000",
 	// 	},
 	// 	{
 	// 		image: dashboardImage,
 	// 		title: "Bringing Dental Care to Undeserved Communities",
 	// 		name: "Locs Designer",
-	// 		proffession: "Health and Welness",
+	// 		profession: "Health and Wellness",
 	// 		amountRaised: "$2,000,000",
 	// 	},
 	// 	{
 	// 		image: dashboardImage,
 	// 		title: "Bringing Dental Care to Undeserved Communities",
 	// 		name: "Locs Designer",
-	// 		proffession: "Health and Welness",
+	// 		profession: "Health and Wellness",
 	// 		amountRaised: "$2,000,000",
 	// 	},
 	// ];
 	return (
-		// <DashBoardPageLayout>
 		<AuthenticatedUserLayout isDashboard>
-			<section className="flex flex-col gap-6">
-				<div className="">
-					{/* {page !== 'dashboard' ? (
-					) : (
-						<div className="">
-							<p className="font-semibold">Hi, FirstName👋</p>
-							<p className="">
-								{step == 1
-									? 'Here is an overview of your campaign✨.'
-									: step == 2
-									? 'Here is an overview of your campaign activities✨.'
-									: 'Here are your recent updates✨.'}
-							</p>
-						</div>
-					)} */}
-					<Link
-						href={"/create-campaign"}
-						className="md:flex items-center p-2 hidden rounded-md bg-white text-abeg-primary px-3"
-					>
-						<span className="pr-2">
-							<PlusIcon />
-						</span>
-
-						<span>Create Campaign</span>
-					</Link>
+			<section className="flex flex-col gap-6 bg-abeg-primary h-[25svh]">
+				<div className="px-[5%] lg:px-[7%] xl:px-[10%]">
+					<div className="py-6">
+						{/* {page !== 'dashboard' ? (
+						) : (
+							<div className="">
+								<p className="font-semibold">Hi, FirstName👋</p>
+								<p className="">
+									{step == 1
+										? 'Here is an overview of your campaign✨.'
+										: step == 2
+										? 'Here is an overview of your campaign activities✨.'
+										: 'Here are your recent updates✨.'}
+								</p>
+							</div>
+						)} */}
+						<Link
+							href={"/create-campaign"}
+							className="md:flex items-center p-2 hidden rounded-md bg-white text-abeg-primary px-3"
+						>
+							<span className="pr-2">
+								<PlusIcon />
+							</span>
+							<span>Create Campaign</span>
+						</Link>
+					</div>
+					<div className="border-b-2 border-b-white flex gap-12">
+						<Button variant="regular" className="gap-1 !text-white">
+							<DashboardIcon />
+							Dashboard
+						</Button>
+						<Button variant="regular" className="gap-1 !text-white">
+							<DashboardIcon />
+							Campaigns
+						</Button>
+						<Button variant="regular" className="gap-1 !text-white">
+							<AnalyticsIcon />
+							Analytics
+						</Button>
+						<Button variant="regular" className="gap-1 !text-white">
+							<DashboardIcon />
+							Updates
+						</Button>
+						<Button variant="regular" className="gap-1 !text-white">
+							<DashboardIcon />
+							Settings
+						</Button>
+					</div>
 				</div>
-				<div className="border-b-2 border-b-white flex gap-12">
-					<Button>
-						<Dashboard />
-					</Button>
+			</section>
+			<section className="">
+				<div className="px-[5%] lg:px-[7%] xl:px-[10%] flex gap-8 justify-between">
+					<div className="w-3/5">
+						<div className=""></div>
+						<div className="">
+							<h1 className="font-bold text-2xl ">
+								Bringing Dental Care to Undeserved Communities
+							</h1>
+							<div className="flex items-center justify-between gap-6">
+								<div className="space-y-4 w-[75%]">
+									<div className="flex justify-between items-center">
+										<span>&#x20A6; 2,000,000</span>
+										<span>&#x20A6; 1,000,000 remaining</span>
+									</div>
+									<ProgressBar value={50} />
+									<div className="flex justify-between items-center">
+										<span className="">235,567 total donors</span>
+										<span className="">235,567 comments</span>
+									</div>
+								</div>
+								<div className="w-fit flex flex-col">
+									<Button variant="secondary" className="">
+										<span className="">Set up account</span>
+									</Button>
+									<Button variant="primary" className="">
+										<span className="">View campaign</span>
+									</Button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="p-4">
+						<div className="flex justify-between items-center mb-8">
+							<h2 className="font-bold text-2xl">Donors list</h2>
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<div className="flex items-center gap-2 md:gap-0 cursor-pointer border border-placeholder rounded-lg px-3 py-2">
+										<span
+											className="cursor-pointer font-medium flex gap-2 items-center"
+											aria-hidden
+										>
+											Latest
+											<ArrowDown />
+										</span>
+									</div>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent className="w-56" align="end" forceMount>
+									<DropdownMenuGroup>
+										<DropdownMenuItem className="py-2">7 days</DropdownMenuItem>
+										<DropdownMenuItem className="py-2">
+											14 days
+										</DropdownMenuItem>
+									</DropdownMenuGroup>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</div>
+						<div className="space-y-6">
+							{campaignData.map((user: any, index) => (
+								<div key={index} className="flex justify-between">
+									<div className="flex gap-2 items-center">
+										<Image
+											src={user.image}
+											alt="User Image"
+											width={30}
+											height={30}
+										/>
+
+										<div className="flex flex-col">
+											<span className="font-medium">{user.name}</span>
+											<span className="text-sm">{user.email}</span>
+										</div>
+									</div>
+									<div className="flex gap-2 items-end">
+										<span className="text-sm">sent</span>
+										<span className="font-semibold">{user.amount}</span>
+										<span className="text-sm">{user.time} ago</span>
+									</div>
+								</div>
+							))}
+						</div>
+						<Button variant="secondary" fullWidth className="mt-8">
+							See more
+						</Button>
+					</div>
 				</div>
 			</section>
 			{/* <div className="min-h-screen  justify-center p-5 md:text-sm mb-10">
@@ -282,7 +399,7 @@ const dashboard = () => {
 									{item.title}
 								</h3>
 								<p className="text-xs">
-									By: {item.name} - {item.proffession}
+									By: {item.name} - {item.profession}
 								</p>
 								<ProgressBar
 									value={70}
@@ -296,8 +413,7 @@ const dashboard = () => {
 				</section>
 			</div> */}
 		</AuthenticatedUserLayout>
-		// </DashBoardPageLayout>
 	);
 };
-export default dashboard;
-dashboard.protect = true;
+export default Dashboard;
+// dashboard.protect = true;

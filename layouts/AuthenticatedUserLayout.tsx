@@ -103,7 +103,11 @@ export const AuthenticatedUserLayout = ({
 					</DropdownMenu>
 				</div>
 			</header>
-			<main className="flex-1 h-full px-[5%] lg:px-[7%] xl:px-[10%]">
+			<main
+				className={`flex-1 h-full${
+					!isDashboard && "px-[5%] lg:px-[7%] xl:px-[10%]"
+				}`}
+			>
 				{children}
 			</main>
 			{!isDashboard && (
