@@ -462,4 +462,4 @@ const Dashboard = () => {
 	);
 };
 export default Dashboard;
-// dashboard.protect = true;
+dashboard.protect = true;
