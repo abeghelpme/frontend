@@ -34,8 +34,8 @@ const WorldMap = ({ countries }: { countries?: string[] }) => {
 	return (
 		<>
 			<ComposableMap
-				projectionConfig={{ scale: 250 }}
-				className="aspect-video w-[100%] lg:w-[50%] "
+				projectionConfig={{ scale: 210 }}
+				className="aspect-video w-[100%] lg:w-[50%]"
 			>
 				<Geographies geography="/assets/worldmap.json">
 					{({ geographies }) =>
@@ -55,8 +55,8 @@ const WorldMap = ({ countries }: { countries?: string[] }) => {
 					<Marker key={name} coordinates={Countries[name].coordinates}>
 						<circle
 							r={5}
-							fill="#A8CCCC"
-							stroke="#A8CCCC"
+							fill="#008080"
+							stroke="#008080"
 							strokeWidth={15}
 							strokeOpacity={0.3}
 						/>
