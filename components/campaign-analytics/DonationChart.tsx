@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const series = [
+	// { data: ['100,000', '75,000', '50,000', '25,000', '0'] },
 	{
 		name: "Item1",
-		data: [0, 9, 20, 31, 39, 10, 29, 91, 38],
+		data: [0, 20000, 25000, 50000, 95000],
 	},
 	{
 		name: "Item2",
-		data: [20, 29, 10, 21, 49, 30, 9, 90, 48],
+		data: [0, 27000, 35000, 60000, 95000],
 	},
 ];
 
@@ -84,7 +85,7 @@ const DonationChart = () => {
 				options={options}
 				series={series}
 				width={`100%`}
-				height={windowSize && windowSize >= 900 ? 500 : 300}
+				height={windowSize && windowSize >= 900 ? 400 : 300}
 			/>
 		</div>
 	);

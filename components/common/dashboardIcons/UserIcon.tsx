@@ -1,4 +1,4 @@
-const User = () => (
+const UserIcon = () => (
 	<svg
 		width="50"
 		height="50"
@@ -26,4 +26,4 @@ const User = () => (
 		</defs>
 	</svg>
 );
-export default User;
+export default UserIcon;

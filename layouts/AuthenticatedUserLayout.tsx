@@ -38,7 +38,7 @@ export const AuthenticatedUserLayout = ({
 	const initials = castedUser?.firstName[0] + castedUser?.lastName[0];
 	return (
 		<>
-			<header className="sticky top-0 left-0 bg-white z-10 flex items-center gap-10 py-6 px-[5%] lg:px-[7%] xl:px-[10%] justify-between border-b border-b-abeg-primary">
+			<header className="sticky top-0 left-0 bg-white z-10 flex items-center gap-10 py-6 px-[5%] lg:px-[7%] 2xl:px-[10%] justify-between border-b border-b-abeg-primary">
 				<LogoBanner />
 				<div className="flex items-center gap-3">
 					<Button
@@ -103,11 +103,15 @@ export const AuthenticatedUserLayout = ({
 					</DropdownMenu>
 				</div>
 			</header>
-			<main className="flex-1 h-full px-[5%] lg:px-[7%] xl:px-[10%]">
+			<main
+				className={`flex-1 h-full${
+					!isDashboard && "px-[5%] lg:px-[7%] 2xl:px-[10%]"
+				}`}
+			>
 				{children}
 			</main>
 			{!isDashboard && (
-				<footer className="mt-20 border-t px-[5%] lg:px-[7%] xl:px-[10%] border-t-abeg-primary py-4 md:py-7">
+				<footer className="mt-20 border-t px-[5%] lg:px-[7%] 2xl:px-[10%] border-t-abeg-primary py-4 md:py-7">
 					{footer}
 				</footer>
 			)}
