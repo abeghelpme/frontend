@@ -39,6 +39,8 @@ export const useInitCampaignStore = create<CampaignStore>()((set) => ({
 	} satisfies CampaignStore["actions"],
 }));
 
+void useInitCampaignStore.getState().actions.initializeCategories();
+
 export const useCampaignStore = <TResult>(
 	selector: SelectorFn<CampaignStore, TResult>
 ) => {

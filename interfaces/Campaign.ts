@@ -15,7 +15,7 @@ type Category = Prettify<{
 	updatedAt: string;
 }>;
 
-type Image = Prettify<{
+export type Image = Prettify<{
 	secureUrl: string;
 	blurHash: string;
 	_id: string;

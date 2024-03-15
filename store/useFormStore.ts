@@ -1,4 +1,4 @@
-import type { Campaign } from "@/interfaces/Campaign";
+import type { Campaign, Image } from "@/interfaces/Campaign";
 import type { Prettify } from "@/lib/type-helpers";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -17,7 +17,9 @@ export type StepTwoData = Prettify<
 >;
 
 export type StepThreeData = Prettify<
-	Pick<Campaign, "story" | "storyHtml"> & { photos: File[] }
+	Pick<Campaign, "story" | "storyHtml"> & {
+		photos: Array<File | Image["secureUrl"]>;
+	}
 >;
 
 export type FormStore = {
@@ -118,22 +120,19 @@ export const useInitFormStore = create<FormStore>()(
 				initializeFormData: () => {
 					const { campaigns } = useInitCampaignStore.getState();
 
-					if (campaigns.length === 0) {
-						set({ currentStep: 1 });
-						return;
-					}
+					if (campaigns.length === 0) return;
 
 					const currentCampaign = campaigns[0];
 
 					if (
 						currentCampaign.status === "Approved" &&
 						currentCampaign.isPublished
-					)
+					) {
+						set({ currentStep: 1 });
 						return;
+					}
 
-					const { updateCurrentCampaign } = get().actions;
-
-					updateCurrentCampaign(currentCampaign);
+					get().actions.updateCurrentCampaign(currentCampaign);
 
 					set({
 						formStepData: {
@@ -146,7 +145,7 @@ export const useInitFormStore = create<FormStore>()(
 							goal: currentCampaign.goal,
 							story: currentCampaign.story,
 							storyHtml: currentCampaign.storyHtml,
-							photos: [],
+							photos: currentCampaign.images.map((image) => image.secureUrl),
 						},
 					});
 				},

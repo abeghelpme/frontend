@@ -1,12 +1,12 @@
 import { cn } from "@/lib";
 import { useElementList } from "@/lib/hooks";
-import { useFormStore } from "@/store";
+import { type StepThreeData, useFormStore } from "@/store";
 import { Trash2Icon } from "lucide-react";
 import Image from "next/image";
 
 type ImagePreviewProps = {
-	value: File[];
-	onChange: (files: File[]) => void;
+	value: StepThreeData["photos"];
+	onChange: (files: StepThreeData["photos"]) => void;
 };
 
 function ImagePreview(props: ImagePreviewProps) {
@@ -16,21 +16,32 @@ function ImagePreview(props: ImagePreviewProps) {
 
 	const { For: ImagePreviewList } = useElementList();
 
-	const imageUrls = imageFiles.map((file) => URL.createObjectURL(file));
+	const imageUrls = imageFiles.map((file) => {
+		if (file instanceof File) {
+			return URL.createObjectURL(file);
+		}
 
-	const handleRevokeImageUrl = (index: number) => () => {
-		URL.revokeObjectURL(imageUrls[index]);
-	};
+		return file;
+	});
 
-	const handleRemoveImage = (imageFile: File) => () => {
-		const updatedFileState = imageFiles.filter(
-			(file) => file.name !== imageFile.name
-		);
+	const handleRemoveImage =
+		(imageFile: StepThreeData["photos"][number]) => () => {
+			const updatedFileState = imageFiles.filter((file) => {
+				if (file instanceof File && imageFile instanceof File) {
+					return file.name !== imageFile.name;
+				}
 
-		updateFormData({ photos: updatedFileState });
+				if (typeof file === "string" && typeof imageFile === "string") {
+					return file !== imageFile;
+				}
 
-		onChange(updatedFileState);
-	};
+				return false;
+			});
+
+			updateFormData({ photos: updatedFileState });
+
+			onChange(updatedFileState);
+		};
 
 	return (
 		<ul
@@ -46,17 +57,18 @@ function ImagePreview(props: ImagePreviewProps) {
 
 					return (
 						<li
-							key={file.name}
+							key={file instanceof File ? file.name : file}
 							className="flex items-center justify-between p-2 text-xs"
 						>
 							<div className="flex min-w-0 items-center gap-2">
 								<Image
 									src={imageUrls[index]}
-									className="size-[40px] shrink-0 rounded-md object-cover"
-									width={40}
-									height={40}
+									className="size-[50px] shrink-0 rounded-md object-cover"
+									width={50}
+									height={50}
+									fetchPriority="high"
+									priority
 									alt="thumbnail"
-									onLoad={handleRevokeImageUrl(index)}
 								/>
 
 								{isCoverImage && (
@@ -64,8 +76,6 @@ function ImagePreview(props: ImagePreviewProps) {
 										*Cover image
 									</span>
 								)}
-
-								<p className="truncate">{file.name}</p>
 							</div>
 
 							<button type="button" onClick={handleRemoveImage(file)}>
