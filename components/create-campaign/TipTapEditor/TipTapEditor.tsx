@@ -46,7 +46,7 @@ function TiptapEditor(props: EditorProps) {
 
 	useEffect(() => {
 		editor?.commands.setContent(editorContent);
-	}, [editorContent]);
+	}, []);
 
 	if (!editor) {
 		return null;

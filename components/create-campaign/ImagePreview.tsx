@@ -71,6 +71,10 @@ function ImagePreview(props: ImagePreviewProps) {
 									alt="thumbnail"
 								/>
 
+								{file instanceof File && (
+									<p className="truncate">{file.name}</p>
+								)}
+
 								{isCoverImage && (
 									<span className="absolute left-[50%] top-0.5 block translate-x-[-50%] text-xs font-bold text-abeg-primary">
 										*Cover image
@@ -78,12 +82,14 @@ function ImagePreview(props: ImagePreviewProps) {
 								)}
 							</div>
 
-							<button type="button" onClick={handleRemoveImage(file)}>
-								<Trash2Icon
-									size={20}
-									className="text-red-500 active:scale-110"
-								/>
-							</button>
+							{file instanceof File && (
+								<button type="button" onClick={handleRemoveImage(file)}>
+									<Trash2Icon
+										size={20}
+										className="text-red-500 active:scale-110"
+									/>
+								</button>
+							)}
 						</li>
 					);
 				}}

@@ -9,6 +9,7 @@ import { callApi } from "@/lib/helpers/campaign";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
 import { useFormStore } from "@/store";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -92,7 +93,7 @@ function PreviewCampaignPage() {
 							type="button"
 							className="border-abeg-primary font-bold"
 						>
-							<a href={"/create-campaign"}> Edit Campaign</a>
+							<Link href={"/create-campaign"}> Edit Campaign</Link>
 						</FormActionButton>
 					</div>
 

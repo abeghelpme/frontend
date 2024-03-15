@@ -2,7 +2,7 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
-import { type StepThreeData, useFormStore } from "@/store";
+import { type StepThreeData, initialFormState, useFormStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -71,7 +71,8 @@ function StepThree() {
 		if (!dataInfo.data) return;
 
 		updateCurrentCampaign(dataInfo.data);
-		void router.push("/create-campaign/preview");
+		updateFormData(initialFormState.formStepData);
+		void router.push("/dashboard");
 	};
 
 	return (

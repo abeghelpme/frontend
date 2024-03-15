@@ -24,8 +24,9 @@ export type Image = Prettify<{
 export type Campaign = {
 	_id: string;
 	creator: Creator | null;
-	status: string;
+	status: "Draft" | "In Review" | "Approved" | "Rejected";
 	category: Category | null;
+	currentStep: 1 | 2 | 3;
 	country: (typeof targetCountries)[number];
 	createdAt: string;
 	featured: boolean;

@@ -1,7 +1,6 @@
 import type { Campaign, Image } from "@/interfaces/Campaign";
 import type { Prettify } from "@/lib/type-helpers";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 import { useShallow } from "zustand/react/shallow";
 import type { SelectorFn } from "./store-types";
 import { useInitCampaignStore } from "./useCampaignStore";
@@ -23,12 +22,12 @@ export type StepThreeData = Prettify<
 >;
 
 export type FormStore = {
-	currentStep: 1 | 2 | 3;
-
 	formStatus: {
 		isValid: boolean;
 		isSubmitting: boolean;
 	};
+
+	currentStep: Campaign["currentStep"];
 
 	formStepData: Prettify<StepOneData & StepTwoData & StepThreeData>;
 
@@ -53,7 +52,7 @@ export type FormStore = {
 	};
 };
 
-const initialState = {
+export const initialFormState = {
 	currentStep: 1,
 
 	currentCampaign: {
@@ -79,78 +78,75 @@ const initialState = {
 	},
 } satisfies Omit<FormStore, "actions">;
 
-export const useInitFormStore = create<FormStore>()(
-	persist(
-		(set, get) => ({
-			...initialState,
+export const useInitFormStore = create<FormStore>()((set, get) => ({
+	...initialFormState,
 
-			actions: {
-				goToStep: (newStep) => {
-					if (newStep < 1 || newStep > 3) return;
+	actions: {
+		goToStep: (newStep) => {
+			if (newStep < 1 || newStep > 3) return;
 
-					set({ currentStep: newStep as FormStore["currentStep"] });
+			set({ currentStep: newStep as FormStore["currentStep"] });
+		},
+
+		updateCurrentCampaign: (newInfo) => {
+			const { currentCampaign: previousInfo } = get();
+
+			set({
+				currentCampaign: {
+					...previousInfo,
+					...newInfo,
+					shortId: newInfo.url
+						? newInfo.url.split(".me/")[1]
+						: previousInfo.shortId,
 				},
+			});
+		},
 
-				updateCurrentCampaign: (newInfo) => {
-					const { currentCampaign: previousInfo } = get();
+		updateFormStatus: (newFormStatus) => {
+			const { formStatus: previousFormStatus } = get();
 
-					set({
-						currentCampaign: {
-							...previousInfo,
-							...newInfo,
-							shortId: newInfo.url
-								? newInfo.url.split(".me/")[1]
-								: previousInfo.shortId,
-						},
-					});
+			set({ formStatus: { ...previousFormStatus, ...newFormStatus } });
+		},
+
+		updateFormData: (updatedFormData) => {
+			const { formStepData } = get();
+
+			set({ formStepData: { ...formStepData, ...updatedFormData } });
+		},
+
+		initializeFormData: () => {
+			const { campaigns } = useInitCampaignStore.getState();
+
+			if (campaigns.length === 0) return;
+
+			const { 0: currentCampaign } = campaigns;
+
+			if (currentCampaign.status !== "Draft") {
+				set({ currentStep: 1 });
+				return;
+			}
+
+			get().actions.updateCurrentCampaign(currentCampaign);
+
+			set({
+				currentStep: currentCampaign.currentStep,
+
+				formStepData: {
+					categoryId: currentCampaign.category?._id ?? "",
+					country: currentCampaign.country,
+					tags: currentCampaign.tags,
+					title: currentCampaign.title,
+					deadline: currentCampaign.deadline,
+					fundraiser: currentCampaign.fundraiser,
+					goal: currentCampaign.goal,
+					story: currentCampaign.story,
+					storyHtml: currentCampaign.storyHtml,
+					photos: currentCampaign.images.map((image) => image.secureUrl),
 				},
-
-				updateFormStatus: (newFormStatus) => {
-					const { formStatus: previousFormStatus } = get();
-
-					set({ formStatus: { ...previousFormStatus, ...newFormStatus } });
-				},
-
-				updateFormData: (updatedFormData) => {
-					const { formStepData } = get();
-
-					set({ formStepData: { ...formStepData, ...updatedFormData } });
-				},
-
-				initializeFormData: () => {
-					const { campaigns } = useInitCampaignStore.getState();
-
-					if (campaigns.length === 0) return;
-
-					const currentCampaign = campaigns[0];
-
-					if (currentCampaign.status !== "Draft") {
-						set({ currentStep: 1 });
-						return;
-					}
-
-					get().actions.updateCurrentCampaign(currentCampaign);
-
-					set({
-						formStepData: {
-							categoryId: currentCampaign.category?._id ?? "",
-							country: currentCampaign.country,
-							tags: currentCampaign.tags,
-							title: currentCampaign.title,
-							deadline: currentCampaign.deadline,
-							fundraiser: currentCampaign.fundraiser,
-							goal: currentCampaign.goal,
-							story: currentCampaign.story,
-							storyHtml: currentCampaign.storyHtml,
-							photos: currentCampaign.images.map((image) => image.secureUrl),
-						},
-					});
-				},
-			} satisfies FormStore["actions"],
-		}),
-		{ name: "FormStore", partialize: ({ currentStep }) => ({ currentStep }) }
-	)
-);
+			});
+		},
+	} satisfies FormStore["actions"],
+}));
 
 export const useFormStore = <TResult>(
 	selector: SelectorFn<FormStore, TResult>
