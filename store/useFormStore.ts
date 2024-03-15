@@ -125,7 +125,11 @@ export const useInitFormStore = create<FormStore>()(
 
 					const currentCampaign = campaigns[0];
 
-					// if (currentCampaign.isPublished) return;
+					if (
+						currentCampaign.status === "Approved" &&
+						currentCampaign.isPublished
+					)
+						return;
 
 					const { updateCurrentCampaign } = get().actions;
 
@@ -145,8 +149,6 @@ export const useInitFormStore = create<FormStore>()(
 							photos: [],
 						},
 					});
-
-					console.log(get().formStepData);
 				},
 			} satisfies FormStore["actions"],
 		}),
