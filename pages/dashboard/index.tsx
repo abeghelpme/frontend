@@ -120,7 +120,7 @@ const Dashboard = () => {
 	// ];
 	return (
 		<AuthenticatedUserLayout isDashboard>
-			<section className="dashboardHeroSection md:flex flex-col gap-6 md:bg-abeg-primary md:h-[29svh]">
+			<section className="dashboardHeroSection flex-col gap-6 md:flex md:h-[29svh] md:bg-abeg-primary">
 				<div className="px-[5%] lg:px-[7%] 2xl:px-[10%]">
 					<div className="py-6">
 						{/* {page !== 'dashboard' ? (
@@ -138,7 +138,7 @@ const Dashboard = () => {
 						)} */}
 						<Link
 							href={"/create-campaign"}
-							className="flex items-center p-2 bg-abeg-primary rounded-md md:bg-white md:text-abeg-primary text-white w-fit px-3"
+							className="flex w-fit items-center rounded-md bg-abeg-primary p-2 px-3 text-white md:bg-white md:text-abeg-primary"
 						>
 							<span className="pr-2">
 								<PlusIcon />
@@ -146,7 +146,7 @@ const Dashboard = () => {
 							<span>Create Campaign</span>
 						</Link>
 					</div>
-					<div className="border-b-2 border-b-white md:flex gap-12 hidden">
+					<div className="hidden gap-12 border-b-2 border-b-white md:flex">
 						<Button variant="regular" className="gap-1 !text-white">
 							<DashboardIcon />
 							Dashboard
@@ -170,45 +170,45 @@ const Dashboard = () => {
 					</div>
 				</div>
 			</section>
-			<div className="px-[5%] lg:px-[7%] 2xl:px-[10%] space-y-10 md:-translate-y-[4.3rem]">
+			<div className="space-y-10 px-[5%] md:-translate-y-[4.3rem] lg:px-[7%] 2xl:px-[10%]">
 				<section className="">
-					<div className="flex flex-col lg:flex-row gap-8 justify-between md:m-0">
-						<div className="lg:w-3/5 space-y-4 lg:space-y-5">
-							<h1 className="md:hidden font-bold text-lg mb-4">
+					<div className="flex flex-col justify-between gap-8 md:m-0 lg:flex-row">
+						<div className="space-y-4 lg:w-3/5 lg:space-y-5">
+							<h1 className="mb-4 text-lg font-bold md:hidden">
 								Bringing Dental Care to Undeserved Communities
 							</h1>
-							<div className="text-white relative">
+							<div className="relative text-white">
 								<Image
 									src={dashboardImage}
 									alt="Dashboard Image"
 									className="w-full rounded-md"
 								/>
-								<div className="space-x-1 absolute top-4 left-4 text-xs sm:text-sm flex items-center p-2 backdrop-blur-md rounded-md">
+								<div className="absolute left-4 top-4 flex items-center space-x-1 rounded-md p-2 text-xs backdrop-blur-md sm:text-sm">
 									<LocationIcon />
 									<span className="">Lagos, Nigeria</span>
 								</div>
-								<div className="space-x-1 absolute bottom-4 right-4 text-xs sm:text-sm flex items-center p-2 backdrop-blur-md rounded-md">
+								<div className="absolute bottom-4 right-4 flex items-center space-x-1 rounded-md p-2 text-xs backdrop-blur-md sm:text-sm">
 									<ClockIcon />
 									<span className="">20 days left</span>
 								</div>
 							</div>
 							<div className="space-y-4 md:space-y-5">
-								<h1 className="md:block hidden font-bold text-2xl ">
+								<h1 className="hidden text-2xl font-bold md:block ">
 									Bringing Dental Care to Undeserved Communities
 								</h1>
-								<div className="flex flex-col md:flex-row justify-between gap-4 md:gap-6">
-									<div className="space-y-4 flex-1 text-sm">
-										<div className="flex justify-between items-center gap-7">
+								<div className="flex flex-col justify-between gap-4 md:flex-row md:gap-6">
+									<div className="flex-1 space-y-4 text-sm">
+										<div className="flex items-center justify-between gap-7">
 											<span>&#x20A6; 2,000,000</span>
 											<span>&#x20A6; 1,000,000 remaining</span>
 										</div>
 										<ProgressBar value={50} />
-										<div className="flex justify-between items-center gap-7">
+										<div className="flex items-center justify-between gap-7">
 											<span className="">235,567 total donors</span>
 											<span className="">235,567 comments</span>
 										</div>
 									</div>
-									<div className="md:w-fit flex md:flex-col justify-between gap-4 text-sm">
+									<div className="flex justify-between gap-4 text-sm md:w-fit md:flex-col">
 										<Button
 											variant="secondary"
 											className="flex items-center gap-2"
@@ -227,14 +227,14 @@ const Dashboard = () => {
 								</div>
 							</div>
 						</div>
-						<div className="p-4 border-[0.5px] bg-white border-placeholder rounded-lg lg:w-[45%]">
-							<div className="flex justify-between items-center mb-8">
-								<h2 className="font-bold text-2xl">Donors list</h2>
+						<div className="rounded-lg border-[0.5px] border-placeholder bg-white p-4 lg:w-[45%]">
+							<div className="mb-8 flex items-center justify-between">
+								<h2 className="text-2xl font-bold">Donors list</h2>
 								<DropdownMenu>
 									<DropdownMenuTrigger asChild>
-										<div className="flex items-center gap-2 md:gap-0 cursor-pointer border border-placeholder rounded-lg px-3 py-2">
+										<div className="flex cursor-pointer items-center gap-2 rounded-lg border border-placeholder px-3 py-2 md:gap-0">
 											<span
-												className="cursor-pointer font-medium text-sm flex gap-2 items-center"
+												className="flex cursor-pointer items-center gap-2 text-sm font-medium"
 												aria-hidden
 											>
 												Latest
@@ -258,22 +258,22 @@ const Dashboard = () => {
 								{campaignData.map((user: any, index) => (
 									<div
 										key={index}
-										className="flex flex-col md:flex-row md:justify-between md:items-center md:gap-7"
+										className="flex flex-col md:flex-row md:items-center md:justify-between md:gap-7"
 									>
-										<div className="flex gap-2 items-center">
+										<div className="flex items-center gap-2">
 											<Image
 												src={user.image}
 												alt="User Image"
 												width={30}
 												height={30}
 											/>
-											<div className="flex flex-col xl:">
+											<div className="xl: flex flex-col">
 												<span className="font-medium">{user.name}</span>
 												<span className="text-sm">{user.email}</span>
 											</div>
 										</div>
-										<div className="flex items-center justify-between gap-4 md:gap-0 md:items-end md:flex-col">
-											<div className="flex items-center gap-2 ml-10">
+										<div className="flex items-center justify-between gap-4 md:flex-col md:items-end md:gap-0">
+											<div className="ml-10 flex items-center gap-2">
 												<span className="text-sm">sent</span>
 												<span className="font-semibold">{user.amount}</span>
 											</div>
@@ -462,4 +462,4 @@ const Dashboard = () => {
 	);
 };
 export default Dashboard;
-dashboard.protect = true;
+Dashboard.protect = true;
