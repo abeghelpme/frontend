@@ -4,7 +4,7 @@ import { type ApiResponse, type User } from "@/interfaces";
 import type { SessionData } from "@/interfaces/ApiResponses";
 import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
-import { useCampaign, useSession } from "@/store";
+import { useCampaignStore, useSession } from "@/store";
 import { useRouter } from "next/router";
 import { type Dispatch, type FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -68,7 +68,7 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 								type="submit"
 								disabled={resend}
 								onClick={() => void resendCode()}
-								className="p-0 font-medium text-abeg-primary !bg-transparent disabled:text-abeg-neutral-50"
+								className="!bg-transparent p-0 font-medium text-abeg-primary disabled:text-abeg-neutral-50"
 							>
 								resend it
 							</Button>
@@ -120,7 +120,7 @@ const AuthenticateUser = () => {
 	} = useSession((state) => state);
 	const {
 		actions: { updateCampaign },
-	} = useCampaign((state) => state);
+	} = useCampaignStore((state) => state);
 	const router = useRouter();
 	const castedUser = user as User;
 

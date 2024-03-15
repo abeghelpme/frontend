@@ -2,13 +2,10 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
-import {
-	STEP_DATA_KEY_LOOKUP,
-	type StepThreeData,
-	useFormStore,
-} from "@/store/formStore";
+import { type StepThreeData, initialFormState, useFormStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import DropZoneInput from "../DropZoneInput";
@@ -21,32 +18,41 @@ function StepThree() {
 	const router = useRouter();
 
 	const {
-		campaignInfo,
-		stepThreeData,
-		actions: { setData, setCampaignInfo },
+		currentStep,
+		currentCampaign,
+		formStepData,
+		actions: { updateFormData, updateCurrentCampaign },
 	} = useFormStore((state) => state);
 
 	const {
 		control,
 		handleSubmit,
 		formState,
+		getValues,
+		reset,
 		setValue: setFormValue,
 	} = useForm({
 		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepThree")!),
-		defaultValues: stepThreeData,
+		defaultValues: formStepData,
 	});
+
+	useEffect(() => {
+		if (!getValues().categoryId) {
+			reset(formStepData);
+		}
+	}, [formStepData]);
 
 	useWatchFormStatus(formState);
 
 	const onSubmit = async (data: StepThreeData) => {
-		setData({ step: 3, data });
+		updateFormData(data);
 
 		const formData = new FormData();
 
 		formData.set("story", data.story);
 		formData.set("storyHtml", data.storyHtml);
-		formData.set("campaignId", campaignInfo._id);
+		formData.set("campaignId", currentCampaign._id);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
 		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
@@ -64,8 +70,9 @@ function StepThree() {
 
 		if (!dataInfo.data) return;
 
-		setCampaignInfo(dataInfo.data);
-		void router.push("/create-campaign/preview");
+		updateCurrentCampaign(dataInfo.data);
+		updateFormData(initialFormState.formStepData);
+		void router.push("/dashboard");
 	};
 
 	return (
@@ -75,7 +82,7 @@ function StepThree() {
 			</Heading>
 
 			<form
-				id={STEP_DATA_KEY_LOOKUP[3]}
+				id={`${currentStep}`}
 				className="mt-8 lg:mt-12"
 				onSubmit={(event) => {
 					event.preventDefault();
@@ -125,8 +132,8 @@ function StepThree() {
 							render={({ field }) => (
 								<TipTapEditor
 									placeholder="Write a compelling story that would arouse the interest of donors..."
-									setFormValue={setFormValue}
 									editorContent={field.value}
+									setFormValue={setFormValue}
 									onChange={field.onChange}
 								/>
 							)}

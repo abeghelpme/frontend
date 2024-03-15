@@ -3,13 +3,11 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { cn, zodValidator } from "@/lib";
 import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
-import {
-	STEP_DATA_KEY_LOOKUP,
-	type StepTwoData,
-	useFormStore,
-} from "@/store/formStore";
+import { useFormStore } from "@/store";
+import type { StepTwoData } from "@/store/useFormStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import FormErrorMessage from "../FormErrorMessage";
@@ -18,27 +16,34 @@ import Heading from "../Heading";
 function StepTwo() {
 	const {
 		currentStep,
-		campaignInfo,
-		stepTwoData,
-		actions: { setData, goToStep, setCampaignInfo },
+		currentCampaign,
+		formStepData,
+		actions: { goToStep, updateFormData, updateCurrentCampaign },
 	} = useFormStore((state) => state);
 
-	const { control, formState, register, handleSubmit } = useForm({
-		mode: "onChange",
-		resolver: zodResolver(zodValidator("campaignStepTwo")!),
-		defaultValues: stepTwoData,
-	});
+	const { control, formState, reset, getValues, register, handleSubmit } =
+		useForm({
+			mode: "onChange",
+			resolver: zodResolver(zodValidator("campaignStepTwo")!),
+			defaultValues: formStepData,
+		});
+
+	useEffect(() => {
+		if (!getValues().categoryId) {
+			reset(formStepData);
+		}
+	}, [formStepData]);
 
 	useWatchFormStatus(formState);
 
 	const onSubmit = async (data: StepTwoData) => {
-		setData({ step: 2, data });
+		updateFormData(data);
 
 		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
 			`/campaign/create/two`,
 			{
 				...data,
-				campaignId: campaignInfo._id,
+				campaignId: currentCampaign._id,
 			}
 		);
 
@@ -52,8 +57,8 @@ function StepTwo() {
 
 		if (!dataInfo.data) return;
 
-		setCampaignInfo(dataInfo.data);
-		goToStep(currentStep + 1);
+		updateCurrentCampaign(dataInfo.data);
+		goToStep(3);
 	};
 
 	return (
@@ -63,7 +68,7 @@ function StepTwo() {
 			</Heading>
 
 			<form
-				id={STEP_DATA_KEY_LOOKUP[currentStep]}
+				id={`${currentStep}`}
 				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();

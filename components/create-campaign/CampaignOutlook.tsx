@@ -33,7 +33,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	const fundraiserTarget =
 		campaign.fundraiser === "INDIVIDUAL"
-			? `${campaign.creator.firstName} ${campaign.creator.lastName}`
+			? `${campaign.creator?.firstName} ${campaign.creator?.lastName}`
 			: "BENEFICIARY";
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
@@ -171,7 +171,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							className="flex gap-4 border-b border-b-placeholder p-2"
 						>
 							Category:
-							<span className="font-normal">{campaign.category.name}</span>
+							<span className="font-normal">{campaign.category?.name}</span>
 						</Heading>
 						<Heading
 							as="h3"

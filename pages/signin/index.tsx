@@ -9,7 +9,7 @@ import type { SessionData } from "@/interfaces/ApiResponses";
 import { AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
-import { useCampaign, useSession } from "@/store";
+import { useCampaignStore, useSession } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -32,7 +32,7 @@ const Login = () => {
 
 	const {
 		actions: { updateCampaign },
-	} = useCampaign((state) => state);
+	} = useCampaignStore((state) => state);
 
 	const {
 		register,

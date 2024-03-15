@@ -4,7 +4,7 @@ import { callApi } from "@/lib";
 import { create } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import type { SelectorFn } from "./store-types";
-import { useInitCampaignStore } from "./useCampaign";
+import { useInitCampaignStore } from "./useCampaignStore";
 
 type Session = {
 	isFirstMount: boolean;
@@ -40,7 +40,7 @@ export const useInitSession = create<Session>()((set, get) => ({
 				.actions.updateCampaign(data?.data?.campaigns ?? []);
 
 			set({
-				...(data?.data && { user: data.data.user as User }),
+				...(data?.data && { user: data.data.user }),
 				loading: false,
 			});
 		},

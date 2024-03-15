@@ -1,8 +1,8 @@
-import { useFormStore } from "@/store/formStore";
+import { useFormStore } from "@/store";
 import { StepIndicator, StepInformation } from "./StepDetails";
 
 function StepTracker() {
-	const currentStep = useFormStore((state) => state.currentStep);
+	const { currentStep } = useFormStore((state) => state);
 
 	return (
 		<>
