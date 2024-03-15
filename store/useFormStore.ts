@@ -124,10 +124,7 @@ export const useInitFormStore = create<FormStore>()(
 
 					const currentCampaign = campaigns[0];
 
-					if (
-						currentCampaign.status === "Approved" &&
-						currentCampaign.isPublished
-					) {
+					if (currentCampaign.status !== "Draft") {
 						set({ currentStep: 1 });
 						return;
 					}
