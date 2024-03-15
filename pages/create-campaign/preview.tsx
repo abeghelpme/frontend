@@ -7,22 +7,20 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { callApi } from "@/lib/helpers/campaign";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
-import { useFormStore, useInitFormStore } from "@/store/formStore";
+import { useFormStore } from "@/store";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-void useInitFormStore.getState().actions.initializeFormData();
-
 function PreviewCampaignPage() {
-	const { campaignInfo } = useFormStore((state) => state);
+	const { currentCampaign } = useFormStore((state) => state);
 
 	const router = useRouter();
 
 	useEffect(() => {
-		if (!campaignInfo.status || campaignInfo.status === "Draft") {
+		if (!currentCampaign.status || currentCampaign.status === "Draft") {
 			toast.error("Error", {
 				description: "Please complete the campaign before previewing",
 				id: "incomplete",
@@ -31,13 +29,14 @@ function PreviewCampaignPage() {
 
 			void router.push("/create-campaign");
 		}
-	}, [campaignInfo.status, router]);
+	}, [currentCampaign.status]);
 
-	if (!campaignInfo.status || campaignInfo.status === "Draft") return null;
+	if (!currentCampaign.status || currentCampaign.status === "Draft")
+		return null;
 
 	const handlePublish = async () => {
 		const { error } = await callApi<Campaign>("/campaign/publish", {
-			campaignId: campaignInfo._id,
+			campaignId: currentCampaign._id,
 		});
 
 		if (error) {
@@ -46,30 +45,30 @@ function PreviewCampaignPage() {
 		}
 
 		toast.success("Campaign published successfully");
-		void router.push(`/${campaignInfo.shortId}`);
+		void router.push(`/${currentCampaign.shortId}`);
 	};
 
-	const excerpt = generateExcerpt(campaignInfo.story);
+	const excerpt = generateExcerpt(currentCampaign.story);
 
 	return (
 		<AuthenticatedUserLayout isDashboard>
 			<NextSeo
-				title={campaignInfo.title}
+				title={currentCampaign.title}
 				description={excerpt}
-				canonical={campaignInfo.url}
+				canonical={currentCampaign.url}
 				openGraph={{
-					url: campaignInfo.url,
-					title: campaignInfo.title,
+					url: currentCampaign.url,
+					title: currentCampaign.title,
 					description: excerpt,
-					...(campaignInfo.images.length > 0 && {
-						images: campaignInfo.images.map((image) => {
+					...(currentCampaign.images.length > 0 && {
+						images: currentCampaign.images.map((image) => {
 							return { url: image.secureUrl };
 						}),
 					}),
 				}}
 			/>
 
-			<CampaignOutlook campaign={campaignInfo}>
+			<CampaignOutlook campaign={currentCampaign}>
 				<CampaignOutlook.Header className="flex flex-col gap-2 text-abeg-primary lg:text-2xl">
 					<Heading as="h1">Campaign Preview</Heading>
 
@@ -102,7 +101,7 @@ function PreviewCampaignPage() {
 						as="h2"
 						className="mt-8 text-xl text-abeg-text lg:text-[32px]"
 					>
-						{`${campaignInfo.title[0].toUpperCase()}${campaignInfo.title.slice(
+						{`${currentCampaign.title[0].toUpperCase()}${currentCampaign.title.slice(
 							1
 						)}`}
 					</Heading>

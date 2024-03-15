@@ -1,6 +1,6 @@
 import { cn } from "@/lib";
 import { useElementList } from "@/lib/hooks";
-import { useFormStore } from "@/store/formStore";
+import { useFormStore } from "@/store";
 import { Trash2Icon } from "lucide-react";
 import Image from "next/image";
 
@@ -12,7 +12,7 @@ type ImagePreviewProps = {
 function ImagePreview(props: ImagePreviewProps) {
 	const { value: imageFiles, onChange } = props;
 
-	const { setData } = useFormStore((state) => state.actions);
+	const { updateFormData } = useFormStore((state) => state.actions);
 
 	const { For: ImagePreviewList } = useElementList();
 
@@ -27,7 +27,7 @@ function ImagePreview(props: ImagePreviewProps) {
 			(file) => file.name !== imageFile.name
 		);
 
-		setData({ step: 3, data: { photos: updatedFileState } });
+		updateFormData({ photos: updatedFileState });
 
 		onChange(updatedFileState);
 	};

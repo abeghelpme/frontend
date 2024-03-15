@@ -2,7 +2,7 @@ import { Button } from "@/components/ui";
 import { cn } from "@/lib";
 import { acceptedFilesString, validateFiles } from "@/lib/helpers/campaign";
 import { useToggle } from "@/lib/hooks";
-import { useFormStore } from "@/store/formStore";
+import { useFormStore } from "@/store";
 import type { ChangeEvent, DragEvent } from "react";
 import { toast } from "sonner";
 
@@ -16,7 +16,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 	const [isDragActive, toggleIsDragActive] = useToggle(false);
 
-	const { setData } = useFormStore((state) => state.actions);
+	const { updateFormData } = useFormStore((state) => state.actions);
 
 	const handleImageUpload = (
 		event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>
@@ -42,7 +42,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 		const newFileState = [...imageFiles, ...validFilesArray];
 
-		setData({ step: 3, data: { photos: newFileState } });
+		updateFormData({ photos: newFileState });
 
 		onChange(newFileState);
 

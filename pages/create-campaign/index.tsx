@@ -7,8 +7,7 @@ import {
 } from "@/components/create-campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { cn } from "@/lib";
-import { STEP_DATA_KEY_LOOKUP, useFormStore } from "@/store/formStore";
-import { useInitFormStore } from "@/store/formStore/formStore";
+import { useFormStore, useInitCampaignStore } from "@/store";
 import { useEffect } from "react";
 
 const STEP_COMPONENT_LOOKUP = {
@@ -17,16 +16,18 @@ const STEP_COMPONENT_LOOKUP = {
 	3: <StepThree />,
 };
 
-void useInitFormStore.getState().actions.initializeFormData();
-void useInitFormStore.getState().actions.initializeCategories();
+void useInitCampaignStore.getState().actions.initializeCategories();
 
 function CreateCampaignPage() {
 	const {
 		currentStep,
 		formStatus,
-
-		actions: { goToStep },
+		actions: { goToStep, initializeFormData },
 	} = useFormStore((state) => state);
+
+	useEffect(() => {
+		initializeFormData();
+	}, []);
 
 	useEffect(() => {
 		window.scrollTo({
@@ -56,7 +57,7 @@ function CreateCampaignPage() {
 								"bg-abeg-primary",
 								currentStep === 3 && "lg:hidden"
 							)}
-							targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+							targetForm={`${currentStep}`}
 							isLoading={formStatus.isSubmitting}
 							disabled={formStatus.isSubmitting}
 						/>
@@ -67,7 +68,7 @@ function CreateCampaignPage() {
 								text="Create campaign"
 								variant="primary"
 								className={"bg-abeg-primary font-bold max-lg:hidden"}
-								targetForm={STEP_DATA_KEY_LOOKUP[currentStep]}
+								targetForm={`${currentStep}`}
 								isLoading={formStatus.isSubmitting}
 								disabled={formStatus.isSubmitting}
 							/>
@@ -76,7 +77,7 @@ function CreateCampaignPage() {
 				</div>
 			}
 		>
-			<div className="flex w-full shrink-0 flex-col gap-8 bg-cover pt-8 max-lg:max-w-[30rem] lg:flex-row lg:items-start lg:gap-16">
+			<div className="mx-auto flex w-full shrink-0 flex-col gap-8 bg-cover pt-8 max-lg:max-w-[30rem] lg:flex-row lg:items-start lg:gap-16">
 				<section className="flex shrink-0 gap-3 lg:mt-5">
 					<StepTracker />
 				</section>

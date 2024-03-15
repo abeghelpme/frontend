@@ -16,10 +16,11 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui";
 import type { User } from "@/interfaces";
-import { callApi } from "@/lib";
+import { callApi, cn } from "@/lib";
 import { useSession } from "@/store";
 import Link from "next/link";
 import { type ReactNode } from "react";
+
 type AuthenticatedUserLayoutProps = {
 	isDashboard?: boolean;
 	children: ReactNode;
@@ -38,19 +39,19 @@ export const AuthenticatedUserLayout = ({
 	const initials = castedUser?.firstName[0] + castedUser?.lastName[0];
 	return (
 		<>
-			<header className="sticky top-0 left-0 bg-white z-10 flex items-center gap-10 py-6 px-[5%] lg:px-[7%] 2xl:px-[10%] justify-between border-b border-b-abeg-primary">
+			<header className="sticky left-0 top-0 z-10 flex items-center justify-between gap-10 border-b border-b-abeg-primary bg-white px-[5%] py-6 lg:px-[7%] 2xl:px-[10%]">
 				<LogoBanner />
 				<div className="flex items-center gap-3">
 					<Button
-						className={`!p-0 !pr-2 md:!px-4 !rounded-none lg:border-r border-r border-r-headerDivider`}
+						className={`!rounded-none border-r border-r-headerDivider !p-0 !pr-2 md:!px-4 lg:border-r`}
 					>
 						<Notification />
 					</Button>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<div className="flex items-center gap-2 md:gap-0 cursor-pointer">
+							<div className="flex cursor-pointer items-center gap-2 md:gap-0">
 								<Avatar initials={initials} />
-								<Button className="!p-0 !px-1 !text-black !rounded-none hidden md:block ml-4 mr-2">
+								<Button className="ml-4 mr-2 hidden !rounded-none !p-0 !px-1 !text-black md:block">
 									{castedUser?.firstName || "First Name"}
 								</Button>
 								<span className="cursor-pointer" aria-hidden>
@@ -78,7 +79,7 @@ export const AuthenticatedUserLayout = ({
 								<DropdownMenuItem className="lg:hidden">
 									<Link
 										href="/dashboard"
-										className="flex w-full items-center bg-abeg-primary rounded-md gap-2 text-sm py-2 px-2"
+										className="flex w-full items-center gap-2 rounded-md bg-abeg-primary px-2 py-2 text-sm"
 									>
 										<PlusIcon />
 										Create Campaign
@@ -104,14 +105,15 @@ export const AuthenticatedUserLayout = ({
 				</div>
 			</header>
 			<main
-				className={`flex-1 h-full${
+				className={cn(
+					"h-full flex-1",
 					!isDashboard && "px-[5%] lg:px-[7%] 2xl:px-[10%]"
-				}`}
+				)}
 			>
 				{children}
 			</main>
 			{!isDashboard && (
-				<footer className="mt-20 border-t px-[5%] lg:px-[7%] 2xl:px-[10%] border-t-abeg-primary py-4 md:py-7">
+				<footer className="mt-20 border-t border-t-abeg-primary px-[5%] py-4 md:py-7 lg:px-[7%] 2xl:px-[10%]">
 					{footer}
 				</footer>
 			)}

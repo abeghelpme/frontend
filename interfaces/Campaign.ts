@@ -1,5 +1,5 @@
+import type { targetCountries } from "@/lib/helpers/campaign";
 import type { Prettify } from "@/lib/type-helpers";
-import type { FormStore } from "@/store/formStore";
 
 type Creator = Prettify<{
 	_id: string;
@@ -23,19 +23,20 @@ type Image = Prettify<{
 
 export type Campaign = {
 	_id: string;
-	creator: Creator;
+	creator: Creator | null;
 	status: string;
-	category: Category;
-	country: string;
+	category: Category | null;
+	country: (typeof targetCountries)[number];
 	createdAt: string;
 	featured: boolean;
 	flaggedReasons: string[];
 	images: Image[];
 	isFlagged: boolean;
+	isPublished: boolean;
 	tags: string[];
 	updatedAt: string;
 	deadline: string;
-	fundraiser: FormStore["stepTwoData"]["fundraiser"];
+	fundraiser: "INDIVIDUAL" | "BENEFICIARY";
 	goal: number;
 	title: string;
 	story: string;
