@@ -270,12 +270,16 @@ const HomePage = () => {
 							empower your cause with Abeghelp.me
 						</p>
 						<div className="flex space-x-10 py-5 md:pt-20">
-							<Button className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none">
-								<Link href="/create-campaign">Start fundraiser</Link>
-							</Button>
-							<Button className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none">
-								<Link href="/create-campaign">Donate now</Link>
-							</Button>
+							<Link href="/create-campaign">
+								<Button className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none">
+									Start fundraiser
+								</Button>
+							</Link>
+							<Link href="/create-campaign">
+								<Button className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none">
+									Donate now
+								</Button>
+							</Link>
 						</div>
 					</div>
 					<Image
@@ -301,9 +305,11 @@ const HomePage = () => {
 							Join the effortless way to raise funds <br /> and make a
 							difference and empower <br /> your cause with Abeghelp.me
 						</p>
-						<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
-							<Link href="/create-campaign">Explore campaigns</Link>
-						</Button>
+						<Link href="/create-campaign">
+							<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
+								Explore campaigns
+							</Button>
+						</Link>
 					</div>
 				</div>
 
@@ -496,9 +502,11 @@ const HomePage = () => {
 								Join our community of change-makers and make an impact today
 							</p>
 						</div>
-						<Button className="border border-gray-500 font-semibold text-gray-500 outline-none">
-							<Link href="/create-campaign">Explore campaigns</Link>
-						</Button>
+						<Link href="/create-campaign">
+							<Button className="border border-gray-500 font-semibold text-gray-500 outline-none">
+								Explore campaigns
+							</Button>
+						</Link>
 					</div>
 
 					<div className="md:hide-scrollbar mt-14 gap-5 md:overflow-x-auto md:flex">

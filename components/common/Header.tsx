@@ -28,12 +28,16 @@ const Header = () => {
 					</ul>
 				</nav>
 				<div className="md:flex gap-2">
-					<Button className="bg-transparent border-2 border-white px-8 font-semibold text-md">
-						<Link href="/signin">Sign In</Link>
-					</Button>
-					<Button className="bg-white text-abeg-primary font-semibold text-md">
-						<Link href="/create-campaign"> Start Fundraiser</Link>
-					</Button>
+					<Link href="/signin">
+						<Button className="bg-transparent border-2 border-white px-8 font-semibold text-md">
+							Sign In
+						</Button>
+					</Link>
+					<Link href="/create-campaign">
+						<Button className="bg-white text-abeg-primary font-semibold text-md">
+							Start Fundraiser
+						</Button>
+					</Link>
 				</div>
 			</div>
 
@@ -63,12 +67,16 @@ const Header = () => {
 					))}
 
 					<div className="space-y-5 md:flex md:flex-col justify-center">
-						<Button className="bg-transparent border-2 border-abeg-primary text-abeg-primary font-semibold text-xl mt-4 w-full md:w-80">
-							<Link href="/signin">Sign In</Link>
-						</Button>
-						<Button className="bg-abeg-primary px-8 font-semibold text-xl mt-2 w-full md:w-80">
-							<Link href="/create-campaign">Start Fundraiser</Link>
-						</Button>
+						<Link href="/signin">
+							<Button className="bg-transparent border-2 border-abeg-primary text-abeg-primary font-semibold text-xl mt-4 w-full md:w-80">
+								Sign In
+							</Button>
+						</Link>
+						<Link href="/create-campaign">
+							<Button className="bg-abeg-primary px-8 font-semibold text-xl mt-2 w-full md:w-80">
+								Start Fundraiser
+							</Button>
+						</Link>
 					</div>
 				</div>
 			)}
