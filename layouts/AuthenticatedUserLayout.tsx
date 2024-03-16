@@ -119,13 +119,13 @@ export const AuthenticatedUserLayout = ({
 				)}
 				<div className="flex items-center gap-3">
 					<Button
-						className={`!p-0 !pr-2 md:!px-4 !rounded-none lg:border-r border-r border-r-headerDivider`}
+						className={`!rounded-none border-r border-r-headerDivider !p-0 !pr-2 md:!px-4 lg:border-r`}
 					>
 						<Notification />
 					</Button>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<div className="flex items-center gap-2 md:gap-0 cursor-pointer">
+							<div className="flex cursor-pointer items-center gap-2 md:gap-0">
 								<Avatar initials={initials} />
 								<span className="px-1 hidden md:block ml-4 mr-2">
 									{castedUser?.firstName || "First Name"}
@@ -155,7 +155,7 @@ export const AuthenticatedUserLayout = ({
 								<DropdownMenuItem className="lg:hidden">
 									<Link
 										href="/dashboard"
-										className="flex w-full items-center bg-abeg-primary rounded-md gap-2 text-sm py-2 px-2"
+										className="flex w-full items-center gap-2 rounded-md bg-abeg-primary px-2 py-2 text-sm"
 									>
 										<PlusIcon />
 										Create Campaign
@@ -189,7 +189,7 @@ export const AuthenticatedUserLayout = ({
 									Hi, {castedUser?.firstName || "FirstName"}👋
 								</p>
 
-								{router.pathname === "/dashboard" ? (
+								{router.pathname === "/c" ? (
 									<p className="">Welcome to your dashboard✨.</p>
 								) : router.pathname === "/c/campaigns" ? (
 									<p className=""> Here is an overview of your campaigns✨.</p>
@@ -213,34 +213,47 @@ export const AuthenticatedUserLayout = ({
 							</Link>
 						</div>
 						<div className="border-b-2 border-b-white md:flex gap-12 hidden pb-3">
-							<Link href="/c" className={`flex items-center gap-1 !text-white`}>
+							<Link
+								href="/c"
+								className={`flex items-center gap-2 !text-white ${
+									router.pathname === "/c" && "font-semibold"
+								}`}
+							>
 								<DashboardIcon fill={router.pathname === "/c"} />
 								Dashboard
 							</Link>
 							<Link
 								href="/c/campaigns"
-								className={`flex items-center gap-1 !text-white`}
+								className={`flex items-center gap-2 !text-white ${
+									router.pathname === "/c/campaigns" && "font-semibold"
+								}`}
 							>
 								<MegaphoneIcon fill={router.pathname === "/c/campaigns"} />
 								Campaigns
 							</Link>
 							<Link
 								href="/c/analytics"
-								className={`flex items-center gap-1 !text-white`}
+								className={`flex items-center gap-2 !text-white ${
+									router.pathname === "/c/analytics" && "font-semibold"
+								}`}
 							>
 								<AnalyticsIcon fill={router.pathname === "/c/analytics"} />
 								Analytics
 							</Link>
 							<Link
 								href="/notifications"
-								className={`flex items-center gap-1 !text-white`}
+								className={`flex items-center gap-2 !text-white ${
+									router.pathname === "/notifications" && "font-semibold"
+								}`}
 							>
 								<UpdatesIcon fill={router.pathname === "/notifications"} />
 								Updates
 							</Link>
 							<Link
 								href="/settings"
-								className={`flex items-center gap-1 !text-white`}
+								className={`flex items-center gap-2 !text-white ${
+									router.pathname === "/settings" && "font-semibold"
+								}`}
 							>
 								<SettingsIcon fill={router.pathname === "/settings"} />
 								Settings

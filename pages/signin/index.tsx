@@ -9,7 +9,7 @@ import type { SessionData } from "@/interfaces/ApiResponses";
 import { AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
-import { useCampaign, useSession } from "@/store";
+import { useCampaignStore, useSession } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -32,7 +32,7 @@ const Login = () => {
 
 	const {
 		actions: { updateCampaign },
-	} = useCampaign((state) => state);
+	} = useCampaignStore((state) => state);
 
 	const {
 		register,
@@ -85,9 +85,7 @@ const Login = () => {
 				if (user.twoFA.active === false) {
 					const skipModal = localStorage.getItem(`skip-2FA-${user._id}`);
 					if (skipModal === "true") {
-						router.push(
-							campaigns.length > 0 ? "/dashboard" : "/create-campaign"
-						);
+						router.push(campaigns.length > 0 ? "/dashboard" : "/c/create");
 					} else {
 						setOpenModal(true);
 						await router.push("/signin?redirect=false", undefined, {

@@ -1,4 +1,4 @@
-import { useFormStore } from "@/store/formStore";
+import { useFormStore } from "@/store";
 import { StepIndicator, StepInformation } from "./StepDetails";
 
 function StepTracker() {

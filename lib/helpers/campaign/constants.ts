@@ -7,7 +7,7 @@ export const targetCountries = [
 	"Liberia",
 	"Cameroon",
 	"Gambia",
-];
+] as const;
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
