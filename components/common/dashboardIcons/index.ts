@@ -14,3 +14,4 @@ export { default as UpdatesIcon } from "./UpdatesIcon";
 export { default as UserIcon } from "./UserIcon";
 export { default as LocationIcon } from "./LocationIcon";
 export { default as ClockIcon } from "./ClockIcon";
+export { default as MegaphoneIcon } from "./MegaphoneIcon";

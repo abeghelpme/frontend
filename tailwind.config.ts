@@ -20,7 +20,7 @@ const config = {
 			backgroundImage: {
 				contours: "url('/assets/images/shared/bg-contours.png')",
 				authBg: "url('/assets/images/auth/auth-bg-jar.svg')",
-				dashboardBg: "url('/assets/images/shared/dashboardBg.png')",
+				dashboardBg: "url('/assets/images/dashboard/dashboardBg.png')",
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",

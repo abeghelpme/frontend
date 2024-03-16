@@ -12,7 +12,7 @@ import { useState } from "react";
 const DonationStatsPanel = () => {
 	const [item, setItem] = useState("Last 9 months");
 	return (
-		<div className="flex flex-col gap-4 rounded-xl  border-CampaignCardBorderWidth border-placeholder bg-white px-4 py-8  text-sm text-abeg-text text-opacity-80 md:gap-8 md:p-8 md:text-base">
+		<section className="flex flex-col gap-4 rounded-xl  border-CampaignCardBorderWidth border-placeholder bg-white px-4 py-8  text-sm text-abeg-text text-opacity-80 md:gap-8 md:p-8 md:text-base">
 			<div className="flex items-center  justify-between border-b-CampaignCardBorderWidth border-b-placeholder border-opacity-80 pb-4">
 				<p className="text-lg font-semibold">Average Donations</p>
 				<DropdownMenu>
@@ -66,7 +66,7 @@ const DonationStatsPanel = () => {
 				</div>
 			</div>
 			<DonationChart />
-		</div>
+		</section>
 	);
 };
 export default DonationStatsPanel;

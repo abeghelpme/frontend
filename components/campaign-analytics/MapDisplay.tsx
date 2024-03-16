@@ -3,7 +3,7 @@ import WorldMap from "./WorldMap";
 
 const MapDisplay = () => {
 	return (
-		<div className="flex flex-col gap-4 rounded-xl  border-CampaignCardBorderWidth border-placeholder bg-white px-4 py-8  text-sm text-abeg-text text-opacity-80 md:gap-8 md:p-8 md:text-base">
+		<section className="flex flex-col gap-4 rounded-xl  border-CampaignCardBorderWidth border-placeholder bg-white px-4 py-8  text-sm text-abeg-text text-opacity-80 md:gap-8 md:p-8 md:text-base">
 			<div className="flex items-center  justify-between border-b-CampaignCardBorderWidth border-b-placeholder border-opacity-80 pb-4">
 				<p className="text-lg font-semibold">Total donors so far</p>
 				<p className="rounded-lg border-CampaignCardBorderWidth border-abeg-text p-2 text-sm text-abeg-text">
@@ -24,7 +24,7 @@ const MapDisplay = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 

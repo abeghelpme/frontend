@@ -5,7 +5,7 @@ const UpdatesIcon = ({ fill, stroke }: DashboardSvgProps) => (
 		width="24"
 		height="24"
 		viewBox="0 0 31 31"
-		fill={fill ? "#008080" : "none"}
+		fill={fill ? "#EE885E" : "none"}
 		xmlns="http://www.w3.org/2000/svg"
 	>
 		<path
