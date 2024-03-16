@@ -137,7 +137,7 @@ const Dashboard = () => {
 							</div>
 						)} */}
 						<Link
-							href={"/create-campaign"}
+							href={"/c/create"}
 							className="flex w-fit items-center rounded-md bg-abeg-primary p-2 px-3 text-white md:bg-white md:text-abeg-primary"
 						>
 							<span className="pr-2">

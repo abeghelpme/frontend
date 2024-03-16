@@ -20,10 +20,10 @@ const socialIcons = [
 
 const siteMapLinks = [
 	{ name: "About", url: "/about" },
-	{ name: "How it works", url: "/create-campaign" },
-	{ name: "Testimonials", url: "/create-campaign" },
-	{ name: "Partners", url: "/create-campaign" },
-	{ name: "FAQ's", url: "/create-campaign" },
+	{ name: "How it works", url: "/c/create" },
+	{ name: "Testimonials", url: "/c/create" },
+	{ name: "Partners", url: "/c/create" },
+	{ name: "FAQ's", url: "/c/create" },
 ];
 
 const joinUsLinks = [
@@ -38,39 +38,39 @@ const contactUsLinks = [
 ];
 const Footer = () => {
 	return (
-		<footer className="bg-primary text-white p-10 md:p-20 space-y-5 divide-y-2 divide-gray-400">
-			<div className="md:flex justify-between items-center pb-5 md:pb-0">
-				<h1 className="text-center md:text-start text-3xl font-bold">
+		<footer className="space-y-5 divide-y-2 divide-gray-400 bg-primary p-10 text-white md:p-20">
+			<div className="items-center justify-between pb-5 md:flex md:pb-0">
+				<h1 className="text-center text-3xl font-bold md:text-start">
 					Be a part of the{" "}
 					<span className="text-abeg-primary">
 						change <br /> today
 					</span>{" "}
 					with Abeghelp.me
 				</h1>
-				<div className="flex justify-center items-center mt-10 md:mt-0">
+				<div className="mt-10 flex items-center justify-center md:mt-0">
 					<Image
 						src={joinUs}
 						alt="join us"
 						width={100}
 						height={100}
-						className="w-40 h-40"
+						className="h-40 w-40"
 					/>
 				</div>
 			</div>
-			<div className="flex flex-col-reverse lg:flex-row md:justify-center lg:justify-between pt-10 space-y-10 md:space-y-0 lg:space-x-20 w-full mx-auto">
-				<div className="flex flex-col space-y-5 md:space-y-10 md:w-1/3">
-					<div className="mt-20 md:mt-10 lg:mt-0 space-y-5">
+			<div className="mx-auto flex w-full flex-col-reverse space-y-10 pt-10 md:justify-center md:space-y-0 lg:flex-row lg:justify-between lg:space-x-20">
+				<div className="flex flex-col space-y-5 md:w-1/3 md:space-y-10">
+					<div className="mt-20 space-y-5 md:mt-10 lg:mt-0">
 						<div className="flex justify-center md:justify-start">
-							<LogoBanner className="text-white text-3xl" />
+							<LogoBanner className="text-3xl text-white" />
 						</div>
 						<div>
-							<p className="text-md font-extralight text-center md:text-start">
+							<p className="text-md text-center font-extralight md:text-start">
 								“Join the effortless way to raise funds and make adifference and
 								empower your cause with Abeghelp.me”
 							</p>
 						</div>
 					</div>
-					<div className="flex space-x-5 items-center justify-center md:justify-start">
+					<div className="flex items-center justify-center space-x-5 md:justify-start">
 						{socialIcons.map((social, index) => (
 							<Link href={social.url} key={index}>
 								<Image src={social.icon} alt="social media icon" />
@@ -78,8 +78,8 @@ const Footer = () => {
 						))}
 					</div>
 				</div>
-				<div className="md:flex md:flex-row gap-10 lg:w-2/3 justify-center text-center lg:justify-between space-y-20 md:space-y-0 md:justify-between">
-					<div className="space-y-5 flex flex-col text-center md:text-start">
+				<div className="justify-center gap-10 space-y-20 text-center md:flex md:flex-row md:justify-between md:space-y-0 lg:w-2/3 lg:justify-between">
+					<div className="flex flex-col space-y-5 text-center md:text-start">
 						<h1 className="text-2xl font-bold">Sitemap</h1>
 						{siteMapLinks.map((link, index) => (
 							<div key={index}>
@@ -89,7 +89,7 @@ const Footer = () => {
 							</div>
 						))}
 					</div>
-					<div className="space-y-5 flex flex-col text-center md:text-start">
+					<div className="flex flex-col space-y-5 text-center md:text-start">
 						<h1 className="text-2xl font-bold">Join Us</h1>
 						{joinUsLinks.map((link, index) => (
 							<div key={index}>
@@ -99,7 +99,7 @@ const Footer = () => {
 							</div>
 						))}
 					</div>
-					<div className="space-y-5 flex flex-col text-center md:text-start">
+					<div className="flex flex-col space-y-5 text-center md:text-start">
 						<h1 className="text-2xl font-bold">Contact Us</h1>
 						{contactUsLinks.map((link, index) => (
 							<div key={index}>

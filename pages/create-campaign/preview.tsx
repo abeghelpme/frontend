@@ -92,7 +92,7 @@ function PreviewCampaignPage() {
 							type="button"
 							className="border-abeg-primary font-bold"
 						>
-							<Link href={"/create-campaign"}> Edit Campaign</Link>
+							<Link href={"/c/create"}> Edit Campaign</Link>
 						</FormActionButton>
 					</div>
 

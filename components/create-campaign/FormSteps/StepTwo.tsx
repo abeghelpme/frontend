@@ -123,8 +123,10 @@ function StepTwo() {
 									</Select.Trigger>
 
 									<Select.Content id="category">
-										<Select.Item value="INDIVIDUAL">For Myself</Select.Item>
-										<Select.Item value="BENEFICIARY">
+										<Select.Item value="INDIVIDUAL" className="lg:text-base">
+											For Myself
+										</Select.Item>
+										<Select.Item value="BENEFICIARY" className="lg:text-base">
 											For Someone else
 										</Select.Item>
 									</Select.Content>

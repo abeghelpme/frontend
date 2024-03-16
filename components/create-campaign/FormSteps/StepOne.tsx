@@ -149,7 +149,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-4 h-[50px] rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px]  lg:px-4 lg:text-base"
+										className="mt-4 h-[50px] rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px] lg:px-4 lg:text-base"
 									>
 										<Select.Value placeholder="Select what category best suit your fundraiser" />
 									</Select.Trigger>
@@ -158,7 +158,11 @@ function StepOne() {
 										<CategoryList
 											each={campaignCategories}
 											render={(category) => (
-												<Select.Item key={category._id} value={category._id}>
+												<Select.Item
+													key={category._id}
+													value={category._id}
+													className="lg:text-base"
+												>
 													{category.name}
 												</Select.Item>
 											)}
@@ -202,6 +206,7 @@ function StepOne() {
 												<Select.Item
 													key={country}
 													value={country.toUpperCase()}
+													className="lg:text-base"
 												>
 													{country}
 												</Select.Item>
