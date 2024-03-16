@@ -92,7 +92,14 @@ function PreviewCampaignPage() {
 							type="button"
 							className="border-abeg-primary font-bold"
 						>
-							<Link href={"/c/create"}> Edit Campaign</Link>
+							<Link
+								href={{
+									pathname: "/c/create",
+									query: { id: currentCampaign._id },
+								}}
+							>
+								Edit Campaign
+							</Link>
 						</FormActionButton>
 					</div>
 
