@@ -1,7 +1,7 @@
+import { useAnimationInterval } from "@/lib/hooks/useAnimationInterval";
 import { useCallbackRef } from "@/lib/hooks/useCallbackRef";
 import { useState } from "react";
 import { useCarouselStore } from "./carouselStoreContext";
-import { useAnimationInterval } from "./useAnimationInterval";
 
 type CarouselOptions = {
 	hasAutoSlide?: boolean;

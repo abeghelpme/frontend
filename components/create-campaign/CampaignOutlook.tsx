@@ -14,10 +14,10 @@ import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CustomDialog } from "../common";
+import Heading from "../common/Heading";
 import { Button, ProgressBar } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
 import DonorSection from "./DonorSection";
-import Heading from "./Heading";
 
 type CampaignOutlookProps = {
 	children?: React.ReactNode;

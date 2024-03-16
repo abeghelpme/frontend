@@ -1,7 +1,7 @@
 import { cn } from "@/lib";
 import { TickIcon } from "@/public/assets/icons/campaign";
 import type { FormStore } from "@/store";
-import Heading from "../Heading";
+import Heading from "../../common/Heading";
 
 type StepIndicatorProps = {
 	step: FormStore["currentStep"];
