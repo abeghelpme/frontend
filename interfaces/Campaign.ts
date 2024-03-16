@@ -1,13 +1,13 @@
 import type { targetCountries } from "@/lib/helpers/campaign";
 import type { Prettify } from "@/lib/type-helpers";
 
-export type Creator = Prettify<{
+type Creator = Prettify<{
 	_id: string;
 	firstName: string;
 	lastName: string;
 }>;
 
-export type Category = Prettify<{
+type Category = Prettify<{
 	isDeleted: boolean;
 	_id: string;
 	name: string;
@@ -24,7 +24,7 @@ export type Image = Prettify<{
 export type Campaign = {
 	_id: string;
 	creator: Creator | null;
-	status: "Draft" | "In Review" | "Approved" | "Rejected";
+	status: "Draft" | "In Review" | "Approved" | "Rejected" | "";
 	category: Category | null;
 	currentStep: 1 | 2 | 3;
 	country: (typeof targetCountries)[number];
@@ -43,9 +43,4 @@ export type Campaign = {
 	story: string;
 	storyHtml: string;
 	url: string;
-	currentStep: 1 | 2 | 3;
-	isPublished: boolean;
-	categoryId?: string;
-	photos: Image[];
-	blobs?: File[];
 };

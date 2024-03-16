@@ -3,13 +3,8 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { cn, zodValidator } from "@/lib";
 import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
-<<<<<<< HEAD
 import { useFormStore } from "@/store";
 import type { StepTwoData } from "@/store/useFormStore";
-=======
-import { STEP_DATA_KEY_LOOKUP } from "@/store/formStore";
-import { useCampaignForm } from "@/store/useCampaignForm";
->>>>>>> 25e901c (refactor)
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { useEffect } from "react";
@@ -20,7 +15,6 @@ import Heading from "../Heading";
 
 function StepTwo() {
 	const {
-<<<<<<< HEAD
 		currentStep,
 		currentCampaign,
 		formStepData,
@@ -45,32 +39,11 @@ function StepTwo() {
 	const onSubmit = async (data: StepTwoData) => {
 		updateFormData(data);
 
-=======
-		values,
-		actions: { goToStep, updateInitialValues },
-	} = useCampaignForm((state) => state);
-
-	const currentStep = values.currentStep ?? 2;
-
-	const { control, formState, register, handleSubmit } = useForm({
-		mode: "onChange",
-		resolver: zodResolver(zodValidator("campaignStepTwo")!),
-		defaultValues: values,
-	});
-
-	useWatchFormStatus(formState);
-
-	const onSubmit = async (data: Partial<Campaign>) => {
->>>>>>> 25e901c (refactor)
 		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
 			`/campaign/create/two`,
 			{
 				...data,
-<<<<<<< HEAD
 				campaignId: currentCampaign._id,
-=======
-				campaignId: values._id,
->>>>>>> 25e901c (refactor)
 			}
 		);
 
@@ -83,14 +56,9 @@ function StepTwo() {
 		}
 
 		if (!dataInfo.data) return;
-		updateInitialValues(dataInfo.data);
 
-<<<<<<< HEAD
 		updateCurrentCampaign(dataInfo.data);
 		goToStep(3);
-=======
-		goToStep(currentStep + 1);
->>>>>>> 25e901c (refactor)
 	};
 
 	return (
@@ -203,7 +171,7 @@ function StepTwo() {
 								<DatePicker
 									className="mt-4 h-[50px] w-full justify-between rounded-[10px] border border-unfocused px-2 text-xs lg:h-[58px] lg:px-4 lg:text-base"
 									placeholder="Specify the end date for your campaign"
-									dateValueString={field.value ?? "0"}
+									dateValueString={field.value}
 									onChange={field.onChange}
 								/>
 							)}

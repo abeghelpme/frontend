@@ -20,19 +20,18 @@ function PreviewCampaignPage() {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (!currentCampaign.status || currentCampaign.status === "Draft") {
+		if (currentCampaign.status !== "Approved") {
 			toast.error("Error", {
 				description: "Please complete the campaign before previewing",
 				id: "incomplete",
 				duration: 2000,
 			});
 
-			void router.push("/create-campaign");
+			void router.push("/dashboard");
 		}
 	}, [currentCampaign.status]);
 
-	if (!currentCampaign.status || currentCampaign.status === "Draft")
-		return null;
+	if (currentCampaign.status !== "Approved") return null;
 
 	const handlePublish = async () => {
 		const { error } = await callApi<Campaign>("/campaign/publish", {

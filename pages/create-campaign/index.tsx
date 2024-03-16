@@ -7,12 +7,7 @@ import {
 } from "@/components/create-campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { cn } from "@/lib";
-<<<<<<< HEAD
 import { useFormStore } from "@/store";
-=======
-import { STEP_DATA_KEY_LOOKUP } from "@/store/formStore";
-import { useCampaignForm } from "@/store/useCampaignForm";
->>>>>>> 25e901c (refactor)
 import { useEffect } from "react";
 
 const STEP_COMPONENT_LOOKUP = {
@@ -23,17 +18,10 @@ const STEP_COMPONENT_LOOKUP = {
 
 function CreateCampaignPage() {
 	const {
-		values,
+		currentStep,
 		formStatus,
-<<<<<<< HEAD
 		actions: { goToStep, initializeFormData },
 	} = useFormStore((state) => state);
-=======
-		actions: { goToStep, initializeCategories },
-	} = useCampaignForm((state) => state);
-
-	const currentStep = values.currentStep ?? 1;
->>>>>>> 25e901c (refactor)
 
 	useEffect(() => {
 		initializeFormData();
@@ -45,9 +33,7 @@ function CreateCampaignPage() {
 			left: 0,
 			behavior: "smooth",
 		});
-
-		initializeCategories();
-	}, []);
+	}, [currentStep]);
 
 	return (
 		<AuthenticatedUserLayout

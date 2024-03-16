@@ -1,8 +1,5 @@
 import { getEditorExtensions } from "@/lib/helpers/campaign";
-<<<<<<< HEAD
 import type { FormStore } from "@/store";
-=======
->>>>>>> 25e901c (refactor)
 import { EditorContent, useEditor } from "@tiptap/react";
 import { sanitize } from "isomorphic-dompurify";
 import { useEffect } from "react";
@@ -12,13 +9,7 @@ import TipTapToolBar from "./TipTapToolBar";
 type EditorProps = {
 	placeholder?: string;
 	editorContent: string;
-<<<<<<< HEAD
 	setFormValue: UseFormSetValue<FormStore["formStepData"]>;
-=======
-	setFormValue: UseFormSetValue<{
-		story: string;
-	}>;
->>>>>>> 25e901c (refactor)
 	onChange: (content: string) => void;
 };
 
@@ -54,8 +45,8 @@ function TiptapEditor(props: EditorProps) {
 	});
 
 	useEffect(() => {
-		editor?.commands.setContent(editorContent);
-	}, []);
+		editor?.isEmpty && editor.commands.setContent(editorContent);
+	}, [editorContent]);
 
 	if (!editor) {
 		return null;

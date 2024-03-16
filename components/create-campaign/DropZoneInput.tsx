@@ -2,22 +2,13 @@ import { Button } from "@/components/ui";
 import { cn } from "@/lib";
 import { acceptedFilesString, validateFiles } from "@/lib/helpers/campaign";
 import { useToggle } from "@/lib/hooks";
-<<<<<<< HEAD
 import { type StepThreeData, useFormStore } from "@/store";
-=======
-import { useInitCampaignForm } from "@/store/useCampaignForm";
->>>>>>> 25e901c (refactor)
 import type { ChangeEvent, DragEvent } from "react";
 import { toast } from "sonner";
 
 type DropZoneInputProps = {
-<<<<<<< HEAD
 	value: StepThreeData["photos"];
 	onChange: (files: StepThreeData["photos"]) => void;
-=======
-	value: File[];
-	onChange: (files: string[]) => void;
->>>>>>> 25e901c (refactor)
 };
 
 function DropZoneInput(props: DropZoneInputProps) {
@@ -25,11 +16,8 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 	const [isDragActive, toggleIsDragActive] = useToggle(false);
 
-<<<<<<< HEAD
 	const { updateFormData } = useFormStore((state) => state.actions);
 
-=======
->>>>>>> 25e901c (refactor)
 	const handleImageUpload = (
 		event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>
 	) => {
@@ -56,32 +44,11 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 		if (validFilesArray.length === 0) return;
 
-		const base64Files: string[] = [];
+		const newFileState = [...imageFiles, ...validFilesArray];
 
-<<<<<<< HEAD
 		updateFormData({ photos: newFileState });
-=======
-		// convert file to base 64 strings
-		validFilesArray.map((file) => {
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onloadend = () => {
-				base64Files.push(reader.result as string);
-			};
-		});
->>>>>>> 25e901c (refactor)
 
-		const newFileState = [...imageFiles, ...base64Files];
-		useInitCampaignForm.setState({
-			...useInitCampaignForm.getState(),
-			fileBlobs: validFilesArray,
-			localImages: [
-				...useInitCampaignForm.getState().localImages,
-				...base64Files,
-			],
-		});
-
-		onChange(newFileState as string[]);
+		onChange(newFileState);
 
 		toast.success("Success", {
 			description: `Uploaded ${validFilesArray.length} file${

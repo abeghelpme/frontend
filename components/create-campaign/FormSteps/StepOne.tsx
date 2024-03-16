@@ -8,13 +8,8 @@ import {
 } from "@/lib/helpers/campaign";
 import { useElementList, useWatchFormStatus } from "@/lib/hooks";
 import { CrossIcon } from "@/public/assets/icons/campaign";
-<<<<<<< HEAD
 import { useCampaignStore } from "@/store";
 import { type StepOneData, useFormStore } from "@/store/useFormStore";
-=======
-import { STEP_DATA_KEY_LOOKUP } from "@/store/formStore";
-import { useCampaignForm } from "@/store/useCampaignForm";
->>>>>>> 25e901c (refactor)
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, useEffect, useRef } from "react";
@@ -27,20 +22,11 @@ function StepOne() {
 	const tagInputRef = useRef<HTMLInputElement>(null);
 
 	const {
-<<<<<<< HEAD
 		currentStep,
 		currentCampaign,
 		formStepData,
 		actions: { goToStep, updateFormData, updateCurrentCampaign },
 	} = useFormStore((state) => state);
-=======
-		values,
-		categories,
-		actions: { goToStep, updateValues, updateInitialValues },
-	} = useCampaignForm((state) => state);
-
-	const currentStep = values.currentStep ?? 1;
->>>>>>> 25e901c (refactor)
 
 	const { categories: campaignCategories } = useCampaignStore((state) => state);
 
@@ -58,11 +44,7 @@ function StepOne() {
 	} = useForm({
 		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepOne")!),
-<<<<<<< HEAD
 		defaultValues: formStepData,
-=======
-		defaultValues: values,
->>>>>>> 25e901c (refactor)
 	});
 
 	useEffect(() => {
@@ -73,23 +55,14 @@ function StepOne() {
 
 	useWatchFormStatus(formState);
 
-<<<<<<< HEAD
 	const onSubmit = async (data: StepOneData) => {
 		updateFormData(data);
 
-=======
-	const onSubmit = async (data: Partial<Campaign>) => {
->>>>>>> 25e901c (refactor)
 		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
 			`/campaign/create/one`,
 			{
 				...data,
-<<<<<<< HEAD
 				campaignId: currentCampaign._id,
-=======
-				...(data?.category?._id && { categoryId: data?.category?._id }),
-				...(values._id && { campaignId: values._id.toString() }),
->>>>>>> 25e901c (refactor)
 			}
 		);
 
@@ -102,12 +75,8 @@ function StepOne() {
 		}
 
 		if (!dataInfo.data) return;
-<<<<<<< HEAD
 
 		updateCurrentCampaign(dataInfo.data);
-=======
-		updateInitialValues(dataInfo.data);
->>>>>>> 25e901c (refactor)
 		goToStep(2);
 	};
 
@@ -123,25 +92,15 @@ function StepOne() {
 		}
 
 		const validTag = validateTagValue(
-<<<<<<< HEAD
 			formStepData.tags,
-=======
-			values.tags ?? [],
->>>>>>> 25e901c (refactor)
 			tagInputRef.current?.value
 		);
 
 		if (!validTag) return;
 
-<<<<<<< HEAD
 		const newTagState = [...formStepData.tags, `#${validTag}`];
 
 		updateFormData({ tags: newTagState });
-=======
-		const newTagState = [...(values.tags ?? []), `#${validTag}`];
-
-		updateValues({ tags: newTagState });
->>>>>>> 25e901c (refactor)
 
 		setFormValue("tags", newTagState);
 
@@ -149,16 +108,9 @@ function StepOne() {
 	};
 
 	const handleRemoveTags = (tag: string) => () => {
-<<<<<<< HEAD
 		const newTagState = formStepData.tags.filter((tagItem) => tagItem !== tag);
 
 		updateFormData({ tags: newTagState });
-=======
-		const newTagState =
-			values.tags && values.tags.filter((tagItem) => tagItem !== tag);
-
-		updateValues({ tags: newTagState });
->>>>>>> 25e901c (refactor)
 
 		setFormValue("tags", newTagState);
 	};
@@ -204,11 +156,7 @@ function StepOne() {
 
 									<Select.Content>
 										<CategoryList
-<<<<<<< HEAD
 											each={campaignCategories}
-=======
-											each={categories}
->>>>>>> 25e901c (refactor)
 											render={(category) => (
 												<Select.Item key={category._id} value={category._id}>
 													{category.name}
@@ -220,7 +168,7 @@ function StepOne() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField={"category"} />
+						<FormErrorMessage formState={formState} errorField={"categoryId"} />
 					</li>
 
 					<li>
@@ -293,20 +241,12 @@ function StepOne() {
 
 						<div className="mt-4 flex flex-col gap-4">
 							<span className="text-xs text-abeg-primary lg:text-sm">
-<<<<<<< HEAD
 								{formStepData.tags.length}/5 tags
-=======
-								{values?.tags?.length ?? 0}/5 tags
->>>>>>> 25e901c (refactor)
 							</span>
 
 							<ul className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary lg:text-base">
 								<TagList
-<<<<<<< HEAD
 									each={formStepData.tags}
-=======
-									each={values?.tags ?? []}
->>>>>>> 25e901c (refactor)
 									render={(tag, index) => (
 										<li
 											key={`${tag}-${index}`}
