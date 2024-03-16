@@ -200,7 +200,7 @@ export const AuthenticatedUserLayout = ({
 								) : null}
 							</div>
 							<Link
-								href={"/create-campaign"}
+								href={"/c/create"}
 								className="flex font-bold items-center p-2 bg-abeg-primary rounded-md md:bg-white md:text-abeg-primary text-white w-fit px-3"
 							>
 								<span className="pr-2 hidden md:block">

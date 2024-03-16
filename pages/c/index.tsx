@@ -406,4 +406,4 @@ const Dashboard = () => {
 	);
 };
 export default Dashboard;
-// dashboard.protect = true;
+Dashboard.protect = true;
