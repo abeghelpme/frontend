@@ -121,10 +121,7 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 
 			const { 0: currentCampaign } = campaigns;
 
-			if (currentCampaign.status !== "Draft") {
-				set({ currentStep: 1 });
-				return;
-			}
+			if (currentCampaign.status !== "Draft") return;
 
 			get().actions.updateCurrentCampaign(currentCampaign);
 

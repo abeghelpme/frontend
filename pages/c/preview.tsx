@@ -15,7 +15,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 function PreviewCampaignPage() {
-	const { currentCampaign } = useFormStore((state) => state);
+	const currentCampaign = useFormStore((state) => state.currentCampaign);
 
 	const router = useRouter();
 
