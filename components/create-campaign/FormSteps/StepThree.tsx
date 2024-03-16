@@ -46,7 +46,7 @@ function StepThree() {
 	useWatchFormStatus(formState);
 
 	const onSubmit = async (data: StepThreeData) => {
-		updateFormData(data);
+		updateFormData(initialFormState.formStepData);
 
 		const formData = new FormData();
 
@@ -71,7 +71,11 @@ function StepThree() {
 		if (!dataInfo.data) return;
 
 		updateCurrentCampaign(dataInfo.data);
-		updateFormData(initialFormState.formStepData);
+
+		toast.success("Success", {
+			description: "Campaign created successfully!",
+		});
+
 		void router.push("/dashboard");
 	};
 
