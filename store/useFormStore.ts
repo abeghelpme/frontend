@@ -96,7 +96,7 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 					...previousInfo,
 					...newInfo,
 					shortId: newInfo.url
-						? newInfo.url.split(".me/")[1]
+						? newInfo.url.split("/c/")[1]
 						: previousInfo.shortId,
 				},
 			});
@@ -121,10 +121,7 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 
 			const { 0: currentCampaign } = campaigns;
 
-			if (currentCampaign.status !== "Draft") {
-				set({ currentStep: 1 });
-				return;
-			}
+			if (currentCampaign.status !== "Draft") return;
 
 			get().actions.updateCurrentCampaign(currentCampaign);
 

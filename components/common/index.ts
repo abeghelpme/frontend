@@ -18,6 +18,8 @@ export {
 	ArrowDown,
 	CameroonFlag,
 	CloseIcon,
+	Closed,
+	Drafts,
 	FilterIcon,
 	GambiaFlag,
 	GhanaFlag,
@@ -26,8 +28,6 @@ export {
 	MaliFlag,
 	NigeriaFlag,
 	ReceiveIcon,
-	Star,
 	SlashedStar,
-	Closed,
-	Drafts,
+	Star,
 } from "./svg";

@@ -15,8 +15,8 @@ import { ChevronDownIcon } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import Heading from "../../common/Heading";
 import FormErrorMessage from "../FormErrorMessage";
-import Heading from "../Heading";
 
 function StepOne() {
 	const tagInputRef = useRef<HTMLInputElement>(null);
@@ -62,7 +62,7 @@ function StepOne() {
 			`/campaign/create/one`,
 			{
 				...data,
-				campaignId: currentCampaign._id,
+				...(!!currentCampaign._id && { campaignId: currentCampaign._id }),
 			}
 		);
 

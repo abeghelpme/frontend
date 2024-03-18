@@ -269,4 +269,4 @@ const Campaigns = () => {
 	);
 };
 export default Campaigns;
-// Campaigns.protect = true;
+Campaigns.protect = true;

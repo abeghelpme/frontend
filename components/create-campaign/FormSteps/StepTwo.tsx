@@ -10,8 +10,8 @@ import { ChevronDownIcon } from "lucide-react";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import Heading from "../../common/Heading";
 import FormErrorMessage from "../FormErrorMessage";
-import Heading from "../Heading";
 
 function StepTwo() {
 	const {
