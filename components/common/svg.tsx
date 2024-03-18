@@ -50,6 +50,31 @@ export const ArrowDown = () => (
 	</svg>
 );
 
+export const CloseIcon = () => (
+	<svg
+		width="67"
+		height="67"
+		viewBox="0 0 67 67"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path
+			d="M25.6055 41.4004L41.4063 25.5996"
+			stroke="#008080"
+			strokeWidth="2.27119"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M41.4063 41.4004L25.6055 25.5996"
+			stroke="#008080"
+			strokeWidth="2.27119"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+	</svg>
+);
+
 export const ReceiveIcon = () => {
 	return (
 		<svg
@@ -150,6 +175,27 @@ export const GhanaFlag = () => (
 		/>
 	</svg>
 );
+
+export const Hamburger = () => {
+	return (
+		<svg
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M3 12H15M3 6H21M3 18H21"
+				stroke="#484848"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
 export const MaliFlag = () => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -166,7 +212,7 @@ export const MaliFlag = () => (
 export const LiberiaFlag = () => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
-		id="flag-icons-lr"
+		id="flag-iconsLr"
 		viewBox="0 0 512 512"
 	>
 		<defs>

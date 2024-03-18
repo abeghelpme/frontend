@@ -53,7 +53,7 @@ const SingleCountryDonor = ({ countryName, progress }: Country) => {
 	const { country, flag } = Countries[countryName];
 	return (
 		<div className="flex gap-3 items-center">
-			<div className="rounded-full overflow-hidden w-10 aspect-square">
+			<div className="rounded-full overflow-hidden w-7 aspect-square">
 				{flag}
 			</div>
 			<div className="flex-1 flex flex-col">

@@ -29,7 +29,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
 	const redirect = (route: string, message: string) => {
 		toast.error("Page access denied!", {
 			description: message,
-			duration: 2000,
+			duration: 1000,
 		});
 
 		setTimeout(() => {
@@ -50,13 +50,24 @@ const Auth = ({ children }: { children: ReactNode }) => {
 	}
 
 	if (user && (user as User).twoFA?.active) {
+		// if (
+		// 	!(user as User).twoFA?.isVerified &&
+		// 	router.pathname !== "/2fa/authenticate"
+		// )
+		const { verified } = router.query;
 		if (
 			!(user as User).twoFA?.isVerified &&
-			router.pathname !== "/2fa/authenticate"
+			!router.pathname.includes("/2fa") &&
+			verified !== "true"
 		) {
-			redirect("/2fa/authenticate", "You need to verify your account");
-			return <Loader message="You need to verify your account" />;
+			redirect("/2fa/authenticate", "You need to verify 2FA");
+			return <Loader message="You need to verify 2FA" />;
 		}
+		// const { verified } = router.query;
+		// if (!(user as User).twoFA?.isVerified && !router.pathname.includes('/2fa') && verified !== 'true') {
+		// 	redirect('/2fa/authenticate', 'You need to verify 2FA');
+		// 	return <Loader message="You need to verify 2FA" />;
+		// }
 
 		if (
 			router.pathname.includes("/2fa") &&

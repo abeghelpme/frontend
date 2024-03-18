@@ -10,9 +10,9 @@ import {
 import { useState } from "react";
 
 const DonationStatsPanel = () => {
-	const [item, setItem] = useState("");
+	const [item, setItem] = useState("Last 9 months");
 	return (
-		<div className="flex flex-col gap-4 rounded-xl  border-CampaignCardBorderWidth border-placeholder bg-white px-4 py-8  text-sm text-abeg-text text-opacity-80 md:gap-8 md:p-8 md:text-base">
+		<section className="flex flex-col gap-4 rounded-xl  border-CampaignCardBorderWidth border-placeholder bg-white px-4 py-8  text-sm text-abeg-text text-opacity-80 md:gap-8 md:p-8 md:text-base">
 			<div className="flex items-center  justify-between border-b-CampaignCardBorderWidth border-b-placeholder border-opacity-80 pb-4">
 				<p className="text-lg font-semibold">Average Donations</p>
 				<DropdownMenu>
@@ -25,7 +25,7 @@ const DonationStatsPanel = () => {
 							//   size='sm'
 							//   variant='secondary'
 						>
-							<p className="text-sm font-semibold">Last 9 months</p>
+							<p className="text-sm font-semibold">{item}</p>
 							<ArrowDown />
 						</div>
 					</DropdownMenuTrigger>
@@ -35,14 +35,14 @@ const DonationStatsPanel = () => {
 							onValueChange={setItem}
 							className="cursor-pointer bg-white text-abeg-text"
 						>
-							<DropdownMenuRadioItem value="All item">
-								All item
+							<DropdownMenuRadioItem value="3 months">
+								3 months
 							</DropdownMenuRadioItem>
-							<DropdownMenuRadioItem value="Option 2">
-								Option 2
+							<DropdownMenuRadioItem value="30 days">
+								30 days
 							</DropdownMenuRadioItem>
-							<DropdownMenuRadioItem value="Option 3">
-								Option 3
+							<DropdownMenuRadioItem value="1 week">
+								1 week
 							</DropdownMenuRadioItem>
 						</DropdownMenuRadioGroup>
 					</DropdownMenuContent>
@@ -66,7 +66,7 @@ const DonationStatsPanel = () => {
 				</div>
 			</div>
 			<DonationChart />
-		</div>
+		</section>
 	);
 };
 export default DonationStatsPanel;

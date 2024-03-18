@@ -270,16 +270,12 @@ const HomePage = () => {
 							empower your cause with Abeghelp.me
 						</p>
 						<div className="flex space-x-10 py-5 md:pt-20">
-							<Link href="/create-campaign">
-								<Button className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none">
-									Start fundraiser
-								</Button>
-							</Link>
-							<Link href="/create-campaign">
-								<Button className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none">
-									Donate now
-								</Button>
-							</Link>
+							<Button className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none">
+								<Link href="/c/create">Start fundraiser</Link>
+							</Button>
+							<Button className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none">
+								<Link href="/c/create">Donate now</Link>
+							</Button>
 						</div>
 					</div>
 					<Image
@@ -305,15 +301,13 @@ const HomePage = () => {
 							Join the effortless way to raise funds <br /> and make a
 							difference and empower <br /> your cause with Abeghelp.me
 						</p>
-						<Link href="/create-campaign">
-							<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
-								Explore campaigns
-							</Button>
-						</Link>
+						<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
+							<Link href="/c/create">Explore campaigns</Link>
+						</Button>
 					</div>
 				</div>
 
-				<div className="md:hide-scrollbar gap-5 space-y-5 md:overflow-x-scroll py-10 md:flex md:space-y-0 md:py-20">
+				<div className="gap-5 space-y-5 py-10 md:flex md:space-y-0 md:overflow-x-scroll md:py-20 md:hide-scrollbar">
 					{campaignCard.map((card, index) => (
 						<div
 							key={index}
@@ -457,7 +451,7 @@ const HomePage = () => {
 					<h1 className="text-center text-4xl font-bold md:hidden">
 						Some of our users we&apos;ve helped reach their goals
 					</h1>
-					<div className="hide-scrollbar flex w-full gap-5 overflow-x-auto">
+					<div className="flex w-full gap-5 overflow-x-auto hide-scrollbar">
 						{testimonials.map((card, index) => (
 							<div
 								key={index}
@@ -502,14 +496,12 @@ const HomePage = () => {
 								Join our community of change-makers and make an impact today
 							</p>
 						</div>
-						<Link href="/create-campaign">
-							<Button className="border border-gray-500 font-semibold text-gray-500 outline-none">
-								Explore campaigns
-							</Button>
-						</Link>
+						<Button className="border border-gray-500 font-semibold text-gray-500 outline-none">
+							<Link href="/c/create">Explore campaigns</Link>
+						</Button>
 					</div>
 
-					<div className="md:hide-scrollbar mt-14 gap-5 md:overflow-x-auto md:flex">
+					<div className="mt-14 gap-5 md:flex md:overflow-x-auto md:hide-scrollbar">
 						{urgentFundraisers.map((item: any, index) => (
 							<div
 								key={index}
@@ -561,7 +553,7 @@ const HomePage = () => {
 						<div key={index} className="mb-4 space-y-2 bg-white p-4">
 							<div className="flex items-center justify-between">
 								<h3
-									className="text-2xl font-semibold cursor-pointer"
+									className="cursor-pointer text-2xl font-semibold"
 									onClick={() => toggleAnswer(index)}
 								>
 									{item.question}
@@ -574,7 +566,7 @@ const HomePage = () => {
 								</span>
 							</div>
 							{expanded[index] && (
-								<div className="pt-5 space-y-5 text-xl"> {item.answer}</div>
+								<div className="space-y-5 pt-5 text-xl"> {item.answer}</div>
 							)}
 							<div className="mt-2 border-t-2 border-gray-300"></div>
 						</div>

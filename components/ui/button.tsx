@@ -10,7 +10,7 @@ type ButtonProps = {
 	loading?: boolean;
 	usage?: "auth";
 	size?: "sm" | "base" | "lg";
-	variant?: "primary" | "secondary" | "danger";
+	variant?: "primary" | "secondary" | "danger" | "regular";
 } & React.ComponentPropsWithRef<"button">;
 
 const ButtonUI = (
@@ -36,6 +36,8 @@ const ButtonUI = (
 		"px-10": size === "lg",
 		"md:py-4 md:px-5 text-sm md:text-base": usage === "auth",
 		"w-full": fullWidth,
+		"bg-transparent p-0 text-abeg-text rounded-none flex items-center justify-center":
+			variant === "regular",
 	};
 
 	return (
