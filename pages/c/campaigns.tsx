@@ -164,7 +164,7 @@ const Campaigns = () => {
 				<h1 className="uppercase text-2xl font-extrabold text-white">
 					your campaigns
 				</h1>
-				<div className="border border-headerDivider bg-white p-3 py-2 rounded-lg flex items-center gap-8 justify-between lg:w-fit mx-auto">
+				<div className="border border-headerDivider bg-white p-3 py-2 rounded-lg flex items-center gap-8 justify-between lg:w-fit">
 					<Button
 						onClick={() => handleAll()}
 						variant="regular"
@@ -232,7 +232,7 @@ const Campaigns = () => {
 					</Button>
 				</div>
 			</div>
-			<section className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+			<section className="grid md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 gap-4">
 				{campaigns.filtered.map((item: CampaignData, index: number) => (
 					<div key={index} className=" mb-5 md:mb-0">
 						<div className="text-white relative">
