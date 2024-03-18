@@ -26,4 +26,8 @@ export {
 	MaliFlag,
 	NigeriaFlag,
 	ReceiveIcon,
+	Star,
+	SlashedStar,
+	Closed,
+	Drafts,
 } from "./svg";

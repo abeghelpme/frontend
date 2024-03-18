@@ -181,10 +181,10 @@ export const AuthenticatedUserLayout = ({
 				</div>
 			</header>
 			{isDashboard && (
-				<section className="dashboardHeroSection md:bg-dashboardBg md:flex flex-col gap-6 md:bg-abeg-primary md:h-[30svh] xl:h-[35svh] 2zl:h-[3svh] bg-no-repeat bg-cover">
+				<section className="dashboardHeroSection md:bg-dashboardBg md:flex flex-col gap-6 md:bg-abeg-primary md:h-[45svh] xl:h-[35svh] 2xl:h-[30svh] 3xl:h-[21svh] bg-no-repeat bg-cover">
 					<div className="px-[5%] lg:px-[7%] 2xl:px-[10%]">
 						<div className="mt-6 md:mt-0 md:py-6 gap-5 flex-col md:flex-row flex justify-between lg:gap-10 items-start">
-							<div className="md:text-2xl md:text-white space-y-2">
+							<div className="md:text-xl xl:text-2xl md:text-white space-y-2">
 								<p className="font-bold">
 									Hi, {castedUser?.firstName || "FirstName"}👋
 								</p>
@@ -212,7 +212,7 @@ export const AuthenticatedUserLayout = ({
 								<span>Create Campaign</span>
 							</Link>
 						</div>
-						<div className="border-b-2 border-b-white md:flex gap-12 hidden pb-3">
+						<div className="border-b-2 border-b-white md:flex gap-7 lg:gap-12 hidden pb-3">
 							<Link
 								href="/c"
 								className={`flex items-center gap-2 !text-white ${
