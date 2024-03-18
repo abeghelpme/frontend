@@ -96,6 +96,14 @@ const Campaigns = () => {
 			amountRaised: "$2,000,000",
 			status: "completed",
 		},
+		{
+			image: dashboardImage,
+			title: "Bringing Dental Care to Undeserved Communities",
+			name: "Locs Designer",
+			profession: "Health and Wellness",
+			amountRaised: "$2,000,000",
+			status: "incomplete",
+		},
 	];
 
 	const reducer = (
@@ -152,74 +160,77 @@ const Campaigns = () => {
 
 	return (
 		<AuthenticatedUserLayout isDashboard>
-			<h1 className="uppercase text-2xl font-extrabold text-white">
-				your campaigns
-			</h1>
-			<div className="mt-6 mb-8 border border-headerDivider bg-white p-3 py-2 rounded-lg flex items-center gap-4 justify-between">
-				<Button
-					onClick={() => handleAll()}
-					variant="regular"
-					className={`flex items-center gap-2 ${
-						campaigns.state === "all" && "text-abeg-primary font-semibold"
-					}`}
-				>
-					<MegaphoneIcon
-						fill={campaigns.state === "all" ? "#008080" : "none"}
-						stroke={campaigns.state !== "all"}
-					/>
-					All Campaigns
-				</Button>
-				<Button
-					variant="regular"
-					onClick={() => handleCompleted()}
-					className={`flex items-center gap-2 ${
-						campaigns.state === "completed" && "text-abeg-primary font-semibold"
-					}`}
-				>
-					<Star
-						fill={campaigns.state === "completed"}
-						stroke={campaigns.state === "completed"}
-					/>
-					Goals Reached
-				</Button>
-				<Button
-					variant="regular"
-					onClick={() => handleUnCompleted()}
-					className={`flex items-center gap-2 ${
-						campaigns.state === "incomplete" &&
-						"text-abeg-primary font-semibold"
-					}`}
-				>
-					<SlashedStar
-						fill={campaigns.state === "incomplete"}
-						stroke={campaigns.state === "incomplete"}
-					/>
-					Unreached
-				</Button>
-				<Button
-					variant="regular"
-					className={`flex items-center gap-2 ${
-						campaigns.state === "closed" && "text-abeg-primary font-semibold"
-					}`}
-				>
-					<Closed
-					// fill
-					// stroke
-					/>
-					Closed
-				</Button>
-				<Button
-					variant="regular"
-					className={`flex items-center gap-2 ${
-						campaigns.state === "draft" && "text-abeg-primary font-semibold"
-					}`}
-				>
-					<Drafts
-						fill={campaigns.state === "draft"}
-						stroke={campaigns.state === "draft"}
-					/>
-					Drafts
-				</Button>
+			<div className="mb-8 space-y-6 hidden md:block">
+				<h1 className="uppercase text-2xl font-extrabold text-white">
+					your campaigns
+				</h1>
+				<div className="border border-headerDivider bg-white p-3 py-2 rounded-lg flex items-center gap-8 justify-between lg:w-fit mx-auto">
+					<Button
+						onClick={() => handleAll()}
+						variant="regular"
+						className={`flex items-center gap-2 ${
+							campaigns.state === "all" && "text-abeg-primary font-semibold"
+						}`}
+					>
+						<MegaphoneIcon
+							fill={campaigns.state === "all" ? "#008080" : "none"}
+							stroke={campaigns.state !== "all"}
+						/>
+						All Campaigns
+					</Button>
+					<Button
+						variant="regular"
+						onClick={() => handleCompleted()}
+						className={`flex items-center gap-2 ${
+							campaigns.state === "completed" &&
+							"text-abeg-primary font-semibold"
+						}`}
+					>
+						<Star
+							fill={campaigns.state === "completed"}
+							stroke={campaigns.state === "completed"}
+						/>
+						Goals Reached
+					</Button>
+					<Button
+						variant="regular"
+						onClick={() => handleUnCompleted()}
+						className={`flex items-center gap-2 ${
+							campaigns.state === "incomplete" &&
+							"text-abeg-primary font-semibold"
+						}`}
+					>
+						<SlashedStar
+							fill={campaigns.state === "incomplete"}
+							stroke={campaigns.state === "incomplete"}
+						/>
+						Unreached
+					</Button>
+					<Button
+						variant="regular"
+						className={`flex items-center gap-2 ${
+							campaigns.state === "closed" && "text-abeg-primary font-semibold"
+						}`}
+					>
+						<Closed
+						// fill
+						// stroke
+						/>
+						Closed
+					</Button>
+					<Button
+						variant="regular"
+						className={`flex items-center gap-2 ${
+							campaigns.state === "draft" && "text-abeg-primary font-semibold"
+						}`}
+					>
+						<Drafts
+							fill={campaigns.state === "draft"}
+							stroke={campaigns.state === "draft"}
+						/>
+						Drafts
+					</Button>
+				</div>
 			</div>
 			<section className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 				{campaigns.filtered.map((item: CampaignData, index: number) => (
