@@ -1,12 +1,18 @@
-import type { DashboardSvgProps } from "@/interfaces";
+import type { FillSvgProps } from "@/interfaces";
 
-const MegaphoneIcon = ({ fill, stroke }: DashboardSvgProps) => {
+const MegaphoneIcon = ({ fill, stroke }: FillSvgProps) => {
 	return (
 		<svg
 			width="24"
 			height="24"
 			viewBox="0 0 31 31"
-			fill={fill ? "#EE885E" : "none"}
+			fill={
+				typeof fill !== "string" && fill
+					? "#EE885E"
+					: typeof fill === "string"
+					  ? fill
+					  : "none"
+			}
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<path
