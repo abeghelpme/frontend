@@ -1,26 +1,26 @@
-export type RenderPropFn<TArray extends unknown[]> = (
+export type RenderPropFn<TArray extends readonly unknown[]> = (
 	item: TArray[number],
 	index: number,
 	array: TArray
 ) => React.ReactNode;
 
-type ForPropsPartOne<TArray extends unknown[]> = {
+type ForPropsPartOne<TArray extends readonly unknown[]> = {
 	each: TArray;
 	children: RenderPropFn<TArray>;
 	render?: "Hey, Sorry but since your're currently using the children prop, the render prop is now redundant";
 };
 
-type ForPropsPartTwo<TArray extends unknown[]> = {
+type ForPropsPartTwo<TArray extends readonly unknown[]> = {
 	each: TArray;
 	children?: "Hey, Sorry but since your're currently using the render prop, so the children prop is now redundant";
 	render: RenderPropFn<TArray>;
 };
 
-type ForProps<TArray extends unknown[]> =
+type ForProps<TArray extends readonly unknown[]> =
 	| ForPropsPartOne<TArray>
 	| ForPropsPartTwo<TArray>;
 
-function For<TArray extends unknown[]>(props: ForProps<TArray>) {
+function For<TArray extends readonly unknown[]>(props: ForProps<TArray>) {
 	const { each: listOfItems, render, children } = props;
 
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

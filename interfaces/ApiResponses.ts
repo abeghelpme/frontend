@@ -1,3 +1,5 @@
+import type { Campaign } from "./Campaign";
+
 export type User = {
 	twoFA: {
 		type: string;
@@ -16,6 +18,11 @@ export type User = {
 	isMobileVerified: boolean;
 	isTermAndConditionAccepted: boolean;
 	createdAt: string;
+};
+
+export type SessionData = {
+	user: User;
+	campaigns: Campaign[];
 };
 
 export type ApiResponse<T = Record<string, unknown>> = {

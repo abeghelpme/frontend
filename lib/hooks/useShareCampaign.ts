@@ -7,17 +7,13 @@ const useShareCampaign = () => {
 
 	const generateTweet = useCallback(
 		(title: string, url: string, tags: string[]) => {
-			const queryParams = new URLSearchParams();
-
-			queryParams.append(
-				"text",
-				`Abeg help donate to my campaign:
+			const queryParams = new URLSearchParams({
+				text: `Abeg help donate to my campaign:
 	${title}
-	${tags.length > 0 && tags.join(", ")}`
-			);
-
-			queryParams.append("url", url);
-			queryParams.append("via", "abeghelpme");
+	${tags.length > 0 && tags.join(", ")}`,
+				url,
+				via: "abeghelpme",
+			});
 
 			return `https://twitter.com/intent/tweet?${queryParams.toString()}`;
 		},
@@ -25,12 +21,9 @@ const useShareCampaign = () => {
 	);
 
 	const generateWhatsAppMessage = useCallback((title: string, url: string) => {
-		const queryParams = new URLSearchParams();
-
-		queryParams.set(
-			"text",
-			`Abeg help donate to my campaign:\n${title}\n${url}`
-		);
+		const queryParams = new URLSearchParams({
+			text: `Abeg help donate to my campaign:\n${title}\n${url}`,
+		});
 
 		return `https://wa.me/?${queryParams.toString()}`;
 	}, []);

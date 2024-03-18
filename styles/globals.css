@@ -13,6 +13,11 @@ body {
 body:has([data-rem-reset]) {
 	font-size: 1.6rem;
 } */
+
+body:has(.authenticatedUserLayoutMain[data-isopen='true']) {
+	overflow: hidden;
+}
+
 #__next {
 	min-height: 100svh;
 	height: 100%;
@@ -23,6 +28,7 @@ body:has([data-rem-reset]) {
 
 input[type='number'] {
 	-webkit-appearance: textfield;
+	appearance: textfield;
 }
 
 /* Remove the inner spinner */
@@ -63,9 +69,9 @@ input[data-autocompleted] {
 
 .scrollbar-hide::-webkit-scrollbar {
 	display: none;
-  }
-  
-  .scrollbar-hide {
+}
+
+.scrollbar-hide {
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
-  }
+}

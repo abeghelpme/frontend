@@ -4,15 +4,16 @@ import {
 	FormErrorMessage,
 } from "@/components/common";
 import { Button, Input } from "@/components/ui";
-import type { ApiResponse, User } from "@/interfaces";
+import type { ApiResponse } from "@/interfaces";
+import type { SessionData } from "@/interfaces/ApiResponses";
 import { AuthPagesLayout } from "@/layouts";
 import { type LoginType, callApi, zodValidator } from "@/lib";
 import { useCloudflareTurnstile } from "@/lib/hooks";
-import { useSession } from "@/store";
+import { useCampaignStore, useSession } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -23,18 +24,15 @@ const Login = () => {
 	const router = useRouter();
 	const [openModal, setOpenModal] = useState(false);
 	const [success] = useState(false);
-	const [skip2FA, setSkip2FA] = useState("false");
+	const [skip2FA, setSkip2FA] = useState<string | boolean>(false);
 	const {
 		user,
-		actions: { updateUser },
+		actions: { updateUser, clearSession },
 	} = useSession((state) => state);
 
-	useEffect(() => {
-		const skipModal = localStorage.getItem("skip-2FA");
-		if (skipModal !== null) {
-			setSkip2FA(skipModal);
-		}
-	}, []);
+	const {
+		actions: { updateCampaign },
+	} = useCampaignStore((state) => state);
 
 	const {
 		register,
@@ -46,27 +44,21 @@ const Login = () => {
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
-	const handleOption = async () => {
-		await localStorage.setItem(
-			"skip-2FA",
-			JSON.stringify(skip2FA === "false" && "true")
-		);
-		await void router.push("/dashboard");
+	const handleSkip2fa = () => {
+		localStorage.setItem(`skip-2FA-${user?._id}`, JSON.stringify(true));
+		void router.push("/dashboard");
 		setOpenModal(false);
 	};
 
 	const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
-		const { data: responseData, error } = await callApi<ApiResponse<User>>(
-			"/auth/signin",
-			{
-				email: data.email,
-				password: data.password,
-			}
-		);
-
+		const { data: responseData, error } = await callApi<
+			ApiResponse<SessionData>
+		>("/auth/signin", {
+			email: data.email,
+			password: data.password,
+		});
 		if (error) {
 			const email = (error?.error as string)?.split(":")?.[1];
-
 			if (email) {
 				void router.push({
 					pathname: "/signup/verification",
@@ -84,25 +76,34 @@ const Login = () => {
 			});
 		} else {
 			toast.success("Success", {
-				description: (responseData as { message: string }).message,
+				description: responseData?.message,
 			});
 
-			reset();
-			if (responseData?.data?.twoFA?.active === false) {
-				if (skip2FA === "true") {
-					router.push("/dashboard");
+			if (responseData?.data) {
+				const { user, campaigns } = responseData?.data;
+
+				if (user.twoFA.active === false) {
+					const skipModal = localStorage.getItem(`skip-2FA-${user._id}`);
+					if (skipModal === "true") {
+						router.push(campaigns.length > 0 ? "/dashboard" : "/c/create");
+					} else {
+						setOpenModal(true);
+						await router.push("/signin?redirect=false", undefined, {
+							shallow: true,
+						});
+					}
+					// populate store with initial data
+					updateUser(user);
+					updateCampaign(campaigns);
 				} else {
-					setOpenModal(true);
-					await router.push("/signin?redirect=false", undefined, {
-						shallow: true,
+					router.push({
+						pathname: "/2fa/authenticate",
+						query: { type: user.twoFA.type, email: data?.email },
 					});
 				}
-
-				updateUser(responseData?.data as User);
-			} else {
-				router.push("/2fa/authenticate");
 			}
 		}
+		reset();
 	};
 
 	return (
@@ -179,7 +180,7 @@ const Login = () => {
 				<div className="mt-6 flex flex-col gap-6">
 					<CustomDialog
 						isOpen={openModal}
-						setIsOpen={() => setOpenModal(openModal)}
+						setIsOpen={() => setOpenModal(skip2FA as boolean)}
 						trigger={
 							<Button
 								type="submit"
@@ -215,7 +216,7 @@ const Login = () => {
 								<Button
 									type="submit"
 									disabled={isSubmitting}
-									onClick={handleOption}
+									onClick={handleSkip2fa}
 									className="mt-4 border border-abeg-primary py-4 text-abeg-primary disabled:bg-gray-500 disabled:text-white"
 									fullWidth
 								>

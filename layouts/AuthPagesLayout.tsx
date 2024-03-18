@@ -19,7 +19,7 @@ export const AuthPagesLayout = ({
 					<div
 						className={`mx-auto w-w90
            space-y-4 rounded-lg border-abeg-primary bg-white/50 px-4 py-5 shadow-auth-layout-shadow backdrop-blur-lg md:mx-0 md:space-y-6 md:p-9 lg:p-12 ${
-							contentClass! ? contentClass : "md:max-w-wAuthFlow"
+							contentClass! ? contentClass : "max-w-wAuthFlow"
 						}`}
 					>
 						<LogoBanner />
