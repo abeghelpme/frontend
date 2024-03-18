@@ -1,3 +1,5 @@
+import type { FillSvgProps } from "@/interfaces";
+
 export const AbegHelpLogo = () => (
 	<svg
 		width="137"
@@ -367,6 +369,129 @@ export const FilterIcon = () => {
 				d="M9.10833 1.75L5 8.33333"
 				stroke="#484848"
 				strokeWidth="1.5"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const Star = ({ fill, stroke }: FillSvgProps) => {
+	return (
+		<svg
+			width="24"
+			height="31"
+			viewBox="0 0 31 31"
+			fill={fill ? "#008080" : "none"}
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M17.4324 4.39767L19.6379 8.80873C19.9387 9.42277 20.7407 10.0117 21.4174 10.1245L25.4149 10.7887C27.9713 11.2148 28.5728 13.0694 26.7307 14.899L23.6229 18.0068C23.0966 18.5331 22.8084 19.5482 22.9713 20.275L23.861 24.1221C24.5628 27.1673 22.9462 28.3452 20.252 26.7537L16.5051 24.5357C15.8284 24.1347 14.7131 24.1347 14.0239 24.5357L10.277 26.7537C7.59523 28.3452 5.96615 27.1547 6.66791 24.1221L7.55764 20.275C7.72055 19.5482 7.43232 18.5331 6.906 18.0068L3.79821 14.899C1.96862 13.0694 2.5576 11.2148 5.11401 10.7887L9.11153 10.1245C9.7757 10.0117 10.5777 9.42277 10.8785 8.80873L13.084 4.39767C14.287 2.00416 16.2419 2.00416 17.4324 4.39767Z"
+				stroke={!stroke ? "#484848" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+export const SlashedStar = ({ fill, stroke }: FillSvgProps) => {
+	return (
+		<svg
+			width="24"
+			height="31"
+			viewBox="0 0 31 31"
+			fill={fill ? "#008080" : "none"}
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M7.06991 23.3703L7.7842 20.275C7.94711 19.5482 7.65889 18.5331 7.13257 18.0068L4.02477 14.899C2.19518 13.0694 2.78416 11.2148 5.34057 10.7887L9.3381 10.1245C10.0023 10.0117 10.8043 9.42277 11.105 8.80873L13.3106 4.39767C14.501 2.00416 16.4559 2.00416 17.659 4.39767L19.8645 8.80873C20.0023 9.09695 20.2655 9.37264 20.5537 9.61074"
+				stroke={!stroke ? "#484848" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M25.6399 10.79C28.1963 11.2161 28.7978 13.0708 26.9557 14.9003L23.8479 18.0081C23.3216 18.5345 23.0334 19.5495 23.1963 20.2763L24.086 24.1235C24.7878 27.1686 23.1712 28.3466 20.477 26.7551L16.7301 24.537C16.0534 24.136 14.9381 24.136 14.2488 24.537L10.502 26.7551"
+				stroke={!stroke ? "#484848" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M28.0218 2.50586L2.95898 27.5687"
+				stroke={"#484848"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const Closed = ({ fill, stroke }: FillSvgProps) => {
+	return (
+		<svg
+			width="24"
+			height="31"
+			viewBox="0 0 31 31"
+			fill={fill ? "#008080" : "none"}
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M12.1719 18.584L19.2647 11.4912"
+				stroke={!stroke ? "#484848" : "#ffffff"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M19.2647 18.584L12.1719 11.4912"
+				stroke={!stroke ? "#484848" : "#ffffff"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M11.9575 27.5687H19.4764C25.7421 27.5687 28.2484 25.0624 28.2484 18.7967V11.2779C28.2484 5.01215 25.7421 2.50586 19.4764 2.50586H11.9575C5.69183 2.50586 3.18555 5.01215 3.18555 11.2779V18.7967C3.18555 25.0624 5.69183 27.5687 11.9575 27.5687Z"
+				stroke={!stroke ? "#292D32" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const Drafts = ({ fill, stroke }: FillSvgProps) => {
+	return (
+		<svg
+			width="24"
+			height="31"
+			viewBox="0 0 31 31"
+			fill={fill ? "#008080" : "none"}
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M14.6884 2.50586H12.1822C5.91644 2.50586 3.41016 5.01215 3.41016 11.2779V18.7967C3.41016 25.0624 5.91644 27.5687 12.1822 27.5687H19.701C25.9667 27.5687 28.473 25.0624 28.473 18.7967V16.2904"
+				stroke={!stroke ? "#484848" : "#ffffff"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M21.0054 3.78444L11.1306 13.6592C10.7546 14.0351 10.3787 14.7745 10.3035 15.3134L9.76466 19.0853C9.56416 20.4512 10.5291 21.4036 11.895 21.2157L15.667 20.6768C16.1933 20.6016 16.9326 20.2257 17.3211 19.8497L27.1959 9.97496C28.9002 8.27069 29.7022 6.29072 27.1959 3.78444C24.6896 1.27815 22.7096 2.08016 21.0054 3.78444Z"
+				stroke={!stroke ? "#484848" : "#ffffff"}
+				strokeWidth="1.87971"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M19.5879 5.20117C20.4275 8.19618 22.7709 10.5396 25.7784 11.3917"
+				stroke={!stroke ? "#292D32" : "none"}
+				strokeWidth="1.87971"
 				strokeMiterlimit="10"
 				strokeLinecap="round"
 				strokeLinejoin="round"

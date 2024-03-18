@@ -1,6 +1,6 @@
-import type { DashboardSvgProps } from "@/interfaces";
+import type { FillSvgProps } from "@/interfaces";
 
-const SettingsIcon = ({ fill, stroke }: DashboardSvgProps) => (
+const SettingsIcon = ({ fill, stroke }: FillSvgProps) => (
 	<svg
 		width="24"
 		height="24"
