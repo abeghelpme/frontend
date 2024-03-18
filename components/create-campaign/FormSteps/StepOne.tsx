@@ -62,7 +62,7 @@ function StepOne() {
 			`/campaign/create/one`,
 			{
 				...data,
-				campaignId: currentCampaign._id,
+				...(!!currentCampaign._id && { campaignId: currentCampaign._id }),
 			}
 		);
 

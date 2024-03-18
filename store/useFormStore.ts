@@ -96,7 +96,7 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 					...previousInfo,
 					...newInfo,
 					shortId: newInfo.url
-						? newInfo.url.split(".me/")[1]
+						? newInfo.url.split("/c/")[1]
 						: previousInfo.shortId,
 				},
 			});
