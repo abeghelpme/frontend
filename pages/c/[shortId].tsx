@@ -49,9 +49,9 @@ export const getStaticProps = (async (context) => {
 	};
 }) satisfies GetStaticProps<{ campaign: Campaign }>;
 
-type CampaignViewProps = InferGetStaticPropsType<typeof getStaticProps>;
-
-function CampaignView({ campaign }: CampaignViewProps) {
+function CampaignView({
+	campaign,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
 	const router = useRouter();
 
 	if (router.isFallback) {
@@ -61,7 +61,7 @@ function CampaignView({ campaign }: CampaignViewProps) {
 	const excerpt = generateExcerpt(campaign.story);
 
 	return (
-		<AuthenticatedUserLayout isDashboard>
+		<>
 			<NextSeo
 				title={campaign.title}
 				description={excerpt}
@@ -93,8 +93,12 @@ function CampaignView({ campaign }: CampaignViewProps) {
 					</Heading>
 				</CampaignOutlook.Header>
 			</CampaignOutlook>
-		</AuthenticatedUserLayout>
+		</>
 	);
 }
 
 export default CampaignView;
+
+CampaignView.getLayout = (page: React.ReactElement) => (
+	<AuthenticatedUserLayout>{page}</AuthenticatedUserLayout>
+);
