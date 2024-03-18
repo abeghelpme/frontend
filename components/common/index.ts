@@ -30,4 +30,7 @@ export {
 	ReceiveIcon,
 	SlashedStar,
 	Star,
+	Moneys,
+	Verify,
+	WalletAdd,
 } from "./svg";
