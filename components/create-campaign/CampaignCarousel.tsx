@@ -1,5 +1,5 @@
+import { DonorIcon, DonorIcon2 } from "@/components/common/campaign-icons";
 import type { Campaign } from "@/interfaces/Campaign";
-import { DonorIcon, DonorIcon2 } from "@/public/assets/icons/campaign";
 import { ArrowBigRightIcon, ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import { ClockIcon, LocationIcon } from "../common";
@@ -67,20 +67,16 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 					)}
 				/>
 
-				<Carousel.Caption
-					as="figure"
-					className="bottom-[20px] right-[18px] flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] text-[11px] backdrop-blur-md"
-				>
-					<ClockIcon />
-					<figcaption>20 days left</figcaption>
-				</Carousel.Caption>
+				<Carousel.Caption className="bottom-[20px] flex w-full justify-between px-[20px]">
+					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px]  text-[11px] backdrop-blur-md">
+						<DonorIcon2 className="size-4" />
+						<figcaption> 235,567 total donors</figcaption>
+					</figure>
 
-				<Carousel.Caption
-					as="figure"
-					className="bottom-[20px] left-[18px] flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] text-[11px] backdrop-blur-md"
-				>
-					<DonorIcon2 className="size-4" />
-					<figcaption> 235,567 total donors</figcaption>
+					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] px-[20px] text-[11px] backdrop-blur-md">
+						<ClockIcon />
+						<figcaption>20 days left</figcaption>
+					</figure>
 				</Carousel.Caption>
 			</Carousel.Content>
 		</Carousel.Root>

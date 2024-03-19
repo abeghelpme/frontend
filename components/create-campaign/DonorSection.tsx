@@ -1,6 +1,6 @@
+import { DummyAvatar } from "@/components/common/campaign-icons";
 import { cn } from "@/lib";
 import { useElementList } from "@/lib/hooks";
-import { DummyAvatar } from "@/public/assets/icons/campaign";
 import { Button } from "../ui";
 
 function DonorSection({ className }: { className?: string }) {

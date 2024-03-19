@@ -1,3 +1,5 @@
+import { Heading } from "@/components/common";
+import { CrossIcon } from "@/components/common/campaign-icons";
 import { Select } from "@/components/ui";
 import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
@@ -7,7 +9,6 @@ import {
 	validateTagValue,
 } from "@/lib/helpers/campaign";
 import { useElementList, useWatchFormStatus } from "@/lib/hooks";
-import { CrossIcon } from "@/public/assets/icons/campaign";
 import { useCampaignStore } from "@/store";
 import { type StepOneData, useFormStore } from "@/store/useFormStore";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +16,6 @@ import { ChevronDownIcon } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import Heading from "../../common/Heading";
 import FormErrorMessage from "../FormErrorMessage";
 
 function StepOne() {
@@ -255,7 +255,7 @@ function StepOne() {
 								render={(tag, index) => (
 									<li
 										key={`${tag}-${index}`}
-										className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
+										className="flex min-w-20 items-center justify-between gap-2.5 rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] px-1 py-3"
 									>
 										<p>{tag}</p>
 

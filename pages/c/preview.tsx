@@ -1,7 +1,7 @@
+import { Heading } from "@/components/common";
 import {
 	CampaignOutlook,
 	FormActionButton,
-	Heading,
 } from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
 import { AuthenticatedUserLayout } from "@/layouts";

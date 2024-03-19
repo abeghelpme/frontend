@@ -1,7 +1,7 @@
-import { Loader } from "@/components/common";
-import { CampaignOutlook, Heading } from "@/components/create-campaign";
+import { Heading, Loader } from "@/components/common";
+import { CampaignOutlook } from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
-import { AuthenticatedUserLayout, BaseLayout } from "@/layouts";
+import { BaseLayout } from "@/layouts";
 import { callApi } from "@/lib/helpers/campaign";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
 import type {
