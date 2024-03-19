@@ -16,7 +16,6 @@ import {
 	globalCommunity,
 	google,
 	happyPeople,
-	hero,
 	joinnUs,
 	netflix,
 	senville,
@@ -274,9 +273,11 @@ const HomePage = () => {
 							Join the effortless way to raise funds <br /> and make a
 							difference and empower <br /> your cause with Abeghelp.me
 						</p>
-						<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
-							<Link href="/c/create">Explore campaigns</Link>
-						</Button>
+						<Link href="/c/create">
+							<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
+								Explore campaigns
+							</Button>
+						</Link>
 					</div>
 				</div>
 

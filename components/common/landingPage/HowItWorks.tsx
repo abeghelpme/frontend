@@ -27,11 +27,11 @@ const HowItWorks = () => {
 						Want to know more?
 					</h4>
 					<h1 className="text-4xl font-bold md:text-5xl">
-						Here’s how it works
+						Here&apos;s how it works
 					</h1>
-					<Button variant="primary">
-						<Link href="/c/create">Donate now</Link>
-					</Button>
+					<Link href="/c/create">
+						<Button variant="primary">Donate now</Button>
+					</Link>
 				</div>
 				<div className="flex-1 lg:pl-20 md:flex md:justify-center">
 					<p className="text-xl text-placeholder font-medium">

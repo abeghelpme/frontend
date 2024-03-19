@@ -31,13 +31,17 @@ const Hero = ({ h1Tag, pTag, button1, button2, imageSrc }: Props) => {
 					</h1>
 					<p className="pr-10 text-lg text-gray-50 md:pr-5">{pTag} </p>
 					<div className="flex space-x-10 py-5 md:pt-20">
-						<Button className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none">
-							<Link href={`${button1.href}`}>{button1.text}</Link>
-						</Button>
-						{button2 && (
-							<Button className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none">
-								<Link href={`${button2.href}`}>{button2.text}</Link>
+						<Link href={`${button1.href}`}>
+							<Button className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none">
+								{button1.text}
 							</Button>
+						</Link>
+						{button2 && (
+							<Link href={`${button2.href}`}>
+								<Button className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none">
+									{button2.text}
+								</Button>
+							</Link>
 						)}
 					</div>
 				</div>
