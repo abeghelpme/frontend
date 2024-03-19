@@ -1,3 +1,4 @@
+import TestimonialCard from "@/components/common/TestimonialCard";
 import { Button, ProgressBar } from "@/components/ui";
 import { BaseLayout } from "@/layouts";
 import {
@@ -18,7 +19,6 @@ import {
 	netflix,
 	senville,
 	testimonialImage1,
-	testimonialImage2,
 	timeCamp,
 } from "@/public/assets/images/landing-page";
 import Image from "next/image";
@@ -197,7 +197,7 @@ const testimonials = [
 		text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
 	},
 	{
-		image: testimonialImage2,
+		image: testimonialImage1,
 		name: "Sandra Doe",
 		greeting: "Thanks AHM",
 		text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
@@ -220,7 +220,7 @@ const campaignCard = [
 	{
 		index: 2,
 		image: createCampaignImage2,
-		heading: "Share you story",
+		heading: "Share your story",
 		text: "Spread the word with our easy sharing tools. Reach out to friends, family, and beyond.",
 	},
 	{
@@ -444,43 +444,16 @@ const HomePage = () => {
 					</div>
 					<Image src={joinnUs} alt="hero image" width={600} height={600} />
 				</div>
-				<div>
-					<h1 className="md-block hidden px-32 text-center text-5xl font-bold">
+				<div className="md:pt-10">
+					<h1 className="md:block hidden lg:px-32 text-center text-5xl font-bold">
 						Hear from some of our users we&apos;ve helped reach their goals
 					</h1>
 					<h1 className="text-center text-4xl font-bold md:hidden">
 						Some of our users we&apos;ve helped reach their goals
 					</h1>
 					<div className="flex w-full gap-5 overflow-x-auto hide-scrollbar">
-						{testimonials.map((card, index) => (
-							<div
-								key={index}
-								className="mt-16 w-[90%] flex-shrink-0 flex-grow-0 items-center justify-center rounded-xl p-4 text-white md:p-7 lg:mt-20 lg:flex lg:gap-20"
-								style={{
-									backgroundImage: `url(/assets/images/landing-page/background.png)`,
-									backgroundSize: "cover",
-									backgroundPosition: "center",
-								}}
-							>
-								<Image
-									src={card.image}
-									alt="hero image"
-									width={400}
-									height={400}
-									className="w-full"
-								/>
-								<div className="mt-5 lg:mt-0">
-									<p className=" text-2xl font-extralight text-gray-200 md:text-3xl">
-										{card.text}
-									</p>
-									<h1 className="mt-10 text-3xl font-bold md:text-4xl lg:mt-20">
-										{card.greeting}
-									</h1>
-									<h1 className="text-xl font-normal md:text-2xl">
-										{card.name}
-									</h1>
-								</div>
-							</div>
+						{testimonials.map((testimonial, index) => (
+							<TestimonialCard key={index} testimonial={testimonial} />
 						))}
 					</div>
 				</div>
