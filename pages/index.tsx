@@ -1,10 +1,12 @@
 import TestimonialCard from "@/components/common/TestimonialCard";
+import { Hero } from "@/components/common/landingPage";
 import { Button, ProgressBar } from "@/components/ui";
 import { BaseLayout } from "@/layouts";
 import {
 	avatar1,
 	avatar2,
 	avatar3,
+	campaignHero,
 	createCampaignImage1,
 	createCampaignImage2,
 	createCampaignImage3,
@@ -252,42 +254,13 @@ const HomePage = () => {
 
 	return (
 		<BaseLayout>
-			<div
-				className="flex items-center md:py-10 lg:h-screen"
-				style={{
-					backgroundImage: `url(/assets/images/landing-page/background.png)`,
-					backgroundSize: "cover",
-					backgroundPosition: "center",
-				}}
-			>
-				<div className="justify-center px-5 text-gray-50 md:items-center md:justify-between md:px-20 lg:flex lg:gap-20">
-					<div className="mt-5 space-y-5 lg:mt-0">
-						<h1 className="pr-5 text-5xl font-bold md:pr-0 md:text-6xl">
-							Start your journey into fundraising with ease
-						</h1>
-						<p className="pr-10 text-lg text-gray-50 md:pr-5">
-							Join the effortless way to raise funds and make a difference and
-							empower your cause with Abeghelp.me
-						</p>
-						<div className="flex space-x-10 py-5 md:pt-20">
-							<Button className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none">
-								<Link href="/c/create">Start fundraiser</Link>
-							</Button>
-							<Button className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none">
-								<Link href="/c/create">Donate now</Link>
-							</Button>
-						</div>
-					</div>
-					<Image
-						src={hero}
-						alt="hero image"
-						width={500}
-						height={500}
-						priority={true}
-						className="ml-[-1.5rem] flex w-full justify-center py-10 md:justify-start lg:py-0"
-					/>
-				</div>
-			</div>
+			<Hero
+				h1Tag="Start your journey into fundraising with ease"
+				pTag="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
+				button1={{ href: "/c/create", text: "Start fundraiser" }}
+				button2={{ href: "/c/create", text: "Donate now" }}
+				imageSrc={campaignHero}
+			/>
 			<div className="px-5 pb-10 pt-10 md:px-20 md:pt-20">
 				<div className="w-full space-y-5 md:justify-between lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
 					<div className="space-y-5 md:pr-20">

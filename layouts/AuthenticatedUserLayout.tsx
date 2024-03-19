@@ -75,7 +75,7 @@ export const AuthenticatedUserLayout = ({
 	const initials = castedUser?.firstName[0] + castedUser?.lastName[0];
 	return (
 		<>
-			<header className="sticky top-0 left-0 bg-white z-10 flex items-center gap-10 py-6 px-[5%] lg:px-[7%] 2xl:px-[10%] justify-between border-b border-b-abeg-primary">
+			<header className="sticky top-0 left-0 bg-white z-10 flex items-center gap-10 py-5 px-[5%] lg:px-[7%] 2xl:px-[10%] justify-between border-b border-b-abeg-primary">
 				<div className="flex items-center gap-5">
 					{isDashboard && (
 						<Button
@@ -181,10 +181,10 @@ export const AuthenticatedUserLayout = ({
 				</div>
 			</header>
 			{isDashboard && (
-				<section className="dashboardHeroSection md:bg-dashboardBg md:flex flex-col gap-6 md:bg-abeg-primary md:h-[30svh] xl:h-[35svh] 2zl:h-[3svh] bg-no-repeat bg-cover">
+				<section className="md:bg-dashboardBg md:flex flex-col gap-6 md:bg-abeg-primary md:h-[42svh] xl:h-[37svh] 2xl:h-[40svh] 3xl:h-[19svh] bg-no-repeat bg-cover">
 					<div className="px-[5%] lg:px-[7%] 2xl:px-[10%]">
 						<div className="mt-6 md:mt-0 md:py-6 gap-5 flex-col md:flex-row flex justify-between lg:gap-10 items-start">
-							<div className="md:text-2xl md:text-white space-y-2">
+							<div className="md:text-xl xl:text-2xl md:text-white space-y-2">
 								<p className="font-bold">
 									Hi, {castedUser?.firstName || "FirstName"}👋
 								</p>
@@ -212,7 +212,7 @@ export const AuthenticatedUserLayout = ({
 								<span>Create Campaign</span>
 							</Link>
 						</div>
-						<div className="border-b-2 border-b-white md:flex gap-12 hidden pb-3">
+						<div className="border-b-2 border-b-white md:flex gap-7 lg:gap-12 hidden pb-3">
 							<Link
 								href="/c"
 								className={`flex items-center gap-2 !text-white ${
@@ -266,7 +266,7 @@ export const AuthenticatedUserLayout = ({
 				data-isopen={isOpen}
 				className={`authenticatedUserLayoutMain flex-1 h-full px-[5%] lg:px-[7%] 2xl:px-[10%] ${
 					isDashboard &&
-					"space-y-8 lg:space-y-10 md:-translate-y-[4.5rem] mt-10 md:mt-0"
+					"space-y-8 lg:space-y-10 md:-translate-y-[4.8rem] mt-10 md:mt-0"
 				}`}
 			>
 				{children}
