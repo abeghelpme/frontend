@@ -533,7 +533,7 @@ const HomePage = () => {
 					</div>
 				</div>
 
-				<div>
+				{/* <div>
 					<h1 className="text-center text-4xl font-bold md:px-32 md:text-5xl">
 						Trusted By Pioneers
 					</h1>
@@ -542,7 +542,7 @@ const HomePage = () => {
 							<Image key={index} src={item} alt={""} width={150} height={150} />
 						))}
 					</div>
-				</div>
+				</div> */}
 
 				<div className="mt-10">
 					<p className="text-xl text-gray-500">Wanna know more?</p>
