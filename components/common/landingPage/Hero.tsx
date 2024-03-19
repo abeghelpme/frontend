@@ -24,20 +24,24 @@ const Hero = ({ h1Tag, pTag, button1, button2, imageSrc }: Props) => {
 				backgroundPosition: "center",
 			}}
 		>
-			<div className="justify-center px-5 text-gray-50 md:items-center md:justify-between md:px-20 lg:flex lg:gap-20">
-				<div className="mt-5 space-y-5 lg:mt-0">
-					<h1 className="pr-5 text-5xl font-bold md:pr-0 md:text-6xl">
+			<div className="flex flex-col lg:flex-row gap-4 lg:gap-12 lg:items-center px-5 text-gray-50  md:px-20">
+				<div className="w-full lg:w-1/2 flex flex-col gap-6">
+					<h1 className="pr-5 text-5xl font-bold md:pr-0 md:text-6xl md:leading-snug leading-tight">
 						{h1Tag}
 					</h1>
 					<p className="pr-10 text-lg text-gray-50 md:pr-5">{pTag} </p>
 					<div className="flex space-x-10 py-5 md:pt-20">
-						<Button className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none">
-							<Link href={`${button1.href}`}>{button1.text}</Link>
-						</Button>
-						{button2 && (
-							<Button className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none">
-								<Link href={`${button2.href}`}>{button2.text}</Link>
+						<Link href={`${button1.href}`}>
+							<Button className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none">
+								{button1.text}
 							</Button>
+						</Link>
+						{button2 && (
+							<Link href={`${button2.href}`}>
+								<Button className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none">
+									{button2.text}
+								</Button>
+							</Link>
 						)}
 					</div>
 				</div>
@@ -47,7 +51,7 @@ const Hero = ({ h1Tag, pTag, button1, button2, imageSrc }: Props) => {
 					width={300}
 					height={300}
 					priority={true}
-					className="ml-[-1.5rem] flex w-full justify-center py-10 md:justify-start lg:py-0"
+					className="ml-[-1.5rem] flex lg:w-1/2 w-full justify-center py-10 md:justify-start lg:py-0"
 				/>
 			</div>
 		</div>

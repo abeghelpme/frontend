@@ -1,10 +1,10 @@
-import { HowItWorks, SuccessStories } from "@/components/campaigns-page";
+import { SuccessStories } from "@/components/campaigns-page";
 import {
 	CampaignCategories,
 	FAQ,
 	Hero,
+	HowItWorks,
 	UrgentFundraisers,
-
 } from "@/components/common/landingPage";
 import { BaseLayout } from "@/layouts";
 import { campaignHero } from "@/public/assets/images/landing-page";
@@ -24,7 +24,6 @@ const Campaigns = () => {
 				<SuccessStories />
 				<UrgentFundraisers />
 				<FAQ />
-
 			</div>
 		</BaseLayout>
 	);

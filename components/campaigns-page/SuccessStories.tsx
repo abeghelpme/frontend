@@ -5,31 +5,31 @@ const successStories = [
 	{
 		title: "Health and wellness",
 		secondTitle: "A Path to Making a Difference.",
-		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborinisi ut aliquip ex ea commodo consequat.",
+		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborinisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		image: storiesAboutUs,
 	},
 	{
 		title: "Health and wellness",
 		secondTitle: "A Path to Making a Difference.",
-		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborinisi ut aliquip ex ea commodo consequat.",
+		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborinisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		image: storiesAboutUs,
 	},
 	{
 		title: "Health and wellness",
 		secondTitle: "A Path to Making a Difference.",
-		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborinisi ut aliquip ex ea commodo consequat.",
+		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborinisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		image: storiesAboutUs,
 	},
 	{
 		title: "Health and wellness",
 		secondTitle: "A Path to Making a Difference.",
-		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborinisi ut aliquip ex ea commodo consequat.",
+		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborinisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		image: storiesAboutUs,
 	},
 	{
 		title: "Health and wellness",
 		secondTitle: "A Path to Making a Difference.",
-		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborinisi ut aliquip ex ea commodo consequat.",
+		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborinisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		image: storiesAboutUs,
 	},
 	{
@@ -46,7 +46,7 @@ const SuccessStories = () => {
 				The Success stories of the <br />
 				benefactors speak for themselves
 			</h1>
-			<div className="flex flex-col gap-8 md:gap-16">
+			<div className="flex flex-col gap-8">
 				{successStories.map((story, id) => {
 					return (
 						<div
@@ -55,7 +55,7 @@ const SuccessStories = () => {
 								(id + 1) % 2 === 0 ? "md:flex-row-reverse" : "md:flex-row"
 							}`}
 						>
-							<div className="flex flex-col gap-1 md:gap-4 w-full lg:w-2/3 justify-center">
+							<div className="flex flex-col gap-1 md:gap-4 w-full lg:w-[51%] justify-center">
 								<p className="text-xl font-normal">{story.title}</p>
 								<p className="text-4xl md:text-5xl font-bold">
 									{story.secondTitle}
@@ -65,9 +65,9 @@ const SuccessStories = () => {
 							<Image
 								src={story.image}
 								alt="stories about us"
-								width={400}
-								height={400}
-								className="w-full lg:w-1/3 max-h-[400px] rounded-2xl object-cover"
+								// width={400}
+								// height={400}
+								className="w-full lg:w-[49%] rounded-2xl object-cover"
 							/>
 						</div>
 					);

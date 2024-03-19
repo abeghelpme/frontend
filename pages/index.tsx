@@ -5,7 +5,6 @@ import {
 	avatar1,
 	avatar2,
 	avatar3,
-	campaignHero,
 	createCampaignImage1,
 	createCampaignImage2,
 	createCampaignImage3,
@@ -14,7 +13,7 @@ import {
 	envato,
 	globalCommunity,
 	google,
-
+	hero,
 	joinnUs,
 	netflix,
 	senville,
@@ -82,7 +81,7 @@ const HomePage = () => {
 				pTag="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
 				button1={{ href: "/c/create", text: "Start fundraiser" }}
 				button2={{ href: "/c/create", text: "Donate now" }}
-				imageSrc={campaignHero}
+				imageSrc={hero}
 			/>
 			<div className="px-5 pb-10 pt-10 md:px-20 md:pt-20">
 				<div className="w-full space-y-5 md:justify-between lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
@@ -97,9 +96,11 @@ const HomePage = () => {
 							Join the effortless way to raise funds <br /> and make a
 							difference and empower <br /> your cause with Abeghelp.me
 						</p>
-						<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
-							<Link href="/c/create">Explore campaigns</Link>
-						</Button>
+						<Link href="/c/create">
+							<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
+								Explore campaigns
+							</Button>
+						</Link>
 					</div>
 				</div>
 
