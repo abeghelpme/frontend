@@ -110,7 +110,6 @@ export const AuthenticatedUserLayout = ({
 									href={path}
 									className={`flex gap-4 text-xl items-center capitalize`}
 								>
-									{icon}
 									<span className="">{title}</span>
 								</Link>
 							))}

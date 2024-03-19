@@ -75,7 +75,7 @@ function StepThree() {
 			description: "Campaign created successfully!",
 		});
 
-		void router.push("/dashboard");
+		void router.push("/c");
 	};
 
 	return (

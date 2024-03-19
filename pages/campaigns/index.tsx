@@ -4,6 +4,7 @@ import {
 	FAQ,
 	Hero,
 	UrgentFundraisers,
+
 } from "@/components/common/landingPage";
 import { BaseLayout } from "@/layouts";
 import { campaignHero } from "@/public/assets/images/landing-page";
@@ -23,6 +24,7 @@ const Campaigns = () => {
 				<SuccessStories />
 				<UrgentFundraisers />
 				<FAQ />
+
 			</div>
 		</BaseLayout>
 	);
