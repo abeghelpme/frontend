@@ -30,9 +30,9 @@ function StepOne() {
 
 	const { categories: campaignCategories } = useCampaignStore((state) => state);
 
-	const { For: TagList } = useElementList();
-	const { For: CategoryList } = useElementList();
-	const { For: CountryList } = useElementList();
+	const [TagList] = useElementList();
+	const [CategoryList] = useElementList();
+	const [CountryList] = useElementList();
 
 	const {
 		control,
@@ -154,7 +154,7 @@ function StepOne() {
 										<Select.Value placeholder="Select what category best suit your fundraiser" />
 									</Select.Trigger>
 
-									<Select.Content>
+									<Select.Content asChild>
 										<CategoryList
 											each={campaignCategories}
 											render={(category) => (
@@ -199,7 +199,7 @@ function StepOne() {
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
 
-									<Select.Content>
+									<Select.Content asChild>
 										<CountryList
 											each={targetCountries}
 											render={(country) => (
@@ -249,27 +249,26 @@ function StepOne() {
 								{formStepData.tags.length}/5 tags
 							</span>
 
-							<ul className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary lg:text-base">
-								<TagList
-									each={formStepData.tags}
-									render={(tag, index) => (
-										<li
-											key={`${tag}-${index}`}
-											className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
-										>
-											<p>{tag}</p>
+							<TagList
+								className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary lg:text-base"
+								each={formStepData.tags}
+								render={(tag, index) => (
+									<li
+										key={`${tag}-${index}`}
+										className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
+									>
+										<p>{tag}</p>
 
-											<button
-												className="transition-transform duration-100 active:scale-[1.12]"
-												type="button"
-												onClick={handleRemoveTags(tag)}
-											>
-												<CrossIcon className="size-2.5" />
-											</button>
-										</li>
-									)}
-								/>
-							</ul>
+										<button
+											className="transition-transform duration-100 active:scale-[1.12]"
+											type="button"
+											onClick={handleRemoveTags(tag)}
+										>
+											<CrossIcon className="size-2.5" />
+										</button>
+									</li>
+								)}
+							/>
 						</div>
 					</li>
 				</ol>

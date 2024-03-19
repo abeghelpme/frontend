@@ -283,7 +283,7 @@ const HomePage = () => {
 
 				<UrgentFundraisers padding="py-20" />
 
-				<div>
+				{/* <div>
 					<h1 className="text-center text-4xl font-bold md:px-32 md:text-5xl">
 						Trusted By Pioneers
 					</h1>
@@ -292,7 +292,7 @@ const HomePage = () => {
 							<Image key={index} src={item} alt={""} width={150} height={150} />
 						))}
 					</div>
-				</div>
+				</div> */}
 
 				<FAQ padding="py-10" />
 			</div>
