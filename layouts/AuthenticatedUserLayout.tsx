@@ -148,14 +148,14 @@ export const AuthenticatedUserLayout = ({
 							<DropdownMenuSeparator />
 							<DropdownMenuGroup>
 								<DropdownMenuItem>
-									<Link href="/dashboard" className="">
+									<Link href="/c" className="">
 										Dashboard
 									</Link>
 								</DropdownMenuItem>
 								<DropdownMenuItem>Settings</DropdownMenuItem>
 								<DropdownMenuItem className="lg:hidden">
 									<Link
-										href="/dashboard"
+										href="/c"
 										className="flex w-full items-center gap-2 rounded-md bg-abeg-primary px-2 py-2 text-sm"
 									>
 										<PlusIcon />

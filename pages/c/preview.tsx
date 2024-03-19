@@ -27,7 +27,7 @@ function PreviewCampaignPage() {
 				duration: 2000,
 			});
 
-			void router.push("/dashboard");
+			void router.push("/c");
 		}
 	}, [currentCampaign.status]);
 
