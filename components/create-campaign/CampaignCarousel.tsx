@@ -1,5 +1,8 @@
 import type { Campaign } from "@/interfaces/Campaign";
+import { DonorIcon, DonorIcon2 } from "@/public/assets/icons/campaign";
+import { ArrowBigRightIcon, ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
+import { ClockIcon, LocationIcon } from "../common";
 import { Carousel } from "../ui/carousel";
 
 type CampaignCarouselProps = {
@@ -17,26 +20,34 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 			<Carousel.Content
 				classNames={{
 					base: classNames?.base,
-					scrollContainer: "rounded-lg lg:rounded-[10px]",
+					scrollContainer: "rounded-[5px]",
 				}}
 			>
 				<Carousel.Button
 					type="prev"
+					icon={<ArrowLeftIcon className="size-3" />}
 					classNames={{
 						iconContainer:
-							"top-[calc(100%_+_8px)] lg:top-[calc(100%_+_16px)] left-[24px]",
-						icon: "size-5 lg:size-6",
+							"size-[25px] bg-abeg-text/40 left-[18px] flex justify-center items-center border border-white backdrop-blur-md rounded-full",
 					}}
 				/>
 
 				<Carousel.Button
 					type="next"
+					icon={<ArrowRightIcon className="size-3" />}
 					classNames={{
 						iconContainer:
-							"top-[calc(100%_+_8px)] lg:top-[calc(100%_+_16px)] right-[24px]",
-						icon: "size-5 lg:size-6",
+							"size-[25px] flex bg-abeg-text/40 right-[18px] justify-center items-center border border-white backdrop-blur-md rounded-full",
 					}}
 				/>
+
+				<Carousel.Caption
+					as="figure"
+					className="left-[18px] top-[25px] flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] text-[11px] backdrop-blur-md"
+				>
+					<LocationIcon />
+					<figcaption>Lagos, Nigeria</figcaption>
+				</Carousel.Caption>
 
 				<Carousel.ItemWrapper<typeof images>
 					render={(image) => (
@@ -45,32 +56,32 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 								src={image.secureUrl}
 								blurDataURL={image.blurHash}
 								alt="campaign image"
-								className="aspect-[342/200] w-full object-cover lg:h-[400px]"
-								width={342}
-								height={200}
+								className="aspect-[381/250] w-full object-cover"
+								width={381}
+								height={250}
 								priority={true}
+								draggable={false}
 								fetchPriority="high"
 							/>
 						</Carousel.Item>
 					)}
 				/>
 
-				<Carousel.IndicatorWrapper<typeof images>
-					classNames={{
-						base: "top-[calc(100%_+_16px)] lg:top-[calc(100%_+_23px)]",
-						indicatorContainer: "gap-2 overflow-x-hidden",
-					}}
-					render={(image, index) => (
-						<Carousel.Indicator
-							key={image.secureUrl}
-							currentIndex={index}
-							classNames={{
-								base: "bg-lightGreen snap-start h-[6px] lg:h-[10px] w-[23px] rounded-[101px]",
-								onActive: "bg-abeg-primary w-[40px]",
-							}}
-						/>
-					)}
-				/>
+				<Carousel.Caption
+					as="figure"
+					className="bottom-[20px] right-[18px] flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] text-[11px] backdrop-blur-md"
+				>
+					<ClockIcon />
+					<figcaption>20 days left</figcaption>
+				</Carousel.Caption>
+
+				<Carousel.Caption
+					as="figure"
+					className="bottom-[20px] left-[18px] flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] text-[11px] backdrop-blur-md"
+				>
+					<DonorIcon2 className="size-4" />
+					<figcaption> 235,567 total donors</figcaption>
+				</Carousel.Caption>
 			</Carousel.Content>
 		</Carousel.Root>
 	);

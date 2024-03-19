@@ -1,5 +1,5 @@
 import { cn } from "@/lib";
-import { useElementList } from "@/lib/hooks";
+import { useBaseElementList } from "@/lib/hooks";
 import type { PolymorphicProps } from "@/lib/type-helpers";
 import { ChevronLeftCircleIcon, ChevronRightCircleIcon } from "lucide-react";
 import type {
@@ -96,9 +96,9 @@ function CarouselButton(props: CarouselButtonsProps) {
 function CarouselItemWrapper<TArray extends unknown[]>(
 	props: CarouselItemWrapperProps<TArray>
 ) {
-	const { each, render, className } = props;
+	const { each, children, render, className } = props;
 
-	const { For: ItemList } = useElementList();
+	const [ItemList] = useBaseElementList();
 	const currentSlide = useCarouselStore((state) => state.currentSlide);
 	const images = useCarouselStore((state) => each ?? (state.images as TArray));
 
@@ -113,7 +113,11 @@ function CarouselItemWrapper<TArray extends unknown[]>(
 				transform: `translate3d(-${currentSlide * 100}%, 0, 0)`,
 			}}
 		>
-			<ItemList each={images} render={render} />
+			{typeof render === "function" ? (
+				<ItemList each={images} render={render} />
+			) : (
+				<ItemList each={images}>{children}</ItemList>
+			)}
 		</ul>
 	);
 }
@@ -131,21 +135,28 @@ function CarouselItem({ children, className }: OtherCarouselProps) {
 	);
 }
 
-function CarouselCaption({ children, className }: OtherCarouselProps) {
+function CarouselCaption<TElement extends React.ElementType = "div">(
+	props: PolymorphicProps<TElement, OtherCarouselProps>
+) {
+	const { as: HtmlElement = "div", children, className } = props;
+
 	return (
-		<div data-id="Carousel Caption" className={cn("absolute", className)}>
+		<HtmlElement
+			data-id="Carousel Caption"
+			className={cn("absolute z-40", className)}
+		>
 			{children}
-		</div>
+		</HtmlElement>
 	);
 }
 
 function CarouselIndicatorWrapper<TArray extends unknown[]>(
 	props: CarouselIndicatorWrapperProps<TArray>
 ) {
-	const { each, render, classNames = {} } = props;
+	const { each, children, render, classNames = {} } = props;
 
 	const images = useCarouselStore((state) => each ?? (state.images as TArray));
-	const { For: IndicatorList } = useElementList();
+	const [IndicatorList] = useBaseElementList();
 
 	return (
 		<div
@@ -155,14 +166,18 @@ function CarouselIndicatorWrapper<TArray extends unknown[]>(
 				classNames.base
 			)}
 		>
-			<span
+			<ul
 				className={cn(
 					"flex items-center justify-center gap-4",
 					classNames.indicatorContainer
 				)}
 			>
-				<IndicatorList each={images} render={render} />
-			</span>
+				{typeof render === "function" ? (
+					<IndicatorList each={images} render={render} />
+				) : (
+					<IndicatorList each={images}>{children}</IndicatorList>
+				)}
+			</ul>
 		</div>
 	);
 }
@@ -176,16 +191,16 @@ function CarouselIndicator(props: CarouselIndicatorProps) {
 	} = useCarouselStore((state) => state);
 
 	return (
-		<button
-			onClick={() => goToSlide(currentIndex)}
-			className={cn(
-				"size-[6px] shrink-0 cursor-pointer ease-in-out",
-
-				classNames.base,
-
-				currentIndex === currentSlide && ["w-[20px]", classNames.onActive]
-			)}
-		/>
+		<li>
+			<button
+				onClick={() => goToSlide(currentIndex)}
+				className={cn(
+					"size-[6px] shrink-0 cursor-pointer ease-in-out",
+					classNames.base,
+					currentIndex === currentSlide && ["w-[20px]", classNames.onActive]
+				)}
+			/>
+		</li>
 	);
 }
 

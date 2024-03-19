@@ -67,7 +67,7 @@ function PreviewCampaignPage() {
 				}}
 			/>
 
-			<CampaignOutlook campaign={currentCampaign}>
+			<CampaignOutlook excerpt={excerpt} campaign={currentCampaign}>
 				<CampaignOutlook.Header className="flex flex-col gap-2 text-abeg-primary lg:text-2xl">
 					<Heading as="h1">Campaign Preview</Heading>
 
