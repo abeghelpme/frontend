@@ -28,7 +28,6 @@ import { useSession } from "@/store";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { type ReactNode, useState } from "react";
-
 type AuthenticatedUserLayoutProps = {
 	isDashboard?: boolean;
 	children: ReactNode;
@@ -92,7 +91,9 @@ export const AuthenticatedUserLayout = ({
 				{/* Mobile menu */}
 				{isDashboard && (
 					<div
+
 						className={`absolute inset-0 z-[110] flex h-full min-h-svh -translate-x-[110%] flex-col gap-7 bg-white p-[51px] transition-transform duration-500 md:hidden ${
+
 							isOpen ? "translate-x-0" : ""
 						}`}
 					>
@@ -111,7 +112,6 @@ export const AuthenticatedUserLayout = ({
 									href={path}
 									className={`flex items-center gap-4 text-xl capitalize`}
 								>
-									{icon}
 									<span className="">{title}</span>
 								</Link>
 							))}
@@ -128,6 +128,7 @@ export const AuthenticatedUserLayout = ({
 						<DropdownMenuTrigger asChild>
 							<div className="flex cursor-pointer items-center gap-2 md:gap-0">
 								<Avatar initials={initials} />
+
 								<span className="ml-4 mr-2 hidden px-1 md:block">
 									{castedUser?.firstName || "First Name"}
 								</span>
@@ -184,6 +185,7 @@ export const AuthenticatedUserLayout = ({
 			{isDashboard && (
 				<section className="flex-col gap-6 bg-cover bg-no-repeat md:flex md:h-[42svh] md:bg-abeg-primary md:bg-dashboardBg xl:h-[37svh] 2xl:h-[40svh] 3xl:h-[19svh]">
 					<div className="px-[5%] lg:px-[7%] 2xl:px-[10%]">
+
 						<div className="mt-6 flex flex-col items-start justify-between gap-5 md:mt-0 md:flex-row md:py-6 lg:gap-10">
 							<div className="space-y-2 md:text-xl md:text-white xl:text-2xl">
 								<p className="font-bold">
@@ -202,6 +204,7 @@ export const AuthenticatedUserLayout = ({
 							</div>
 							<Link
 								href={"/c/create"}
+
 								className="flex w-fit items-center rounded-md bg-abeg-primary p-2 px-3 font-bold text-white md:bg-white md:text-abeg-primary"
 							>
 								<span className="hidden pr-2 md:block">
@@ -265,6 +268,7 @@ export const AuthenticatedUserLayout = ({
 			)}
 			<main
 				data-isopen={isOpen}
+
 				className={`authenticatedUserLayoutMain h-full flex-1 px-[5%] lg:px-[7%] 2xl:px-[10%] ${
 					isDashboard &&
 					"mt-10 space-y-8 md:mt-0 md:-translate-y-[4.8rem] lg:space-y-10"
