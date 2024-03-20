@@ -1,6 +1,5 @@
 import {
 	DonorIcon,
-	DonorIcon2,
 	DummyAvatar,
 	MoneyIcon,
 	ShareIcon,
@@ -10,17 +9,17 @@ import {
 import type { Campaign } from "@/interfaces/Campaign";
 import { cn } from "@/lib";
 import { getDateFromString } from "@/lib/helpers/campaign";
-import { useDragScroll, useElementList, useShareCampaign } from "@/lib/hooks";
+import { useElementList, useShareCampaign } from "@/lib/hooks";
 import { useSlot } from "@/lib/hooks/useSlot";
 import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ClockIcon, CustomDialog, LocationIcon } from "../common";
+import { CustomDialog } from "../common";
+import { CampaignCardList, dummyCardData } from "../common/CampaignCard";
 import Heading from "../common/Heading";
 import { FAQ } from "../common/landingPage";
 import { Button, ProgressBar } from "../ui";
-import Card from "../ui/card";
 import CampaignCarousel from "./CampaignCarousel";
 import DonorSection from "./DonorSection";
 
@@ -40,10 +39,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	const [TagList] = useElementList();
 
-	const [CardList] = useElementList();
-
-	const dragScrollProps = useDragScroll<HTMLUListElement>();
-
 	const HeaderSlot = useSlot(children, CampaignOutlook.Header);
 
 	const { generateTweet, generateWhatsAppMessage, handleShareLink } =
@@ -58,7 +53,12 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	return (
 		<main className="flex w-full flex-col items-center pb-20 text-abeg-text">
-			<section className="bg-abeg-primary bg-heroBg px-6 pb-14 pt-11 text-white lg:px-[100px] ">
+			<section
+				className="bg-cover bg-center px-6 pb-14 pt-11 text-white md:px-[100px] "
+				style={{
+					backgroundImage: `url(/assets/images/shared/hero-background.svg)`,
+				}}
+			>
 				{HeaderSlot}
 
 				<p className="mt-3 text-pretty lg:text-xl">{excerpt}</p>
@@ -104,7 +104,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				</div>
 			</section>
 
-			<div className="flex flex-col px-6 max-lg:max-w-[430px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[100px]">
+			<div className="flex flex-col px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[100px]">
 				<section className="mt-16 space-y-5 px-[18px] py-6 lg:min-w-[383px] lg:max-w-[505px]">
 					<article>
 						<div className="flex items-center justify-between">
@@ -296,67 +296,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					</Button>
 				</header>
 
-				<CardList
-					{...dragScrollProps}
-					className="mt-[2.4rem] flex w-full cursor-grab gap-4 overflow-x-scroll [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-					each={[...Array(4).keys()]}
-					render={(item) => (
-						<Card
-							key={item}
-							as="li"
-							className="w-full max-w-[383px] shrink-0 space-y-[25px] lg:max-w-[396px]"
-						>
-							<Card.Header
-								className="h-[263px] rounded-md"
-								style={{
-									backgroundImage: `url(/assets/images/dashboard/dashboardImage.png)`,
-								}}
-							>
-								<article className="flex size-full select-none flex-col items-start justify-between p-[25px] text-xs text-white">
-									<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-										<LocationIcon />
-										<figcaption>Lagos, Nigeria</figcaption>
-									</figure>
-
-									<div className="flex w-full justify-between">
-										<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-											<DonorIcon2 className="size-4" />
-											<figcaption> 235,567 total donors</figcaption>
-										</figure>
-
-										<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-											<ClockIcon />
-											<figcaption>20 days left</figcaption>
-										</figure>
-									</div>
-								</article>
-							</Card.Header>
-
-							<Card.Content>
-								<Heading
-									as="h4"
-									className="w-[80%] text-base font-bold lg:text-base"
-								>
-									Bringing Dental Care to Underserved Communities
-								</Heading>
-
-								<p className="mt-2 text-sm font-medium">
-									By: Locs Designer - Health and Wellness
-								</p>
-							</Card.Content>
-
-							<Card.Footer className="flex flex-col gap-2">
-								<ProgressBar
-									value={70}
-									className="progress-unfilled:h-1 progress-unfilled:rounded-lg progress-unfilled:bg-lightGreen progress-filled:rounded-lg progress-filled:bg-abeg-primary"
-								/>
-
-								<p className="text-xs font-medium text-abeg-primary">
-									₦2,000,000 raised
-								</p>
-							</Card.Footer>
-						</Card>
-					)}
+				<CampaignCardList
+					listType="horizontal"
+					cardDetailList={dummyCardData}
+					classNames={{ base: "mt-10 lg:mt-14" }}
 				/>
 			</section>
 

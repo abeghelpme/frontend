@@ -7,34 +7,25 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { callApi } from "@/lib/helpers/campaign";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
-import { useFormStore } from "@/store";
+import { useCampaignStore } from "@/store";
 import { NextSeo } from "next-seo";
+import Error from "next/error";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { toast } from "sonner";
 
 function PreviewCampaignPage() {
-	const currentCampaign = useFormStore(
-		(state) => state.campaignId as unknown as Campaign & { shortId: string }
+	const searchParams = useSearchParams();
+	const currentCampaign = useCampaignStore((state) =>
+		state.campaigns.find((campaign) => campaign._id === searchParams.get("id"))
 	);
 
 	const router = useRouter();
 
-	useEffect(() => {
-		if (currentCampaign.status !== "Approved") {
-			toast.error("Error", {
-				description: "Please complete the campaign before previewing",
-				id: "incomplete",
-				duration: 2000,
-			});
-
-			void router.push("/c");
-		}
-	}, [currentCampaign.status]);
-
-	if (currentCampaign.status !== "Approved") return null;
-
+	if (!currentCampaign) {
+		return <Error statusCode={404} />;
+	}
 	const handlePublish = async () => {
 		const { error } = await callApi<Campaign>("/campaign/publish", {
 			campaignId: currentCampaign._id,
@@ -46,7 +37,7 @@ function PreviewCampaignPage() {
 		}
 
 		toast.success("Campaign published successfully");
-		void router.push(`/${currentCampaign.shortId}`);
+		void router.push(`/${currentCampaign.url.split("/c/")[1]}`);
 	};
 
 	const excerpt = generateExcerpt(currentCampaign.story);

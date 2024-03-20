@@ -25,7 +25,7 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 			>
 				<Carousel.Controls
 					classNames={{
-						base: "px-[18px] py-[25px] lg:px-[53px] lg:py-10",
+						base: "px-[18px] py-[25px] md:px-[53px] lg:py-10",
 						iconsContainer:
 							"size-[25px] lg:size-20 bg-abeg-text/40 flex justify-center items-center border border-white backdrop-blur-md rounded-full",
 					}}
@@ -35,7 +35,7 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 					}}
 				/>
 
-				<Carousel.Caption className="inset-0 flex flex-col items-start justify-between px-[18px] py-[25px] text-[10px] font-medium lg:rounded-[15px] lg:px-[53px] lg:py-10 lg:text-[30px]">
+				<Carousel.Caption className="inset-0 flex flex-col items-start justify-between px-[18px] py-[25px] text-[10px] font-medium md:px-[53px] lg:rounded-[15px] lg:py-10 lg:text-[30px]">
 					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-5">
 						<LocationIcon className="size-4 lg:size-10" />
 						<figcaption>Lagos, Nigeria</figcaption>
