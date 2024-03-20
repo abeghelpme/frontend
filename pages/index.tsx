@@ -295,7 +295,7 @@ const HomePage = () => {
 					</div>
 				</div> */}
 
-				<FAQ padding="py-10" />
+				<FAQ className="py-10" />
 			</div>
 		</BaseLayout>
 	);

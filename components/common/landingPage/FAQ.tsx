@@ -132,7 +132,7 @@ const faqData = [
 	},
 ];
 
-const FAQ = ({ padding }: { padding?: String }) => {
+const FAQ = ({ className }: { className?: string }) => {
 	// State to manage the visibility of each question's answer
 	const [expanded, setExpanded] = useState<boolean[]>([]);
 
@@ -144,7 +144,7 @@ const FAQ = ({ padding }: { padding?: String }) => {
 		});
 	};
 	return (
-		<div className={`${padding}`}>
+		<section className={className}>
 			<p className="text-xl text-placeholder">Wanna know more?</p>
 			<h1 className="mb-10 mt-5 text-4xl font-bold md:mb-20 md:text-5xl">
 				Frequently asked questions
@@ -171,7 +171,7 @@ const FAQ = ({ padding }: { padding?: String }) => {
 					<div className="mt-2 border-t-2 border-gray-300"></div>
 				</div>
 			))}
-		</div>
+		</section>
 	);
 };
 export default FAQ;

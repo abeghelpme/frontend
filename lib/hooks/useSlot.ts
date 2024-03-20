@@ -17,13 +17,10 @@ const isSlotInstance = (
 		return true;
 	}
 
-	if (child.type === SlotWrapper) {
-		return true;
-	}
-
-	if ((child.type as Noop).name === (SlotWrapper as Noop).name) {
-		return true;
-	}
+	return Boolean(
+		child.type === SlotWrapper ||
+			(child.type as Noop).name === (SlotWrapper as Noop).name
+	);
 };
 
 const useSlot = <TProps extends Record<string, unknown>>(

@@ -18,6 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ClockIcon, CustomDialog, LocationIcon } from "../common";
 import Heading from "../common/Heading";
+import { FAQ } from "../common/landingPage";
 import { Button, ProgressBar } from "../ui";
 import Card from "../ui/card";
 import CampaignCarousel from "./CampaignCarousel";
@@ -57,12 +58,12 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	return (
 		<main className="flex w-full flex-col items-center pb-20 text-abeg-text">
-			<section className="bg-abeg-primary bg-heroBg px-[clamp(24px,7.1vw,100px)] pb-14 pt-11 text-white ">
+			<section className="bg-abeg-primary bg-heroBg px-6 pb-14 pt-11 text-white lg:px-[100px] ">
 				{HeaderSlot}
 
 				<p className="mt-3 text-pretty lg:text-xl">{excerpt}</p>
 
-				<div className="mt-6 flex items-center justify-between">
+				<div className="relative mt-6 flex items-center max-lg:justify-between lg:gap-9">
 					<figure className="flex items-center gap-3 text-xl">
 						<DummyAvatar className="size-10" />
 
@@ -71,6 +72,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 					<button className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-xl font-bold">
 						Donate
+					</button>
+
+					<button className="absolute right-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] max-lg:hidden">
+						<ShareIcon />
 					</button>
 				</div>
 
@@ -93,14 +98,14 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						)}
 					/>
 
-					<button className="absolute right-0 top-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03]">
+					<button className="absolute right-0 top-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] lg:hidden">
 						<ShareIcon />
 					</button>
 				</div>
 			</section>
 
-			<div className="flex flex-col px-[clamp(24px,7.1vw,100px)] max-lg:items-center lg:flex-row-reverse lg:gap-5">
-				<section className="mt-16 max-w-[385px] space-y-5 px-[18px] py-6 lg:max-w-[505px]">
+			<div className="flex flex-col px-6 max-lg:max-w-[430px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[100px]">
+				<section className="mt-16 space-y-5 px-[18px] py-6 lg:min-w-[383px] lg:max-w-[505px]">
 					<article>
 						<div className="flex items-center justify-between">
 							<p className="font-bold">₦ {campaign.goal}</p>
@@ -209,7 +214,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					<DonorSection className="px-[19px]" />
 				</section>
 
-				<section className="mt-14 text-xl lg:max-w-[714px]">
+				<section className="mt-14 max-w-[714px] text-xl">
 					<article>
 						<Heading
 							as="h3"
@@ -262,7 +267,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				</section>
 			</div>
 
-			<section className="mt-[72px] w-full pl-[clamp(24px,7.1vw,100px)]">
+			<section className="mt-[72px] w-full pl-6 lg:mt-[160px] lg:pl-[100px]">
 				<header className="lg:flex lg:flex-row lg:items-center lg:justify-between">
 					<div className="space-y-2.5">
 						<Heading as="h3" className="text-xl font-normal">
@@ -346,6 +351,8 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					)}
 				/>
 			</section>
+
+			<FAQ className="mt-[72px] w-full px-6 lg:mt-[120px] lg:px-[100px]" />
 		</main>
 	);
 }
@@ -355,8 +362,8 @@ function CampaignOutlookHeader(props: CampaignHeaderProps) {
 
 	return <header className={cn("w-full", className)}>{children}</header>;
 }
-CampaignOutlookHeader.slot = "header";
 
 CampaignOutlook.Header = CampaignOutlookHeader;
+CampaignOutlookHeader.slot = "header";
 
 export default CampaignOutlook;

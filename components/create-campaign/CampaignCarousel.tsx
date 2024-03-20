@@ -28,7 +28,7 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 					icon={<ArrowLeftIcon className="size-3 lg:size-6" />}
 					classNames={{
 						iconContainer:
-							"p-[6px] lg:p-4 bg-abeg-text/40 left-[18px] lg:left-14 flex justify-center items-center border border-white backdrop-blur-md rounded-full",
+							"p-[6px] lg:p-3 bg-abeg-text/40 left-[18px] lg:left-12 flex justify-center items-center border border-white backdrop-blur-md rounded-full",
 					}}
 				/>
 
@@ -37,24 +37,24 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 					icon={<ArrowRightIcon className="size-3 lg:size-6" />}
 					classNames={{
 						iconContainer:
-							"p-[6px] lg:p-4 flex bg-abeg-text/40 right-[18px] lg:right-14 justify-center items-center border border-white backdrop-blur-md rounded-full",
+							"p-[6px] lg:p-3 flex bg-abeg-text/40 right-[18px] lg:right-12 justify-center items-center border border-white backdrop-blur-md rounded-full",
 					}}
 				/>
 
-				<Carousel.Caption className="inset-0 flex flex-col items-start justify-between px-[18px] py-[25px] text-[11px] lg:rounded-[15px] lg:px-14 lg:py-10 lg:text-lg">
-					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:rounded-[15px] lg:p-[14px]">
-						<LocationIcon />
+				<Carousel.Caption className="inset-0 flex flex-col items-start justify-between px-[18px] py-[25px] text-[11px] lg:rounded-[15px] lg:px-12 lg:py-10 lg:text-base">
+					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-[14px]">
+						<LocationIcon className="lg:size-6" />
 						<figcaption>Lagos, Nigeria</figcaption>
 					</figure>
 
 					<div className="flex w-full justify-between">
-						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:rounded-[15px] lg:p-[14px]">
-							<DonorIcon2 className="size-4" />
+						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-[14px]">
+							<DonorIcon2 className="size-4 lg:size-6" />
 							<figcaption> 235,567 total donors</figcaption>
 						</figure>
 
-						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:rounded-[15px] lg:p-[14px]">
-							<ClockIcon />
+						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-[14px]">
+							<ClockIcon className="lg:size-6" />
 							<figcaption>20 days left</figcaption>
 						</figure>
 					</div>
