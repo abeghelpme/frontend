@@ -5,6 +5,7 @@ import { ChevronLeftCircleIcon, ChevronRightCircleIcon } from "lucide-react";
 import type {
 	CarouselButtonsProps,
 	CarouselContentProps,
+	CarouselControlProps,
 	CarouselIndicatorProps,
 	CarouselIndicatorWrapperProps,
 	CarouselItemWrapperProps,
@@ -56,17 +57,12 @@ function CarouselContent<TElement extends React.ElementType = "article">(
 	);
 }
 
-function CarouselButton(props: CarouselButtonsProps) {
+function $CarouselButton(props: CarouselButtonsProps) {
 	const { type, icon, classNames = {} } = props;
 
 	const nextOrPreviousSlide = useCarouselStore((state) =>
 		type === "prev" ? state.actions.previousSlide : state.actions.nextSlide
 	);
-
-	const semanticVariants = {
-		base: { prev: "left-0", next: "right-0" },
-		iconContainer: { prev: "left-[7px]", next: "right-[7px]" },
-	};
 
 	const DefaultIcon =
 		type === "prev" ? ChevronLeftCircleIcon : ChevronRightCircleIcon;
@@ -74,22 +70,50 @@ function CarouselButton(props: CarouselButtonsProps) {
 	return (
 		<button
 			className={cn(
-				"absolute z-40 h-full w-[90px]",
-				semanticVariants.base[type],
+				"z-[30] flex h-full w-[90px] items-center",
+				type === "prev" ? "justify-start" : "justify-end",
 				classNames.base
 			)}
 			onClick={nextOrPreviousSlide}
 		>
 			<span
 				className={cn(
-					"absolute top-[45%] transition-transform active:scale-[1.11]",
-					semanticVariants.iconContainer[type],
+					"transition-transform active:scale-[1.11]",
 					classNames.iconContainer
 				)}
 			>
-				{icon ?? <DefaultIcon className={classNames.icon} />}
+				{icon ?? <DefaultIcon className={classNames.defaultIcon} />}
 			</span>
 		</button>
+	);
+}
+
+function CarouselControls(props: CarouselControlProps) {
+	const { classNames, icons } = props;
+
+	/* eslint-disable react/jsx-pascal-case */
+	return (
+		<div
+			className={cn("absolute inset-0 flex justify-between", classNames?.base)}
+		>
+			<$CarouselButton
+				type="prev"
+				classNames={{
+					defaultIcon: classNames?.defaultIcons,
+					iconContainer: classNames?.iconsContainer,
+				}}
+				icon={icons?.prev}
+			/>
+
+			<$CarouselButton
+				type="next"
+				classNames={{
+					defaultIcon: classNames?.defaultIcons,
+					iconContainer: classNames?.iconsContainer,
+				}}
+				icon={icons?.next}
+			/>
+		</div>
 	);
 }
 
@@ -122,13 +146,18 @@ function CarouselItemWrapper<TArray extends unknown[]>(
 	);
 }
 
-function CarouselItem({ children, className }: OtherCarouselProps) {
+function CarouselItem({
+	children,
+	className,
+	...restOfProps
+}: OtherCarouselProps) {
 	return (
 		<li
 			className={cn(
 				"flex w-full shrink-0 snap-center justify-center",
 				className
 			)}
+			{...restOfProps}
 		>
 			{children}
 		</li>
@@ -143,7 +172,7 @@ function CarouselCaption<TElement extends React.ElementType = "div">(
 	return (
 		<HtmlElement
 			data-id="Carousel Caption"
-			className={cn("absolute z-40", className)}
+			className={cn("absolute z-[10]", className)}
 		>
 			{children}
 		</HtmlElement>
@@ -162,7 +191,7 @@ function CarouselIndicatorWrapper<TArray extends unknown[]>(
 		<div
 			data-id="Carousel Indicators"
 			className={cn(
-				"absolute top-[-25px] z-[5] flex w-full justify-center",
+				"absolute top-[-25px] z-[20] flex w-full justify-center",
 				classNames.base
 			)}
 		>
@@ -207,7 +236,7 @@ function CarouselIndicator(props: CarouselIndicatorProps) {
 const Carousel = {
 	Root: CarouselContextProvider,
 	Content: CarouselContent,
-	Button: CarouselButton,
+	Controls: CarouselControls,
 	Item: CarouselItem,
 	ItemWrapper: CarouselItemWrapper,
 	Caption: CarouselCaption,

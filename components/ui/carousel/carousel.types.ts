@@ -50,12 +50,25 @@ export type CarouselContentProps = {
 export type CarouselButtonsProps = {
 	type: "prev" | "next";
 
-	icon?: React.ReactNode;
-
 	classNames?: {
 		base?: string;
 		iconContainer?: string;
-		icon?: string;
+		defaultIcon?: string;
+	};
+
+	icon?: React.ReactNode;
+};
+
+export type CarouselControlProps = {
+	classNames?: {
+		base?: string;
+		defaultIcons?: string;
+		iconsContainer?: string;
+	};
+
+	icons?: {
+		prev?: React.ReactNode;
+		next?: React.ReactNode;
 	};
 };
 
@@ -85,6 +98,7 @@ export type CarouselIndicatorWrapperProps<TArray extends unknown[]> =
 	};
 
 export type OtherCarouselProps = {
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	className?: string;
+	style?: React.CSSProperties;
 };

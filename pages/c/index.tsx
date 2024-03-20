@@ -19,9 +19,12 @@ import {
 import { AuthenticatedUserLayout } from "@/layouts";
 import userImage from "@/public/assets/icons/dashboard/userIcon.svg";
 import dashboardImage from "@/public/assets/images/dashboard/dashboardImage.png";
+import { useCampaignStore } from "@/store";
 import Image from "next/image";
 
 const Dashboard = () => {
+	const { campaigns } = useCampaignStore((state) => state);
+	console.log(campaigns);
 	const campaignData = [
 		{
 			image: userImage,

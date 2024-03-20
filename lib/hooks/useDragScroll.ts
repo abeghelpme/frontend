@@ -1,14 +1,15 @@
 import { useRef } from "react";
 import { useCallbackRef } from "./useCallbackRef";
 
+/* eslint-disable no-param-reassign */
 const updateCursor = <TElement extends HTMLElement>(element: TElement) => {
-	element.classList.remove("cursor-grab");
-	element.classList.add("cursor-grabbing", "select-none");
+	element.style.cursor = "grabbing";
+	element.style.userSelect = "none";
 };
 
 const resetCursor = <TElement extends HTMLElement>(element: TElement) => {
-	element.classList.remove("cursor-grabbing", "select-none");
-	element.classList.add("cursor-grab");
+	element.style.cursor = "grab";
+	element.style.userSelect = "auto";
 };
 
 const useDragScroll = <TElement extends HTMLElement>(options?: {
@@ -31,11 +32,18 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 		updateCursor(dragContainerRef.current);
 	});
 
-	const handleMouseUp = useCallbackRef<MouseEvent>(() => {
+	const handleMouseUpOrLeave = useCallbackRef<MouseEvent>(() => {
 		if (!dragContainerRef.current) return;
 
 		dragContainerRef.current.removeEventListener("mousemove", handleMouseMove);
-		dragContainerRef.current.removeEventListener("mouseup", handleMouseUp);
+		dragContainerRef.current.removeEventListener(
+			"mouseup",
+			handleMouseUpOrLeave
+		);
+		dragContainerRef.current.removeEventListener(
+			"mouseleave",
+			handleMouseUpOrLeave
+		);
 
 		resetCursor(dragContainerRef.current);
 	});
@@ -51,7 +59,11 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 		};
 
 		dragContainerRef.current.addEventListener("mousemove", handleMouseMove);
-		dragContainerRef.current.addEventListener("mouseup", handleMouseUp);
+		dragContainerRef.current.addEventListener("mouseup", handleMouseUpOrLeave);
+		dragContainerRef.current.addEventListener(
+			"mouseleave",
+			handleMouseUpOrLeave
+		);
 	});
 
 	const onTouchMove = useCallbackRef((event: TouchEvent) => {

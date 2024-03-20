@@ -16,9 +16,7 @@ const CampaignCategories = () => {
 	return (
 		<div className="flex flex-col gap-12 justify-center">
 			<div className="w-full flex flex-col gap-2">
-				<h1 className="text-4xl font-bold w-1/3 md:w-full md:text-5xl">
-					Campaign Categories
-				</h1>
+				<h1 className="text-4xl font-bold md:text-5xl">Campaign Categories</h1>
 				<p className="text-xl text-placeholder font-medium max-w-[540px]">
 					Join the effortless way to fundraise and make a difference and empower
 					your cause with Abeghelp.me

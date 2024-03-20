@@ -1,15 +1,25 @@
 import { Children, isValidElement, useMemo } from "react";
 
 type Noop = () => void;
+type NoopWithSlot = { slot?: string };
 
 const isSlotInstance = (
 	child: React.ReactNode,
 	SlotWrapper: React.ElementType
 ) => {
-	return (
-		isValidElement(child) &&
-		(child.type === SlotWrapper ||
-			(child.type as Noop).name === (SlotWrapper as Noop).name)
+	if (!isValidElement(child)) {
+		return false;
+	}
+
+	if (
+		(child.type as NoopWithSlot).slot === (SlotWrapper as NoopWithSlot).slot
+	) {
+		return true;
+	}
+
+	return Boolean(
+		child.type === SlotWrapper ||
+			(child.type as Noop).name === (SlotWrapper as Noop).name
 	);
 };
 

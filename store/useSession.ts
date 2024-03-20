@@ -34,7 +34,7 @@ export const useInitSession = create<Session>()((set, get) => ({
 			}
 
 			const { data } = await callApi<ApiResponse<SessionData>>("/auth/session");
-
+			console.log(data);
 			useInitCampaignStore
 				.getState()
 				.actions.updateCampaign(data?.data?.campaigns ?? []);
