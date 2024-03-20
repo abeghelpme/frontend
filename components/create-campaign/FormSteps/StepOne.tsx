@@ -23,9 +23,9 @@ function StepOne() {
 
 	const {
 		currentStep,
-		currentCampaign,
+		campaignId,
 		formStepData,
-		actions: { goToStep, updateFormData, updateCurrentCampaign },
+		actions: { goToStep, updateFormData, updateCampaignId },
 	} = useFormStore((state) => state);
 
 	const { categories: campaignCategories } = useCampaignStore((state) => state);
@@ -62,7 +62,7 @@ function StepOne() {
 			`/campaign/create/one`,
 			{
 				...data,
-				...(!!currentCampaign._id && { campaignId: currentCampaign._id }),
+				...(!!campaignId && { campaignId }),
 			}
 		);
 
@@ -76,7 +76,7 @@ function StepOne() {
 
 		if (!dataInfo.data) return;
 
-		updateCurrentCampaign(dataInfo.data);
+		updateCampaignId(dataInfo.data._id);
 		goToStep(2);
 	};
 

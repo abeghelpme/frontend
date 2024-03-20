@@ -70,7 +70,7 @@ function $CarouselButton(props: CarouselButtonsProps) {
 	return (
 		<button
 			className={cn(
-				"z-[30] flex h-full w-[90px] items-center",
+				"z-[30] flex h-full w-[15%] items-center",
 				type === "prev" ? "justify-start" : "justify-end",
 				classNames.base
 			)}
@@ -78,7 +78,7 @@ function $CarouselButton(props: CarouselButtonsProps) {
 		>
 			<span
 				className={cn(
-					"transition-transform active:scale-[1.11]",
+					"transition-transform active:scale-[1.06]",
 					classNames.iconContainer
 				)}
 			>
