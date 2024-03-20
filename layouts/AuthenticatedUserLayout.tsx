@@ -75,7 +75,7 @@ export const AuthenticatedUserLayout = ({
 	const initials = castedUser?.firstName[0] + castedUser?.lastName[0];
 	return (
 		<>
-			<header className="sticky top-0 left-0 bg-white z-10 flex items-center gap-10 py-5 px-[5%] lg:px-[7%] 2xl:px-[10%] justify-between border-b border-b-abeg-primary">
+			<header className="sticky left-0 top-0 z-10 flex items-center justify-between gap-10 border-b border-b-abeg-primary bg-white px-[5%] py-5 lg:px-[7%] 2xl:px-[10%]">
 				<div className="flex items-center gap-5">
 					{isDashboard && (
 						<Button
@@ -91,7 +91,7 @@ export const AuthenticatedUserLayout = ({
 				{/* Mobile menu */}
 				{isDashboard && (
 					<div
-						className={`md:hidden absolute inset-0 z-[110] min-h-svh bg-white h-full p-[51px] -translate-x-[110%] transition-transform duration-500 flex flex-col gap-7 ${
+						className={`absolute inset-0 z-[110] flex h-full min-h-svh -translate-x-[110%] flex-col gap-7 bg-white p-[51px] transition-transform duration-500 md:hidden ${
 							isOpen ? "translate-x-0" : ""
 						}`}
 					>
@@ -108,9 +108,8 @@ export const AuthenticatedUserLayout = ({
 									onClick={() => setIsOpen(false)}
 									key={title}
 									href={path}
-									className={`flex gap-4 text-xl items-center capitalize`}
+									className={`flex items-center gap-4 text-xl capitalize`}
 								>
-									{icon}
 									<span className="">{title}</span>
 								</Link>
 							))}
@@ -127,7 +126,8 @@ export const AuthenticatedUserLayout = ({
 						<DropdownMenuTrigger asChild>
 							<div className="flex cursor-pointer items-center gap-2 md:gap-0">
 								<Avatar initials={initials} />
-								<span className="px-1 hidden md:block ml-4 mr-2">
+
+								<span className="ml-4 mr-2 hidden px-1 md:block">
 									{castedUser?.firstName || "First Name"}
 								</span>
 								<span className="cursor-pointer" aria-hidden>
@@ -147,14 +147,14 @@ export const AuthenticatedUserLayout = ({
 							<DropdownMenuSeparator />
 							<DropdownMenuGroup>
 								<DropdownMenuItem>
-									<Link href="/dashboard" className="">
+									<Link href="/c" className="">
 										Dashboard
 									</Link>
 								</DropdownMenuItem>
 								<DropdownMenuItem>Settings</DropdownMenuItem>
 								<DropdownMenuItem className="lg:hidden">
 									<Link
-										href="/dashboard"
+										href="/c"
 										className="flex w-full items-center gap-2 rounded-md bg-abeg-primary px-2 py-2 text-sm"
 									>
 										<PlusIcon />
@@ -181,10 +181,10 @@ export const AuthenticatedUserLayout = ({
 				</div>
 			</header>
 			{isDashboard && (
-				<section className="md:bg-dashboardBg md:flex flex-col gap-6 md:bg-abeg-primary md:h-[42svh] xl:h-[37svh] 2xl:h-[40svh] 3xl:h-[19svh] bg-no-repeat bg-cover">
+				<section className="flex-col gap-6 bg-cover bg-no-repeat md:flex md:h-[42svh] md:bg-abeg-primary md:bg-dashboardBg xl:h-[37svh] 2xl:h-[40svh] 3xl:h-[19svh]">
 					<div className="px-[5%] lg:px-[7%] 2xl:px-[10%]">
-						<div className="mt-6 md:mt-0 md:py-6 gap-5 flex-col md:flex-row flex justify-between lg:gap-10 items-start">
-							<div className="md:text-xl xl:text-2xl md:text-white space-y-2">
+						<div className="mt-6 flex flex-col items-start justify-between gap-5 md:mt-0 md:flex-row md:py-6 lg:gap-10">
+							<div className="space-y-2 md:text-xl md:text-white xl:text-2xl">
 								<p className="font-bold">
 									Hi, {castedUser?.firstName || "FirstName"}👋
 								</p>
@@ -201,9 +201,9 @@ export const AuthenticatedUserLayout = ({
 							</div>
 							<Link
 								href={"/c/create"}
-								className="flex font-bold items-center p-2 bg-abeg-primary rounded-md md:bg-white md:text-abeg-primary text-white w-fit px-3"
+								className="flex w-fit items-center rounded-md bg-abeg-primary p-2 px-3 font-bold text-white md:bg-white md:text-abeg-primary"
 							>
-								<span className="pr-2 hidden md:block">
+								<span className="hidden pr-2 md:block">
 									<PlusIcon fill />
 								</span>
 								<span className="pr-2 md:hidden">
@@ -212,7 +212,7 @@ export const AuthenticatedUserLayout = ({
 								<span>Create Campaign</span>
 							</Link>
 						</div>
-						<div className="border-b-2 border-b-white md:flex gap-7 lg:gap-12 hidden pb-3">
+						<div className="hidden gap-7 border-b-2 border-b-white pb-3 md:flex lg:gap-12">
 							<Link
 								href="/c"
 								className={`flex items-center gap-2 !text-white ${
@@ -264,15 +264,15 @@ export const AuthenticatedUserLayout = ({
 			)}
 			<main
 				data-isopen={isOpen}
-				className={`authenticatedUserLayoutMain flex-1 h-full px-[5%] lg:px-[7%] 2xl:px-[10%] ${
+				className={`authenticatedUserLayoutMain h-full flex-1 px-[5%] lg:px-[7%] 2xl:px-[10%] ${
 					isDashboard &&
-					"space-y-8 lg:space-y-10 md:-translate-y-[4.8rem] mt-10 md:mt-0"
+					"mt-10 space-y-8 md:mt-0 md:-translate-y-[4.8rem] lg:space-y-10"
 				}`}
 			>
 				{children}
 			</main>
 			{!isDashboard && (
-				<footer className="mt-20 border-t px-[5%] lg:px-[7%] 2xl:px-[10%] border-t-abeg-primary py-4 md:py-7">
+				<footer className="mt-20 border-t border-t-abeg-primary px-[5%] py-4 md:py-7 lg:px-[7%] 2xl:px-[10%]">
 					{footer}
 				</footer>
 			)}

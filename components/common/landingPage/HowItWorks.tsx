@@ -21,8 +21,8 @@ const howItWorksCards = [
 const HowItWorks = () => {
 	return (
 		<div className="flex flex-col gap-8 justify-center ">
-			<div className="w-full space-y-5 md:justify-between md:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
-				<div className=" flex-1 space-y-2 md:pr-20">
+			<div className="w-full space-y-5 md:justify-between lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
+				<div className=" flex-1 flex flex-col gap-3 space-y-2 md:pr-20">
 					<h4 className="text-xl text-placeholder font-normal">
 						Want to know more?
 					</h4>
@@ -33,7 +33,7 @@ const HowItWorks = () => {
 						<Button variant="primary">Donate now</Button>
 					</Link>
 				</div>
-				<div className="flex-1 lg:pl-20 md:flex md:justify-center">
+				<div className="flex-1 lg:pl-20 md:flex lg:justify-center items-center">
 					<p className="text-xl text-placeholder font-medium">
 						Join the effortless way to raise funds <br /> and make a difference
 						and empower <br /> your cause with Abeghelp.me

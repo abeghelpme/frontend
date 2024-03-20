@@ -1,7 +1,7 @@
-import { Loader } from "@/components/common";
-import { CampaignOutlook, Heading } from "@/components/create-campaign";
+import { Heading, Loader } from "@/components/common";
+import { CampaignOutlook } from "@/components/create-campaign";
 import type { Campaign } from "@/interfaces/Campaign";
-import { AuthenticatedUserLayout } from "@/layouts";
+import { BaseLayout } from "@/layouts";
 import { callApi } from "@/lib/helpers/campaign";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
 import type {
@@ -86,9 +86,9 @@ function CampaignView({
 				}}
 			/>
 
-			<CampaignOutlook campaign={campaign}>
+			<CampaignOutlook excerpt={excerpt} campaign={campaign}>
 				<CampaignOutlook.Header>
-					<Heading as="h1" className="text-xl lg:text-[32px]">
+					<Heading as="h1" className="text-2xl">
 						{`${campaign.title[0].toUpperCase()}${campaign.title.slice(1)}`}
 					</Heading>
 				</CampaignOutlook.Header>
@@ -100,5 +100,5 @@ function CampaignView({
 export default CampaignView;
 
 CampaignView.getLayout = (page: React.ReactElement) => (
-	<AuthenticatedUserLayout>{page}</AuthenticatedUserLayout>
+	<BaseLayout>{page}</BaseLayout>
 );

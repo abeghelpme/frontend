@@ -4,7 +4,7 @@ import type { CallbackFn } from "../type-helpers/global-type-helpers";
 
 const useIsoMorphicLayoutEffect = isServer ? useEffect : useLayoutEffect;
 
-const useCallbackRef = <TParams, TResult>(
+const useCallbackRef = <TParams, TResult = unknown>(
 	callbackFn: CallbackFn<TParams, TResult>
 ) => {
 	const callbackRef = useRef(callbackFn);

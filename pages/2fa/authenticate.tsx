@@ -181,7 +181,7 @@ const AuthenticateUser = () => {
 					description: (data as { message: string }).message,
 					duration: 1500,
 				});
-				router.push(campaigns.length > 0 ? "/dashboard" : "/c/create");
+				router.push(campaigns.length > 0 ? "/c" : "/c/create");
 			}
 		}
 	};

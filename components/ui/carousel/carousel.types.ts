@@ -1,4 +1,5 @@
-import type { RenderPropFn } from "@/lib/hooks/useElementList/For";
+import type { EachProp, ForRenderProps } from "@/lib/hooks/useElementList/For";
+import type { Prettify } from "@/lib/type-helpers";
 import type { StoreApi } from "zustand";
 
 // Carousel store types
@@ -66,18 +67,17 @@ export type CarouselIndicatorProps = {
 	currentIndex: number;
 };
 
-type CarouselWrapperProps<TArray extends unknown[]> = {
-	each?: TArray;
-	render: RenderPropFn<TArray>;
-};
+type BaseWrapperProps<TArray extends unknown[]> = Prettify<
+	ForRenderProps<TArray> & Partial<EachProp<TArray>>
+>;
 
 export type CarouselItemWrapperProps<TArray extends unknown[]> =
-	CarouselWrapperProps<TArray> & {
+	BaseWrapperProps<TArray> & {
 		className?: string;
 	};
 
 export type CarouselIndicatorWrapperProps<TArray extends unknown[]> =
-	CarouselWrapperProps<TArray> & {
+	BaseWrapperProps<TArray> & {
 		classNames?: {
 			base?: string;
 			indicatorContainer?: string;

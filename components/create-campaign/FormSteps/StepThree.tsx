@@ -1,3 +1,4 @@
+import { Heading } from "@/components/common";
 import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import { callApi } from "@/lib/helpers/campaign";
@@ -8,7 +9,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import Heading from "../../common/Heading";
 import DropZoneInput from "../DropZoneInput";
 import FormErrorMessage from "../FormErrorMessage";
 import ImagePreview from "../ImagePreview";

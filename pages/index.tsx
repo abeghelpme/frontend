@@ -419,17 +419,7 @@ const HomePage = () => {
 					<Image src={joinnUs} alt="hero image" width={600} height={600} />
 				</div>
 				<div className="md:pt-10">
-					<h1 className="md:block hidden lg:px-32 text-center text-5xl font-bold">
-						Hear from some of our users we&apos;ve helped reach their goals
-					</h1>
-					<h1 className="text-center text-4xl font-bold md:hidden">
-						Some of our users we&apos;ve helped reach their goals
-					</h1>
-					<div className="flex w-full gap-5 overflow-x-auto hide-scrollbar">
-						{testimonials.map((testimonial, index) => (
-							<TestimonialCard key={index} testimonial={testimonial} />
-						))}
-					</div>
+					<TestimonialCard />
 				</div>
 
 				<div className="py-20">
