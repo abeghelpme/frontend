@@ -74,7 +74,7 @@ function CarouselButton(props: CarouselButtonsProps) {
 	return (
 		<button
 			className={cn(
-				"absolute z-40 h-full w-[90px]",
+				"absolute z-[60] h-full w-[90px]",
 				semanticVariants.base[type],
 				classNames.base
 			)}

@@ -7,7 +7,7 @@ function DonorSection({ className }: { className?: string }) {
 	const [DonorList] = useElementList();
 
 	return (
-		<article className={cn("w-full max-w-[338px] space-y-8", className)}>
+		<article className={cn("w-full space-y-8", className)}>
 			<DonorList
 				className="space-y-6"
 				each={[...Array(6).keys()]}

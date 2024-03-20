@@ -1,6 +1,6 @@
-import { DonorIcon, DonorIcon2 } from "@/components/common/campaign-icons";
+import { DonorIcon2 } from "@/components/common/campaign-icons";
 import type { Campaign } from "@/interfaces/Campaign";
-import { ArrowBigRightIcon, ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import { ClockIcon, LocationIcon } from "../common";
 import { Carousel } from "../ui/carousel";
@@ -20,33 +20,44 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 			<Carousel.Content
 				classNames={{
 					base: classNames?.base,
-					scrollContainer: "rounded-[5px]",
+					scrollContainer: "rounded-[5px] lg:rounded-[15px]",
 				}}
 			>
 				<Carousel.Button
 					type="prev"
-					icon={<ArrowLeftIcon className="size-3" />}
+					icon={<ArrowLeftIcon className="size-3 lg:size-6" />}
 					classNames={{
 						iconContainer:
-							"size-[25px] bg-abeg-text/40 left-[18px] flex justify-center items-center border border-white backdrop-blur-md rounded-full",
+							"p-[6px] lg:p-4 bg-abeg-text/40 left-[18px] lg:left-14 flex justify-center items-center border border-white backdrop-blur-md rounded-full",
 					}}
 				/>
 
 				<Carousel.Button
 					type="next"
-					icon={<ArrowRightIcon className="size-3" />}
+					icon={<ArrowRightIcon className="size-3 lg:size-6" />}
 					classNames={{
 						iconContainer:
-							"size-[25px] flex bg-abeg-text/40 right-[18px] justify-center items-center border border-white backdrop-blur-md rounded-full",
+							"p-[6px] lg:p-4 flex bg-abeg-text/40 right-[18px] lg:right-14 justify-center items-center border border-white backdrop-blur-md rounded-full",
 					}}
 				/>
 
-				<Carousel.Caption
-					as="figure"
-					className="left-[18px] top-[25px] flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] text-[11px] backdrop-blur-md"
-				>
-					<LocationIcon />
-					<figcaption>Lagos, Nigeria</figcaption>
+				<Carousel.Caption className="inset-0 flex flex-col items-start justify-between px-[18px] py-[25px] text-[11px] lg:rounded-[15px] lg:px-14 lg:py-10 lg:text-lg">
+					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:rounded-[15px] lg:p-[14px]">
+						<LocationIcon />
+						<figcaption>Lagos, Nigeria</figcaption>
+					</figure>
+
+					<div className="flex w-full justify-between">
+						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:rounded-[15px] lg:p-[14px]">
+							<DonorIcon2 className="size-4" />
+							<figcaption> 235,567 total donors</figcaption>
+						</figure>
+
+						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:rounded-[15px] lg:p-[14px]">
+							<ClockIcon />
+							<figcaption>20 days left</figcaption>
+						</figure>
+					</div>
 				</Carousel.Caption>
 
 				<Carousel.ItemWrapper<typeof images>
@@ -66,18 +77,6 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 						</Carousel.Item>
 					)}
 				/>
-
-				<Carousel.Caption className="bottom-[20px] flex w-full justify-between px-[20px]">
-					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px]  text-[11px] backdrop-blur-md">
-						<DonorIcon2 className="size-4" />
-						<figcaption> 235,567 total donors</figcaption>
-					</figure>
-
-					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] px-[20px] text-[11px] backdrop-blur-md">
-						<ClockIcon />
-						<figcaption>20 days left</figcaption>
-					</figure>
-				</Carousel.Caption>
 			</Carousel.Content>
 		</Carousel.Root>
 	);
