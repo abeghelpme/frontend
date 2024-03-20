@@ -51,83 +51,71 @@ const faqData = [
 	{
 		question: "How does AbegHelp.me keep fundraisers safe?",
 		answer: (
-			<>
-				<p>
-					AbegHelp.me features the very best in secure payment encryption
-					technology. Your donors&apos; online payments are safe, and your money
-					is stored securely until you&apos;re ready to request a withdrawal via
-					electronic bank transfer.
-				</p>
-			</>
+			<p>
+				AbegHelp.me features the very best in secure payment encryption
+				technology. Your donors&apos; online payments are safe, and your money
+				is stored securely until you&apos;re ready to request a withdrawal via
+				electronic bank transfer.
+			</p>
 		),
 	},
 	{
 		question: "Can a friend withdraw the money I raise for them?",
 		answer: (
-			<>
-				<p>
-					Yes. AbegHelp.me makes it easy for another friend or family member to
-					securely access the funds you have raised. Through AbegHelp.me, they
-					will receive direct access to the money you have raised. Please note:
-					You will not be able to enter their bank information during the
-					withdrawal process; they will need to do this themselves.
-				</p>
-			</>
+			<p>
+				Yes. AbegHelp.me makes it easy for another friend or family member to
+				securely access the funds you have raised. Through AbegHelp.me, they
+				will receive direct access to the money you have raised. Please note:
+				You will not be able to enter their bank information during the
+				withdrawal process; they will need to do this themselves.
+			</p>
 		),
 	},
 	{
 		question: "Are there any deadlines or time limits?",
 		answer: (
-			<>
-				<p>
-					While there are important withdrawals deadlines you&apos;ll need to
-					observe to avoid donations being refunded to donors, your fundraiser
-					will remain live until you choose to turn off donations or remove the
-					fundraiser altogether. Most organizers leave their fundraisers active
-					indefinitely to refer back to the kind comments and support they
-					received.
-				</p>
-			</>
+			<p>
+				While there are important withdrawals deadlines you&apos;ll need to
+				observe to avoid donations being refunded to donors, your fundraiser
+				will remain live until you choose to turn off donations or remove the
+				fundraiser altogether. Most organizers leave their fundraisers active
+				indefinitely to refer back to the kind comments and support they
+				received.
+			</p>
 		),
 	},
 	{
 		question: "What if I do not reach my goal?",
 		answer: (
-			<>
-				<p>
-					No problem. Reaching your goal is not required. With AbegHelp.me, you
-					keep each and every donation you receive. Your fundraiser will be able
-					to accept donations even after your goal is reached. Once the goal is
-					reached, the progress meter on your fundraiser will show that you have
-					received more than your goal amount. If you&apos;d like to continue
-					raising money, you can keep your fundraiser running for as long as
-					you&apos;d like.
-				</p>
-			</>
+			<p>
+				No problem. Reaching your goal is not required. With AbegHelp.me, you
+				keep each and every donation you receive. Your fundraiser will be able
+				to accept donations even after your goal is reached. Once the goal is
+				reached, the progress meter on your fundraiser will show that you have
+				received more than your goal amount. If you&apos;d like to continue
+				raising money, you can keep your fundraiser running for as long as
+				you&apos;d like.
+			</p>
 		),
 	},
 	{
 		question: "How do I get donations?",
 		answer: (
-			<>
-				<p>
-					AbegHelp.me provides an easy way to raise money from your friends,
-					family, and online community. Our platform makes it simple to share
-					your fundraiser in a variety of ways to bring in donations, track your
-					progress, and post updates to engage your community.
-				</p>
-			</>
+			<p>
+				AbegHelp.me provides an easy way to raise money from your friends,
+				family, and online community. Our platform makes it simple to share your
+				fundraiser in a variety of ways to bring in donations, track your
+				progress, and post updates to engage your community.
+			</p>
 		),
 	},
 	{
 		question: "Is my country supported?",
 		answer: (
-			<>
-				<p>
-					We are currently supporting 17 African countries. We are working on
-					expanding our support to more countries.
-				</p>
-			</>
+			<p>
+				We are currently supporting 17 African countries. We are working on
+				expanding our support to more countries.
+			</p>
 		),
 	},
 ];
@@ -143,6 +131,7 @@ const FAQ = ({ className }: { className?: string }) => {
 			return newExpanded;
 		});
 	};
+
 	return (
 		<section className={className}>
 			<p className="text-xl text-placeholder">Wanna know more?</p>
@@ -150,14 +139,15 @@ const FAQ = ({ className }: { className?: string }) => {
 				Frequently asked questions
 			</h1>
 			{faqData.map((item, index) => (
-				<div key={index} className="mb-4 space-y-2 bg-white p-4">
+				<div key={item.question} className="mb-4 space-y-2 bg-white p-4">
 					<div className="flex items-center justify-between">
-						<h3
+						<button
 							className="cursor-pointer text-2xl font-semibold"
 							onClick={() => toggleAnswer(index)}
 						>
 							{item.question}
-						</h3>
+						</button>
+
 						<span
 							className="mr-2 cursor-pointer text-2xl md:text-3xl"
 							onClick={() => toggleAnswer(index)}
@@ -165,13 +155,16 @@ const FAQ = ({ className }: { className?: string }) => {
 							{expanded[index] ? "−" : "+"}
 						</span>
 					</div>
+
 					{expanded[index] && (
 						<div className="space-y-5 pt-5 text-xl"> {item.answer}</div>
 					)}
-					<div className="mt-2 border-t-2 border-gray-300"></div>
+
+					<div className="mt-2 border-t-2 border-gray-300" />
 				</div>
 			))}
 		</section>
 	);
 };
+
 export default FAQ;
