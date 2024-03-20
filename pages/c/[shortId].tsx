@@ -88,7 +88,7 @@ function CampaignView({
 
 			<CampaignOutlook excerpt={excerpt} campaign={campaign}>
 				<CampaignOutlook.Header>
-					<Heading as="h1" className="text-2xl">
+					<Heading as="h1" className="text-4xl lg:text-4xl">
 						{`${campaign.title[0].toUpperCase()}${campaign.title.slice(1)}`}
 					</Heading>
 				</CampaignOutlook.Header>

@@ -3,7 +3,7 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
-import { type StepThreeData, initialFormState, useFormStore } from "@/store";
+import { type StepThreeData, useFormStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -19,9 +19,9 @@ function StepThree() {
 
 	const {
 		currentStep,
-		currentCampaign,
+		campaignId,
 		formStepData,
-		actions: { updateFormData, updateCurrentCampaign },
+		actions: { resetFormData },
 	} = useFormStore((state) => state);
 
 	const {
@@ -50,7 +50,7 @@ function StepThree() {
 
 		formData.set("story", data.story);
 		formData.set("storyHtml", data.storyHtml);
-		formData.set("campaignId", currentCampaign._id);
+		formData.set("campaignId", campaignId);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
 		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
@@ -68,14 +68,16 @@ function StepThree() {
 
 		if (!dataInfo.data) return;
 
-		updateCurrentCampaign(dataInfo.data);
-		updateFormData(initialFormState.formStepData);
+		resetFormData();
 
 		toast.success("Success", {
 			description: "Campaign created successfully!",
 		});
 
-		void router.push("/c/campaigns");
+		void router.push({
+			pathname: "/c/overview",
+			query: { id: dataInfo.data._id },
+		});
 	};
 
 	return (
