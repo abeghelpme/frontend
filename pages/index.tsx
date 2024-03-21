@@ -18,7 +18,6 @@ import {
 	joinnUs,
 	netflix,
 	senville,
-	testimonialImage1,
 	timeCamp,
 } from "@/public/assets/images/landing-page";
 import Image from "next/image";
@@ -50,7 +49,6 @@ const campaignCard = [
 		text: "Change lives With the funds raised, take the steps to turn your dream project into reality.",
 	},
 ];
-const trustedPioneers = [timeCamp, senville, google, dropbox, netflix, envato]; // Trusted Pioneers images
 
 const HomePage = () => {
 	return (
@@ -106,14 +104,15 @@ const HomePage = () => {
 					))}
 				</div>
 
-				<div
-					className="flex justify-center rounded-xl py-20 text-white lg:px-20"
-					style={{
-						backgroundImage: `url(/assets/images/landing-page/background.png)`,
-						backgroundSize: "cover",
-						backgroundPosition: "center",
-					}}
-				>
+				<div className="flex justify-center rounded-xl py-20 text-white lg:px-20">
+					<Image
+						src="/assets/images/shared/hero-background.svg"
+						className="z-[-1] object-cover object-center"
+						fetchPriority="high"
+						priority={true}
+						alt=""
+						fill
+					/>
 					<div className="space-y-5 md:px-10">
 						<p className="flex justify-center text-center text-xl font-light">
 							Let&apos;s Help you start your Journey
@@ -224,7 +223,7 @@ const HomePage = () => {
 					<TestimonialCard />
 				</div>
 
-				<UrgentFundraisers padding="py-20" />
+				<UrgentFundraisers className="py-20" />
 
 				{/* <div>
 					<h1 className="text-center text-4xl font-bold md:px-32 md:text-5xl">

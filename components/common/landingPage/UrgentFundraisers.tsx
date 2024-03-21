@@ -1,86 +1,39 @@
-import { Button, ProgressBar } from "@/components/ui";
-import { happyPeople } from "@/public/assets/images/landing-page";
-import Image from "next/image";
+import { Button } from "@/components/ui";
+import { cn } from "@/lib";
 import Link from "next/link";
+import { CampaignCardList, dummyCardData } from "../CampaignCard";
+import Heading from "../Heading";
 
-const urgentFundraisers = [
-	{
-		image: happyPeople,
-		title: "Bringing Dental Care to Undeserved Communities",
-		name: "Locs Designer",
-		proffession: "Health and Welness",
-		amountRaised: "$2,000,000",
-	},
-	{
-		image: happyPeople,
-		title: "Bringing Dental Care to Undeserved Communities",
-		name: "Locs Designer",
-		proffession: "Health and Welness",
-		amountRaised: "$2,000,000",
-	},
-	{
-		image: happyPeople,
-		title: "Bringing Dental Care to Undeserved Communities",
-		name: "Locs Designer",
-		proffession: "Health and Welness",
-		amountRaised: "$2,000,000",
-	},
-	{
-		image: happyPeople,
-		title: "Bringing Dental Care to Undeserved Communities",
-		name: "Locs Designer",
-		proffession: "Health and Welness",
-		amountRaised: "$2,000,000",
-	},
-];
-
-const UrgentFundraisers = ({ padding }: { padding?: String }) => {
+function UrgentFundraisers({ className }: { className?: string }) {
 	return (
-		<div className={`${padding} 'py-20'`}>
-			<div className="md:items-center md:justify-between lg:flex">
-				<div className="mb-5 space-y-5">
-					<h4 className="text-xl text-gray-500">Donate today</h4>
-					<h1 className="text-4xl font-bold md:text-5xl">Urgent Fundraisers</h1>
-					<p className="text-xl text-gray-500">
-						Join our community of change-makers and make an impact today
+		<section className={cn("w-full", className)}>
+			<div className="px-6 lg:flex lg:flex-row lg:items-center lg:justify-between lg:px-[100px]">
+				<div className="space-y-2.5">
+					<Heading as="h3" className="text-xl font-normal">
+						Donate Today
+					</Heading>
+
+					<Heading as="h3" className="text-[40px] lg:text-5xl">
+						Urgent Fundraiser
+					</Heading>
+
+					<p className="text-pretty text-xl lg:text-2xl">
+						Join our community of change makers and make an impact today
 					</p>
 				</div>
-				<Button className="border border-gray-500 font-semibold text-gray-500 outline-none">
-					<Link href="/c/create">Explore campaigns</Link>
+
+				<Button className="mt-4 shrink-0 border border-placeholder text-base font-extrabold text-placeholder">
+					<Link href="/explore">Explore campaigns</Link>
 				</Button>
 			</div>
 
-			<div className="mt-14 gap-5 md:flex md:overflow-x-auto md:hide-scrollbar">
-				{urgentFundraisers.map((item: any, index) => (
-					<div
-						key={index}
-						className="mb-5 flex-shrink-0 flex-grow-0 space-y-4 md:mb-0 md:w-[45%] lg:w-[30%]"
-					>
-						<Image
-							src={item.image}
-							alt={item.name}
-							priority
-							width={400}
-							height={400}
-							className="h-60 w-full rounded-md object-cover"
-						/>
-						<h3 className="text-md text-base font-semibold xl:pr-10 xl:text-lg">
-							{item.title}
-						</h3>
-						<p className="text-xs">
-							By: {item.name} - {item.proffession}
-						</p>
-						<ProgressBar
-							value={70}
-							className="rounded-full progress-unfilled:h-1 progress-unfilled:bg-teal-400 progress-filled:bg-abeg-primary"
-						/>
-						<p className="pt-2 text-xs text-abeg-primary">
-							{item.amountRaised} raised
-						</p>
-					</div>
-				))}
-			</div>
-		</div>
+			<CampaignCardList
+				listType="horizontal"
+				cardDetailList={dummyCardData}
+				classNames={{ base: "mt-10 lg:mt-14 pl-6 lg:pl-[100px]" }}
+			/>
+		</section>
 	);
-};
+}
+
 export default UrgentFundraisers;

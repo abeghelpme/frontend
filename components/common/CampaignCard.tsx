@@ -93,7 +93,10 @@ export function CampaignCard(props: CardProps) {
 			</Card.Header>
 
 			<Card.Content>
-				<Heading as="h4" className="w-[80%] text-base font-bold lg:text-base">
+				<Heading
+					as="h4"
+					className="max-w-[30ch] text-base font-bold lg:text-base"
+				>
 					{cardDetails.title}
 				</Heading>
 

@@ -16,9 +16,8 @@ import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CustomDialog } from "../common";
-import { CampaignCardList, dummyCardData } from "../common/CampaignCard";
 import Heading from "../common/Heading";
-import { FAQ } from "../common/landingPage";
+import { FAQ, UrgentFundraisers } from "../common/landingPage";
 import { Button, ProgressBar } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
 import DonorSection from "./DonorSection";
@@ -52,7 +51,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
 	return (
-		<main className="flex w-full flex-col items-center pb-20 text-abeg-text">
+		<main className="flex flex-col items-center pb-20 text-abeg-text">
 			<section className="relative px-6 pb-14 pt-11 text-white md:px-[100px]">
 				<Image
 					src="/assets/images/shared/hero-background.svg"
@@ -279,33 +278,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				</section>
 			</div>
 
-			<section className="mt-[72px] w-full pl-6 lg:mt-[160px] lg:pl-[100px]">
-				<header className="pr-6 lg:flex lg:flex-row lg:items-center lg:justify-between lg:pr-[100px]">
-					<div className="space-y-2.5">
-						<Heading as="h3" className="text-xl font-normal">
-							Donate Today
-						</Heading>
-
-						<Heading as="h3" className="text-[40px] lg:text-5xl">
-							Urgent Fundraiser
-						</Heading>
-
-						<p className="text-pretty text-xl lg:text-2xl">
-							Join our community of change makers and make an impact today
-						</p>
-					</div>
-
-					<Button className="mt-4 shrink-0 border border-placeholder text-base font-extrabold text-placeholder">
-						<Link href="/explore">Explore campaigns</Link>
-					</Button>
-				</header>
-
-				<CampaignCardList
-					listType="horizontal"
-					cardDetailList={dummyCardData}
-					classNames={{ base: "mt-10 lg:mt-14" }}
-				/>
-			</section>
+			<UrgentFundraisers className="mt-[72px] lg:mt-[120px]" />
 
 			<FAQ className="mt-[72px] w-full px-6 lg:mt-[120px] lg:px-[100px]" />
 		</main>
