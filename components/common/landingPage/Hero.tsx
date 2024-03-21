@@ -2,25 +2,29 @@ import { Button } from "@/components/ui";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 
-type Button = {
+type ButtonType = {
 	href: string;
 	text: string;
 };
+
 type Props = {
 	h1Tag: string;
 	pTag: string;
-	button1: Button;
-	button2?: Button;
+	button1: ButtonType;
+	button2?: ButtonType;
 	imageSrc: StaticImageData;
 };
 const Hero = ({ h1Tag, pTag, button1, button2, imageSrc }: Props) => {
 	return (
-		<div
-			className="flex items-center bg-cover bg-center md:py-10 lg:h-screen"
-			style={{
-				backgroundImage: `url(/assets/images/shared/hero-background.svg)`,
-			}}
-		>
+		<div className="relative flex items-center bg-cover bg-center md:py-10 lg:h-screen">
+			<Image
+				src="/assets/images/shared/hero-background.svg"
+				className="z-[-1] object-cover object-center"
+				fetchPriority="high"
+				priority={true}
+				alt=""
+				fill
+			/>
 			<div className="flex flex-col gap-4 px-5 text-gray-50 md:px-20 lg:flex-row lg:items-center  lg:gap-12">
 				<div className="flex w-full flex-col gap-6 lg:w-1/2">
 					<h1 className="pr-5 text-5xl font-bold leading-tight md:pr-0 md:text-6xl md:leading-snug">

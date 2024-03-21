@@ -10,15 +10,9 @@ import {
 	createCampaignImage2,
 	createCampaignImage3,
 	crowdFund,
-	dropbox,
-	envato,
 	globalCommunity,
-	google,
 	hero,
 	joinnUs,
-	netflix,
-	senville,
-	timeCamp,
 } from "@/public/assets/images/landing-page";
 import Image from "next/image";
 import Link from "next/link";
@@ -60,7 +54,7 @@ const HomePage = () => {
 				button2={{ href: "/c/create", text: "Donate now" }}
 				imageSrc={hero}
 			/>
-			<div className="px-5 pb-10 pt-10 md:px-20 md:pt-20">
+			<div className="px-5 py-10 md:px-20 md:pt-20">
 				<div className="w-full space-y-5 md:justify-between lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
 					<div className="space-y-5 md:pr-20">
 						<h4 className="text-xl text-gray-500">How it works</h4>
@@ -85,7 +79,7 @@ const HomePage = () => {
 					{campaignCard.map((card, index) => (
 						<div
 							key={index}
-							className="relative flex-shrink-0 flex-grow-0 space-y-3 rounded-xl bg-gray-200 p-5 md:w-[45%] lg:w-[30%]"
+							className="relative shrink-0 grow-0 space-y-3 rounded-xl bg-gray-200 p-5 md:w-[45%] lg:w-[30%]"
 						>
 							<h1 className="text-2xl font-bold">{card.heading}</h1>
 							<p className="text-md font-medium">{card.text}</p>
@@ -107,12 +101,11 @@ const HomePage = () => {
 				<div className="relative flex justify-center py-20 text-white lg:px-20">
 					<Image
 						src="/assets/images/shared/hero-background.svg"
-						className="z-[-1]  rounded-xl object-cover object-center"
-						fetchPriority="high"
-						priority={true}
+						className="z-[-1] rounded-xl object-cover object-center"
 						alt=""
 						fill
 					/>
+
 					<div className="space-y-5 md:px-10">
 						<p className="flex justify-center text-center text-xl font-light">
 							Let&apos;s Help you start your Journey
@@ -155,7 +148,7 @@ const HomePage = () => {
 						<h1 className="text-4xl font-bold md:text-5xl">
 							A Path to Making a Difference.
 						</h1>
-						<div className="border-t-2 border-gray-400"></div>
+						<div className="border-t-2 border-gray-400" />
 						<div className="space-y-10">
 							<div className="flex items-start gap-5">
 								<Image
@@ -195,21 +188,21 @@ const HomePage = () => {
 									alt="Avatar 1"
 									width={50}
 									height={50}
-									className="relative z-10 rounded-full md:h-full md:w-full"
+									className="relative z-10 rounded-full md:size-full"
 								/>
 								<Image
 									src={avatar2}
 									alt="Avatar 2"
 									width={50}
 									height={50}
-									className="absolute left-10 top-0 z-20 rounded-full md:left-14 md:h-full md:w-full"
+									className="absolute left-10 top-0 z-20 rounded-full md:left-14 md:size-full"
 								/>
 								<Image
 									src={avatar3}
 									alt="Avatar 3"
 									width={50}
 									height={50}
-									className="absolute left-20 top-0 z-30 rounded-full md:left-28 md:h-full md:w-full"
+									className="absolute left-20 top-0 z-30 rounded-full md:left-28 md:size-full"
 								/>
 								<p className="absolute left-32 top-2 ml-2 text-3xl font-semibold text-white md:left-48 md:top-4">
 									8k+
@@ -224,17 +217,6 @@ const HomePage = () => {
 				</div>
 
 				<UrgentFundraisers className="py-20" />
-
-				{/* <div>
-					<h1 className="text-center text-4xl font-bold md:px-32 md:text-5xl">
-						Trusted By Pioneers
-					</h1>
-					<div className="flex flex-wrap justify-center gap-10 py-10 md:justify-normal">
-						{trustedPioneers.map((item: any, index) => (
-							<Image key={index} src={item} alt={""} width={150} height={150} />
-						))}
-					</div>
-				</div> */}
 
 				<FAQ className="py-10" />
 			</div>
