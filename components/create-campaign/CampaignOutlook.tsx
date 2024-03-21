@@ -53,12 +53,16 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	return (
 		<main className="flex w-full flex-col items-center pb-20 text-abeg-text">
-			<section
-				className="bg-cover bg-center px-6 pb-14 pt-11 text-white md:px-[100px] "
-				style={{
-					backgroundImage: `url(/assets/images/shared/hero-background.svg)`,
-				}}
-			>
+			<section className="relative px-6 pb-14 pt-11 text-white md:px-[100px]">
+				<Image
+					src="/assets/images/shared/hero-background.svg"
+					className="absolute z-[-1] object-cover object-center"
+					fetchPriority="high"
+					priority={true}
+					alt=""
+					fill
+				/>
+
 				{HeaderSlot}
 
 				<p className="mt-3 text-pretty lg:text-xl">{excerpt}</p>
