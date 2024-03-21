@@ -104,10 +104,10 @@ const HomePage = () => {
 					))}
 				</div>
 
-				<div className="flex justify-center rounded-xl py-20 text-white lg:px-20">
+				<div className="relative flex justify-center py-20 text-white lg:px-20">
 					<Image
 						src="/assets/images/shared/hero-background.svg"
-						className="z-[-1] object-cover object-center"
+						className="z-[-1]  rounded-xl object-cover object-center"
 						fetchPriority="high"
 						priority={true}
 						alt=""
