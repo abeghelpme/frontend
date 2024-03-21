@@ -1,6 +1,5 @@
 import {
 	DonorIcon,
-	DonorIcon2,
 	DummyAvatar,
 	MoneyIcon,
 	ShareIcon,
@@ -10,17 +9,16 @@ import {
 import type { Campaign } from "@/interfaces/Campaign";
 import { cn } from "@/lib";
 import { getDateFromString } from "@/lib/helpers/campaign";
-import { useDragScroll, useElementList, useShareCampaign } from "@/lib/hooks";
+import { useElementList, useShareCampaign } from "@/lib/hooks";
 import { useSlot } from "@/lib/hooks/useSlot";
 import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ClockIcon, CustomDialog, LocationIcon } from "../common";
+import { CustomDialog } from "../common";
 import Heading from "../common/Heading";
-import { FAQ } from "../common/landingPage";
+import { FAQ, UrgentFundraisers } from "../common/landingPage";
 import { Button, ProgressBar } from "../ui";
-import Card from "../ui/card";
 import CampaignCarousel from "./CampaignCarousel";
 import DonorSection from "./DonorSection";
 
@@ -40,10 +38,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	const [TagList] = useElementList();
 
-	const [CardList] = useElementList();
-
-	const dragScrollProps = useDragScroll<HTMLUListElement>();
-
 	const HeaderSlot = useSlot(children, CampaignOutlook.Header);
 
 	const { generateTweet, generateWhatsAppMessage, handleShareLink } =
@@ -57,17 +51,26 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
 	return (
-		<main className="flex w-full flex-col items-center pb-20 text-abeg-text">
-			<section className="bg-abeg-primary bg-heroBg px-6 pb-14 pt-11 text-white lg:px-[100px] ">
+		<main className="flex flex-col items-center pb-20 text-abeg-text">
+			<section className="relative px-6 pb-14 pt-11 text-white md:px-[100px]">
+				<Image
+					src="/assets/images/shared/hero-background.svg"
+					className="z-[-1] object-cover object-center"
+					fetchPriority="high"
+					priority={true}
+					alt=""
+					fill
+				/>
+
 				{HeaderSlot}
 
 				<p className="mt-3 text-pretty lg:text-xl">{excerpt}</p>
 
 				<div className="relative mt-6 flex items-center max-lg:justify-between lg:gap-9">
-					<figure className="flex items-center gap-3 text-xl">
+					<figure className="flex items-center gap-3 ">
 						<DummyAvatar className="size-10" />
 
-						<figcaption>{fundraiserTarget}</figcaption>
+						<figcaption className="text-xl">{fundraiserTarget}</figcaption>
 					</figure>
 
 					<button className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-xl font-bold">
@@ -104,21 +107,24 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				</div>
 			</section>
 
-			<div className="flex flex-col px-6 max-lg:max-w-[430px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[100px]">
+			<div className="flex flex-col px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[100px]">
 				<section className="mt-16 space-y-5 px-[18px] py-6 lg:min-w-[383px] lg:max-w-[505px]">
 					<article>
 						<div className="flex items-center justify-between">
-							<p className="font-bold">₦ {campaign.goal}</p>
-							<p className="text-xs font-semibold">
-								₦1,000,000{" "}
-								<span className="font-medium text-placeholder">remaining</span>
+							<p className="font-bold">₦ {campaign.amountRaised}</p>
+
+							<p className="text-xs font-semibold ">
+								₦ {Math.floor(campaign.goal - campaign.amountRaised)}{" "}
+								<span className="text-placeholder">remaining</span>
 							</p>
 						</div>
+
 						<ProgressBar
-							value={70}
+							value={Math.floor((campaign.amountRaised / campaign.goal) * 100)}
 							className="progress-unfilled:h-1 progress-unfilled:rounded-lg progress-unfilled:bg-lightGreen progress-filled:rounded-lg progress-filled:bg-abeg-primary"
 						/>
 					</article>
+
 					<article className="space-y-4">
 						<Button
 							variant="primary"
@@ -175,6 +181,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									<Image src={xIcon as string} width={32} height={32} alt="" />
 									Twitter (X)
 								</Link>
+
 								<Link
 									href={generateWhatsAppMessage(campaign.title, campaign.url)}
 									target="_blank"
@@ -191,6 +198,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							</div>
 						</CustomDialog>
 					</article>
+
 					<article className="space-y-7">
 						<figure className="flex items-start gap-2.5 text-sm lg:text-base">
 							<MoneyIcon className="mt-[5px] size-6 shrink-0" />
@@ -214,7 +222,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					<DonorSection className="px-[19px]" />
 				</section>
 
-				<section className="mt-14 max-w-[714px] text-xl">
+				<section className="mt-14 max-w-[714px] text-2xl">
 					<article>
 						<Heading
 							as="h3"
@@ -230,17 +238,18 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							Story
 						</Heading>
 						<div
-							className="mt-6 min-h-16 text-justify text-[18px] lg:text-xl"
+							className="mt-6 min-h-16 text-justify text-2xl"
 							dangerouslySetInnerHTML={{
 								__html: campaign.storyHtml,
 							}}
 						/>
-						<p className="mt-6 lg:mt-12 lg:text-2xl">
+
+						<p className="mt-6 lg:mt-12">
 							Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
 						</p>
 
 						<TagList
-							className="mt-4 font-medium max-lg:space-y-2 lg:grid lg:grid-cols-3 lg:gap-x-2 lg:gap-y-6 lg:text-2xl"
+							className="mt-4 font-medium max-lg:space-y-2 lg:grid lg:grid-cols-3 lg:gap-x-2 lg:gap-y-6"
 							each={campaign.tags}
 							render={(tag, index) => (
 								<li key={`${tag}-${index}`} className="flex min-w-0">
@@ -249,8 +258,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							)}
 						/>
 					</article>
+
 					<article className="mt-12 flex items-start gap-6">
 						<DummyAvatar className="size-[82px]" />
+
 						<div>
 							<p className="flex flex-col">
 								{fundraiserTarget} is in charge of this fundraiser.
@@ -258,7 +269,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							</p>
 							<Button
 								variant="primary"
-								className="mt-8 w-full rounded-md bg-abeg-primary py-3 text-base font-bold lg:mt-8 lg:py-4 lg:text-base"
+								className="mt-8 w-full rounded-md bg-abeg-primary py-3 text-base font-bold lg:mt-8 lg:py-4"
 							>
 								Reach out
 							</Button>
@@ -267,90 +278,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				</section>
 			</div>
 
-			<section className="mt-[72px] w-full pl-6 lg:mt-[160px] lg:pl-[100px]">
-				<header className="lg:flex lg:flex-row lg:items-center lg:justify-between">
-					<div className="space-y-2.5">
-						<Heading as="h3" className="text-xl font-normal">
-							Donate Today
-						</Heading>
-
-						<Heading as="h3" className="text-4xl lg:text-[42px]">
-							Urgent Fundraiser
-						</Heading>
-
-						<p className="text-xl lg:text-2xl">
-							Join our community of change makers and make an impact today
-						</p>
-					</div>
-
-					<Button className="mt-4 border border-placeholder font-extrabold text-placeholder">
-						<Link href="/explore">Explore campaigns</Link>
-					</Button>
-				</header>
-
-				<CardList
-					{...dragScrollProps}
-					className="mt-[2.4rem] flex w-full cursor-grab gap-4 overflow-x-scroll [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-					each={[...Array(4).keys()]}
-					render={(item) => (
-						<Card
-							key={item}
-							as="li"
-							className="w-full max-w-[383px] shrink-0 space-y-[25px] lg:max-w-[396px]"
-						>
-							<Card.Header
-								className="h-[263px] rounded-md"
-								style={{
-									backgroundImage: `url(/assets/images/dashboard/dashboardImage.png)`,
-								}}
-							>
-								<article className="flex size-full select-none flex-col items-start justify-between p-[25px] text-xs text-white">
-									<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-										<LocationIcon />
-										<figcaption>Lagos, Nigeria</figcaption>
-									</figure>
-
-									<div className="flex w-full justify-between">
-										<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-											<DonorIcon2 className="size-4" />
-											<figcaption> 235,567 total donors</figcaption>
-										</figure>
-
-										<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-											<ClockIcon />
-											<figcaption>20 days left</figcaption>
-										</figure>
-									</div>
-								</article>
-							</Card.Header>
-
-							<Card.Content>
-								<Heading
-									as="h4"
-									className="w-[80%] text-base font-bold lg:text-base"
-								>
-									Bringing Dental Care to Underserved Communities
-								</Heading>
-
-								<p className="mt-2 text-sm font-medium">
-									By: {fundraiserTarget} - {campaign.category?.name}
-								</p>
-							</Card.Content>
-
-							<Card.Footer className="flex flex-col gap-2">
-								<ProgressBar
-									value={70}
-									className="progress-unfilled:h-1 progress-unfilled:rounded-lg progress-unfilled:bg-lightGreen progress-filled:rounded-lg progress-filled:bg-abeg-primary"
-								/>
-
-								<p className="text-xs font-medium text-abeg-primary">
-									₦2,000,000 raised
-								</p>
-							</Card.Footer>
-						</Card>
-					)}
-				/>
-			</section>
+			<UrgentFundraisers className="mt-[72px] lg:mt-[120px]" />
 
 			<FAQ className="mt-[72px] w-full px-6 lg:mt-[120px] lg:px-[100px]" />
 		</main>

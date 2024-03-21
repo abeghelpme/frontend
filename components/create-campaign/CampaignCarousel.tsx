@@ -25,30 +25,30 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 			>
 				<Carousel.Controls
 					classNames={{
-						base: "px-[18px] py-[25px] lg:px-12 lg:py-10",
+						base: "px-[18px] py-[25px] md:px-[53px] lg:py-10",
 						iconsContainer:
-							"p-[6px] lg:p-3 bg-abeg-text/40 flex justify-center items-center border border-white backdrop-blur-md rounded-full",
+							"size-[25px] lg:size-20 bg-abeg-text/40 flex justify-center items-center border border-white backdrop-blur-md rounded-full",
 					}}
 					icons={{
-						prev: <ArrowLeftIcon className="size-3 lg:size-6" />,
-						next: <ArrowRightIcon className="size-3 lg:size-6" />,
+						prev: <ArrowLeftIcon className="size-2.5 lg:size-[30px]" />,
+						next: <ArrowRightIcon className="size-2.5 lg:size-[30px]" />,
 					}}
 				/>
 
-				<Carousel.Caption className="inset-0 flex flex-col items-start justify-between px-[18px] py-[25px] text-xs lg:rounded-[15px] lg:px-12 lg:py-10 lg:text-base">
-					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-[14px]">
-						<LocationIcon className="lg:size-6" />
+				<Carousel.Caption className="inset-0 flex flex-col items-start justify-between px-[18px] py-[25px] text-[10px] font-medium md:px-[53px] lg:rounded-[15px] lg:py-10 lg:text-[30px]">
+					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-5">
+						<LocationIcon className="size-4 lg:size-10" />
 						<figcaption>Lagos, Nigeria</figcaption>
 					</figure>
 
 					<div className="flex w-full justify-between">
-						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-[14px]">
-							<DonorIcon2 className="size-4 lg:size-6" />
-							<figcaption> 235,567 total donors</figcaption>
+						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-5">
+							<DonorIcon2 className="size-4 lg:size-10" />
+							<figcaption>235,567 total donors</figcaption>
 						</figure>
 
-						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-[14px]">
-							<ClockIcon className="lg:size-6" />
+						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-5">
+							<ClockIcon className="size-4 lg:size-10" />
 							<figcaption>20 days left</figcaption>
 						</figure>
 					</div>

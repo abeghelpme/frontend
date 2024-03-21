@@ -28,6 +28,7 @@ import { useSession } from "@/store";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { type ReactNode, useState } from "react";
+
 type AuthenticatedUserLayoutProps = {
 	isDashboard?: boolean;
 	children: ReactNode;
@@ -222,15 +223,7 @@ export const AuthenticatedUserLayout = ({
 								<DashboardIcon fill={router.pathname === "/c"} />
 								Dashboard
 							</Link>
-							<Link
-								href="/c/campaigns"
-								className={`flex items-center gap-2 !text-white ${
-									router.pathname === "/c/campaigns" && "font-semibold"
-								}`}
-							>
-								<MegaphoneIcon fill={router.pathname === "/c/campaigns"} />
-								Campaigns
-							</Link>
+
 							<Link
 								href="/c/analytics"
 								className={`flex items-center gap-2 !text-white ${
