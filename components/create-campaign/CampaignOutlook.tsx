@@ -56,7 +56,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 			<section className="relative px-6 pb-14 pt-11 text-white md:px-[100px]">
 				<Image
 					src="/assets/images/shared/hero-background.svg"
-					className="absolute z-[-1] object-cover object-center"
+					className="z-[-1] object-cover object-center"
 					fetchPriority="high"
 					priority={true}
 					alt=""
