@@ -154,28 +154,32 @@ export const CampaignCategoryCard = () => {
 					</span>
 					<span> Prev</span>
 				</button>
-				{[...Array(totalPages).keys()].map((pageNumber, i) => (
-					<div key={i} className="flex items-center">
-						{(pageNumber <= 3 || i === totalPages - 1) && (
-							<button
-								key={pageNumber}
-								onClick={() => handlePageChange(pageNumber)}
-								className={`rounded-full px-3 py-1 md:px-4 md:text-2xl ${
-									currentPage === pageNumber
-										? "border border-black bg-abeg-primary font-bold text-white"
-										: "font-bold"
-								}`}
-							>
-								{pageNumber}
-							</button>
-						)}
-						{pageNumber === 3 && totalPages > 3 && (
-							<span className="mb-2 flex items-center px-2 py-1 font-bold md:text-2xl">
-								...
-							</span>
-						)}
-					</div>
-				))}
+				{[...Array<number>(totalPages).keys()].map((number, i) => {
+					const pageNumber = number + 1;
+
+					return (
+						<div key={i} className="flex items-center">
+							{(pageNumber <= 3 || i === totalPages - 1) && (
+								<button
+									key={pageNumber}
+									onClick={() => handlePageChange(pageNumber)}
+									className={`rounded-full px-3 py-1 md:px-4 md:text-2xl ${
+										currentPage === pageNumber
+											? "border border-black bg-abeg-primary font-bold text-white"
+											: "font-bold"
+									}`}
+								>
+									{pageNumber}
+								</button>
+							)}
+							{pageNumber === 3 && totalPages > 3 && (
+								<span className="mb-2 flex items-center px-2 py-1 font-bold md:text-2xl">
+									...
+								</span>
+							)}
+						</div>
+					);
+				})}
 				<button
 					onClick={handleNextPage}
 					disabled={currentPage === totalPages}
