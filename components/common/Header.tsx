@@ -1,4 +1,5 @@
 "use client";
+
 import { useToggle } from "@/lib/hooks";
 import { closeIcon, menuIcon } from "@/public/assets/images/landing-page";
 import { useSession } from "@/store";
@@ -9,7 +10,7 @@ import LogoBanner from "./LogoBanner";
 
 const navLinks = [
 	{ name: "How it works", url: "/c/create" },
-	{ name: "Explore Campaigns", url: "/c/create" },
+	{ name: "Explore Campaigns", url: "/explore" },
 	{ name: "About", url: "/about" },
 ];
 const Header = () => {
@@ -31,16 +32,14 @@ const Header = () => {
 					</ul>
 				</nav>
 				<div className="gap-2 md:flex">
-					<Link href={user ? "/c" : "/signin"}>
-						<Button className="text-md border-2 border-white bg-transparent px-8 font-semibold">
-							{!!user ? "Dashboard" : "Sign In"}
-						</Button>
-					</Link>
-					<Link href="/c/create">
-						<Button className="text-md bg-white font-semibold text-abeg-primary">
-							Start Fundraiser
-						</Button>
-					</Link>
+					<Button className="text-md border-2 border-white bg-transparent px-8 font-semibold">
+						<Link href={user ? "/c" : "/signin"}>
+							{user ? "Dashboard" : "Sign In"}
+						</Link>
+					</Button>
+					<Button className="text-md bg-white font-semibold text-abeg-primary">
+						<Link href="/c/create">Start Fundraiser</Link>
+					</Button>
 				</div>
 			</div>
 
@@ -53,7 +52,7 @@ const Header = () => {
 
 			{/* Mobile Navigation Menu */}
 			{isMobileNavOpen && (
-				<div className="fixed left-0 top-0 z-50 flex h-full w-full flex-col space-y-5 bg-white px-5 py-10 text-2xl font-medium text-abeg-primary md:items-center md:justify-center lg:hidden">
+				<div className="fixed left-0 top-0 z-50 flex size-full flex-col space-y-5 bg-white px-5 py-10 text-2xl font-medium text-abeg-primary md:items-center md:justify-center lg:hidden">
 					{/* Close button for mobile nav */}
 					<div className="flex justify-end md:absolute md:right-20 md:top-20">
 						<Button onClick={toggleMobileNav} className="text-abeg-primary">
@@ -71,7 +70,7 @@ const Header = () => {
 					<div className="justify-center space-y-5 md:flex md:flex-col">
 						<Link href={user ? "/c" : "/signin"}>
 							<Button className="mt-4 w-full border-2 border-abeg-primary bg-transparent text-xl font-semibold text-abeg-primary md:w-80">
-								{!!user ? "Dashboard" : "Sign In"}
+								{user ? "Dashboard" : "Sign In"}
 							</Button>
 						</Link>
 						<Link href="/c/create">

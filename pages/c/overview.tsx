@@ -1,29 +1,20 @@
 import { DonationStatsPanel } from "@/components/campaign-analytics";
 import MapDisplay from "@/components/campaign-analytics/MapDisplay";
-import {
-	ArrowDown,
-	BankIcon,
-	ClockIcon,
-	EyeIcon,
-	LocationIcon,
-} from "@/components/common";
+import { ArrowDown, Heading } from "@/components/common";
+import { CampaignCard, dummyCardData } from "@/components/common/CampaignCard";
 import {
 	Button,
-	Card,
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-	ProgressBar,
 } from "@/components/ui";
 import { AuthenticatedUserLayout } from "@/layouts";
 import userImage from "@/public/assets/icons/dashboard/userIcon.svg";
-import dashboardImage from "@/public/assets/images/dashboard/dashboardImage.png";
 import { useCampaignStore } from "@/store";
 import Error from "next/error";
 import Image from "next/image";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 const donorData = {
@@ -39,7 +30,10 @@ const donorDataList = Array<typeof donorData>(6).fill(donorData);
 const Overview = () => {
 	const searchParams = useSearchParams();
 	const currentCampaign = useCampaignStore((state) =>
-		state.campaigns.find((campaign) => campaign._id === searchParams.get("id"))
+		state.campaigns.find(
+			(campaign) =>
+				campaign._id === searchParams.get("id") && !campaign.isPublished
+		)
 	);
 
 	if (!currentCampaign) {
@@ -50,65 +44,29 @@ const Overview = () => {
 		<AuthenticatedUserLayout isDashboard>
 			<section className="">
 				<div className="flex flex-col justify-between gap-8 md:m-0 lg:flex-row">
-					<div className="flex-1 space-y-4 lg:w-3/5 lg:space-y-5">
-						<h1 className="mb-4 text-lg font-bold md:hidden">
-							Bringing Dental Care to Undeserved Communities
-						</h1>
-						<div className="relative text-white lg:!m-0">
-							<Image
-								src={dashboardImage}
-								alt="Dashboard Image"
-								className="w-full rounded-md"
-							/>
-							<div className="absolute left-4 top-4 flex items-center space-x-1 rounded-md p-2 text-xs backdrop-blur-md sm:text-sm">
-								<LocationIcon />
-								<span className="">Lagos, Nigeria</span>
-							</div>
-							<div className="absolute bottom-4 right-4 flex items-center space-x-1 rounded-md p-2 text-xs backdrop-blur-md sm:text-sm">
-								<ClockIcon />
-								<span className="">20 days left</span>
-							</div>
-						</div>
-						<div className="space-y-4 md:space-y-5">
-							<h1 className="hidden text-2xl font-bold md:block ">
-								{currentCampaign.title}
-							</h1>
-							<div className="flex flex-col justify-between gap-4 md:flex-row md:gap-6">
-								<div className="flex-1 space-y-4 text-sm">
-									<div className="flex items-center justify-between gap-7">
-										<span>&#x20A6; 2,000,000</span>
-										<span>&#x20A6; 1,000,000 remaining</span>
-									</div>
-									<ProgressBar value={50} />
-									<div className="flex items-center justify-between gap-7">
-										<span className="">235,567 total donors</span>
-										<span className="">235,567 comments</span>
-									</div>
-								</div>
-								<div className="flex justify-between gap-4 text-sm md:w-fit md:flex-col">
-									<Button
-										variant="secondary"
-										className="flex items-center gap-2"
-									>
-										<BankIcon />
-										<span className="">Set up account</span>
-									</Button>
-									<Button variant="primary">
-										<Link
-											href={{
-												pathname: "/c/preview",
-												query: { id: currentCampaign._id },
-											}}
-											className="flex items-center gap-2"
-										>
-											<EyeIcon />
-											<span className="">View campaign</span>
-										</Link>
-									</Button>
-								</div>
-							</div>
-						</div>
-					</div>
+					<Heading
+						as="h1"
+						className="mb-4 text-lg font-bold md:hidden lg:w-3/5 lg:space-y-5"
+					>
+						{currentCampaign.title}
+					</Heading>
+
+					<CampaignCard
+						classNames={{
+							image:
+								"aspect-[382/266] md:aspect-[751/313] max-h-[313px] rounded-[10px] object-cover object-center",
+						}}
+						cardType="overview"
+						cardDetails={{
+							...dummyCardData[0],
+							title: currentCampaign.title,
+							amountRaised: currentCampaign.amountRaised,
+							goal: currentCampaign.goal,
+							id: currentCampaign._id,
+							imageSrc: currentCampaign.images[0].secureUrl,
+						}}
+					/>
+
 					<div className="rounded-lg border-[0.5px] border-placeholder bg-white p-4 lg:w-[45%] lg:max-w-[450px]">
 						<div className="mb-8 flex items-center justify-between">
 							<h2 className="text-2xl font-bold">Donors list</h2>

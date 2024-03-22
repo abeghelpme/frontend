@@ -1,4 +1,4 @@
-import { DonorIcon2 } from "@/components/common/campaign-icons";
+import { DonorIcon } from "@/components/common/campaign-icons";
 import type { Campaign } from "@/interfaces/Campaign";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
@@ -43,7 +43,7 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 
 					<div className="flex w-full justify-between">
 						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-5">
-							<DonorIcon2 className="size-4 lg:size-10" />
+							<DonorIcon stroke="light" className="size-4 lg:size-10" />
 							<figcaption>235,567 total donors</figcaption>
 						</figure>
 
@@ -59,9 +59,8 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 						<Carousel.Item key={image.secureUrl}>
 							<Image
 								src={image.secureUrl}
-								blurDataURL={image.blurHash}
 								alt="campaign image"
-								className="aspect-[381/250] min-h-[250px] w-full object-cover"
+								className="aspect-[381/250] w-full object-cover max-lg:max-h-[350px] lg:aspect-[1241/599]"
 								width={381}
 								height={250}
 								priority={true}

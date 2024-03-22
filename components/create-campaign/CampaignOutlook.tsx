@@ -50,6 +50,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
+	const donationProgress = Math.floor(
+		(campaign.amountRaised / campaign.goal) * 100
+	);
+
 	return (
 		<main className="flex flex-col items-center pb-20 text-abeg-text">
 			<section className="relative px-6 pb-14 pt-11 text-white md:px-[100px]">
@@ -120,8 +124,8 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						</div>
 
 						<ProgressBar
-							value={Math.floor((campaign.amountRaised / campaign.goal) * 100)}
-							className="progress-unfilled:h-1 progress-unfilled:rounded-lg progress-unfilled:bg-lightGreen progress-filled:rounded-lg progress-filled:bg-abeg-primary"
+							value={donationProgress}
+							className="progress-unfilled:h-1"
 						/>
 					</article>
 
