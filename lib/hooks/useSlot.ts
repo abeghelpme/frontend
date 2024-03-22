@@ -19,8 +19,8 @@ const isSlotInstance = (
 
 	return Boolean(
 		child.type === SlotWrapper ||
-			(child.type as Noop).name === (SlotWrapper as Noop).name
-	);
+			(child.type as Noop).name === (SlotWrapper as Noop).name || child.type.toString() === SlotWrapper.toString()
+	)
 };
 
 const useSlot = <TProps extends Record<string, unknown>>(
