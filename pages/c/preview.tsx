@@ -86,6 +86,7 @@ function PreviewCampaignPage() {
 						<FormActionButton
 							type="button"
 							className="bg-white font-bold text-abeg-primary"
+							asChild
 						>
 							<Link
 								href={{

@@ -130,9 +130,9 @@ export const CampaignCategoryCard = () => {
 
 			{/* href={`/explore?category=${item.url}`} */}
 			<CampaignCardList
-				classNames={{ base: "mt-10" }}
-				cardDetailList={currentItems}
 				listType="grid"
+				cardDetailList={currentItems}
+				classNames={{ base: "mt-10" }}
 			/>
 
 			<div className="mt-10 flex items-center justify-center gap-5 md:mt-20">

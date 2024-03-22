@@ -173,7 +173,7 @@ export function CampaignCard(props: CardProps) {
 									<p>Set up account</p>
 								</Button>
 
-								<Button variant="primary">
+								<Button variant="primary" asChild>
 									<Link
 										href={{
 											pathname: "/c/preview",
@@ -199,7 +199,7 @@ export function CampaignCardList(props: CardListProps) {
 
 	const [CardList] = useElementList();
 
-	const { dragScrollProps, dragContainerClasses } =
+	const { dragScrollProps, dragContainerClasses, dragItemClasses } =
 		useDragScroll<HTMLUListElement>();
 
 	const semanticClasses = {
@@ -209,7 +209,10 @@ export function CampaignCardList(props: CardListProps) {
 		},
 
 		card: {
-			horizontal: "max-w-[383px] shrink-0 lg:max-w-[396px]",
+			horizontal: cn(
+				"max-w-[383px] shrink-0 lg:max-w-[396px]",
+				dragItemClasses
+			),
 			grid: "",
 		},
 	};
@@ -226,6 +229,7 @@ export function CampaignCardList(props: CardListProps) {
 			render={(detail, index) => (
 				<CampaignCard
 					key={index}
+					as="li"
 					cardDetails={detail}
 					classNames={{
 						base: cn(semanticClasses.card[listType], classNames?.card?.base),

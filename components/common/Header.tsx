@@ -32,12 +32,18 @@ const Header = () => {
 					</ul>
 				</nav>
 				<div className="gap-2 md:flex">
-					<Button className="text-md border-2 border-white bg-transparent px-8 font-semibold">
+					<Button
+						className="text-md border-2 border-white bg-transparent px-8 font-semibold"
+						asChild
+					>
 						<Link href={user ? "/c" : "/signin"}>
 							{user ? "Dashboard" : "Sign In"}
 						</Link>
 					</Button>
-					<Button className="text-md bg-white font-semibold text-abeg-primary">
+					<Button
+						className="text-md bg-white font-semibold text-abeg-primary"
+						asChild
+					>
 						<Link href="/c/create">Start Fundraiser</Link>
 					</Button>
 				</div>
@@ -68,16 +74,20 @@ const Header = () => {
 					))}
 
 					<div className="justify-center space-y-5 md:flex md:flex-col">
-						<Link href={user ? "/c" : "/signin"}>
-							<Button className="mt-4 w-full border-2 border-abeg-primary bg-transparent text-xl font-semibold text-abeg-primary md:w-80">
+						<Button
+							className="mt-4 w-full border-2 border-abeg-primary bg-transparent text-xl font-semibold text-abeg-primary md:w-80"
+							asChild
+						>
+							<Link href={user ? "/c" : "/signin"}>
 								{user ? "Dashboard" : "Sign In"}
-							</Button>
-						</Link>
-						<Link href="/c/create">
-							<Button className="mt-2 w-full bg-abeg-primary px-8 text-xl font-semibold md:w-80">
-								Start Fundraiser
-							</Button>
-						</Link>
+							</Link>
+						</Button>
+						<Button
+							className="mt-2 w-full bg-abeg-primary px-8 text-xl font-semibold md:w-80"
+							asChild
+						>
+							<Link href="/c/create">Start Fundraiser</Link>
+						</Button>
 					</div>
 				</div>
 			)}

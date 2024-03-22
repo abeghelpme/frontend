@@ -24,12 +24,14 @@ const HowItWorks = ({ className }: { className?: string }) => {
 	return (
 		<div className={cn("flex flex-col justify-center gap-8", className)}>
 			<div className="w-full space-y-5 md:flex md:justify-between lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
-				<div className=" flex flex-1 flex-col gap-3 space-y-2 md:pr-20">
+				<div className="flex flex-1 flex-col items-start gap-3 space-y-2 md:pr-20">
 					<h4 className="text-xl font-normal text-placeholder">
 						Want to know more?
 					</h4>
-					<h1 className="text-4xl font-bold md:text-5xl">Here’s how it work</h1>
-					<Button variant="primary">
+					<h1 className="text-4xl font-bold md:text-5xl">
+						Here’s how it works
+					</h1>
+					<Button variant="primary" asChild>
 						<Link href="/c/create"> Donate now</Link>
 					</Button>
 				</div>

@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { checkIsDeviceMobileOrTablet } from "../helpers/checkIsDeviceMobileOrTablet";
 import { useCallbackRef } from "./useCallbackRef";
 
 /* eslint-disable no-param-reassign */
@@ -7,9 +8,21 @@ const updateCursor = <TElement extends HTMLElement>(element: TElement) => {
 	element.style.userSelect = "none";
 };
 
+const handleScrollSnap = <TElement extends HTMLElement>(
+	element: TElement,
+	action: "reset" | "remove"
+) => {
+	if (action === "remove") {
+		element.style.scrollSnapType = "none";
+		return;
+	}
+
+	element.style.scrollSnapType = "";
+};
+
 const resetCursor = <TElement extends HTMLElement>(element: TElement) => {
-	element.style.cursor = "grab";
-	element.style.userSelect = "auto";
+	element.style.cursor = "";
+	element.style.userSelect = "";
 };
 
 const useDragScroll = <TElement extends HTMLElement>(options?: {
@@ -28,8 +41,6 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 
 		dragContainerRef.current.scrollTop = positionRef.current.top - dy;
 		dragContainerRef.current.scrollLeft = positionRef.current.left - dx;
-
-		updateCursor(dragContainerRef.current);
 	});
 
 	const handleMouseUpOrLeave = useCallbackRef<MouseEvent>(() => {
@@ -58,6 +69,7 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 			y: event.clientY,
 		};
 
+		updateCursor(dragContainerRef.current);
 		dragContainerRef.current.addEventListener("mousemove", handleMouseMove);
 		dragContainerRef.current.addEventListener("mouseup", handleMouseUpOrLeave);
 		dragContainerRef.current.addEventListener(
@@ -101,6 +113,18 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 		dragContainerRef.current.addEventListener("touchend", onTouchEnd);
 	});
 
+	useEffect(() => {
+		const { isMobileOrTablet } = checkIsDeviceMobileOrTablet();
+
+		if (!dragContainerRef.current) return;
+
+		if (!isMobileOrTablet) {
+			handleScrollSnap(dragContainerRef.current, "remove");
+		} else {
+			handleScrollSnap(dragContainerRef.current, "reset");
+		}
+	}, []);
+
 	const dragScrollProps = {
 		ref: dragContainerRef,
 		onMouseDown,
@@ -108,9 +132,11 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 	};
 
 	const dragContainerClasses =
-		"w-full flex flex-row cursor-grab overflow-x-scroll [scrollbar-width:none] hide-scrollbar" as const;
+		"w-full flex flex-row cursor-grab overflow-x-scroll [scrollbar-width:none] hide-scrollbar snap-x snap-mandatory" as const;
 
-	return { dragContainerClasses, dragScrollProps };
+	const dragItemClasses = "snap-center snap-always" as const;
+
+	return { dragContainerClasses, dragScrollProps, dragItemClasses };
 };
 
 export { useDragScroll };

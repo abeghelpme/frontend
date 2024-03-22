@@ -40,3 +40,4 @@ export { Select, SelectPrimitive } from "./select";
 export { DatePicker } from "./date-picker";
 export { default as Toggle } from "./toggle";
 export { default as Card } from "./card";
+export * from "./slot";

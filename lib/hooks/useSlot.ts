@@ -3,7 +3,7 @@ import { Children, isValidElement, useMemo } from "react";
 type Noop = () => void;
 type NoopWithSlot = { slot?: string };
 
-const isSlotInstance = (
+const isSlotElement = (
 	child: React.ReactNode,
 	SlotWrapper: React.ElementType
 ) => {
@@ -17,10 +17,14 @@ const isSlotInstance = (
 		return true;
 	}
 
-	return Boolean(
-		child.type === SlotWrapper ||
-			(child.type as Noop).name === (SlotWrapper as Noop).name || child.type.toString() === SlotWrapper.toString()
-	)
+	if (child.type === SlotWrapper) {
+		return true;
+	}
+
+	return (
+		(child.type as Noop).name === (SlotWrapper as Noop).name ||
+		child.type.toString() === SlotWrapper.toString()
+	);
 };
 
 const useSlot = <TProps extends Record<string, unknown>>(
@@ -30,7 +34,7 @@ const useSlot = <TProps extends Record<string, unknown>>(
 	const Slot = useMemo(() => {
 		const childrenArray = Children.toArray(children);
 
-		return childrenArray.find((child) => isSlotInstance(child, SlotWrapper));
+		return childrenArray.find((child) => isSlotElement(child, SlotWrapper));
 	}, [children, SlotWrapper]);
 
 	return Slot as React.ReactElement<TProps>;
