@@ -31,7 +31,7 @@ const Login = () => {
 	} = useSession((state) => state);
 
 	const {
-		actions: { updateCampaign },
+		actions: { initializeCampaigns },
 	} = useCampaignStore((state) => state);
 
 	const {
@@ -94,7 +94,7 @@ const Login = () => {
 					}
 					// populate store with initial data
 					updateUser(user);
-					updateCampaign(campaigns);
+					initializeCampaigns(campaigns);
 				} else {
 					router.push({
 						pathname: "/2fa/authenticate",

@@ -3,7 +3,7 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { zodValidator } from "@/lib";
 import { callApi } from "@/lib/helpers/campaign";
 import { useWatchFormStatus } from "@/lib/hooks";
-import { type StepThreeData, useFormStore } from "@/store";
+import { type StepThreeData, useCampaignStore, useFormStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -23,6 +23,8 @@ function StepThree() {
 		formStepData,
 		actions: { resetFormData },
 	} = useFormStore((state) => state);
+
+	const { addCampaign } = useCampaignStore((state) => state.actions);
 
 	const {
 		control,
@@ -53,7 +55,7 @@ function StepThree() {
 		formData.set("campaignId", campaignId);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
-		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
+		const { data: dataInfo, error } = await callApi<Campaign>(
 			`/campaign/create/three`,
 			formData
 		);
@@ -69,6 +71,8 @@ function StepThree() {
 		if (!dataInfo.data) return;
 
 		resetFormData();
+
+		addCampaign(dataInfo.data);
 
 		toast.success("Success", {
 			description: "Campaign created successfully!",
