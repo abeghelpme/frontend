@@ -21,10 +21,11 @@ function UrgentFundraisers({ className }: { className?: string }) {
 						Join our community of change makers and make an impact today
 					</p>
 				</div>
-
-				<Button className="mt-4 shrink-0 border border-placeholder text-base font-extrabold text-placeholder">
-					<Link href="/explore">Explore campaigns</Link>
-				</Button>
+				<Link href="/explore">
+					<Button className="mt-4 shrink-0 border border-placeholder text-base font-extrabold text-placeholder">
+						Explore campaigns
+					</Button>
+				</Link>
 			</div>
 
 			<CampaignCardList

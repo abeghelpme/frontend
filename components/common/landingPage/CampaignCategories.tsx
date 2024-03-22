@@ -1,3 +1,5 @@
+import { cn } from "@/lib";
+
 const categories = [
 	{ title: "Health & Wellness (20)", color: "bg-[#A8CCCC]" },
 	{ title: "Business (12)", color: "bg-[#E6E6E6]" },
@@ -12,9 +14,9 @@ const categories = [
 	{ title: "Others", color: "bg-[#8BD2BD]" },
 ];
 
-const CampaignCategories = () => {
+const CampaignCategories = ({ className }: { className?: string }) => {
 	return (
-		<div className="flex flex-col gap-12 justify-center">
+		<div className={cn("flex flex-col gap-12 justify-center", className)}>
 			<div className="w-full flex flex-col gap-2">
 				<h1 className="text-4xl font-bold md:text-5xl">Campaign Categories</h1>
 				<p className="text-xl text-placeholder font-medium max-w-[540px]">

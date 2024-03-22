@@ -14,18 +14,20 @@ import Image from "next/image";
 const ExploreCampaignPage = () => {
 	return (
 		<BaseLayout>
-			<div
-				className="flex flex-col items-center py-28 md:py-32 md:px-20 space-y-4 px-5 text-gray-50  relative overflow-x-hidden"
-				style={{
-					backgroundImage: `url(/assets/images/landing-page/background.png)`,
-					backgroundSize: "cover",
-					backgroundPosition: "center",
-				}}
-			>
+			<div className="relative bg-cover bg-center flex flex-col items-center py-28 md:py-32 md:px-20 space-y-4 px-5 text-gray-50 overflow-x-hidden">
+				<Image
+					src="/assets/images/landing-page/background.png"
+					className="z-[-1] object-cover object-center"
+					fetchPriority="high"
+					priority={true}
+					alt=""
+					fill
+				/>
 				<Image
 					src={heroHalfMoon}
 					alt="hero svg icon"
-					priority
+					fetchPriority="high"
+					priority={true}
 					width={90}
 					height={90}
 					className="absolute top-[27rem] right-[-2rem] md:translate-x-0 md:-translate-y-0 md:top-16 md:left-16 lg:top-32 lg:left-40"
@@ -59,26 +61,19 @@ const ExploreCampaignPage = () => {
 				<Image
 					src={heroCircle}
 					alt="hero svg icon"
-					priority
+					fetchPriority="high"
+					priority={true}
 					width={150}
 					height={150}
 					className="absolute top-20 right-[-3rem] transform -translate-x-1/2 -translate-y-1/2 md: md:translate-x-0 md:-translate-y-0 md:right-0 md:top-[25rem] lg:bottom-40 lg:right-40"
 				/>
 			</div>
 
-			<div className="pt-10 md:pt-20 px-5 md:px-20">
+			<div className="pt-10 md:py-20">
 				<CampaignCategoryCard />
-
-				<div className="pt-10 md:pt-20">
-					<CampaignCategories />
-				</div>
-				<div className="py-10 md:py-20">
-					<HowItWorks />
-				</div>
-
-				<div className="pb-20">
-					<TestimonialCard />
-				</div>
+				<CampaignCategories className="px-5 md:px-20 pt-10 md:pt-20" />
+				<HowItWorks className="px-5 md:px-20 py-10 md:py-20" />
+				<TestimonialCard />
 			</div>
 		</BaseLayout>
 	);

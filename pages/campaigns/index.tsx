@@ -18,12 +18,12 @@ const Campaigns = () => {
 				button1={{ href: "/c/create", text: "Donate now" }}
 				imageSrc={campaignHero}
 			/>
-			<div className="px-5 py-10 md:px-20 md:py-20 flex flex-col gap-8 md:gap-20 justify-center">
-				<CampaignCategories />
-				<HowItWorks />
-				<SuccessStories />
+			<div className="md:py-20 flex flex-col gap-8 md:gap-20 justify-center">
+				<CampaignCategories className="px-5 md:px-20" />
+				<HowItWorks className="px-5 md:px-20" />
+				<SuccessStories className="px-5 md:px-20" />
 				<UrgentFundraisers />
-				<FAQ />
+				<FAQ className="px-5 md:px-20" />
 			</div>
 		</BaseLayout>
 	);
