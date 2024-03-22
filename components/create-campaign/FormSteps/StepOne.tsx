@@ -8,7 +8,11 @@ import {
 	targetCountries,
 	validateTagValue,
 } from "@/lib/helpers/campaign";
-import { useElementList, useWatchFormStatus } from "@/lib/hooks";
+import {
+	useBaseElementList,
+	useElementList,
+	useWatchFormStatus,
+} from "@/lib/hooks";
 import { useCampaignStore } from "@/store";
 import { type StepOneData, useFormStore } from "@/store/useFormStore";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,11 +32,7 @@ function StepOne() {
 		actions: { goToStep, updateFormData, updateCampaignId },
 	} = useFormStore((state) => state);
 
-	const { categories: campaignCategories } = useCampaignStore((state) => state);
-
-	const [TagList] = useElementList();
-	const [CategoryList] = useElementList();
-	const [CountryList] = useElementList();
+	const campaignCategories = useCampaignStore((state) => state.categories);
 
 	const {
 		control,
@@ -52,6 +52,10 @@ function StepOne() {
 			reset(formStepData);
 		}
 	}, [formStepData]);
+
+	const [CategoryList] = useBaseElementList();
+	const [CountryList] = useBaseElementList();
+	const [TagList] = useElementList();
 
 	useWatchFormStatus(formState);
 
@@ -154,7 +158,7 @@ function StepOne() {
 										<Select.Value placeholder="Select what category best suit your fundraiser" />
 									</Select.Trigger>
 
-									<Select.Content asChild>
+									<Select.Content>
 										<CategoryList
 											each={campaignCategories}
 											render={(category) => (
@@ -199,7 +203,7 @@ function StepOne() {
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
 
-									<Select.Content asChild>
+									<Select.Content>
 										<CountryList
 											each={targetCountries}
 											render={(country) => (
@@ -255,7 +259,7 @@ function StepOne() {
 								render={(tag, index) => (
 									<li
 										key={`${tag}-${index}`}
-										className="flex min-w-20 items-center justify-between gap-2.5 rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] px-1 py-3"
+										className="flex min-w-20 items-center justify-between gap-2.5 rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] px-3 py-1"
 									>
 										<p>{tag}</p>
 

@@ -37,7 +37,7 @@ export const useInitSession = create<Session>()((set, get) => ({
 			console.log(data);
 			useInitCampaignStore
 				.getState()
-				.actions.updateCampaign(data?.data?.campaigns ?? []);
+				.actions.initializeCampaigns(data?.data?.campaigns ?? []);
 
 			set({
 				...(data?.data && { user: data.data.user }),

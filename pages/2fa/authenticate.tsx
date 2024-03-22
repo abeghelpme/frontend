@@ -119,7 +119,7 @@ const AuthenticateUser = () => {
 		actions: { updateUser },
 	} = useSession((state) => state);
 	const {
-		actions: { updateCampaign },
+		actions: { initializeCampaigns },
 	} = useCampaignStore((state) => state);
 	const router = useRouter();
 	const castedUser = user as User;
@@ -175,7 +175,7 @@ const AuthenticateUser = () => {
 			if (data?.data) {
 				const { user, campaigns } = data.data;
 				updateUser(user as User);
-				updateCampaign(campaigns);
+				initializeCampaigns(campaigns);
 				setLoading(false);
 				toast.success("Success", {
 					description: (data as { message: string }).message,
