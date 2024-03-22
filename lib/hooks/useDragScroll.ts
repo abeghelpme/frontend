@@ -101,15 +101,16 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 		dragContainerRef.current.addEventListener("touchend", onTouchEnd);
 	});
 
-	return {
-		dragScrollProps: {
-			ref: dragContainerRef,
-			onMouseDown,
-			...(hasMobileSupport && { onTouchStart }),
-		},
-		dragContainerClasses:
-			"w-full flex cursor-grab overflow-x-scroll [scrollbar-width:none] hide-scrollbar",
+	const dragScrollProps = {
+		ref: dragContainerRef,
+		onMouseDown,
+		...(hasMobileSupport && { onTouchStart }),
 	};
+
+	const dragContainerClasses =
+		"w-full flex flex-row cursor-grab overflow-x-scroll [scrollbar-width:none] hide-scrollbar" as const;
+
+	return { dragContainerClasses, dragScrollProps };
 };
 
 export { useDragScroll };

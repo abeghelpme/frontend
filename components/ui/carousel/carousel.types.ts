@@ -80,17 +80,17 @@ export type CarouselIndicatorProps = {
 	currentIndex: number;
 };
 
-type BaseWrapperProps<TArray extends unknown[]> = Prettify<
-	ForRenderProps<TArray> & Partial<EachProp<TArray>>
+type BaseWrapperProps<TArrayItem> = Prettify<
+	ForRenderProps<TArrayItem> & Partial<EachProp<TArrayItem>>
 >;
 
-export type CarouselItemWrapperProps<TArray extends unknown[]> =
-	BaseWrapperProps<TArray> & {
+export type CarouselItemWrapperProps<TArrayItem> =
+	BaseWrapperProps<TArrayItem> & {
 		className?: string;
 	};
 
-export type CarouselIndicatorWrapperProps<TArray extends unknown[]> =
-	BaseWrapperProps<TArray> & {
+export type CarouselIndicatorWrapperProps<TArrayItem> =
+	BaseWrapperProps<TArrayItem> & {
 		classNames?: {
 			base?: string;
 			indicatorContainer?: string;

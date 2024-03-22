@@ -2,6 +2,8 @@ import TestimonialCard from "@/components/common/TestimonialCard";
 import { FAQ, Hero, UrgentFundraisers } from "@/components/common/landingPage";
 import { Button } from "@/components/ui";
 import { BaseLayout } from "@/layouts";
+import { cn } from "@/lib";
+import { useDragScroll } from "@/lib/hooks";
 import {
 	avatar1,
 	avatar2,
@@ -45,6 +47,9 @@ const campaignCard = [
 ];
 
 const HomePage = () => {
+	const { dragContainerClasses, dragScrollProps } =
+		useDragScroll<HTMLDivElement>();
+
 	return (
 		<BaseLayout>
 			<Hero
@@ -73,7 +78,13 @@ const HomePage = () => {
 					</div>
 				</div>
 
-				<div className="gap-5 space-y-5 px-5 py-10 md:flex md:space-y-0 md:overflow-x-scroll md:px-20 md:py-20 md:hide-scrollbar">
+				<div
+					{...dragScrollProps}
+					className={cn(
+						"gap-5 space-y-5 px-5 py-10 md:space-y-0 md:p-20",
+						dragContainerClasses
+					)}
+				>
 					{campaignCard.map((card, index) => (
 						<div
 							key={index}

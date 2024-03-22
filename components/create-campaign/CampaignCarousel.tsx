@@ -54,7 +54,7 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 					</div>
 				</Carousel.Caption>
 
-				<Carousel.ItemWrapper<typeof images>
+				<Carousel.ItemWrapper<(typeof images)[number]>
 					render={(image) => (
 						<Carousel.Item key={image.secureUrl}>
 							<Image

@@ -117,14 +117,16 @@ function CarouselControls(props: CarouselControlProps) {
 	);
 }
 
-function CarouselItemWrapper<TArray extends unknown[]>(
-	props: CarouselItemWrapperProps<TArray>
+function CarouselItemWrapper<TArrayItem>(
+	props: CarouselItemWrapperProps<TArrayItem>
 ) {
 	const { each, children, render, className } = props;
 
 	const [ItemList] = useBaseElementList();
 	const currentSlide = useCarouselStore((state) => state.currentSlide);
-	const images = useCarouselStore((state) => each ?? (state.images as TArray));
+	const images = useCarouselStore(
+		(state) => each ?? (state.images as TArrayItem[])
+	);
 
 	return (
 		<ul
@@ -179,12 +181,14 @@ function CarouselCaption<TElement extends React.ElementType = "div">(
 	);
 }
 
-function CarouselIndicatorWrapper<TArray extends unknown[]>(
-	props: CarouselIndicatorWrapperProps<TArray>
+function CarouselIndicatorWrapper<TArrayItem>(
+	props: CarouselIndicatorWrapperProps<TArrayItem>
 ) {
 	const { each, children, render, classNames = {} } = props;
 
-	const images = useCarouselStore((state) => each ?? (state.images as TArray));
+	const images = useCarouselStore(
+		(state) => each ?? (state.images as TArrayItem[])
+	);
 	const [IndicatorList] = useBaseElementList();
 
 	return (
