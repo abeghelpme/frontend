@@ -1,3 +1,4 @@
+import { cn } from "@/lib";
 import { storiesAboutUs } from "@/public/assets/images/landing-page";
 import Image from "next/image";
 
@@ -39,9 +40,9 @@ const successStories = [
 		image: storiesAboutUs,
 	},
 ];
-const SuccessStories = () => {
+const SuccessStories = ({ className }: { className?: string }) => {
 	return (
-		<div className="flex flex-col gap-8 md:gap-12">
+		<div className={cn("flex flex-col gap-8 md:gap-12", className)}>
 			<h1 className="text-4xl font-bold md:text-5xl text-center">
 				The Success stories of the <br />
 				benefactors speak for themselves

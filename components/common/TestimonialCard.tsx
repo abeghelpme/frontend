@@ -1,3 +1,5 @@
+import { cn } from "@/lib";
+import { useDragScroll } from "@/lib/hooks";
 import { testimonialImage1 } from "@/public/assets/images/landing-page";
 import Image from "next/image";
 
@@ -31,26 +33,37 @@ const testimonials = [
 	},
 ];
 
-const TestimonialCard = () => {
+const TestimonialCard = ({ className }: { className?: string }) => {
+	const { dragScrollProps, dragContainerClasses } =
+		useDragScroll<HTMLDivElement>();
 	return (
-		<>
+		<section className={cn("w-full", className)}>
 			<h1 className="md:block hidden lg:px-32 text-center text-5xl font-bold">
 				Hear from some of our users we&apos;ve helped reach their goals
 			</h1>
 			<h1 className="text-center text-4xl font-bold md:hidden">
 				Some of our users we&apos;ve helped reach their goals
 			</h1>
-			<div className="flex w-full gap-5 overflow-x-auto hide-scrollbar">
+			<div
+				{...dragScrollProps}
+				className={cn(
+					dragContainerClasses,
+					"gap-5 w-full lg:flex lg:flex-row lg:items-center lg:justify-between pl-6 lg:pl-[100px]"
+				)}
+			>
 				{testimonials.map((testimonial, index) => (
 					<div
 						key={index}
-						className="mt-16 w-[90%] flex-shrink-0 flex-grow-0 items-center justify-center rounded-xl p-4 text-white md:p-7 lg:mt-20 lg:flex lg:gap-20"
-						style={{
-							backgroundImage: `url(/assets/images/landing-page/background.png)`,
-							backgroundSize: "cover",
-							backgroundPosition: "center",
-						}}
+						className="relative mt-16 w-[90%] flex-shrink-0 flex-grow-0 items-center justify-center p-4 text-white md:p-7 lg:mt-20 lg:flex lg:gap-20"
 					>
+						<Image
+							src="/assets/images/landing-page/background.png"
+							className="z-[-1] object-cover object-center rounded-xl"
+							fetchPriority="high"
+							priority={true}
+							alt=""
+							fill
+						/>
 						<Image
 							src={testimonial.image}
 							alt="testimonial image"
@@ -72,7 +85,7 @@ const TestimonialCard = () => {
 					</div>
 				))}
 			</div>
-		</>
+		</section>
 	);
 };
 

@@ -102,9 +102,13 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 	});
 
 	return {
-		ref: dragContainerRef,
-		onMouseDown,
-		...(hasMobileSupport && { onTouchStart }),
+		dragScrollProps: {
+			ref: dragContainerRef,
+			onMouseDown,
+			...(hasMobileSupport && { onTouchStart }),
+		},
+		dragContainerClasses:
+			"w-full flex cursor-grab overflow-x-scroll [scrollbar-width:none] hide-scrollbar",
 	};
 };
 

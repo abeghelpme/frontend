@@ -1,5 +1,6 @@
 import { Moneys, Verify, WalletAdd } from "@/components/common";
 import { Button } from "@/components/ui";
+import { cn } from "@/lib";
 import Link from "next/link";
 const howItWorksCards = [
 	{
@@ -18,9 +19,9 @@ const howItWorksCards = [
 		text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam. quis nostrud ullamco laboris. ",
 	},
 ];
-const HowItWorks = () => {
+const HowItWorks = ({ className }: { className?: string }) => {
 	return (
-		<div className="flex flex-col gap-8 justify-center ">
+		<div className={cn("flex flex-col gap-8 justify-center", className)}>
 			<div className="w-full space-y-5 md:justify-between md:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
 				<div className=" flex-1 flex flex-col gap-3 space-y-2 md:pr-20">
 					<h4 className="text-xl text-placeholder font-normal">

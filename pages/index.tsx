@@ -54,8 +54,8 @@ const HomePage = () => {
 				button2={{ href: "/c/create", text: "Donate now" }}
 				imageSrc={hero}
 			/>
-			<div className="px-5 py-10 md:px-20 md:pt-20">
-				<div className="w-full space-y-5 md:justify-between lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
+			<div className="py-10 md:pt-20">
+				<div className="px-5 md:px-20 w-full space-y-5 md:justify-between lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
 					<div className="space-y-5 md:pr-20">
 						<h4 className="text-xl text-gray-500">How it works</h4>
 						<h1 className="text-4xl font-bold md:text-5xl">
@@ -75,7 +75,7 @@ const HomePage = () => {
 					</div>
 				</div>
 
-				<div className="gap-5 space-y-5 py-10 md:flex md:space-y-0 md:overflow-x-scroll md:py-20 md:hide-scrollbar">
+				<div className="px-5 md:px-20 gap-5 space-y-5 py-10 md:flex md:space-y-0 md:overflow-x-scroll md:py-20 md:hide-scrollbar">
 					{campaignCard.map((card, index) => (
 						<div
 							key={index}
@@ -98,51 +98,53 @@ const HomePage = () => {
 					))}
 				</div>
 
-				<div className="relative flex justify-center py-20 text-white lg:px-20">
-					<Image
-						src="/assets/images/shared/hero-background.svg"
-						className="z-[-1] rounded-xl object-cover object-center"
-						alt=""
-						fill
-					/>
+				<div className="px-5 md:px-20">
+					<div className="relative flex justify-center py-20 text-white lg:px-20">
+						<Image
+							src="/assets/images/shared/hero-background.svg"
+							className="z-[-1] rounded-xl object-cover object-center"
+							alt=""
+							fill
+						/>
 
-					<div className="space-y-5 md:px-10">
-						<p className="flex justify-center text-center text-xl font-light">
-							Let&apos;s Help you start your Journey
-						</p>
-						<h1 className="flex justify-center px-5 text-center text-4xl font-bold sm:px-10 md:px-0 lg:text-5xl">
-							Together We are Stronger
-						</h1>
-						<div className="space-y-20 py-14 md:flex md:gap-10 md:space-y-0 lg:px-10">
-							<div className="space-y-5 px-16 md:px-0">
-								<h1 className="flex justify-center text-4xl font-bold lg:text-5xl">
-									50K
-								</h1>
-								<p className="flex text-center text-xl font-light">
-									Reach more people and hit your goals faster
-								</p>
-							</div>
-							<div className="space-y-5 px-16 md:px-0">
-								<h1 className="flex justify-center  text-4xl font-bold lg:text-5xl">
-									15+
-								</h1>
-								<p className="flex text-center text-xl font-light">
-									Get donations across 15 different countries
-								</p>
-							</div>
-							<div className="space-y-5 px-16 md:px-0">
-								<h1 className="flex justify-center  text-4xl font-bold lg:text-5xl">
-									20M
-								</h1>
-								<p className="flex text-center text-xl font-light">
-									More than 20M naira donated every day
-								</p>
+						<div className="space-y-5 md:px-10">
+							<p className="flex justify-center text-center text-xl font-light">
+								Let&apos;s Help you start your Journey
+							</p>
+							<h1 className="flex justify-center px-5 text-center text-4xl font-bold sm:px-10 md:px-0 lg:text-5xl">
+								Together We are Stronger
+							</h1>
+							<div className="space-y-20 py-14 md:flex md:gap-10 md:space-y-0 lg:px-10">
+								<div className="space-y-5 px-16 md:px-0">
+									<h1 className="flex justify-center text-4xl font-bold lg:text-5xl">
+										50K
+									</h1>
+									<p className="flex text-center text-xl font-light">
+										Reach more people and hit your goals faster
+									</p>
+								</div>
+								<div className="space-y-5 px-16 md:px-0">
+									<h1 className="flex justify-center  text-4xl font-bold lg:text-5xl">
+										15+
+									</h1>
+									<p className="flex text-center text-xl font-light">
+										Get donations across 15 different countries
+									</p>
+								</div>
+								<div className="space-y-5 px-16 md:px-0">
+									<h1 className="flex justify-center  text-4xl font-bold lg:text-5xl">
+										20M
+									</h1>
+									<p className="flex text-center text-xl font-light">
+										More than 20M naira donated every day
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div className="items-center justify-between py-16 lg:flex lg:gap-20 lg:py-20">
+				<div className="items-center justify-between py-16 lg:flex lg:gap-20 lg:py-20 px-5 md:px-20">
 					<div className="mb-8 space-y-5 lg:mb-0">
 						<p className="text-xl">Let&apos;s Help you start your Journey</p>
 						<h1 className="text-4xl font-bold md:text-5xl">
@@ -218,7 +220,7 @@ const HomePage = () => {
 
 				<UrgentFundraisers className="py-20" />
 
-				<FAQ className="py-10" />
+				<FAQ className="px-5 md:px-20 py-10" />
 			</div>
 		</BaseLayout>
 	);

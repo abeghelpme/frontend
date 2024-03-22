@@ -7,7 +7,7 @@ import Heading from "./Heading";
 import { DonorIcon2 } from "./campaign-icons";
 import { ClockIcon, LocationIcon } from "./dashboardIcons";
 
-type CardProps = AsProp & {
+export type CardProps = AsProp & {
 	classNames?: { base?: string; header?: string };
 	listType: "horizontal" | "grid";
 	cardDetails: {
@@ -124,22 +124,18 @@ export function CampaignCardList(props: CardListProps) {
 
 	const [CardList] = useElementList();
 
-	const dragScrollProps = useDragScroll<HTMLUListElement>();
+	const { dragScrollProps, dragContainerClasses } =
+		useDragScroll<HTMLUListElement>();
 
 	const semanticClasses = {
-		horizontal:
-			"flex cursor-grab overflow-x-scroll [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-		grid: "grid md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4",
+		horizontal: dragContainerClasses,
+		grid: "grid md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 w-full",
 	};
 
 	return (
 		<CardList
 			{...(listType === "horizontal" && dragScrollProps)}
-			className={cn(
-				"w-full gap-4",
-				classNames?.base,
-				semanticClasses[listType]
-			)}
+			className={cn(" gap-4", classNames?.base, semanticClasses[listType])}
 			each={cardDetailList}
 			render={(detail, index) => (
 				<CampaignCard
