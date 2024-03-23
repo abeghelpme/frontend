@@ -1,10 +1,15 @@
 import { Button } from "@/components/ui";
 import { cn } from "@/lib";
+import { useCampaignStore } from "@/store";
 import Link from "next/link";
-import { CampaignCardList, dummyCardData } from "../CampaignCard";
+import { CampaignCardList } from "../CampaignCard";
 import Heading from "../Heading";
 
 function UrgentFundraisers({ className }: { className?: string }) {
+	const campaignsFromDb = useCampaignStore((state) =>
+		state.campaigns.filter((campaign) => campaign.status !== "Draft")
+	);
+
 	return (
 		<section className={cn("w-full", className)}>
 			<div className="px-6 lg:flex lg:flex-row lg:items-center lg:justify-between lg:px-[100px]">
@@ -31,8 +36,13 @@ function UrgentFundraisers({ className }: { className?: string }) {
 
 			<CampaignCardList
 				listType="horizontal"
-				cardDetailList={dummyCardData}
-				classNames={{ base: "mt-10 lg:mt-14 pl-6 lg:pl-[100px]" }}
+				cardDetailsArray={campaignsFromDb}
+				classNames={{
+					base: "mt-10 lg:mt-14 pl-6 lg:pl-[100px]",
+					card: {
+						image: "aspect-[383/263] md:aspect-[396/263] max-h-[263px]",
+					},
+				}}
 			/>
 		</section>
 	);

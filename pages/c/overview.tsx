@@ -54,17 +54,10 @@ const Overview = () => {
 					<CampaignCard
 						classNames={{
 							image:
-								"aspect-[382/266] md:aspect-[751/313] max-h-[313px] rounded-[10px] object-cover object-center",
+								"aspect-[382/266] md:aspect-[751/313] max-h-[313px] rounded-[10px]",
 						}}
 						cardType="overview"
-						cardDetails={{
-							...dummyCardData[0],
-							title: currentCampaign.title,
-							amountRaised: currentCampaign.amountRaised,
-							goal: currentCampaign.goal,
-							id: currentCampaign._id,
-							imageSrc: currentCampaign.images[0].secureUrl,
-						}}
+						cardDetails={currentCampaign}
 					/>
 
 					<div className="rounded-lg border-[0.5px] border-placeholder bg-white p-4 lg:w-[45%] lg:max-w-[450px]">

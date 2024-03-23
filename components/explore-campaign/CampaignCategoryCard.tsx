@@ -4,16 +4,15 @@ import {
 	arrowLeft,
 	arrowRight,
 } from "@/public/assets/images/campaign-category";
+import { useCampaignStore } from "@/store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import {
-	CampaignCardList,
-	generateDummyCardData,
-} from "../common/CampaignCard";
-
-const dummyCardData = generateDummyCardData(15);
+import { CampaignCardList } from "../common/CampaignCard";
 
 export const CampaignCategoryCard = () => {
+	const campaignsFromDb = useCampaignStore((state) =>
+		state.campaigns.filter((campaign) => campaign.status !== "Draft")
+	);
 	// Custom hook to determine the number of items per page based on screen size
 	const useItemsPerPage = () => {
 		const [itemsPerPage, setItemsPerPage] = useState(9);
@@ -42,12 +41,12 @@ export const CampaignCategoryCard = () => {
 	const itemsPerPage = useItemsPerPage();
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const totalItems = dummyCardData.length;
+	const totalItems = campaignsFromDb.length;
 	const totalPages = Math.ceil(totalItems / itemsPerPage);
 
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
-	const currentItems = dummyCardData.slice(startIndex, endIndex);
+	const currentItems = campaignsFromDb.slice(startIndex, endIndex);
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
@@ -130,9 +129,9 @@ export const CampaignCategoryCard = () => {
 
 			{/* href={`/explore?category=${item.url}`} */}
 			<CampaignCardList
-				listType="grid"
-				cardDetailList={currentItems}
 				classNames={{ base: "mt-10" }}
+				cardDetailsArray={currentItems}
+				listType="grid"
 			/>
 
 			<div className="mt-10 flex items-center justify-center gap-5 md:mt-20">
