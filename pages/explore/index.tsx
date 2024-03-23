@@ -14,7 +14,7 @@ import Image from "next/image";
 const ExploreCampaignPage = () => {
 	return (
 		<BaseLayout>
-			<div className="relative flex flex-col items-center space-y-4 overflow-x-hidden bg-cover bg-center px-5 py-28 text-gray-50 md:px-20 md:py-32">
+			<div className="relative flex flex-col items-center space-y-4 overflow-hidden bg-cover bg-center px-5 py-28 text-gray-50 md:px-20 md:py-32">
 				<Image
 					src="/assets/images/landing-page/background.png"
 					className="z-[-1] object-cover object-center"

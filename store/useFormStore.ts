@@ -113,7 +113,37 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 
 			if (campaigns.length === 0) return;
 
-			const { 0: currentCampaign } = campaigns;
+			const searchParams = new URLSearchParams(window.location.search);
+
+			const currentEditCampaign = campaigns.find(
+				(campaign) =>
+					campaign._id === searchParams.get("id") && !campaign.isPublished
+			);
+
+			if (currentEditCampaign) {
+				set({
+					currentStep: currentEditCampaign.currentStep,
+
+					campaignId: currentEditCampaign._id,
+
+					formStepData: {
+						categoryId: currentEditCampaign.category?._id ?? "",
+						country: currentEditCampaign.country,
+						tags: currentEditCampaign.tags,
+						title: currentEditCampaign.title,
+						deadline: currentEditCampaign.deadline,
+						fundraiser: currentEditCampaign.fundraiser,
+						goal: currentEditCampaign.goal,
+						story: currentEditCampaign.story,
+						storyHtml: currentEditCampaign.storyHtml,
+						photos: currentEditCampaign.images.map((image) => image.secureUrl),
+					},
+				});
+
+				return;
+			}
+
+			const currentCampaign = campaigns[0];
 
 			if (currentCampaign.status !== "Draft") return;
 

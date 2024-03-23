@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { checkIsDeviceMobileOrTablet } from "../helpers/checkIsDeviceMobileOrTablet";
+import { cn } from "../helpers/cn";
 import { useCallbackRef } from "./useCallbackRef";
 
 const updateCursor = <TElement extends HTMLElement>(element: TElement) => {
@@ -25,9 +26,9 @@ const resetCursor = <TElement extends HTMLElement>(element: TElement) => {
 };
 
 const useDragScroll = <TElement extends HTMLElement>(options?: {
-	hasMobileSupport: boolean;
+	isDesktopOnly: boolean;
 }) => {
-	const { hasMobileSupport = false } = options ?? {};
+	const { isDesktopOnly = false } = options ?? {};
 
 	const dragContainerRef = useRef<TElement>(null);
 	const positionRef = useRef({ top: 0, left: 0, x: 0, y: 0 });
@@ -61,6 +62,8 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 	const onMouseDown = useCallbackRef((event: React.MouseEvent<TElement>) => {
 		if (!dragContainerRef.current) return;
 
+		if (isDesktopOnly && window.innerWidth < 768) return;
+
 		positionRef.current = {
 			left: dragContainerRef.current.scrollLeft,
 			top: dragContainerRef.current.scrollTop,
@@ -75,41 +78,6 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 			"mouseleave",
 			handleMouseUpOrLeave
 		);
-	});
-
-	const onTouchMove = useCallbackRef((event: TouchEvent) => {
-		if (!dragContainerRef.current) return;
-
-		const touch = event.touches[0];
-
-		const dx = touch.clientX - positionRef.current.x;
-		const dy = touch.clientY - positionRef.current.y;
-
-		dragContainerRef.current.scrollTop = positionRef.current.top - dy;
-		dragContainerRef.current.scrollLeft = positionRef.current.left - dx;
-	});
-
-	const onTouchEnd = useCallbackRef<TouchEvent>(() => {
-		if (!dragContainerRef.current) return;
-
-		dragContainerRef.current.removeEventListener("touchmove", onTouchMove);
-		dragContainerRef.current.removeEventListener("touchend", onTouchEnd);
-	});
-
-	const onTouchStart = useCallbackRef<React.TouchEvent<TElement>>((event) => {
-		if (!dragContainerRef.current) return;
-
-		const touch = event.touches[0];
-
-		positionRef.current = {
-			left: dragContainerRef.current.scrollLeft,
-			top: dragContainerRef.current.scrollTop,
-			x: touch.clientX,
-			y: touch.clientY,
-		};
-
-		dragContainerRef.current.addEventListener("touchmove", onTouchMove);
-		dragContainerRef.current.addEventListener("touchend", onTouchEnd);
 	});
 
 	useEffect(() => {
@@ -127,11 +95,12 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 	const dragScrollProps = {
 		ref: dragContainerRef,
 		onMouseDown,
-		...(hasMobileSupport && { onTouchStart }),
 	};
 
-	const dragContainerClasses =
-		"w-full flex flex-row cursor-grab overflow-x-scroll [scrollbar-width:none] hide-scrollbar snap-x snap-mandatory" as const;
+	const dragContainerClasses = cn(
+		`flex w-full cursor-grab snap-x snap-mandatory flex-row overflow-x-scroll hide-scrollbar [scrollbar-width:none]`,
+		isDesktopOnly && "max-md:cursor-default max-md:flex-col"
+	);
 
 	const dragItemClasses = "snap-center snap-always" as const;
 

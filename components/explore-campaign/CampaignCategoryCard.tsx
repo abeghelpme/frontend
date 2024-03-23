@@ -154,10 +154,8 @@ export const CampaignCategoryCard = () => {
 					</span>
 					<span> Prev</span>
 				</button>
-				{[...Array<number>(totalPages).keys()].map((number, i) => {
-					const pageNumber = number + 1;
-
-					return (
+				{Array.from({ length: totalPages }, (_, index) => index + 1).map(
+					(pageNumber, i) => (
 						<div key={i} className="flex items-center">
 							{(pageNumber <= 3 || i === totalPages - 1) && (
 								<button
@@ -178,8 +176,8 @@ export const CampaignCategoryCard = () => {
 								</span>
 							)}
 						</div>
-					);
-				})}
+					)
+				)}
 				<button
 					onClick={handleNextPage}
 					disabled={currentPage === totalPages}
