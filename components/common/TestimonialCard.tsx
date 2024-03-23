@@ -3,15 +3,6 @@ import { useDragScroll } from "@/lib/hooks";
 import { testimonialImage1 } from "@/public/assets/images/landing-page";
 import Image from "next/image";
 
-type TestimonialProps = {
-	testimonial: {
-		image: any;
-		name: string;
-		greeting: string;
-		text: string;
-	};
-};
-
 const testimonials = [
 	{
 		image: testimonialImage1,
@@ -36,9 +27,10 @@ const testimonials = [
 const TestimonialCard = ({ className }: { className?: string }) => {
 	const { dragScrollProps, dragContainerClasses } =
 		useDragScroll<HTMLDivElement>();
+
 	return (
 		<section className={cn("w-full", className)}>
-			<h1 className="md:block hidden lg:px-32 text-center text-5xl font-bold">
+			<h1 className="hidden text-center text-5xl font-bold md:block lg:px-32">
 				Hear from some of our users we&apos;ve helped reach their goals
 			</h1>
 			<h1 className="text-center text-4xl font-bold md:hidden">
@@ -48,17 +40,17 @@ const TestimonialCard = ({ className }: { className?: string }) => {
 				{...dragScrollProps}
 				className={cn(
 					dragContainerClasses,
-					"gap-5 w-full lg:flex lg:flex-row lg:items-center lg:justify-between pl-6 lg:pl-[100px]"
+					"w-full gap-5 pl-6 lg:flex lg:flex-row lg:items-center lg:justify-between lg:pl-[100px]"
 				)}
 			>
 				{testimonials.map((testimonial, index) => (
 					<div
 						key={index}
-						className="relative mt-16 w-[90%] flex-shrink-0 flex-grow-0 items-center justify-center p-4 text-white md:p-7 lg:mt-20 lg:flex lg:gap-20"
+						className="relative mt-16 w-[90%] shrink-0 grow-0 items-center justify-center p-4 text-white md:p-7 lg:mt-20 lg:flex lg:gap-20"
 					>
 						<Image
 							src="/assets/images/landing-page/background.png"
-							className="z-[-1] object-cover object-center rounded-xl"
+							className="z-[-1] rounded-xl object-cover object-center"
 							fetchPriority="high"
 							priority={true}
 							alt=""
@@ -67,6 +59,7 @@ const TestimonialCard = ({ className }: { className?: string }) => {
 						<Image
 							src={testimonial.image}
 							alt="testimonial image"
+							draggable={false}
 							width={400}
 							height={400}
 							className="w-full"

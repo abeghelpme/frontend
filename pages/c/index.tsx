@@ -5,35 +5,33 @@ import {
 	SlashedStar,
 	Star,
 } from "@/components/common";
-import {
-	CampaignCardList,
-	type CardListProps,
-	dummyCardData,
-} from "@/components/common/CampaignCard";
+import { CampaignCardList } from "@/components/common/CampaignCard";
 import { Button } from "@/components/ui";
+import type { Campaign } from "@/interfaces/Campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
+import { useCampaignStore } from "@/store";
 import { useReducer } from "react";
 
 const reducer = (
 	campaigns: {
-		original: CardListProps["cardDetailList"];
-		filtered: CardListProps["cardDetailList"];
+		original: Campaign[];
+		filtered: Campaign[];
 		state: string;
 	},
 	action: { status: string }
 ) => {
 	switch (action.status) {
-		case "incomplete":
+		case "In Review":
 			return {
 				...campaigns,
-				filtered: campaigns.original.filter((c) => c.status === "incomplete"),
-				state: "incomplete",
+				filtered: campaigns.original.filter((c) => c.status === "In Review"),
+				state: "inReview",
 			};
-		case "completed":
+		case "Approved":
 			return {
 				...campaigns,
-				filtered: campaigns.original.filter((c) => c.status === "completed"),
-				state: "completed",
+				filtered: campaigns.original.filter((c) => c.status === "Approved"),
+				state: "approved",
 			};
 		case "all":
 			return {
@@ -46,21 +44,25 @@ const reducer = (
 	}
 };
 
-const initialState = {
-	original: dummyCardData,
-	filtered: dummyCardData,
-	state: "all",
-};
-
 const DashboardCampaigns = () => {
-	const [campaigns, dispatch] = useReducer(reducer, initialState);
+	const campaignsFromDb = useCampaignStore((state) =>
+		state.campaigns.filter((campaign) => campaign.status !== "Draft")
+	);
 
-	const handleCompleted = () => {
-		dispatch({ status: "completed" });
+	const initialState = {
+		original: campaignsFromDb,
+		filtered: campaignsFromDb,
+		state: "all",
 	};
 
-	const handleUnCompleted = () => {
-		dispatch({ status: "incomplete" });
+	const [campaigns, dispatch] = useReducer(reducer, initialState);
+
+	const handleApproved = () => {
+		dispatch({ status: "Approved" });
+	};
+
+	const handleInReview = () => {
+		dispatch({ status: "In Review" });
 	};
 
 	const handleAll = () => {
@@ -89,7 +91,7 @@ const DashboardCampaigns = () => {
 					</Button>
 					<Button
 						variant="regular"
-						onClick={() => handleCompleted()}
+						onClick={() => handleApproved()}
 						className={`flex items-center gap-2 ${
 							campaigns.state === "completed" &&
 							"font-semibold text-abeg-primary"
@@ -103,7 +105,7 @@ const DashboardCampaigns = () => {
 					</Button>
 					<Button
 						variant="regular"
-						onClick={() => handleUnCompleted()}
+						onClick={() => handleInReview()}
 						className={`flex items-center gap-2 ${
 							campaigns.state === "incomplete" &&
 							"font-semibold text-abeg-primary"
@@ -139,7 +141,15 @@ const DashboardCampaigns = () => {
 				</div>
 			</div>
 			<section>
-				<CampaignCardList cardDetailList={campaigns.filtered} listType="grid" />
+				<CampaignCardList
+					cardDetailsArray={campaigns.filtered}
+					listType="grid"
+					classNames={{
+						card: {
+							image: "aspect-[380/345] md:aspect-[403/375] max-h-[375px]",
+						},
+					}}
+				/>
 			</section>
 		</AuthenticatedUserLayout>
 	);

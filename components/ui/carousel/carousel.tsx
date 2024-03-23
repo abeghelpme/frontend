@@ -57,7 +57,7 @@ function CarouselContent<TElement extends React.ElementType = "article">(
 	);
 }
 
-function $CarouselButton(props: CarouselButtonsProps) {
+function CarouselButton(props: CarouselButtonsProps) {
 	const { type, icon, classNames = {} } = props;
 
 	const nextOrPreviousSlide = useCarouselStore((state) =>
@@ -91,12 +91,11 @@ function $CarouselButton(props: CarouselButtonsProps) {
 function CarouselControls(props: CarouselControlProps) {
 	const { classNames, icons } = props;
 
-	/* eslint-disable react/jsx-pascal-case */
 	return (
 		<div
 			className={cn("absolute inset-0 flex justify-between", classNames?.base)}
 		>
-			<$CarouselButton
+			<CarouselButton
 				type="prev"
 				classNames={{
 					defaultIcon: classNames?.defaultIcons,
@@ -105,7 +104,7 @@ function CarouselControls(props: CarouselControlProps) {
 				icon={icons?.prev}
 			/>
 
-			<$CarouselButton
+			<CarouselButton
 				type="next"
 				classNames={{
 					defaultIcon: classNames?.defaultIcons,
@@ -117,14 +116,16 @@ function CarouselControls(props: CarouselControlProps) {
 	);
 }
 
-function CarouselItemWrapper<TArray extends unknown[]>(
-	props: CarouselItemWrapperProps<TArray>
+function CarouselItemWrapper<TArrayItem>(
+	props: CarouselItemWrapperProps<TArrayItem>
 ) {
 	const { each, children, render, className } = props;
 
 	const [ItemList] = useBaseElementList();
 	const currentSlide = useCarouselStore((state) => state.currentSlide);
-	const images = useCarouselStore((state) => each ?? (state.images as TArray));
+	const images = useCarouselStore(
+		(state) => each ?? (state.images as TArrayItem[])
+	);
 
 	return (
 		<ul
@@ -179,12 +180,14 @@ function CarouselCaption<TElement extends React.ElementType = "div">(
 	);
 }
 
-function CarouselIndicatorWrapper<TArray extends unknown[]>(
-	props: CarouselIndicatorWrapperProps<TArray>
+function CarouselIndicatorWrapper<TArrayItem>(
+	props: CarouselIndicatorWrapperProps<TArrayItem>
 ) {
 	const { each, children, render, classNames = {} } = props;
 
-	const images = useCarouselStore((state) => each ?? (state.images as TArray));
+	const images = useCarouselStore(
+		(state) => each ?? (state.images as TArrayItem[])
+	);
 	const [IndicatorList] = useBaseElementList();
 
 	return (

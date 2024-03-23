@@ -2,6 +2,8 @@ import TestimonialCard from "@/components/common/TestimonialCard";
 import { FAQ, Hero, UrgentFundraisers } from "@/components/common/landingPage";
 import { Button } from "@/components/ui";
 import { BaseLayout } from "@/layouts";
+import { cn } from "@/lib";
+import { useDragScroll } from "@/lib/hooks";
 import {
 	avatar1,
 	avatar2,
@@ -45,6 +47,11 @@ const campaignCard = [
 ];
 
 const HomePage = () => {
+	const { dragContainerClasses, dragScrollProps } =
+		useDragScroll<HTMLDivElement>({
+			isDesktopOnly: true,
+		});
+
 	return (
 		<BaseLayout>
 			<Hero
@@ -55,7 +62,7 @@ const HomePage = () => {
 				imageSrc={hero}
 			/>
 			<div className="py-10 md:pt-20">
-				<div className="px-5 md:px-20 w-full space-y-5 md:justify-between lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
+				<div className="w-full space-y-5 px-5 md:justify-between md:px-20 lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
 					<div className="space-y-5 md:pr-20">
 						<h4 className="text-xl text-gray-500">How it works</h4>
 						<h1 className="text-4xl font-bold md:text-5xl">
@@ -67,15 +74,22 @@ const HomePage = () => {
 							Join the effortless way to raise funds <br /> and make a
 							difference and empower <br /> your cause with Abeghelp.me
 						</p>
-						<Link href="/c/create">
-							<Button className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none">
-								Explore campaigns
-							</Button>
-						</Link>
+						<Button
+							className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none"
+							asChild
+						>
+							<Link href="/explore">Explore campaigns</Link>
+						</Button>
 					</div>
 				</div>
 
-				<div className="px-5 md:px-20 gap-5 space-y-5 py-10 md:flex md:space-y-0 md:overflow-x-scroll md:py-20 md:hide-scrollbar">
+				<div
+					{...dragScrollProps}
+					className={cn(
+						"gap-5 space-y-5 px-5 py-10 md:space-y-0 md:p-20",
+						dragContainerClasses
+					)}
+				>
 					{campaignCard.map((card, index) => (
 						<div
 							key={index}
@@ -144,7 +158,7 @@ const HomePage = () => {
 					</div>
 				</div>
 
-				<div className="items-center justify-between py-16 lg:flex lg:gap-20 lg:py-20 px-5 md:px-20">
+				<div className="items-center justify-between px-5 py-16 md:px-20 lg:flex lg:gap-20 lg:py-20">
 					<div className="mb-8 space-y-5 lg:mb-0">
 						<p className="text-xl">Let&apos;s Help you start your Journey</p>
 						<h1 className="text-4xl font-bold md:text-5xl">
@@ -220,7 +234,7 @@ const HomePage = () => {
 
 				<UrgentFundraisers className="py-20" />
 
-				<FAQ className="px-5 md:px-20 py-10" />
+				<FAQ className="px-5 py-10 md:px-20" />
 			</div>
 		</BaseLayout>
 	);
