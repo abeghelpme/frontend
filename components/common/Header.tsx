@@ -75,7 +75,7 @@ const Header = () => {
 
 					<div className="justify-center space-y-5 md:flex md:flex-col">
 						<Button
-							className="mt-4 w-full border-2 border-abeg-primary bg-transparent text-xl font-semibold text-abeg-primary md:w-80"
+							className="flex justify-center mt-4 w-full border-2 border-abeg-primary bg-transparent text-xl font-semibold text-abeg-primary md:w-80"
 							asChild
 						>
 							<Link href={user ? "/c" : "/signin"}>
@@ -83,7 +83,7 @@ const Header = () => {
 							</Link>
 						</Button>
 						<Button
-							className="mt-2 w-full bg-abeg-primary px-8 text-xl font-semibold md:w-80"
+							className="flex justify-center mt-2 w-full bg-abeg-primary px-8 text-xl font-semibold md:w-80"
 							asChild
 						>
 							<Link href="/c/create">Start Fundraiser</Link>
