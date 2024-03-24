@@ -3,15 +3,33 @@ import { CampaignCategories } from "@/components/common/landingPage";
 import HowItWorks from "@/components/common/landingPage/HowItWorks";
 import { CampaignCategoryCard } from "@/components/explore-campaign";
 import { Button, Input } from "@/components/ui";
+import type { Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
+import { callApi } from "@/lib/helpers/campaign";
 import {
 	heroCircle,
 	heroHalfMoon,
 	searchIcon,
 } from "@/public/assets/images/campaign-category";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 
-const ExploreCampaignPage = () => {
+export const getStaticProps = (async () => {
+	const { data, error } = await callApi<Campaign[]>("/campaign/all");
+
+	if (error || !data.data) {
+		return { notFound: true };
+	}
+
+	return {
+		props: { allCampaigns: data.data },
+		revalidate: 60, // 60 seconds
+	};
+}) satisfies GetStaticProps<{ allCampaigns: Campaign[] }>;
+
+const ExploreCampaignPage = ({
+	allCampaigns,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
 		<BaseLayout>
 			<div className="relative flex flex-col items-center space-y-4 overflow-hidden bg-cover bg-center px-5 py-28 text-gray-50 md:px-20 md:py-32">
@@ -70,7 +88,7 @@ const ExploreCampaignPage = () => {
 			</div>
 
 			<div className="pt-10 md:py-20">
-				<CampaignCategoryCard />
+				<CampaignCategoryCard allCampaigns={allCampaigns} />
 				<CampaignCategories className="px-5 pt-10 md:px-20 md:pt-20" />
 				<HowItWorks className="px-5 py-10 md:p-20" />
 				<TestimonialCard />

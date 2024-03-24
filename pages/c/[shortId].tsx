@@ -36,22 +36,34 @@ export const getStaticPaths = (async () => {
 export const getStaticProps = (async (context) => {
 	const { shortId } = context.params as { shortId: string };
 
-	const { data, error } = await callApi<Campaign>(`/campaign/one/${shortId}`);
-	if (error || !data.data) {
+	const [singleCampaign, featuredCampaigns] = await Promise.all([
+		callApi<Campaign>(`/campaign/one/${shortId}`),
+		callApi<Campaign[]>("/campaign/featured"),
+	]);
+
+	if (
+		singleCampaign.error ||
+		!singleCampaign.data.data ||
+		featuredCampaigns.error ||
+		!featuredCampaigns.data.data
+	) {
 		return {
 			notFound: true,
 		};
 	}
 
 	return {
-		props: { campaign: data.data },
+		props: {
+			campaign: singleCampaign.data.data,
+			featuredCampaigns: featuredCampaigns.data.data,
+		},
 		revalidate: 60, // 60 seconds
 	};
 }) satisfies GetStaticProps<{ campaign: Campaign }>;
 
-function CampaignView({
-	campaign,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
+	const { campaign, featuredCampaigns } = props;
+
 	const router = useRouter();
 
 	if (router.isFallback) {
@@ -86,7 +98,11 @@ function CampaignView({
 				}}
 			/>
 
-			<CampaignOutlook excerpt={excerpt} campaign={campaign}>
+			<CampaignOutlook
+				featuredCampaigns={featuredCampaigns}
+				excerpt={excerpt}
+				campaign={campaign}
+			>
 				<CampaignOutlook.Header>
 					<Heading as="h1" className="text-4xl lg:text-4xl">
 						{`${campaign.title[0].toUpperCase()}${campaign.title.slice(1)}`}

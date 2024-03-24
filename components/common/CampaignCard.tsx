@@ -9,7 +9,7 @@ import Heading from "./Heading";
 import { DonorIcon } from "./campaign-icons";
 import { BankIcon, ClockIcon, EyeIcon, LocationIcon } from "./dashboardIcons";
 
-export type CardProps = AsProp & {
+type CampaignCardProps = AsProp & {
 	classNames?: { base?: string; header?: string; image?: string };
 
 	cardType?: "overview" | "regular";
@@ -32,13 +32,14 @@ type TransformedDetails = {
 	status: string;
 };
 
-export type CardListProps = {
+type CardListProps = {
 	listType: "horizontal" | "grid";
+
 	classNames?: {
 		base?: string;
-		card?: CardProps["classNames"];
+		card?: CampaignCardProps["classNames"];
 	};
-	cardDetailsArray: Array<CardProps["cardDetails"]>;
+	cardDetailsArray: Array<CampaignCardProps["cardDetails"]>;
 };
 
 export const generateDummyCardData = (count = 5) =>
@@ -58,7 +59,7 @@ export const generateDummyCardData = (count = 5) =>
 
 export const dummyCardData = generateDummyCardData();
 
-export function CampaignCard(props: CardProps) {
+export function CampaignCard(props: CampaignCardProps) {
 	const {
 		as = "article",
 		cardDetails,
@@ -78,7 +79,9 @@ export function CampaignCard(props: CardProps) {
 		daysLeft: 0,
 		location: "Not Provided",
 		name: cardDetails.creator
-			? `${cardDetails.creator.firstName} ${cardDetails.creator.lastName}`
+			? cardDetails.fundraiser === "INDIVIDUAL"
+				? `${cardDetails.creator.firstName} ${cardDetails.creator.lastName}`
+				: "Beneficiary"
 			: "Unknown",
 		title: cardDetails.title,
 	} satisfies TransformedDetails;
@@ -232,6 +235,10 @@ export function CampaignCardList(props: CardListProps) {
 	const { dragScrollProps, dragContainerClasses, dragItemClasses } =
 		useDragScroll<HTMLUListElement>();
 
+	if (cardDetailsArray.length === 0) {
+		return null;
+	}
+
 	const semanticClasses = {
 		cardList: {
 			horizontal: dragContainerClasses,
@@ -247,7 +254,7 @@ export function CampaignCardList(props: CardListProps) {
 				grid: "",
 			},
 
-			image: {
+			header: {
 				horizontal: "aspect-[383/263] md:aspect-[396/263] max-h-[263px]",
 				grid: "aspect-[380/345] max-h-[345px] md:aspect-[403/375] md:max-h-[375px]",
 			},
@@ -263,7 +270,7 @@ export function CampaignCardList(props: CardListProps) {
 				classNames?.base
 			)}
 		>
-			{cardDetailsArray.map((detail, index) => (
+			{cardDetailsArray.map((detail) => (
 				<CampaignCard
 					key={detail._id}
 					as="li"
@@ -273,11 +280,11 @@ export function CampaignCardList(props: CardListProps) {
 							semanticClasses.card.base[listType],
 							classNames?.card?.base
 						),
-						header: classNames?.card?.header,
-						image: cn(
-							semanticClasses.card.image[listType],
-							classNames?.card?.image
+						header: cn(
+							semanticClasses.card.header[listType],
+							classNames?.card?.header
 						),
+						image: classNames?.card?.image,
 					}}
 				/>
 			))}

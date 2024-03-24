@@ -8,6 +8,7 @@ import { BaseLayout } from "@/layouts";
 import { callApi } from "@/lib/helpers/campaign";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
 import { useCampaignStore } from "@/store";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { NextSeo } from "next-seo";
 import Error from "next/error";
 import Link from "next/link";
@@ -15,8 +16,24 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { toast } from "sonner";
 
-function PreviewCampaignPage() {
+export const getStaticProps = (async () => {
+	const { data, error } = await callApi<Campaign[]>("/campaign/featured");
+
+	if (error || !data.data) {
+		return { notFound: true };
+	}
+
+	return {
+		props: { featuredCampaigns: data.data },
+		revalidate: 60, // 60 seconds
+	};
+}) satisfies GetStaticProps<{ featuredCampaigns: Campaign[] }>;
+
+function PreviewCampaignPage({
+	featuredCampaigns,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
 	const searchParams = useSearchParams();
+
 	const currentCampaign = useCampaignStore((state) =>
 		state.campaigns.find(
 			(campaign) =>
@@ -63,7 +80,12 @@ function PreviewCampaignPage() {
 					}),
 				}}
 			/>
-			<CampaignOutlook excerpt={excerpt} campaign={currentCampaign}>
+
+			<CampaignOutlook
+				featuredCampaigns={featuredCampaigns}
+				excerpt={excerpt}
+				campaign={currentCampaign}
+			>
 				<CampaignOutlook.Header className="flex flex-col gap-2 text-white lg:text-2xl">
 					<Heading as="h1">Campaign Preview</Heading>
 

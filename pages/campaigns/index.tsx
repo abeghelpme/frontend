@@ -6,10 +6,28 @@ import {
 	HowItWorks,
 	UrgentFundraisers,
 } from "@/components/common/landingPage";
+import type { Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
+import { callApi } from "@/lib/helpers/campaign";
 import { campaignHero } from "@/public/assets/images/landing-page";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 
-const Campaigns = () => {
+export const getStaticProps = (async () => {
+	const { data, error } = await callApi<Campaign[]>("/campaign/featured");
+
+	if (error || !data.data) {
+		return { notFound: true };
+	}
+
+	return {
+		props: { featuredCampaigns: data.data },
+		revalidate: 60, // 60 seconds
+	};
+}) satisfies GetStaticProps<{ featuredCampaigns: Campaign[] }>;
+
+const Campaigns = ({
+	featuredCampaigns,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
 		<BaseLayout>
 			<Hero
@@ -18,11 +36,11 @@ const Campaigns = () => {
 				button1={{ href: "/c/create", text: "Donate now" }}
 				imageSrc={campaignHero}
 			/>
-			<div className="md:py-20 flex flex-col gap-8 md:gap-20 justify-center">
+			<div className="flex flex-col justify-center gap-8 md:gap-20 md:py-20">
 				<CampaignCategories className="px-5 md:px-20" />
 				<HowItWorks className="px-5 md:px-20" />
 				<SuccessStories className="px-5 md:px-20" />
-				<UrgentFundraisers />
+				<UrgentFundraisers featuredCampaigns={featuredCampaigns} />
 				<FAQ className="px-5 md:px-20" />
 			</div>
 		</BaseLayout>

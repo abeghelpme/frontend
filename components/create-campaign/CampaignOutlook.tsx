@@ -25,6 +25,7 @@ import DonorSection from "./DonorSection";
 type CampaignOutlookProps = {
 	children?: React.ReactNode;
 	campaign: Campaign;
+	featuredCampaigns: Campaign[];
 	excerpt: string;
 };
 
@@ -34,7 +35,7 @@ type CampaignHeaderProps = {
 };
 
 function CampaignOutlook(props: CampaignOutlookProps) {
-	const { campaign, excerpt, children } = props;
+	const { campaign, featuredCampaigns, excerpt, children } = props;
 
 	const [TagList] = useElementList();
 
@@ -46,7 +47,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 	const fundraiserTarget =
 		campaign.fundraiser === "INDIVIDUAL"
 			? `${campaign.creator?.firstName} ${campaign.creator?.lastName}`
-			: "BENEFICIARY";
+			: "Beneficiary";
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
@@ -282,7 +283,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				</section>
 			</div>
 
-			<UrgentFundraisers className="mt-[72px] lg:mt-[120px]" />
+			<UrgentFundraisers
+				featuredCampaigns={featuredCampaigns}
+				className="mt-[72px] lg:mt-[120px]"
+			/>
 
 			<FAQ className="mt-[72px] w-full px-6 lg:mt-[120px] lg:px-[100px]" />
 		</main>

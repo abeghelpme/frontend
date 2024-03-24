@@ -1,52 +1,52 @@
 import { Button } from "@/components/ui";
+import type { Campaign } from "@/interfaces/Campaign";
 import {
 	arrowDown,
 	arrowLeft,
 	arrowRight,
 } from "@/public/assets/images/campaign-category";
-import { useCampaignStore } from "@/store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CampaignCardList } from "../common/CampaignCard";
 
-export const CampaignCategoryCard = () => {
-	const campaignsFromDb = useCampaignStore((state) =>
-		state.campaigns.filter((campaign) => campaign.status !== "Draft")
-	);
-	// Custom hook to determine the number of items per page based on screen size
-	const useItemsPerPage = () => {
-		const [itemsPerPage, setItemsPerPage] = useState(9);
+// Custom hook to determine the number of items per page based on screen size
+const useItemsPerPage = () => {
+	const [itemsPerPage, setItemsPerPage] = useState(9);
 
-		useEffect(() => {
-			const handleResize = () => {
-				if (window.innerWidth < 768) {
-					setItemsPerPage(3);
-				} else if (window.innerWidth < 1024) {
-					setItemsPerPage(8);
-				} else {
-					setItemsPerPage(9);
-				}
-			};
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth < 768) {
+				setItemsPerPage(3);
+			} else if (window.innerWidth < 1024) {
+				setItemsPerPage(8);
+			} else {
+				setItemsPerPage(9);
+			}
+		};
 
-			handleResize(); // Call to initialize, to prevent flashing original state on load when resizing window
-			window.addEventListener("resize", handleResize);
+		handleResize(); // Call to initialize, to prevent flashing original state on load when resizing window
+		window.addEventListener("resize", handleResize);
 
-			return () => {
-				window.removeEventListener("resize", handleResize);
-			};
-		}, []);
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
 
-		return itemsPerPage;
-	};
+	return itemsPerPage;
+};
+
+export const CampaignCategoryCard = ({
+	allCampaigns,
+}: { allCampaigns: Campaign[] }) => {
 	const itemsPerPage = useItemsPerPage();
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const totalItems = campaignsFromDb.length;
+	const totalItems = allCampaigns.length;
 	const totalPages = Math.ceil(totalItems / itemsPerPage);
 
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
-	const currentItems = campaignsFromDb.slice(startIndex, endIndex);
+	const currentItems = allCampaigns.slice(startIndex, endIndex);
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
@@ -127,7 +127,6 @@ export const CampaignCategoryCard = () => {
 				</Button>
 			</div>
 
-			{/* href={`/explore?category=${item.url}`} */}
 			<CampaignCardList
 				classNames={{ base: "mt-10" }}
 				cardDetailsArray={currentItems}

@@ -1,8 +1,10 @@
 import TestimonialCard from "@/components/common/TestimonialCard";
 import { FAQ, Hero, UrgentFundraisers } from "@/components/common/landingPage";
 import { Button } from "@/components/ui";
+import type { Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
 import { cn } from "@/lib";
+import { callApi } from "@/lib/helpers/campaign";
 import { useDragScroll } from "@/lib/hooks";
 import {
 	avatar1,
@@ -16,8 +18,22 @@ import {
 	hero,
 	joinnUs,
 } from "@/public/assets/images/landing-page";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const getStaticProps = (async () => {
+	const { data, error } = await callApi<Campaign[]>("/campaign/featured");
+
+	if (error || !data.data) {
+		return { notFound: true };
+	}
+
+	return {
+		props: { featuredCampaigns: data.data },
+		revalidate: 60, // 60 seconds
+	};
+}) satisfies GetStaticProps<{ featuredCampaigns: Campaign[] }>;
 
 const campaignCard = [
 	{
@@ -46,7 +62,9 @@ const campaignCard = [
 	},
 ];
 
-const HomePage = () => {
+const HomePage = ({
+	featuredCampaigns,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const { dragContainerClasses, dragScrollProps } =
 		useDragScroll<HTMLDivElement>("desktopOnly");
 
@@ -73,7 +91,7 @@ const HomePage = () => {
 							difference and empower <br /> your cause with Abeghelp.me
 						</p>
 						<Button
-							className="flex justify-center max-w-[165px] mt-5 border border-gray-500 font-semibold text-gray-500 outline-none"
+							className="mt-5 flex max-w-[165px] justify-center border border-gray-500 font-semibold text-gray-500 outline-none"
 							asChild
 						>
 							<Link href="/explore">Explore campaigns</Link>
@@ -230,7 +248,10 @@ const HomePage = () => {
 					<TestimonialCard />
 				</div>
 
-				<UrgentFundraisers className="py-20" />
+				<UrgentFundraisers
+					featuredCampaigns={featuredCampaigns}
+					className="py-20"
+				/>
 
 				<FAQ className="px-5 py-10 md:px-20" />
 			</div>
