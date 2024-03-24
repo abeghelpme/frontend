@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { checkIsDeviceMobileOrTablet } from "../helpers/checkIsDeviceMobileOrTablet";
 import { cn } from "../helpers/cn";
 import { useCallbackRef } from "./useCallbackRef";
@@ -25,11 +25,9 @@ const resetCursor = <TElement extends HTMLElement>(element: TElement) => {
 	element.style.userSelect = "";
 };
 
-const useDragScroll = <TElement extends HTMLElement>(options?: {
-	isDesktopOnly: boolean;
-}) => {
-	const { isDesktopOnly = false } = options ?? {};
-
+const useDragScroll = <TElement extends HTMLElement>(
+	usage: "desktopOnly" | "regular" = "regular"
+) => {
 	const dragContainerRef = useRef<TElement>(null);
 	const positionRef = useRef({ top: 0, left: 0, x: 0, y: 0 });
 
@@ -62,7 +60,7 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 	const onMouseDown = useCallbackRef((event: React.MouseEvent<TElement>) => {
 		if (!dragContainerRef.current) return;
 
-		if (isDesktopOnly && window.innerWidth < 768) return;
+		if (usage === "desktopOnly" && window.innerWidth < 768) return;
 
 		positionRef.current = {
 			left: dragContainerRef.current.scrollLeft,
@@ -98,8 +96,9 @@ const useDragScroll = <TElement extends HTMLElement>(options?: {
 	};
 
 	const dragContainerClasses = cn(
-		`flex w-full cursor-grab snap-x snap-mandatory flex-row overflow-x-scroll overflow-y-hidden hide-scrollbar [scrollbar-width:none]`,
-		isDesktopOnly && "max-md:cursor-default max-md:flex-col"
+		"flex w-full cursor-grab snap-x snap-mandatory flex-row overflow-y-clip overflow-x-scroll hide-scrollbar [scrollbar-width:none]",
+		usage === "desktopOnly" &&
+			"max-md:cursor-default max-md:flex-col"
 	);
 
 	const dragItemClasses = "snap-center snap-always" as const;

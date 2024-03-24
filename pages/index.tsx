@@ -48,9 +48,7 @@ const campaignCard = [
 
 const HomePage = () => {
 	const { dragContainerClasses, dragScrollProps } =
-		useDragScroll<HTMLDivElement>({
-			isDesktopOnly: true,
-		});
+		useDragScroll<HTMLDivElement>("desktopOnly");
 
 	return (
 		<BaseLayout>

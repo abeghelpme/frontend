@@ -37,12 +37,7 @@ function UrgentFundraisers({ className }: { className?: string }) {
 			<CampaignCardList
 				listType="horizontal"
 				cardDetailsArray={campaignsFromDb}
-				classNames={{
-					base: "mt-10 lg:mt-14 pl-5 md:pl-[80px]",
-					card: {
-						image: "aspect-[383/263] md:aspect-[396/263] max-h-[263px]",
-					},
-				}}
+				classNames={{ base: "mt-10 lg:mt-14 pl-5 md:pl-[80px]" }}
 			/>
 		</section>
 	);
