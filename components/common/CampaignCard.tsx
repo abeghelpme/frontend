@@ -1,6 +1,6 @@
 import type { Campaign } from "@/interfaces/Campaign";
 import { cn } from "@/lib";
-import { useDragScroll, useElementList } from "@/lib/hooks";
+import { useDragScroll } from "@/lib/hooks";
 import type { AsProp } from "@/lib/type-helpers";
 import Image from "next/image";
 import Link from "next/link";
@@ -229,8 +229,6 @@ export function CampaignCard(props: CardProps) {
 export function CampaignCardList(props: CardListProps) {
 	const { cardDetailsArray, listType, classNames } = props;
 
-	const [CardList] = useElementList();
-
 	const { dragScrollProps, dragContainerClasses, dragItemClasses } =
 		useDragScroll<HTMLUListElement>();
 
@@ -241,35 +239,48 @@ export function CampaignCardList(props: CardListProps) {
 		},
 
 		card: {
-			horizontal: cn(
-				"max-w-[383px] shrink-0 lg:max-w-[396px]",
-				dragItemClasses
-			),
-			grid: "",
+			base: {
+				horizontal: cn(
+					"max-w-[383px] shrink-0 lg:max-w-[396px]",
+					dragItemClasses
+				),
+				grid: "",
+			},
+
+			image: {
+				horizontal: "aspect-[383/263] md:aspect-[396/263] max-h-[263px]",
+				grid: "aspect-[380/345] max-h-[345px] md:aspect-[403/375] md:max-h-[375px]",
+			},
 		},
 	};
 
 	return (
-		<CardList
+		<ul
 			{...(listType === "horizontal" && dragScrollProps)}
 			className={cn(
 				"gap-4",
 				semanticClasses.cardList[listType],
 				classNames?.base
 			)}
-			each={cardDetailsArray}
-			render={(detail, index) => (
+		>
+			{cardDetailsArray.map((detail, index) => (
 				<CampaignCard
-					key={index}
+					key={detail._id}
 					as="li"
 					cardDetails={detail}
 					classNames={{
-						base: cn(semanticClasses.card[listType], classNames?.card?.base),
+						base: cn(
+							semanticClasses.card.base[listType],
+							classNames?.card?.base
+						),
 						header: classNames?.card?.header,
-						image: classNames?.card?.image,
+						image: cn(
+							semanticClasses.card.image[listType],
+							classNames?.card?.image
+						),
 					}}
 				/>
-			)}
-		/>
+			))}
+		</ul>
 	);
 }

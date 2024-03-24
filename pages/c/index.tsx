@@ -144,11 +144,6 @@ const DashboardCampaigns = () => {
 				<CampaignCardList
 					cardDetailsArray={campaigns.filtered}
 					listType="grid"
-					classNames={{
-						card: {
-							image: "aspect-[380/345] md:aspect-[403/375] max-h-[375px]",
-						},
-					}}
 				/>
 			</section>
 		</AuthenticatedUserLayout>
