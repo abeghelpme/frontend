@@ -1,4 +1,5 @@
 import type { PolymorphicProps } from "@/lib/type-helpers";
+import { Slot } from "@radix-ui/react-slot";
 
 type CardProps = {
 	className?: string;
@@ -6,19 +7,23 @@ type CardProps = {
 };
 
 function Card<TElement extends React.ElementType = "article">(
-	props: PolymorphicProps<TElement, CardProps>
+	props: PolymorphicProps<TElement, CardProps & { asChild?: boolean }>
 ) {
-	const { as: Element = "article", children, ...restOfProps } = props;
+	const { as: Element = "article", children, asChild, ...restOfProps } = props;
 
-	return <Element {...restOfProps}>{children}</Element>;
+	const Component = asChild ? Slot : Element;
+
+	return <Component {...restOfProps}>{children}</Component>;
 }
 
 function CardHeader<TElement extends React.ElementType = "header">(
-	props: PolymorphicProps<TElement, CardProps>
+	props: PolymorphicProps<TElement, CardProps & { asChild?: boolean }>
 ) {
-	const { as: Element = "header", children, ...restOfProps } = props;
+	const { as: Element = "header", asChild, children, ...restOfProps } = props;
 
-	return <Element {...restOfProps}>{children}</Element>;
+	const Component = asChild ? Slot : Element;
+
+	return <Component {...restOfProps}>{children}</Component>;
 }
 
 function CardContent<TElement extends React.ElementType = "div">(

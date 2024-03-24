@@ -41,12 +41,7 @@ export const getStaticProps = (async (context) => {
 		callApi<Campaign[]>("/campaign/featured"),
 	]);
 
-	if (
-		singleCampaign.error ||
-		!singleCampaign.data.data ||
-		featuredCampaigns.error ||
-		!featuredCampaigns.data.data
-	) {
+	if (singleCampaign.error || !singleCampaign.data.data) {
 		return {
 			notFound: true,
 		};
@@ -55,7 +50,7 @@ export const getStaticProps = (async (context) => {
 	return {
 		props: {
 			campaign: singleCampaign.data.data,
-			featuredCampaigns: featuredCampaigns.data.data,
+			featuredCampaigns: featuredCampaigns.data?.data ?? [],
 		},
 		revalidate: 60, // 60 seconds
 	};
