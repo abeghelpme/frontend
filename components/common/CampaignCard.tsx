@@ -241,7 +241,7 @@ export function CampaignCardList(props: CardListProps) {
 		card: {
 			base: {
 				horizontal: cn(
-					"max-w-[383px] shrink-0 lg:max-w-[396px]",
+					"max-w-[370px] shrink-0 lg:max-w-[396px]",
 					dragItemClasses
 				),
 				grid: "",
