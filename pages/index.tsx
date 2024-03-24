@@ -73,7 +73,7 @@ const HomePage = () => {
 							difference and empower <br /> your cause with Abeghelp.me
 						</p>
 						<Button
-							className="mt-5 border border-gray-500 font-semibold text-gray-500 outline-none"
+							className="flex justify-center max-w-[165px] mt-5 border border-gray-500 font-semibold text-gray-500 outline-none"
 							asChild
 						>
 							<Link href="/explore">Explore campaigns</Link>

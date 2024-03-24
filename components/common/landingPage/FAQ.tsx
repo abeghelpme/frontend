@@ -139,10 +139,10 @@ const FAQ = ({ className }: { className?: string }) => {
 				Frequently asked questions
 			</h1>
 			{faqData.map((item, index) => (
-				<div key={item.question} className="mb-4 space-y-2 bg-white p-4">
+				<div key={item.question} className="mb-4 space-y-2 bg-white py-4">
 					<div className="flex items-center justify-between">
 						<button
-							className="cursor-pointer text-2xl font-semibold"
+							className="cursor-pointer text-start text-2xl font-semibold"
 							onClick={() => toggleAnswer(index)}
 						>
 							{item.question}

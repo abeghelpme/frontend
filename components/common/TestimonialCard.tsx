@@ -29,18 +29,18 @@ const TestimonialCard = ({ className }: { className?: string }) => {
 		useDragScroll<HTMLDivElement>();
 
 	return (
-		<section className={cn("w-full", className)}>
-			<h1 className="hidden text-center text-5xl font-bold md:block lg:px-32">
+		<section className={cn("w-full pb-10 md:pb-0", className)}>
+			<h1 className="hidden text-center text-5xl font-bold md:block md:px-20 lg:px-32">
 				Hear from some of our users we&apos;ve helped reach their goals
 			</h1>
-			<h1 className="text-center text-4xl font-bold md:hidden">
+			<h1 className="text-center text-4xl font-bold md:hidden px-5">
 				Some of our users we&apos;ve helped reach their goals
 			</h1>
 			<div
 				{...dragScrollProps}
 				className={cn(
 					dragContainerClasses,
-					"w-full gap-5 pl-6 lg:flex lg:flex-row lg:items-center lg:justify-between lg:pl-[100px]"
+					"w-full gap-5 pl-5 lg:flex lg:flex-row lg:items-center lg:justify-between md:px-[80px]"
 				)}
 			>
 				{testimonials.map((testimonial, index) => (
