@@ -115,28 +115,28 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 
 			const searchParams = new URLSearchParams(window.location.search);
 
-			const currentEditCampaign = campaigns.find(
+			const campaignToBeEdited = campaigns.find(
 				(campaign) =>
 					campaign._id === searchParams.get("id") && !campaign.isPublished
 			);
 
-			if (currentEditCampaign) {
+			if (campaignToBeEdited) {
 				set({
-					currentStep: currentEditCampaign.currentStep,
+					currentStep: campaignToBeEdited.currentStep,
 
-					campaignId: currentEditCampaign._id,
+					campaignId: campaignToBeEdited._id,
 
 					formStepData: {
-						categoryId: currentEditCampaign.category?._id ?? "",
-						country: currentEditCampaign.country,
-						tags: currentEditCampaign.tags,
-						title: currentEditCampaign.title,
-						deadline: currentEditCampaign.deadline,
-						fundraiser: currentEditCampaign.fundraiser,
-						goal: currentEditCampaign.goal,
-						story: currentEditCampaign.story,
-						storyHtml: currentEditCampaign.storyHtml,
-						photos: currentEditCampaign.images.map((image) => image.secureUrl),
+						categoryId: campaignToBeEdited.category?._id ?? "",
+						country: campaignToBeEdited.country,
+						tags: campaignToBeEdited.tags,
+						title: campaignToBeEdited.title,
+						deadline: campaignToBeEdited.deadline,
+						fundraiser: campaignToBeEdited.fundraiser,
+						goal: campaignToBeEdited.goal,
+						story: campaignToBeEdited.story,
+						storyHtml: campaignToBeEdited.storyHtml,
+						photos: campaignToBeEdited.images.map((image) => image.secureUrl),
 					},
 				});
 
