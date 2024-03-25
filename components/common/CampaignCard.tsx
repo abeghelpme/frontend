@@ -113,11 +113,13 @@ export function CampaignCard(props: CampaignCardProps) {
 						draggable={false}
 						alt="Campaigns Image"
 					/>
+
 					<div className="absolute inset-0 flex select-none flex-col items-start justify-between p-6 text-xs text-white">
 						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
 							<LocationIcon />
 							<figcaption>{transformedDetails.location}</figcaption>
 						</figure>
+
 						<div className="flex w-full justify-between">
 							{cardType === "regular" && (
 								<figure className="mr-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
@@ -127,6 +129,7 @@ export function CampaignCard(props: CampaignCardProps) {
 									</figcaption>
 								</figure>
 							)}
+
 							<figure className="ml-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
 								<ClockIcon />
 								<figcaption>{transformedDetails.daysLeft} days left</figcaption>
@@ -135,6 +138,7 @@ export function CampaignCard(props: CampaignCardProps) {
 					</div>
 				</Link>
 			</Card.Header>
+
 			{cardType === "regular" && (
 				<Card.Content className="flex h-full flex-col justify-between">
 					<Heading
@@ -148,6 +152,7 @@ export function CampaignCard(props: CampaignCardProps) {
 					</p>
 				</Card.Content>
 			)}
+
 			{cardType === "regular" ? (
 				<Card.Footer className="flex flex-col gap-2">
 					<ProgressBar
@@ -164,6 +169,7 @@ export function CampaignCard(props: CampaignCardProps) {
 						<Heading as="h4" className="hidden font-bold md:block md:text-2xl">
 							{transformedDetails.title}
 						</Heading>
+
 						<article className="flex flex-col justify-between gap-4 md:flex-row md:gap-6">
 							<div className="flex-1 space-y-4 text-sm">
 								<div className="flex items-center justify-between">
@@ -178,10 +184,12 @@ export function CampaignCard(props: CampaignCardProps) {
 										<span className="text-placeholder">remaining</span>
 									</p>
 								</div>
+
 								<ProgressBar
 									value={donationProgress}
 									className="progress-unfilled:h-1"
 								/>
+
 								<div className="flex items-center justify-between gap-7">
 									<figure className="flex items-center gap-1">
 										<DonorIcon stroke="dark" className="size-4 lg:size-5" />
@@ -196,11 +204,13 @@ export function CampaignCard(props: CampaignCardProps) {
 									</figure>
 								</div>
 							</div>
+
 							<div className="flex justify-between gap-4 text-sm md:w-fit md:flex-col">
 								<Button variant="secondary" className="flex items-center gap-2">
 									<BankIcon />
 									<p>Set up account</p>
 								</Button>
+
 								<Button variant="primary" asChild>
 									<Link
 										href={{

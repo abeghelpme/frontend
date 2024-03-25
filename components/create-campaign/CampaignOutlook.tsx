@@ -57,11 +57,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	return (
 		<main className="flex flex-col items-center pb-20 text-abeg-text">
-			<section className="relative px-6 pb-14 pt-11 text-white md:px-[100px]">
+			<section className="relative px-6 pb-14 pt-11 text-white md:px-[80px]">
 				<Image
 					src="/assets/images/shared/hero-background.svg"
-					className="z-[-1] object-cover object-center"
-					fetchPriority="high"
+					className="z-[-1] object-cover"
 					priority={true}
 					alt=""
 					fill
@@ -94,7 +93,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 				<div className="relative mt-6">
 					<TagList
-						className="flex flex-wrap gap-5"
+						className="flex flex-wrap gap-5 max-lg:pr-[42px]"
 						each={campaign.tags}
 						render={(tag, index) => (
 							<li
@@ -112,8 +111,8 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				</div>
 			</section>
 
-			<div className="flex flex-col px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[100px]">
-				<section className="mt-16 space-y-5 px-[18px] py-6 lg:min-w-[383px] lg:max-w-[505px]">
+			<div className="mt-14 flex flex-col px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px]">
+				<section className="mt-2 space-y-5 self-start px-[18px] py-6 lg:sticky lg:top-0 lg:min-w-[383px] lg:max-w-[505px]">
 					<article>
 						<div className="flex items-center justify-between">
 							<p className="font-bold">₦ {campaign.amountRaised}</p>
@@ -137,6 +136,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						>
 							Donate to this campaign
 						</Button>
+
 						<CustomDialog
 							classNames={{
 								content: "gap-0 p-12 md:p-12 max-w-[500px]",
@@ -227,7 +227,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					<DonorSection className="px-[19px]" />
 				</section>
 
-				<section className="mt-14 max-w-[714px] text-2xl">
+				<section className="max-w-[714px] text-2xl">
 					<article>
 						<Heading
 							as="h3"
@@ -288,7 +288,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				className="mt-[72px] lg:mt-[120px]"
 			/>
 
-			<FAQ className="mt-[72px] w-full px-6 lg:mt-[120px] lg:px-[100px]" />
+			<FAQ className="mt-[72px] w-full px-6 lg:mt-[120px] lg:px-[80px]" />
 		</main>
 	);
 }

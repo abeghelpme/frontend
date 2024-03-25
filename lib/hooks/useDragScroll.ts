@@ -97,11 +97,10 @@ const useDragScroll = <TElement extends HTMLElement>(
 
 	const dragContainerClasses = cn(
 		"flex w-full cursor-grab snap-x snap-mandatory flex-row overflow-y-clip overflow-x-scroll hide-scrollbar [scrollbar-width:none]",
-		usage === "desktopOnly" &&
-			"max-md:cursor-default max-md:flex-col"
+		usage === "desktopOnly" && "max-md:cursor-default max-md:flex-col"
 	);
 
-	const dragItemClasses = "snap-center snap-always" as const;
+	const dragItemClasses = "snap-center" as const;
 
 	return { dragContainerClasses, dragScrollProps, dragItemClasses };
 };
