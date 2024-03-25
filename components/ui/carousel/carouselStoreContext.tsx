@@ -1,6 +1,6 @@
 import { createCustomContext } from "@/lib/hooks";
 import type { SelectorFn } from "@/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import type {
@@ -26,6 +26,11 @@ export function CarouselContextProvider<
 	const [carouselStore] = useState(() =>
 		createCarouselStore({ images, onSlideBtnClick })
 	);
+
+	useEffect(() => {
+		carouselStore.setState({ images });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [images]);
 
 	return <Provider value={carouselStore}>{children}</Provider>;
 }
