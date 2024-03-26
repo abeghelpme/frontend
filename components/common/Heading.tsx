@@ -1,15 +1,13 @@
 import { cn } from "@/lib";
-import type {
-	PolymorphicProps,
-	RequiredAsProp,
-} from "@/lib/type-helpers/polymorphism-helper";
+import type { PolymorphicProps } from "@/lib/type-helpers/polymorphism-helper";
 
 type HeadingElements = keyof typeof semanticHeadings;
-type HeadingProps<TElement extends HeadingElements> =
-	RequiredAsProp<TElement> & {
-		children: React.ReactNode;
-		className?: string;
-	};
+
+type HeadingProps<TElement extends HeadingElements> = {
+	as: TElement;
+	children: React.ReactNode;
+	className?: string;
+};
 
 const semanticHeadings = {
 	h1: "font-bold text-base lg:text-2xl",

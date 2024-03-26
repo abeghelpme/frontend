@@ -21,10 +21,7 @@ const isSlotElement = (
 		return true;
 	}
 
-	return (
-		(child.type as Noop).name === (SlotWrapper as Noop).name ||
-		child.type.toString() === SlotWrapper.toString()
-	);
+	return (child.type as Noop).name === (SlotWrapper as Noop).name;
 };
 
 const useSlot = <TProps extends Record<string, unknown>>(

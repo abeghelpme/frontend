@@ -2,31 +2,29 @@ export type AsProp<TElement extends React.ElementType = React.ElementType> = {
 	as?: TElement;
 };
 
-export type RequiredAsProp<
-	TElement extends React.ElementType = React.ElementType,
-> = Required<AsProp<TElement>>;
+type PropsWithOptionalAs<
+	TElement extends React.ElementType,
+	TProps,
+> = "as" extends keyof TProps ? TProps : TProps & AsProp<TElement>;
 
-type RefProp<TElement extends React.ElementType> = {
-	ref?: React.ComponentPropsWithRef<TElement>["ref"];
-};
-
-type MergePropsWithAsProp<TElement extends React.ElementType, TProps> = TProps &
-	AsProp<TElement>;
-
-// == Get all other primitive element props by Omitting the result of MergedProps from React.ComponentPropsWithoutRef
-type InferPrimitiveProps<TElement extends React.ElementType, TProps> = Omit<
+// == Get all other primitive element props by Omit the result of MergedProps from React.ComponentPropsWithoutRef
+type InferOtherProps<TElement extends React.ElementType, TProps> = Omit<
 	React.ComponentPropsWithoutRef<TElement>,
-	keyof MergePropsWithAsProp<TElement, TProps> | "className" | "children" // == Removing children and className props to give components control over these props
+	// == Removing children and className as well to give components control over these props
+	keyof PropsWithOptionalAs<TElement, TProps> | "className" | "children"
 >;
 
 // == Polymorphic props helper
 export type PolymorphicProps<
 	TElement extends React.ElementType,
 	TProps extends Record<string, unknown> = AsProp<TElement>,
-> = MergePropsWithAsProp<TElement, TProps> &
-	InferPrimitiveProps<TElement, TProps>;
+> = PropsWithOptionalAs<TElement, TProps> & InferOtherProps<TElement, TProps>;
 
-// == For Components with Ref Prop
+type RefProp<TElement extends React.ElementType> = {
+	ref?: React.ComponentPropsWithRef<TElement>["ref"];
+};
+
+// == For components with the Ref Prop
 export type PolymorphicPropsWithRef<
 	TElement extends React.ElementType,
 	TProps extends Record<string, unknown> = AsProp<TElement>,
