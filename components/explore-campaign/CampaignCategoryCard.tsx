@@ -37,11 +37,13 @@ const useItemsPerPage = () => {
 
 export const CampaignCategoryCard = ({
 	allCampaigns,
-}: { allCampaigns: Campaign[] }) => {
+}: {
+	allCampaigns: Campaign[];
+}) => {
 	const itemsPerPage = useItemsPerPage();
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const totalItems = allCampaigns.length;
+	const totalItems = allCampaigns?.length;
 	const totalPages = Math.ceil(totalItems / itemsPerPage);
 
 	const startIndex = (currentPage - 1) * itemsPerPage;

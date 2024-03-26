@@ -6,27 +6,51 @@ import {
 	HowItWorks,
 	UrgentFundraisers,
 } from "@/components/common/landingPage";
-import type { Campaign } from "@/interfaces/Campaign";
+import type { AllCampaignCategories, Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
 import { callApi } from "@/lib/helpers/campaign";
 import { campaignHero } from "@/public/assets/images/landing-page";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 
 export const getStaticProps = (async () => {
-	const { data, error } = await callApi<Campaign[]>("/campaign/featured");
+	const [featuredCampaigns, allCampaignCategories] = await Promise.all([
+		callApi<Campaign[]>("/campaign/featured"),
+		callApi<AllCampaignCategories[]>("/campaign/categories"),
+	]);
 
-	if (error || !data.data) {
+	if (
+		featuredCampaigns.error ||
+		!featuredCampaigns.data.data ||
+		allCampaignCategories.error ||
+		!allCampaignCategories.data.data
+	) {
 		return { notFound: true };
 	}
-
 	return {
-		props: { featuredCampaigns: data.data },
-		revalidate: 60, // 60 seconds
+		props: {
+			featuredCampaigns: featuredCampaigns.data.data,
+			allCampaignCategories: allCampaignCategories.data.data,
+		},
+		revalidate: 60,
 	};
-}) satisfies GetStaticProps<{ featuredCampaigns: Campaign[] }>;
+	//   const { data, error } = await callApi<Campaign[]>("/campaign/featured");
+
+	//   if (error || !data.data) {
+	//     return { notFound: true };
+	//   }
+
+	//   return {
+	//     props: { featuredCampaigns: data.data },
+	//     revalidate: 60, // 60 seconds
+	//   };
+}) satisfies GetStaticProps<{
+	featuredCampaigns: Campaign[];
+	allCampaignCategories: AllCampaignCategories[];
+}>;
 
 const Campaigns = ({
 	featuredCampaigns,
+	allCampaignCategories,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
 		<BaseLayout>
@@ -37,7 +61,10 @@ const Campaigns = ({
 				imageSrc={campaignHero}
 			/>
 			<div className="flex flex-col justify-center gap-8 md:gap-20 md:py-20">
-				<CampaignCategories className="px-5 md:px-20" />
+				<CampaignCategories
+					className="px-5 md:px-20"
+					allCampaignCategories={allCampaignCategories}
+				/>
 				<HowItWorks className="px-5 md:px-20" />
 				<SuccessStories className="px-5 md:px-20" />
 				<UrgentFundraisers featuredCampaigns={featuredCampaigns} />

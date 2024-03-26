@@ -50,3 +50,11 @@ export type Campaign = {
 	isDeleted: boolean;
 	featured: boolean;
 };
+
+export type AllCampaignCategories = {
+	_id: string;
+	name: string;
+	count: string;
+	createdAt: string;
+	updatedAt: string;
+};
