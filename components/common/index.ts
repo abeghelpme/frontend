@@ -35,3 +35,4 @@ export {
 	Verify,
 	WalletAdd,
 } from "./svg";
+export { default as SingleCampaignProgress } from "./SingleCampaignProgress";
