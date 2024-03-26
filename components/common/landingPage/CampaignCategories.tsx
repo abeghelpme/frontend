@@ -3,20 +3,6 @@ import type { AllCampaignCategories } from "@/interfaces";
 import { cn } from "@/lib";
 import { useRouter } from "next/router";
 
-// const categories = [
-//   { title: "Health & Wellness (20)", color: "bg-[#A8CCCC]", path: "health" },
-//   { title: "Business (12)", color: "bg-[#E6E6E6]", path: "business" },
-//   { title: "Family (15)", color: "bg-[#455A64]", path: "family" },
-//   { title: "Emergency (30)", color: "bg-[#2B908E]", path: "emergency" },
-//   { title: "Religion {12)", color: "bg-[#ACDCDC]", path: "religion" },
-//   { title: "Medical (18)", color: "bg-[#D6BBFB]", path: "medical" },
-//   { title: "Volunteer (20)", color: "bg-[#FFC3C2]", path: "volunteer" },
-//   { title: "Education (15)", color: "bg-[#D2D2D2]", path: "education" },
-//   { title: "Events (10)", color: "bg-[#D2D2D2]", path: "events" },
-//   { title: "Wedding(8)", color: "bg-[#A8CCCC]", path: "wedding" },
-//   { title: "Others", color: "bg-[#8BD2BD]", path: "others" },
-// ];
-
 type CategoriesMap = {
 	[key: string]: string;
 };
@@ -42,25 +28,6 @@ const CampaignCategories = ({
 	allCampaignCategories?: AllCampaignCategories[];
 }) => {
 	const router = useRouter();
-	// console.log("from campaign categories : ", allCampaignCategories);
-
-	// const [data, setData] = useState<AllCampaignCategories[] | null>();
-	// const fetchAllCampaignCategories = async () => {
-	//   const { data, error } = await callApi<AllCampaignCategories[]>(
-	//     "/campaign/categories"
-	//   );
-
-	//   if (error) {
-	//     console.log("error:", error);
-	//   }
-	//   setData(data?.data);
-	// };
-
-	// // console.log(data);
-
-	// useEffect(() => {
-	//   void fetchAllCampaignCategories();
-	// }, []);
 
 	return (
 		<div className={cn("flex flex-col gap-12 justify-center", className)}>
