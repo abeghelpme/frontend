@@ -133,7 +133,7 @@ const FAQ = ({ className }: { className?: string }) => {
 	};
 
 	return (
-		<section className={className}>
+		<section className={className} id="faq">
 			<p className="text-xl text-placeholder">Wanna know more?</p>
 			<h1 className="mb-10 mt-5 text-4xl font-bold md:mb-20 md:text-5xl">
 				Frequently asked questions

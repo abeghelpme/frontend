@@ -17,6 +17,8 @@ import type {
 	InferGetStaticPropsType,
 } from "next";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const getStaticPaths = (async () => {
 	const { data, error } = await callApi<Campaign[]>("/campaign/categories");
@@ -24,27 +26,30 @@ export const getStaticPaths = (async () => {
 	if (error || !data.data || data.data.length === 0) {
 		return {
 			paths: [],
-			fallback: "blocking",
+			fallback: false,
 		};
 	}
 
 	return {
-		paths: data.data.map((category) => ({
+		paths: [{ _id: "all" }, ...data.data].map((category) => ({
 			params: { categoryId: category._id },
 		})),
 
-		fallback: true,
+		fallback: false,
 	};
 }) satisfies GetStaticPaths;
 
 export const getStaticProps = (async (context) => {
-	console.log(context);
 	const { categoryId } = context.params as { categoryId: string };
-	console.log(
-		`/campaign/all${categoryId !== "all" ? `?category=${categoryId}` : ""}`
-	);
+
+	console.log(categoryId);
+
 	const [allCampaigns, allCampaignCategories] = await Promise.all([
-		callApi<Campaign[]>(`/campaign/all`),
+		callApi<Campaign[]>(
+			`/campaign/all?limit=9${
+				categoryId !== "all" ? `&category=${categoryId}` : ""
+			}`
+		),
 		callApi<AllCampaignCategories[]>("/campaign/categories"),
 	]);
 
@@ -63,27 +68,23 @@ export const getStaticProps = (async (context) => {
 		},
 		revalidate: 16 * 60,
 	};
-	// const { data, error } = await callApi<Campaign[]>("/campaign/all");
-
-	// if (error || !data.data) {
-	// 	return { notFound: true };
-	// }
-
-	// return {
-	// 	props: { allCampaigns: data.data },
-	// 	revalidate: 16 * 60, // 16 minutess
-	// };
 }) satisfies GetStaticProps<{
 	allCampaigns: Campaign[];
 	allCampaignCategories: AllCampaignCategories[];
 }>;
 
 const ExploreCampaignPage = ({
-	allCampaigns,
+	allCampaigns: campaigns,
 	allCampaignCategories,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-	console.log(allCampaigns);
-	console.log(allCampaignCategories);
+	const params = useSearchParams();
+	const categoryName = params.get("name");
+
+	const [allCampaigns, setAllCampaigns] = useState(campaigns);
+
+	useEffect(() => {
+		setAllCampaigns(campaigns);
+	}, [campaigns]);
 
 	return (
 		<BaseLayout>
@@ -106,7 +107,7 @@ const ExploreCampaignPage = ({
 					className="absolute right-[-2rem] top-[27rem] md:left-16 md:top-16 md:-translate-y-0 md:translate-x-0 lg:left-40 lg:top-32"
 				/>
 				<h1 className="pr-5 text-5xl font-bold leading-tight md:flex md:justify-center md:pr-0 md:text-6xl md:leading-snug">
-					Health & Wellness
+					{categoryName ?? "All Categories"}
 				</h1>
 				<p className="max-w-[500px] pr-8 text-xl text-gray-50 md:pr-0 md:text-center">
 					Join the effortless way to fundraise and make a difference and empower
@@ -143,7 +144,10 @@ const ExploreCampaignPage = ({
 			</div>
 
 			<div className="pt-10 md:py-20">
-				<CampaignCategoryCard allCampaigns={allCampaigns} />
+				<CampaignCategoryCard
+					allCampaigns={allCampaigns}
+					categoryName={categoryName}
+				/>
 				<CampaignCategories
 					className="px-5 pt-10 md:px-20 md:pt-20"
 					allCampaignCategories={allCampaignCategories}

@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui";
 import type { AllCampaignCategories } from "@/interfaces";
 import { cn } from "@/lib";
-import { callApi } from "@/lib/helpers/campaign";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
 // const categories = [
 //   { title: "Health & Wellness (20)", color: "bg-[#A8CCCC]", path: "health" },

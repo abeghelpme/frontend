@@ -33,16 +33,6 @@ export const getStaticProps = (async () => {
 		},
 		revalidate: 60,
 	};
-	//   const { data, error } = await callApi<Campaign[]>("/campaign/featured");
-
-	//   if (error || !data.data) {
-	//     return { notFound: true };
-	//   }
-
-	//   return {
-	//     props: { featuredCampaigns: data.data },
-	//     revalidate: 60, // 60 seconds
-	//   };
 }) satisfies GetStaticProps<{
 	featuredCampaigns: Campaign[];
 	allCampaignCategories: AllCampaignCategories[];

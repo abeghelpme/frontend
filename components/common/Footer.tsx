@@ -20,10 +20,10 @@ const socialIcons = [
 
 const siteMapLinks = [
 	{ name: "About", url: "/about" },
-	{ name: "How it works", url: "/c/create" },
-	{ name: "Testimonials", url: "/c/create" },
-	{ name: "Partners", url: "/c/create" },
-	{ name: "FAQ's", url: "/c/create" },
+	{ name: "How it works", url: "/get-started" },
+	{ name: "Testimonials", url: "/" },
+	{ name: "Partners", url: "/" },
+	{ name: "FAQ's", url: "/" },
 ];
 
 const joinUsLinks = [

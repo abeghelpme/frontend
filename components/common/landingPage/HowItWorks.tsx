@@ -22,7 +22,13 @@ const howItWorksCards = [
 ];
 const HowItWorks = ({ className }: { className?: string }) => {
 	return (
-		<div className={cn("flex flex-col justify-center gap-8", className)}>
+		<div
+			id="start"
+			className={cn(
+				"flex flex-col justify-center gap-8 scroll-mt-16",
+				className
+			)}
+		>
 			<div className="w-full space-y-5 lg:flex md:justify-between lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
 				<div className="flex flex-1 flex-col items-start gap-3 space-y-2 md:pr-20">
 					<h4 className="text-xl font-normal text-placeholder">
