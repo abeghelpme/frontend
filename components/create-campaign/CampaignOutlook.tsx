@@ -124,7 +124,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 						<CustomDialog
 							classNames={{
-								content: "gap-0 p-12 md:p-12 max-w-[500px]",
+								content: "gap-0 p-6 md:p-12 w-full max-w-[500px]",
 							}}
 							trigger={
 								<Button
@@ -140,8 +140,8 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								the world. Every share brings us one step closer to making a
 								difference
 							</p>
-							<div className="mt-6 flex w-full items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-								<div className="flex w-full gap-1">
+							<div className="mt-6 flex min-w-0 items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
+								<div className="flex gap-1">
 									<LinkIcon className="size-5" />
 									<p>{campaign.url}</p>
 								</div>
@@ -154,9 +154,9 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								</button>
 							</div>
 							<div className="mt-6 flex w-full items-center justify-between gap-4 text-base">
-								<hr className="my-1 basis-full border border-placeholder" />
+								<hr className="my-1 w-full border border-placeholder" />
 								<p className="shrink-0">or share on</p>
-								<hr className="my-1 basis-full border border-placeholder" />
+								<hr className="my-1 w-full border border-placeholder" />
 							</div>
 							<div className="mt-6 flex w-full items-center justify-between">
 								<Link
