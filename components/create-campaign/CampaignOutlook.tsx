@@ -15,10 +15,9 @@ import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { CustomDialog, SingleCampaignProgress } from "../common";
-import Heading from "../common/Heading";
+import { CustomDialog, Heading, SingleCampaignProgress } from "../common";
 import { FAQ, UrgentFundraisers } from "../common/landingPage";
-import { Button, ProgressBar } from "../ui";
+import { Button } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
 import DonorSection from "./DonorSection";
 
@@ -52,7 +51,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
 	return (
-		<main className="flex flex-col items-center pb-20 text-abeg-text">
+		<main className="flex flex-col pb-20 text-abeg-text">
 			<section className="relative px-6 pb-14 pt-11 text-white md:px-[80px]">
 				<Image
 					src="/assets/images/shared/hero-background.svg"
@@ -101,13 +100,72 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						)}
 					/>
 
-					<button className="absolute right-0 top-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] lg:hidden">
-						<ShareIcon />
-					</button>
+					<CustomDialog
+						classNames={{
+							content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+						}}
+						trigger={
+							<button className="absolute right-0 top-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] lg:hidden">
+								<ShareIcon />
+							</button>
+						}
+					>
+						<p className="text-center">
+							Spread the word, share your campaign with friends, family, and the
+							world. Every share brings us one step closer to making a
+							difference
+						</p>
+						<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
+							<div className="flex items-center gap-1">
+								<LinkIcon className="size-5" />
+								<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
+							</div>
+							<button
+								className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
+								onClick={handleShareLink(campaign.url)}
+							>
+								<FilesIcon className="size-4" />
+								Copy link
+							</button>
+						</div>
+						<div className="mt-6 flex w-full items-center justify-between gap-4 text-base">
+							<hr className="my-1 w-full border border-placeholder" />
+							<p className="shrink-0">or share on</p>
+							<hr className="my-1 w-full border border-placeholder" />
+						</div>
+						<div className="mt-6 flex w-full items-center justify-between">
+							<Link
+								href={generateTweet(
+									campaign.title,
+									campaign.url,
+									campaign.tags
+								)}
+								target="_blank"
+								className="flex w-full items-center gap-2"
+							>
+								<Image src={xIcon as string} width={32} height={32} alt="" />
+								Twitter (X)
+							</Link>
+
+							<Link
+								href={generateWhatsAppMessage(campaign.title, campaign.url)}
+								target="_blank"
+								className="flex w-full items-center justify-end gap-2"
+							>
+								<Image
+									src={whatsappIcon as string}
+									width={32}
+									height={32}
+									alt=""
+								/>
+								Whatsapp
+							</Link>
+						</div>
+					</CustomDialog>
 				</div>
 			</section>
 
-			<div className="mt-14 flex flex-col px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px]">
+			<div className="mt-14 flex flex-col self-center px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px]">
 				<section className="mt-2 space-y-5 self-start px-[18px] py-6 lg:sticky lg:top-0 lg:min-w-[383px] lg:max-w-[505px]">
 					<SingleCampaignProgress
 						amountRaised={campaign.amountRaised}
@@ -124,7 +182,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 						<CustomDialog
 							classNames={{
-								content: "gap-0 p-6 md:p-12 w-full max-w-[500px]",
+								content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
 							}}
 							trigger={
 								<Button
@@ -140,10 +198,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								the world. Every share brings us one step closer to making a
 								difference
 							</p>
-							<div className="mt-6 flex min-w-0 items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-								<div className="flex gap-1">
+							<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
+								<div className="flex items-center gap-1">
 									<LinkIcon className="size-5" />
-									<p>{campaign.url}</p>
+									<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
 								</div>
 								<button
 									className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
