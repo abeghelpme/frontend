@@ -1,4 +1,4 @@
-import type { Campaign } from "@/interfaces/Campaign";
+noimport type { Campaign } from "@/interfaces/Campaign";
 import { cn } from "@/lib";
 import { useDragScroll } from "@/lib/hooks";
 import type { AsProp } from "@/lib/type-helpers";
@@ -71,7 +71,7 @@ export function CampaignCard(props: CampaignCardProps) {
 		amountRaised: cardDetails.amountRaised,
 		commentCount: 0,
 		donorCount: 0,
-		imageSrc: cardDetails.images[0].secureUrl,
+		imageSrc: cardDetails.images?.[0]?.secureUrl ?? "assets/images/shared/logo.svg",
 		daysLeft: 0,
 		location: "Not Provided",
 		name: cardDetails.creator
