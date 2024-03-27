@@ -1,3 +1,4 @@
+import { CustomDialog, SingleCampaignProgress } from "@/components/common";
 import {
 	DonorIcon,
 	DummyAvatar,
@@ -15,7 +16,6 @@ import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { CustomDialog, SingleCampaignProgress } from "../common";
 import Heading from "../common/Heading";
 import { FAQ, UrgentFundraisers } from "../common/landingPage";
 import { Button, ProgressBar } from "../ui";
@@ -52,7 +52,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
 	return (
-		<main className="flex flex-col items-center pb-20 text-abeg-text">
+		<main className="flex flex-col pb-20 text-abeg-text">
 			<section className="relative px-6 pb-14 pt-11 text-white md:px-[80px]">
 				<Image
 					src="/assets/images/shared/hero-background.svg"
@@ -107,7 +107,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				</div>
 			</section>
 
-			<div className="mt-14 flex flex-col px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px]">
+			<div className="mt-14 flex flex-col px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px] justify-center self-center">
 				<section className="mt-2 space-y-5 self-start px-[18px] py-6 lg:sticky lg:top-0 lg:min-w-[383px] lg:max-w-[505px]">
 					<SingleCampaignProgress
 						amountRaised={campaign.amountRaised}
