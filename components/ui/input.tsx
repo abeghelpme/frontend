@@ -13,11 +13,15 @@ import type { FieldErrors } from "react-hook-form";
 
 type InputProps = {
 	errorField?: FieldErrors<SignUpProps> | string;
+	searchInputClassName?: string;
 };
 type TInputProps = InputProps & React.InputHTMLAttributes<HTMLInputElement>;
 
 const Input = forwardRef<HTMLInputElement, TInputProps>(
-	({ id, type, className, errorField, ...props }, ref) => {
+	(
+		{ id, type, className, errorField, searchInputClassName, ...props },
+		ref
+	) => {
 		const [showPassword, setShowPassword] = useState(false);
 
 		const handleToggle: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -26,7 +30,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
 		};
 
 		return (
-			<div className="relative">
+			<div className={cn("relative", searchInputClassName)}>
 				<input
 					className={cn(
 						"block w-full rounded-md border border-inputBorder bg-white px-3 py-3 text-abeg-neutral-10 outline-0 placeholder:text-sm placeholder:text-abeg-neutral-50 focus:border-inputBorder disabled:border-[#D0D5DD] disabled:bg-[#F0F2F5] ",
