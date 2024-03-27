@@ -1,4 +1,4 @@
-noimport type { Campaign } from "@/interfaces/Campaign";
+import type { Campaign } from "@/interfaces/Campaign";
 import { cn } from "@/lib";
 import { useDragScroll } from "@/lib/hooks";
 import type { AsProp } from "@/lib/type-helpers";
