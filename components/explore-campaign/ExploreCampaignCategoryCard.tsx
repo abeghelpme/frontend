@@ -35,7 +35,7 @@ const useItemsPerPage = () => {
 	return itemsPerPage;
 };
 
-export const CampaignCategoryCard = ({
+const ExploreCampaignCategoryCard = ({
 	allCampaigns,
 	categoryName,
 }: {
@@ -80,9 +80,9 @@ export const CampaignCategoryCard = ({
 		<div className="px-5 md:px-20">
 			<div className="flex w-full flex-col gap-2 space-y-5">
 				<h1 className="text-4xl font-bold md:w-full md:text-5xl">
-					Explore campaigns from{" "}
+					Explore campaigns from
 					{categoryName
-						? `${categoryName.toLowerCase()} category`
+						? ` ${categoryName.toLowerCase()} category`
 						: "all categories"}
 				</h1>
 				<p className="text-xl font-medium text-placeholder md:w-3/6">
@@ -206,4 +206,4 @@ export const CampaignCategoryCard = ({
 		</div>
 	);
 };
-export default CampaignCategoryCard;
+export default ExploreCampaignCategoryCard;

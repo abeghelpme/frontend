@@ -1,7 +1,7 @@
 import TestimonialCard from "@/components/common/TestimonialCard";
 import { CampaignCategories } from "@/components/common/landingPage";
 import HowItWorks from "@/components/common/landingPage/HowItWorks";
-import { CampaignCategoryCard } from "@/components/explore-campaign";
+import { ExploreCampaignCategoryCard } from "@/components/explore-campaign";
 import { Button, Input } from "@/components/ui";
 import type { AllCampaignCategories, Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
@@ -113,11 +113,13 @@ const ExploreCampaignPage = ({
 					Join the effortless way to fundraise and make a difference and empower
 					your cause with Abeghelp.me
 				</p>
-				<div className="relative flex w-full flex-row justify-center gap-2 pt-5 md:w-[40rem] md:gap-5 md:pt-8">
-					<div className="flex items-center">
+
+				<div className="flex w-full justify-center gap-2 md:w-[40rem] md:gap-5  pt-5 md:pt-8">
+					<div className="relative flex items-center  flex-1 ">
 						<Input
 							placeholder="Type your enquiry here"
-							className="relative w-full bg-transparent px-4 pl-12 text-white ring-1 ring-white placeholder:text-gray-200 md:w-[30rem] md:py-5"
+							searchInputClassName="w-full"
+							className="w-full bg-transparent px-4 pl-12 text-white ring-1 ring-white placeholder:text-gray-200 md:w-[30rem] md:py-5 "
 						/>
 						<Image
 							src={searchIcon}
@@ -128,7 +130,7 @@ const ExploreCampaignPage = ({
 							className="absolute bottom-0 left-3 -translate-y-1/2 md:bottom-2"
 						/>
 					</div>
-					<Button className="flex w-full flex-1 items-center justify-center bg-white text-base font-bold text-abeg-primary md:px-9">
+					<Button className="bg-white text-base font-bold text-abeg-primary md:px-9">
 						Search
 					</Button>
 				</div>
@@ -144,7 +146,7 @@ const ExploreCampaignPage = ({
 			</div>
 
 			<div className="pt-10 md:py-20">
-				<CampaignCategoryCard
+				<ExploreCampaignCategoryCard
 					allCampaigns={allCampaigns}
 					categoryName={categoryName}
 				/>

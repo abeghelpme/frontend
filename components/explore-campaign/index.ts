@@ -1,1 +1,1 @@
-export { default as CampaignCategoryCard } from "./CampaignCategoryCard";
+export { default as ExploreCampaignCategoryCard } from "./ExploreCampaignCategoryCard";
