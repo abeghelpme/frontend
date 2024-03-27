@@ -45,9 +45,7 @@ const reducer = (
 };
 
 const DashboardCampaigns = () => {
-	const campaignsFromDb = useCampaignStore((state) =>
-		state.campaigns.filter((campaign) => campaign.status !== "Draft")
-	);
+	const campaignsFromDb = useCampaignStore((state) => state.campaigns);
 
 	const initialState = {
 		original: campaignsFromDb,
