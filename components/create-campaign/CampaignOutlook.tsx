@@ -51,10 +51,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
-	const donationProgress = Math.floor(
-		(campaign.amountRaised / campaign.goal) * 100
-	);
-
 	return (
 		<main className="flex flex-col pb-20 text-abeg-text">
 			<section className="relative px-6 pb-14 pt-11 text-white md:px-[80px]">
