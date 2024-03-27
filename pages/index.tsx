@@ -253,7 +253,7 @@ const HomePage = ({
 					className="py-20"
 				/>
 
-				<FAQ className="px-5 py-10 md:px-20" />
+				<FAQ className="px-5 py-10 md:px-20 scroll-mt-16" />
 			</div>
 		</BaseLayout>
 	);

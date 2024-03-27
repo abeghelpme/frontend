@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button, Card, ProgressBar } from "../ui";
 import Heading from "./Heading";
+import SingleCampaignProgress from "./SingleCampaignProgress";
 import { DonorIcon } from "./campaign-icons";
 import { BankIcon, ClockIcon, EyeIcon, LocationIcon } from "./dashboardIcons";
 
@@ -89,7 +90,7 @@ export function CampaignCard(props: CampaignCardProps) {
 		<Card
 			as={as}
 			className={cn(
-				"flex w-full min-w-[310px] flex-col justify-between gap-6",
+				"flex w-full flex-col justify-between gap-2",
 				classNames?.base
 			)}
 		>
@@ -140,14 +141,14 @@ export function CampaignCard(props: CampaignCardProps) {
 			</Card.Header>
 
 			{cardType === "regular" && (
-				<Card.Content className="flex h-full flex-col justify-between">
+				<Card.Content className="">
 					<Heading
 						as="h4"
-						className="flex max-w-[30ch] text-base font-bold lg:text-base"
+						className="flex max-w-[30ch text-base font-bold lg:text-base"
 					>
 						{transformedDetails.title}
 					</Heading>
-					<p className="mt-2 text-sm font-medium">
+					<p className="mt-1 text-sm font-medium">
 						By: {transformedDetails.name} - {transformedDetails.category}
 					</p>
 				</Card.Content>
@@ -155,13 +156,10 @@ export function CampaignCard(props: CampaignCardProps) {
 
 			{cardType === "regular" ? (
 				<Card.Footer className="flex flex-col gap-2">
-					<ProgressBar
-						value={donationProgress}
-						className="progress-unfilled:h-1"
+					<SingleCampaignProgress
+						amountRaised={transformedDetails.amountRaised}
+						goal={transformedDetails.goal}
 					/>
-					<p className="text-xs font-medium text-abeg-primary">
-						₦ {transformedDetails.amountRaised} raised
-					</p>
 				</Card.Footer>
 			) : (
 				<Card.Footer>
@@ -172,24 +170,10 @@ export function CampaignCard(props: CampaignCardProps) {
 
 						<article className="flex flex-col justify-between gap-4 md:flex-row md:gap-6">
 							<div className="flex-1 space-y-4 text-sm">
-								<div className="flex items-center justify-between">
-									<p className="font-bold">
-										₦ {transformedDetails.amountRaised}
-									</p>
-									<p className="text-xs font-semibold">
-										₦{" "}
-										{Math.floor(
-											transformedDetails.goal - transformedDetails.amountRaised
-										)}{" "}
-										<span className="text-placeholder">remaining</span>
-									</p>
-								</div>
-
-								<ProgressBar
-									value={donationProgress}
-									className="progress-unfilled:h-1"
+								<SingleCampaignProgress
+									amountRaised={transformedDetails.amountRaised}
+									goal={transformedDetails.goal}
 								/>
-
 								<div className="flex items-center justify-between gap-7">
 									<figure className="flex items-center gap-1">
 										<DonorIcon stroke="dark" className="size-4 lg:size-5" />
@@ -268,7 +252,7 @@ export function CampaignCardList(props: CardListProps) {
 		<ul
 			{...(listType === "horizontal" && dragScrollProps)}
 			className={cn(
-				"gap-4",
+				"gap-6 lg:gap-8",
 				semanticClasses.cardList[listType],
 				classNames?.base
 			)}

@@ -37,11 +37,15 @@ const useItemsPerPage = () => {
 
 export const CampaignCategoryCard = ({
 	allCampaigns,
-}: { allCampaigns: Campaign[] }) => {
+	categoryName,
+}: {
+	allCampaigns: Campaign[];
+	categoryName: string | null;
+}) => {
 	const itemsPerPage = useItemsPerPage();
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const totalItems = allCampaigns.length;
+	const totalItems = allCampaigns?.length;
 	const totalPages = Math.ceil(totalItems / itemsPerPage);
 
 	const startIndex = (currentPage - 1) * itemsPerPage;
@@ -76,7 +80,10 @@ export const CampaignCategoryCard = ({
 		<div className="px-5 md:px-20">
 			<div className="flex w-full flex-col gap-2 space-y-5">
 				<h1 className="text-4xl font-bold md:w-full md:text-5xl">
-					Explore our health & Wellness Campaigns
+					Explore campaigns from{" "}
+					{categoryName
+						? `${categoryName.toLowerCase()} category`
+						: "all categories"}
 				</h1>
 				<p className="text-xl font-medium text-placeholder md:w-3/6">
 					Join the effortless way to fundraise and make a difference and empower

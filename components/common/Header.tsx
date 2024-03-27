@@ -9,9 +9,9 @@ import { Button } from "../ui";
 import LogoBanner from "./LogoBanner";
 
 const navLinks = [
-	{ name: "How it works", url: "/c/create" },
+	{ name: "How it works", url: "/get-started#start" },
 	{ name: "Explore Campaigns", url: "/explore" },
-	{ name: "About", url: "/about" },
+	{ name: "FAQ", url: "/#faq" },
 ];
 const Header = () => {
 	const [isMobileNavOpen, toggleMobileNav] = useToggle(false);
