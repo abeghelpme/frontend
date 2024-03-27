@@ -15,7 +15,7 @@ import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { CustomDialog } from "../common";
+import { CustomDialog, SingleCampaignProgress } from "../common";
 import Heading from "../common/Heading";
 import { FAQ, UrgentFundraisers } from "../common/landingPage";
 import { Button, ProgressBar } from "../ui";
@@ -50,10 +50,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 			: "Beneficiary";
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
-
-	const donationProgress = Math.floor(
-		(campaign.amountRaised / campaign.goal) * 100
-	);
 
 	return (
 		<main className="flex flex-col items-center pb-20 text-abeg-text">
@@ -113,21 +109,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 			<div className="mt-14 flex flex-col px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px]">
 				<section className="mt-2 space-y-5 self-start px-[18px] py-6 lg:sticky lg:top-0 lg:min-w-[383px] lg:max-w-[505px]">
-					<article>
-						<div className="flex items-center justify-between">
-							<p className="font-bold">₦ {campaign.amountRaised}</p>
-
-							<p className="text-xs font-semibold ">
-								₦ {Math.floor(campaign.goal - campaign.amountRaised)}{" "}
-								<span className="text-placeholder">remaining</span>
-							</p>
-						</div>
-
-						<ProgressBar
-							value={donationProgress}
-							className="progress-unfilled:h-1"
-						/>
-					</article>
+					<SingleCampaignProgress
+						amountRaised={campaign.amountRaised}
+						goal={campaign.goal}
+					/>
 
 					<article className="space-y-4">
 						<Button

@@ -4,7 +4,7 @@ import { useDragScroll } from "@/lib/hooks";
 import type { AsProp } from "@/lib/type-helpers";
 import Image from "next/image";
 import Link from "next/link";
-import { Button, Card, ProgressBar } from "../ui";
+import { Button, Card } from "../ui";
 import Heading from "./Heading";
 import SingleCampaignProgress from "./SingleCampaignProgress";
 import { DonorIcon } from "./campaign-icons";
@@ -71,7 +71,8 @@ export function CampaignCard(props: CampaignCardProps) {
 		amountRaised: cardDetails.amountRaised,
 		commentCount: 0,
 		donorCount: 0,
-		imageSrc: cardDetails.images?.[0]?.secureUrl ?? "assets/images/shared/logo.svg",
+		imageSrc:
+			cardDetails.images[0]?.secureUrl ?? "/assets/images/shared/logo.svg",
 		daysLeft: 0,
 		location: "Not Provided",
 		name: cardDetails.creator
@@ -82,9 +83,7 @@ export function CampaignCard(props: CampaignCardProps) {
 		title: cardDetails.title,
 	} satisfies TransformedDetails;
 
-	const donationProgress = Math.floor(
-		(transformedDetails.amountRaised / transformedDetails.goal) * 100
-	);
+	const shortId = cardDetails.url ? cardDetails.url.split("/c/")[1] : "";
 
 	return (
 		<Card
@@ -102,7 +101,7 @@ export function CampaignCard(props: CampaignCardProps) {
 				draggable={false}
 				asChild
 			>
-				<Link href={`/c/${cardDetails.url.split("/c/")[1]}`} draggable={false}>
+				<Link href={`/c/${shortId}`} draggable={false}>
 					<Image
 						src={transformedDetails.imageSrc}
 						className={cn(
@@ -144,7 +143,7 @@ export function CampaignCard(props: CampaignCardProps) {
 				<Card.Content className="">
 					<Heading
 						as="h4"
-						className="flex max-w-[30ch text-base font-bold lg:text-base"
+						className="max-w-[30ch flex text-base font-bold lg:text-base"
 					>
 						{transformedDetails.title}
 					</Heading>
@@ -155,7 +154,7 @@ export function CampaignCard(props: CampaignCardProps) {
 			)}
 
 			{cardType === "regular" ? (
-				<Card.Footer className="flex flex-col gap-2">
+				<Card.Footer>
 					<SingleCampaignProgress
 						amountRaised={transformedDetails.amountRaised}
 						goal={transformedDetails.goal}
@@ -174,6 +173,7 @@ export function CampaignCard(props: CampaignCardProps) {
 									amountRaised={transformedDetails.amountRaised}
 									goal={transformedDetails.goal}
 								/>
+
 								<div className="flex items-center justify-between gap-7">
 									<figure className="flex items-center gap-1">
 										<DonorIcon stroke="dark" className="size-4 lg:size-5" />
@@ -243,7 +243,7 @@ export function CampaignCardList(props: CardListProps) {
 
 			header: {
 				horizontal: "aspect-[383/263] md:aspect-[396/263] max-h-[263px]",
-				grid: "aspect-[380/345] max-h-[345px] md:aspect-[403/375] md:max-h-[375px]",
+				grid: "aspect-[380/345] max-h-[345px] md:aspect-[403/375] h-full md:max-h-[375px]",
 			},
 		},
 	};
