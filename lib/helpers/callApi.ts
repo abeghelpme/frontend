@@ -1,6 +1,6 @@
 import { useInitSession } from "@/store/useSession";
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { toast } from "sonner";
 import { isObject } from "../type-helpers";
 import { assertENV } from "../type-helpers/assert";
@@ -62,12 +62,22 @@ export const callApi = async <T>(
 					description: error.message,
 				});
 			}
-
+			if (
+				error.response.status === 403 &&
+				error.response.data.message === "2FA verification is required"
+			) {
+				toast.error("2FA verification required", {
+					description: error.message,
+				});
+				Router.push(
+					`/2fa/authenticate?type=${error.response.data.error.type}&email=${error.response.data.error.email}`
+				);
+			}
 			if (error.response.status === 500) {
 				toast.error("Internal server Error!", {
 					description: error.message,
 				});
-				useRouter().push("/500");
+				Router.push("/500");
 			}
 		} else {
 			if (error instanceof Error) {

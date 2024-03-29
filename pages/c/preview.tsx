@@ -3,9 +3,10 @@ import {
 	CampaignOutlook,
 	FormActionButton,
 } from "@/components/create-campaign";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
-import { callApi } from "@/lib/helpers/campaign";
+import { callApi } from "@/lib";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
 import { useCampaignStore } from "@/store";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
@@ -17,9 +18,10 @@ import { useRouter } from "next/router";
 import { toast } from "sonner";
 
 export const getStaticProps = (async () => {
-	const { data, error } = await callApi<Campaign[]>("/campaign/featured");
+	const { data, error } =
+		await callApi<ApiResponse<Campaign[]>>(`/campaign/featured`);
 
-	if (error || !data.data) {
+	if (error || !data || !data.data) {
 		return { notFound: true };
 	}
 

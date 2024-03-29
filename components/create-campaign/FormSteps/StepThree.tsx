@@ -1,7 +1,7 @@
 import { Heading } from "@/components/common";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { zodValidator } from "@/lib";
-import { callApi } from "@/lib/helpers/campaign";
+import { callApi, zodValidator } from "@/lib";
 import { useWatchFormStatus } from "@/lib/hooks";
 import { type StepThreeData, useCampaignStore, useFormStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -55,7 +55,7 @@ function StepThree() {
 		formData.set("campaignId", campaignId);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
-		const { data: dataInfo, error } = await callApi<Campaign>(
+		const { data: dataInfo, error } = await callApi<ApiResponse<Campaign>>(
 			`/campaign/create/three`,
 			formData
 		);
@@ -68,7 +68,7 @@ function StepThree() {
 			return;
 		}
 
-		if (!dataInfo.data) return;
+		if (!dataInfo?.data) return;
 
 		resetFormData();
 

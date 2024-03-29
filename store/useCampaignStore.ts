@@ -1,5 +1,6 @@
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { callApi } from "@/lib/helpers/campaign";
+import { callApi } from "@/lib";
 import { create } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import type { SelectorFn } from "./store-types";
@@ -35,11 +36,11 @@ export const useInitCampaignStore = create<CampaignStore>()((set, get) => ({
 		initializeCampaigns: (campaigns) => set({ campaigns }),
 
 		initializeCategories: async () => {
-			const { data, error } = await callApi<CampaignStore["categories"]>(
-				"/campaign/categories"
-			);
+			const { data, error } = await callApi<
+				ApiResponse<CampaignStore["categories"]>
+			>("/campaign/categories");
 
-			if (error || !data.data) return;
+			if (error || !data || !data.data) return;
 
 			set({ categories: data.data });
 		},

@@ -3,9 +3,10 @@ import { CampaignCategories } from "@/components/common/landingPage";
 import HowItWorks from "@/components/common/landingPage/HowItWorks";
 import { CampaignCategoryCard } from "@/components/explore-campaign";
 import { Button, Input } from "@/components/ui";
+import type { ApiResponse } from "@/interfaces";
 import type { AllCampaignCategories, Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
-import { callApi } from "@/lib/helpers/campaign";
+import { callApi } from "@/lib";
 import {
 	heroCircle,
 	heroHalfMoon,
@@ -21,9 +22,11 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const getStaticPaths = (async () => {
-	const { data, error } = await callApi<Campaign[]>("/campaign/categories");
+	const { data, error } = await callApi<ApiResponse<Campaign[]>>(
+		"/campaign/categories"
+	);
 
-	if (error || !data.data || data.data.length === 0) {
+	if (error || !data?.data || data.data.length === 0) {
 		return {
 			paths: [],
 			fallback: false,
@@ -43,19 +46,19 @@ export const getStaticProps = (async (context) => {
 	const { categoryId } = context.params as { categoryId: string };
 
 	const [allCampaigns, allCampaignCategories] = await Promise.all([
-		callApi<Campaign[]>(
+		callApi<ApiResponse<Campaign[]>>(
 			`/campaign/all?limit=9${
 				categoryId !== "all" ? `&category=${categoryId}` : ""
 			}`
 		),
-		callApi<AllCampaignCategories[]>("/campaign/categories"),
+		callApi<ApiResponse<AllCampaignCategories[]>>("/campaign/categories"),
 	]);
 
 	if (
 		allCampaigns.error ||
-		!allCampaigns.data.data ||
+		!allCampaigns?.data?.data ||
 		allCampaignCategories.error ||
-		!allCampaignCategories.data.data
+		!allCampaignCategories?.data?.data
 	) {
 		return { notFound: true };
 	}
