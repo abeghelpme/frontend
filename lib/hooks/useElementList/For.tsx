@@ -6,7 +6,7 @@ import { forwardRef } from "react";
 
 // prettier-ignore
 type RenderPropFn<TArrayItem> = (
-	item: NoInfer<TArrayItem>,
+	item: TArrayItem,
 	index: number,
 	array: TArrayItem[]
 ) => React.ReactNode;

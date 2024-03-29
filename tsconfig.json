@@ -1,37 +1,37 @@
 {
-	"compilerOptions": {
-		"target": "ES2017",
-		"allowSyntheticDefaultImports": true,
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"noEmit": true,
-		"esModuleInterop": true,
-		"module": "esnext",
-		"baseUrl": "./",
-		"moduleResolution": "node",
-		"noImplicitAny": true,
-		"resolveJsonModule": true,
-		"noErrorTruncation": true, // Disables error and type truncation
-		"verbatimModuleSyntax": true, // Automatically add "type" modifier to type import statements
-		"isolatedModules": true,
-		"incremental": true,
-		"jsx": "preserve",
-		"paths": {
-			"@/*": ["./*"]
-		}
-	},
-	"include": [
-		"next-env.d.ts",
-		"**/*.ts",
-		"**/*.tsx",
-		".eslintrc.js",
-		"next.config.js",
-		"postcss.config.js",
-		"prettier.config.js",
-		"lint-staged.config.js"
-	],
-	"exclude": ["node_modules"]
+  "compilerOptions": {
+    "target": "ESNext",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "noErrorTruncation": true, // Disables error and type truncation
+    "verbatimModuleSyntax": true, // Automatically add "type" modifier to type import statements
+    "isolatedModules": true,
+    "incremental": true,
+    "jsx": "preserve",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".eslintrc.js",
+    "next.config.js",
+    "postcss.config.js",
+    "prettier.config.js",
+    "lint-staged.config.js"
+  ],
+  "exclude": ["node_modules"]
 }
