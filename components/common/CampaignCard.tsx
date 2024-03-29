@@ -83,7 +83,7 @@ export function CampaignCard(props: CampaignCardProps) {
 		title: cardDetails.title,
 	} satisfies TransformedDetails;
 
-	const shortId = cardDetails.url ? cardDetails.url.split("/c/")[1] : "";
+	const shortId = cardDetails.url ? cardDetails.url.split("/c/")[1] : null;
 
 	return (
 		<Card
@@ -102,7 +102,7 @@ export function CampaignCard(props: CampaignCardProps) {
 				asChild
 			>
 				<div className="border-2 border-red-500 flex flex-1">
-					<Link href={`/c/${shortId}`} draggable={false} className="flex-1">
+					<Link href={shortId ? `/c/${shortId}` : ""} draggable={false} className="flex-1">
 						<Image
 							src={transformedDetails.imageSrc}
 							className={cn(
