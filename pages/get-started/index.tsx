@@ -50,7 +50,7 @@ const Campaigns = ({
 				button1={{ href: "/c/create", text: "Donate now" }}
 				imageSrc={campaignHero}
 			/>
-			<div className="flex flex-col justify-center gap-8 md:gap-20 md:py-20">
+			<div className="flex flex-col justify-center gap-8 md:gap-20 py-10 md:py-20">
 				<CampaignCategories
 					className="px-5 md:px-20"
 					allCampaignCategories={allCampaignCategories}

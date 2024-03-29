@@ -242,7 +242,13 @@ const HomePage = ({
 							</div>
 						</div>
 					</div>
-					<Image src={joinnUs} alt="hero image" width={600} height={600} />
+					<Image
+						src={joinnUs}
+						alt="hero image"
+						width={600}
+						height={600}
+						className="size-full"
+					/>
 				</div>
 				<div className="md:pt-10">
 					<TestimonialCard />
