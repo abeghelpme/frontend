@@ -101,42 +101,46 @@ export function CampaignCard(props: CampaignCardProps) {
 				draggable={false}
 				asChild
 			>
-				<Link href={`/c/${shortId}`} draggable={false}>
-					<Image
-						src={transformedDetails.imageSrc}
-						className={cn(
-							"size-full rounded-md object-cover",
-							classNames?.image
-						)}
-						width={383}
-						height={263}
-						draggable={false}
-						alt="Campaigns Image"
-					/>
+				<div className="border-2 border-red-500 flex flex-1">
+					<Link href={`/c/${shortId}`} draggable={false} className="flex-1">
+						<Image
+							src={transformedDetails.imageSrc}
+							className={cn(
+								"size-full rounded-md object-cover",
+								classNames?.image
+							)}
+							width={383}
+							height={263}
+							draggable={false}
+							alt="Campaigns Image"
+						/>
 
-					<div className="absolute inset-0 flex select-none flex-col items-start justify-between p-6 text-xs text-white">
-						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-							<LocationIcon />
-							<figcaption>{transformedDetails.location}</figcaption>
-						</figure>
+						<div className="absolute inset-0 flex select-none flex-col items-start justify-between p-6 text-xs text-white">
+							<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
+								<LocationIcon />
+								<figcaption>{transformedDetails.location}</figcaption>
+							</figure>
 
-						<div className="flex w-full justify-between">
-							{cardType === "regular" && (
-								<figure className="mr-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-									<DonorIcon stroke="light" className="size-4" />
+							<div className="flex w-full justify-between">
+								{cardType === "regular" && (
+									<figure className="mr-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
+										<DonorIcon stroke="light" className="size-4" />
+										<figcaption>
+											{transformedDetails.donorCount} total donors
+										</figcaption>
+									</figure>
+								)}
+
+								<figure className="ml-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
+									<ClockIcon />
 									<figcaption>
-										{transformedDetails.donorCount} total donors
+										{transformedDetails.daysLeft} days left
 									</figcaption>
 								</figure>
-							)}
-
-							<figure className="ml-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-								<ClockIcon />
-								<figcaption>{transformedDetails.daysLeft} days left</figcaption>
-							</figure>
+							</div>
 						</div>
-					</div>
-				</Link>
+					</Link>
+				</div>
 			</Card.Header>
 
 			{cardType === "regular" && (
