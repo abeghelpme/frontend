@@ -42,8 +42,6 @@ export const getStaticPaths = (async () => {
 export const getStaticProps = (async (context) => {
 	const { categoryId } = context.params as { categoryId: string };
 
-	console.log(categoryId);
-
 	const [allCampaigns, allCampaignCategories] = await Promise.all([
 		callApi<Campaign[]>(
 			`/campaign/all?limit=9${
@@ -66,7 +64,7 @@ export const getStaticProps = (async (context) => {
 			allCampaigns: allCampaigns.data.data,
 			allCampaignCategories: allCampaignCategories.data.data,
 		},
-		revalidate: 16 * 60,
+		revalidate: 30 * 60,
 	};
 }) satisfies GetStaticProps<{
 	allCampaigns: Campaign[];

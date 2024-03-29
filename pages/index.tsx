@@ -31,7 +31,7 @@ export const getStaticProps = (async () => {
 
 	return {
 		props: { featuredCampaigns: data.data },
-		revalidate: 16 * 60, // 16 minutes
+		revalidate: 24 * 60, // 24 hours
 	};
 }) satisfies GetStaticProps<{ featuredCampaigns: Campaign[] }>;
 
