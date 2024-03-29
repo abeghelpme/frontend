@@ -101,8 +101,9 @@ export function CampaignCard(props: CampaignCardProps) {
 				draggable={false}
 				asChild
 			>
-				<div className="border-2 border-red-500 flex flex-1">
-					<Link href={shortId ? `/c/${shortId}` : ""} draggable={false} className="flex-1">
+				<div className="flex flex-1">
+					<Link href={`/c/${shortId}`} draggable={false} className="flex-1">
+
 						<Image
 							src={transformedDetails.imageSrc}
 							className={cn(
