@@ -40,7 +40,7 @@ const TestimonialCard = ({ className }: { className?: string }) => {
 				{...dragScrollProps}
 				className={cn(
 					dragContainerClasses,
-					"w-full gap-5 pl-5 lg:flex lg:flex-row lg:items-center lg:justify-between md:px-[80px]"
+					"w-full gap-5 pl-5 lg:flex lg:flex-row lg:items-center lg:justify-between px-4 md:px-[80px]"
 				)}
 			>
 				{testimonials.map((testimonial, index) => (
