@@ -43,7 +43,7 @@ const validateFiles = (
 
 		const isMaxFileQuantityReached =
 			validFilesArray.length === MAX_FILE_QUANTITY ||
-			exisitingFileArray.length + validFilesArray.length === MAX_FILE_QUANTITY;
+			exisitingFileArray.length === MAX_FILE_QUANTITY;
 
 		if (isMaxFileQuantityReached) {
 			toast.error("Error", {
