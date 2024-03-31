@@ -1,8 +1,9 @@
 import { Heading, Loader } from "@/components/common";
 import { CampaignOutlook } from "@/components/create-campaign";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
-import { callApi } from "@/lib/helpers/campaign";
+import { callApi } from "@/lib";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
 import type {
 	GetStaticPaths,
@@ -13,11 +14,11 @@ import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 
 export const getStaticPaths = (async () => {
-	const { data, error } = await callApi<Campaign[]>(
+	const { data, error } = await callApi<ApiResponse<Campaign[]>>(
 		"/campaign/all?limit=100&isPublished=true&status=Approved"
 	);
 
-	if (error || !data.data || data.data.length === 0) {
+	if (error || !data?.data || data.data.length === 0) {
 		return {
 			paths: [],
 			fallback: "blocking",
@@ -37,11 +38,11 @@ export const getStaticProps = (async (context) => {
 	const { shortId } = context.params as { shortId: string };
 
 	const [singleCampaign, featuredCampaigns] = await Promise.all([
-		callApi<Campaign>(`/campaign/one/${shortId}`),
-		callApi<Campaign[]>("/campaign/featured"),
+		callApi<ApiResponse<Campaign>>(`/campaign/one/${shortId}`),
+		callApi<ApiResponse<Campaign[]>>("/campaign/featured"),
 	]);
 
-	if (singleCampaign.error || !singleCampaign.data.data) {
+	if (singleCampaign.error || !singleCampaign.data?.data) {
 		return {
 			notFound: true,
 		};

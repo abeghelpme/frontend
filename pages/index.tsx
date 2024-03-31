@@ -1,10 +1,10 @@
 import TestimonialCard from "@/components/common/TestimonialCard";
 import { FAQ, Hero, UrgentFundraisers } from "@/components/common/landingPage";
 import { Button } from "@/components/ui";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
-import { cn } from "@/lib";
-import { callApi } from "@/lib/helpers/campaign";
+import { callApi, cn } from "@/lib";
 import { useDragScroll } from "@/lib/hooks";
 import {
 	avatar1,
@@ -23,9 +23,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const getStaticProps = (async () => {
-	const { data, error } = await callApi<Campaign[]>("/campaign/featured");
+	const { data, error } =
+		await callApi<ApiResponse<Campaign[]>>("/campaign/featured");
 
-	if (error || !data.data) {
+	if (error || !data?.data) {
 		return { notFound: true };
 	}
 

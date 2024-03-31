@@ -6,23 +6,24 @@ import {
 	HowItWorks,
 	UrgentFundraisers,
 } from "@/components/common/landingPage";
+import type { ApiResponse } from "@/interfaces";
 import type { AllCampaignCategories, Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
-import { callApi } from "@/lib/helpers/campaign";
+import { callApi } from "@/lib";
 import { campaignHero } from "@/public/assets/images/landing-page";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 
 export const getStaticProps = (async () => {
 	const [featuredCampaigns, allCampaignCategories] = await Promise.all([
-		callApi<Campaign[]>("/campaign/featured"),
-		callApi<AllCampaignCategories[]>("/campaign/categories"),
+		callApi<ApiResponse<Campaign[]>>("/campaign/featured"),
+		callApi<ApiResponse<AllCampaignCategories[]>>("/campaign/categories"),
 	]);
 
 	if (
 		featuredCampaigns.error ||
-		!featuredCampaigns.data.data ||
+		!featuredCampaigns?.data?.data ||
 		allCampaignCategories.error ||
-		!allCampaignCategories.data.data
+		!allCampaignCategories?.data?.data
 	) {
 		return { notFound: true };
 	}

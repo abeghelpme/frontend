@@ -5,6 +5,7 @@ import type { SessionData } from "@/interfaces/ApiResponses";
 import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import { useCampaignStore, useSession } from "@/store";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { type Dispatch, type FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -111,42 +112,24 @@ const AuthApp = ({ otp, setOtp, handleSubmit, loading }: Props) => {
 const AuthenticateUser = () => {
 	const [otp, setOtp] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [showPage, setShowPage] = useState(true);
+
 	const {
 		user,
-		loading: apiProgress,
 		actions: { updateUser },
 	} = useSession((state) => state);
 	const {
 		actions: { initializeCampaigns },
 	} = useCampaignStore((state) => state);
+
 	const router = useRouter();
-	const castedUser = user as User;
 
-	const [params, setParams] = useState({
-		type: "",
-		email: "",
-	});
+	const params = useSearchParams();
+	const authType = params.get("type");
+	const email = params.get("email");
 
-	useEffect(() => {
-		setParams({
-			type: router.query.type as string,
-			email: router.query.email as string,
-		});
-		!apiProgress && setShowPage(false);
-	}, [params.type, apiProgress, user]);
-
-	if (showPage) {
-		return <Loader message="Validating auth status..." />;
-	}
-
-	if (!apiProgress) {
-		if (!params.type && !user) {
-			setTimeout(() => router.push("/signin"), 1000);
-			return (
-				<Loader message="You are not signed in. Redirecting to sign in page" />
-			);
-		}
+	if (!authType || (authType === "EMAIL" && !email)) {
+		setTimeout(() => router.push("/signin"), 1000);
+		return <Loader message="Please log in again" />;
 	}
 
 	const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
@@ -192,9 +175,9 @@ const AuthenticateUser = () => {
 			withHeader={false}
 			hasSuccess={false}
 		>
-			{params.type === "EMAIL" || castedUser?.twoFA?.type === "EMAIL" ? (
+			{authType === "EMAIL" || user?.twoFA?.type === "EMAIL" ? (
 				<EmailAuth
-					email={params.email || castedUser?.email}
+					email={email ?? user?.email}
 					otp={otp}
 					setOtp={setOtp}
 					handleSubmit={(e) => void handleSubmit(e)}
@@ -213,3 +196,4 @@ const AuthenticateUser = () => {
 };
 
 export default AuthenticateUser;
+AuthenticateUser.protect = true;

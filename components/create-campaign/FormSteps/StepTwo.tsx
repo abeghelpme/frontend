@@ -1,7 +1,7 @@
 import { DatePicker, Select } from "@/components/ui";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { cn, zodValidator } from "@/lib";
-import { callApi } from "@/lib/helpers/campaign";
+import { callApi, cn, zodValidator } from "@/lib";
 import { useWatchFormStatus } from "@/lib/hooks";
 import { useFormStore } from "@/store";
 import type { StepTwoData } from "@/store/useFormStore";
@@ -39,13 +39,12 @@ function StepTwo() {
 	const onSubmit = async (data: StepTwoData) => {
 		updateFormData(data);
 
-		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
-			`/campaign/create/two`,
-			{
-				...data,
-				campaignId,
-			}
-		);
+		const { data: dataInfo, error } = await callApi<
+			ApiResponse<Partial<Campaign>>
+		>(`/campaign/create/two`, {
+			...data,
+			campaignId,
+		});
 
 		if (error) {
 			toast.error(error.status, {
@@ -55,7 +54,7 @@ function StepTwo() {
 			return;
 		}
 
-		if (!dataInfo.data) return;
+		if (!dataInfo || !dataInfo.data) return;
 
 		updateCampaignId(dataInfo.data._id);
 		goToStep(3);

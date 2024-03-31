@@ -1,13 +1,10 @@
 import { Heading } from "@/components/common";
 import { CrossIcon } from "@/components/common/campaign-icons";
 import { Select } from "@/components/ui";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { zodValidator } from "@/lib";
-import {
-	callApi,
-	targetCountries,
-	validateTagValue,
-} from "@/lib/helpers/campaign";
+import { callApi, zodValidator } from "@/lib";
+import { targetCountries, validateTagValue } from "@/lib/helpers/campaign";
 import {
 	useBaseElementList,
 	useElementList,
@@ -61,14 +58,12 @@ function StepOne() {
 
 	const onSubmit = async (data: StepOneData) => {
 		updateFormData(data);
-
-		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
-			`/campaign/create/one`,
-			{
-				...data,
-				...(!!campaignId && { campaignId }),
-			}
-		);
+		const { data: dataInfo, error } = await callApi<
+			ApiResponse<Partial<Campaign>>
+		>(`/campaign/create/one`, {
+			...data,
+			...(!!campaignId && { campaignId }),
+		});
 
 		if (error) {
 			toast.error(error.status, {
@@ -78,7 +73,7 @@ function StepOne() {
 			return;
 		}
 
-		if (!dataInfo.data) return;
+		if (!dataInfo || !dataInfo.data) return;
 
 		updateCampaignId(dataInfo.data._id);
 		goToStep(2);
