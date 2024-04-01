@@ -34,13 +34,11 @@ export const getStaticPaths = (async () => {
 	}
 
 	return {
-		paths: [
-			// { _id: "" },
-			{ _id: "all-categories" },
-			...data.data,
-		].map((category) => ({
-			params: { categoryId: [category._id] },
-		})),
+		paths: [{ _id: "" }, { _id: "all-categories" }, ...data.data].map(
+			(category) => ({
+				params: { categoryId: [category._id] },
+			})
+		),
 
 		fallback: false,
 	};
@@ -55,7 +53,6 @@ export const getStaticProps = (async (context) => {
 				categoryId && categoryId[0] !== "all-categories"
 					? `&category=${categoryId[0]}`
 					: ""
-				// categoryId && `&category=${categoryId[0]}`
 			}`
 		),
 		callApi<ApiResponse<AllCampaignCategories[]>>("/campaign/categories"),
