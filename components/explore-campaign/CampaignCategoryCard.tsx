@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CampaignCardList } from "../common/CampaignCard";
+import NoCampaign from "./NoCampaigns";
 
 // Custom hook to determine the number of items per page based on screen size
 const useItemsPerPage = () => {
@@ -42,6 +43,9 @@ export const CampaignCategoryCard = ({
 	allCampaigns: Campaign[];
 	categoryName: string | null;
 }) => {
+	if (allCampaigns.length === 0)
+		return <NoCampaign categoryName={categoryName} />;
+
 	const itemsPerPage = useItemsPerPage();
 	const [currentPage, setCurrentPage] = useState(1);
 
