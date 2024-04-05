@@ -1,5 +1,11 @@
+import { targetCountries } from "@/lib/helpers/campaign";
 import type { Prettify } from "@/lib/type-helpers";
-import type { FormStore } from "@/store/formStore";
+
+export type Image = Prettify<{
+	secureUrl: string;
+	blurHash: string;
+	_id: string;
+}>;
 
 type Creator = Prettify<{
 	_id: string;
@@ -15,30 +21,40 @@ type Category = Prettify<{
 	updatedAt: string;
 }>;
 
-type Image = Prettify<{
-	secureUrl: string;
-	blurHash: string;
-	_id: string;
-}>;
+type Fundraiser = "INDIVIDUAL" | "BENEFICIARY";
+
+type Status = "In Review" | "Approved" | "Rejected" | "Draft";
+
+type FlaggedReasonType = "Inappropriate Content" | "Mismatch" | "Exists";
 
 export type Campaign = {
 	_id: string;
-	creator: Creator;
-	status: string;
-	category: Category;
-	country: string;
-	createdAt: string;
-	featured: boolean;
-	flaggedReasons: string[];
-	images: Image[];
-	isFlagged: boolean;
+	currentStep: 1 | 2 | 3;
+	url: string;
+	category: Category | null;
+	country: (typeof targetCountries)[number];
 	tags: string[];
-	updatedAt: string;
-	deadline: string;
-	fundraiser: FormStore["stepTwoData"]["fundraiser"];
 	goal: number;
-	title: string;
+	amountRaised: number;
 	story: string;
 	storyHtml: string;
-	url: string;
+	images: Image[];
+	title: string;
+	fundraiser: Fundraiser;
+	deadline: string;
+	creator: Creator | null;
+	isPublished: boolean;
+	status: Status;
+	isFlagged: boolean;
+	flaggedReasons: Array<{ type: FlaggedReasonType; reason: string }>;
+	isDeleted: boolean;
+	featured: boolean;
+};
+
+export type AllCampaignCategories = {
+	_id: string;
+	name: string;
+	count: string;
+	createdAt: string;
+	updatedAt: string;
 };

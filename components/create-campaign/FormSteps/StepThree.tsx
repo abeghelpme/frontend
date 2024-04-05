@@ -1,19 +1,16 @@
+import { Heading } from "@/components/common";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { zodValidator } from "@/lib";
-import { callApi } from "@/lib/helpers/campaign";
+import { callApi, zodValidator } from "@/lib";
 import { useWatchFormStatus } from "@/lib/hooks";
-import {
-	STEP_DATA_KEY_LOOKUP,
-	type StepThreeData,
-	useFormStore,
-} from "@/store/formStore";
+import { type StepThreeData, useCampaignStore, useFormStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import DropZoneInput from "../DropZoneInput";
 import FormErrorMessage from "../FormErrorMessage";
-import Heading from "../Heading";
 import ImagePreview from "../ImagePreview";
 import { TipTapEditor } from "../TipTapEditor";
 
@@ -21,35 +18,44 @@ function StepThree() {
 	const router = useRouter();
 
 	const {
-		campaignInfo,
-		stepThreeData,
-		actions: { setData, setCampaignInfo },
+		currentStep,
+		campaignId,
+		formStepData,
+		actions: { resetFormData },
 	} = useFormStore((state) => state);
+
+	const { addCampaign } = useCampaignStore((state) => state.actions);
 
 	const {
 		control,
 		handleSubmit,
 		formState,
+		getValues,
+		reset,
 		setValue: setFormValue,
 	} = useForm({
 		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepThree")!),
-		defaultValues: stepThreeData,
+		defaultValues: formStepData,
 	});
+
+	useEffect(() => {
+		if (!getValues().categoryId) {
+			reset(formStepData);
+		}
+	}, [formStepData]);
 
 	useWatchFormStatus(formState);
 
 	const onSubmit = async (data: StepThreeData) => {
-		setData({ step: 3, data });
-
 		const formData = new FormData();
 
 		formData.set("story", data.story);
 		formData.set("storyHtml", data.storyHtml);
-		formData.set("campaignId", campaignInfo._id);
+		formData.set("campaignId", campaignId);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
-		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
+		const { data: dataInfo, error } = await callApi<ApiResponse<Campaign>>(
 			`/campaign/create/three`,
 			formData
 		);
@@ -62,10 +68,20 @@ function StepThree() {
 			return;
 		}
 
-		if (!dataInfo.data) return;
+		if (!dataInfo?.data) return;
 
-		setCampaignInfo(dataInfo.data);
-		void router.push("/create-campaign/preview");
+		resetFormData();
+
+		addCampaign(dataInfo.data);
+
+		toast.success("Success", {
+			description: "Campaign created successfully!",
+		});
+
+		void router.push({
+			pathname: "/c/overview",
+			query: { id: dataInfo.data._id },
+		});
 	};
 
 	return (
@@ -75,7 +91,7 @@ function StepThree() {
 			</Heading>
 
 			<form
-				id={STEP_DATA_KEY_LOOKUP[3]}
+				id={`${currentStep}`}
 				className="mt-8 lg:mt-12"
 				onSubmit={(event) => {
 					event.preventDefault();
@@ -125,8 +141,8 @@ function StepThree() {
 							render={({ field }) => (
 								<TipTapEditor
 									placeholder="Write a compelling story that would arouse the interest of donors..."
-									setFormValue={setFormValue}
 									editorContent={field.value}
+									setFormValue={setFormValue}
 									onChange={field.onChange}
 								/>
 							)}

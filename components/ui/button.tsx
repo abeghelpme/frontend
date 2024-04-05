@@ -1,16 +1,18 @@
 import { cn } from "@/lib";
 import type { ForwardedRefType } from "@/lib/type-helpers";
+import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
 
 type ButtonProps = {
+	asChild?: boolean;
 	className?: string;
 	fullWidth?: boolean;
 	children: React.ReactNode;
 	loading?: boolean;
 	usage?: "auth";
 	size?: "sm" | "base" | "lg";
-	variant?: "primary" | "secondary" | "danger";
+	variant?: "primary" | "secondary" | "danger" | "regular";
 } & React.ComponentPropsWithRef<"button">;
 
 const ButtonUI = (
@@ -18,6 +20,7 @@ const ButtonUI = (
 	ref: ForwardedRefType<HTMLButtonElement>
 ) => {
 	const {
+		asChild,
 		className,
 		children,
 		fullWidth,
@@ -36,12 +39,16 @@ const ButtonUI = (
 		"px-10": size === "lg",
 		"md:py-4 md:px-5 text-sm md:text-base": usage === "auth",
 		"w-full": fullWidth,
+		"bg-transparent p-0 text-abeg-text rounded-none flex items-center justify-center":
+			variant === "regular",
 	};
 
+	const Element = asChild ? Slot : "button";
+
 	return (
-		<button
+		<Element
 			className={cn(
-				"rounded-lg px-4 py-3 text-sm font-medium text-white disabled:bg-abeg-neutral-50",
+				"rounded-lg px-4 block py-3 text-sm font-medium text-white disabled:bg-abeg-neutral-50",
 				buttonClass,
 				className
 			)}
@@ -72,7 +79,7 @@ const ButtonUI = (
 			) : (
 				children
 			)}
-		</button>
+		</Element>
 	);
 };
 

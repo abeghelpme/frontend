@@ -1,13 +1,18 @@
+import type { Writeable } from "@/lib/type-helpers";
 import { add } from "date-fns";
 
-export const targetCountries = [
+const _targetCountries = [
 	"Nigeria",
 	"Ghana",
 	"Mali",
 	"Liberia",
 	"Cameroon",
 	"Gambia",
-];
+] as const;
+
+export const targetCountries = _targetCountries as Writeable<
+	typeof _targetCountries
+>;
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024;
 

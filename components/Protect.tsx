@@ -22,6 +22,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
 		"/verify-email/success",
 		"/reset-password",
 		"/forgot-password",
+		"/2fa/authenticate",
 	];
 
 	const isInaccessible = noAuthRoutes.includes(router.pathname);
@@ -29,6 +30,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
 	const redirect = (route: string, message: string) => {
 		toast.error("Page access denied!", {
 			description: message,
+			id: "access-denied",
 			duration: 1000,
 		});
 
@@ -36,7 +38,6 @@ const Auth = ({ children }: { children: ReactNode }) => {
 			void router.push(route);
 		}, 500);
 	};
-
 	if (isInaccessible && user) {
 		const { redirect: nav } = router.query;
 		if (typeof nav === "undefined" || nav === "true") {
@@ -44,30 +45,23 @@ const Auth = ({ children }: { children: ReactNode }) => {
 			return <Loader message="You are already signed in" />;
 		}
 	}
+
 	if (!isInaccessible && !user) {
 		redirect("/signin", "You are not signed in");
 		return <Loader message="You are not signed in" />;
 	}
 
 	if (user && (user as User).twoFA?.active) {
-		// if (
-		// 	!(user as User).twoFA?.isVerified &&
-		// 	router.pathname !== "/2fa/authenticate"
-		// )
-		const { verified } = router.query;
 		if (
 			!(user as User).twoFA?.isVerified &&
-			!router.pathname.includes("/2fa") &&
-			verified !== "true"
+			router.pathname.includes("/2fa/authenticate")
 		) {
-			redirect("/2fa/authenticate", "You need to verify 2FA");
-			return <Loader message="You need to verify 2FA" />;
+			redirect(
+				`/2fa/authenticate?type=${user.twoFA.type}&email=${user.email}`,
+				"You need to verify your account"
+			);
+			return <Loader message="You need to verify your account" />;
 		}
-		// const { verified } = router.query;
-		// if (!(user as User).twoFA?.isVerified && !router.pathname.includes('/2fa') && verified !== 'true') {
-		// 	redirect('/2fa/authenticate', 'You need to verify 2FA');
-		// 	return <Loader message="You need to verify 2FA" />;
-		// }
 
 		if (
 			router.pathname.includes("/2fa") &&
@@ -77,6 +71,7 @@ const Auth = ({ children }: { children: ReactNode }) => {
 			return <Loader message="2FA is already active or verified!" />;
 		}
 	}
+
 	return children;
 };
 

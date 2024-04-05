@@ -1,8 +1,9 @@
-import { Loader } from "@/components/common";
-import { CampaignOutlook, Heading } from "@/components/create-campaign";
+import { Heading, Loader } from "@/components/common";
+import { CampaignOutlook } from "@/components/create-campaign";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { AuthenticatedUserLayout } from "@/layouts";
-import { callApi } from "@/lib/helpers/campaign";
+import { BaseLayout } from "@/layouts";
+import { callApi } from "@/lib";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
 import type {
 	GetStaticPaths,
@@ -13,11 +14,11 @@ import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 
 export const getStaticPaths = (async () => {
-	const { data, error } = await callApi<Campaign[]>(
+	const { data, error } = await callApi<ApiResponse<Campaign[]>>(
 		"/campaign/all?limit=100&isPublished=true&status=Approved"
 	);
 
-	if (error || !data.data || data.data.length === 0) {
+	if (error || !data?.data || data.data.length === 0) {
 		return {
 			paths: [],
 			fallback: "blocking",
@@ -36,22 +37,29 @@ export const getStaticPaths = (async () => {
 export const getStaticProps = (async (context) => {
 	const { shortId } = context.params as { shortId: string };
 
-	const { data, error } = await callApi<Campaign>(`/campaign/one/${shortId}`);
-	if (error || !data.data) {
+	const [singleCampaign, featuredCampaigns] = await Promise.all([
+		callApi<ApiResponse<Campaign>>(`/campaign/one/${shortId}`),
+		callApi<ApiResponse<Campaign[]>>("/campaign/featured"),
+	]);
+
+	if (singleCampaign.error || !singleCampaign.data?.data) {
 		return {
 			notFound: true,
 		};
 	}
 
 	return {
-		props: { campaign: data.data },
-		revalidate: 60, // 60 seconds
+		props: {
+			campaign: singleCampaign.data.data,
+			featuredCampaigns: featuredCampaigns.data?.data ?? [],
+		},
+		revalidate: 15 * 60, // 15 mins
 	};
 }) satisfies GetStaticProps<{ campaign: Campaign }>;
 
-type CampaignViewProps = InferGetStaticPropsType<typeof getStaticProps>;
+function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
+	const { campaign, featuredCampaigns } = props;
 
-function CampaignView({ campaign }: CampaignViewProps) {
 	const router = useRouter();
 
 	if (router.isFallback) {
@@ -61,7 +69,7 @@ function CampaignView({ campaign }: CampaignViewProps) {
 	const excerpt = generateExcerpt(campaign.story);
 
 	return (
-		<AuthenticatedUserLayout isDashboard>
+		<>
 			<NextSeo
 				title={campaign.title}
 				description={excerpt}
@@ -86,15 +94,23 @@ function CampaignView({ campaign }: CampaignViewProps) {
 				}}
 			/>
 
-			<CampaignOutlook campaign={campaign}>
+			<CampaignOutlook
+				featuredCampaigns={featuredCampaigns}
+				excerpt={excerpt}
+				campaign={campaign}
+			>
 				<CampaignOutlook.Header>
-					<Heading as="h1" className="text-xl lg:text-[32px]">
+					<Heading as="h1" className="text-4xl lg:text-4xl">
 						{`${campaign.title[0].toUpperCase()}${campaign.title.slice(1)}`}
 					</Heading>
 				</CampaignOutlook.Header>
 			</CampaignOutlook>
-		</AuthenticatedUserLayout>
+		</>
 	);
 }
 
 export default CampaignView;
+
+CampaignView.getLayout = (page: React.ReactElement) => (
+	<BaseLayout>{page}</BaseLayout>
+);

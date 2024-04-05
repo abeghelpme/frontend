@@ -225,9 +225,15 @@ const campaignStepTwoSchema = z.object({
 });
 
 const campaignStepThreeSchema = z.object({
-	photos: z.array(z.custom<File>((file) => file instanceof File)).min(1, {
-		message: "Select at least one image (which would be the cover image)",
-	}),
+	photos: z
+		.array(
+			z.custom<File | string>(
+				(file) => file instanceof File || typeof file === "string"
+			)
+		)
+		.min(1, {
+			message: "Select at least one image (which would be the cover image)",
+		}),
 	story: z
 		.string()
 		.min(100, { message: "Story must be at least 100 characters" }),

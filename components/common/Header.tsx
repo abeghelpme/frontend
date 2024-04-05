@@ -1,23 +1,27 @@
 "use client";
+
 import { useToggle } from "@/lib/hooks";
 import { closeIcon, menuIcon } from "@/public/assets/images/landing-page";
+import { useSession } from "@/store";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui";
 import LogoBanner from "./LogoBanner";
 
 const navLinks = [
-	{ name: "How it works", url: "/create-campaign" },
-	{ name: "Explore Campaigns", url: "/create-campaign" },
-	{ name: "About", url: "/about" },
+	{ name: "How it works", url: "/get-started#start" },
+	{ name: "Explore Campaigns", url: "/explore/all-categories" },
+	{ name: "FAQ", url: "/#faq" },
 ];
 const Header = () => {
 	const [isMobileNavOpen, toggleMobileNav] = useToggle(false);
 
+	const { user } = useSession((state) => state);
+
 	return (
-		<header className="bg-abeg-primary text-white  lg:py-7 px-5 md:px-20">
-			<div className="hidden lg:flex lg:justify-between items-center">
-				<LogoBanner className="text-white font-normal" />
+		<header className="bg-abeg-primary px-5  text-white md:px-20 lg:py-7">
+			<div className="hidden items-center lg:flex lg:justify-between">
+				<LogoBanner className="font-normal text-white" />
 				<nav className="text-lg">
 					<ul className="lg:flex-row lg:justify-between lg:space-x-10">
 						{navLinks.map((link, index) => (
@@ -27,18 +31,26 @@ const Header = () => {
 						))}
 					</ul>
 				</nav>
-				<div className="md:flex gap-2">
-					<Button className="bg-transparent border-2 border-white px-8 font-semibold text-md">
-						<Link href="/signin">Sign In</Link>
+				<div className="gap-2 md:flex">
+					<Button
+						className="text-md border-2 border-white bg-transparent px-8 font-semibold"
+						asChild
+					>
+						<Link href={user ? "/c" : "/signin"}>
+							{user ? "Dashboard" : "Sign In"}
+						</Link>
 					</Button>
-					<Button className="bg-white text-abeg-primary font-semibold text-md">
-						<Link href="/create-campaign"> Start Fundraiser</Link>
+					<Button
+						className="text-md bg-white font-semibold text-abeg-primary"
+						asChild
+					>
+						<Link href="/c/create">Start Fundraiser</Link>
 					</Button>
 				</div>
 			</div>
 
-			<div className="lg:hidden flex justify-between">
-				<LogoBanner className="text-white font-normal" />
+			<div className="flex justify-between lg:hidden">
+				<LogoBanner className="font-normal text-white" />
 				<Button onClick={toggleMobileNav}>
 					<Image src={menuIcon} alt="menu icon" width={35} height={35} />
 				</Button>
@@ -46,14 +58,13 @@ const Header = () => {
 
 			{/* Mobile Navigation Menu */}
 			{isMobileNavOpen && (
-				<div className="lg:hidden fixed z-50 top-0 left-0 w-full h-full bg-white text-abeg-primary font-medium flex flex-col space-y-5 text-2xl py-10 px-5 md:items-center md:justify-center">
+				<div className="fixed left-0 top-0 z-50 flex size-full flex-col space-y-5 bg-white px-5 py-10 text-2xl font-medium text-abeg-primary md:items-center md:justify-center lg:hidden">
 					{/* Close button for mobile nav */}
-					<div className="flex md:absolute md:top-20 md:right-20 justify-end">
+					<div className="flex justify-end md:absolute md:right-20 md:top-20">
 						<Button onClick={toggleMobileNav} className="text-abeg-primary">
 							<Image src={closeIcon} alt="menu icon" width={70} height={70} />
 						</Button>
 					</div>
-
 					{navLinks.map((link, index) => (
 						<div key={index}>
 							<Link className="text-xl" href={link.url}>
@@ -62,12 +73,20 @@ const Header = () => {
 						</div>
 					))}
 
-					<div className="space-y-5 md:flex md:flex-col justify-center">
-						<Button className="bg-transparent border-2 border-abeg-primary text-abeg-primary font-semibold text-xl mt-4 w-full md:w-80">
-							<Link href="/signin">Sign In</Link>
+					<div className="justify-center space-y-5 md:flex md:flex-col">
+						<Button
+							className="flex justify-center mt-4 w-full border-2 border-abeg-primary bg-transparent text-xl font-semibold text-abeg-primary md:w-80"
+							asChild
+						>
+							<Link href={user ? "/c" : "/signin"}>
+								{user ? "Dashboard" : "Sign In"}
+							</Link>
 						</Button>
-						<Button className="bg-abeg-primary px-8 font-semibold text-xl mt-2 w-full md:w-80">
-							<Link href="/create-campaign">Start Fundraiser</Link>
+						<Button
+							className="flex justify-center mt-2 w-full bg-abeg-primary px-8 text-xl font-semibold md:w-80"
+							asChild
+						>
+							<Link href="/c/create">Start Fundraiser</Link>
 						</Button>
 					</div>
 				</div>

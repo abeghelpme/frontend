@@ -149,20 +149,14 @@ const TwoFa = () => {
 							variant="primary"
 							className="w-fit !px-6"
 							size="sm"
-							onClick={
-								() => {
-									toast.success("Success", {
-										description: "Sign in to verify 2FA",
-										duration: 2000,
-									});
+							onClick={() => {
+								toast.success("Success", {
+									description: "Sign in to verify 2FA",
+									duration: 2000,
+								});
 
-									void router.push("/signin");
-								}
-								// void router.push({
-								// 	pathname: '/signin',
-								// 	query: { verified: true }
-								// })
-							}
+								void router.push("/signin");
+							}}
 						>
 							Got it!
 						</Button>

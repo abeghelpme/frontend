@@ -1,11 +1,11 @@
-import { useFormStore } from "@/store/formStore";
+import { useFormStore } from "@/store";
 import { useEffect, useRef } from "react";
 import type { FieldValues, FormState } from "react-hook-form";
 
 const useWatchFormStatus = <TStepData extends FieldValues>(
 	formState: FormState<TStepData>
 ) => {
-	const { setFormStatus } = useFormStore((state) => state.actions);
+	const { updateFormStatus } = useFormStore((state) => state.actions);
 
 	const firstMountRef = useRef({ real: true, dummy: true });
 
@@ -13,7 +13,7 @@ const useWatchFormStatus = <TStepData extends FieldValues>(
 
 	useEffect(() => {
 		if (firstMountRef.current.real) {
-			setFormStatus({ isValid: true, isSubmitting });
+			updateFormStatus({ isValid: true, isSubmitting });
 			firstMountRef.current.real = false;
 		}
 
@@ -22,8 +22,7 @@ const useWatchFormStatus = <TStepData extends FieldValues>(
 			return;
 		}
 
-		setFormStatus({ isValid, isSubmitting });
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		updateFormStatus({ isValid, isSubmitting });
 	}, [isValid, isSubmitting]);
 };
 

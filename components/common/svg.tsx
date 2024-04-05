@@ -1,3 +1,5 @@
+import type { FillSvgProps } from "@/interfaces";
+
 export const AbegHelpLogo = () => (
 	<svg
 		width="137"
@@ -44,6 +46,31 @@ export const ArrowDown = () => (
 			stroke="#292D32"
 			strokeWidth="1.5"
 			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+	</svg>
+);
+
+export const CloseIcon = () => (
+	<svg
+		width="67"
+		height="67"
+		viewBox="0 0 67 67"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path
+			d="M25.6055 41.4004L41.4063 25.5996"
+			stroke="#008080"
+			strokeWidth="2.27119"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M41.4063 41.4004L25.6055 25.5996"
+			stroke="#008080"
+			strokeWidth="2.27119"
 			strokeLinecap="round"
 			strokeLinejoin="round"
 		/>
@@ -150,6 +177,27 @@ export const GhanaFlag = () => (
 		/>
 	</svg>
 );
+
+export const Hamburger = () => {
+	return (
+		<svg
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M3 12H15M3 6H21M3 18H21"
+				stroke="#484848"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
 export const MaliFlag = () => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -166,7 +214,7 @@ export const MaliFlag = () => (
 export const LiberiaFlag = () => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
-		id="flag-icons-lr"
+		id="flag-iconsLr"
 		viewBox="0 0 512 512"
 	>
 		<defs>
@@ -322,6 +370,273 @@ export const FilterIcon = () => {
 				stroke="#484848"
 				strokeWidth="1.5"
 				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const Star = ({ fill, stroke }: FillSvgProps) => {
+	return (
+		<svg
+			width="24"
+			height="31"
+			viewBox="0 0 31 31"
+			fill={fill ? "#008080" : "none"}
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M17.4324 4.39767L19.6379 8.80873C19.9387 9.42277 20.7407 10.0117 21.4174 10.1245L25.4149 10.7887C27.9713 11.2148 28.5728 13.0694 26.7307 14.899L23.6229 18.0068C23.0966 18.5331 22.8084 19.5482 22.9713 20.275L23.861 24.1221C24.5628 27.1673 22.9462 28.3452 20.252 26.7537L16.5051 24.5357C15.8284 24.1347 14.7131 24.1347 14.0239 24.5357L10.277 26.7537C7.59523 28.3452 5.96615 27.1547 6.66791 24.1221L7.55764 20.275C7.72055 19.5482 7.43232 18.5331 6.906 18.0068L3.79821 14.899C1.96862 13.0694 2.5576 11.2148 5.11401 10.7887L9.11153 10.1245C9.7757 10.0117 10.5777 9.42277 10.8785 8.80873L13.084 4.39767C14.287 2.00416 16.2419 2.00416 17.4324 4.39767Z"
+				stroke={!stroke ? "#484848" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+export const SlashedStar = ({ fill, stroke }: FillSvgProps) => {
+	return (
+		<svg
+			width="24"
+			height="31"
+			viewBox="0 0 31 31"
+			fill={fill ? "#008080" : "none"}
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M7.06991 23.3703L7.7842 20.275C7.94711 19.5482 7.65889 18.5331 7.13257 18.0068L4.02477 14.899C2.19518 13.0694 2.78416 11.2148 5.34057 10.7887L9.3381 10.1245C10.0023 10.0117 10.8043 9.42277 11.105 8.80873L13.3106 4.39767C14.501 2.00416 16.4559 2.00416 17.659 4.39767L19.8645 8.80873C20.0023 9.09695 20.2655 9.37264 20.5537 9.61074"
+				stroke={!stroke ? "#484848" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M25.6399 10.79C28.1963 11.2161 28.7978 13.0708 26.9557 14.9003L23.8479 18.0081C23.3216 18.5345 23.0334 19.5495 23.1963 20.2763L24.086 24.1235C24.7878 27.1686 23.1712 28.3466 20.477 26.7551L16.7301 24.537C16.0534 24.136 14.9381 24.136 14.2488 24.537L10.502 26.7551"
+				stroke={!stroke ? "#484848" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M28.0218 2.50586L2.95898 27.5687"
+				stroke={"#484848"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const Closed = ({ fill, stroke }: FillSvgProps) => {
+	return (
+		<svg
+			width="24"
+			height="31"
+			viewBox="0 0 31 31"
+			fill={fill ? "#008080" : "none"}
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M12.1719 18.584L19.2647 11.4912"
+				stroke={!stroke ? "#484848" : "#ffffff"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M19.2647 18.584L12.1719 11.4912"
+				stroke={!stroke ? "#484848" : "#ffffff"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M11.9575 27.5687H19.4764C25.7421 27.5687 28.2484 25.0624 28.2484 18.7967V11.2779C28.2484 5.01215 25.7421 2.50586 19.4764 2.50586H11.9575C5.69183 2.50586 3.18555 5.01215 3.18555 11.2779V18.7967C3.18555 25.0624 5.69183 27.5687 11.9575 27.5687Z"
+				stroke={!stroke ? "#292D32" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const Drafts = ({ fill, stroke }: FillSvgProps) => {
+	return (
+		<svg
+			width="24"
+			height="31"
+			viewBox="0 0 31 31"
+			fill={fill ? "#008080" : "none"}
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M14.6884 2.50586H12.1822C5.91644 2.50586 3.41016 5.01215 3.41016 11.2779V18.7967C3.41016 25.0624 5.91644 27.5687 12.1822 27.5687H19.701C25.9667 27.5687 28.473 25.0624 28.473 18.7967V16.2904"
+				stroke={!stroke ? "#484848" : "#ffffff"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M21.0054 3.78444L11.1306 13.6592C10.7546 14.0351 10.3787 14.7745 10.3035 15.3134L9.76466 19.0853C9.56416 20.4512 10.5291 21.4036 11.895 21.2157L15.667 20.6768C16.1933 20.6016 16.9326 20.2257 17.3211 19.8497L27.1959 9.97496C28.9002 8.27069 29.7022 6.29072 27.1959 3.78444C24.6896 1.27815 22.7096 2.08016 21.0054 3.78444Z"
+				stroke={!stroke ? "#484848" : "#ffffff"}
+				strokeWidth="1.87971"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M19.5879 5.20117C20.4275 8.19618 22.7709 10.5396 25.7784 11.3917"
+				stroke={!stroke ? "#292D32" : "none"}
+				strokeWidth="1.87971"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const Moneys = () => {
+	return (
+		<svg
+			width="63"
+			height="63"
+			viewBox="0 0 63 63"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M50.662 20.7901V34.309C50.662 42.394 46.042 45.8589 39.112 45.8589H16.0383C14.857 45.8589 13.7283 45.754 12.6783 45.5178C12.022 45.4128 11.392 45.229 10.8145 45.019C6.87704 43.549 4.48828 40.1365 4.48828 34.309L4.48828 20.7901C4.48828 12.7051 9.10826 9.24023 16.0383 9.24023L39.112 9.24023C44.992 9.24023 49.2183 11.734 50.347 17.4302C50.5308 18.4802 50.662 19.5564 50.662 20.7901Z"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M58.5404 28.6656V42.1844C58.5404 50.2694 53.9204 53.7343 46.9904 53.7343H23.9166C21.9741 53.7343 20.2154 53.4719 18.6929 52.8944C15.5692 51.7394 13.4429 49.3507 12.6816 45.5182C13.7316 45.7544 14.8604 45.8593 16.0416 45.8593H39.1154C46.0454 45.8593 50.6654 42.3944 50.6654 34.3094V20.7906C50.6654 19.5568 50.5604 18.4544 50.3504 17.4307C55.3379 18.4807 58.5404 21.9981 58.5404 28.6656Z"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M27.5589 34.4919C31.3863 34.4919 34.489 31.3892 34.489 27.5619C34.489 23.7345 31.3863 20.6318 27.5589 20.6318C23.7316 20.6318 20.6289 23.7345 20.6289 27.5619C20.6289 31.3892 23.7316 34.4919 27.5589 34.4919Z"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M12.5469 21.7871V33.3372"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M42.582 21.7881V33.3382"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const Verify = () => {
+	return (
+		<svg
+			width="63"
+			height="63"
+			viewBox="0 0 63 63"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M22 31.5L28.3262 37.8525L41.005 25.1475"
+				stroke="#008080"
+				strokeWidth="3.9375"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M28.2212 6.43207C30.0325 4.88332 32.9988 4.88332 34.8363 6.43207L38.9838 10.0021C39.7713 10.6846 41.2413 11.2358 42.2913 11.2358L46.7537 11.2358C49.5362 11.2358 51.82 13.5196 51.82 16.3021V20.7646C51.82 21.7883 52.3712 23.2846 53.0537 24.0721L56.6238 28.2196C58.1725 30.0308 58.1725 32.9971 56.6238 34.8346L53.0537 38.9821C52.3712 39.7696 51.82 41.2396 51.82 42.2896V46.7521C51.82 49.5346 49.5362 51.8183 46.7537 51.8183H42.2913C41.2675 51.8183 39.7713 52.3696 38.9838 53.0521L34.8363 56.6221C33.025 58.1708 30.0587 58.1708 28.2212 56.6221L24.0737 53.0521C23.2862 52.3696 21.8162 51.8183 20.7662 51.8183H16.225C13.4425 51.8183 11.1587 49.5346 11.1587 46.7521L11.1587 42.2633C11.1587 41.2396 10.6075 39.7696 9.95125 38.9821L6.4075 34.8083C4.885 32.9971 4.885 30.0571 6.4075 28.2458L9.95125 24.0721C10.6075 23.2846 11.1587 21.8146 11.1587 20.7908V16.2758C11.1587 13.4933 13.4425 11.2096 16.225 11.2096H20.7662C21.79 11.2096 23.2862 10.6583 24.0737 9.97582L28.2212 6.43207Z"
+				stroke="#008080"
+				strokeWidth="3.9375"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const WalletAdd = () => {
+	return (
+		<svg
+			width="63"
+			height="63"
+			viewBox="0 0 63 63"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M37.4375 40.5254H24.3125"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M30.875 34.1201V47.2451"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M33.232 6.61011L33.1533 6.79386L25.5408 24.4601H18.0595C16.2745 24.4601 14.5683 24.8276 13.0195 25.4839L17.6133 14.5114L17.7183 14.2489L17.902 13.8289C17.9545 13.6714 18.007 13.5139 18.0858 13.3826C21.5245 5.42886 25.4095 3.61761 33.232 6.61011Z"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M47.381 24.9854C46.1998 24.6179 44.9398 24.4604 43.6798 24.4604H25.541L33.1535 6.7941L33.2323 6.61035C33.626 6.7416 33.9935 6.92535 34.3873 7.08285L40.1885 9.5241C43.4173 10.8629 45.6748 12.2541 47.0398 13.9341C47.3023 14.2491 47.5123 14.5379 47.696 14.8791C47.9323 15.2466 48.116 15.6141 48.221 16.0079C48.326 16.2441 48.4048 16.4804 48.4573 16.6904C49.166 18.8954 48.746 21.5991 47.381 24.9854Z"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M56.493 37.2709V42.3897C56.493 42.9147 56.4668 43.4397 56.4405 43.9647C55.9418 53.1259 50.823 57.7459 41.1105 57.7459H20.6355C20.0055 57.7459 19.3755 57.6934 18.7718 57.6147C10.4243 57.0634 5.9618 52.6009 5.41055 44.2534C5.3318 43.6497 5.2793 43.0197 5.2793 42.3897V37.2709C5.2793 31.9947 8.4818 27.4534 13.0493 25.4847C14.6243 24.8284 16.3043 24.4609 18.0893 24.4609L43.7093 24.4609C44.9955 24.4609 46.2555 24.6447 47.4105 24.9859C52.6343 26.5872 56.493 31.4697 56.493 37.2709Z"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M17.6137 14.5107L13.02 25.4832C8.4525 27.452 5.25 31.9932 5.25 37.2695V29.5782C5.25 22.1232 10.5525 15.902 17.6137 14.5107Z"
+				stroke="#008080"
+				strokeWidth="3"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M56.4848 29.5771V37.2684C56.4848 31.4934 52.6523 26.5846 47.4023 25.0096C48.7673 21.5971 49.1611 18.9196 48.5048 16.6884C48.4523 16.4521 48.3736 16.2159 48.2686 16.0059C53.1511 18.5259 56.4848 23.6971 56.4848 29.5771Z"
+				stroke="#008080"
+				strokeWidth="3"
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>

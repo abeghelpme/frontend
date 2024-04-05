@@ -1,46 +1,50 @@
 import { DatePicker, Select } from "@/components/ui";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { cn, zodValidator } from "@/lib";
-import { callApi } from "@/lib/helpers/campaign";
+import { callApi, cn, zodValidator } from "@/lib";
 import { useWatchFormStatus } from "@/lib/hooks";
-import {
-	STEP_DATA_KEY_LOOKUP,
-	type StepTwoData,
-	useFormStore,
-} from "@/store/formStore";
+import { useFormStore } from "@/store";
+import type { StepTwoData } from "@/store/useFormStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import Heading from "../../common/Heading";
 import FormErrorMessage from "../FormErrorMessage";
-import Heading from "../Heading";
 
 function StepTwo() {
 	const {
 		currentStep,
-		campaignInfo,
-		stepTwoData,
-		actions: { setData, goToStep, setCampaignInfo },
+		campaignId,
+		formStepData,
+		actions: { goToStep, updateFormData, updateCampaignId },
 	} = useFormStore((state) => state);
 
-	const { control, formState, register, handleSubmit } = useForm({
-		mode: "onChange",
-		resolver: zodResolver(zodValidator("campaignStepTwo")!),
-		defaultValues: stepTwoData,
-	});
+	const { control, formState, reset, getValues, register, handleSubmit } =
+		useForm({
+			mode: "onChange",
+			resolver: zodResolver(zodValidator("campaignStepTwo")!),
+			defaultValues: formStepData,
+		});
+
+	useEffect(() => {
+		if (!getValues().categoryId) {
+			reset(formStepData);
+		}
+	}, [formStepData]);
 
 	useWatchFormStatus(formState);
 
 	const onSubmit = async (data: StepTwoData) => {
-		setData({ step: 2, data });
+		updateFormData(data);
 
-		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
-			`/campaign/create/two`,
-			{
-				...data,
-				campaignId: campaignInfo._id,
-			}
-		);
+		const { data: dataInfo, error } = await callApi<
+			ApiResponse<Partial<Campaign>>
+		>(`/campaign/create/two`, {
+			...data,
+			campaignId,
+		});
 
 		if (error) {
 			toast.error(error.status, {
@@ -50,10 +54,10 @@ function StepTwo() {
 			return;
 		}
 
-		if (!dataInfo.data) return;
+		if (!dataInfo || !dataInfo.data) return;
 
-		setCampaignInfo(dataInfo.data);
-		goToStep(currentStep + 1);
+		updateCampaignId(dataInfo.data._id);
+		goToStep(3);
 	};
 
 	return (
@@ -63,7 +67,7 @@ function StepTwo() {
 			</Heading>
 
 			<form
-				id={STEP_DATA_KEY_LOOKUP[currentStep]}
+				id={`${currentStep}`}
 				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();
@@ -118,8 +122,10 @@ function StepTwo() {
 									</Select.Trigger>
 
 									<Select.Content id="category">
-										<Select.Item value="INDIVIDUAL">For Myself</Select.Item>
-										<Select.Item value="BENEFICIARY">
+										<Select.Item value="INDIVIDUAL" className="lg:text-base">
+											For Myself
+										</Select.Item>
+										<Select.Item value="BENEFICIARY" className="lg:text-base">
 											For Someone else
 										</Select.Item>
 									</Select.Content>

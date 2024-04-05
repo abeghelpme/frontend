@@ -22,7 +22,7 @@ export type User = {
 
 export type SessionData = {
 	user: User;
-	campaign: Campaign;
+	campaigns: Campaign[];
 };
 
 export type ApiResponse<T = Record<string, unknown>> = {

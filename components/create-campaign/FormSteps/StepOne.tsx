@@ -1,63 +1,69 @@
+import { Heading } from "@/components/common";
+import { CrossIcon } from "@/components/common/campaign-icons";
 import { Select } from "@/components/ui";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { zodValidator } from "@/lib";
+import { callApi, zodValidator } from "@/lib";
+import { targetCountries, validateTagValue } from "@/lib/helpers/campaign";
 import {
-	callApi,
-	targetCountries,
-	validateTagValue,
-} from "@/lib/helpers/campaign";
-import { useElementList, useWatchFormStatus } from "@/lib/hooks";
-import { CrossIcon } from "@/public/assets/icons/campaign";
-import {
-	STEP_DATA_KEY_LOOKUP,
-	type StepOneData,
-	useFormStore,
-} from "@/store/formStore";
+	useBaseElementList,
+	useElementList,
+	useWatchFormStatus,
+} from "@/lib/hooks";
+import { useCampaignStore } from "@/store";
+import { type StepOneData, useFormStore } from "@/store/useFormStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
-import { type KeyboardEvent, type MouseEvent, useRef } from "react";
+import { type KeyboardEvent, type MouseEvent, useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import FormErrorMessage from "../FormErrorMessage";
-import Heading from "../Heading";
 
 function StepOne() {
 	const tagInputRef = useRef<HTMLInputElement>(null);
 
 	const {
 		currentStep,
-		stepOneData,
-		campaignInfo,
-		actions: { goToStep, setData, setCampaignInfo },
+		campaignId,
+		formStepData,
+		actions: { goToStep, updateFormData, updateCampaignId },
 	} = useFormStore((state) => state);
 
-	const { For: TagList } = useElementList();
-	const { For: CategoryList } = useElementList();
-	const { For: CountryList } = useElementList();
+	const campaignCategories = useCampaignStore((state) => state.categories);
 
 	const {
 		control,
 		formState,
 		handleSubmit,
+		getValues,
+		reset,
 		setValue: setFormValue,
 	} = useForm({
 		mode: "onChange",
 		resolver: zodResolver(zodValidator("campaignStepOne")!),
-		defaultValues: stepOneData,
+		defaultValues: formStepData,
 	});
+
+	useEffect(() => {
+		if (!getValues().categoryId) {
+			reset(formStepData);
+		}
+	}, [formStepData]);
+
+	const [CategoryList] = useBaseElementList();
+	const [CountryList] = useBaseElementList();
+	const [TagList] = useElementList();
 
 	useWatchFormStatus(formState);
 
 	const onSubmit = async (data: StepOneData) => {
-		setData({ step: 1, data });
-
-		const { data: dataInfo, error } = await callApi<Partial<Campaign>>(
-			`/campaign/create/one`,
-			{
-				...data,
-				campaignId: campaignInfo._id,
-			}
-		);
+		updateFormData(data);
+		const { data: dataInfo, error } = await callApi<
+			ApiResponse<Partial<Campaign>>
+		>(`/campaign/create/one`, {
+			...data,
+			...(!!campaignId && { campaignId }),
+		});
 
 		if (error) {
 			toast.error(error.status, {
@@ -67,10 +73,10 @@ function StepOne() {
 			return;
 		}
 
-		if (!dataInfo.data) return;
+		if (!dataInfo || !dataInfo.data) return;
 
-		setCampaignInfo(dataInfo.data);
-		goToStep(currentStep + 1);
+		updateCampaignId(dataInfo.data._id);
+		goToStep(2);
 	};
 
 	const handleAddTags = (
@@ -85,15 +91,15 @@ function StepOne() {
 		}
 
 		const validTag = validateTagValue(
-			stepOneData.tags,
+			formStepData.tags,
 			tagInputRef.current?.value
 		);
 
 		if (!validTag) return;
 
-		const newTagState = [...stepOneData.tags, `#${validTag}`];
+		const newTagState = [...formStepData.tags, `#${validTag}`];
 
-		setData({ step: 1, data: { tags: newTagState } });
+		updateFormData({ tags: newTagState });
 
 		setFormValue("tags", newTagState);
 
@@ -101,9 +107,9 @@ function StepOne() {
 	};
 
 	const handleRemoveTags = (tag: string) => () => {
-		const newTagState = stepOneData.tags.filter((tagItem) => tagItem !== tag);
+		const newTagState = formStepData.tags.filter((tagItem) => tagItem !== tag);
 
-		setData({ step: 1, data: { tags: newTagState } });
+		updateFormData({ tags: newTagState });
 
 		setFormValue("tags", newTagState);
 	};
@@ -115,7 +121,7 @@ function StepOne() {
 			</Heading>
 
 			<form
-				id={STEP_DATA_KEY_LOOKUP[currentStep]}
+				id={`${currentStep}`}
 				className="mt-8"
 				onSubmit={(event) => {
 					event.preventDefault();
@@ -142,16 +148,20 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-4 h-[50px] rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px]  lg:px-4 lg:text-base"
+										className="mt-4 h-[50px] rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px] lg:px-4 lg:text-base"
 									>
 										<Select.Value placeholder="Select what category best suit your fundraiser" />
 									</Select.Trigger>
 
 									<Select.Content>
 										<CategoryList
-											each={campaignInfo.categories}
+											each={campaignCategories}
 											render={(category) => (
-												<Select.Item key={category._id} value={category._id}>
+												<Select.Item
+													key={category._id}
+													value={category._id}
+													className="lg:text-base"
+												>
 													{category.name}
 												</Select.Item>
 											)}
@@ -195,6 +205,7 @@ function StepOne() {
 												<Select.Item
 													key={country}
 													value={country.toUpperCase()}
+													className="lg:text-base"
 												>
 													{country}
 												</Select.Item>
@@ -234,30 +245,29 @@ function StepOne() {
 
 						<div className="mt-4 flex flex-col gap-4">
 							<span className="text-xs text-abeg-primary lg:text-sm">
-								{stepOneData.tags.length}/5 tags
+								{formStepData.tags.length}/5 tags
 							</span>
 
-							<ul className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary lg:text-base">
-								<TagList
-									each={stepOneData.tags}
-									render={(tag, index) => (
-										<li
-											key={`${tag}-${index}`}
-											className="flex min-w-[8rem] items-center justify-between gap-[1rem] rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] p-[0.4rem_1.2rem]"
-										>
-											<p>{tag}</p>
+							<TagList
+								className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary lg:text-base"
+								each={formStepData.tags}
+								render={(tag, index) => (
+									<li
+										key={`${tag}-${index}`}
+										className="flex min-w-20 items-center justify-between gap-2.5 rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] px-3 py-1"
+									>
+										<p>{tag}</p>
 
-											<button
-												className="transition-transform duration-100 active:scale-[1.12]"
-												type="button"
-												onClick={handleRemoveTags(tag)}
-											>
-												<CrossIcon className="size-2.5" />
-											</button>
-										</li>
-									)}
-								/>
-							</ul>
+										<button
+											className="transition-transform duration-100 active:scale-[1.12]"
+											type="button"
+											onClick={handleRemoveTags(tag)}
+										>
+											<CrossIcon className="size-2.5" />
+										</button>
+									</li>
+								)}
+							/>
 						</div>
 					</li>
 				</ol>
