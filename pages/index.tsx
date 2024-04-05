@@ -6,6 +6,7 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
 import { callApi, cn } from "@/lib";
 import { useDragScroll } from "@/lib/hooks";
+import { usePaginate } from "@/lib/hooks/usePaginate";
 import {
 	avatar1,
 	avatar2,
@@ -69,8 +70,42 @@ const HomePage = ({
 	const { dragContainerClasses, dragScrollProps } =
 		useDragScroll<HTMLDivElement>("desktopOnly");
 
+	const {
+		currData,
+		page,
+		loading,
+		totalPages,
+		handleNext,
+		handlePrev,
+		disableNext,
+		disablePrev,
+	} = usePaginate("/campaign/featured", {
+		fetchAll: true,
+		paginationStyle: "manual",
+		limit: 4,
+	});
+
 	return (
 		<BaseLayout>
+			{/* <button
+				disabled={disablePrev}
+				onClick={handlePrev}
+				className="p-3 disabled:bg-red-400 disabled:text-white"
+			>
+				Prev
+			</button>
+			<span className="">
+				currentPage{page}/ totalPages {totalPages}
+			</span>
+			<button
+				disabled={disableNext}
+				onClick={handleNext}
+				className="p-3 disabled:bg-red-400 disabled:text-white"
+			>
+				Next
+			</button> */}
+			{/* {loading && <div>Loading</div>}
+			{currData && currData.map((post) => <div key={post?.id}>{post?.title}</div>)} */}
 			<Hero
 				h1Tag="Start your journey into fundraising with ease"
 				pTag="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
