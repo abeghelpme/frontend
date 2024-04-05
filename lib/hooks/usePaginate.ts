@@ -1,90 +1,92 @@
-import { useEffect, useRef, useState } from "react";
+import type { ApiResponse } from "@/interfaces";
+import type { Campaign } from "@/interfaces/Campaign";
+import { useRef, useState } from "react";
+import { callApi } from "../helpers/callApi";
 
 type UsePaginateProps = {
-	fetchAll?: boolean;
-	paginationStyle?: "manual" | "scroll";
-	limit?: number;
+	allData?: boolean;
+	startPage?: number;
 };
 
-type Products = {
-	id: number;
-	title: string;
-	price: number;
+type PaginatedResponse<T> = {
+	data: T[];
+	count: number;
 };
 
-type res = {
-	products: Products[];
-	total: number;
-	skip: number;
-	limit: number;
-};
-export const usePaginate =
-	// <T extends Omit<UsePaginateProps, keyof UsePaginateProps>>
-	(
-		endpoint: string | undefined,
-		options: UsePaginateProps = {
-			fetchAll: false,
-			paginationStyle: "manual",
-			limit: 10,
+const LIMIT = 12;
+
+export const usePaginate = <T = Campaign>(
+	endpoint: string | undefined,
+	options: UsePaginateProps = {
+		allData: false,
+		startPage: 1,
+	}
+) => {
+	const [page, setPage] = useState(options.startPage ?? 1);
+	const returnAll = useRef(options.allData ?? false);
+
+	const [data, setData] = useState<PaginatedResponse<T>>({
+		data: [],
+		count: 0,
+	});
+	const [isFetching, setIsFetching] = useState(false);
+	const [error, setError] = useState("");
+
+	const fetch = async (direction: "prev" | "next") => {
+		setIsFetching(true);
+		setError("");
+		if (!endpoint) {
+			return setError("Endpoint is required");
 		}
-	) => {
-		const [page, setPage] = useState(1);
-		const [skip, setSkip] = useState(options?.fetchAll ? 0 : 0);
-		const [data, setData] = useState<Products[]>([]);
-		const [loading, setLoading] = useState(false);
-		const [hasMore, setHasMore] = useState(false);
-		const itemsPerPage = options?.limit || 8;
-		const start = (page - 1) * itemsPerPage;
-		const end = page * itemsPerPage;
-		const currData = data?.slice(start, end);
-		const totalPages = Math.ceil(data?.length / itemsPerPage);
-		const disablePrev = page === 1;
-		const disableNext = page === totalPages;
-		const limitRef = useRef(null);
 
-		// const { data, error } = await callApi<ApiResponse<T[]>>(`/${endpoint}`);
-		// if (error || !data || !data.data) {
-		// 	console.error(error);
-		// 	return;
-		// }
-		const fetchData = async () => {
-			setLoading(true);
-			if (!endpoint) {
-				return;
-			}
+		if (direction === "prev" && page <= 1) {
+			setIsFetching(false);
+			return;
+		}
 
-			const res = await fetch(
-				`https://dummyjson.com/products?limit=0&skip=${skip}&select=title,price`
-			);
-			if (res.ok) {
-				const result = (await res.json()) as res;
-				setLoading(false);
-				setData(result.products);
-			}
-		};
+		const newPage = direction === "next" ? page + 1 : page - 1;
+		setPage(newPage);
 
-		useEffect(() => {
-			fetchData();
-		}, [skip]);
-		const handleNext = () => {
-			if (!itemsPerPage) return;
-			setPage((prev) => prev + 1);
-		};
+		const { data: response, error } = await callApi<
+			ApiResponse<PaginatedResponse<T>>
+		>(`/${endpoint}?page=${newPage}&limit=${LIMIT}`);
 
-		const handlePrev = () => {
-			if (!itemsPerPage) return;
-			setPage((prev) => prev - 1);
-		};
+		if (error || !response || !response.data) {
+			setError(error?.message || "Could not fetch data");
+			setIsFetching(false);
+			return;
+		}
 
-		return {
-			currData,
-			page,
-			setPage,
-			handleNext,
-			totalPages,
-			disableNext,
-			disablePrev,
-			loading,
-			handlePrev,
-		};
+		let updateData;
+		if (returnAll.current) {
+			updateData = {
+				...data,
+				data: [...data.data, ...response.data.data],
+			};
+		} else {
+			updateData = response.data;
+		}
+
+		setData(updateData);
+		setIsFetching(false);
 	};
+
+	const hasMore = () => {
+		if (returnAll.current) {
+			return data.data.length < data.count;
+		}
+		return page < Math.floor(data.count / LIMIT);
+	};
+
+	const hasPrevious = () => page > 1 && !isFetching;
+
+	return {
+		currentPage: page,
+		data,
+		isFetching,
+		error,
+		fetch,
+		hasPrevious,
+		hasMore,
+	};
+};

@@ -7,6 +7,7 @@ import type { ApiResponse } from "@/interfaces";
 import type { AllCampaignCategories, Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
 import { callApi } from "@/lib";
+import { usePaginate } from "@/lib/hooks";
 import {
 	heroCircle,
 	heroHalfMoon,
@@ -19,7 +20,7 @@ import type {
 } from "next";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const getStaticPaths = (async () => {
 	const { data, error } = await callApi<ApiResponse<Campaign[]>>(
@@ -49,7 +50,7 @@ export const getStaticProps = (async (context) => {
 
 	const [allCampaigns, allCampaignCategories] = await Promise.all([
 		callApi<ApiResponse<Campaign[]>>(
-			`/campaign/all?limit=9${
+			`/campaign/all?limit=12${
 				categoryId && categoryId[0] !== "all-categories"
 					? `&category=${categoryId[0]}`
 					: ""
@@ -87,9 +88,12 @@ const ExploreCampaignPage = ({
 
 	const [allCampaigns, setAllCampaigns] = useState(campaigns);
 
-	useEffect(() => {
-		setAllCampaigns(campaigns);
-	}, [campaigns]);
+	const { currentPage, data, hasMore, hasPrevious } = usePaginate(
+		"/campaign/all",
+		{
+			startPage: 2,
+		}
+	);
 
 	return (
 		<BaseLayout>
