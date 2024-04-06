@@ -32,7 +32,7 @@ const VerificationPage = () => {
 				description: error.message,
 			});
 		} else {
-			toast.error("Success", {
+			toast.success("Success", {
 				description: (data as { message: string }).message,
 			});
 		}
