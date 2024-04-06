@@ -65,6 +65,9 @@ function StepOne() {
 			...(!!campaignId && { campaignId }),
 		});
 
+		console.log("data info", dataInfo);
+		console.log("error", error);
+
 		if (error) {
 			toast.error(error.status, {
 				description: error.message,

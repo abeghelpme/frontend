@@ -27,7 +27,7 @@ export const getStaticProps = (async () => {
 		await callApi<ApiResponse<Campaign[]>>("/campaign/featured");
 
 	if (error || !data?.data) {
-		return { notFound: true };
+		return { props: { featuredCampaigns: [] } };
 	}
 
 	return {
@@ -255,10 +255,12 @@ const HomePage = ({
 					<TestimonialCard />
 				</div>
 
-				<UrgentFundraisers
-					featuredCampaigns={featuredCampaigns}
-					className="py-20"
-				/>
+				{featuredCampaigns.length > 0 && (
+					<UrgentFundraisers
+						featuredCampaigns={featuredCampaigns}
+						className="py-20"
+					/>
+				)}
 
 				<FAQ className="px-5 py-10 md:px-20 scroll-mt-16" />
 			</div>
