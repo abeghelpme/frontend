@@ -29,16 +29,22 @@ export const callApi = async <T>(
 	const method = data ? "POST" : "GET";
 
 	try {
+		const href = window.location.href;
+		const baseUrl = href.split("/")[0] + "//" + href.split("/")[2];
+
 		const response: AxiosResponse<T> = await api.request<T>({
 			url: endpoint,
 			method,
 			...(data && { data }),
-			headers: isObject(data)
-				? {
-						"Content-Type": "application/json",
-						Accept: "application/json",
-				  }
-				: { "Content-Type": "multipart/form-data" },
+			headers: {
+				...(isObject(data)
+					? {
+							"Content-Type": "application/json",
+							Accept: "application/json",
+					  }
+					: { "Content-Type": "multipart/form-data" }),
+				"x-referer": baseUrl,
+			},
 			cancelToken: source.token,
 		});
 
