@@ -12,6 +12,7 @@ import { BaseLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import { campaignHero } from "@/public/assets/images/landing-page";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { NextSeo } from "next-seo";
 
 export const getStaticProps = (async () => {
 	const [featuredCampaigns, allCampaignCategories] = await Promise.all([
@@ -45,6 +46,28 @@ const Campaigns = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
 		<BaseLayout>
+			<NextSeo
+				title="Get started"
+				description="Get started with Abeghelp.me and join the effortless way to raise funds and make a difference and empower your cause"
+				canonical="https://www.abeghelp.me/get-started"
+				openGraph={{
+					url: "https://www.abeghelp.me/get-started",
+					title: "Get Started",
+					description:
+						"Get started with Abeghelp.me and join the effortless way to raise funds and make a difference and empower your cause",
+					images: [
+						{
+							url: "https://www.abeghelp.me/get-started",
+							width: 800,
+							height: 600,
+							alt: "Get started image",
+						},
+					],
+				}}
+				twitter={{
+					cardType: "summary_large_image",
+				}}
+			/>
 			<Hero
 				h1Tag="Be part of the change makers today!"
 				pTag="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
