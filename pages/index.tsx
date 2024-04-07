@@ -19,6 +19,7 @@ import {
 	joinnUs,
 } from "@/public/assets/images/landing-page";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { NextSeo } from "next-seo";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -71,6 +72,28 @@ const HomePage = ({
 
 	return (
 		<BaseLayout>
+			<NextSeo
+				title="Homepage"
+				description="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
+				canonical="https://www.abeghelp.me/"
+				openGraph={{
+					url: "https://www.abeghelp.me/",
+					title: "Homepage",
+					description:
+						"Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
+					images: [
+						{
+							url: "https://www.abeghelp.me/",
+							width: 800,
+							height: 600,
+							alt: "Homepage image",
+						},
+					],
+				}}
+				twitter={{
+					cardType: "summary_large_image",
+				}}
+			/>
 			<Hero
 				h1Tag="Start your journey into fundraising with ease"
 				pTag="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
