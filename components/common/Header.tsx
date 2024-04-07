@@ -33,7 +33,7 @@ const Header = () => {
 				</nav>
 				<div className="gap-2 md:flex">
 					<Button
-						className="text-md border-2 border-white bg-transparent px-8 font-semibold"
+						className="text-md border-2 border-white bg-transparent px-8 font-semibold flex items-center"
 						asChild
 					>
 						<Link href={user ? "/c" : "/signin"}>
@@ -41,7 +41,7 @@ const Header = () => {
 						</Link>
 					</Button>
 					<Button
-						className="text-md bg-white font-semibold text-abeg-primary"
+						className="text-md bg-white font-semibold text-abeg-primary flex items-center"
 						asChild
 					>
 						<Link href="/c/create">Start Fundraiser</Link>
