@@ -51,7 +51,7 @@ export const getStaticProps = (async (context) => {
 
 	const [allCampaigns, allCampaignCategories] = await Promise.all([
 		callApi<ApiResponse<Campaign[]>>(
-			`/campaign/all?limit=12${
+			`/campaign/all?published=true&limit=12${
 				categoryId && categoryId[0] !== "all-categories"
 					? `&category=${categoryId[0]}`
 					: ""
