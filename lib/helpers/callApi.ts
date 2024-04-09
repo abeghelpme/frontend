@@ -29,9 +29,6 @@ export const callApi = async <T>(
 	const method = data ? "POST" : "GET";
 
 	try {
-		const href = window.location.href;
-		const baseUrl = href.split("/")[0] + "//" + href.split("/")[2];
-
 		const response: AxiosResponse<T> = await api.request<T>({
 			url: endpoint,
 			method,
@@ -43,7 +40,8 @@ export const callApi = async <T>(
 							Accept: "application/json",
 					  }
 					: { "Content-Type": "multipart/form-data" }),
-				"x-referer": baseUrl,
+				"x-referer":
+					process.env.NEXT_PUBLIC_BASE_URL ?? "http://www.abeghelp.me",
 			},
 			cancelToken: source.token,
 		});
