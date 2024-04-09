@@ -5,6 +5,7 @@ import Link from "next/link";
 type ButtonType = {
 	href: string;
 	text: string;
+	className?: string;
 };
 
 type Props = {
@@ -35,7 +36,7 @@ const Hero = ({ h1Tag, pTag, button1, button2, imageSrc }: Props) => {
 					<p className="pr-10 text-lg text-gray-50 md:pr-5">{pTag} </p>
 					<div className="flex space-x-10 py-5 md:pt-20">
 						<Button
-							className="text-md bg-gray-50 font-semibold text-abeg-primary outline-none"
+							className={`text-md bg-gray-50 font-semibold text-abeg-primary outline-none ${button1.className}`}
 							asChild
 						>
 							<Link href={button1.href}>{button1.text}</Link>
