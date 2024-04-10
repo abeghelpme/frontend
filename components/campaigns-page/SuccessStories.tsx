@@ -4,8 +4,10 @@ import {
 	storiesAboutUs,
 	testimonialImage1,
 } from "@/public/assets/images/landing-page";
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
+import { useState } from "react";
+import * as React from "react";
 
 const successStories = [
 	{
@@ -46,21 +48,33 @@ const successStories = [
 	},
 ];
 const SuccessStories = ({ className }: { className?: string }) => {
-	const { dragContainerClasses, dragScrollProps } =
-		useDragScroll<HTMLDivElement>("desktopOnly");
+	useDragScroll<HTMLDivElement>("desktopOnly");
+	const [currentItem, setCurrentItem] = useState(0);
+
+	const next = () => {
+		setCurrentItem((prevItem) =>
+			prevItem === successStories.length - 1 ? 0 : prevItem + 1
+		);
+	};
+
+	const prev = () => {
+		setCurrentItem((prevItem) =>
+			prevItem === 0 ? successStories.length - 1 : prevItem - 1
+		);
+	};
+
 	return (
-		<div className={cn("flex flex-col gap-8 md:gap-12", className)}>
+		<div className={cn("relative flex flex-col md:gap-12", className)}>
 			<h1 className="px-4 text-4xl font-bold text-center">
 				The Success stories of the benefactors speak for themselves
 			</h1>
-			<div
-				{...dragScrollProps}
-				className={cn("gap-5 md:gap-20", dragContainerClasses)}
-			>
+
+			<div className={"md:flex overflow-hidden"}>
 				{successStories.map((story, id) => (
 					<div
 						key={id}
-						className="flex flex-col-reverse gap-5 md:flex-row shrink-0 grow-0 space-y-10 md:space-x-20 w-[100%] justify-between md:items-center"
+						style={{ transform: `translateX(-${currentItem * 100}%)` }}
+						className="w-full transition-transform duration-500 flex flex-col-reverse gap-5 md:flex-row shrink-0 grow-0 space-y-10 md:space-y-0 md:justify-between md:items-center"
 					>
 						<div className="md:w-1/2 space-y-5 md:space-y-10">
 							<h1 className="text-xl">{story.title}</h1>
@@ -75,8 +89,20 @@ const SuccessStories = ({ className }: { className?: string }) => {
 								alt="Create campaign card image"
 								width={350}
 								height={350}
-								className="w-full"
+								className="w-full rounded-2xl object-cover"
 							/>
+							<button
+								className="hidden md:block absolute z-50 top-[45%] right-0 transform -translate-y-1/2 border border-white rounded-full p-2 md:p-3 backdrop-filter backdrop-blur-md hover:backdrop-blur-lg transition-all duration-300"
+								onClick={next}
+							>
+								<ArrowRightIcon className="text-white" />
+							</button>
+							<button
+								className="hidden md:block absolute z-50 transform  top-[55%] right-0 -translate-y-1/2 border border-white rounded-full p-2 md:p-3 backdrop-filter backdrop-blur-md hover:backdrop-blur-lg transition-all duration-300"
+								onClick={prev}
+							>
+								<ArrowLeftIcon className="text-white" />
+							</button>
 						</div>
 					</div>
 				))}

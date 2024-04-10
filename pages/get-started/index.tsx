@@ -80,7 +80,7 @@ const Campaigns = ({
 					allCampaignCategories={allCampaignCategories}
 				/>
 				<HowItWorks className="px-5 md:px-20" />
-				<SuccessStories className="px-5 md:px-20 pb-10 pt-10 md:pt-0" />
+				<SuccessStories className="px-5 md:px-20 py-10 md:py-0" />
 				<UrgentFundraisers featuredCampaigns={featuredCampaigns} />
 				<FAQ className="px-5 md:px-20" />
 			</div>

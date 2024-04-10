@@ -216,8 +216,8 @@ const HomePage = ({
 								<div className="space-y-2">
 									<h1 className="text-2xl font-bold">Global Community</h1>
 									<p className="text-gray-400 text-sm">
-										Join the effortless way to raise funds and make a difference
-										and empower your cause with Abeghelp.me
+										The global community of volunteers, donors and supporters
+										that help you achieve your goals with Abeghelp.me
 									</p>
 								</div>
 							</div>
@@ -231,8 +231,8 @@ const HomePage = ({
 								<div className="space-y-2">
 									<h1 className="text-2xl font-bold">Crowd Funding</h1>
 									<p className="text-gray-400 text-sm">
-										Join the effortless way to raise funds and make a difference
-										and empower your cause with Abeghelp.me
+										Crowd funding platforms that help you raise funds for your
+										cause and help them reach their goals with Abeghelp.me
 									</p>
 								</div>
 							</div>
