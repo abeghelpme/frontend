@@ -259,7 +259,7 @@ export const AuthenticatedUserLayout = ({
 				data-isopen={isOpen}
 				className={`authenticatedUserLayoutMain h-full flex-1 px-[5%] lg:px-[7%] 2xl:px-[10%] ${
 					isDashboard &&
-					"mt-10 space-y-8 md:mt-0 md:-translate-y-[4.8rem] lg:space-y-10"
+					"mt-10 space-y-8 md:mt-0 md:-translate-y-[9.8rem] lg:space-y-10"
 				}`}
 			>
 				{children}

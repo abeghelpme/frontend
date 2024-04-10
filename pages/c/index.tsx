@@ -1,12 +1,7 @@
-import {
-	Closed,
-	Drafts,
-	MegaphoneIcon,
-	SlashedStar,
-	Star,
-} from "@/components/common";
+import { DonationStatsPanel } from "@/components/campaign-analytics";
 import { CampaignCardList } from "@/components/common/CampaignCard";
-import { Button } from "@/components/ui";
+import { SummaryCard } from "@/components/dashboard";
+import { DateRangePicker } from "@/components/ui/date-picker";
 import type { Campaign } from "@/interfaces/Campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { useCampaignStore } from "@/store";
@@ -67,13 +62,34 @@ const DashboardCampaigns = () => {
 		dispatch({ status: "all" });
 	};
 
+	type Dummy = { title: string; amount: string; analytics: string };
+
+	const dummy: Dummy[] = [
+		{
+			title: "funds raised",
+			amount: "#283,000,098",
+			analytics: "+3.6 in 4days",
+		},
+		{
+			title: "funds withdrawn",
+			amount: "#283,000,098",
+			analytics: "+3.6 in 4days",
+		},
+		{
+			title: "campaigns",
+			amount: "23",
+			analytics: "+0.006 in 4days",
+		},
+	];
+
 	return (
 		<AuthenticatedUserLayout isDashboard>
-			<div className="mb-8 hidden space-y-6 md:block">
-				<h1 className="text-2xl font-extrabold uppercase text-white">
-					your campaigns
-				</h1>
-				<div className="flex items-center justify-between gap-8 rounded-lg border border-headerDivider bg-white p-3 py-2 lg:w-fit">
+			<section className="space-y-8">
+				<div className="hidden md:flex justify-between items-center">
+					<h1 className="text-2xl font-extrabold capitalize text-white">
+						summary
+					</h1>
+					{/* <div className="flex items-center justify-between gap-8 rounded-lg border border-headerDivider bg-white p-3 py-2 lg:w-fit">
 					<Button
 						onClick={() => handleAll()}
 						variant="regular"
@@ -136,8 +152,26 @@ const DashboardCampaigns = () => {
 						/>
 						Drafts
 					</Button>
+				</div> */}
+
+					<DateRangePicker />
 				</div>
-			</div>
+				<div className="space-y-4">
+					<div className="flex flex-col gap-4 md:flex-row md:flex-wrap lg:flex-nowrap">
+						{dummy.map((data, id) => {
+							return (
+								<SummaryCard
+									key={id}
+									title={data.title}
+									figure={data.amount}
+									result={data.analytics}
+								/>
+							);
+						})}
+					</div>
+					<DonationStatsPanel />
+				</div>
+			</section>
 			<section>
 				<CampaignCardList
 					cardDetailsArray={campaigns.filtered}

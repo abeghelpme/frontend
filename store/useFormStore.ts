@@ -111,7 +111,7 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 		initializeFormData: () => {
 			const { campaigns } = useInitCampaignStore.getState();
 
-			if (campaigns.length === 0) return;
+			if (campaigns?.length === 0) return;
 
 			const searchParams = new URLSearchParams(window.location.search);
 

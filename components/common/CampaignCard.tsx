@@ -103,7 +103,6 @@ export function CampaignCard(props: CampaignCardProps) {
 			>
 				<div className="flex flex-1">
 					<Link href={`/c/${shortId}`} draggable={false} className="flex-1">
-
 						<Image
 							src={transformedDetails.imageSrc}
 							className={cn(
@@ -227,7 +226,7 @@ export function CampaignCardList(props: CardListProps) {
 	const { dragScrollProps, dragContainerClasses, dragItemClasses } =
 		useDragScroll<HTMLUListElement>();
 
-	if (cardDetailsArray.length === 0) {
+	if (!cardDetailsArray || cardDetailsArray.length === 0) {
 		return null;
 	}
 
