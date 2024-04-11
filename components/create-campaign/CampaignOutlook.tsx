@@ -170,6 +170,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					<SingleCampaignProgress
 						amountRaised={campaign.amountRaised}
 						goal={campaign.goal}
+						style2
 					/>
 
 					<article className="space-y-4">
@@ -251,14 +252,14 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						<figure className="flex items-start gap-2.5 text-sm lg:text-base">
 							<MoneyIcon className="mt-[5px] size-6 shrink-0" />
 							<figcaption>
-								Be the first to donate to this fundraiser, every penny donated
-								will go a long way
+								Be among the first to donate to this fundraiser, every penny
+								donated will go a long way
 							</figcaption>
 						</figure>
-						<figure className="flex items-center gap-2.5 text-sm lg:text-base">
-							<DonorIcon className="shrink-0" />
-							<figcaption>0 total donors</figcaption>
-						</figure>
+						{/* <figure className='flex items-center gap-2.5 text-sm lg:text-base'>
+              <DonorIcon className='shrink-0' />
+              <figcaption>0 total donors</figcaption>
+            </figure> */}
 						<figure className="flex items-center gap-2 text-sm lg:text-base">
 							<DummyAvatar className="size-8 shrink-0" />
 							<figcaption>
