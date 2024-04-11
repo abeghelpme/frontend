@@ -34,5 +34,6 @@ export {
 	Moneys,
 	Verify,
 	WalletAdd,
+	TotalDonors,
 } from "./svg";
 export { default as SingleCampaignProgress } from "./SingleCampaignProgress";
