@@ -36,11 +36,9 @@ export const getStaticPaths = (async () => {
 	}
 
 	return {
-		paths: [{ _id: "" }, { _id: "all-categories" }, ...data.data].map(
-			(category) => ({
-				params: { categoryId: [category?._id] },
-			})
-		),
+		paths: data.data.map((category) => ({
+			params: { categoryId: category?._id },
+		})),
 
 		fallback: false,
 	};
@@ -51,7 +49,7 @@ export const getStaticProps = (async (context) => {
 
 	const [allCampaigns, allCampaignCategories] = await Promise.all([
 		callApi<ApiResponse<Campaign[]>>(
-			`/campaign/all?limit=12${`&category=${categoryId[0]}`}`
+			`/campaign/all?published=true&limit=12${`&category=${categoryId}`}`
 		),
 		callApi<ApiResponse<AllCampaignCategories[]>>("/campaign/categories"),
 	]);
