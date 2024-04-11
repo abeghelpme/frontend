@@ -1,13 +1,12 @@
 import TestimonialCard from "@/components/common/TestimonialCard";
-import { CampaignCategories } from "@/components/common/landingPage";
 import HowItWorks from "@/components/common/landingPage/HowItWorks";
 import { CampaignCategoryCard } from "@/components/explore-campaign";
 import { Button, Input } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import type { AllCampaignCategories, Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
-import { callApi } from "@/lib";
-import { usePaginate } from "@/lib/hooks";
+import { callApi, cn } from "@/lib";
+import { useDragScroll, usePaginate } from "@/lib/hooks";
 import {
 	heroCircle,
 	heroHalfMoon,
@@ -21,6 +20,7 @@ import type {
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export const getStaticPaths = (async () => {
@@ -51,15 +51,10 @@ export const getStaticProps = (async (context) => {
 
 	const [allCampaigns, allCampaignCategories] = await Promise.all([
 		callApi<ApiResponse<Campaign[]>>(
-			`/campaign/all?published=true&limit=12${
-				categoryId && categoryId[0] !== "all-categories"
-					? `&category=${categoryId[0]}`
-					: ""
-			}`
+			`/campaign/all?limit=12${`&category=${categoryId[0]}`}`
 		),
 		callApi<ApiResponse<AllCampaignCategories[]>>("/campaign/categories"),
 	]);
-
 	if (
 		allCampaigns.error ||
 		!allCampaigns?.data?.data ||
@@ -96,6 +91,9 @@ const ExploreCampaignPage = ({
 		}
 	);
 
+	const { dragScrollProps, dragContainerClasses } =
+		useDragScroll<HTMLDivElement>();
+	const router = useRouter();
 	return (
 		<>
 			<NextSeo
@@ -143,7 +141,7 @@ const ExploreCampaignPage = ({
 						{categoryName ?? "All Categories"}
 					</h1>
 					<p className="max-w-[500px] pr-8 text-xl text-gray-50 md:pr-0 md:text-center">
-						Join the effortless way to fundraise and make a difference and
+						Join the effortless way to fund-raise and make a difference and
 						empower your cause with Abeghelp.me
 					</p>
 					<div className="relative flex w-full flex-row justify-center gap-2 pt-5 md:w-[40rem] md:gap-5 md:pt-8">
@@ -177,16 +175,54 @@ const ExploreCampaignPage = ({
 					/>
 				</div>
 
-				<div className="pt-10 md:py-20">
-					<CampaignCategoryCard
-						allCampaigns={allCampaigns}
-						categoryName={categoryName}
-					/>
-					<CampaignCategories
-						className="px-5 pt-10 md:px-20 md:pt-20"
-						allCampaignCategories={allCampaignCategories}
-					/>
-					<HowItWorks className="px-5 py-10 md:p-20" />
+				<div className="pt-10 md:py-20 flex flex-col gap-10 md:gap-20">
+					<div className="flex w-full flex-col gap-8">
+						<div className="flex flex-col gap-2 px-5 md:px-20 ">
+							<h1 className="text-4xl font-bold md:w-full md:text-5xl">
+								Explore our {`${categoryName?.toLowerCase()} campaigns`}
+							</h1>
+							<p className="text-xl font-medium text-placeholder md:w-3/6">
+								Join the effortless way to fund-raise and make a difference and
+								empower your cause with Abeghelp.me
+							</p>
+						</div>
+						<div
+							{...dragScrollProps}
+							className={cn(
+								"flex gap-8 text-black justify-between",
+								dragContainerClasses
+							)}
+						>
+							{allCampaignCategories.map((category, id) => {
+								return (
+									<Button
+										key={id}
+										className={cn(
+											"text-black text-base whitespace-nowrap rounded-none p-0 py-1",
+											categoryName === category.name
+												? "text-abeg-primary border-b-4 border-b-abeg-primary"
+												: ""
+										)}
+										onClick={() =>
+											void router.push({
+												pathname: `/explore/${category._id}`,
+												query: {
+													name: category.name,
+												},
+											})
+										}
+									>
+										{category.name}
+									</Button>
+								);
+							})}
+						</div>
+						<CampaignCategoryCard
+							allCampaigns={allCampaigns}
+							categoryName={categoryName}
+						/>
+					</div>
+					<HowItWorks className="px-5 md:px-20" />
 					<TestimonialCard />
 				</div>
 			</BaseLayout>
