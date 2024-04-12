@@ -8,17 +8,18 @@ type CategoriesMap = {
 };
 
 const categoriesColors: CategoriesMap = {
-	"Health & Wellness": "bg-[#A8CCCC]",
-	Business: "bg-[#E6E6E6]",
-	Family: "bg-[#455A64]",
-	Emergency: "bg-[#2B908E]",
-	Religion: "bg-[#ACDCDC]",
-	Medical: "bg-[#D6BBFB]",
-	Volunteer: "bg-[#FFC3C2]",
-	Education: "bg-[#D2D2D2]",
-	Events: "bg-[#D2D2D2]",
-	Wedding: "bg-[#A8CCCC]",
-	Others: "bg-[#8BD2BD]",
+	0: "bg-[#A8CCCC]",
+	1: "bg-[#E6E6E6]",
+	2: "bg-[#455A64]",
+	3: "bg-[#2B908E]",
+	4: "bg-[#ACDCDC]",
+	5: "bg-[#D6BBFB]",
+	6: "bg-[#FFC3C2]",
+	7: "bg-[#D2D2D2]",
+	8: "bg-[#D2D2D2]",
+	9: "bg-[#A8CCCC]",
+	10: "bg-[#8BD2BD]",
+	default: "bg-abeg-primary",
 };
 const CampaignCategories = ({
 	className,
@@ -54,7 +55,7 @@ const CampaignCategories = ({
 								}
 								className={cn(
 									`text-center p-6 rounded-lg font-bold text-xl truncate`,
-									categoriesColors[category.name]
+									categoriesColors[id] ?? categoriesColors.default
 								)}
 							>
 								{category.name} ({category.count})
