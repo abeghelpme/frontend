@@ -42,6 +42,7 @@ export const getStaticProps = (async (context) => {
 		callApi<ApiResponse<Campaign[]>>("/campaign/featured"),
 	]);
 
+	console.log(singleCampaign.error, singleCampaign.data?.data);
 	if (singleCampaign.error || !singleCampaign.data?.data) {
 		return {
 			notFound: true,
@@ -67,7 +68,7 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 	}
 
 	const excerpt = generateExcerpt(campaign.story);
-
+	console.log(campaign.url);
 	return (
 		<>
 			<NextSeo
