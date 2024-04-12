@@ -37,7 +37,7 @@ function UrgentFundraisers(props: UrgentFundraiserProps) {
 					className="mt-4 flex max-w-[185px] shrink-0 justify-center border border-placeholder text-base font-extrabold text-placeholder"
 					asChild
 				>
-					<Link href="/explore/all-categories">Explore campaigns</Link>
+					<Link href="/explore">Explore campaigns</Link>
 				</Button>
 			</div>
 

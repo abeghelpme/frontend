@@ -118,7 +118,7 @@ const HomePage = ({
 							className="mt-5 flex max-w-[165px] justify-center border border-gray-500 font-semibold text-gray-500 outline-none"
 							asChild
 						>
-							<Link href="/explore/all-categories">Explore campaigns</Link>
+							<Link href="/explore">Explore campaigns</Link>
 						</Button>
 					</div>
 				</div>
