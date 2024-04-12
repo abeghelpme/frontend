@@ -49,15 +49,15 @@ const Campaigns = ({
 			<NextSeo
 				title="Get started"
 				description="Get started with Abeghelp.me and join the effortless way to raise funds and make a difference and empower your cause"
-				canonical="https://www.abeghelp.me/get-started"
+				canonical="https://www.abeghelp.me/explore"
 				openGraph={{
-					url: "https://www.abeghelp.me/get-started",
+					url: "https://www.abeghelp.me/explore",
 					title: "Get Started",
 					description:
 						"Get started with Abeghelp.me and join the effortless way to raise funds and make a difference and empower your cause",
 					images: [
 						{
-							url: "https://www.abeghelp.me/get-started",
+							url: "https://www.abeghelp.me/explore",
 							width: 800,
 							height: 600,
 							alt: "Get started image",
