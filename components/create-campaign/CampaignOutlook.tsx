@@ -65,7 +65,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 				<p className="mt-3 text-pretty lg:text-xl">{excerpt}</p>
 
-				<div className="relative mt-6 flex items-center max-lg:justify-between lg:gap-9">
+				<div className="relative mt-6 flex items-center max-lg:justify-between lg:gap-9 flex-wrap gap-2">
 					<figure className="flex items-center gap-3 ">
 						<DummyAvatar className="size-10" />
 
@@ -165,7 +165,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				</div>
 			</section>
 
-			<div className="mt-14 flex flex-col self-center px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px]">
+			<div className="mt-14 flex flex-col md:self-center px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px]">
 				<section className="mt-2 space-y-5 self-start px-[18px] py-6 lg:sticky lg:top-0 lg:min-w-[383px] lg:max-w-[505px]">
 					<SingleCampaignProgress
 						amountRaised={campaign.amountRaised}
