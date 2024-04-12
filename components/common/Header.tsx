@@ -23,7 +23,7 @@ const Header = () => {
 			<div className="hidden items-center lg:flex lg:justify-between">
 				<LogoBanner className="font-normal text-white" />
 				<nav className="text-lg">
-					<ul className="lg:flex-row lg:justify-between lg:space-x-10">
+					<ul className="lg:flex-row lg:justify-between lg:space-x-20">
 						{navLinks.map((link, index) => (
 							<Link key={index} href={link.url}>
 								{link.name}
@@ -33,7 +33,7 @@ const Header = () => {
 				</nav>
 				<div className="gap-2 md:flex">
 					<Button
-						className="text-md border-2 border-white bg-transparent px-8 font-semibold flex items-center"
+						className="text-md bg-transparent px-8 font-semibold flex items-center"
 						asChild
 					>
 						<Link href={user ? "/c" : "/signin"}>
@@ -41,10 +41,14 @@ const Header = () => {
 						</Link>
 					</Button>
 					<Button
-						className="text-md bg-white font-semibold text-abeg-primary flex items-center"
+						className={`text-md bg-white font-semibold text-abeg-primary flex items-center ${
+							user ? "px-0" : "px-10"
+						}`}
 						asChild
 					>
-						<Link href="/c/create">Start Fundraiser</Link>
+						<Link href={user ? "c/create" : "/signup"}>
+							{user ? "Start Fundraiser" : "Sign Up"}
+						</Link>
 					</Button>
 				</div>
 			</div>

@@ -102,7 +102,7 @@ const HomePage = ({
 				imageSrc={hero}
 			/>
 			<div className="py-10 md:pt-20">
-				<div className="w-full space-y-5 px-5 md:justify-between md:px-20 lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-500">
+				<div className="w-full space-y-5 px-5 md:justify-between md:px-20 lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-300">
 					<div className="space-y-5 md:pr-20">
 						<h4 className="text-xl text-gray-500">How it works</h4>
 						<h1 className="text-4xl font-bold md:text-5xl">
@@ -115,7 +115,7 @@ const HomePage = ({
 							difference and empower <br /> your cause with Abeghelp.me
 						</p>
 						<Button
-							className="mt-5 flex max-w-[165px] justify-center border border-gray-500 font-semibold text-gray-500 outline-none"
+							className="mt-5 flex max-w-[175px] justify-center border border-gray-500 font-semibold text-gray-500 text-base outline-none"
 							asChild
 						>
 							<Link href="/explore">Explore campaigns</Link>
@@ -135,8 +135,8 @@ const HomePage = ({
 							key={index}
 							className="relative shrink-0 grow-0 space-y-3 rounded-xl bg-gray-200 p-5 md:w-[45%] lg:w-[30%]"
 						>
-							<h1 className="text-2xl font-bold">{card.heading}</h1>
-							<p className="text-md font-medium">{card.text}</p>
+							<h1 className="text-xl font-bold">{card.heading}</h1>
+							<p className="text-sm font-medium">{card.text}</p>
 							<div className="flex">
 								<Image
 									src={card.image}
@@ -153,10 +153,10 @@ const HomePage = ({
 				</div>
 
 				<div className="px-5 md:px-20">
-					<div className="relative flex justify-center py-20 text-white lg:px-20">
+					<div className="relative flex justify-center py-16 text-white lg:px-20">
 						<Image
-							src="/assets/images/shared/hero-background.svg"
-							className="z-[-1] rounded-xl object-cover object-center"
+							src="/assets/images/landing-page/MagicPattern.svg"
+							className="z-[-1] rounded-xl object-cover object-center bg-abeg-primary"
 							alt=""
 							fill
 						/>
@@ -214,10 +214,10 @@ const HomePage = ({
 									height={50}
 								/>
 								<div className="space-y-2">
-									<h1 className="text-xl font-bold">Global Community</h1>
-									<p className="text-gray-400">
-										Join the effortless way to raise funds and make a difference
-										and empower your cause with Abeghelp.me
+									<h1 className="text-2xl font-bold">Global Community</h1>
+									<p className="text-gray-400 text-sm">
+										The global community of volunteers, donors and supporters
+										that help you achieve your goals with Abeghelp.me
 									</p>
 								</div>
 							</div>
@@ -229,15 +229,15 @@ const HomePage = ({
 									height={50}
 								/>
 								<div className="space-y-2">
-									<h1 className="text-xl font-bold">Crowd Funding</h1>
-									<p className="text-gray-400">
-										Join the effortless way to raise funds and make a difference
-										and empower your cause with Abeghelp.me
+									<h1 className="text-2xl font-bold">Crowd Funding</h1>
+									<p className="text-gray-400 text-sm">
+										Crowd funding platforms that help you raise funds for your
+										cause and help them reach their goals with Abeghelp.me
 									</p>
 								</div>
 							</div>
 						</div>
-						<div className="relative flex w-56 items-center rounded-full bg-teal-300 p-3 md:w-72">
+						<div className="relative flex w-56 items-center rounded-full bg-abeg-avatar p-3 md:w-72">
 							<div className="relative">
 								<Image
 									src={avatar1}

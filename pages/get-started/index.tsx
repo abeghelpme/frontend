@@ -22,9 +22,9 @@ export const getStaticProps = (async () => {
 
 	if (
 		featuredCampaigns.error ||
-		!featuredCampaigns?.data?.data ||
+		!featuredCampaigns.data?.data ||
 		allCampaignCategories.error ||
-		!allCampaignCategories?.data?.data
+		!allCampaignCategories.data?.data
 	) {
 		return { notFound: true };
 	}
@@ -71,7 +71,7 @@ const Campaigns = ({
 			<Hero
 				h1Tag="Be part of the change makers today!"
 				pTag="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
-				button1={{ href: "/c/create", text: "Donate now" }}
+				button1={{ href: "/c/create", text: "Donate now", className: "px-10" }}
 				imageSrc={campaignHero}
 			/>
 			<div className="flex flex-col justify-center gap-8 md:gap-20 py-10 md:py-20">
@@ -80,7 +80,7 @@ const Campaigns = ({
 					allCampaignCategories={allCampaignCategories}
 				/>
 				<HowItWorks className="px-5 md:px-20" />
-				<SuccessStories className="px-5 md:px-20" />
+				<SuccessStories className="px-5 md:px-20 py-10 md:py-0" />
 				<UrgentFundraisers featuredCampaigns={featuredCampaigns} />
 				<FAQ className="px-5 md:px-20" />
 			</div>

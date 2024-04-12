@@ -8,19 +8,19 @@ const testimonials = [
 		image: testimonialImage1,
 		name: "Jonathan Doe",
 		greeting: "Thanks AHM",
-		text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
+		text: "I was inspired by Abeghelp.me to easily raise funds and make a difference for my cause.",
 	},
 	{
 		image: testimonialImage1,
 		name: "Sandra Doe",
 		greeting: "Thanks AHM",
-		text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
+		text: "Abeghelp.me helped me easily raise funds and make a difference for my project.",
 	},
 	{
 		image: testimonialImage1,
 		name: "William Doe",
 		greeting: "Thanks AHM",
-		text: "Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
+		text: "Grateful for the ease of raising funds and making a difference with Abeghelp.me for my cause.",
 	},
 ];
 

@@ -30,3 +30,4 @@ export { default as twitter } from "@/public/assets/images/landing-page/Twitter.
 export { default as youtube } from "@/public/assets/images/landing-page/YouTube.svg";
 export { default as campaignHero } from "@/public/assets/images/landing-page/campaign-hero.svg";
 export { default as storiesAboutUs } from "@/public/assets/images/landing-page/stories-about-us.png";
+export { default as MagicPattern } from "@/public/assets/images/landing-page/MagicPattern.svg";
