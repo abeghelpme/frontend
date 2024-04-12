@@ -1,13 +1,12 @@
 import TestimonialCard from "@/components/common/TestimonialCard";
-import { CampaignCategories } from "@/components/common/landingPage";
 import HowItWorks from "@/components/common/landingPage/HowItWorks";
 import { CampaignCategoryCard } from "@/components/explore-campaign";
 import { Button, Input } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import type { AllCampaignCategories, Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
-import { callApi } from "@/lib";
-import { usePaginate } from "@/lib/hooks";
+import { callApi, cn } from "@/lib";
+import { useDragScroll, usePaginate } from "@/lib/hooks";
 import {
 	heroCircle,
 	heroHalfMoon,
@@ -21,7 +20,7 @@ import type {
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from "next/router";
 
 export const getStaticPaths = (async () => {
 	const { data, error } = await callApi<ApiResponse<Campaign[]>>(
@@ -36,11 +35,9 @@ export const getStaticPaths = (async () => {
 	}
 
 	return {
-		paths: [{ _id: "" }, { _id: "all-categories" }, ...data.data].map(
-			(category) => ({
-				params: { categoryId: [category?._id] },
-			})
-		),
+		paths: data.data.map((category) => ({
+			params: { categoryId: category?._id },
+		})),
 
 		fallback: false,
 	};
@@ -51,15 +48,10 @@ export const getStaticProps = (async (context) => {
 
 	const [allCampaigns, allCampaignCategories] = await Promise.all([
 		callApi<ApiResponse<Campaign[]>>(
-			`/campaign/all?published=true&limit=12${
-				categoryId && categoryId[0] !== "all-categories"
-					? `&category=${categoryId[0]}`
-					: ""
-			}`
+			`/campaign/all?isPublished=true&limit=12${`&category=${categoryId}`}`
 		),
 		callApi<ApiResponse<AllCampaignCategories[]>>("/campaign/categories"),
 	]);
-
 	if (
 		allCampaigns.error ||
 		!allCampaigns?.data?.data ||
@@ -87,8 +79,6 @@ const ExploreCampaignPage = ({
 	const params = useSearchParams();
 	const categoryName = params.get("name");
 
-	const [allCampaigns, setAllCampaigns] = useState(campaigns);
-
 	const { currentPage, data, hasMore, hasPrevious } = usePaginate(
 		"/campaign/all",
 		{
@@ -96,20 +86,23 @@ const ExploreCampaignPage = ({
 		}
 	);
 
+	const { dragScrollProps, dragContainerClasses } =
+		useDragScroll<HTMLDivElement>();
+	const router = useRouter();
 	return (
 		<>
 			<NextSeo
 				title="Explore Campaigns"
 				description="Explore campaigns on Abeghelp.me. Find the best campaigns on Abeghelp.me. Get started with Abeghelp.me."
-				canonical="https://www.abeghelp.me/expore/all-categories"
+				canonical="https://www.abeghelp.me/expore"
 				openGraph={{
-					url: "https://www.abeghelp.me/explore/all-categories",
+					url: "https://www.abeghelp.me/explore",
 					title: "Explore Campaigns",
 					description:
 						"Explore campaigns on Abeghelp.me. Find the best campaigns on Abeghelp.me. Get started with Abeghelp.me.",
 					images: [
 						{
-							url: "https://www.abeghelp.me/exlore/all-categories",
+							url: "https://www.abeghelp.me/exlore",
 							width: 800,
 							height: 600,
 							alt: "Explore campaign image",
@@ -140,10 +133,10 @@ const ExploreCampaignPage = ({
 						className="absolute right-[-2rem] top-[27rem] md:left-16 md:top-16 md:-translate-y-0 md:translate-x-0 lg:left-40 lg:top-32"
 					/>
 					<h1 className="pr-5 text-5xl font-bold leading-tight md:flex md:justify-center md:pr-0 md:text-6xl md:leading-snug">
-						{categoryName ?? "All Categories"}
+						{categoryName}
 					</h1>
 					<p className="max-w-[500px] pr-8 text-xl text-gray-50 md:pr-0 md:text-center">
-						Join the effortless way to fundraise and make a difference and
+						Join the effortless way to fund-raise and make a difference and
 						empower your cause with Abeghelp.me
 					</p>
 					<div className="relative flex w-full flex-row justify-center gap-2 pt-5 md:w-[40rem] md:gap-5 md:pt-8">
@@ -177,16 +170,54 @@ const ExploreCampaignPage = ({
 					/>
 				</div>
 
-				<div className="pt-10 md:py-20">
-					<CampaignCategoryCard
-						allCampaigns={allCampaigns}
-						categoryName={categoryName}
-					/>
-					<CampaignCategories
-						className="px-5 pt-10 md:px-20 md:pt-20"
-						allCampaignCategories={allCampaignCategories}
-					/>
-					<HowItWorks className="px-5 py-10 md:p-20" />
+				<div className="pt-10 md:py-20 flex flex-col gap-10 md:gap-20">
+					<div className="flex w-full flex-col gap-8">
+						<div className="flex flex-col gap-2 px-5 md:px-20 ">
+							<h1 className="text-4xl font-bold md:w-full md:text-5xl">
+								Explore our {`${categoryName?.toLowerCase()} campaigns`}
+							</h1>
+							<p className="text-xl font-medium text-placeholder md:w-3/6">
+								Join the effortless way to fund-raise and make a difference and
+								empower your cause with Abeghelp.me
+							</p>
+						</div>
+						<div
+							{...dragScrollProps}
+							className={cn(
+								"flex gap-8 text-black justify-between",
+								dragContainerClasses
+							)}
+						>
+							{allCampaignCategories.map((category, id) => {
+								return (
+									<Button
+										key={id}
+										className={cn(
+											"text-black text-base whitespace-nowrap rounded-none p-0 py-1",
+											categoryName === category.name
+												? "text-abeg-primary border-b-4 border-b-abeg-primary font-bold"
+												: ""
+										)}
+										onClick={() =>
+											void router.push({
+												pathname: `/explore/${category._id}`,
+												query: {
+													name: category.name,
+												},
+											})
+										}
+									>
+										{category.name}
+									</Button>
+								);
+							})}
+						</div>
+						<CampaignCategoryCard
+							allCampaigns={campaigns}
+							categoryName={categoryName}
+						/>
+					</div>
+					<HowItWorks className="px-5 md:px-20" />
 					<TestimonialCard />
 				</div>
 			</BaseLayout>

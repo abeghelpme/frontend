@@ -10,7 +10,7 @@ import LogoBanner from "./LogoBanner";
 
 const navLinks = [
 	{ name: "How it works", url: "/get-started#start" },
-	{ name: "Explore Campaigns", url: "/explore/all-categories" },
+	{ name: "Explore Campaigns", url: "/explore" },
 	{ name: "FAQ", url: "/#faq" },
 ];
 const Header = () => {
