@@ -21,7 +21,6 @@ import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 export const getStaticPaths = (async () => {
 	const { data, error } = await callApi<ApiResponse<Campaign[]>>(
@@ -49,7 +48,7 @@ export const getStaticProps = (async (context) => {
 
 	const [allCampaigns, allCampaignCategories] = await Promise.all([
 		callApi<ApiResponse<Campaign[]>>(
-			`/campaign/all?published=true&limit=12${`&category=${categoryId}`}`
+			`/campaign/all?isPublished=true&limit=12${`&category=${categoryId}`}`
 		),
 		callApi<ApiResponse<AllCampaignCategories[]>>("/campaign/categories"),
 	]);
@@ -80,8 +79,6 @@ const ExploreCampaignPage = ({
 	const params = useSearchParams();
 	const categoryName = params.get("name");
 
-	const [allCampaigns, setAllCampaigns] = useState(campaigns);
-
 	const { currentPage, data, hasMore, hasPrevious } = usePaginate(
 		"/campaign/all",
 		{
@@ -97,15 +94,15 @@ const ExploreCampaignPage = ({
 			<NextSeo
 				title="Explore Campaigns"
 				description="Explore campaigns on Abeghelp.me. Find the best campaigns on Abeghelp.me. Get started with Abeghelp.me."
-				canonical="https://www.abeghelp.me/expore/all-categories"
+				canonical="https://www.abeghelp.me/expore"
 				openGraph={{
-					url: "https://www.abeghelp.me/explore/all-categories",
+					url: "https://www.abeghelp.me/explore",
 					title: "Explore Campaigns",
 					description:
 						"Explore campaigns on Abeghelp.me. Find the best campaigns on Abeghelp.me. Get started with Abeghelp.me.",
 					images: [
 						{
-							url: "https://www.abeghelp.me/exlore/all-categories",
+							url: "https://www.abeghelp.me/exlore",
 							width: 800,
 							height: 600,
 							alt: "Explore campaign image",
@@ -136,7 +133,7 @@ const ExploreCampaignPage = ({
 						className="absolute right-[-2rem] top-[27rem] md:left-16 md:top-16 md:-translate-y-0 md:translate-x-0 lg:left-40 lg:top-32"
 					/>
 					<h1 className="pr-5 text-5xl font-bold leading-tight md:flex md:justify-center md:pr-0 md:text-6xl md:leading-snug">
-						{categoryName ?? "All Categories"}
+						{categoryName}
 					</h1>
 					<p className="max-w-[500px] pr-8 text-xl text-gray-50 md:pr-0 md:text-center">
 						Join the effortless way to fund-raise and make a difference and
@@ -198,7 +195,7 @@ const ExploreCampaignPage = ({
 										className={cn(
 											"text-black text-base whitespace-nowrap rounded-none p-0 py-1",
 											categoryName === category.name
-												? "text-abeg-primary border-b-4 border-b-abeg-primary"
+												? "text-abeg-primary border-b-4 border-b-abeg-primary font-bold"
 												: ""
 										)}
 										onClick={() =>
@@ -216,7 +213,7 @@ const ExploreCampaignPage = ({
 							})}
 						</div>
 						<CampaignCategoryCard
-							allCampaigns={allCampaigns}
+							allCampaigns={campaigns}
 							categoryName={categoryName}
 						/>
 					</div>
