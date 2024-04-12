@@ -20,7 +20,7 @@ const socialIcons = [
 
 const siteMapLinks = [
 	{ name: "About", url: "/about" },
-	{ name: "How it works", url: "/get-started" },
+	{ name: "How it works", url: "/explore" },
 	{ name: "Testimonials", url: "/" },
 	{ name: "Partners", url: "/" },
 	{ name: "FAQ's", url: "/" },
