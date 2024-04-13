@@ -120,7 +120,15 @@ const faqData = [
 	},
 ];
 
-const FAQ = ({ className }: { className?: string }) => {
+const FAQ = ({
+	className,
+	title = "Frequently asked questions",
+	subTitle = "Wanna know more?",
+}: {
+	className?: string;
+	title?: string;
+	subTitle?: string;
+}) => {
 	// State to manage the visibility of each question's answer
 	const [expanded, setExpanded] = useState<boolean[]>([]);
 
@@ -134,9 +142,9 @@ const FAQ = ({ className }: { className?: string }) => {
 
 	return (
 		<section className={className} id="faq">
-			<p className="text-xl text-placeholder">Wanna know more?</p>
-			<h1 className="mb-10 mt-5 text-4xl font-bold md:mb-20 md:text-5xl">
-				Frequently asked questions
+			<p className="text-xl text-placeholder">{subTitle}</p>
+			<h1 className="mb-10 mt-5 text-3xl font-bold md:mb-20 md:text-5xl">
+				{title}
 			</h1>
 			{faqData.map((item, index) => (
 				<div key={item.question} className="mb-4 space-y-2 bg-white py-4">
