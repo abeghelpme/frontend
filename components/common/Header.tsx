@@ -9,7 +9,7 @@ import { Button } from "../ui";
 import LogoBanner from "./LogoBanner";
 
 const navLinks = [
-	{ name: "How it works", url: "/explore#start" },
+	{ name: "How it works", url: "/how-it-works" },
 	{ name: "Explore Campaigns", url: "/explore" },
 	{ name: "FAQ", url: "/#faq" },
 ];
