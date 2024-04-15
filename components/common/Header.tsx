@@ -46,7 +46,7 @@ const Header = () => {
 						}`}
 						asChild
 					>
-						<Link href={user ? "c/create" : "/signup"}>
+						<Link href={user ? "/c/create" : "/signup"}>
 							{user ? "Start Fundraiser" : "Sign Up"}
 						</Link>
 					</Button>

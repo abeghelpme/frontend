@@ -33,14 +33,16 @@ const TwoFa = () => {
 		} else {
 			setLoading({ ...loading, resend: true });
 			e.preventDefault();
+			setOpenModal(true);
+
 			const { data, error } = await callApi<ApiResponse>("/auth/2fa/setup", {
 				twoFactorType: "EMAIL",
 			});
+
 			if (data) {
 				toast.success("Success", {
 					description: data.message,
 				});
-				setOpenModal(true);
 				setLoading({ ...loading, resend: false });
 			}
 			if (error) {
@@ -124,7 +126,7 @@ const TwoFa = () => {
 												type="submit"
 												disabled={loading.resend}
 												onClick={(e) => otp === "" && void handleStep(e)}
-												className="!p-0 !text-sm md:!text-base font-medium text-abeg-primary disabled:text-gray-500 disabled:!bg-transparent disabled:cursor-not-allowed"
+												className="!p-0 !text-sm md:!text-base font-medium text-abeg-primary disabled:text-gray-500 disabled:!bg-transparent disabled:cursor-not-allowed inline"
 											>
 												resend it
 											</Button>
@@ -150,12 +152,7 @@ const TwoFa = () => {
 							className="w-fit !px-6"
 							size="sm"
 							onClick={() => {
-								toast.success("Success", {
-									description: "Sign in to verify 2FA",
-									duration: 2000,
-								});
-
-								void router.push("/signin");
+								void router.push("/c");
 							}}
 						>
 							Got it!

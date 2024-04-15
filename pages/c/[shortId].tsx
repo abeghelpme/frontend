@@ -68,7 +68,6 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 	}
 
 	const excerpt = generateExcerpt(campaign.story);
-	console.log(campaign.url);
 	return (
 		<>
 			<NextSeo

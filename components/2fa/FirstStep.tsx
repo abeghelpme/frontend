@@ -5,7 +5,7 @@ import { useCopyToClipboard } from "@/lib/hooks";
 import { useSession } from "@/store";
 import { ClipboardIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { CustomDialog, OtpInputDisplay, Spinner } from "../common";
 import { Button } from "../ui";
@@ -23,6 +23,8 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 	const [otp, setOtp] = useState("");
 	const { copyToClipboard } = useCopyToClipboard();
 	const { user } = useSession((state) => state);
+
+	const apiCalled = useRef(false);
 
 	// get qr code or secret
 	useEffect(() => {
@@ -47,7 +49,11 @@ const FirstStep = ({ setStep, recoveryCode }: AuthenticatorFirstStepProps) => {
 				setIsQRCodeLoading(false);
 			}
 		};
-		void setup2fa();
+
+		if (!apiCalled.current) {
+			void setup2fa();
+			apiCalled.current = true;
+		}
 	}, [isQRCodeLoading]);
 
 	const handleCopy = () => {
