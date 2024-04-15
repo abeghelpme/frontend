@@ -56,6 +56,7 @@ const SignUp = () => {
 	}, [deferredPassword]);
 
 	const onSubmit: SubmitHandler<SignUpType> = async (data: SignUpType) => {
+		setMessage((prev) => ({ ...prev, message: "" }));
 		const { data: responseData, error } = await callApi<ApiResponse>(
 			"/auth/signup",
 			{
@@ -230,16 +231,8 @@ const SignUp = () => {
 					</div>
 				</div>
 				<div className="flex flex-col justify-center">
-					<div className="flex w-full gap-1">
-						<label htmlFor="terms">
-							{isChecked ? <CheckedIcon /> : <UncheckedIcon />}
-						</label>
-						<Input
-							type="checkbox"
-							id="terms"
-							className="hidden rounded-lg md:h-6 md:w-6"
-							{...register("terms")}
-						/>
+					<label htmlFor="terms" className="flex space-x-1 items-center">
+						<span>{isChecked ? <CheckedIcon /> : <UncheckedIcon />}</span>
 						<p className="text-sm md:text-base">
 							I agree to AbegHelp.me&apos;s{" "}
 							<Link href="" className="text-abeg-primary">
@@ -250,7 +243,13 @@ const SignUp = () => {
 								privacy notice.
 							</Link>
 						</p>
-					</div>
+					</label>
+					<Input
+						type="checkbox"
+						id="terms"
+						className="hidden rounded-lg md:h-6 md:w-6"
+						{...register("terms")}
+					/>
 					<FormErrorMessage
 						errorMsg={errors.terms?.message!}
 						error={errors.terms!}

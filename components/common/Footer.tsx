@@ -33,7 +33,7 @@ const joinUsLinks = [
 ];
 
 const contactUsLinks = [
-	{ name: "Support@abeghelp.me", url: "mailto:support@abeghelp.me" },
+	{ name: "support@abeghelp.me", url: "mailto:support@abeghelp.me" },
 	{ name: "(+234) 876 - 5432 - 109)", url: "tel:+2348765432109" },
 ];
 const Footer = () => {
