@@ -45,6 +45,8 @@ const config = {
 
 				abeg: {
 					primary: "#008080",
+					teal: "#8BD2BD",
+					gray: "#292D32",
 					avatar: "#A8CCCC",
 					text: "#484848",
 					neutral: {

@@ -1,0 +1,11 @@
+export { default as aboutHero } from "@/public/assets/images/about-page/aboutHero.png";
+export { default as MagicPattern } from "@/public/assets/images/about-page/MagicPattern.png";
+export { default as whoWeAre } from "@/public/assets/images/about-page/who-we-are-image.png";
+export { default as ourAchievements1 } from "@/public/assets/images/about-page/our-achievements1.svg";
+export { default as ourAchievements2 } from "@/public/assets/images/about-page/our-achievements2.svg";
+export { default as ourAchievements3 } from "@/public/assets/images/about-page/our-achievements3.svg";
+export { default as ourAchievements4 } from "@/public/assets/images/about-page/our-achievements4.svg";
+export { default as ImagePattern } from "@/public/assets/images/about-page/image-pattern.png";
+export { default as JaneDoe } from "@/public/assets/images/about-page/jane.png";
+export { default as JohnDoe1 } from "@/public/assets/images/about-page/john-one.png";
+export { default as JohnDoe2 } from "@/public/assets/images/about-page/john-two.png";

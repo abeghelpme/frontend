@@ -30,7 +30,7 @@ const TestimonialCard = ({ className }: { className?: string }) => {
 
 	return (
 		<section className={cn("w-full pb-10 md:pb-0", className)}>
-			<h1 className="hidden text-center text-5xl font-bold md:block md:px-20 lg:px-32">
+			<h1 className="hidden text-center text-4xl font-bold md:block md:px-20 lg:px-[350px]">
 				Hear from some of our users we&apos;ve helped reach their goals
 			</h1>
 			<h1 className="text-center text-4xl font-bold md:hidden px-5">
@@ -65,10 +65,10 @@ const TestimonialCard = ({ className }: { className?: string }) => {
 							className="w-full"
 						/>
 						<div className="mt-5 lg:mt-0">
-							<p className="text-2xl font-extralight text-gray-200 md:text-3xl">
+							<p className="text-2xl font-extralight text-gray-200">
 								{testimonial.text}
 							</p>
-							<h1 className="mt-10 text-3xl font-bold md:text-4xl lg:mt-20">
+							<h1 className="mt-10 text-3xl font-bold lg:mt-20">
 								{testimonial.greeting}
 							</h1>
 							<h1 className="text-xl font-normal md:text-2xl">
