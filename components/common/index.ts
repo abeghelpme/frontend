@@ -35,5 +35,13 @@ export {
 	Verify,
 	WalletAdd,
 	TotalDonors,
+	BringPositiveChangeStar,
+	Spark,
+	Smiley,
+	Sun,
+	Cup,
+	Heart,
+	ArrowUpRight,
+	Settings,
 } from "./svg";
 export { default as SingleCampaignProgress } from "./SingleCampaignProgress";

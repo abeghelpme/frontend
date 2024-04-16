@@ -47,8 +47,14 @@ const useDragScroll = <TElement extends HTMLElement>(
 		if (!dragContainerRef.current) return;
 
 		dragContainerRef.current.removeEventListener("mousemove", handleMouseMove);
-		dragContainerRef.current.removeEventListener("mouseup", handleMouseUpOrLeave);
-		dragContainerRef.current.removeEventListener("mouseleave", handleMouseUpOrLeave);
+		dragContainerRef.current.removeEventListener(
+			"mouseup",
+			handleMouseUpOrLeave
+		);
+		dragContainerRef.current.removeEventListener(
+			"mouseleave",
+			handleMouseUpOrLeave
+		);
 
 		resetCursor(dragContainerRef.current);
 	});
@@ -68,7 +74,10 @@ const useDragScroll = <TElement extends HTMLElement>(
 		updateCursor(dragContainerRef.current);
 		dragContainerRef.current.addEventListener("mousemove", handleMouseMove);
 		dragContainerRef.current.addEventListener("mouseup", handleMouseUpOrLeave);
-		dragContainerRef.current.addEventListener("mouseleave", handleMouseUpOrLeave);
+		dragContainerRef.current.addEventListener(
+			"mouseleave",
+			handleMouseUpOrLeave
+		);
 	});
 
 	useEffect(() => {

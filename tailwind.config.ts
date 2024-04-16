@@ -42,6 +42,7 @@ const config = {
 				inputBorder: "rgba(124, 148, 107, 0.25)",
 				headerDivider: "#D4D4D4",
 				otpBorder: "rgba(0, 128, 128, 0.5)",
+				"why-choose-us": "#F6F6F6",
 
 				abeg: {
 					primary: "#008080",
