@@ -30,10 +30,10 @@ const TestimonialCard = ({ className }: { className?: string }) => {
 
 	return (
 		<section className={cn("w-full pb-10 md:pb-0", className)}>
-			<h1 className="hidden text-center text-5xl font-bold md:block md:px-20 lg:px-32">
+			<h1 className="hidden text-center text-2xl md:text-3xl font-bold md:block md:px-20 lg:px-32 ">
 				Hear from some of our users we&apos;ve helped reach their goals
 			</h1>
-			<h1 className="text-center text-4xl font-bold md:hidden px-5">
+			<h1 className="text-center text-2xl md:text-3xl font-bold md:hidden px-5">
 				Some of our users we&apos;ve helped reach their goals
 			</h1>
 			<div
@@ -46,7 +46,7 @@ const TestimonialCard = ({ className }: { className?: string }) => {
 				{testimonials.map((testimonial, index) => (
 					<div
 						key={index}
-						className="relative mt-16 w-[90%] shrink-0 grow-0 items-center justify-center p-4 text-white md:p-7 lg:mt-20 lg:flex lg:gap-20"
+						className="relative mt-10 w-[90%] shrink-0 grow-0 items-center justify-center p-4 text-white md:p-7 lg:flex lg:gap-20"
 					>
 						<Image
 							src="/assets/images/landing-page/background.png"
