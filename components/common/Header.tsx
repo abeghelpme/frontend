@@ -11,7 +11,7 @@ import LogoBanner from "./LogoBanner";
 const navLinks = [
 	{ name: "How it works", url: "/how-it-works" },
 	{ name: "Explore Campaigns", url: "/explore" },
-	{ name: "FAQ", url: "/#faq" },
+	{ name: "About", url: "/about" },
 ];
 const Header = () => {
 	const [isMobileNavOpen, toggleMobileNav] = useToggle(false);
@@ -42,7 +42,7 @@ const Header = () => {
 					</Button>
 					<Button
 						className={`text-md bg-white font-semibold text-abeg-primary flex items-center ${
-							user ? "px-0" : "px-10"
+							user ? "px-5" : "px-10"
 						}`}
 						asChild
 					>

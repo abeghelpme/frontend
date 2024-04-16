@@ -1,4 +1,5 @@
 import {
+	type ContactUsProps,
 	type ForgotPasswordProps,
 	type LoginProps,
 	type ResetPasswordProps,
@@ -32,7 +33,8 @@ type FormType =
 	| "forgotPassword"
 	| "campaignStepOne"
 	| "campaignStepTwo"
-	| "campaignStepThree";
+	| "campaignStepThree"
+	| "contactUs";
 
 const signUpSchema: z.ZodType<SignUpProps> = z
 	.object({
@@ -240,6 +242,45 @@ const campaignStepThreeSchema = z.object({
 	storyHtml: z.string(),
 });
 
+const contactUsSchema: z.ZodType<ContactUsProps> = z.object({
+	firstName: z
+		.string()
+		.min(2, { message: "First Name is required" })
+		.max(50, { message: "First Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		}),
+	lastName: z
+		.string()
+		.min(2, { message: "Last Name is required" })
+		.max(50, { message: "Last Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		}),
+	email: z
+		.string()
+		.min(2, { message: "Email is required" })
+		.email({ message: "Invalid email address" })
+		.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+			message: "Enter a valid email",
+		})
+		.transform((value) => {
+			return value.toLowerCase().trim();
+		}),
+	terms: z.boolean().refine((value) => value === true, {
+		message: "Please accept the terms before proceeding",
+	}),
+	phone: z.string().min(10, "Phone number must be at least 10 digits long."),
+	message: z
+		.string()
+		.min(2, { message: "Message is required" })
+		.max(100, { message: "Message must be less than 100 characters" }),
+});
+
 export const zodValidator = (formType: FormType) => {
 	switch (formType) {
 		case "signup":
@@ -256,6 +297,8 @@ export const zodValidator = (formType: FormType) => {
 			return campaignStepTwoSchema;
 		case "campaignStepThree":
 			return campaignStepThreeSchema;
+		case "contactUs":
+			return contactUsSchema;
 		default:
 			return;
 	}
@@ -265,3 +308,4 @@ export type SignUpType = z.infer<typeof signUpSchema>;
 export type LoginType = z.infer<typeof loginSchema>;
 export type ForgotPasswordType = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordType = z.infer<typeof resetPasswordSchema>;
+export type ContactUsType = z.infer<typeof contactUsSchema>;
