@@ -31,3 +31,6 @@ export { default as youtube } from "@/public/assets/images/landing-page/YouTube.
 export { default as campaignHero } from "@/public/assets/images/landing-page/campaign-hero.svg";
 export { default as storiesAboutUs } from "@/public/assets/images/landing-page/stories-about-us.png";
 export { default as MagicPattern } from "@/public/assets/images/landing-page/MagicPattern.svg";
+export { default as charity } from "@/public/assets/images/landing-page/charity.png";
+export { default as support } from "@/public/assets/images/landing-page/support.png";
+export { default as contours } from "@/public/assets/images/landing-page/contours.png";
