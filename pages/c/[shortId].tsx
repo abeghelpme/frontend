@@ -71,8 +71,6 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
 		<>
 			<NextSeo
-				title={campaign.title}
-				description={excerpt}
 				canonical={campaign.url}
 				openGraph={{
 					url: campaign.url,

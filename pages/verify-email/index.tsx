@@ -50,7 +50,6 @@ const VerificationPage = () => {
 			hasSuccess={false}
 			contentClass="md:max-w-wAuthFlow"
 		>
-			{" "}
 			<div className="space-y-2 text-center">
 				<h1 className="text-xl font-medium">Verify your email</h1>
 				<div className="">

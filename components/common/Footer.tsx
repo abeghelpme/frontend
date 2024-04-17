@@ -23,7 +23,7 @@ const siteMapLinks = [
 	{ name: "How it works", url: "/how-it-works" },
 	{ name: "Testimonials", url: "/" },
 	{ name: "Partners", url: "/" },
-	{ name: "FAQ's", url: "/" },
+	{ name: "FAQ's", url: "/#faq" },
 ];
 
 const joinUsLinks = [

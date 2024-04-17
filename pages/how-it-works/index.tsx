@@ -106,11 +106,7 @@ const HowItWorks = ({
 			</div>
 			<section className="py-16 flex flex-col gap-14 md:gap-16">
 				<div className="flex flex-col-reverse md:flex-row gap-8 md:gap-16 lg:gap-24 px-5 md:px-20 ">
-					<FAQ
-						className="w-full"
-						title="Abeghelp.me FAQ"
-						subTitle="Some popular questions"
-					/>
+					<FAQ className="w-full px-0 py-0 md:px-0 md:py-0" />
 					<div className="md:relative w-full">
 						<div className="flex flex-col gap-8 md:gap-12 md:sticky md:top-5 ">
 							{howItWorksData.map((data, id) => {

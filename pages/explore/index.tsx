@@ -45,22 +45,19 @@ const Campaigns = ({
 	allCampaignCategories,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
-		<BaseLayout>
+		<>
 			<NextSeo
-				title="Get started"
-				description="Get started with Abeghelp.me and join the effortless way to raise funds and make a difference and empower your cause"
 				canonical="https://www.abeghelp.me/explore"
 				openGraph={{
 					url: "https://www.abeghelp.me/explore",
-					title: "Get Started",
+					title: "Explore campaign categories",
 					description:
-						"Get started with Abeghelp.me and join the effortless way to raise funds and make a difference and empower your cause",
+						"Browse through different campaign categories to find the one that resonates with you.",
 					images: [
 						{
-							url: "https://www.abeghelp.me/explore",
+							url: "https://static.abeghelp.me/assets/explore.png",
 							width: 800,
 							height: 600,
-							alt: "Get started image",
 						},
 					],
 				}}
@@ -68,23 +65,25 @@ const Campaigns = ({
 					cardType: "summary_large_image",
 				}}
 			/>
-			<Hero
-				h1Tag="Be part of the change makers today!"
-				pTag="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
-				button1={{ href: "/c/create", text: "Donate now", className: "px-10" }}
-				imageSrc={campaignHero}
-			/>
-			<div className="flex flex-col justify-center gap-8 md:gap-20 py-10 md:py-20">
-				<CampaignCategories
-					className="px-5 md:px-20"
-					allCampaignCategories={allCampaignCategories}
+			<BaseLayout>
+				<Hero
+					h1Tag="Be part of the change makers today!"
+					pTag="Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me"
+					// button1={{ href: '/c/create', text: 'Donate now', className: 'px-10' }}
+					imageSrc={campaignHero}
 				/>
-				<HowItWorks className="px-5 md:px-20" />
-				<SuccessStories className="px-5 md:px-20 py-10 md:py-0" />
-				<UrgentFundraisers featuredCampaigns={featuredCampaigns} />
-				<FAQ className="px-5 md:px-20" />
-			</div>
-		</BaseLayout>
+				<div className="flex flex-col justify-center gap-8 md:gap-20 py-10 md:py-20">
+					<CampaignCategories
+						className="px-5 md:px-20"
+						allCampaignCategories={allCampaignCategories}
+					/>
+					<HowItWorks className="px-5 md:px-20" />
+					<SuccessStories className="px-5 md:px-20 py-10 md:py-0" />
+					<UrgentFundraisers featuredCampaigns={featuredCampaigns} />
+					<FAQ className="px-5 md:px-20" />
+				</div>
+			</BaseLayout>
+		</>
 	);
 };
 export default Campaigns;
