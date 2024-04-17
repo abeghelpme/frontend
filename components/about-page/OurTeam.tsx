@@ -58,7 +58,13 @@ const OurTeam = () => {
 			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 pt-10">
 				{ourTeam.map((dev, index) => (
 					<div key={index} className="flex flex-col items-center">
-						<Image src={dev.image} width={300} height={300} alt={dev.name} />
+						<Image
+							src={dev.image}
+							width={300}
+							height={300}
+							alt={dev.name}
+							className="w-full"
+						/>
 						<span className="bg-abeg-gray text-white flex flex-col items-center p-2 w-full">
 							<h1 className="text-2xl">{dev.name}</h1>
 							<p className="text-base">{dev.position}</p>
