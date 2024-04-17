@@ -14,21 +14,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const Login = () => {
 	const { cfTurnStile, checkBotStatus, handleBotStatus } =
 		useCloudflareTurnstile();
-	const showModal = useRef(false);
 	const router = useRouter();
 	const [openModal, setOpenModal] = useState(false);
 	const [success] = useState(false);
-	const [skip2FA, setSkip2FA] = useState<string | boolean>(false);
 	const {
 		user,
-		actions: { updateUser, clearSession },
+		actions: { updateUser },
 	} = useSession((state) => state);
 
 	const {

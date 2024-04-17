@@ -11,7 +11,7 @@ type ButtonType = {
 type Props = {
 	h1Tag: string;
 	pTag: string;
-	button1: ButtonType;
+	button1?: ButtonType;
 	button2?: ButtonType;
 	imageSrc: StaticImageData;
 };
@@ -35,12 +35,14 @@ const Hero = ({ h1Tag, pTag, button1, button2, imageSrc }: Props) => {
 					</h1>
 					<p className="pr-10 text-lg text-gray-50 md:pr-5">{pTag} </p>
 					<div className="flex space-x-10 py-5 md:pt-20">
-						<Button
-							className={`text-md bg-gray-50 font-semibold text-abeg-primary outline-none ${button1.className}`}
-							asChild
-						>
-							<Link href={button1.href}>{button1.text}</Link>
-						</Button>
+						{button1 && (
+							<Button
+								className={`text-md bg-gray-50 font-semibold text-abeg-primary outline-none ${button1.className}`}
+								asChild
+							>
+								<Link href={button1.href}>{button1.text}</Link>
+							</Button>
+						)}
 						{button2 && (
 							<Button
 								className="text-md border border-gray-200 bg-transparent font-semibold text-gray-100 outline-none"
