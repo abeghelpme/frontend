@@ -196,12 +196,10 @@ const HomePage = ({
 					<div className=" pt-10">
 						<TestimonialCard />
 					</div>
-					<FAQS />
 				</div>
 				<FAQ />
-			</div>
-		</BaseLayout>
-
+			</BaseLayout>
+		</>
 	);
 };
 
