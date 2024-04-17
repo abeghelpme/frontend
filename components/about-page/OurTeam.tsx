@@ -50,7 +50,7 @@ const ourTeam = [
 ];
 const OurTeam = () => {
 	return (
-		<section className="px-5 md:px-20 py-16 lg:py-20">
+		<section className="px-5 md:px-20 py-10 lg:py-20">
 			<div className="flex flex-col items-center space-y-5">
 				<p className="text-xl">Meet the team</p>
 				<h1 className="font-bold text-4xl">A pack of achievers with a dream</h1>

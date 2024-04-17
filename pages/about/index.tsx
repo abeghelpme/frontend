@@ -7,7 +7,11 @@ import {
 import TestimonialCard from "@/components/common/TestimonialCard";
 import { Button } from "@/components/ui";
 import { BaseLayout } from "@/layouts";
-import { aboutHero, whoWeAre } from "@/public/assets/images/about-page";
+import {
+	MagicPattern,
+	aboutHero,
+	whoWeAre,
+} from "@/public/assets/images/about-page";
 import {
 	heroCircle,
 	heroHalfMoon,
@@ -28,7 +32,7 @@ const AboutPage = () => {
 		<BaseLayout>
 			<div className="relative flex justify-center overflow-hidden bg-abeg-primary bg-cover bg-center px-5 md:px-20 pt-20 pb-56">
 				<Image
-					src="/assets/images/about-page/MagicPattern.png"
+					src={MagicPattern}
 					className="object-cover object-center z-30"
 					fetchPriority="high"
 					priority={true}
@@ -40,7 +44,7 @@ const AboutPage = () => {
 						src={aboutHero}
 						fetchPriority="high"
 						priority={true}
-						alt=""
+						alt="About page hero image"
 						width={300}
 						height={300}
 						className="z-10 w-full aspect-video object-cover h-72 md:h-96 rounded-lg"
@@ -65,8 +69,8 @@ const AboutPage = () => {
 					height={150}
 					className="z-10 md: absolute right-[-4rem] top-60 md:right-0 md:top-[25rem] "
 				/>
-				<div className="z-10 absolute sm:top-[10rem] top-[20rem] md:top-[25rem] text-white flex flex-col items-center gap-2 md:gap-10 md:max-w-[850px]  text-center px-5">
-					<h3 className="text-5xl md:text-6xl font-extrabold">
+				<div className="z-10 absolute top-[20rem] md:top-[25rem] text-white flex flex-col items-center gap-2 md:gap-10 md:max-w-[850px]  text-center px-5">
+					<h3 className="text-4xl md:text-6xl font-extrabold">
 						One Campaign at a time, we're renewing hope in lives
 					</h3>
 					<p className="font-medium text-base md:text-xl md:max-w-[700px] px-2">
@@ -76,7 +80,7 @@ const AboutPage = () => {
 				</div>
 			</div>
 
-			<section className="px-5 py-16 md:px-20 lg:py-20">
+			<section className="px-5 py-10 md:px-20 lg:py-20">
 				<div className="items-center lg:grid lg:grid-cols-2 lg:gap-20 justify-between relative">
 					<div className="mb-8 space-y-5 lg:mb-0 lg:pr-24">
 						<p className="text-xl">Who we are at Abeghelp.me?</p>
@@ -136,7 +140,7 @@ const AboutPage = () => {
 							height={600}
 							className="size-full rounded-xl"
 						/>
-						<div className="absolute right-[120px] md:right-[290px] bottom-8 md:bottom-[70px] text-white px-5 md:px-10 py-5 bg-abeg-teal flex flex-col items-center justify-center">
+						<div className="absolute right-[120px] md:right-[290px] bottom-8 md:bottom-[70px] text-white p-3 md:px-10 bg-abeg-teal flex flex-col items-center justify-center">
 							<p className="text-base">Over</p>
 							<h1 className="text-3xl md:text-5xl">10,000</h1>
 							<p className="text-base text-center">Satisfied Customers</p>
@@ -147,7 +151,7 @@ const AboutPage = () => {
 
 			<OurAchievements />
 
-			<section className="flex flex-col-reverse lg:flex-row items-center justify-between px-5 py-16 md:px-20 lg:flex lg:gap-20 lg:py-20">
+			<section className="flex flex-col-reverse lg:flex-row items-center justify-between px-5 py-10 md:px-20 lg:flex lg:gap-20 lg:py-20">
 				<Image
 					src={joinnUs}
 					alt="hero image"
@@ -265,7 +269,6 @@ const AboutPage = () => {
 					</div>
 				</div>
 
-				{/* Tabs */}
 				<div className="lg:w-2/3 w-full">
 					<OurPurpose />
 				</div>
@@ -293,7 +296,7 @@ const AboutPage = () => {
 							Let&apos;s help make your dream a reality today
 						</h1>
 						<Button
-							className="flex w-[300px] py-5 justify-center border border-gray-100 font-semibold bg-abeg-primary text-white text-base outline-none"
+							className="flex w-[300px] py-4 justify-center border border-gray-100 font-semibold bg-abeg-primary text-white text-base outline-none"
 							asChild
 						>
 							<Link href="/c/create">Start a Fundraiser</Link>

@@ -30,11 +30,11 @@ const ourAchievements = [
 ];
 const OurAchievements = () => {
 	return (
-		<section className="bg-abeg-gray md:grid md:grid-cols-2 lg:grid-cols-4 px-20 text-white">
+		<section className="bg-abeg-gray md:grid md:grid-cols-2 lg:grid-cols-4 px-10 md:px-20 text-white">
 			{ourAchievements.map((achievement, index) => (
 				<div
 					key={index}
-					className="flex flex-col justify-center items-center gap-5 py-24 border-y md:border-x border-gray-300"
+					className="flex flex-col justify-center items-center gap-5 py-20 md:py-24 border-y md:border-x border-gray-300"
 				>
 					<Image
 						src={achievement.image}

@@ -60,7 +60,7 @@ const ContactForm = () => {
 	return (
 		<section className="px-5 md:px-20 flex flex-col items-center space-y-10">
 			<div className="flex flex-col items-center space-y-5">
-				<h1 className="font-bold text-4xl lg:text-6xl">Get in touch</h1>
+				<h1 className="font-bold text-4xl lg:text-5xl">Get in touch</h1>
 				<p className="text-base lg:text-2xl font-extralight">
 					We’d love to hear from you, kindly fill out this form.
 				</p>

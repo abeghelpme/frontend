@@ -126,7 +126,7 @@ const HomePage = ({
 							<Link href="/c/create">Start fundraiser</Link>
 						</Button>
 						<Button
-							className="flex justify-center border border-abeg-primary font-semibold text-abeg-primary text-base outline-none whitespace-nowrap px-3 md:px-4"
+							className="flex justify-cente items-centerr border border-abeg-primary font-semibold text-abeg-primary text-base outline-none whitespace-nowrap px-3 md:px-4"
 							asChild
 						>
 							<Link href="/donate">Donate now</Link>
