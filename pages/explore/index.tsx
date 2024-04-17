@@ -57,7 +57,7 @@ const Campaigns = ({
 						{
 							url: "https://static.abeghelp.me/assets/explore.png",
 							width: 1200,
-							height: 1200,
+							height: 630,
 						},
 					],
 				}}

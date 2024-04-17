@@ -117,7 +117,7 @@ const Login = () => {
 						{
 							url: "https://static.abeghelp.me/assets/signin.png",
 							width: 1200,
-							height: 1200,
+							height: 630,
 						},
 					],
 				}}

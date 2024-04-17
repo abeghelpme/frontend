@@ -32,7 +32,7 @@ const SEOCONFIG: DefaultSeoProps = {
 			{
 				url: "https://static.abeghelp.me/assets/og-index.png",
 				width: 1200,
-				height: 1200,
+				height: 630,
 				alt: "OG image",
 			},
 		],

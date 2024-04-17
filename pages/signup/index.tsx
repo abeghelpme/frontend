@@ -107,6 +107,8 @@ const SignUp = () => {
 					images: [
 						{
 							url: "https://static.abeghelp.me/assets/signup.png",
+							width: 1200,
+							height: 630,
 						},
 					],
 				}}
