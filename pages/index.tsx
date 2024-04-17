@@ -92,7 +92,7 @@ const HomePage = ({
 						"Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
 					images: [
 						{
-							url: "https://www.abeghelp.me/",
+							url: "https://static.abeghelp.me/assets/og-index.png",
 							width: 800,
 							height: 600,
 							alt: "Homepage image",
@@ -120,16 +120,10 @@ const HomePage = ({
 					</p>
 					<div className="flex justify-center gap-2 md:gap-6 self-center">
 						<Button
-							className="text-sm  flex justify-center bg-abeg-primary font-semibold text-white md:text-base outline-none whitespace-nowrap px-3 md:px-4"
+							className="bg-abeg-primary font-semibold text-white md:text-lg"
 							asChild
 						>
-							<Link href="/c/create">Start fundraiser</Link>
-						</Button>
-						<Button
-							className="flex justify-center border border-abeg-primary font-semibold text-abeg-primary text-base outline-none whitespace-nowrap px-3 md:px-4"
-							asChild
-						>
-							<Link href="/donate">Donate now</Link>
+							<Link href="/c/create">Start a fundraiser</Link>
 						</Button>
 					</div>
 				</div>
@@ -241,7 +235,7 @@ const Cards = () => {
 					</p>
 				</div>
 				<Link
-					href="/donate"
+					href="/explore/66029c5d59ccbd1162a2e252?name=Emergency"
 					className="rounded-full bg-[#F7F7F7] w-full flex justify-between px-4 py-3 font-bold text-base text-abeg-text"
 				>
 					<span className="flex items-center">Donate</span>
@@ -408,7 +402,7 @@ const FAQS = () => {
 		{
 			question: "Is my country supported?",
 			text: `
-        We are currently supporting 17 African countries. We are working on
+        We are currently supporting few Anglophone African countries. We are working on
         expanding our support to more countries.`,
 		},
 	];
@@ -489,7 +483,10 @@ const WhyUs = () => {
 					);
 				})}
 			</div>
-			<Button asChild className="text-white self-center bg-abeg-primary  ">
+			<Button
+				className="bg-abeg-primary font-semibold text-white md:text-lg w-fit mx-auto"
+				asChild
+			>
 				<Link href="/c/create">Start a fundraiser</Link>
 			</Button>
 		</div>

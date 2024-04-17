@@ -113,8 +113,8 @@ const faqData = [
 		question: "Is my country supported?",
 		answer: (
 			<p>
-				We are currently supporting 17 African countries. We are working on
-				expanding our support to more countries.
+				We are currently supporting few Anglophone African countries. We are
+				working on expanding our support to more countries.
 			</p>
 		),
 	},
