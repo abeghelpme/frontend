@@ -71,8 +71,6 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
 		<>
 			<NextSeo
-				title={campaign.title}
-				description={excerpt}
 				canonical={campaign.url}
 				openGraph={{
 					url: campaign.url,
@@ -82,8 +80,8 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 						images: campaign.images.map((image) => {
 							return {
 								url: image.secureUrl,
-								width: 800,
-								height: 600,
+								width: 1200,
+								height: 630,
 								alt: campaign.title,
 							};
 						}),

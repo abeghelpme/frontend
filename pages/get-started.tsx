@@ -6,14 +6,23 @@ import bg from "@/public/assets/images/auth/auth-bg-jar.svg";
 import { useSession } from "@/store";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const InactiveLogoBanner = ({
 	fill,
 	color,
 	isBottom,
-}: { fill?: boolean; color?: string; isBottom?: boolean }) => {
+}: {
+	fill?: boolean;
+	color?: string;
+	isBottom?: boolean;
+}) => {
+	const router = useRouter();
 	return (
-		<div className="flex items-center justify-center space-x-2">
+		<div
+			className="flex items-center justify-center space-x-2 cursor-pointer"
+			onClick={() => router.push("/")}
+		>
 			<svg
 				width="25"
 				height="25"

@@ -22,12 +22,20 @@ const SEOCONFIG: DefaultSeoProps = {
 	titleTemplate: "AbegHelp |'%s",
 	description:
 		"Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
-	canonical: "https://www.abeghelp.me/",
+	canonical: "https://www.abeghelp.me",
 	openGraph: {
 		type: "website",
 		locale: "en_IE",
-		url: "https://www.abeghelp.me/",
+		url: "https://www.abeghelp.me",
 		siteName: "AbegHelp",
+		images: [
+			{
+				url: "https://static.abeghelp.me/assets/og-index.png",
+				width: 1200,
+				height: 630,
+				alt: "OG image",
+			},
+		],
 	},
 	twitter: {
 		handle: "@abeghelpme",

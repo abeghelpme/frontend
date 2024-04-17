@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib";
 
+
 const FAQ = ({ className }: { className?: string }) => {
 	const faqs = [
 		{
