@@ -85,7 +85,7 @@ const HomePage = ({
 				canonical="https://www.abeghelp.me"
 				openGraph={{
 					url: "https://www.abeghelp.me",
-					title: "Start your journey into fundraising with ease",
+					title: "Homepage",
 					description:
 						"Join the effortless way to raise funds and make a difference and empower your cause with Abeghelp.me",
 					images: [
