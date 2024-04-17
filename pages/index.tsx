@@ -91,8 +91,8 @@ const HomePage = ({
 					images: [
 						{
 							url: "https://static.abeghelp.me/assets/og-index.png",
-							width: 1200,
-							height: 630,
+							width: 800,
+							height: 600,
 						},
 					],
 				}}

@@ -80,8 +80,8 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 						images: campaign.images.map((image) => {
 							return {
 								url: image.secureUrl,
-								width: 1200,
-								height: 630,
+								width: 800,
+								height: 600,
 								alt: campaign.title,
 							};
 						}),
