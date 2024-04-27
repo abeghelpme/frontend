@@ -25,7 +25,5 @@ export type ContactUsProps = {
 	firstName: string;
 	lastName: string;
 	email: string;
-	phone: string;
 	message: string;
-	terms: boolean;
 };

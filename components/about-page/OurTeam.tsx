@@ -3,11 +3,6 @@ import Image from "next/image";
 
 const ourTeam = [
 	{
-		name: "Jane Doe",
-		position: "UI UX Designer",
-		image: JaneDoe,
-	},
-	{
 		name: "John Doe",
 		position: "UI UX Designer",
 		image: JohnDoe1,
@@ -18,12 +13,7 @@ const ourTeam = [
 		image: JohnDoe2,
 	},
 	{
-		name: "John Doe",
-		position: "Frontend Engineer",
-		image: JohnDoe2,
-	},
-	{
-		name: "John Doe",
+		name: "Jane Doe",
 		position: "Frontend Engineer",
 		image: JaneDoe,
 	},
@@ -40,7 +30,7 @@ const ourTeam = [
 	{
 		name: "John Doe",
 		position: "Support Engineer",
-		image: JohnDoe2,
+		image: JohnDoe1,
 	},
 	{
 		name: "John Doe",
