@@ -29,8 +29,7 @@ const ContactForm = () => {
 	const onSubmit: SubmitHandler<ContactUsType> = async (
 		data: ContactUsType
 	) => {
-		console.log(data);
-		// setMessage((prev) => ({ ...prev, message: "" }));
+		setMessage((prev) => ({ ...prev, message: "" }));
 		const { data: responseData, error } = await callApi<ApiResponse>(
 			"/contact/create",
 			{
@@ -168,6 +167,7 @@ const ContactForm = () => {
 							variant="primary"
 							fullWidth
 							loading={isSubmitting}
+							type="submit"
 						>
 							Send Message
 						</Button>

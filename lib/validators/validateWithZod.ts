@@ -271,9 +271,6 @@ const contactUsSchema: z.ZodType<ContactUsProps> = z.object({
 		.transform((value) => {
 			return value.toLowerCase().trim();
 		}),
-	terms: z.boolean().refine((value) => value === true, {
-		message: "Please accept the terms before proceeding",
-	}),
 	message: z
 		.string()
 		.min(2, { message: "Message is required" })
