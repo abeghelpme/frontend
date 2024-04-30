@@ -14,7 +14,6 @@ const ContactForm = () => {
 		error: undefined,
 		data: undefined,
 	});
-	const [isChecked, setIsChecked] = useState(false);
 
 	const {
 		register,
@@ -30,37 +29,36 @@ const ContactForm = () => {
 	const onSubmit: SubmitHandler<ContactUsType> = async (
 		data: ContactUsType
 	) => {
-		// const { data: responseData, error } = await callApi<ApiResponse>(
-		//   "/contact-us",
-		//   {
-		//     email: data.email,
-		//     firstName: data.firstName,
-		//     lastName: data.lastName,
-		//     phone: data.phone,
-		//     message: data.message,
-		//     isTermAndConditionAccepted: data.terms,
-		//   }
-		// );
-		// if (error) {
-		//   const castedError = error as ApiResponse;
-		//   setMessage(castedError);
-		//   toast.error(castedError.status, {
-		//     description: castedError.message,
-		//     duration: 2000,
-		//   });
-		//   return;
-		// } else {
-		//   toast.success("Success", {
-		//     description: responseData?.message,
-		//     duration: 2000,
-		//   });
-		//   reset();
-		// }
+		setMessage((prev) => ({ ...prev, message: "" }));
+		const { data: responseData, error } = await callApi<ApiResponse>(
+			"/contact/create",
+			{
+				firstName: data.firstName,
+				lastName: data.lastName,
+				email: data.email,
+				message: data.message,
+			}
+		);
+		if (error) {
+			const castedError = error as ApiResponse;
+			setMessage(castedError);
+			toast.error(castedError.status, {
+				description: castedError.message,
+				duration: 2000,
+			});
+			return;
+		} else {
+			toast.success("Success", {
+				description: responseData?.message,
+				duration: 2000,
+			});
+			reset();
+		}
 	};
 	return (
 		<section className="px-5 md:px-20 flex flex-col items-center space-y-10">
 			<div className="flex flex-col items-center space-y-5">
-				<h1 className="font-bold text-4xl lg:text-6xl">Get in touch</h1>
+				<h1 className="font-bold text-4xl lg:text-5xl">Get in touch</h1>
 				<p className="text-base lg:text-2xl font-extralight">
 					We’d love to hear from you, kindly fill out this form.
 				</p>
@@ -146,22 +144,6 @@ const ContactForm = () => {
 					</div>
 
 					<div className="space-y-1 sm:space-y-0 lg:gap-6">
-						<label htmlFor="password" className="mb-1 font-medium lg:text-lg">
-							Phone number
-						</label>
-						<Input
-							type="phone"
-							{...register("phone")}
-							id="phone"
-							className={`min-h-[45px]`}
-							errorField={errors.phone}
-						/>
-						<FormErrorMessage
-							errorMsg={errors.phone?.message!}
-							error={errors.phone!}
-						/>
-					</div>
-					<div className="space-y-1 sm:space-y-0 lg:gap-6">
 						<label htmlFor="message" className="mb-1 font-medium lg:text-lg">
 							Message
 						</label>
@@ -185,6 +167,7 @@ const ContactForm = () => {
 							variant="primary"
 							fullWidth
 							loading={isSubmitting}
+							type="submit"
 						>
 							Send Message
 						</Button>
