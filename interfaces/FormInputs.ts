@@ -27,3 +27,15 @@ export type ContactUsProps = {
 	email: string;
 	message: string;
 };
+
+export type UpdateProfileProps = {
+	fullName?: string;
+	email?: string;
+	phoneNumber?: string;
+};
+
+export type UpdatePasswordsProps = {
+	currentPassword: string;
+	newPassword: string;
+	confirmNewPassword: string;
+};

@@ -5,6 +5,8 @@ export type {
 	ResetPasswordProps,
 	SignUpProps,
 	ContactUsProps,
+	UpdateProfileProps,
+	UpdatePasswordsProps,
 } from "./FormInputs";
 export type { AuthLayoutProps, BaseLayoutProps } from "./Layouts";
 export type { WithPageLayout } from "./WithPageLayout";
