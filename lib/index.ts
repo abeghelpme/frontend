@@ -6,6 +6,7 @@ export {
 	type ResetPasswordType,
 	type SignUpType,
 	type ContactUsType,
+	type UpdateProfileType,
 } from "./validators/validateWithZod";
 
 export { callApi } from "./helpers/callApi";

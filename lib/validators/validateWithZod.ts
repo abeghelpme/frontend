@@ -4,6 +4,8 @@ import {
 	type LoginProps,
 	type ResetPasswordProps,
 	type SignUpProps,
+	type UpdatePasswordsProps,
+	type UpdateProfileProps,
 } from "@/interfaces";
 import { zxcvbn, zxcvbnAsync, zxcvbnOptions } from "@zxcvbn-ts/core";
 import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
@@ -34,7 +36,10 @@ type FormType =
 	| "campaignStepOne"
 	| "campaignStepTwo"
 	| "campaignStepThree"
-	| "contactUs";
+	| "contactUs"
+	| "updateProfile"
+	| "updatePasswords"
+	| "uploadProfileImage";
 
 const signUpSchema: z.ZodType<SignUpProps> = z
 	.object({
@@ -277,6 +282,135 @@ const contactUsSchema: z.ZodType<ContactUsProps> = z.object({
 		.max(100, { message: "Message must be less than 100 characters" }),
 });
 
+const updateProfileSchema: z.ZodType<UpdateProfileProps> = z.object({
+	fullName: z
+		.string()
+		.min(2, { message: "Full Name is required" })
+		.max(50, { message: "Full Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		})
+		.optional(),
+	email: z
+		.string()
+		.min(2, { message: "Email is required" })
+		.email({ message: "Invalid email address" })
+		.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+			message: "Enter a valid email",
+		})
+		.transform((value) => {
+			return value.toLowerCase().trim();
+		})
+		.optional(),
+	phoneNumber: z.string().optional(),
+});
+
+const updatePassWordsSchema: z.ZodType<UpdatePasswordsProps> = z.object({
+	currentPassword: z
+		.string()
+		.min(6, { message: "Password must be at least 6 characters" })
+		.regex(
+			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+			{
+				message:
+					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+			}
+		)
+		.max(50)
+		.transform((value, ctx) => {
+			const options = {
+				dictionary: {
+					...zxcvbnCommonPackage.dictionary,
+					...zxcvbnEnPackage.dictionary,
+				},
+				translations: {
+					...zxcvbnEnPackage.translations,
+				},
+				graphs: zxcvbnCommonPackage.adjacencyGraphs,
+			};
+			zxcvbnOptions.setOptions(options);
+			const testedResult = zxcvbn(value);
+
+			if (testedResult.score < 3) {
+				testedResult.feedback.suggestions.map((issue) => {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: issue,
+					});
+				});
+			}
+
+			return value.trim();
+		}),
+	newPassword: z
+		.string()
+		.min(6, { message: "Password must be at least 6 characters" })
+		.regex(
+			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+			{
+				message:
+					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+			}
+		)
+		.max(50)
+		.transform((value, ctx) => {
+			const options = {
+				dictionary: {
+					...zxcvbnCommonPackage.dictionary,
+					...zxcvbnEnPackage.dictionary,
+				},
+				translations: {
+					...zxcvbnEnPackage.translations,
+				},
+				graphs: zxcvbnCommonPackage.adjacencyGraphs,
+			};
+			zxcvbnOptions.setOptions(options);
+			const testedResult = zxcvbn(value);
+
+			if (testedResult.score < 3) {
+				testedResult.feedback.suggestions.map((issue) => {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: issue,
+					});
+				});
+			}
+
+			return value.trim();
+		}),
+	confirmNewPassword: z
+		.string()
+		.min(6, { message: "Password must be at least 6 characters" })
+		.regex(
+			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+			{
+				message:
+					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+			}
+		)
+		.max(50)
+		.transform((value) => {
+			return value.trim();
+		}),
+});
+
+const uploadProfileImage = z.object({
+	photos: z
+		.array(
+			z.custom<File | string>(
+				(file) => file instanceof File || typeof file === "string"
+			)
+		)
+		.min(1, {
+			message: "Select at least one image (which would be the cover image)",
+		})
+		.max(1, {
+			message: "Select at most one image (which would be the cover image)",
+		})
+		.optional(),
+});
 export const zodValidator = (formType: FormType) => {
 	switch (formType) {
 		case "signup":
@@ -295,6 +429,12 @@ export const zodValidator = (formType: FormType) => {
 			return campaignStepThreeSchema;
 		case "contactUs":
 			return contactUsSchema;
+		case "updateProfile":
+			return updateProfileSchema;
+		case "updatePasswords":
+			return updatePassWordsSchema;
+		case "uploadProfileImage":
+			return uploadProfileImage;
 		default:
 			return;
 	}
@@ -305,3 +445,6 @@ export type LoginType = z.infer<typeof loginSchema>;
 export type ForgotPasswordType = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordType = z.infer<typeof resetPasswordSchema>;
 export type ContactUsType = z.infer<typeof contactUsSchema>;
+export type UpdateProfileType = z.infer<typeof updateProfileSchema>;
+export type UpdatePasswordsType = z.infer<typeof updatePassWordsSchema>;
+export type UploadProfileImage = z.infer<typeof uploadProfileImage>;
