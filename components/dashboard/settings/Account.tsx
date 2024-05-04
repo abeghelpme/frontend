@@ -54,7 +54,7 @@ const Account = () => {
 		mode: "onChange",
 		reValidateMode: "onChange",
 		defaultValues: {
-			fullName: "jadkjf kajdkfj akjd kldaf ",
+			fullName: "Testing Testing",
 			email: "testing@gmail.com",
 			phoneNumber: "0192474784",
 		},
@@ -85,9 +85,8 @@ const Account = () => {
 		setValue: setFormValue,
 	} = useForm({
 		mode: "onChange",
-		resolver: zodResolver(zodValidator("campaignStepThree")!),
+		resolver: zodResolver(zodValidator("uploadProfileImage")!),
 	});
-
 	const toggleDisabled = (index: number) => {
 		setInputs(
 			inputs.map((input, i) => {
@@ -117,17 +116,14 @@ const Account = () => {
 					<Controller
 						control={control}
 						name="photos"
-						render={({ field }) => (
-							<>
-								<DragAndDrop value={field.value} onChange={field.onChange} />
-								{/* <DragAndDropImagePreview
-                  // file={field.value}
-                  value={field.value}
-                  onChange={field.onChange}
-                /> */}
-								{/* <Image src={field.value} alt='image' width={200} height={200} /> */}
-							</>
-						)}
+						render={({ field }) => {
+							console.log(field);
+							return (
+								<>
+									<DragAndDrop value={field.value} onChange={field.onChange} />
+								</>
+							);
+						}}
 					/>
 				</div>
 			</div>
@@ -172,7 +168,7 @@ const Account = () => {
 							className="text-sm text-abeg-text p-0"
 							onClick={() =>
 								reset({
-									fullName: "jadkjf kajdkfj akjd kldaf ",
+									fullName: "Testing Testing",
 									email: "testing@gmail.com",
 									phoneNumber: "0192474784",
 								})
@@ -194,7 +190,7 @@ const Account = () => {
 				<div className="flex flex-col gap-8 border-l-[1px] pl-6 flex-1">
 					{updatePassword.map((item: UpdatePassword, id) => {
 						return (
-							<div className="flex flex-col gap-3">
+							<div key={id} className="flex flex-col gap-3">
 								<label htmlFor="firstName" className="font-bold text-sm">
 									{item.label}
 								</label>
