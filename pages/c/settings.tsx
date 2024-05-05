@@ -9,7 +9,6 @@ import {
 	Notification,
 } from "@/components/dashboard/settings";
 import { AuthenticatedUserLayout } from "@/layouts";
-import { title } from "process";
 import { useState } from "react";
 
 const sideBarItems = [
