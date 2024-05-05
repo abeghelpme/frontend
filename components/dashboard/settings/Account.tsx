@@ -1,14 +1,12 @@
-import { EditIcon, FormErrorMessage } from "@/components/common";
-import DropZoneInput from "@/components/create-campaign/DropZoneInput";
-import ImagePreview from "@/components/create-campaign/ImagePreview";
+import { EditIcon, UploadIcon } from "@/components/common";
 import { Button, Input } from "@/components/ui";
-import { type UpdateProfileType, zodValidator } from "@/lib";
+import { type UpdateProfileType, cn, zodValidator } from "@/lib";
 import type { UpdatePasswordsType } from "@/lib/validators/validateWithZod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import DragAndDrop from "./DragAndDrop";
+import { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { useForm } from "react-hook-form";
 
 type UpdateProfileInput = {
 	id: "fullName" | "email" | "phoneNumber";
@@ -42,13 +40,47 @@ const Account = () => {
 		{ id: "email", label: "E-mail", disabled: true },
 		{ id: "phoneNumber", label: "Phone Number", disabled: true },
 	]);
+	const [preview, setPreview] = useState<string | ArrayBuffer | null>(null);
+
+	// Drag and drop
+	const onDrop = useCallback((acceptedFiles: Array<File>) => {
+		const file = new FileReader();
+
+		file.onload = function () {
+			setPreview(file.result);
+		};
+
+		file.readAsDataURL(acceptedFiles[0]);
+	}, []);
+
+	const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
+		useDropzone({
+			onDrop,
+			maxFiles: 1,
+			accept: {
+				"image/jpeg": [],
+				"image/png": [],
+			},
+		});
+
+	async function handleOnSubmit(e: React.SyntheticEvent) {
+		e.preventDefault();
+
+		if (typeof acceptedFiles[0] === "undefined") return;
+
+		const formData = new FormData();
+
+		formData.append("file", acceptedFiles[0]);
+
+		//await callApi here
+	}
 
 	// Form 1
 	const {
 		register,
-		handleSubmit,
+		// handleSubmit,
 		reset,
-		formState: { errors, isSubmitting },
+		// formState: { errors, isSubmitting },
 	} = useForm<UpdateProfileType>({
 		resolver: zodResolver(zodValidator("updateProfile")!),
 		mode: "onChange",
@@ -63,30 +95,18 @@ const Account = () => {
 	//Form 2
 	const {
 		register: updatePasswordRegister,
-		handleSubmit: updatePasswordHandleSubmit,
+		// handleSubmit: updatePasswordHandleSubmit,
 		reset: updatePasswordReset,
-		formState: {
-			errors: updatePasswordError,
-			isSubmitting: updatePasswordIsSubmitting,
-		},
+		// formState: {
+		//   errors: updatePasswordError,
+		//   isSubmitting: updatePasswordIsSubmitting,
+		// },
 	} = useForm<UpdatePasswordsType>({
 		resolver: zodResolver(zodValidator("updateProfile")!),
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
 
-	//Form 3
-	const {
-		control,
-		handleSubmit: uploadProfileImage,
-		formState,
-		getValues,
-		reset: uploadProfileImageReset,
-		setValue: setFormValue,
-	} = useForm({
-		mode: "onChange",
-		resolver: zodResolver(zodValidator("uploadProfileImage")!),
-	});
 	const toggleDisabled = (index: number) => {
 		setInputs(
 			inputs.map((input, i) => {
@@ -101,32 +121,66 @@ const Account = () => {
 	return (
 		<section className="flex flex-col gap-6">
 			<p className="font-extrabold  text-3xl">Accounts</p>
-			<div className=" flex gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
-				<div className="flex flex-col gap-4 ">
-					<p className="font-bold text-base">Profile Photo</p>
+			<div className=" bg-[#D0D7DE3D] w-full rounded-lg p-6 flex flex-col gap-3">
+				<div className=" flex gap-4 w-full">
+					<div className="flex flex-col gap-4 ">
+						<p className="font-bold text-base">Profile Photo</p>
+						<Image
+							src="/assets/images/about-page/jane.png"
+							alt="profile image"
+							width={200}
+							height={200}
+							className=" size-32 object-cover rounded-full"
+						/>
+					</div>
+					<div
+						className={cn(
+							"flex-1 cursor-pointer border border-dashed border-abeg-primary bg-white rounded-lg ",
+							isDragActive && "opacity-60"
+						)}
+					>
+						<div
+							{...getRootProps()}
+							className=" size-full flex justify-center items-center"
+						>
+							<input {...getInputProps()} />
+
+							{isDragActive ? (
+								<p className="text-sm">Drop the file here ...</p>
+							) : (
+								<div className="flex flex-col gap-1 justify-center items-center">
+									<UploadIcon />
+									<p className="text-sm">
+										<strong>Click to upload </strong> or drag and drop
+									</p>
+									<p className="text-sm">
+										JPG or PNG (Recommended size 1000px by 1000px)
+									</p>
+								</div>
+							)}
+						</div>
+					</div>
+				</div>
+				{preview && (
 					<Image
-						src="/assets/images/about-page/jane.png"
-						alt="profile image"
+						src={preview as string}
+						alt="preview"
 						width={200}
 						height={200}
-						className=" size-32 object-cover rounded-full"
+						className="size-16 self-center"
 					/>
-				</div>
-				<div className="flex-1 ">
-					<Controller
-						control={control}
-						name="photos"
-						render={({ field }) => {
-							console.log(field);
-							return (
-								<>
-									<DragAndDrop value={field.value} onChange={field.onChange} />
-								</>
-							);
-						}}
-					/>
+				)}
+				<div className="self-end mt-6 flex gap-2">
+					<Button
+						className="text-sm text-abeg-text p-0"
+						onClick={() => setPreview(null)}
+					>
+						Cancel
+					</Button>
+					<Button className="text-sm text-abeg-primary p-0">Save</Button>
 				</div>
 			</div>
+
 			<div className=" flex gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
 				<div className="md:w-64 xl:w-80">
 					<p className="font-bold text-sm">Personal Info</p>
