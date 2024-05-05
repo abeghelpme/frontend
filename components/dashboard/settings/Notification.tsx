@@ -1,4 +1,4 @@
-import { Checkbox, Switch } from "@/components/ui";
+import { Button, Checkbox, Switch } from "@/components/ui";
 import { useState } from "react";
 
 const Notification = () => {
@@ -73,6 +73,10 @@ const Notification = () => {
 						</div>
 					);
 				})}
+				<div className="self-end mt-6 flex gap-2">
+					<Button className="text-sm text-abeg-text p-0">Cancel</Button>
+					<Button className="text-sm text-abeg-primary p-0">Save</Button>
+				</div>
 			</div>
 		</section>
 	);
