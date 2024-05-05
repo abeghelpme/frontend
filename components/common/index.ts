@@ -47,5 +47,6 @@ export {
 	BillingIcon,
 	NotificationIcon,
 	EditIcon,
+	UploadIcon,
 } from "./svg";
 export { default as SingleCampaignProgress } from "./SingleCampaignProgress";

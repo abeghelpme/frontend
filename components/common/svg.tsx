@@ -1042,3 +1042,44 @@ export const EditIcon = () => {
 		</svg>
 	);
 };
+
+export const UploadIcon = () => {
+	return (
+		<svg
+			width="36"
+			height="35"
+			viewBox="0 0 36 35"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M13.6257 24.792V16.042L10.709 18.9587"
+				stroke="#484848"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M13.625 16.042L16.5417 18.9587"
+				stroke="#484848"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M32.5827 14.5837V21.8753C32.5827 29.167 29.666 32.0837 22.3743 32.0837H13.6243C6.33268 32.0837 3.41602 29.167 3.41602 21.8753V13.1253C3.41602 5.83366 6.33268 2.91699 13.6243 2.91699H20.916"
+				stroke="#484848"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M32.5827 14.5837H26.7493C22.3743 14.5837 20.916 13.1253 20.916 8.75033V2.91699L32.5827 14.5837Z"
+				stroke="#292D32"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
