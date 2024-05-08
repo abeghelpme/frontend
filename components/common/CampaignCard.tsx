@@ -242,7 +242,7 @@ export function CampaignCardList(props: CardListProps) {
 					"max-w-[370px] shrink-0 lg:max-w-[396px]",
 					dragItemClasses
 				),
-				grid: "",
+				grid: " overflow-hidden",
 			},
 
 			header: {
