@@ -121,7 +121,7 @@ const Account = () => {
 	return (
 		<section className="flex flex-col gap-6">
 			<p className="font-extrabold  text-3xl hidden md:block">Accounts</p>
-			<div className=" bg-[#D0D7DE3D] w-full rounded-lg p-6 flex flex-col gap-3">
+			<div className=" bg-[#D0D7DE3D] border-2 md:border-0 w-full rounded-lg p-6 flex flex-col gap-3">
 				<div className=" flex flex-col md:flex-row gap-4 w-full">
 					<div className="flex flex-col gap-4 ">
 						<p className="font-bold text-base">Profile Photo</p>
@@ -181,7 +181,7 @@ const Account = () => {
 				</div>
 			</div>
 
-			<div className=" flex flex-col md:flex-row gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
+			<div className=" flex flex-col md:flex-row gap-4 bg-[#D0D7DE3D] border-2 md:border-0 w-full rounded-lg p-6">
 				<div className="md:w-64 xl:w-80 border-b-[1px] md:border-b-0 pb-6">
 					<p className="font-bold text-sm">Personal Info</p>
 					<p className="font-extralight text-xs">
@@ -234,7 +234,7 @@ const Account = () => {
 					</div>
 				</div>
 			</div>
-			<div className=" flex flex-col md:flex-row gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
+			<div className=" flex flex-col md:flex-row gap-4 bg-[#D0D7DE3D] border-2 md:border-0 w-full rounded-lg p-6">
 				<div className="md:w-64 xl:w-80 border-b-[1px] md:border-b-0 pb-6">
 					<p className="font-bold text-sm">Passwords</p>
 					<p className="font-extralight text-xs">
