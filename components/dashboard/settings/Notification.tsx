@@ -41,7 +41,7 @@ const Notification = () => {
 				</div>
 				<div className="flex gap-3 items-center">
 					<Switch
-						id="email"
+						id="emailSwitch"
 						checked={values.emailNotification}
 						onCheckedChange={() =>
 							setValues((prev) => ({
@@ -51,9 +51,12 @@ const Notification = () => {
 						}
 						className=" data-[state=checked]:bg-abeg-primary data-[state=unchecked]:bg-abeg-primary"
 					/>
-					<p className="font-bold text-base">
+					<label
+						htmlFor="emailSwitch"
+						className="font-bold text-base cursor-pointer"
+					>
 						{values.emailNotification ? "On" : "Off"}
-					</p>
+					</label>
 				</div>
 				{checkBoxes.map((item) => {
 					return (
@@ -66,7 +69,7 @@ const Notification = () => {
 									setValues((prev) => ({ ...prev, [item.id]: !item.value }))
 								}
 							/>
-							<label htmlFor={item.id}>
+							<label htmlFor={item.id} className="cursor-pointer">
 								<p className="font-bold text-sm">{item.title}</p>
 								<p className="font-extralight text-xs">{item.description}</p>
 							</label>
