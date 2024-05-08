@@ -120,9 +120,9 @@ const Account = () => {
 
 	return (
 		<section className="flex flex-col gap-6">
-			<p className="font-extrabold  text-3xl">Accounts</p>
+			<p className="font-extrabold  text-3xl hidden md:block">Accounts</p>
 			<div className=" bg-[#D0D7DE3D] w-full rounded-lg p-6 flex flex-col gap-3">
-				<div className=" flex gap-4 w-full">
+				<div className=" flex flex-col md:flex-row gap-4 w-full">
 					<div className="flex flex-col gap-4 ">
 						<p className="font-bold text-base">Profile Photo</p>
 						<Image
@@ -135,7 +135,7 @@ const Account = () => {
 					</div>
 					<div
 						className={cn(
-							"flex-1 cursor-pointer border border-dashed border-abeg-primary bg-white rounded-lg ",
+							"flex-1 cursor-pointer border border-dashed border-abeg-primary bg-white rounded-lg p-4",
 							isDragActive && "opacity-60"
 						)}
 					>
@@ -148,7 +148,7 @@ const Account = () => {
 							{isDragActive ? (
 								<p className="text-sm">Drop the file here ...</p>
 							) : (
-								<div className="flex flex-col gap-1 justify-center items-center">
+								<div className="flex flex-col gap-1 justify-center items-center text-center">
 									<UploadIcon />
 									<p className="text-sm">
 										<strong>Click to upload </strong> or drag and drop
@@ -181,15 +181,15 @@ const Account = () => {
 				</div>
 			</div>
 
-			<div className=" flex gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
-				<div className="md:w-64 xl:w-80">
+			<div className=" flex flex-col md:flex-row gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
+				<div className="md:w-64 xl:w-80 border-b-[1px] md:border-b-0 pb-6">
 					<p className="font-bold text-sm">Personal Info</p>
 					<p className="font-extralight text-xs">
 						These are your basic account details, consisting of your name,
 						contact, and email address
 					</p>
 				</div>
-				<div className="flex flex-col gap-4 border-l-[1px] pl-6 flex-1">
+				<div className="flex flex-col gap-4  md:border-l-[1px] md:pl-6 flex-1">
 					{inputs.map((input: UpdateProfileInput, id) => {
 						return (
 							<div
@@ -234,14 +234,14 @@ const Account = () => {
 					</div>
 				</div>
 			</div>
-			<div className=" flex gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
-				<div className="md:w-64 xl:w-80">
+			<div className=" flex flex-col md:flex-row gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
+				<div className="md:w-64 xl:w-80 border-b-[1px] md:border-b-0 pb-6">
 					<p className="font-bold text-sm">Passwords</p>
 					<p className="font-extralight text-xs">
 						Enter your current password to make updates
 					</p>
 				</div>
-				<div className="flex flex-col gap-8 border-l-[1px] pl-6 flex-1">
+				<div className="flex flex-col gap-8 md:border-l-[1px] md:pl-6 flex-1">
 					{updatePassword.map((item: UpdatePassword, id) => {
 						return (
 							<div key={id} className="flex flex-col gap-3">

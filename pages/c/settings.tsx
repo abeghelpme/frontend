@@ -38,10 +38,12 @@ const settings = () => {
 	return (
 		<AuthenticatedUserLayout isDashboard>
 			<div className="flex flex-col gap-6">
-				<h1 className="text-2xl font-extrabold text-white ">Settings</h1>
-				<div className="flex w-full shadow-lg rounded-lg bg-white p-4 md:p-6 relative gap-6">
-					<div className="sticky top-48 max-h-56">
-						<div className=" md:min-w-64 xl:min-w-80 flex flex-col gap-4 ">
+				<h1 className="text-2xl md:text-3xl font-extrabold md:text-white ">
+					Settings
+				</h1>
+				<div className="flex flex-col md:flex-row w-full md:shadow-lg rounded-lg bg-white md:p-6 relative gap-6">
+					<div className="md:sticky md:top-48 md:max-h-56 block">
+						<div className=" md:min-w-64 xl:min-w-80 flex flex-wrap md:flex-col gap-4 ">
 							{sideBarItems.map((item, id) => {
 								return (
 									<div
@@ -50,7 +52,7 @@ const settings = () => {
 										onClick={() => changeOption(item.option)}
 									>
 										<div
-											className={`w-1 bg-abeg-primary rounded-md h-8 transition-opacity duration-500 ${
+											className={`w-1 bg-abeg-primary rounded-md h-8 transition-opacity duration-500 hidden md:block ${
 												option === item.option ? "opacity-100" : "opacity-0"
 											}`}
 										></div>
@@ -69,7 +71,7 @@ const settings = () => {
 							})}
 						</div>
 					</div>
-					<div className="flex-1 border-l-[1px] pl-6">
+					<div className="flex-1 md:border-l-[1px] md:pl-6">
 						{objectLookUp[option].element}
 					</div>
 				</div>
