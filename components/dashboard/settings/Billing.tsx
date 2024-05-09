@@ -20,25 +20,25 @@ type TableDataType = {
 
 const tableData: TableDataType[] = [
 	{
-		campaign: "Bringing Dental Care to Underserved Communities",
+		campaign: "Bringing Dental Care to Undeserved Communities",
 		date: "Apr 18, 2024",
 		amount: "$ 3,000",
 		status: "Successful",
 	},
 	{
-		campaign: "Bringing Dental Care to Underserved Communities",
+		campaign: "Bringing Dental Care to Undeserved Communities",
 		date: "Apr 18, 2024",
 		amount: "$ 3,000",
 		status: "Successful",
 	},
 	{
-		campaign: "Bringing Dental Care to Underserved Communities",
+		campaign: "Bringing Dental Care to Undeserved Communities",
 		date: "Apr 18, 2024",
 		amount: "$ 3,000",
 		status: "Successful",
 	},
 	{
-		campaign: "Bringing Dental Care to Underserved Communities",
+		campaign: "Bringing Dental Care to Undeserved Communities",
 		date: "Apr 18, 2024",
 		amount: "$ 3,000",
 		status: "Successful",
@@ -63,19 +63,21 @@ const Billing = () => {
 	};
 	return (
 		<main className="flex flex-col gap-6">
-			<p className="font-extrabold  text-3xl">Account and Billing</p>
+			<p className="font-extrabold  text-3xl hidden md:block">
+				Account and Billing
+			</p>
 			<section className="gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
 				<div className="flex justify-between">
 					<div className="flex flex-col">
 						<h4 className="text-base font-semibold">Card Details</h4>
 						<p className="text-sm">Update your billing details and addresses</p>
 					</div>
-					<Button className="text-sm text-extralight px-2 border border-abeg-text">
+					<Button className="text-sm text-extralight p-2 border border-abeg-text hidden md:block whitespace-nowrap">
 						+ Add another card
 					</Button>
 				</div>
-				<div className="flex flex-col mt-5 gap-5 pr-24">
-					<div className="flex gap-8 pr-20 justify-between text-start">
+				<div className="flex flex-col mt-5 gap-5 md:pr-24">
+					<div className="flex flex-col md:flex-row gap-8 md:pr-20 justify-between text-start w-full">
 						<div className="flex-1">
 							<label htmlFor="firstName" className="font-semibold text-sm">
 								Card Name
@@ -89,25 +91,25 @@ const Billing = () => {
 						</div>
 						<div className="flex-1">
 							<label htmlFor="firstName" className="font-semibold text-sm">
-								Expiry
-							</label>
-							<Input
-								{...register("expiry")}
-								type="text"
-								id={"expiry"}
-								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
-							/>
-						</div>
-					</div>
-					<div className="flex gap-8 pr-20 justify-between text-start">
-						<div className="flex-1">
-							<label htmlFor="firstName" className="font-semibold text-sm">
 								Card Number
 							</label>
 							<Input
 								{...register("cardNumber")}
 								type="text"
 								id={"cardNumber"}
+								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
+							/>
+						</div>
+					</div>
+					<div className="flex gap-4 md:gap-8 md:pr-20 justify-between text-start">
+						<div className="flex-1">
+							<label htmlFor="firstName" className="font-semibold text-sm">
+								Expiry
+							</label>
+							<Input
+								{...register("expiry")}
+								type="text"
+								id={"expiry"}
 								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
 							/>
 						</div>
@@ -124,8 +126,8 @@ const Billing = () => {
 						</div>
 					</div>
 					<hr />
-					<div className="flex gap-8 pr-24 justify-between">
-						<div className="flex items-center space-x-2">
+					<div className="flex flex-col md:flex-row gap-4 md:gap-8 md:pr-24 justify-between">
+						<div className="flex items-center space-x-2 self-start">
 							<input
 								type="radio"
 								value={"app"}
@@ -142,7 +144,7 @@ const Billing = () => {
 								<p className="text-xs font-extralight">example@gmail.com</p>
 							</div>
 						</div>
-						<div className="flex items-center space-x-2">
+						<div className="flex items-center space-x-2 self-start">
 							<input
 								type="radio"
 								value={"app"}
@@ -167,32 +169,36 @@ const Billing = () => {
 				</div>
 				<Table>
 					<TableHeader>
-						<TableRow></TableRow>
+						{/* <TableRow></TableRow> */}
 						<TableRow>
 							<TableHead>Campaign</TableHead>
-							<TableHead>Date</TableHead>
+							<TableHead className="hidden md:block">Date</TableHead>
 							<TableHead>Amount</TableHead>
 							<TableHead>Status</TableHead>
 						</TableRow>
 					</TableHeader>
 					{tableData.map((item, index) => (
-						<TableBody key={index}>
+						<TableBody
+							key={index}
+							className="text-xs font-bold md:font-normal md:text-sm "
+						>
 							<TableRow>
-								<TableCell className="w-[250px]">{item.campaign}</TableCell>
-								<TableCell>{item.date}</TableCell>
-								<TableCell>{item.amount}</TableCell>
-								<TableCell className="text-center">
-									{" "}
+								<TableCell className="">
+									{item.campaign}
+									<p className="block md:hidden font-normal">{item.date}</p>
+								</TableCell>
+								<TableCell className="hidden md:block">{item.date}</TableCell>
+								<TableCell className="font-normal">{item.amount}</TableCell>
+								<TableCell className="text-center font-normal">
 									<p
 										className={`border rounded-full p-1 ${
 											item.status === "Successful"
-												? "border-abeg-primary"
+												? "border-abeg-primary text-abeg-primary"
 												: item.status === "Pending"
-												  ? "border-yellow-500"
-												  : "border-red-500"
+												  ? "border-yellow-500 text-yellow-500"
+												  : "border-red-500 text-red-500"
 										}`}
 									>
-										{" "}
 										{item.status === "Successful"
 											? "Successful"
 											: item.status === "Pending"
@@ -207,17 +213,17 @@ const Billing = () => {
 			</section>
 
 			<section className="gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
-				<div className="flex justify-between">
+				<div className="flex flex-col gap-3 md:flex-row justify-between">
 					<div className="flex flex-col">
 						<h4 className="text-base font-semibold">Account Details</h4>
 						<p className="text-sm">Update your billing details and addresses</p>
 					</div>
-					<Button className="text-sm text-extralight px-2 border border-abeg-text">
+					<Button className="text-sm text-extralight p-2 border border-abeg-text max-w-fit">
 						+ Add another account
 					</Button>
 				</div>
-				<div className="flex flex-col mt-5 gap-5 pr-24">
-					<div className="flex gap-8 pr-20 justify-between text-start">
+				<div className="flex flex-col mt-5 gap-4 md:gap-5 md:pr-24">
+					<div className="flex flex-col md:flex-row gap-4 md:gap-8 md:pr-20 justify-between text-start">
 						<div className="flex-1">
 							<label htmlFor="firstName" className="font-semibold text-sm">
 								Account Name
@@ -231,19 +237,6 @@ const Billing = () => {
 						</div>
 						<div className="flex-1">
 							<label htmlFor="firstName" className="font-semibold text-sm">
-								Bank
-							</label>
-							<Input
-								{...register("bank")}
-								type="text"
-								id={"bank"}
-								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
-							/>
-						</div>
-					</div>
-					<div className="grid grid-cols-2 gap-8 text-start pr-20">
-						<div className="flex-1">
-							<label htmlFor="firstName" className="font-semibold text-sm">
 								Account Number
 							</label>
 							<Input
@@ -253,11 +246,24 @@ const Billing = () => {
 								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
 							/>
 						</div>
+					</div>
+					<div className="grid grid-cols-2 gap-8 text-start md:pr-20">
+						<div className="flex-1">
+							<label htmlFor="firstName" className="font-semibold text-sm">
+								Bank
+							</label>
+							<Input
+								{...register("bank")}
+								type="text"
+								id={"bank"}
+								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
+							/>
+						</div>
 						<div></div>
 					</div>
 					<hr />
-					<div className="flex gap-8 pr-24 justify-between">
-						<div className="flex items-center space-x-2">
+					<div className="flex flex-col md:flex-row gap-4 md:gap-8 md:pr-24 justify-between">
+						<div className="flex items-center space-x-2 self-start">
 							<input
 								type="radio"
 								value={"app"}
@@ -274,7 +280,7 @@ const Billing = () => {
 								<p className="text-xs font-extralight">example@gmail.com</p>
 							</div>
 						</div>
-						<div className="flex items-center space-x-2">
+						<div className="flex items-center space-x-2 self-start">
 							<input
 								type="radio"
 								value={"app"}
@@ -294,39 +300,43 @@ const Billing = () => {
 
 			<section className="flex flex-col gap-4 bg-[#D0D7DE3D] w-full rounded-lg p-6">
 				<div className="md:w-64 xl:w-80">
-					<p className="font-bold text-base">Payment/Withdrawal History</p>
+					<p className="font-bold text-base">Payment History</p>
 					<p className="font-extralight text-sm">
 						See the withdrawals you made
 					</p>
 				</div>
 				<Table>
 					<TableHeader>
-						<TableRow></TableRow>
+						{/* <TableRow></TableRow> */}
 						<TableRow>
 							<TableHead>Campaign</TableHead>
-							<TableHead>Date</TableHead>
+							<TableHead className="hidden md:block">Date</TableHead>
 							<TableHead>Amount</TableHead>
 							<TableHead>Status</TableHead>
 						</TableRow>
 					</TableHeader>
 					{tableData.map((item, index) => (
-						<TableBody key={index}>
+						<TableBody
+							key={index}
+							className="text-xs font-bold md:font-normal md:text-sm "
+						>
 							<TableRow>
-								<TableCell className="w-[250px]">{item.campaign}</TableCell>
-								<TableCell>{item.date}</TableCell>
-								<TableCell>{item.amount}</TableCell>
-								<TableCell className="text-center">
-									{" "}
+								<TableCell className="">
+									{item.campaign}
+									<p className="block md:hidden font-normal">{item.date}</p>
+								</TableCell>
+								<TableCell className="hidden md:block">{item.date}</TableCell>
+								<TableCell className="font-normal">{item.amount}</TableCell>
+								<TableCell className="text-center font-normal">
 									<p
 										className={`border rounded-full p-1 ${
 											item.status === "Successful"
-												? "border-abeg-primary"
+												? "border-abeg-primary text-abeg-primary"
 												: item.status === "Pending"
-												  ? "border-yellow-500"
-												  : "border-red-500"
+												  ? "border-yellow-500 text-yellow-500"
+												  : "border-red-500 text-red-500"
 										}`}
 									>
-										{" "}
 										{item.status === "Successful"
 											? "Successful"
 											: item.status === "Pending"
