@@ -7,6 +7,8 @@ export type {
 	ContactUsProps,
 	UpdateProfileProps,
 	UpdatePasswordsProps,
+	CardDetailsProps,
+	AddAccountDetailsProps,
 } from "./FormInputs";
 export type { AuthLayoutProps, BaseLayoutProps } from "./Layouts";
 export type { WithPageLayout } from "./WithPageLayout";

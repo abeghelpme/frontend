@@ -39,3 +39,16 @@ export type UpdatePasswordsProps = {
 	newPassword: string;
 	confirmNewPassword: string;
 };
+
+export type CardDetailsProps = {
+	cardNumber: string;
+	cvv: string;
+	cardName: string;
+	cardExpiry: string;
+};
+
+export type AddAccountDetailsProps = {
+	accountName: string;
+	accountNumber: string;
+	bankName: string;
+};
