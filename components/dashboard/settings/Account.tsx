@@ -1,7 +1,11 @@
 import { EditIcon, UploadIcon } from "@/components/common";
 import { Button, Input } from "@/components/ui";
-import { type UpdateProfileType, cn, zodValidator } from "@/lib";
-import type { UpdatePasswordsType } from "@/lib/validators/validateWithZod";
+import {
+	type UpdatePasswordsType,
+	type UpdateProfileType,
+	cn,
+	zodValidator,
+} from "@/lib";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -102,7 +106,7 @@ const Account = () => {
 		//   isSubmitting: updatePasswordIsSubmitting,
 		// },
 	} = useForm<UpdatePasswordsType>({
-		resolver: zodResolver(zodValidator("updateProfile")!),
+		resolver: zodResolver(zodValidator("updatePasswords")!),
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
