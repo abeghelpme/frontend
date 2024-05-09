@@ -1,4 +1,6 @@
 import {
+	type AddAccountDetailsProps,
+	type CardDetailsProps,
 	type ContactUsProps,
 	type ForgotPasswordProps,
 	type LoginProps,
@@ -39,7 +41,8 @@ type FormType =
 	| "contactUs"
 	| "updateProfile"
 	| "updatePasswords"
-	| "uploadProfileImage";
+	| "cardDetails"
+	| "addAccountDetails";
 
 const signUpSchema: z.ZodType<SignUpProps> = z
 	.object({
@@ -396,21 +399,41 @@ const updatePassWordsSchema: z.ZodType<UpdatePasswordsProps> = z.object({
 		}),
 });
 
-const uploadProfileImage = z.object({
-	photos: z
-		.array(
-			z.custom<File | string>(
-				(file) => file instanceof File || typeof file === "string"
-			)
-		)
-		.min(1, {
-			message: "Select at least one image (which would be the cover image)",
-		})
-		.max(1, {
-			message: "Select at most one image (which would be the cover image)",
-		})
-		.optional(),
+const cardDetailsSchema: z.ZodType<CardDetailsProps> = z.object({
+	cardName: z
+		.string()
+		.min(2, { message: "Card Name is required" })
+		.max(50, { message: "Card Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		}),
+	cardNumber: z
+		.string()
+		.min(12, { message: "Card Number is required" })
+		.max(18, { message: "Card Number must be less than 18 characters" }),
+	cardExpiry: z.string(),
+	cvv: z.string(),
 });
+
+const addAccountDetailsSchema: z.ZodType<AddAccountDetailsProps> = z.object({
+	accountName: z
+		.string()
+		.min(2, { message: "Card Name is required" })
+		.max(50, { message: "Card Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		}),
+	accountNumber: z
+		.string()
+		.min(12, { message: "Card Number is required" })
+		.max(18, { message: "Card Number must be less than 18 characters" }),
+	bankName: z.string(),
+});
+
 export const zodValidator = (formType: FormType) => {
 	switch (formType) {
 		case "signup":
@@ -433,8 +456,10 @@ export const zodValidator = (formType: FormType) => {
 			return updateProfileSchema;
 		case "updatePasswords":
 			return updatePassWordsSchema;
-		case "uploadProfileImage":
-			return uploadProfileImage;
+		case "cardDetails":
+			return cardDetailsSchema;
+		case "addAccountDetails":
+			return addAccountDetailsSchema;
 		default:
 			return;
 	}
@@ -447,4 +472,5 @@ export type ResetPasswordType = z.infer<typeof resetPasswordSchema>;
 export type ContactUsType = z.infer<typeof contactUsSchema>;
 export type UpdateProfileType = z.infer<typeof updateProfileSchema>;
 export type UpdatePasswordsType = z.infer<typeof updatePassWordsSchema>;
-export type UploadProfileImage = z.infer<typeof uploadProfileImage>;
+export type CardDetailsType = z.infer<typeof cardDetailsSchema>;
+export type AddAccountDetailsType = z.infer<typeof addAccountDetailsSchema>;
