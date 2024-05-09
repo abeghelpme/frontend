@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { zodValidator } from "@/lib";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type TableDataType = {
@@ -46,14 +47,28 @@ const tableData: TableDataType[] = [
 ];
 
 const Billing = () => {
-	//Form 2
+	const [selectedOption, setSelectedOption] = useState("existing-email");
+	const [selectedOption2, setSelectedOption2] = useState("existing-email-2");
+	//Form 1 for card details
 	const {
 		register,
-		handleSubmit,
-		reset,
-		formState: { errors, isSubmitting },
+		// handleSubmit,
+		// reset,
+		// formState: { errors, isSubmitting },
 	} = useForm({
-		resolver: zodResolver(zodValidator("updateProfile")!),
+		resolver: zodResolver(zodValidator("cardDetails")!),
+		mode: "onChange",
+		reValidateMode: "onChange",
+	});
+
+	//Form 2 for adding accounts details
+	const {
+		register: addAccountDetailsRegister,
+		// handleSubmit: addAccountDetailsHandleSubmit,
+		// reset: addAccountDetailsReset,
+		// formState: { addAccountDetailErrors, addAccountDetailIsSubmitting },
+	} = useForm({
+		resolver: zodResolver(zodValidator("addAccountDetails")!),
 		mode: "onChange",
 		reValidateMode: "onChange",
 	});
@@ -79,48 +94,48 @@ const Billing = () => {
 				<div className="flex flex-col mt-5 gap-5 md:pr-24">
 					<div className="flex flex-col md:flex-row gap-8 md:pr-20 justify-between text-start w-full">
 						<div className="flex-1">
-							<label htmlFor="firstName" className="font-semibold text-sm">
+							<label htmlFor="cardName" className="font-semibold text-sm">
 								Card Name
 							</label>
 							<Input
 								{...register("cardName")}
 								type="text"
-								id={"cardName"}
+								id="cardName"
 								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
 							/>
 						</div>
 						<div className="flex-1">
-							<label htmlFor="firstName" className="font-semibold text-sm">
+							<label htmlFor="cardNumber" className="font-semibold text-sm">
 								Card Number
 							</label>
 							<Input
 								{...register("cardNumber")}
 								type="text"
-								id={"cardNumber"}
+								id="cardNumber"
 								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
 							/>
 						</div>
 					</div>
 					<div className="flex gap-4 md:gap-8 md:pr-20 justify-between text-start">
 						<div className="flex-1">
-							<label htmlFor="firstName" className="font-semibold text-sm">
+							<label htmlFor="cardExpiry" className="font-semibold text-sm">
 								Expiry
 							</label>
 							<Input
-								{...register("expiry")}
+								{...register("cardExpiry")}
 								type="text"
-								id={"expiry"}
+								id="cardExpiry"
 								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
 							/>
 						</div>
 						<div className="flex-1">
-							<label htmlFor="firstName" className="font-semibold text-sm">
+							<label htmlFor="cvv" className="font-semibold text-sm">
 								CVV
 							</label>
 							<Input
 								{...register("cvv")}
 								type="text"
-								id={"cvv"}
+								id="cvv"
 								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
 							/>
 						</div>
@@ -130,11 +145,11 @@ const Billing = () => {
 						<div className="flex items-center space-x-2 self-start">
 							<input
 								type="radio"
-								value={"app"}
-								name="2fa-app"
-								checked
-								// onChange={() => setSelectedOption("app")}
-								id="app"
+								value={"existing-email"}
+								name="existing-email"
+								checked={selectedOption === "existing-email"}
+								onChange={() => setSelectedOption("existing-email")}
+								id="existing-email"
 								className="ml-auto accent-abeg-primary"
 							/>
 							<div className="flex flex-col">
@@ -147,11 +162,11 @@ const Billing = () => {
 						<div className="flex items-center space-x-2 self-start">
 							<input
 								type="radio"
-								value={"app"}
-								name="2fa-app"
-								checked
-								// onChange={() => setSelectedOption("app")}
-								id="app"
+								value="another-email"
+								name="another-email"
+								checked={selectedOption === "another-email"}
+								onChange={() => setSelectedOption("another-email")}
+								id="another-email"
 								className="ml-auto accent-abeg-primary"
 							/>
 							<label htmlFor="another-email" className="text-sm">
@@ -169,7 +184,6 @@ const Billing = () => {
 				</div>
 				<Table>
 					<TableHeader>
-						{/* <TableRow></TableRow> */}
 						<TableRow>
 							<TableHead>Campaign</TableHead>
 							<TableHead className="hidden md:block">Date</TableHead>
@@ -191,12 +205,12 @@ const Billing = () => {
 								<TableCell className="font-normal">{item.amount}</TableCell>
 								<TableCell className="text-center font-normal">
 									<p
-										className={`border rounded-full p-1 ${
+										className={`md:border rounded-full p-1 ${
 											item.status === "Successful"
-												? "border-abeg-primary text-abeg-primary"
+												? "md:border-abeg-primary text-abeg-primary"
 												: item.status === "Pending"
-												  ? "border-yellow-500 text-yellow-500"
-												  : "border-red-500 text-red-500"
+												  ? "md:border-yellow-500 text-yellow-500"
+												  : "md:border-red-500 text-red-500"
 										}`}
 									>
 										{item.status === "Successful"
@@ -225,37 +239,37 @@ const Billing = () => {
 				<div className="flex flex-col mt-5 gap-4 md:gap-5 md:pr-24">
 					<div className="flex flex-col md:flex-row gap-4 md:gap-8 md:pr-20 justify-between text-start">
 						<div className="flex-1">
-							<label htmlFor="firstName" className="font-semibold text-sm">
+							<label htmlFor="accountName" className="font-semibold text-sm">
 								Account Name
 							</label>
 							<Input
-								{...register("accountName")}
+								{...addAccountDetailsRegister("accountName")}
 								type="text"
 								id={"accountName"}
 								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
 							/>
 						</div>
 						<div className="flex-1">
-							<label htmlFor="firstName" className="font-semibold text-sm">
+							<label htmlFor="accountNumber" className="font-semibold text-sm">
 								Account Number
 							</label>
 							<Input
-								{...register("cardNumber")}
+								{...addAccountDetailsRegister("accountNumber")}
 								type="text"
-								id={"cardNumber"}
+								id={"accountNumber"}
 								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
 							/>
 						</div>
 					</div>
 					<div className="grid grid-cols-2 gap-8 text-start md:pr-20">
 						<div className="flex-1">
-							<label htmlFor="firstName" className="font-semibold text-sm">
+							<label htmlFor="bankName" className="font-semibold text-sm">
 								Bank
 							</label>
 							<Input
-								{...register("bank")}
+								{...addAccountDetailsRegister("bankName")}
 								type="text"
-								id={"bank"}
+								id={"bankName"}
 								className={`h-10 font-light text-sm bg-inherit focus:bg-white`}
 							/>
 						</div>
@@ -264,33 +278,33 @@ const Billing = () => {
 					<hr />
 					<div className="flex flex-col md:flex-row gap-4 md:gap-8 md:pr-24 justify-between">
 						<div className="flex items-center space-x-2 self-start">
-							<input
+							<Input
 								type="radio"
-								value={"app"}
-								name="2fa-app"
-								checked
-								// onChange={() => setSelectedOption("app")}
-								id="app"
+								value="existing-email-2"
+								name="existing-email-2"
+								checked={selectedOption2 === "existing-email-2"}
+								onChange={() => setSelectedOption2("existing-email-2")}
+								id="existing-email-2"
 								className="ml-auto accent-abeg-primary"
 							/>
 							<div className="flex flex-col">
-								<label htmlFor="existing-email" className="text-sm">
+								<label htmlFor="existing-email-2" className="text-sm">
 									Send to existing email address
 								</label>
 								<p className="text-xs font-extralight">example@gmail.com</p>
 							</div>
 						</div>
 						<div className="flex items-center space-x-2 self-start">
-							<input
+							<Input
 								type="radio"
-								value={"app"}
-								name="2fa-app"
-								checked
-								// onChange={() => setSelectedOption("app")}
-								id="app"
-								className="ml-auto accent-abeg-primary"
+								value="another-email-2"
+								name="another-email-2"
+								checked={selectedOption2 === "another-email-2"}
+								onChange={() => setSelectedOption2("another-email-2")}
+								id="another-email-2"
+								className="ml-auto !accent-abeg-primary"
 							/>
-							<label htmlFor="another-email" className="text-sm">
+							<label htmlFor="another-email-2" className="text-sm">
 								Add another email address
 							</label>
 						</div>
@@ -307,7 +321,6 @@ const Billing = () => {
 				</div>
 				<Table>
 					<TableHeader>
-						{/* <TableRow></TableRow> */}
 						<TableRow>
 							<TableHead>Campaign</TableHead>
 							<TableHead className="hidden md:block">Date</TableHead>
@@ -329,12 +342,12 @@ const Billing = () => {
 								<TableCell className="font-normal">{item.amount}</TableCell>
 								<TableCell className="text-center font-normal">
 									<p
-										className={`border rounded-full p-1 ${
+										className={`md:border rounded-full p-1 ${
 											item.status === "Successful"
-												? "border-abeg-primary text-abeg-primary"
+												? "md:border-abeg-primary text-abeg-primary"
 												: item.status === "Pending"
-												  ? "border-yellow-500 text-yellow-500"
-												  : "border-red-500 text-red-500"
+												  ? "md:border-yellow-500 text-yellow-500"
+												  : "md:border-red-500 text-red-500"
 										}`}
 									>
 										{item.status === "Successful"
