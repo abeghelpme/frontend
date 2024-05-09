@@ -31,7 +31,7 @@ const Notification = () => {
 	];
 	return (
 		<section className="flex flex-col gap-6">
-			<p className="font-extrabold  text-3xl">Notification</p>
+			<p className="font-extrabold  text-3xl hidden md:block">Notification</p>
 			<div className=" flex flex-col gap-4 bg-[#D0D7DE3D] border-2 md:border-0 w-full rounded-lg p-6">
 				<div>
 					<p className="font-bold text-base">Email Notification</p>
