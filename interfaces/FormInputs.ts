@@ -29,13 +29,14 @@ export type ContactUsProps = {
 };
 
 export type UpdateProfileProps = {
-	fullName?: string;
+	firstName?: string;
+	lastName?: string;
 	email?: string;
 	phoneNumber?: string;
 };
 
 export type UpdatePasswordsProps = {
-	currentPassword: string;
+	oldPassword: string;
 	newPassword: string;
 	confirmNewPassword: string;
 };

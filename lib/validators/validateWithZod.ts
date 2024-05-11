@@ -286,7 +286,17 @@ const contactUsSchema: z.ZodType<ContactUsProps> = z.object({
 });
 
 const updateProfileSchema: z.ZodType<UpdateProfileProps> = z.object({
-	fullName: z
+	firstName: z
+		.string()
+		.min(2, { message: "Full Name is required" })
+		.max(50, { message: "Full Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		})
+		.optional(),
+	lastName: z
 		.string()
 		.min(2, { message: "Full Name is required" })
 		.max(50, { message: "Full Name must be less than 50 characters" })
@@ -311,7 +321,7 @@ const updateProfileSchema: z.ZodType<UpdateProfileProps> = z.object({
 });
 
 const updatePassWordsSchema: z.ZodType<UpdatePasswordsProps> = z.object({
-	currentPassword: z
+	oldPassword: z
 		.string()
 		.min(6, { message: "Password must be at least 6 characters" })
 		.regex(

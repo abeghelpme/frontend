@@ -13,19 +13,19 @@ import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 
 type UpdateProfileInput = {
-	id: "fullName" | "email" | "phoneNumber";
+	id: "firstName" | "lastName" | "email" | "phoneNumber";
 	label: string;
 	disabled: boolean;
 };
 
 type UpdatePassword = {
-	id: "currentPassword" | "newPassword" | "confirmNewPassword";
+	id: "oldPassword" | "newPassword" | "confirmNewPassword";
 	label: string;
 };
 
 const updatePassword: UpdatePassword[] = [
 	{
-		id: "currentPassword",
+		id: "oldPassword",
 		label: "Current Password",
 	},
 	{
@@ -40,7 +40,8 @@ const updatePassword: UpdatePassword[] = [
 
 const Account = () => {
 	const [inputs, setInputs] = useState<UpdateProfileInput[]>([
-		{ id: "fullName", label: "Full Name", disabled: true },
+		{ id: "firstName", label: "First Name", disabled: true },
+		{ id: "lastName", label: "Last Name", disabled: true },
 		{ id: "email", label: "E-mail", disabled: true },
 		{ id: "phoneNumber", label: "Phone Number", disabled: true },
 	]);
@@ -90,7 +91,8 @@ const Account = () => {
 		mode: "onChange",
 		reValidateMode: "onChange",
 		defaultValues: {
-			fullName: "Testing Testing",
+			firstName: "Testing",
+			lastName: "Testing",
 			email: "testing@gmail.com",
 			phoneNumber: "0192474784",
 		},
@@ -226,7 +228,8 @@ const Account = () => {
 							className="text-sm text-abeg-text p-0"
 							onClick={() =>
 								reset({
-									fullName: "Testing Testing",
+									firstName: "Testing",
+									lastName: "Testing",
 									email: "testing@gmail.com",
 									phoneNumber: "0192474784",
 								})
@@ -267,7 +270,7 @@ const Account = () => {
 							onClick={() =>
 								updatePasswordReset({
 									confirmNewPassword: "",
-									currentPassword: "",
+									oldPassword: "",
 									newPassword: "",
 								})
 							}
