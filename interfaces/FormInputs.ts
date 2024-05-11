@@ -31,7 +31,7 @@ export type ContactUsProps = {
 export type UpdateProfileProps = {
 	firstName?: string;
 	lastName?: string;
-	email?: string;
+	// email?: string;
 	phoneNumber?: string;
 };
 

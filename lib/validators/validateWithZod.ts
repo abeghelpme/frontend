@@ -306,17 +306,17 @@ const updateProfileSchema: z.ZodType<UpdateProfileProps> = z.object({
 			).trim();
 		})
 		.optional(),
-	email: z
-		.string()
-		.min(2, { message: "Email is required" })
-		.email({ message: "Invalid email address" })
-		.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
-			message: "Enter a valid email",
-		})
-		.transform((value) => {
-			return value.toLowerCase().trim();
-		})
-		.optional(),
+	// email: z
+	// 	.string()
+	// 	.min(2, { message: "Email is required" })
+	// 	.email({ message: "Invalid email address" })
+	// 	.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+	// 		message: "Enter a valid email",
+	// 	})
+	// 	.transform((value) => {
+	// 		return value.toLowerCase().trim();
+	// 	})
+	// 	.optional(),
 	phoneNumber: z.string().optional(),
 });
 
