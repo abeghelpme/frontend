@@ -1,19 +1,21 @@
 import { EditIcon, UploadIcon } from "@/components/common";
 import { Button, Input } from "@/components/ui";
+import type { User } from "@/interfaces";
 import {
 	type UpdatePasswordsType,
 	type UpdateProfileType,
 	cn,
 	zodValidator,
 } from "@/lib";
+import { useSession } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 
 type UpdateProfileInput = {
-	id: "firstName" | "lastName" | "email" | "phoneNumber";
+	id: "firstName" | "lastName" | "phoneNumber";
 	label: string;
 	disabled: boolean;
 };
@@ -39,10 +41,23 @@ const updatePassword: UpdatePassword[] = [
 ];
 
 const Account = () => {
+	const { user } = useSession((state) => state);
+
+	useEffect(() => {
+		if (user) {
+			reset({
+				firstName: user.firstName,
+				lastName: user.lastName,
+				// email: user.email,
+				phoneNumber: "",
+			});
+		}
+	}, [user]);
+
 	const [inputs, setInputs] = useState<UpdateProfileInput[]>([
 		{ id: "firstName", label: "First Name", disabled: true },
 		{ id: "lastName", label: "Last Name", disabled: true },
-		{ id: "email", label: "E-mail", disabled: true },
+		// { id: "email", label: "E-mail", disabled: true },
 		{ id: "phoneNumber", label: "Phone Number", disabled: true },
 	]);
 	const [preview, setPreview] = useState<string | ArrayBuffer | null>(null);
@@ -91,10 +106,10 @@ const Account = () => {
 		mode: "onChange",
 		reValidateMode: "onChange",
 		defaultValues: {
-			firstName: "Testing",
-			lastName: "Testing",
-			email: "testing@gmail.com",
-			phoneNumber: "0192474784",
+			firstName: user?.firstName,
+			lastName: user?.lastName,
+			// email: user.email,
+			phoneNumber: "",
 		},
 	});
 
@@ -203,7 +218,7 @@ const Account = () => {
 								className="flex justify-between items-center gap-6"
 							>
 								<div className="flex-1">
-									<label htmlFor="firstName" className="font-bold text-sm">
+									<label htmlFor={input.id} className="font-bold text-sm">
 										{input.label}
 									</label>
 									<Input
@@ -226,14 +241,18 @@ const Account = () => {
 					<div className="self-end mt-6 flex gap-2">
 						<Button
 							className="text-sm text-abeg-text p-0"
-							onClick={() =>
+							onClick={() => {
 								reset({
-									firstName: "Testing",
-									lastName: "Testing",
-									email: "testing@gmail.com",
-									phoneNumber: "0192474784",
-								})
-							}
+									firstName: user?.firstName,
+									lastName: user?.lastName,
+									// email: user.email,
+									phoneNumber: "",
+								});
+
+								setInputs(
+									inputs.map((input) => ({ ...input, disabled: true }))
+								);
+							}}
 						>
 							Cancel
 						</Button>
