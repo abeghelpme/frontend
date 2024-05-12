@@ -18,6 +18,8 @@ export type User = {
 	isMobileVerified: boolean;
 	isTermAndConditionAccepted: boolean;
 	createdAt: string;
+	photo: string;
+	phoneNumber: string;
 };
 
 export type SessionData = {
