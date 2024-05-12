@@ -63,16 +63,16 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 				{HeaderSlot}
 
-				<p className="mt-3 text-pretty lg:text-xl">{excerpt}</p>
+				<p className="mt-3 text-pretty text-base md:text-lg">{excerpt}</p>
 
 				<div className="relative mt-6 flex items-center max-lg:justify-between lg:gap-9 flex-wrap gap-2">
 					<figure className="flex items-center gap-3 ">
 						<DummyAvatar className="size-10" />
 
-						<figcaption className="text-xl">{fundraiserTarget}</figcaption>
+						<figcaption className="text-lg">{fundraiserTarget}</figcaption>
 					</figure>
 
-					<button className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-xl font-bold">
+					<button className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-lg font-bold">
 						Donate
 					</button>
 
@@ -93,7 +93,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						render={(tag, index) => (
 							<li
 								key={`${tag}-${index}`}
-								className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-xl font-bold "
+								className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-base md:text-lg font-bold "
 							>
 								<p>{tag}</p>
 							</li>
@@ -275,25 +275,25 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					<article>
 						<Heading
 							as="h3"
-							className="flex gap-4 border-b border-b-placeholder p-2 text-xl"
+							className="flex gap-4 border-b border-b-placeholder p-2 text-base md:text-lg"
 						>
 							Category:
 							<span className="font-normal">{campaign.category?.name}</span>
 						</Heading>
 						<Heading
 							as="h3"
-							className="mt-3 border-b border-b-placeholder p-2 text-xl lg:mt-6"
+							className="mt-3 border-b border-b-placeholder p-2 text-base md:text-lg lg:mt-6"
 						>
 							Story
 						</Heading>
 						<div
-							className="mt-6 min-h-16 text-justify text-2xl"
+							className="mt-6 min-h-16 text-justify text-base md:text-lg"
 							dangerouslySetInnerHTML={{
 								__html: campaign.storyHtml,
 							}}
 						/>
 
-						<p className="mt-6 lg:mt-12">
+						<p className="mt-6 lg:mt-12 text-base md:text-xl">
 							Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
 						</p>
 
@@ -301,7 +301,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							className="mt-4 font-medium max-lg:space-y-2 lg:grid lg:grid-cols-3 lg:gap-x-2 lg:gap-y-6"
 							each={campaign.tags}
 							render={(tag, index) => (
-								<li key={`${tag}-${index}`} className="flex min-w-0">
+								<li
+									key={`${tag}-${index}`}
+									className="flex min-w-0 text-base md:text-lg"
+								>
 									<p className="truncate">{tag}</p>
 								</li>
 							)}
@@ -312,9 +315,11 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						<DummyAvatar className="size-[82px]" />
 
 						<div>
-							<p className="flex flex-col">
+							<p className="flex flex-col text-base md:text-lg">
 								{fundraiserTarget} is in charge of this fundraiser.
-								<span className="mt-4">{campaign.country}</span>
+								<span className="mt-4 text-base md:text-lg">
+									{campaign.country}
+								</span>
 							</p>
 							<Button
 								variant="primary"

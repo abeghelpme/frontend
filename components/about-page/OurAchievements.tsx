@@ -43,10 +43,12 @@ const OurAchievements = () => {
 						height={100}
 					/>
 					<div className="space-y-2">
-						<h1 className="text-4xl font-bold text-center">
+						<h1 className="text-2xl md:text-3xl font-bold text-center">
 							{achievement.figure}
 						</h1>
-						<p className="text-2xl text-center">{achievement.title}</p>
+						<p className="text-lg md:text-xl text-center">
+							{achievement.title}
+						</p>
 					</div>
 				</div>
 			))}

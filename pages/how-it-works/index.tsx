@@ -97,7 +97,7 @@ const HowItWorks = ({
 					className="md: absolute right-[-4rem] top-60 md:right-0 md:top-[25rem] "
 				/>
 				<div className="absolute top-[21.5rem] md:top-[27.5rem] text-white flex flex-col gap-2 max-w-96 md:max-w-[600px] text-center px-5">
-					<h3 className="text-5xl md:text-6xl font-extrabold">How It Works</h3>
+					<h3 className="text-4xl  md:text-5xl font-extrabold">How It Works</h3>
 					<p className="font-medium text-base md:text-xl">
 						Join the effortless way to fundraise and make a difference and
 						empower your cause with Abeghelp.me
@@ -112,10 +112,12 @@ const HowItWorks = ({
 							{howItWorksData.map((data, id) => {
 								return (
 									<div className="flex flex-col gap-3" key={id}>
-										<h5 className="text-2xl font-bold">
+										<h5 className="text-xl md:text-2xl font-bold">
 											{id + 1}. {data.title}
 										</h5>
-										<p className="text-justify text-xl">{data.text}</p>
+										<p className="text-justify text-base md:text-lg">
+											{data.text}
+										</p>
 									</div>
 								);
 							})}
@@ -131,21 +133,21 @@ const HowItWorks = ({
 				/>
 				<div className="flex flex-col md:flex-row gap-8 md:gap-12 lg:gap-24 px-5 md:px-20 lg:px-32">
 					<div className="flex flex-col gap-5 bg-abeg-primary w-full p-8 text-white text-center justify-center">
-						<p className="text-3xl font-extralight leading-normal">
+						<p className="text-xl md:text-2xl font-extralight leading-normal">
 							“Abeghelp.me is one of those platforms that gives you space to
 							share your dreams, not just with people who know you, love you,
 							and support you, but with even more.”
 						</p>
 						<div>
-							<p className="text-3xl">- John Doe</p>
+							<p className="text-2xl md:text-3xl">- John Doe</p>
 							<p className="text-xs">beneficiary of the abeghelpme platform</p>
 						</div>
 					</div>
 					<div className="flex flex-col gap-6  w-full">
-						<h5 className="text-3xl font-bold md:text-5xl ">
+						<h5 className="text-2xl md:text-3xl font-bold ">
 							Ready to start a Campaign?
 						</h5>
-						<p className="font-extralight text-base leading-loose">
+						<p className="text-base md:text-lg leading-loose">
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 							eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
 							enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -163,7 +165,7 @@ const HowItWorks = ({
 					<p className=" text-base md:text-xl font-medium text-placeholder md:w-3/6">
 						Donate today
 					</p>
-					<h1 className="text-3xl font-bold md:text-4xl md:w-full">
+					<h1 className="text-2xl font-bold md:text-3xl md:w-full">
 						Explore Campaigns
 					</h1>
 					<p className="text-base md:text-xl  font-medium text-placeholder md:w-3/6">
