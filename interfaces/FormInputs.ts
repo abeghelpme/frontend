@@ -38,7 +38,7 @@ export type UpdateProfileProps = {
 export type UpdatePasswordsProps = {
 	oldPassword: string;
 	newPassword: string;
-	confirmNewPassword: string;
+	confirmPassword: string;
 };
 
 export type CardDetailsProps = {
