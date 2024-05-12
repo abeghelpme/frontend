@@ -44,11 +44,17 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 		useShareCampaign();
 
 	const fundraiserTarget =
-		campaign.fundraiser === "INDIVIDUAL"
-			? `${campaign.creator?.firstName} ${campaign.creator?.lastName}`
-			: "Beneficiary";
+		`${campaign.creator?.firstName} ${campaign.creator?.lastName}` ||
+		"Beneficiary";
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
+	const getDaysLeft = (deadlineTime: any) => {
+		const deadline: any = new Date(deadlineTime);
+		const currentTime: any = new Date();
+		const deadlineTimeFinal = deadline.getTime() - currentTime.getTime();
+		const final = Math.floor(deadlineTimeFinal / (1000 * 60 * 60 * 24));
+		return final;
+	};
 
 	return (
 		<main className="flex flex-col pb-20 text-abeg-text">
@@ -67,7 +73,16 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 				<div className="relative mt-6 flex items-center max-lg:justify-between lg:gap-9 flex-wrap gap-2">
 					<figure className="flex items-center gap-3 ">
-						<DummyAvatar className="size-10" />
+						{campaign?.creator?.photo && (
+							<Image
+								src={campaign?.creator?.photo || ""}
+								alt="image"
+								width={200}
+								height={200}
+								className="rounded-full size-10"
+							/>
+						)}
+						{!campaign?.creator?.photo && <DummyAvatar className="size-10" />}
 
 						<figcaption className="text-lg">{fundraiserTarget}</figcaption>
 					</figure>
@@ -84,6 +99,11 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				<CampaignCarousel
 					images={campaign.images}
 					classNames={{ base: "mt-8" }}
+					captionContent={{
+						location: campaign.country,
+						donorCount: 0,
+						daysLeft: getDaysLeft(campaign.deadline),
+					}}
 				/>
 
 				<div className="relative mt-6">
