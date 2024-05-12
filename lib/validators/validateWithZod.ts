@@ -288,8 +288,8 @@ const contactUsSchema: z.ZodType<ContactUsProps> = z.object({
 const updateProfileSchema: z.ZodType<UpdateProfileProps> = z.object({
 	firstName: z
 		.string()
-		.min(2, { message: "Full Name is required" })
-		.max(50, { message: "Full Name must be less than 50 characters" })
+		.min(2, { message: "First Name is required" })
+		.max(50, { message: "First Name must be less than 50 characters" })
 		.transform((value) => {
 			return (
 				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
@@ -298,116 +298,110 @@ const updateProfileSchema: z.ZodType<UpdateProfileProps> = z.object({
 		.optional(),
 	lastName: z
 		.string()
-		.min(2, { message: "Full Name is required" })
-		.max(50, { message: "Full Name must be less than 50 characters" })
+		.min(2, { message: "Last Name is required" })
+		.max(50, { message: "Last Name must be less than 50 characters" })
 		.transform((value) => {
 			return (
 				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
 			).trim();
 		})
 		.optional(),
-	// email: z
-	// 	.string()
-	// 	.min(2, { message: "Email is required" })
-	// 	.email({ message: "Invalid email address" })
-	// 	.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
-	// 		message: "Enter a valid email",
-	// 	})
-	// 	.transform((value) => {
-	// 		return value.toLowerCase().trim();
-	// 	})
-	// 	.optional(),
 	phoneNumber: z.string().optional(),
 });
 
-const updatePassWordsSchema: z.ZodType<UpdatePasswordsProps> = z.object({
-	oldPassword: z
-		.string()
-		.min(6, { message: "Password must be at least 6 characters" })
-		.regex(
-			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
-			{
-				message:
-					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-			}
-		)
-		.max(50)
-		.transform((value, ctx) => {
-			const options = {
-				dictionary: {
-					...zxcvbnCommonPackage.dictionary,
-					...zxcvbnEnPackage.dictionary,
-				},
-				translations: {
-					...zxcvbnEnPackage.translations,
-				},
-				graphs: zxcvbnCommonPackage.adjacencyGraphs,
-			};
-			zxcvbnOptions.setOptions(options);
-			const testedResult = zxcvbn(value);
+const updatePassWordsSchema: z.ZodType<UpdatePasswordsProps> = z
+	.object({
+		oldPassword: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value, ctx) => {
+				const options = {
+					dictionary: {
+						...zxcvbnCommonPackage.dictionary,
+						...zxcvbnEnPackage.dictionary,
+					},
+					translations: {
+						...zxcvbnEnPackage.translations,
+					},
+					graphs: zxcvbnCommonPackage.adjacencyGraphs,
+				};
+				zxcvbnOptions.setOptions(options);
+				const testedResult = zxcvbn(value);
 
-			if (testedResult.score < 3) {
-				testedResult.feedback.suggestions.map((issue) => {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
-						message: issue,
+				if (testedResult.score < 3) {
+					testedResult.feedback.suggestions.map((issue) => {
+						ctx.addIssue({
+							code: z.ZodIssueCode.custom,
+							message: issue,
+						});
 					});
-				});
-			}
+				}
 
-			return value.trim();
-		}),
-	newPassword: z
-		.string()
-		.min(6, { message: "Password must be at least 6 characters" })
-		.regex(
-			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
-			{
-				message:
-					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-			}
-		)
-		.max(50)
-		.transform((value, ctx) => {
-			const options = {
-				dictionary: {
-					...zxcvbnCommonPackage.dictionary,
-					...zxcvbnEnPackage.dictionary,
-				},
-				translations: {
-					...zxcvbnEnPackage.translations,
-				},
-				graphs: zxcvbnCommonPackage.adjacencyGraphs,
-			};
-			zxcvbnOptions.setOptions(options);
-			const testedResult = zxcvbn(value);
+				return value.trim();
+			}),
+		newPassword: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value, ctx) => {
+				const options = {
+					dictionary: {
+						...zxcvbnCommonPackage.dictionary,
+						...zxcvbnEnPackage.dictionary,
+					},
+					translations: {
+						...zxcvbnEnPackage.translations,
+					},
+					graphs: zxcvbnCommonPackage.adjacencyGraphs,
+				};
+				zxcvbnOptions.setOptions(options);
+				const testedResult = zxcvbn(value);
 
-			if (testedResult.score < 3) {
-				testedResult.feedback.suggestions.map((issue) => {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
-						message: issue,
+				if (testedResult.score < 3) {
+					testedResult.feedback.suggestions.map((issue) => {
+						ctx.addIssue({
+							code: z.ZodIssueCode.custom,
+							message: issue,
+						});
 					});
-				});
-			}
+				}
 
-			return value.trim();
-		}),
-	confirmNewPassword: z
-		.string()
-		.min(6, { message: "Password must be at least 6 characters" })
-		.regex(
-			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
-			{
-				message:
-					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-			}
-		)
-		.max(50)
-		.transform((value) => {
-			return value.trim();
-		}),
-});
+				return value.trim();
+			}),
+		confirmPassword: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value) => {
+				return value.trim();
+			}),
+	})
+	.refine((data) => data.newPassword === data.confirmPassword, {
+		message: "Passwords do not match",
+		path: ["confirmNewPassword"],
+	});
 
 const cardDetailsSchema: z.ZodType<CardDetailsProps> = z.object({
 	cardName: z
