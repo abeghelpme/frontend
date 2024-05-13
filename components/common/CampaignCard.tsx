@@ -1,5 +1,5 @@
 import type { Campaign } from "@/interfaces/Campaign";
-import { cn } from "@/lib";
+import { cn, getDaysLeft } from "@/lib";
 import { useDragScroll } from "@/lib/hooks";
 import type { AsProp } from "@/lib/type-helpers";
 import Image from "next/image";
@@ -73,8 +73,8 @@ export function CampaignCard(props: CampaignCardProps) {
 		donorCount: 0,
 		imageSrc:
 			cardDetails.images[0]?.secureUrl ?? "/assets/images/shared/logo.svg",
-		daysLeft: 0,
-		location: "Not Provided",
+		daysLeft: getDaysLeft(cardDetails.deadline),
+		location: cardDetails.country || "Not Provided",
 		name: cardDetails.creator
 			? cardDetails.fundraiser === "INDIVIDUAL"
 				? `${cardDetails.creator.firstName} ${cardDetails.creator.lastName}`
