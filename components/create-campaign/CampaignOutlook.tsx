@@ -7,7 +7,7 @@ import {
 	xIcon,
 } from "@/components/common/campaign-icons";
 import type { Campaign } from "@/interfaces/Campaign";
-import { cn } from "@/lib";
+import { cn, getDaysLeft } from "@/lib";
 import { getDateFromString } from "@/lib/helpers/campaign";
 import { useElementList, useShareCampaign } from "@/lib/hooks";
 import { useSlot } from "@/lib/hooks/useSlot";
@@ -48,13 +48,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 		"Beneficiary";
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
-	const getDaysLeft = (deadlineTime: any) => {
-		const deadline: any = new Date(deadlineTime);
-		const currentTime: any = new Date();
-		const deadlineTimeFinal = deadline.getTime() - currentTime.getTime();
-		const final = Math.floor(deadlineTimeFinal / (1000 * 60 * 60 * 24));
-		return final;
-	};
 
 	return (
 		<main className="flex flex-col pb-20 text-abeg-text">
