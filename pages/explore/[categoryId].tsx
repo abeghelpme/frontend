@@ -108,10 +108,10 @@ const ExploreCampaignPage = ({
 					height={90}
 					className="absolute right-[-2rem] top-[27rem] md:left-16 md:top-16 md:-translate-y-0 md:translate-x-0 lg:left-40 lg:top-32"
 				/>
-				<h1 className="pr-5 text-5xl font-bold leading-tight md:flex md:justify-center md:pr-0 md:text-6xl md:leading-snug">
+				<h1 className="pr-5 text-4xl  md:text-5xl font-bold leading-tight md:flex md:justify-center md:pr-0 md:leading-snug">
 					{categoryName}
 				</h1>
-				<p className="max-w-[500px] pr-8 text-xl text-gray-50 md:pr-0 md:text-center">
+				<p className="max-w-[500px] pr-8 text-base md:text-lg text-gray-50 md:pr-0 md:text-center">
 					Join the effortless way to fund-raise and make a difference and
 					empower your cause with Abeghelp.me
 				</p>
@@ -149,10 +149,10 @@ const ExploreCampaignPage = ({
 			<div className="pt-10 md:py-20 flex flex-col gap-10 md:gap-20">
 				<div className="flex w-full flex-col gap-8">
 					<div className="flex flex-col gap-2 px-5 md:px-20 ">
-						<h1 className="text-4xl font-bold md:w-full md:text-5xl">
+						<h1 className="text-2xl md:text-3xl font-bold md:w-full">
 							Explore our {`${categoryName?.toLowerCase()} campaigns`}
 						</h1>
-						<p className="text-xl font-medium text-placeholder md:w-3/6">
+						<p className="text-base md:text-lg font-medium text-placeholder md:w-3/6">
 							Join the effortless way to fund-raise and make a difference and
 							empower your cause with Abeghelp.me
 						</p>

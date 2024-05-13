@@ -55,8 +55,10 @@ const HowItWorks = ({ className }: { className?: string }) => {
 							<div className="absolute left-2 top-[-24px] rounded-full border-4 border-gray-100 bg-white p-4">
 								{card.icon}
 							</div>
-							<p className="mt-12 text-2xl font-semibold">{card.title}</p>
-							<p className="text-base font-light">{card.text}</p>
+							<p className="mt-12 text-xl md:text-2xl font-semibold">
+								{card.title}
+							</p>
+							<p className="text-base md:text-lg font-light">{card.text}</p>
 						</div>
 					);
 				})}
