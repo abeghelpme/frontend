@@ -43,7 +43,7 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 				<Carousel.Caption className="inset-0 flex flex-col items-start justify-between px-[18px] py-[25px] text-[10px] font-medium md:px-[53px] lg:rounded-[15px] lg:py-10 lg:text-[30px]">
 					<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-3">
 						<LocationIcon className="size-4 lg:size-6" />
-						<figcaption className="text-lg">
+						<figcaption className="text-sm md:text-lg">
 							{captionContent?.location ?? "Not Provided"}
 						</figcaption>
 					</figure>
@@ -51,14 +51,14 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 					<div className="flex w-full justify-between">
 						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-3">
 							<DonorIcon stroke="light" className="size-4 lg:size-6" />
-							<figcaption className="text-lg">
+							<figcaption className="text-sm md:text-lg">
 								{captionContent?.donorCount ?? 0} total donors
 							</figcaption>
 						</figure>
 
 						<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-[6px] backdrop-blur-md lg:gap-2 lg:rounded-[15px] lg:p-3">
 							<ClockIcon className="size-4 lg:size-6" />
-							<figcaption className="text-lg">
+							<figcaption className="text-sm md:text-lg">
 								{captionContent?.daysLeft ?? 0} days left
 							</figcaption>
 						</figure>
