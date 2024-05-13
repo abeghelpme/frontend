@@ -43,5 +43,10 @@ export {
 	Heart,
 	ArrowUpRight,
 	Settings,
+	AccountIcon,
+	BillingIcon,
+	NotificationIcon,
+	EditIcon,
+	UploadIcon,
 } from "./svg";
 export { default as SingleCampaignProgress } from "./SingleCampaignProgress";

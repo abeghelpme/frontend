@@ -1,9 +1,13 @@
 import {
+	type AddAccountDetailsProps,
+	type CardDetailsProps,
 	type ContactUsProps,
 	type ForgotPasswordProps,
 	type LoginProps,
 	type ResetPasswordProps,
 	type SignUpProps,
+	type UpdatePasswordsProps,
+	type UpdateProfileProps,
 } from "@/interfaces";
 import { zxcvbn, zxcvbnAsync, zxcvbnOptions } from "@zxcvbn-ts/core";
 import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
@@ -34,7 +38,11 @@ type FormType =
 	| "campaignStepOne"
 	| "campaignStepTwo"
 	| "campaignStepThree"
-	| "contactUs";
+	| "contactUs"
+	| "updateProfile"
+	| "updatePasswords"
+	| "cardDetails"
+	| "addAccountDetails";
 
 const signUpSchema: z.ZodType<SignUpProps> = z
 	.object({
@@ -277,6 +285,159 @@ const contactUsSchema: z.ZodType<ContactUsProps> = z.object({
 		.max(100, { message: "Message must be less than 100 characters" }),
 });
 
+const updateProfileSchema: z.ZodType<UpdateProfileProps> = z.object({
+	firstName: z
+		.string()
+		.min(2, { message: "First Name is required" })
+		.max(50, { message: "First Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		})
+		.optional(),
+	lastName: z
+		.string()
+		.min(2, { message: "Last Name is required" })
+		.max(50, { message: "Last Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		})
+		.optional(),
+	phoneNumber: z.string().optional(),
+});
+
+const updatePassWordsSchema: z.ZodType<UpdatePasswordsProps> = z
+	.object({
+		oldPassword: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value, ctx) => {
+				const options = {
+					dictionary: {
+						...zxcvbnCommonPackage.dictionary,
+						...zxcvbnEnPackage.dictionary,
+					},
+					translations: {
+						...zxcvbnEnPackage.translations,
+					},
+					graphs: zxcvbnCommonPackage.adjacencyGraphs,
+				};
+				zxcvbnOptions.setOptions(options);
+				const testedResult = zxcvbn(value);
+
+				if (testedResult.score < 3) {
+					testedResult.feedback.suggestions.map((issue) => {
+						ctx.addIssue({
+							code: z.ZodIssueCode.custom,
+							message: issue,
+						});
+					});
+				}
+
+				return value.trim();
+			}),
+		newPassword: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value, ctx) => {
+				const options = {
+					dictionary: {
+						...zxcvbnCommonPackage.dictionary,
+						...zxcvbnEnPackage.dictionary,
+					},
+					translations: {
+						...zxcvbnEnPackage.translations,
+					},
+					graphs: zxcvbnCommonPackage.adjacencyGraphs,
+				};
+				zxcvbnOptions.setOptions(options);
+				const testedResult = zxcvbn(value);
+
+				if (testedResult.score < 3) {
+					testedResult.feedback.suggestions.map((issue) => {
+						ctx.addIssue({
+							code: z.ZodIssueCode.custom,
+							message: issue,
+						});
+					});
+				}
+
+				return value.trim();
+			}),
+		confirmPassword: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value) => {
+				return value.trim();
+			}),
+	})
+	.refine((data) => data.newPassword === data.confirmPassword, {
+		message: "Passwords do not match",
+		path: ["confirmNewPassword"],
+	});
+
+const cardDetailsSchema: z.ZodType<CardDetailsProps> = z.object({
+	cardName: z
+		.string()
+		.min(2, { message: "Card Name is required" })
+		.max(50, { message: "Card Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		}),
+	cardNumber: z
+		.string()
+		.min(12, { message: "Card Number is required" })
+		.max(18, { message: "Card Number must be less than 18 characters" }),
+	cardExpiry: z.string(),
+	cvv: z.string(),
+});
+
+const addAccountDetailsSchema: z.ZodType<AddAccountDetailsProps> = z.object({
+	accountName: z
+		.string()
+		.min(2, { message: "Card Name is required" })
+		.max(50, { message: "Card Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		}),
+	accountNumber: z
+		.string()
+		.min(12, { message: "Card Number is required" })
+		.max(18, { message: "Card Number must be less than 18 characters" }),
+	bankName: z.string(),
+});
+
 export const zodValidator = (formType: FormType) => {
 	switch (formType) {
 		case "signup":
@@ -295,6 +456,14 @@ export const zodValidator = (formType: FormType) => {
 			return campaignStepThreeSchema;
 		case "contactUs":
 			return contactUsSchema;
+		case "updateProfile":
+			return updateProfileSchema;
+		case "updatePasswords":
+			return updatePassWordsSchema;
+		case "cardDetails":
+			return cardDetailsSchema;
+		case "addAccountDetails":
+			return addAccountDetailsSchema;
 		default:
 			return;
 	}
@@ -305,3 +474,7 @@ export type LoginType = z.infer<typeof loginSchema>;
 export type ForgotPasswordType = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordType = z.infer<typeof resetPasswordSchema>;
 export type ContactUsType = z.infer<typeof contactUsSchema>;
+export type UpdateProfileType = z.infer<typeof updateProfileSchema>;
+export type UpdatePasswordsType = z.infer<typeof updatePassWordsSchema>;
+export type CardDetailsType = z.infer<typeof cardDetailsSchema>;
+export type AddAccountDetailsType = z.infer<typeof addAccountDetailsSchema>;

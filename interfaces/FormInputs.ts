@@ -27,3 +27,29 @@ export type ContactUsProps = {
 	email: string;
 	message: string;
 };
+
+export type UpdateProfileProps = {
+	firstName?: string;
+	lastName?: string;
+	// email?: string;
+	phoneNumber?: string;
+};
+
+export type UpdatePasswordsProps = {
+	oldPassword: string;
+	newPassword: string;
+	confirmPassword: string;
+};
+
+export type CardDetailsProps = {
+	cardNumber: string;
+	cvv: string;
+	cardName: string;
+	cardExpiry: string;
+};
+
+export type AddAccountDetailsProps = {
+	accountName: string;
+	accountNumber: string;
+	bankName: string;
+};

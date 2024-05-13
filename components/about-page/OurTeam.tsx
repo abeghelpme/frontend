@@ -42,8 +42,10 @@ const OurTeam = () => {
 	return (
 		<section className="px-5 md:px-20 py-10 lg:py-20">
 			<div className="flex flex-col items-center space-y-5">
-				<p className="text-xl">Meet the team</p>
-				<h1 className="font-bold text-4xl">A pack of achievers with a dream</h1>
+				<p className="text-base md:text-">Meet the team</p>
+				<h1 className="font-bold text-2xl md:text-3xl">
+					A pack of achievers with a dream
+				</h1>
 			</div>
 			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 pt-10">
 				{ourTeam.map((dev, index) => (
@@ -56,8 +58,8 @@ const OurTeam = () => {
 							className="w-full"
 						/>
 						<span className="bg-abeg-gray text-white flex flex-col items-center p-2 w-full">
-							<h1 className="text-2xl">{dev.name}</h1>
-							<p className="text-base">{dev.position}</p>
+							<h1 className="text-lg md:text-xl">{dev.name}</h1>
+							<p className="text-sm md:text-base">{dev.position}</p>
 						</span>
 					</div>
 				))}

@@ -8,7 +8,7 @@ const OurPurpose = () => {
 		switch (activeTab) {
 			case "mission":
 				return (
-					<div className="space-y-10">
+					<div className="space-y-10 text-base md:text-xl">
 						<p>
 							Our mission is to make a positive impact on people's lives by
 							providing support and resources to those in need. We strive to
@@ -32,7 +32,7 @@ const OurPurpose = () => {
 				);
 			case "vision":
 				return (
-					<div className="space-y-10">
+					<div className="space-y-10 text-base md:text-xl">
 						<p>
 							Our vision is to create a world where everyone has equal
 							opportunities to succeed and thrive. We envision a society that is
@@ -55,7 +55,7 @@ const OurPurpose = () => {
 				);
 			case "goals":
 				return (
-					<div className="space-y-10">
+					<div className="space-y-10 text-base md:text-xl">
 						<p>
 							Our goals are to make a lasting and measurable impact on the lives
 							of the people we serve. We aim to improve quality of life, advance

@@ -56,7 +56,7 @@ const navigation = [
 		title: "updates",
 	},
 	{
-		path: "/settings",
+		path: "/c/settings",
 		icon: <SettingsIcon stroke />,
 		title: "settings",
 	},
@@ -198,6 +198,8 @@ export const AuthenticatedUserLayout = ({
 									<p className="">
 										Here is an overview of your campaign activities✨.
 									</p>
+								) : router.pathname === "/c/settings" ? (
+									<p>Here's a snapshot of your settings page</p>
 								) : null}
 							</div>
 							<Link
@@ -243,12 +245,12 @@ export const AuthenticatedUserLayout = ({
 								Updates
 							</Link>
 							<Link
-								href="/settings"
+								href="/c/settings"
 								className={`flex items-center gap-2 !text-white ${
-									router.pathname === "/settings" && "font-semibold"
+									router.pathname === "/c/settings" && "font-semibold"
 								}`}
 							>
-								<SettingsIcon fill={router.pathname === "/settings"} />
+								<SettingsIcon fill={router.pathname === "/c/settings"} />
 								Settings
 							</Link>
 						</div>

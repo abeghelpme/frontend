@@ -65,7 +65,7 @@ const SuccessStories = ({ className }: { className?: string }) => {
 
 	return (
 		<div className={cn("relative flex flex-col md:gap-12", className)}>
-			<h1 className="px-4 text-4xl font-bold text-center">
+			<h1 className="px-4 text-2xl md:text-3xl  font-bold text-center">
 				The Success stories of the benefactors speak for themselves
 			</h1>
 
@@ -77,11 +77,11 @@ const SuccessStories = ({ className }: { className?: string }) => {
 						className="w-full transition-transform duration-500 flex flex-col-reverse gap-5 md:flex-row shrink-0 grow-0 space-y-10 md:space-y-0 md:justify-between md:items-center"
 					>
 						<div className="md:w-1/2 space-y-5 md:space-y-10">
-							<h1 className="text-xl">{story.title}</h1>
-							<h1 className="text-4xl lg:text-5xl font-bold pr-16 md:pr-0">
+							<h1 className="text-base md:text-lg">{story.title}</h1>
+							<h1 className="text-2xl md:text-3xl  font-bold pr-16 md:pr-0">
 								{story.secondTitle}
 							</h1>
-							<p className="text-xl md:text-base font-medium">{story.text}</p>
+							<p className="text-base md:text-lg font-medium">{story.text}</p>
 						</div>
 						<div className="w-full md:w-1/2">
 							<Image
@@ -95,13 +95,13 @@ const SuccessStories = ({ className }: { className?: string }) => {
 								className="hidden md:block absolute z-50 top-[45%] right-0 transform -translate-y-1/2 border border-white rounded-full p-2 md:p-3 backdrop-filter backdrop-blur-md hover:backdrop-blur-lg transition-all duration-300"
 								onClick={next}
 							>
-								<ArrowRightIcon className="text-white" />
+								<ArrowRightIcon className="text-white size-20" />
 							</button>
 							<button
-								className="hidden md:block absolute z-50 transform  top-[55%] right-0 -translate-y-1/2 border border-white rounded-full p-2 md:p-3 backdrop-filter backdrop-blur-md hover:backdrop-blur-lg transition-all duration-300"
+								className="hidden md:block absolute z-50 transform  top-[70%] right-0 -translate-y-1/2 border border-white rounded-full p-2 md:p-3 backdrop-filter backdrop-blur-md hover:backdrop-blur-lg transition-all duration-300"
 								onClick={prev}
 							>
-								<ArrowLeftIcon className="text-white" />
+								<ArrowLeftIcon className="text-white size-20" />
 							</button>
 						</div>
 					</div>

@@ -30,7 +30,7 @@ const Hero = ({ h1Tag, pTag, button1, button2, imageSrc }: Props) => {
 			/>
 			<div className="flex flex-col gap-4 px-5 text-gray-50 md:px-20 lg:flex-row lg:items-center  lg:gap-12">
 				<div className="flex w-full flex-col gap-6 lg:w-1/2">
-					<h1 className="pr-5 text-5xl font-bold leading-tight md:pr-0 md:text-6xl md:leading-snug">
+					<h1 className="pr-5 text-4xl  md:text-5xl font-bold leading-tight md:pr-0 md:leading-snug">
 						{h1Tag}
 					</h1>
 					<p className="pr-10 text-lg text-gray-50 md:pr-5">{pTag} </p>

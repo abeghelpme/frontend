@@ -48,8 +48,8 @@ const CampaignCategories = ({
 	return (
 		<div className={cn("flex flex-col gap-12 justify-center pb-10", className)}>
 			<div className="w-full flex flex-col gap-2">
-				<h1 className="text-4xl font-bold md:text-5xl">Campaign Categories</h1>
-				<p className="text-xl text-placeholder font-medium max-w-[540px]">
+				<h1 className="text-2xl md:text-3xl font-bold">Campaign Categories</h1>
+				<p className="text-base md:text-lg text-placeholder font-medium max-w-[540px]">
 					See the list of campaign categories in Abeghelp.me and get started to
 					empower your cause and that of others
 				</p>
@@ -69,7 +69,7 @@ const CampaignCategories = ({
 									})
 								}
 								className={cn(
-									`hover:transition-all duration-500 hover:scale-110 text-center p-6 rounded-lg font-bold text-xl truncate border-abeg-primary border text-abeg-primary hover:bg-abeg-primary hover:text-white`
+									`hover:transition-all duration-500 hover:scale-110 text-center p-6 rounded-lg font-bold text-base md:text-lg truncate border-abeg-primary border text-abeg-primary hover:bg-abeg-primary hover:text-white`
 								)}
 							>
 								{category.name} ({category.count})

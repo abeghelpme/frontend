@@ -98,7 +98,7 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 				campaign={campaign}
 			>
 				<CampaignOutlook.Header>
-					<Heading as="h1" className="text-4xl lg:text-4xl">
+					<Heading as="h1" className="text-2xl md:text-3xl">
 						{`${campaign.title[0].toUpperCase()}${campaign.title.slice(1)}`}
 					</Heading>
 				</CampaignOutlook.Header>

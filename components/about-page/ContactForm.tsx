@@ -58,8 +58,8 @@ const ContactForm = () => {
 	return (
 		<section className="px-5 md:px-20 flex flex-col items-center space-y-10">
 			<div className="flex flex-col items-center space-y-5">
-				<h1 className="font-bold text-4xl lg:text-5xl">Get in touch</h1>
-				<p className="text-base lg:text-2xl font-extralight">
+				<h1 className="font-bold text-2xl md:text-3xl">Get in touch</h1>
+				<p className="text-base md:text-xl font-extralight">
 					We’d love to hear from you, kindly fill out this form.
 				</p>
 			</div>
@@ -93,7 +93,7 @@ const ContactForm = () => {
 					)}
 					<div className="grid grid-cols-2 gap-4 lg:gap-6">
 						<div className="space-y-1">
-							<label htmlFor="firstName" className="font-medium lg:text-lg">
+							<label htmlFor="firstName" className="font-medium text-sm">
 								First Name
 							</label>
 							<Input
@@ -109,7 +109,7 @@ const ContactForm = () => {
 							/>
 						</div>
 						<div className="space-y-1">
-							<label htmlFor="lastName" className="font-medium lg:text-lg">
+							<label htmlFor="lastName" className="font-medium text-sm">
 								Last Name
 							</label>
 							<Input
@@ -127,7 +127,7 @@ const ContactForm = () => {
 					</div>
 
 					<div className="space-y-1">
-						<label htmlFor="email" className="font-medium lg:text-lg">
+						<label htmlFor="email" className="font-medium text-sm">
 							Email
 						</label>
 						<Input
@@ -144,7 +144,7 @@ const ContactForm = () => {
 					</div>
 
 					<div className="space-y-1 sm:space-y-0 lg:gap-6">
-						<label htmlFor="message" className="mb-1 font-medium lg:text-lg">
+						<label htmlFor="message" className="mb-1 font-medium text-sm">
 							Message
 						</label>
 						<Input

@@ -93,6 +93,7 @@ const FAQ = ({ className }: { className?: string }) => {
 				{faqs.map((faq, id) => {
 					return (
 						<AccordionItem
+							key={id}
 							value={`item-${id}`}
 							className="rounded-lg overflow-hidden [&[data-state=open]]:bg-[#F7F7F7] p-5 text-[#475467]"
 						>
