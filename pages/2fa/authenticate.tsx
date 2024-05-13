@@ -68,7 +68,7 @@ const EmailAuth = ({ otp, setOtp, handleSubmit, loading, email }: Props) => {
 								type="submit"
 								disabled={resend}
 								onClick={() => void resendCode()}
-								className="!bg-transparent p-0 font-medium text-abeg-primary disabled:text-abeg-neutral-50"
+								className="!bg-transparent p-0 font-medium text-abeg-primary disabled:text-abeg-neutral-50 inline"
 							>
 								resend it
 							</Button>
