@@ -57,5 +57,5 @@ export type AddAccountDetailsProps = {
 export type DonationDetailsProps = {
 	donorEmail: string;
 	donorName: string;
-	amount: number;
+	amount: string;
 };

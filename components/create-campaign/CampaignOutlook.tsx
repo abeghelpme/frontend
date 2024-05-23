@@ -24,10 +24,16 @@ import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { CustomDialog, Heading, SingleCampaignProgress } from "../common";
+import {
+	CustomDialog,
+	FormErrorMessage,
+	Heading,
+	SingleCampaignProgress,
+} from "../common";
 import { FAQ, UrgentFundraisers } from "../common/landingPage";
 import { Button, Checkbox, Input } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
@@ -38,6 +44,7 @@ type CampaignOutlookProps = {
 	campaign: Campaign;
 	featuredCampaigns: Campaign[];
 	excerpt: string;
+	campaignId: string;
 };
 
 type CampaignHeaderProps = {
@@ -46,7 +53,7 @@ type CampaignHeaderProps = {
 };
 
 function CampaignOutlook(props: CampaignOutlookProps) {
-	const { campaign, featuredCampaigns, excerpt, children } = props;
+	const { campaign, featuredCampaigns, excerpt, children, campaignId } = props;
 
 	const [TagList] = useElementList();
 
@@ -61,6 +68,52 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
+	//donation flow
+	const { user } = useSession((state) => state);
+	useEffect(() => {
+		if (user) {
+			reset({
+				donorName: `${user.firstName} ${user.lastName}`,
+				donorEmail: user.email,
+				amount: "",
+			});
+		}
+	}, [user]);
+	const [hideMyDetails, setHideMyDetails] = useState(false);
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm<DonationDetailsType>({
+		resolver: zodResolver(zodValidator("donationDetails")!),
+		mode: "onChange",
+		reValidateMode: "onChange",
+		defaultValues: {
+			donorName: "",
+			donorEmail: "",
+			amount: "",
+		},
+	});
+	const onDonateSubmit: SubmitHandler<DonationDetailsType> = async (
+		data: DonationDetailsType
+	) => {
+		console.log({ ...data, hideMyDetails, campaignId, amount: +data.amount });
+		const { data: dataInfo, error } = await callApi<ApiResponse>(
+			"/donation/create",
+			{ ...data, hideMyDetails, campaignId, amount: +data.amount }
+		);
+		if (error) {
+			toast.error("Error", {
+				description: error.message,
+			});
+			return;
+		}
+		toast.success("Success", {
+			description: dataInfo?.message,
+		});
+	};
+	console.log(campaign);
 	return (
 		<main className="flex flex-col pb-20 text-abeg-text">
 			<section className="relative px-6 pb-14 pt-11 text-white md:px-[80px]">
@@ -91,10 +144,122 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 						<figcaption className="text-lg">{fundraiserTarget}</figcaption>
 					</figure>
-
-					<button className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-lg font-bold">
-						Donate
-					</button>
+					<CustomDialog
+						classNames={{
+							content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+						}}
+						trigger={
+							<button className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-lg font-bold">
+								Donate
+							</button>
+						}
+					>
+						<form
+							className="flex flex-col gap-4"
+							onSubmit={(e) => {
+								e.preventDefault();
+								handleSubmit(onDonateSubmit)(e);
+							}}
+						>
+							<p className="text-center mt-2">
+								Donate to this campaign. Every penny brings us one step closer
+								to making a difference
+							</p>
+							<div className="space-y-1 bg-white">
+								<label
+									htmlFor="donorName"
+									className="text-sm font-medium md:text-base"
+								>
+									Full name
+								</label>
+								<Input
+									{...register("donorName")}
+									autoFocus
+									type="text"
+									id="donorName"
+									required
+									placeholder="Enter your Full name"
+									className={`min-h-[45px] font-light border text-sm md:text-base disabled:cursor-not-allowed disabled:bg-inherit ${
+										errors.donorName &&
+										"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+									}`}
+									disabled={user?.firstName && user.lastName ? true : false}
+								/>
+								<FormErrorMessage
+									error={errors.donorName!}
+									errorMsg={errors.donorName?.message!}
+								/>
+							</div>
+							<div className="space-y-1">
+								<label
+									htmlFor="donorEmail"
+									className="text-sm font-medium md:text-base"
+								>
+									Email address
+								</label>
+								<Input
+									{...register("donorEmail")}
+									autoFocus
+									type="text"
+									id="donorEmail"
+									required
+									placeholder="Enter your email address"
+									className={`min-h-[45px] font-light border text-sm md:text-base disabled:cursor-not-allowed disabled:bg-inherit ${
+										errors.donorEmail &&
+										"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+									}`}
+									disabled={user?.email ? true : false}
+								/>
+								<FormErrorMessage
+									error={errors.donorEmail!}
+									errorMsg={errors.donorEmail?.message!}
+								/>
+							</div>
+							<div className="space-y-1">
+								<label
+									htmlFor="amount"
+									className="text-sm font-medium md:text-base"
+								>
+									Amount
+								</label>
+								<Input
+									{...register("amount")}
+									autoFocus
+									type="number"
+									id="amount"
+									required
+									placeholder="Enter any amount"
+									className={`min-h-[45px] font-light border text-sm md:text-base disabled:cursor-not-allowed disabled:bg-inherit ${
+										errors.amount &&
+										"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+									}`}
+								/>
+								<FormErrorMessage
+									error={errors.amount!}
+									errorMsg={errors.amount?.message!}
+								/>
+							</div>
+							<div className="flex gap-3 items-center">
+								<Checkbox
+									name="hideMyDetails"
+									id="hideMydetails"
+									className="accent-red-500"
+									checked={hideMyDetails}
+									onCheckedChange={() => setHideMyDetails(!hideMyDetails)}
+								/>
+								<label
+									htmlFor="hideMyDetails"
+									className="cursor-pointer text-sm font-medium md:text-base"
+									onClick={() => setHideMyDetails(!hideMyDetails)}
+								>
+									Hide details
+								</label>
+							</div>
+							<Button className="bg-abeg-primary text-base text-white">
+								Donate
+							</Button>
+						</form>
+					</CustomDialog>
 
 					<button className="absolute right-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] max-lg:hidden">
 						<ShareIcon />
@@ -392,7 +557,7 @@ const DonateModalContent = ({ campaignId }: { campaignId: string }) => {
 					: ""
 			}`,
 			donorEmail: `${user?.email ? `${user.email}` : ""}`,
-			amount: 0,
+			amount: "",
 		},
 	});
 

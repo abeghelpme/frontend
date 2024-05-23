@@ -440,35 +440,28 @@ const addAccountDetailsSchema: z.ZodType<AddAccountDetailsProps> = z.object({
 	bankName: z.string(),
 });
 
-const donationDetails: z.ZodType<DonationDetailsProps> = z
-	// donorEmail: string;
-	// donorName: string;
-	// amount: string;
-	// hideMyDetails: boolean;
-	.object({
-		donorName: z
-			.string()
-			.min(2, { message: "First Name is required" })
-			.max(50, { message: "First Name must be less than 50 characters" })
-			.transform((value) => {
-				return (
-					value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
-				).trim();
-			}),
+const donationDetails: z.ZodType<DonationDetailsProps> = z.object({
+	donorName: z
+		.string()
+		.min(2, { message: "Full Name is required" })
+		.max(50, { message: "Full Name must be less than 50 characters" })
+		.transform((value) => {
+			return value.trim();
+		}),
 
-		donorEmail: z
-			.string()
-			.min(2, { message: "Email is required" })
-			.email({ message: "Invalid email address" })
-			.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
-				message: "Enter a valid email",
-			})
-			.transform((value) => {
-				return value.toLowerCase().trim();
-			}),
+	donorEmail: z
+		.string()
+		.min(2, { message: "Email is required" })
+		.email({ message: "Invalid email address" })
+		.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+			message: "Enter a valid email",
+		})
+		.transform((value) => {
+			return value.toLowerCase().trim();
+		}),
 
-		amount: z.number(),
-	});
+	amount: z.string().min(1, { message: "Amount is required" }),
+});
 
 export const zodValidator = (formType: FormType) => {
 	switch (formType) {

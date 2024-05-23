@@ -87,6 +87,7 @@ function PreviewCampaignPage({
 				featuredCampaigns={featuredCampaigns}
 				excerpt={excerpt}
 				campaign={currentCampaign}
+				campaignId={currentCampaign.url.split("/c/")[1]}
 			>
 				<CampaignOutlook.Header className="flex flex-col gap-2 text-white lg:text-2xl">
 					<Heading as="h1">Campaign Preview</Heading>
