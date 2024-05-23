@@ -74,7 +74,7 @@ const Billing = () => {
 	});
 
 	const onSubmit = (data: any) => {
-		console.log(data); // Handle form submission here
+		// console.log(data); // Handle form submission here
 	};
 	return (
 		<main className="flex flex-col gap-6">

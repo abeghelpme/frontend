@@ -45,7 +45,7 @@ const ResetPassword = () => {
 			setResult(passwordStrength);
 		};
 		genStrength().catch((e) => {
-			console.log(e);
+			// console.log(e);
 		});
 	}, [deferredPassword]);
 

@@ -42,7 +42,7 @@ export const getStaticProps = (async (context) => {
 		callApi<ApiResponse<Campaign[]>>("/campaign/featured"),
 	]);
 
-	console.log(singleCampaign.error, singleCampaign.data?.data);
+	// console.log(singleCampaign.error, singleCampaign.data?.data);
 	if (singleCampaign.error || !singleCampaign.data?.data) {
 		return {
 			notFound: true,

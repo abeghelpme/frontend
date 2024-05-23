@@ -52,7 +52,7 @@ const SignUp = () => {
 	};
 	useEffect(() => {
 		genStrength().catch((e) => {
-			console.log(e);
+			// console.log(e);
 		});
 	}, [deferredPassword]);
 
