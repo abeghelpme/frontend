@@ -44,6 +44,7 @@ const updatePassword: UpdatePassword[] = [
 
 const Account = () => {
 	const { user } = useSession((state) => state);
+	const { updateUser } = useSession((state) => state.actions);
 	const [userPhoto, setUserPhoto] = useState("");
 	const [preview, setPreview] = useState<string | ArrayBuffer | null>(null);
 	const [inputs, setInputs] = useState<UpdateProfileInput[]>([
@@ -70,7 +71,7 @@ const Account = () => {
 			setPreview(file.result);
 		};
 		file.readAsDataURL(acceptedFiles[0]);
-		toast.success("Success", { description: "! file chosen successfully" });
+		toast.success("Success", { description: "1 file chosen successfully" });
 	}, []);
 
 	const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
@@ -143,6 +144,7 @@ const Account = () => {
 		toast.success("Success", {
 			description: dataInfo?.message,
 		});
+		// updateUser(dataInfo)
 	};
 
 	//Form 2
@@ -309,7 +311,7 @@ const Account = () => {
 									firstName: user?.firstName,
 									lastName: user?.lastName,
 									// email: user.email,
-									phoneNumber: "",
+									phoneNumber: user?.phoneNumber,
 								});
 
 								setInputs(
@@ -344,7 +346,7 @@ const Account = () => {
 					{updatePassword.map((item: UpdatePassword, id) => {
 						return (
 							<div key={id} className="flex flex-col gap-3">
-								<label htmlFor="firstName" className="font-bold text-sm">
+								<label htmlFor={item.id} className="font-bold text-sm">
 									{item.label}
 								</label>
 								<Input

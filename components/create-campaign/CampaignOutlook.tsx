@@ -6,18 +6,30 @@ import {
 	whatsappIcon,
 	xIcon,
 } from "@/components/common/campaign-icons";
+import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { cn, getDaysLeft } from "@/lib";
+import {
+	type DonationDetailsType,
+	callApi,
+	cn,
+	getDaysLeft,
+	zodValidator,
+} from "@/lib";
 import { getDateFromString } from "@/lib/helpers/campaign";
 import { useElementList, useShareCampaign } from "@/lib/hooks";
 import { useSlot } from "@/lib/hooks/useSlot";
+import { useSession } from "@/store";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { CustomDialog, Heading, SingleCampaignProgress } from "../common";
 import { FAQ, UrgentFundraisers } from "../common/landingPage";
-import { Button } from "../ui";
+import { Button, Checkbox, Input } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
 import DonorSection from "./DonorSection";
 
@@ -68,7 +80,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					<figure className="flex items-center gap-3 ">
 						{campaign?.creator?.photo && (
 							<Image
-								src={campaign?.creator?.photo || ""}
+								src={campaign.creator.photo}
 								alt="image"
 								width={200}
 								height={200}
@@ -365,3 +377,108 @@ CampaignOutlook.Header = CampaignOutlookHeader;
 CampaignOutlookHeader.slot = "header";
 
 export default CampaignOutlook;
+
+const DonateModalContent = ({ campaignId }: { campaignId: string }) => {
+	const [hideMyDetails, setHideMyDetails] = useState(false);
+	const { user } = useSession((state) => state);
+	const { register, handleSubmit, reset } = useForm<DonationDetailsType>({
+		resolver: zodResolver(zodValidator("donationDetails")!),
+		mode: "onChange",
+		reValidateMode: "onChange",
+		defaultValues: {
+			donorName: `${
+				user?.firstName && user?.lastName
+					? `${user.firstName} ${user.lastName}`
+					: ""
+			}`,
+			donorEmail: `${user?.email ? `${user.email}` : ""}`,
+			amount: 0,
+		},
+	});
+
+	//   useEffect(() => {
+	//     if (user)
+	//       reset({
+	//         donorName: `${
+	//           user?.firstName && user?.lastName
+	//             ? `${user.firstName} ${user.lastName}`
+	//             : ""
+	//         }`,
+	//         donorEmail: `${user?.email ? `${user.email}` : ""}`,
+	//         amount: 0,
+	//       });
+	//   }, [user]);
+
+	const onSubmit: SubmitHandler<DonationDetailsType> = async (
+		data: DonationDetailsType
+	) => {
+		const { data: dataInfo, error } = await callApi<ApiResponse>(
+			"/donation/create",
+			{ ...data, hideMyDetails, campaignId }
+		);
+		if (error) {
+			toast.error("Error", {
+				description: error.message,
+			});
+			return;
+		}
+		toast.success("Success", {
+			description: dataInfo?.message,
+		});
+	};
+	return (
+		<form
+			onSubmit={(event) => {
+				event.preventDefault();
+				void handleSubmit(onSubmit)(event);
+			}}
+			className="flex gap-4 flex-col"
+		>
+			<div className="flex-1">
+				<label htmlFor="donorName" className="font-bold text-sm">
+					Name
+				</label>
+				<Input
+					{...register("donorName")}
+					type="text"
+					id={"donorName"}
+					className={` h-10 font-light text-sm disabled:border-0 disabled:bg-inherit disabled:p-0`}
+				/>
+			</div>
+			<div className="flex-1">
+				<label htmlFor="donorEmail" className="font-bold text-sm">
+					E-mail
+				</label>
+				<Input
+					{...register("donorEmail")}
+					type="text"
+					id="donorEmail"
+					className={` h-10 font-light text-sm disabled:border-0 disabled:bg-inherit disabled:p-0`}
+				/>
+			</div>
+			<div className="flex-1">
+				<label htmlFor="amount" className="font-bold text-sm">
+					Amount
+				</label>
+				<Input
+					{...register("amount")}
+					type="number"
+					id="amount"
+					className={` h-10 font-light text-sm disabled:border-0 disabled:bg-inherit disabled:p-0`}
+				/>
+			</div>
+			<div className="flex-1 flex gap-3 ">
+				<Checkbox
+					className="data-[state=checked]:bg-abeg-primary data-[state=checked]:text-zinc-50"
+					id="hideMyDetails"
+					checked={hideMyDetails}
+					onCheckedChange={() => setHideMyDetails((prev) => !prev)}
+				/>
+				<label htmlFor="donorEmail" className="font-bold text-sm">
+					E-mail
+				</label>
+			</div>
+			<Button className="bg-abeg-primary self-center">Pay now</Button>
+		</form>
+	);
+};

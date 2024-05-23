@@ -53,3 +53,9 @@ export type AddAccountDetailsProps = {
 	accountNumber: string;
 	bankName: string;
 };
+
+export type DonationDetailsProps = {
+	donorEmail: string;
+	donorName: string;
+	amount: number;
+};

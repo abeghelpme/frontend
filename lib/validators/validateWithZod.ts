@@ -2,6 +2,7 @@ import {
 	type AddAccountDetailsProps,
 	type CardDetailsProps,
 	type ContactUsProps,
+	type DonationDetailsProps,
 	type ForgotPasswordProps,
 	type LoginProps,
 	type ResetPasswordProps,
@@ -42,7 +43,8 @@ type FormType =
 	| "updateProfile"
 	| "updatePasswords"
 	| "cardDetails"
-	| "addAccountDetails";
+	| "addAccountDetails"
+	| "donationDetails";
 
 const signUpSchema: z.ZodType<SignUpProps> = z
 	.object({
@@ -438,6 +440,36 @@ const addAccountDetailsSchema: z.ZodType<AddAccountDetailsProps> = z.object({
 	bankName: z.string(),
 });
 
+const donationDetails: z.ZodType<DonationDetailsProps> = z
+	// donorEmail: string;
+	// donorName: string;
+	// amount: string;
+	// hideMyDetails: boolean;
+	.object({
+		donorName: z
+			.string()
+			.min(2, { message: "First Name is required" })
+			.max(50, { message: "First Name must be less than 50 characters" })
+			.transform((value) => {
+				return (
+					value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+				).trim();
+			}),
+
+		donorEmail: z
+			.string()
+			.min(2, { message: "Email is required" })
+			.email({ message: "Invalid email address" })
+			.regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+				message: "Enter a valid email",
+			})
+			.transform((value) => {
+				return value.toLowerCase().trim();
+			}),
+
+		amount: z.number(),
+	});
+
 export const zodValidator = (formType: FormType) => {
 	switch (formType) {
 		case "signup":
@@ -464,6 +496,8 @@ export const zodValidator = (formType: FormType) => {
 			return cardDetailsSchema;
 		case "addAccountDetails":
 			return addAccountDetailsSchema;
+		case "donationDetails":
+			return donationDetails;
 		default:
 			return;
 	}
@@ -478,3 +512,4 @@ export type UpdateProfileType = z.infer<typeof updateProfileSchema>;
 export type UpdatePasswordsType = z.infer<typeof updatePassWordsSchema>;
 export type CardDetailsType = z.infer<typeof cardDetailsSchema>;
 export type AddAccountDetailsType = z.infer<typeof addAccountDetailsSchema>;
+export type DonationDetailsType = z.infer<typeof donationDetails>;

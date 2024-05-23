@@ -10,6 +10,7 @@ export {
 	type UpdatePasswordsType,
 	type CardDetailsType,
 	type AddAccountDetailsType,
+	type DonationDetailsType,
 } from "./validators/validateWithZod";
 
 export { callApi } from "./helpers/callApi";
