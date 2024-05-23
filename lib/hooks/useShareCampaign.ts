@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { toast } from "sonner";
+import { useCallbackRef } from "./useCallbackRef";
 import { useCopyToClipboard } from "./useCopyToClipboard";
 
 const useShareCampaign = () => {
@@ -28,13 +29,13 @@ const useShareCampaign = () => {
 		return `https://wa.me/?${queryParams.toString()}`;
 	}, []);
 
-	const handleShareLink = (url: string) => () => {
+	const handleShareLink = useCallbackRef((url: string) => () => {
 		copyToClipboard(url);
 
 		toast.success("Campaign link copied to clipboard!", {
 			duration: 1500,
 		});
-	};
+	});
 
 	return { generateTweet, generateWhatsAppMessage, handleShareLink };
 };
