@@ -17,5 +17,6 @@
 		"source.addMissingImports": "never"
 	},
 
-	"tailwindCSS.rootFontSize": 16
+	"tailwindCSS.rootFontSize": 16,
+	"typescript.tsdk": "node_modules\\typescript\\lib"
 }
