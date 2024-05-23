@@ -40,14 +40,14 @@ function CarouselContent<TElement extends React.ElementType = "article">(
 	return (
 		<HtmlElement
 			data-id="Carousel"
-			className={cn("relative w-full touch-none select-none", classNames.base)}
+			className={cn("relative w-full select-none", classNames.base)}
 			onMouseEnter={pauseAutoSlide}
 			onMouseLeave={resumeAutoSlide}
 		>
 			<div
 				data-id="Scroll Container"
 				className={cn(
-					"flex size-full touch-none snap-x snap-mandatory overflow-x-scroll scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+					"flex size-full snap-x snap-mandatory overflow-x-scroll scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
 					classNames.scrollContainer
 				)}
 			>
