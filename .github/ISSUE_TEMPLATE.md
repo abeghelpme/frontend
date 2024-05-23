@@ -1,3 +1,7 @@
+## NOTE:
+
+Type .take as a comment under an issue to automatically assign it to yourself
+
 ## Issue Type
 
 - [ ] Bug Report
