@@ -268,7 +268,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								</label>
 							</div>
 							<Button
-								className="bg-abeg-primary text-base text-white"
+								className={cn(
+									"bg-abeg-primary text-base text-white",
+									donateLoading && "disabled:cursor-not-allowed"
+								)}
 								loading={donateLoading}
 							>
 								Donate
@@ -553,7 +556,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									</label>
 								</div>
 								<Button
-									className="bg-abeg-primary text-base text-white"
+									className={cn(
+										"bg-abeg-primary text-base text-white",
+										donateLoading && "disabled:cursor-not-allowed"
+									)}
 									loading={donateLoading}
 								>
 									Donate
