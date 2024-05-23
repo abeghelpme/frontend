@@ -23,6 +23,7 @@ import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -52,6 +53,9 @@ type CampaignHeaderProps = {
 
 function CampaignOutlook(props: CampaignOutlookProps) {
 	const { campaign, featuredCampaigns, excerpt, children, campaignId } = props;
+	const [donateLoading, setDonateLoading] = useState(false);
+
+	const router = useRouter();
 
 	const [TagList] = useElementList();
 
@@ -93,9 +97,11 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 			amount: "",
 		},
 	});
+
 	const onDonateSubmit: SubmitHandler<DonationDetailsType> = async (
 		data: DonationDetailsType
 	) => {
+		setDonateLoading(true);
 		console.log({ ...data, hideMyDetails, campaignId, amount: +data.amount });
 		const { data: dataInfo, error } = await callApi<ApiResponse>(
 			"/donation/create",
@@ -110,11 +116,14 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 			toast.error("Error", {
 				description: error.message,
 			});
+			setDonateLoading(false);
 			return;
 		}
 		toast.success("Success", {
 			description: dataInfo?.message,
 		});
+		router.push(dataInfo?.data?.paymentUrl as string);
+		setDonateLoading(false);
 	};
 
 	return (
@@ -223,7 +232,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									htmlFor="amount"
 									className="text-sm font-medium md:text-base"
 								>
-									Amount
+									Amount (₦)
 								</label>
 								<Input
 									{...register("amount")}
@@ -258,7 +267,13 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									Donate anonymously
 								</label>
 							</div>
-							<Button className="bg-abeg-primary text-base text-white">
+							<Button
+								className={cn(
+									"bg-abeg-primary text-base text-white",
+									donateLoading && "disabled:cursor-not-allowed"
+								)}
+								loading={donateLoading}
+							>
 								Donate
 							</Button>
 						</form>
@@ -505,7 +520,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 										htmlFor="amount"
 										className="text-sm font-medium md:text-base"
 									>
-										Amount
+										Amount (₦)
 									</label>
 									<Input
 										{...register("amount")}
@@ -540,7 +555,13 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 										Donate anonymously
 									</label>
 								</div>
-								<Button className="bg-abeg-primary text-base text-white">
+								<Button
+									className={cn(
+										"bg-abeg-primary text-base text-white",
+										donateLoading && "disabled:cursor-not-allowed"
+									)}
+									loading={donateLoading}
+								>
 									Donate
 								</Button>
 							</form>
