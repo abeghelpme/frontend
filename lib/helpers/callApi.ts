@@ -12,7 +12,7 @@ const BACKEND_API = assertENV(process.env.NEXT_PUBLIC_BACKEND_URL, {
 const api: AxiosInstance = axios.create({
 	baseURL: BACKEND_API,
 	timeout: 60000, // Set timeout to 60 seconds
-	withCredentials: true,
+	withCredentials: true, // enable cookies to be sent with the request for authentication automatically
 });
 
 interface ApiError {
@@ -21,6 +21,7 @@ interface ApiError {
 	error?: unknown;
 	headers?: Record<string, unknown>;
 }
+
 export const callApi = async <T>(
 	endpoint: `/${string}`,
 	data?: Record<string, unknown> | FormData
@@ -41,7 +42,7 @@ export const callApi = async <T>(
 					  }
 					: { "Content-Type": "multipart/form-data" }),
 				"x-referer":
-					process.env.NEXT_PUBLIC_BASE_URL ?? "http://www.abeghelp.me",
+					process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.abeghelp.me",
 			},
 			cancelToken: source.token,
 		});
