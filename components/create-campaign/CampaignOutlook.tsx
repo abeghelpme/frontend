@@ -105,12 +105,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				campaignId,
 				amount: +data.amount,
 			}
-			{
-				...data,
-				hideMyDetails,
-				campaignId,
-				amount: +data.amount,
-			}
 		);
 		if (error) {
 			toast.error("Error", {
@@ -122,7 +116,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 			description: dataInfo?.message,
 		});
 	};
-
 
 	return (
 		<main className="flex flex-col pb-20 text-abeg-text">
@@ -140,7 +133,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				<p className="mt-3 text-pretty text-base md:text-lg">{excerpt}</p>
 
 				<div className="relative mt-6 flex flex-wrap items-center gap-2 max-lg:justify-between lg:gap-9">
-				<div className="relative mt-6 flex flex-wrap items-center gap-2 max-lg:justify-between lg:gap-9">
 					<figure className="flex items-center gap-3 ">
 						{campaign?.creator?.photo && (
 							<Image
@@ -148,7 +140,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								alt="image"
 								width={200}
 								height={200}
-								className="size-10 rounded-full"
 								className="size-10 rounded-full"
 							/>
 						)}
@@ -174,7 +165,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							}}
 						>
 							<p className="mt-2 text-center">
-							<p className="mt-2 text-center">
 								Donate to this campaign. Every penny brings us one step closer
 								to making a difference
 							</p>
@@ -192,7 +182,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									id="donorName"
 									required
 									placeholder="Enter your Full name"
-									className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
 									className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
 										errors.donorName &&
 										"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
@@ -219,7 +208,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									required
 									placeholder="Enter your email address"
 									className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
-									className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
 										errors.donorEmail &&
 										"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 									}`}
@@ -245,7 +233,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									required
 									placeholder="Enter any amount"
 									className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
-									className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
 										errors.amount &&
 										"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 									}`}
@@ -255,7 +242,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									errorMsg={errors.amount?.message!}
 								/>
 							</div>
-							<div className="flex items-center gap-3">
 							<div className="flex items-center gap-3">
 								<Checkbox
 									name="hideMyDetails"
@@ -324,69 +310,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								<Image src={xIcon as string} width={32} height={32} alt="" />
 								Twitter (X)
 							</Link>
-					<CustomDialog
-						classNames={{
-							content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
-						}}
-						trigger={
-							<button className="absolute right-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] max-lg:hidden">
-								<ShareIcon />
-							</button>
-						}
-					>
-						<p className="text-center">
-							Spread the word, share your campaign with friends, family, and the
-							world. Every share brings us one step closer to making a
-							difference
-						</p>
-						<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-							<div className="flex items-center gap-1">
-								<LinkIcon className="size-5" />
-								<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
-							</div>
-							<button
-								className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
-								onClick={handleShareLink(campaign.url)}
-							>
-								<FilesIcon className="size-4" />
-								Copy link
-							</button>
-						</div>
-						<div className="mt-6 flex w-full items-center justify-between gap-4 text-base">
-							<hr className="my-1 w-full border border-placeholder" />
-							<p className="shrink-0">or share on</p>
-							<hr className="my-1 w-full border border-placeholder" />
-						</div>
-						<div className="mt-6 flex w-full items-center justify-between">
-							<Link
-								href={generateTweet(
-									campaign.title,
-									campaign.url,
-									campaign.tags
-								)}
-								target="_blank"
-								className="flex w-full items-center gap-2"
-							>
-								<Image src={xIcon as string} width={32} height={32} alt="" />
-								Twitter (X)
-							</Link>
 
-							<Link
-								href={generateWhatsAppMessage(campaign.title, campaign.url)}
-								target="_blank"
-								className="flex w-full items-center justify-end gap-2"
-							>
-								<Image
-									src={whatsappIcon as string}
-									width={32}
-									height={32}
-									alt=""
-								/>
-								Whatsapp
-							</Link>
-						</div>
-					</CustomDialog>
-				</div>
 							<Link
 								href={generateWhatsAppMessage(campaign.title, campaign.url)}
 								target="_blank"
@@ -421,7 +345,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						render={(tag, index) => (
 							<li
 								key={`${tag}-${index}`}
-								className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-base font-bold md:text-lg "
 								className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-base font-bold md:text-lg "
 							>
 								<p>{tag}</p>
@@ -495,7 +418,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 			</section>
 
 			<div className="mt-14 flex flex-col self-center px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px]">
-			<div className="mt-14 flex flex-col self-center px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px]">
 				<section className="mt-2 space-y-5 self-start px-[18px] py-6 lg:sticky lg:top-0 lg:min-w-[383px] lg:max-w-[505px]">
 					<SingleCampaignProgress
 						amountRaised={campaign.amountRaised}
@@ -525,7 +447,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								}}
 							>
 								<p className="mt-2 text-center">
-								<p className="mt-2 text-center">
 									Donate to this campaign. Every penny brings us one step closer
 									to making a difference
 								</p>
@@ -543,7 +464,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 										id="donorName"
 										required
 										placeholder="Enter your Full name"
-										className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
 										className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
 											errors.donorName &&
 											"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
@@ -570,7 +490,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 										required
 										placeholder="Enter your email address"
 										className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
-										className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
 											errors.donorEmail &&
 											"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 										}`}
@@ -596,7 +515,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 										required
 										placeholder="Enter any amount"
 										className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
-										className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
 											errors.amount &&
 											"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 										}`}
@@ -606,7 +524,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 										errorMsg={errors.amount?.message!}
 									/>
 								</div>
-								<div className="flex items-center gap-3">
 								<div className="flex items-center gap-3">
 									<Checkbox
 										name="hideMyDetails"
@@ -628,7 +545,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								</Button>
 							</form>
 						</CustomDialog>
-
 
 						<CustomDialog
 							classNames={{
@@ -706,7 +622,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							</figcaption>
 						</figure>
 
-
 						<figure className="flex items-center gap-2 text-sm lg:text-base">
 							<DummyAvatar className="size-8 shrink-0" />
 							<figcaption>
@@ -741,12 +656,11 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						/>
 
 						<p className="mt-6 text-base md:text-xl lg:mt-12">
-						<p className="mt-6 text-base md:text-xl lg:mt-12">
 							Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
 						</p>
 
 						<TagList
-							className="mt-4 grid max-w-max grid-cols-2  font-medium lg:grid-cols-3 lg:gap-x-2 lg:gap-y-6"
+							className="mt-4 grid max-w-max grid-cols-2 font-medium lg:grid-cols-3 lg:gap-x-2 lg:gap-y-6"
 							each={campaign.tags}
 							render={(tag, index) => (
 								<li
