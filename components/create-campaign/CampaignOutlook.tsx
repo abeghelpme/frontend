@@ -660,7 +660,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						</p>
 
 						<TagList
-							className="mt-4 grid grid-cols-2 font-medium lg:grid-cols-3 lg:gap-x-2 lg:gap-y-6"
+							className="mt-4 grid max-w-max grid-cols-2  font-medium lg:grid-cols-3 lg:gap-x-2 lg:gap-y-6"
 							each={campaign.tags}
 							render={(tag, index) => (
 								<li
