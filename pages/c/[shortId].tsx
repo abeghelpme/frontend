@@ -96,6 +96,7 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 				featuredCampaigns={featuredCampaigns}
 				excerpt={excerpt}
 				campaign={campaign}
+				campaignId={campaign.url.split("/c/")[1]}
 			>
 				<CampaignOutlook.Header>
 					<Heading as="h1" className="text-2xl md:text-3xl">
