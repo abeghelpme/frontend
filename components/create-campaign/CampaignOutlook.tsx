@@ -252,7 +252,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									className="cursor-pointer text-sm font-medium md:text-base"
 									onClick={() => setHideMyDetails(!hideMyDetails)}
 								>
-									Hide details
+									Donate anonymously
 								</label>
 							</div>
 							<Button className="bg-abeg-primary text-base text-white">
@@ -265,6 +265,66 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						<ShareIcon />
 					</button>
 				</div>
+				<CustomDialog
+					classNames={{
+						content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+					}}
+					trigger={
+						<Button
+							variant="secondary"
+							className="w-full rounded-md border-abeg-primary py-3 text-base font-bold text-abeg-primary lg:rounded-lg"
+						>
+							Share this campaign
+						</Button>
+					}
+				>
+					<p className="text-center">
+						Spread the word, share your campaign with friends, family, and the
+						world. Every share brings us one step closer to making a difference
+					</p>
+					<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
+						<div className="flex items-center gap-1">
+							<LinkIcon className="size-5" />
+							<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
+						</div>
+						<button
+							className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
+							onClick={handleShareLink(campaign.url)}
+						>
+							<FilesIcon className="size-4" />
+							Copy link
+						</button>
+					</div>
+					<div className="mt-6 flex w-full items-center justify-between gap-4 text-base">
+						<hr className="my-1 w-full border border-placeholder" />
+						<p className="shrink-0">or share on</p>
+						<hr className="my-1 w-full border border-placeholder" />
+					</div>
+					<div className="mt-6 flex w-full items-center justify-between">
+						<Link
+							href={generateTweet(campaign.title, campaign.url, campaign.tags)}
+							target="_blank"
+							className="flex w-full items-center gap-2"
+						>
+							<Image src={xIcon as string} width={32} height={32} alt="" />
+							Twitter (X)
+						</Link>
+
+						<Link
+							href={generateWhatsAppMessage(campaign.title, campaign.url)}
+							target="_blank"
+							className="flex w-full items-center justify-end gap-2"
+						>
+							<Image
+								src={whatsappIcon as string}
+								width={32}
+								height={32}
+								alt=""
+							/>
+							Whatsapp
+						</Link>
+					</div>
+				</CustomDialog>
 
 				<CampaignCarousel
 					images={campaign.images}
@@ -364,13 +424,125 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					/>
 
 					<article className="space-y-4">
-						<Button
-							variant="primary"
-							className="w-full rounded-md bg-abeg-primary py-3 text-base font-bold lg:rounded-lg"
+						<CustomDialog
+							classNames={{
+								content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+							}}
+							trigger={
+								<Button
+									variant="primary"
+									className="w-full rounded-md bg-abeg-primary py-3 text-base font-bold lg:rounded-lg"
+								>
+									Donate to this campaign
+								</Button>
+							}
 						>
-							Donate to this campaign
-						</Button>
-
+							<form
+								className="flex flex-col gap-4"
+								onSubmit={(e) => {
+									e.preventDefault();
+									handleSubmit(onDonateSubmit)(e);
+								}}
+							>
+								<p className="text-center mt-2">
+									Donate to this campaign. Every penny brings us one step closer
+									to making a difference
+								</p>
+								<div className="space-y-1 bg-white">
+									<label
+										htmlFor="donorName"
+										className="text-sm font-medium md:text-base"
+									>
+										Full name
+									</label>
+									<Input
+										{...register("donorName")}
+										autoFocus
+										type="text"
+										id="donorName"
+										required
+										placeholder="Enter your Full name"
+										className={`min-h-[45px] font-light border text-sm md:text-base disabled:cursor-not-allowed disabled:bg-inherit ${
+											errors.donorName &&
+											"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+										}`}
+										disabled={user?.firstName && user.lastName ? true : false}
+									/>
+									<FormErrorMessage
+										error={errors.donorName!}
+										errorMsg={errors.donorName?.message!}
+									/>
+								</div>
+								<div className="space-y-1">
+									<label
+										htmlFor="donorEmail"
+										className="text-sm font-medium md:text-base"
+									>
+										Email address
+									</label>
+									<Input
+										{...register("donorEmail")}
+										autoFocus
+										type="text"
+										id="donorEmail"
+										required
+										placeholder="Enter your email address"
+										className={`min-h-[45px] font-light border text-sm md:text-base disabled:cursor-not-allowed disabled:bg-inherit ${
+											errors.donorEmail &&
+											"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+										}`}
+										disabled={user?.email ? true : false}
+									/>
+									<FormErrorMessage
+										error={errors.donorEmail!}
+										errorMsg={errors.donorEmail?.message!}
+									/>
+								</div>
+								<div className="space-y-1">
+									<label
+										htmlFor="amount"
+										className="text-sm font-medium md:text-base"
+									>
+										Amount
+									</label>
+									<Input
+										{...register("amount")}
+										autoFocus
+										type="number"
+										id="amount"
+										required
+										placeholder="Enter any amount"
+										className={`min-h-[45px] font-light border text-sm md:text-base disabled:cursor-not-allowed disabled:bg-inherit ${
+											errors.amount &&
+											"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
+										}`}
+									/>
+									<FormErrorMessage
+										error={errors.amount!}
+										errorMsg={errors.amount?.message!}
+									/>
+								</div>
+								<div className="flex gap-3 items-center">
+									<Checkbox
+										name="hideMyDetails"
+										id="hideMydetails"
+										className="accent-red-500"
+										checked={hideMyDetails}
+										onCheckedChange={() => setHideMyDetails(!hideMyDetails)}
+									/>
+									<label
+										htmlFor="hideMyDetails"
+										className="cursor-pointer text-sm font-medium md:text-base"
+										onClick={() => setHideMyDetails(!hideMyDetails)}
+									>
+										Donate anonymously
+									</label>
+								</div>
+								<Button className="bg-abeg-primary text-base text-white">
+									Donate
+								</Button>
+							</form>
+						</CustomDialog>
 						<CustomDialog
 							classNames={{
 								content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
