@@ -239,7 +239,7 @@ function StepOne() {
 
 							<button
 								type="button"
-								className="rounded-md border border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base"
+								className="rounded-md border border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base self-stretch"
 								onClick={handleAddTags}
 							>
 								Add
