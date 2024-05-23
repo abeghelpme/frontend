@@ -7,7 +7,13 @@ import {
 } from "@/components/common/campaign-icons";
 import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { type DonationDetailsType, callApi, cn, getDaysLeft, zodValidator } from "@/lib";
+import {
+	type DonationDetailsType,
+	callApi,
+	cn,
+	getDaysLeft,
+	zodValidator,
+} from "@/lib";
 import { getDateFromString } from "@/lib/helpers/campaign";
 import { useElementList, useShareCampaign } from "@/lib/hooks";
 import { useSlot } from "@/lib/hooks/useSlot";
@@ -20,7 +26,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { CustomDialog, FormErrorMessage, Heading, SingleCampaignProgress } from "../common";
+import {
+	CustomDialog,
+	FormErrorMessage,
+	Heading,
+	SingleCampaignProgress,
+} from "../common";
 import { FAQ, UrgentFundraisers } from "../common/landingPage";
 import { Button, Checkbox, Input } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
@@ -46,10 +57,12 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	const HeaderSlot = useSlot(children, CampaignOutlook.Header);
 
-	const { generateTweet, generateWhatsAppMessage, handleShareLink } = useShareCampaign();
+	const { generateTweet, generateWhatsAppMessage, handleShareLink } =
+		useShareCampaign();
 
 	const fundraiserTarget =
-		`${campaign.creator?.firstName} ${campaign.creator?.lastName}` || "Beneficiary";
+		`${campaign.creator?.firstName} ${campaign.creator?.lastName}` ||
+		"Beneficiary";
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
@@ -80,14 +93,19 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 			amount: "",
 		},
 	});
-	const onDonateSubmit: SubmitHandler<DonationDetailsType> = async (data: DonationDetailsType) => {
+	const onDonateSubmit: SubmitHandler<DonationDetailsType> = async (
+		data: DonationDetailsType
+	) => {
 		console.log({ ...data, hideMyDetails, campaignId, amount: +data.amount });
-		const { data: dataInfo, error } = await callApi<ApiResponse>("/donation/create", {
-			...data,
-			hideMyDetails,
-			campaignId,
-			amount: +data.amount,
-		});
+		const { data: dataInfo, error } = await callApi<ApiResponse>(
+			"/donation/create",
+			{
+				...data,
+				hideMyDetails,
+				campaignId,
+				amount: +data.amount,
+			}
+		);
 		if (error) {
 			toast.error("Error", {
 				description: error.message,
@@ -147,11 +165,14 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							}}
 						>
 							<p className="mt-2 text-center">
-								Donate to this campaign. Every penny brings us one step closer to making a
-								difference
+								Donate to this campaign. Every penny brings us one step closer
+								to making a difference
 							</p>
 							<div className="space-y-1 bg-white">
-								<label htmlFor="donorName" className="text-sm font-medium md:text-base">
+								<label
+									htmlFor="donorName"
+									className="text-sm font-medium md:text-base"
+								>
 									Full name
 								</label>
 								<Input
@@ -173,7 +194,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								/>
 							</div>
 							<div className="space-y-1">
-								<label htmlFor="donorEmail" className="text-sm font-medium md:text-base">
+								<label
+									htmlFor="donorEmail"
+									className="text-sm font-medium md:text-base"
+								>
 									Email address
 								</label>
 								<Input
@@ -195,7 +219,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								/>
 							</div>
 							<div className="space-y-1">
-								<label htmlFor="amount" className="text-sm font-medium md:text-base">
+								<label
+									htmlFor="amount"
+									className="text-sm font-medium md:text-base"
+								>
 									Amount
 								</label>
 								<Input
@@ -210,7 +237,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 										"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
 									}`}
 								/>
-								<FormErrorMessage error={errors.amount!} errorMsg={errors.amount?.message!} />
+								<FormErrorMessage
+									error={errors.amount!}
+									errorMsg={errors.amount?.message!}
+								/>
 							</div>
 							<div className="flex items-center gap-3">
 								<Checkbox
@@ -228,7 +258,9 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									Donate anonymously
 								</label>
 							</div>
-							<Button className="bg-abeg-primary text-base text-white">Donate</Button>
+							<Button className="bg-abeg-primary text-base text-white">
+								Donate
+							</Button>
 						</form>
 					</CustomDialog>
 
@@ -243,8 +275,9 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						}
 					>
 						<p className="text-center">
-							Spread the word, share your campaign with friends, family, and the world. Every
-							share brings us one step closer to making a difference
+							Spread the word, share your campaign with friends, family, and the
+							world. Every share brings us one step closer to making a
+							difference
 						</p>
 						<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
 							<div className="flex items-center gap-1">
@@ -266,7 +299,11 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						</div>
 						<div className="mt-6 flex w-full items-center justify-between">
 							<Link
-								href={generateTweet(campaign.title, campaign.url, campaign.tags)}
+								href={generateTweet(
+									campaign.title,
+									campaign.url,
+									campaign.tags
+								)}
 								target="_blank"
 								className="flex w-full items-center gap-2"
 							>
@@ -279,7 +316,12 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								target="_blank"
 								className="flex w-full items-center justify-end gap-2"
 							>
-								<Image src={whatsappIcon as string} width={32} height={32} alt="" />
+								<Image
+									src={whatsappIcon as string}
+									width={32}
+									height={32}
+									alt=""
+								/>
 								Whatsapp
 							</Link>
 						</div>
@@ -321,8 +363,9 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						}
 					>
 						<p className="text-center">
-							Spread the word, share your campaign with friends, family, and the world. Every
-							share brings us one step closer to making a difference
+							Spread the word, share your campaign with friends, family, and the
+							world. Every share brings us one step closer to making a
+							difference
 						</p>
 						<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
 							<div className="flex items-center gap-1">
@@ -344,7 +387,11 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						</div>
 						<div className="mt-6 flex w-full items-center justify-between">
 							<Link
-								href={generateTweet(campaign.title, campaign.url, campaign.tags)}
+								href={generateTweet(
+									campaign.title,
+									campaign.url,
+									campaign.tags
+								)}
 								target="_blank"
 								className="flex w-full items-center gap-2"
 							>
@@ -357,7 +404,12 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								target="_blank"
 								className="flex w-full items-center justify-end gap-2"
 							>
-								<Image src={whatsappIcon as string} width={32} height={32} alt="" />
+								<Image
+									src={whatsappIcon as string}
+									width={32}
+									height={32}
+									alt=""
+								/>
 								Whatsapp
 							</Link>
 						</div>
@@ -395,11 +447,14 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								}}
 							>
 								<p className="mt-2 text-center">
-									Donate to this campaign. Every penny brings us one step closer to making a
-									difference
+									Donate to this campaign. Every penny brings us one step closer
+									to making a difference
 								</p>
 								<div className="space-y-1 bg-white">
-									<label htmlFor="donorName" className="text-sm font-medium md:text-base">
+									<label
+										htmlFor="donorName"
+										className="text-sm font-medium md:text-base"
+									>
 										Full name
 									</label>
 									<Input
@@ -421,7 +476,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									/>
 								</div>
 								<div className="space-y-1">
-									<label htmlFor="donorEmail" className="text-sm font-medium md:text-base">
+									<label
+										htmlFor="donorEmail"
+										className="text-sm font-medium md:text-base"
+									>
 										Email address
 									</label>
 									<Input
@@ -443,7 +501,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									/>
 								</div>
 								<div className="space-y-1">
-									<label htmlFor="amount" className="text-sm font-medium md:text-base">
+									<label
+										htmlFor="amount"
+										className="text-sm font-medium md:text-base"
+									>
 										Amount
 									</label>
 									<Input
@@ -479,7 +540,9 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 										Donate anonymously
 									</label>
 								</div>
-								<Button className="bg-abeg-primary text-base text-white">Donate</Button>
+								<Button className="bg-abeg-primary text-base text-white">
+									Donate
+								</Button>
 							</form>
 						</CustomDialog>
 
@@ -497,8 +560,9 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							}
 						>
 							<p className="text-center">
-								Spread the word, share your campaign with friends, family, and the world.
-								Every share brings us one step closer to making a difference
+								Spread the word, share your campaign with friends, family, and
+								the world. Every share brings us one step closer to making a
+								difference
 							</p>
 							<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
 								<div className="flex items-center gap-1">
@@ -520,7 +584,11 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							</div>
 							<div className="mt-6 flex w-full items-center justify-between">
 								<Link
-									href={generateTweet(campaign.title, campaign.url, campaign.tags)}
+									href={generateTweet(
+										campaign.title,
+										campaign.url,
+										campaign.tags
+									)}
 									target="_blank"
 									className="flex w-full items-center gap-2"
 								>
@@ -533,7 +601,12 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									target="_blank"
 									className="flex w-full items-center justify-end gap-2"
 								>
-									<Image src={whatsappIcon as string} width={32} height={32} alt="" />
+									<Image
+										src={whatsappIcon as string}
+										width={32}
+										height={32}
+										alt=""
+									/>
 									Whatsapp
 								</Link>
 							</div>
@@ -544,17 +617,16 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						<figure className="flex items-start gap-2.5 text-sm lg:text-base">
 							<MoneyIcon className="mt-[5px] size-6 shrink-0" />
 							<figcaption>
-								Be among the first to donate to this fundraiser, every penny donated will go a
-								long way
+								Be among the first to donate to this fundraiser, every penny
+								donated will go a long way
 							</figcaption>
 						</figure>
-						{/* <figure className='flex items-center gap-2.5 text-sm lg:text-base'>
-              <DonorIcon className='shrink-0' />
-              <figcaption>0 total donors</figcaption>
-            </figure> */}
+
 						<figure className="flex items-center gap-2 text-sm lg:text-base">
 							<DummyAvatar className="size-8 shrink-0" />
-							<figcaption>{fundraiserTarget} is in charge of this fundraiser.</figcaption>
+							<figcaption>
+								{fundraiserTarget} is in charge of this fundraiser.
+							</figcaption>
 						</figure>
 					</article>
 
@@ -591,7 +663,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							className="mt-4 grid grid-cols-2 font-medium lg:grid-cols-3 lg:gap-x-2 lg:gap-y-6"
 							each={campaign.tags}
 							render={(tag, index) => (
-								<li key={`${tag}-${index}`} className="flex min-w-0 text-base md:text-lg">
+								<li
+									key={`${tag}-${index}`}
+									className="flex min-w-0 text-base md:text-lg"
+								>
 									<p className="truncate">{tag}</p>
 								</li>
 							)}
@@ -604,7 +679,9 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						<div>
 							<p className="flex flex-col text-base md:text-lg">
 								{fundraiserTarget} is in charge of this fundraiser.
-								<span className="mt-4 text-base md:text-lg">{campaign.country}</span>
+								<span className="mt-4 text-base md:text-lg">
+									{campaign.country}
+								</span>
 							</p>
 							<Button
 								variant="primary"
