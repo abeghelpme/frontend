@@ -1,7 +1,6 @@
 import {
 	DummyAvatar,
 	MoneyIcon,
-	ShareIcon,
 	whatsappIcon,
 	xIcon,
 } from "@/components/common/campaign-icons";
@@ -266,26 +265,28 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 					<CustomDialog
 						classNames={{
-							content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+							content: "gap-0 px-4 py-14 md:p-12 w-full max-w-[500px]",
 						}}
 						trigger={
-							<button className="absolute right-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] max-lg:hidden">
-								<ShareIcon />
-							</button>
+							<Button
+								variant="secondary"
+								className="w-full rounded-md border-abeg-primary py-3 text-base font-bold text-abeg-primary lg:rounded-lg"
+							>
+								Share this campaign
+							</Button>
 						}
 					>
 						<p className="text-center">
 							Spread the word, share your campaign with friends, family, and the
-							world. Every share brings us one step closer to making a
-							difference
+							world, make a difference
 						</p>
 						<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-							<div className="flex items-center gap-1">
-								<LinkIcon className="size-5" />
-								<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
-							</div>
+							<LinkIcon className="size-5 " />
+							<p className="overflow-ellipsis mx-1 overflow-hidden whitespace-nowrap max-w-[80%]">
+								{campaign.url}
+							</p>
 							<button
-								className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
+								className="flex shrink-0 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
 								onClick={handleShareLink(campaign.url)}
 							>
 								<FilesIcon className="size-4" />
@@ -354,26 +355,28 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 					<CustomDialog
 						classNames={{
-							content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+							content: "gap-0 px-4 py-14 md:p-12 w-full max-w-[500px]",
 						}}
 						trigger={
-							<button className="absolute right-0 top-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] lg:hidden">
-								<ShareIcon />
-							</button>
+							<Button
+								variant="secondary"
+								className="w-full rounded-md border-abeg-primary py-3 text-base font-bold text-abeg-primary lg:rounded-lg"
+							>
+								Share this campaign
+							</Button>
 						}
 					>
 						<p className="text-center">
 							Spread the word, share your campaign with friends, family, and the
-							world. Every share brings us one step closer to making a
-							difference
+							world, make a difference
 						</p>
 						<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-							<div className="flex items-center gap-1">
-								<LinkIcon className="size-5" />
-								<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
-							</div>
+							<LinkIcon className="size-5 " />
+							<p className="overflow-ellipsis mx-1 overflow-hidden whitespace-nowrap max-w-[80%]">
+								{campaign.url}
+							</p>
 							<button
-								className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
+								className="flex shrink-0 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
 								onClick={handleShareLink(campaign.url)}
 							>
 								<FilesIcon className="size-4" />
@@ -548,7 +551,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 						<CustomDialog
 							classNames={{
-								content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+								content: "gap-0 px-4 py-14 md:p-12 w-full max-w-[500px]",
 							}}
 							trigger={
 								<Button
@@ -561,16 +564,15 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						>
 							<p className="text-center">
 								Spread the word, share your campaign with friends, family, and
-								the world. Every share brings us one step closer to making a
-								difference
+								the world, make a difference
 							</p>
 							<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-								<div className="flex items-center gap-1">
-									<LinkIcon className="size-5" />
-									<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
-								</div>
+								<LinkIcon className="size-5 " />
+								<p className="overflow-ellipsis mx-1 overflow-hidden whitespace-nowrap max-w-[80%]">
+									{campaign.url}
+								</p>
 								<button
-									className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
+									className="flex shrink-0 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
 									onClick={handleShareLink(campaign.url)}
 								>
 									<FilesIcon className="size-4" />
