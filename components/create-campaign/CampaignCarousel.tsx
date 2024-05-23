@@ -66,7 +66,7 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 				</Carousel.Caption>
 
 				<Carousel.ItemWrapper<(typeof images)[number]>
-					render={(image) => (
+					render={(image, index) => (
 						<Carousel.Item key={image.secureUrl}>
 							<Image
 								src={image.secureUrl}
@@ -74,7 +74,7 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 								className="aspect-[381/250] w-full object-cover max-lg:max-h-[350px] lg:aspect-[1241/599]"
 								width={381}
 								height={250}
-								priority={true}
+								priority={index === 0 ? true : false}
 								draggable={false}
 							/>
 						</Carousel.Item>
