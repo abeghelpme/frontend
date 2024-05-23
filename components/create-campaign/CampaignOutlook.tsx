@@ -1,7 +1,6 @@
 import {
 	DummyAvatar,
 	MoneyIcon,
-	ShareIcon,
 	whatsappIcon,
 	xIcon,
 } from "@/components/common/campaign-icons";
@@ -23,6 +22,7 @@ import { format } from "date-fns";
 import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -52,6 +52,9 @@ type CampaignHeaderProps = {
 
 function CampaignOutlook(props: CampaignOutlookProps) {
 	const { campaign, featuredCampaigns, excerpt, children, campaignId } = props;
+	const [donateLoading, setDonateLoading] = useState(false);
+
+	const router = useRouter();
 
 	const [TagList] = useElementList();
 
@@ -93,9 +96,11 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 			amount: "",
 		},
 	});
+
 	const onDonateSubmit: SubmitHandler<DonationDetailsType> = async (
 		data: DonationDetailsType
 	) => {
+		setDonateLoading(true);
 		console.log({ ...data, hideMyDetails, campaignId, amount: +data.amount });
 		const { data: dataInfo, error } = await callApi<ApiResponse>(
 			"/donation/create",
@@ -110,11 +115,14 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 			toast.error("Error", {
 				description: error.message,
 			});
+			setDonateLoading(false);
 			return;
 		}
 		toast.success("Success", {
 			description: dataInfo?.message,
 		});
+		router.push(dataInfo?.data?.paymentUrl as string);
+		setDonateLoading(false);
 	};
 
 	return (
@@ -223,7 +231,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									htmlFor="amount"
 									className="text-sm font-medium md:text-base"
 								>
-									Amount
+									Amount (₦)
 								</label>
 								<Input
 									{...register("amount")}
@@ -258,7 +266,13 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									Donate anonymously
 								</label>
 							</div>
-							<Button className="bg-abeg-primary text-base text-white">
+							<Button
+								className={cn(
+									"bg-abeg-primary text-base text-white",
+									donateLoading && "disabled:cursor-not-allowed"
+								)}
+								loading={donateLoading}
+							>
 								Donate
 							</Button>
 						</form>
@@ -266,26 +280,28 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 					<CustomDialog
 						classNames={{
-							content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+							content: "gap-0 px-4 py-14 md:p-12 w-full max-w-[500px]",
 						}}
 						trigger={
-							<button className="absolute right-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] max-lg:hidden">
-								<ShareIcon />
-							</button>
+							<Button
+								variant="secondary"
+								className="w-full rounded-md border-abeg-primary py-3 text-base font-bold text-abeg-primary lg:rounded-lg"
+							>
+								Share this campaign
+							</Button>
 						}
 					>
 						<p className="text-center">
 							Spread the word, share your campaign with friends, family, and the
-							world. Every share brings us one step closer to making a
-							difference
+							world, make a difference
 						</p>
 						<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-							<div className="flex items-center gap-1">
-								<LinkIcon className="size-5" />
-								<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
-							</div>
+							<LinkIcon className="size-5 " />
+							<p className="overflow-ellipsis mx-1 overflow-hidden whitespace-nowrap max-w-[80%]">
+								{campaign.url}
+							</p>
 							<button
-								className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
+								className="flex shrink-0 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
 								onClick={handleShareLink(campaign.url)}
 							>
 								<FilesIcon className="size-4" />
@@ -354,26 +370,28 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 					<CustomDialog
 						classNames={{
-							content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+							content: "gap-0 px-4 py-14 md:p-12 w-full max-w-[500px]",
 						}}
 						trigger={
-							<button className="absolute right-0 top-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] lg:hidden">
-								<ShareIcon />
-							</button>
+							<Button
+								variant="secondary"
+								className="w-full rounded-md border-abeg-primary py-3 text-base font-bold text-abeg-primary lg:rounded-lg"
+							>
+								Share this campaign
+							</Button>
 						}
 					>
 						<p className="text-center">
 							Spread the word, share your campaign with friends, family, and the
-							world. Every share brings us one step closer to making a
-							difference
+							world, make a difference
 						</p>
 						<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-							<div className="flex items-center gap-1">
-								<LinkIcon className="size-5" />
-								<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
-							</div>
+							<LinkIcon className="size-5 " />
+							<p className="overflow-ellipsis mx-1 overflow-hidden whitespace-nowrap max-w-[80%]">
+								{campaign.url}
+							</p>
 							<button
-								className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
+								className="flex shrink-0 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
 								onClick={handleShareLink(campaign.url)}
 							>
 								<FilesIcon className="size-4" />
@@ -505,7 +523,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 										htmlFor="amount"
 										className="text-sm font-medium md:text-base"
 									>
-										Amount
+										Amount (₦)
 									</label>
 									<Input
 										{...register("amount")}
@@ -540,7 +558,13 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 										Donate anonymously
 									</label>
 								</div>
-								<Button className="bg-abeg-primary text-base text-white">
+								<Button
+									className={cn(
+										"bg-abeg-primary text-base text-white",
+										donateLoading && "disabled:cursor-not-allowed"
+									)}
+									loading={donateLoading}
+								>
 									Donate
 								</Button>
 							</form>
@@ -548,7 +572,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 						<CustomDialog
 							classNames={{
-								content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+								content: "gap-0 px-4 py-14 md:p-12 w-full max-w-[500px]",
 							}}
 							trigger={
 								<Button
@@ -561,16 +585,15 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						>
 							<p className="text-center">
 								Spread the word, share your campaign with friends, family, and
-								the world. Every share brings us one step closer to making a
-								difference
+								the world, make a difference
 							</p>
 							<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-								<div className="flex items-center gap-1">
-									<LinkIcon className="size-5" />
-									<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
-								</div>
+								<LinkIcon className="size-5 " />
+								<p className="overflow-ellipsis mx-1 overflow-hidden whitespace-nowrap max-w-[80%]">
+									{campaign.url}
+								</p>
 								<button
-									className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
+									className="flex shrink-0 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
 									onClick={handleShareLink(campaign.url)}
 								>
 									<FilesIcon className="size-4" />

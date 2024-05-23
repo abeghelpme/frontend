@@ -1,6 +1,9 @@
 import { cn } from "@/lib";
-import { Player } from "@lottiefiles/react-lottie-player";
+import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
+import SuccessLottie from "../../public/assets/lottie/success.json";
+
+const Lottie = dynamic(async () => import("lottie-react"), { ssr: false });
 
 type SuccessProps = {
 	children?: ReactNode;
@@ -21,11 +24,11 @@ const Success = ({ children, description, classNames }: SuccessProps) => {
 				classNames?.wrapper
 			)}
 		>
-			<Player
-				className={cn("size-[200px]", classNames?.lottiePlayer)}
-				autoplay
-				loop
-				src="https://lottie.host/93bf3dac-15f5-42b4-a224-deaf8748cb5b/FZJMtsnjYZ.json"
+			<Lottie
+				animationData={SuccessLottie}
+				loop={true}
+				autoplay={true}
+				className={cn("size-[200px] mx-auto", classNames?.lottiePlayer)}
 			/>
 			<div className="mb-5 text-center">
 				<h1 className={cn("text-xl font-medium", classNames?.heading)}>
