@@ -74,7 +74,7 @@ const DashboardCampaigns = () => {
 				</div>
 
 				<div className="space-y-4">
-					<div className="flex flex-col gap-4 md:flex-row md:flex-wrap lg:flex-nowrap">
+					<div className="flex flex-col gap-4 md:flex-row ">
 						{dummy.map((data, id) => {
 							return (
 								<SummaryCard
