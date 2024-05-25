@@ -266,6 +266,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					<ShareCampaignDialog
 						campaign={campaign}
 						trigger={
+							/* Using absolute on the button to prevent it from forcing unneeded flex wrap for the tags */
 							<button className="absolute right-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] max-lg:hidden">
 								<ShareIcon />
 							</button>
@@ -283,7 +284,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					}}
 				/>
 
-				<article className="relative mt-6">
+				<article className="relative mt-6 flex items-center">
 					<TagList
 						className="flex flex-wrap gap-5 max-lg:pr-[42px]"
 						each={campaign.tags}
@@ -300,7 +301,8 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					<ShareCampaignDialog
 						campaign={campaign}
 						trigger={
-							<button className="absolute right-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] max-lg:hidden">
+							/* Using absolute on the button to prevent it from forcing unneeded flex wrap for the tags */
+							<button className="absolute right-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] lg:hidden">
 								<ShareIcon />
 							</button>
 						}
@@ -548,6 +550,6 @@ function CampaignOutlookHeader(props: CampaignHeaderProps) {
 }
 
 CampaignOutlook.Header = CampaignOutlookHeader;
-CampaignOutlookHeader.slot = "header";
+CampaignOutlookHeader.slot = Symbol.for("header");
 
 export default CampaignOutlook;

@@ -1,7 +1,8 @@
 import type { Campaign } from "@/interfaces/Campaign";
 import { useShareCampaign } from "@/lib/hooks";
-import { FilesIcon, Link, LinkIcon } from "lucide-react";
+import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { CustomDialog } from "../common";
 import { whatsappIcon, xIcon } from "../common/campaign-icons";
 
@@ -25,9 +26,11 @@ function ShareCampaignDialog({ campaign, trigger }: ShareCampaignProps) {
 			</p>
 			<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
 				<LinkIcon className="size-5 " />
-				<p className="mx-1 max-w-[80%] overflow-hidden overflow-ellipsis whitespace-nowrap">
+				{/* CSS technique required to keep the url from rigidly pushing other flex elements out of view on smaller screens */}
+				<p className="mx-3 w-0 basis-full overflow-clip overflow-ellipsis text-center">
 					{campaign.url}
 				</p>
+
 				<button
 					className="flex shrink-0 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
 					onClick={handleShareLink(campaign.url)}
