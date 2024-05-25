@@ -50,7 +50,13 @@ function ShareCampaignDialog({ campaign, trigger }: ShareCampaignProps) {
 					target="_blank"
 					className="flex w-full items-center gap-2"
 				>
-					<Image src={xIcon as string} width={32} height={32} alt="" />
+					<Image
+						src={xIcon as string}
+						width={32}
+						height={32}
+						priority={true}
+						alt=""
+					/>
 					Twitter (X)
 				</Link>
 
@@ -59,7 +65,13 @@ function ShareCampaignDialog({ campaign, trigger }: ShareCampaignProps) {
 					target="_blank"
 					className="flex w-full items-center justify-end gap-2"
 				>
-					<Image src={whatsappIcon as string} width={32} height={32} alt="" />
+					<Image
+						src={whatsappIcon as string}
+						width={32}
+						priority={true}
+						height={32}
+						alt=""
+					/>
 					Whatsapp
 				</Link>
 			</div>

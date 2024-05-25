@@ -84,7 +84,7 @@ const Login = () => {
 				if (user.twoFA.active === false) {
 					const skipModal = localStorage.getItem(`skip-2FA-${user._id}`);
 					if (skipModal === "true") {
-						router.push(campaigns.length > 0 ? "/c" : "/c/create");
+						router.push(campaigns && campaigns.length > 0 ? "/c" : "/c/create");
 					} else {
 						setOpenModal(true);
 						await router.push("/signin?redirect=false", undefined, {
