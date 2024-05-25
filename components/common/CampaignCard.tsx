@@ -89,7 +89,7 @@ export function CampaignCard(props: CampaignCardProps) {
 		<Card
 			as={as}
 			className={cn(
-				"flex w-full flex-col justify-between gap-5 md:min-w-[400px]",
+				"flex w-full flex-col justify-between gap-5 lg:min-w-[400px]",
 				classNames?.base
 			)}
 		>

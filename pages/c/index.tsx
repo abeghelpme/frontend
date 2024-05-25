@@ -104,4 +104,5 @@ const DashboardCampaigns = () => {
 };
 
 export default DashboardCampaigns;
+
 DashboardCampaigns.protect = true;
