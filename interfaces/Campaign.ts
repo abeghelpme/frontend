@@ -11,6 +11,7 @@ type Creator = Prettify<{
 	_id: string;
 	firstName: string;
 	lastName: string;
+	photo: string;
 }>;
 
 type Category = Prettify<{

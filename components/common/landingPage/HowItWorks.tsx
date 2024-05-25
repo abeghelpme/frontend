@@ -31,10 +31,10 @@ const HowItWorks = ({ className }: { className?: string }) => {
 		>
 			<div className="w-full space-y-5 lg:flex md:justify-between lg:space-y-0 lg:divide-x-2 lg:divide-slate-300">
 				<div className="flex flex-1 flex-col items-start gap-3 space-y-2 md:pr-20">
-					<h4 className="text-xl font-normal text-placeholder">
+					<h4 className="text-base md:text-lg font-normal text-placeholder">
 						Want to know more?
 					</h4>
-					<h1 className="text-4xl font-bold md:text-5xl">
+					<h1 className="text-2xl md:text-3xl font-bold">
 						Here’s how it works
 					</h1>
 					<Button variant="primary" className="px-8" asChild>
@@ -42,7 +42,7 @@ const HowItWorks = ({ className }: { className?: string }) => {
 					</Button>
 				</div>
 				<div className="flex-1 items-center lg:flex lg:justify-center lg:pl-20">
-					<p className="text-xl font-medium text-placeholder">
+					<p className="text-base md:text-lg font-medium text-placeholder">
 						Join the effortless way to raise funds <br /> and make a difference
 						and empower <br /> your cause with Abeghelp.me
 					</p>
@@ -55,8 +55,10 @@ const HowItWorks = ({ className }: { className?: string }) => {
 							<div className="absolute left-2 top-[-24px] rounded-full border-4 border-gray-100 bg-white p-4">
 								{card.icon}
 							</div>
-							<p className="mt-12 text-2xl font-semibold">{card.title}</p>
-							<p className="text-base font-light">{card.text}</p>
+							<p className="mt-12 text-xl md:text-2xl font-semibold">
+								{card.title}
+							</p>
+							<p className="text-base md:text-lg font-light">{card.text}</p>
 						</div>
 					);
 				})}

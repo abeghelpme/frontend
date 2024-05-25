@@ -316,7 +316,7 @@ const BringPositiveChange = () => {
 						<BringPositiveChangeStar />
 					</span>
 				</p>
-				<p className="text-center text-3xl font-bold">
+				<p className="text-center text-2xl md:text-3xl font-bold">
 					<span className="mr-4 inline-block">
 						<BringPositiveChangeStar />
 					</span>
@@ -366,11 +366,11 @@ const WhyUs = () => {
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-y-12">
 				{whyUsComponentTexts.map((singleComponent, id) => {
 					return (
-						<div className="flex flex-col gap-2 text-justify">
-							<p className="text-xl md:text-2xl font-bold">
+						<div key={id} className="flex flex-col gap-2 text-justify">
+							<p className="text-lg md:text-xl font-bold">
 								{singleComponent.title}
 							</p>
-							<p className="text-lg md:text-xl font-normal">
+							<p className="text-base md:text-lg font-normal">
 								{singleComponent.text}
 							</p>
 						</div>

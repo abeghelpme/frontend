@@ -42,7 +42,7 @@ export const getStaticProps = (async (context) => {
 		callApi<ApiResponse<Campaign[]>>("/campaign/featured"),
 	]);
 
-	console.log(singleCampaign.error, singleCampaign.data?.data);
+	// console.log(singleCampaign.error, singleCampaign.data?.data);
 	if (singleCampaign.error || !singleCampaign.data?.data) {
 		return {
 			notFound: true,
@@ -96,9 +96,10 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 				featuredCampaigns={featuredCampaigns}
 				excerpt={excerpt}
 				campaign={campaign}
+				campaignId={campaign._id}
 			>
 				<CampaignOutlook.Header>
-					<Heading as="h1" className="text-4xl lg:text-4xl">
+					<Heading as="h1" className="text-2xl md:text-3xl">
 						{`${campaign.title[0].toUpperCase()}${campaign.title.slice(1)}`}
 					</Heading>
 				</CampaignOutlook.Header>

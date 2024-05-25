@@ -80,3 +80,4 @@ const settings = () => {
 	);
 };
 export default settings;
+settings.protect = true;

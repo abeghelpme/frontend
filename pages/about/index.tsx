@@ -70,7 +70,7 @@ const AboutPage = () => {
 					className="z-10 md: absolute right-[-4rem] top-60 md:right-0 md:top-[25rem] "
 				/>
 				<div className="z-10 absolute top-[20rem] md:top-[25rem] text-white flex flex-col items-center gap-2 md:gap-10 md:max-w-[850px]  text-center px-5">
-					<h3 className="text-4xl md:text-6xl font-extrabold">
+					<h3 className="text-4xl  md:text-5xl font-extrabold">
 						One Campaign at a time, we're renewing hope in lives
 					</h3>
 					<p className="font-medium text-base md:text-xl md:max-w-[700px] px-2">
@@ -83,8 +83,8 @@ const AboutPage = () => {
 			<section className="px-5 py-10 md:px-20 lg:py-20">
 				<div className="items-center lg:grid lg:grid-cols-2 lg:gap-20 justify-between relative">
 					<div className="mb-8 space-y-5 lg:mb-0 lg:pr-24">
-						<p className="text-xl">Who we are at Abeghelp.me?</p>
-						<h1 className="text-3xl md:text-4xl font-bold pr-10 md:pr-20">
+						<p className="text-base md:text-xl">Who we are at Abeghelp.me?</p>
+						<h1 className="text-2xl md:text-3xl font-bold pr-10 md:pr-20">
 							Learn about our Company
 						</h1>
 
@@ -142,7 +142,7 @@ const AboutPage = () => {
 						/>
 						<div className="absolute right-[120px] md:right-[290px] bottom-8 md:bottom-[70px] text-white p-3 md:px-10 bg-abeg-teal flex flex-col items-center justify-center">
 							<p className="text-base">Over</p>
-							<h1 className="text-3xl md:text-5xl">10,000</h1>
+							<h1 className="text-2xl md:text-3xl">10,000</h1>
 							<p className="text-base text-center">Satisfied Customers</p>
 						</div>
 					</div>
@@ -162,10 +162,10 @@ const AboutPage = () => {
 				<div>
 					<div className="mb-8 space-y-5 lg:mb-0">
 						<p className="text-xl hidden md:block">Why Abeghelp.me?</p>
-						<p className="text-xl md:hidden">
+						<p className="text-base md:text-lg md:hidden">
 							Lets Help you start your Journey
 						</p>
-						<h1 className="text-4xl font-bold">
+						<h1 className="text-2xl md:text-3xl font-bold">
 							A Path to Making a Difference.
 						</h1>
 						<div className="border-t-2 border-gray-300" />
@@ -235,8 +235,8 @@ const AboutPage = () => {
 
 			<section className="lg:flex px-5 md:px-20 gap-20 space-y-10 lg:space-y-0">
 				<div className="lg:w-1/3 space-y-5 w-full">
-					<p className="text-xl">Why we do what we do</p>
-					<h1 className="text-4xl font-bold">
+					<p className="text-base md:text-xl">Why we do what we do</p>
+					<h1 className="text-2xl md:text-3xl font-bold">
 						Saving lives one donation at a time
 					</h1>
 					<div className="border-t-2 border-gray-300" />
@@ -289,10 +289,10 @@ const AboutPage = () => {
 						fill
 					/>
 					<div className="flex flex-col items-center space-y-5 z-50 max-w-[650px]">
-						<p className="text-xl text-center">
+						<p className="text-base md:text-xl text-center">
 							Let&apos;s Help you start your Journey
 						</p>
-						<h1 className="text-4xl font-bold md:text-5xl text-center pb-10">
+						<h1 className="text-2xl md:text-3xl font-bold text-center pb-10">
 							Let&apos;s help make your dream a reality today
 						</h1>
 						<Button

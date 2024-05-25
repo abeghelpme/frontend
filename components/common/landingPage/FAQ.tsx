@@ -93,10 +93,11 @@ const FAQ = ({ className }: { className?: string }) => {
 				{faqs.map((faq, id) => {
 					return (
 						<AccordionItem
+							key={id}
 							value={`item-${id}`}
 							className="rounded-lg overflow-hidden [&[data-state=open]]:bg-[#F7F7F7] p-5 text-[#475467]"
 						>
-							<AccordionTrigger className="[&[data-state=open]]:bg-[#F7F7F7] text-base md:text-lg font-semibold">
+							<AccordionTrigger className="[&[data-state=open]]:bg-[#F7F7F7] text-base text-left md:text-lg font-semibold">
 								{faq.question}
 							</AccordionTrigger>
 							<AccordionContent className="bg-[#F7F7F7] text-base md:text-lg">

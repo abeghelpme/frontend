@@ -111,13 +111,13 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 		initializeFormData: () => {
 			const { campaigns } = useInitCampaignStore.getState();
 
-			if (campaigns?.length === 0) return;
+			if (!campaigns || campaigns.length === 0) return;
 
 			const searchParams = new URLSearchParams(window.location.search);
 
 			const campaignToBeEdited = campaigns.find(
 				(campaign) =>
-					campaign._id === searchParams.get("id") && !campaign.isPublished
+					!campaign.isPublished && campaign._id === searchParams.get("id")
 			);
 
 			if (campaignToBeEdited) {
@@ -143,26 +143,26 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 				return;
 			}
 
-			const currentCampaign = campaigns[0];
+			const currentDraftCampaign = campaigns[0];
 
-			if (currentCampaign.status !== "Draft") return;
+			if (currentDraftCampaign.status !== "Draft") return;
 
 			set({
-				currentStep: currentCampaign.currentStep,
+				currentStep: currentDraftCampaign.currentStep,
 
-				campaignId: currentCampaign._id,
+				campaignId: currentDraftCampaign._id,
 
 				formStepData: {
-					categoryId: currentCampaign.category?._id ?? "",
-					country: currentCampaign.country,
-					tags: currentCampaign.tags,
-					title: currentCampaign.title,
-					deadline: currentCampaign.deadline,
-					fundraiser: currentCampaign.fundraiser,
-					goal: currentCampaign.goal,
-					story: currentCampaign.story,
-					storyHtml: currentCampaign.storyHtml,
-					photos: currentCampaign.images.map((image) => image.secureUrl),
+					categoryId: currentDraftCampaign.category?._id ?? "",
+					country: currentDraftCampaign.country,
+					tags: currentDraftCampaign.tags,
+					title: currentDraftCampaign.title,
+					deadline: currentDraftCampaign.deadline,
+					fundraiser: currentDraftCampaign.fundraiser,
+					goal: currentDraftCampaign.goal,
+					story: currentDraftCampaign.story,
+					storyHtml: currentDraftCampaign.storyHtml,
+					photos: currentDraftCampaign.images.map((image) => image.secureUrl),
 				},
 			});
 		},

@@ -29,13 +29,33 @@ export type ContactUsProps = {
 };
 
 export type UpdateProfileProps = {
-	fullName?: string;
-	email?: string;
+	firstName?: string;
+	lastName?: string;
+	// email?: string;
 	phoneNumber?: string;
 };
 
 export type UpdatePasswordsProps = {
-	currentPassword: string;
+	oldPassword: string;
 	newPassword: string;
-	confirmNewPassword: string;
+	confirmPassword: string;
+};
+
+export type CardDetailsProps = {
+	cardNumber: string;
+	cvv: string;
+	cardName: string;
+	cardExpiry: string;
+};
+
+export type AddAccountDetailsProps = {
+	accountName: string;
+	accountNumber: string;
+	bankName: string;
+};
+
+export type DonationDetailsProps = {
+	donorEmail: string;
+	donorName: string;
+	amount: string;
 };

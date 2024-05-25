@@ -40,7 +40,7 @@ const Footer = () => {
 	return (
 		<footer className="space-y-5 divide-y-2 divide-gray-400 bg-primary p-10 text-white md:p-20">
 			<div className="items-center justify-between pb-5 md:flex md:pb-0">
-				<h1 className="text-center text-3xl font-bold md:text-start">
+				<h1 className="text-center text-xl md:text-2xl font-bold md:text-start">
 					Be a part of the{" "}
 					<span className="text-abeg-primary">
 						change <br /> today
@@ -80,30 +80,30 @@ const Footer = () => {
 				</div>
 				<div className="justify-center gap-10 space-y-20 text-center md:flex md:flex-row md:justify-between md:space-y-0 lg:w-2/3 lg:justify-between">
 					<div className="flex flex-col space-y-5 text-center md:text-start">
-						<h1 className="text-2xl font-bold">Sitemap</h1>
+						<h1 className=" text-xl md:text-2xl font-bold">Sitemap</h1>
 						{siteMapLinks.map((link, index) => (
 							<div key={index}>
-								<Link href={link.url} className="text-xl">
+								<Link href={link.url} className="text-base md:text-lg">
 									{link.name}
 								</Link>
 							</div>
 						))}
 					</div>
 					<div className="flex flex-col space-y-5 text-center md:text-start">
-						<h1 className="text-2xl font-bold">Join Us</h1>
+						<h1 className=" text-xl md:text-2xl font-bold">Join Us</h1>
 						{joinUsLinks.map((link, index) => (
 							<div key={index}>
-								<Link href={link.url} className="text-xl">
+								<Link href={link.url} className="text-base md:text-lg">
 									{link.name}
 								</Link>
 							</div>
 						))}
 					</div>
 					<div className="flex flex-col space-y-5 text-center md:text-start">
-						<h1 className="text-2xl font-bold">Contact Us</h1>
+						<h1 className="text-xl md:text-2xl font-bold">Contact Us</h1>
 						{contactUsLinks.map((link, index) => (
 							<div key={index}>
-								<Link href={link.url} className="text-xl">
+								<Link href={link.url} className="text-base md:text-lg">
 									{link.name}
 								</Link>
 							</div>

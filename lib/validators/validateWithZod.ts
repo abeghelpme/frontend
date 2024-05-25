@@ -1,5 +1,8 @@
 import {
+	type AddAccountDetailsProps,
+	type CardDetailsProps,
 	type ContactUsProps,
+	type DonationDetailsProps,
 	type ForgotPasswordProps,
 	type LoginProps,
 	type ResetPasswordProps,
@@ -39,7 +42,9 @@ type FormType =
 	| "contactUs"
 	| "updateProfile"
 	| "updatePasswords"
-	| "uploadProfileImage";
+	| "cardDetails"
+	| "addAccountDetails"
+	| "donationDetails";
 
 const signUpSchema: z.ZodType<SignUpProps> = z
 	.object({
@@ -78,7 +83,7 @@ const signUpSchema: z.ZodType<SignUpProps> = z
 			.string()
 			.min(6, { message: "Password must be at least 6 characters" })
 			.regex(
-				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*\-\]\?])[A-Za-z\d.,!@#$%^&*\-\]\?]{6,}$/,
 				{
 					message:
 						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
@@ -283,17 +288,168 @@ const contactUsSchema: z.ZodType<ContactUsProps> = z.object({
 });
 
 const updateProfileSchema: z.ZodType<UpdateProfileProps> = z.object({
-	fullName: z
+	firstName: z
 		.string()
-		.min(2, { message: "Full Name is required" })
-		.max(50, { message: "Full Name must be less than 50 characters" })
+		.min(2, { message: "First Name is required" })
+		.max(50, { message: "First Name must be less than 50 characters" })
 		.transform((value) => {
 			return (
 				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
 			).trim();
 		})
 		.optional(),
-	email: z
+	lastName: z
+		.string()
+		.min(2, { message: "Last Name is required" })
+		.max(50, { message: "Last Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		})
+		.optional(),
+	phoneNumber: z.string().optional(),
+});
+
+const updatePassWordsSchema: z.ZodType<UpdatePasswordsProps> = z
+	.object({
+		oldPassword: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value, ctx) => {
+				const options = {
+					dictionary: {
+						...zxcvbnCommonPackage.dictionary,
+						...zxcvbnEnPackage.dictionary,
+					},
+					translations: {
+						...zxcvbnEnPackage.translations,
+					},
+					graphs: zxcvbnCommonPackage.adjacencyGraphs,
+				};
+				zxcvbnOptions.setOptions(options);
+				const testedResult = zxcvbn(value);
+
+				if (testedResult.score < 3) {
+					testedResult.feedback.suggestions.map((issue) => {
+						ctx.addIssue({
+							code: z.ZodIssueCode.custom,
+							message: issue,
+						});
+					});
+				}
+
+				return value.trim();
+			}),
+		newPassword: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value, ctx) => {
+				const options = {
+					dictionary: {
+						...zxcvbnCommonPackage.dictionary,
+						...zxcvbnEnPackage.dictionary,
+					},
+					translations: {
+						...zxcvbnEnPackage.translations,
+					},
+					graphs: zxcvbnCommonPackage.adjacencyGraphs,
+				};
+				zxcvbnOptions.setOptions(options);
+				const testedResult = zxcvbn(value);
+
+				if (testedResult.score < 3) {
+					testedResult.feedback.suggestions.map((issue) => {
+						ctx.addIssue({
+							code: z.ZodIssueCode.custom,
+							message: issue,
+						});
+					});
+				}
+
+				return value.trim();
+			}),
+		confirmPassword: z
+			.string()
+			.min(6, { message: "Password must be at least 6 characters" })
+			.regex(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
+				{
+					message:
+						"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+				}
+			)
+			.max(50)
+			.transform((value) => {
+				return value.trim();
+			}),
+	})
+	.refine((data) => data.newPassword === data.confirmPassword, {
+		message: "Passwords do not match",
+		path: ["confirmNewPassword"],
+	});
+
+const cardDetailsSchema: z.ZodType<CardDetailsProps> = z.object({
+	cardName: z
+		.string()
+		.min(2, { message: "Card Name is required" })
+		.max(50, { message: "Card Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		}),
+	cardNumber: z
+		.string()
+		.min(12, { message: "Card Number is required" })
+		.max(18, { message: "Card Number must be less than 18 characters" }),
+	cardExpiry: z.string(),
+	cvv: z.string(),
+});
+
+const addAccountDetailsSchema: z.ZodType<AddAccountDetailsProps> = z.object({
+	accountName: z
+		.string()
+		.min(2, { message: "Card Name is required" })
+		.max(50, { message: "Card Name must be less than 50 characters" })
+		.transform((value) => {
+			return (
+				value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+			).trim();
+		}),
+	accountNumber: z
+		.string()
+		.min(12, { message: "Card Number is required" })
+		.max(18, { message: "Card Number must be less than 18 characters" }),
+	bankName: z.string(),
+});
+
+const donationDetails: z.ZodType<DonationDetailsProps> = z.object({
+	donorName: z
+		.string()
+		.min(2, { message: "Full Name is required" })
+		.max(50, { message: "Full Name must be less than 50 characters" })
+		.transform((value) => {
+			return value.trim();
+		}),
+
+	donorEmail: z
 		.string()
 		.min(2, { message: "Email is required" })
 		.email({ message: "Invalid email address" })
@@ -302,115 +458,11 @@ const updateProfileSchema: z.ZodType<UpdateProfileProps> = z.object({
 		})
 		.transform((value) => {
 			return value.toLowerCase().trim();
-		})
-		.optional(),
-	phoneNumber: z.string().optional(),
+		}),
+
+	amount: z.string().min(1, { message: "Amount is required" }),
 });
 
-const updatePassWordsSchema: z.ZodType<UpdatePasswordsProps> = z.object({
-	currentPassword: z
-		.string()
-		.min(6, { message: "Password must be at least 6 characters" })
-		.regex(
-			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
-			{
-				message:
-					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-			}
-		)
-		.max(50)
-		.transform((value, ctx) => {
-			const options = {
-				dictionary: {
-					...zxcvbnCommonPackage.dictionary,
-					...zxcvbnEnPackage.dictionary,
-				},
-				translations: {
-					...zxcvbnEnPackage.translations,
-				},
-				graphs: zxcvbnCommonPackage.adjacencyGraphs,
-			};
-			zxcvbnOptions.setOptions(options);
-			const testedResult = zxcvbn(value);
-
-			if (testedResult.score < 3) {
-				testedResult.feedback.suggestions.map((issue) => {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
-						message: issue,
-					});
-				});
-			}
-
-			return value.trim();
-		}),
-	newPassword: z
-		.string()
-		.min(6, { message: "Password must be at least 6 characters" })
-		.regex(
-			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
-			{
-				message:
-					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-			}
-		)
-		.max(50)
-		.transform((value, ctx) => {
-			const options = {
-				dictionary: {
-					...zxcvbnCommonPackage.dictionary,
-					...zxcvbnEnPackage.dictionary,
-				},
-				translations: {
-					...zxcvbnEnPackage.translations,
-				},
-				graphs: zxcvbnCommonPackage.adjacencyGraphs,
-			};
-			zxcvbnOptions.setOptions(options);
-			const testedResult = zxcvbn(value);
-
-			if (testedResult.score < 3) {
-				testedResult.feedback.suggestions.map((issue) => {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
-						message: issue,
-					});
-				});
-			}
-
-			return value.trim();
-		}),
-	confirmNewPassword: z
-		.string()
-		.min(6, { message: "Password must be at least 6 characters" })
-		.regex(
-			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.,!@#$%^&*])[A-Za-z\d.,!@#$%^&*]{6,}$/,
-			{
-				message:
-					"Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-			}
-		)
-		.max(50)
-		.transform((value) => {
-			return value.trim();
-		}),
-});
-
-const uploadProfileImage = z.object({
-	photos: z
-		.array(
-			z.custom<File | string>(
-				(file) => file instanceof File || typeof file === "string"
-			)
-		)
-		.min(1, {
-			message: "Select at least one image (which would be the cover image)",
-		})
-		.max(1, {
-			message: "Select at most one image (which would be the cover image)",
-		})
-		.optional(),
-});
 export const zodValidator = (formType: FormType) => {
 	switch (formType) {
 		case "signup":
@@ -433,8 +485,12 @@ export const zodValidator = (formType: FormType) => {
 			return updateProfileSchema;
 		case "updatePasswords":
 			return updatePassWordsSchema;
-		case "uploadProfileImage":
-			return uploadProfileImage;
+		case "cardDetails":
+			return cardDetailsSchema;
+		case "addAccountDetails":
+			return addAccountDetailsSchema;
+		case "donationDetails":
+			return donationDetails;
 		default:
 			return;
 	}
@@ -447,4 +503,6 @@ export type ResetPasswordType = z.infer<typeof resetPasswordSchema>;
 export type ContactUsType = z.infer<typeof contactUsSchema>;
 export type UpdateProfileType = z.infer<typeof updateProfileSchema>;
 export type UpdatePasswordsType = z.infer<typeof updatePassWordsSchema>;
-export type UploadProfileImage = z.infer<typeof uploadProfileImage>;
+export type CardDetailsType = z.infer<typeof cardDetailsSchema>;
+export type AddAccountDetailsType = z.infer<typeof addAccountDetailsSchema>;
+export type DonationDetailsType = z.infer<typeof donationDetails>;
