@@ -16,14 +16,14 @@ const RecoveryCode = ({ recoveryCode }: { recoveryCode: string | null }) => {
 
 	return (
 		<div className="mx-auto mt-8 flex w-full flex-col gap-8">
-			<h1 className="balancedText text-lg font-semibold md:text-2xl">
+			<h1 className="text-balance text-lg font-semibold md:text-2xl">
 				Two-factor authentication is enabled
 			</h1>
 			<p>
 				We’ll now ask for a login code whenever you want to log in so that
 				we&apos;re sure it&apos;s you
 			</p>
-			<p className="balancedText">
+			<p className="text-balance">
 				Make sure to secure your recovery key in safe place . Without these, you
 				may not be able to disable 2FA your account if you lose access to your
 				phone or can’t log in using your security method.

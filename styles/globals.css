@@ -2,19 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* html,
-body {
-	height: 100%;
-} */
-/* html:has([data-rem-reset]) {
-	font-size: 62.5%;
-}
 
-body:has([data-rem-reset]) {
-	font-size: 1.6rem;
-} */
 
-body:has(.authenticatedUserLayoutMain[data-isopen='true']) {
+body:has(.authenticatedUserLayoutMain[data-isopen="true"]) {
 	overflow: hidden;
 }
 
@@ -26,24 +16,14 @@ body:has(.authenticatedUserLayoutMain[data-isopen='true']) {
 	justify-content: space-between;
 }
 
-input[type='number'] {
+input[type="number"] {
 	-webkit-appearance: textfield;
 	appearance: textfield;
 }
 
-/* Remove the inner spinner */
-/* input[type="number"]::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
-} */
 
-/* Remove the outer spinner (for Firefox) */
-/* input[type="number"]::-webkit-outer-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
-} */
 
-input[type='number'] {
+input[type="number"] {
 	-moz-appearance: textfield;
 	appearance: textfield;
 }
@@ -56,22 +36,11 @@ input::-webkit-inner-spin-button {
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-	transition: background-color 600000s 0s, color 600000s 0s;
+	transition:
+		background-color 600000s 0s,
+		color 600000s 0s;
 }
 
 input[data-autocompleted] {
 	background-color: transparent !important;
-}
-
-.balancedText {
-	text-wrap: balance;
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-	display: none;
-}
-
-.scrollbar-hide {
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
 }

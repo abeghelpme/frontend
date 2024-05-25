@@ -135,19 +135,25 @@ const config = {
 		require("tailwindcss-animate"),
 		require("@tailwindcss/typography"),
 		plugin(function ({ addUtilities, addVariant, addComponents, theme }) {
-			const newUtilities = {
-				".hide-scrollbar::-webkit-scrollbar": {
-					display: "none",
-				},
-			};
-			addUtilities(newUtilities);
-
 			addVariant("progress-unfilled", ["&::-webkit-progress-bar", "&"]);
 			addVariant("progress-filled", [
 				"&::-webkit-progress-value",
 				"&::-moz-progress-bar",
 				"&",
 			]);
+
+			addComponents({
+				".scrollbar-hide": {
+					"&::-webkit-scrollbar": {
+						display: "none",
+					},
+
+					"&": {
+						"-ms-overflow-style": "none" /* IE and Edge */,
+						"scrollbar-width": "none" /* Firefox */,
+					},
+				},
+			});
 
 			addComponents({
 				".custom-scrollbar": {
