@@ -64,7 +64,7 @@ const DashboardCampaigns = () => {
 
 	return (
 		<AuthenticatedUserLayout isDashboard>
-			<section className="space-y-8 md:mt-[105px]">
+			<section className="space-y-8">
 				<div className="flex flex-col justify-between md:flex-row md:items-center">
 					<h1 className="text-2xl font-extrabold max-md:ml-2 md:text-white">
 						Summary
