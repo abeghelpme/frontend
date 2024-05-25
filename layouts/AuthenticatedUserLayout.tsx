@@ -2,6 +2,8 @@ import {
 	AnalyticsIcon,
 	ArrowDown,
 	Avatar,
+	BookmarkIcon,
+	CampaignIcon,
 	CloseIcon,
 	DashboardIcon,
 	Hamburger,
@@ -73,7 +75,9 @@ export const AuthenticatedUserLayout = ({
 		actions: { clearSession },
 	} = useSession((state) => state);
 	const castedUser = user as User;
+
 	const initials = castedUser?.firstName[0] + castedUser?.lastName[0];
+
 	return (
 		<>
 			<header className="sticky left-0 top-0 z-10 flex items-center justify-between gap-10 border-b border-b-abeg-primary bg-white px-[5%] py-5 lg:px-[7%] 2xl:px-[10%]">
@@ -227,22 +231,23 @@ export const AuthenticatedUserLayout = ({
 							</Link>
 
 							<Link
-								href="/c/analytics"
+								href="/c/campaigns"
 								className={`flex items-center gap-2 !text-white ${
-									router.pathname === "/c/analytics" && "font-semibold"
+									router.pathname === "/c/campaigns" && "font-semibold"
 								}`}
 							>
-								<AnalyticsIcon fill={router.pathname === "/c/analytics"} />
-								Analytics
+								<CampaignIcon fill={router.pathname === "/c/campaigns"} />
+								Campaigns
 							</Link>
+
 							<Link
-								href="/notifications"
+								href="/c/bookmarks"
 								className={`flex items-center gap-2 !text-white ${
-									router.pathname === "/notifications" && "font-semibold"
+									router.pathname === "/bookmarks" && "font-semibold"
 								}`}
 							>
-								<UpdatesIcon fill={router.pathname === "/notifications"} />
-								Updates
+								<BookmarkIcon fill={router.pathname === "/bookmarks"} />
+								Bookmarks
 							</Link>
 							<Link
 								href="/c/settings"
@@ -261,7 +266,7 @@ export const AuthenticatedUserLayout = ({
 				data-isopen={isOpen}
 				className={`authenticatedUserLayoutMain h-full flex-1 px-[5%] lg:px-[7%] 2xl:px-[10%] ${
 					isDashboard &&
-					"mt-10 space-y-8 md:mt-0 md:-translate-y-[9.8rem] lg:space-y-10"
+					"mt-10 flex flex-col gap-8 md:mt-0 md:-translate-y-[9.8rem] lg:gap-10"
 				}`}
 			>
 				{children}

@@ -5,14 +5,14 @@ type SummaryCardProps = {
 };
 const SummaryCard = ({ title, figure, result }: SummaryCardProps) => {
 	return (
-		<div className="w-1/3 group text-abeg-text hover:bg-abeg-primary hover:text-white p-4 rounded-xl border bg-white border-summaryCardBorder hover:border-white space-y-9 transition-colors duration-300">
+		<div className="group w-1/3 space-y-9 rounded-xl border border-summaryCardBorder bg-white p-4 text-abeg-text transition-colors duration-300 hover:border-white hover:bg-abeg-primary hover:text-white max-md:w-full">
 			<p className="space-y-2">
 				<svg
 					width="25"
 					height="24"
 					viewBox="0 0 25 24"
 					fill="none"
-					className="group-hover:stroke-white stroke-abeg-text"
+					className="stroke-abeg-text group-hover:stroke-white"
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<path

@@ -17,7 +17,7 @@ export function DateRangePicker({
 }: React.HTMLAttributes<HTMLDivElement>) {
 	const [date, setDate] = React.useState<DateRange | undefined>({
 		from: new Date(2024, 0, 1),
-		to: addDays(new Date(2023, 0, 20), 20),
+		to: addDays(new Date(2024, 0, 20), 20),
 	});
 
 	return (
@@ -28,7 +28,7 @@ export function DateRangePicker({
 						id="date"
 						variant={"regular"}
 						className={cn(
-							"w-fit justify-start text-left font-normal p-2 bg-white rounded-lg",
+							"w-fit justify-start rounded-lg bg-white p-2 text-left font-normal",
 							!date && "text-muted-foreground"
 						)}
 					>
@@ -48,7 +48,7 @@ export function DateRangePicker({
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent
-					className="w-auto p-0 bg-white mt-2 rounded-lg border border-abeg-primary"
+					className="mt-2 w-auto rounded-lg border border-abeg-primary bg-white p-0"
 					align="end"
 				>
 					<Calendar

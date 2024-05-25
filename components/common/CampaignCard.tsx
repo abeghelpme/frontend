@@ -89,7 +89,7 @@ export function CampaignCard(props: CampaignCardProps) {
 		<Card
 			as={as}
 			className={cn(
-				"flex w-full flex-col justify-between gap-2",
+				"flex w-full flex-col justify-between gap-5 md:min-w-[400px]",
 				classNames?.base
 			)}
 		>
@@ -101,16 +101,16 @@ export function CampaignCard(props: CampaignCardProps) {
 				draggable={false}
 				asChild
 			>
-				<div className="flex flex-1">
-					<Link href={`/c/${shortId}`} draggable={false} className="flex-1">
+				<div className="flex max-h-[236px] md:max-h-[250px]">
+					<Link href={`/c/${shortId}`} draggable={false} className="basis-full">
 						<Image
 							src={transformedDetails.imageSrc}
 							className={cn(
-								"size-full rounded-md object-cover",
+								"size-full rounded-md object-cover ",
 								classNames?.image
 							)}
 							width={383}
-							height={263}
+							height={236}
 							draggable={false}
 							alt="Campaigns Image"
 						/>
@@ -144,11 +144,8 @@ export function CampaignCard(props: CampaignCardProps) {
 			</Card.Header>
 
 			{cardType === "regular" && (
-				<Card.Content className="">
-					<Heading
-						as="h4"
-						className="max-w-[30ch flex text-base font-bold lg:text-base"
-					>
+				<Card.Content>
+					<Heading as="h4" className="flex text-base font-bold lg:text-base">
 						{transformedDetails.title}
 					</Heading>
 					<p className="mt-1 text-sm font-medium">

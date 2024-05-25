@@ -84,8 +84,6 @@ const data = [
 	},
 ];
 
-// const dataFormatter = (number) => `$${Intl.NumberFormat('us').format(number).toString()}`;
-
 const DonationChart = () => {
 	const [windowSize, setWindowSize] = useState<number | null>(null);
 
@@ -100,31 +98,21 @@ const DonationChart = () => {
 			window.removeEventListener("resize", handleWindowResize);
 		};
 	}, []);
-	const options = {
-		responsive: true,
-		layout: {
-			padding: "1rem",
-		},
-		plugins: {
-			legend: {
-				align: "start",
-				useBorderRadius: true,
-				borderRadius: "4px",
-			},
-		},
-	};
+
 	return (
-		<div className="w-full h-[80%]">
-			<div className="flex gap-4 text-sm mb-6 font-medium">
+		<div className="h-[80%] w-full">
+			<div className="mb-6 flex gap-4 text-sm font-medium">
 				<div className="space-x-1">
-					<span className="bg-[#D80027] w-6 h-[11px] rounded-[10px] inline-block" />
+					<span className="inline-block h-[11px] w-6 rounded-[10px] bg-[#D80027]" />
 					<span className="">Recurring Donors</span>
 				</div>
+
 				<div className="space-x-1">
-					<span className="bg-[#008080] w-6 h-[11px] rounded-[10px] inline-block" />
+					<span className="inline-block h-[11px] w-6 rounded-[10px] bg-[#008080]" />
 					<span className="">First Time Donors</span>
 				</div>
 			</div>
+
 			<ResponsiveContainer
 				width="100%"
 				height={windowSize && windowSize >= 900 ? 400 : 300}
@@ -140,21 +128,11 @@ const DonationChart = () => {
 						bottom: 5,
 					}}
 				>
-					<CartesianGrid
-						vertical={false}
-						// strokeDasharray="3"
-					/>
+					<CartesianGrid vertical={false} />
 					<XAxis dataKey="name" />
 					<YAxis />
 					<Tooltip />
-					{/* <Legend
-						wrapperStyle={{ top: 0 }}
-						iconType="rect"
-						verticalAlign="top"
-						iconSize={26}
-						height={36}
-						align="left"
-					/> */}
+
 					<Line
 						type="monotone"
 						dataKey="pv"
