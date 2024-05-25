@@ -61,11 +61,11 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
 		<>
 			<DefaultSeo {...SEOCONFIG} />
 			<style jsx global>{`
-        html {
-          font-family: ${manrope.style.fontFamily};
-          color: #484848;
-        }
-      `}</style>
+				html {
+					font-family: ${manrope.style.fontFamily};
+					color: #484848;
+				}
+			`}</style>
 			<NextNProgress color="#324823" />
 			{Component.protect === true ? (
 				<Auth>{getLayout(<Component {...pageProps} />)}</Auth>
