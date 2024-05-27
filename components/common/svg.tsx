@@ -1130,3 +1130,29 @@ export const GridIcon = (props: React.SVGProps<SVGSVGElement>) => (
 		/>
 	</svg>
 );
+
+export const SearchIcon = (props: React.SVGProps<SVGSVGElement>) => (
+	<svg
+		width="25"
+		height="24"
+		viewBox="0 0 25 24"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+		{...props}
+	>
+		<path
+			d="M11.9643 20.9725C17.1945 20.9725 21.4344 16.7326 21.4344 11.5024C21.4344 6.27215 17.1945 2.03223 11.9643 2.03223C6.73407 2.03223 2.49414 6.27215 2.49414 11.5024C2.49414 16.7326 6.73407 20.9725 11.9643 20.9725Z"
+			stroke="white"
+			strokeWidth="1.49529"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M22.4312 21.9693L20.4375 19.9756"
+			stroke="white"
+			strokeWidth="1.49529"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+	</svg>
+);

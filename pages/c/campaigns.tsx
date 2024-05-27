@@ -1,78 +1,106 @@
 import { ArrowDown, Heading } from "@/components/common";
 import { CampaignCardList } from "@/components/common/CampaignCard";
-import { Dropdown, Select, Tabs } from "@/components/ui";
+import { SearchIcon } from "@/components/common/svg";
+import { Dropdown, Tabs } from "@/components/ui";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { useCampaignStore } from "@/store";
 import { AlignJustifyIcon, Grid3x3Icon } from "lucide-react";
+import { useState } from "react";
 
 function AllCampaignsPage() {
 	const campaignsFromDb = useCampaignStore((state) => state.campaigns);
+	const [filter, setFilter] = useState("All");
+	const [resultsPerPage, setResultsPerPage] = useState(10);
 
 	return (
 		<AuthenticatedUserLayout isDashboard>
 			<Tabs.Root defaultValue="grid" className="mb-[95px] space-y-8">
-				<div className="flex flex-col justify-between max-md:gap-6 md:flex-row md:items-center">
-					<Heading as="h2" className="text-[32px] font-[800] text-white">
+				<div className="flex flex-col flex-wrap justify-between gap-6 md:flex-row md:items-center md:gap-3">
+					<Heading as="h1" className="text-[32px]  font-extrabold md:text-white">
 						My Campaigns
 					</Heading>
 
-					<div className="flex justify-between gap-2">
-						<Tabs.List className="items-stretch p-0 text-sm">
-							<Tabs.Trigger
-								value="grid"
-								className="flex items-center gap-1 rounded-l-md border border-borderPrimary bg-white p-2 data-[state=active]:border-abeg-primary data-[state=active]:bg-abeg-primary data-[state=active]:font-extrabold data-[state=active]:text-white"
-							>
-								<Grid3x3Icon className="size-5 font-normal" />
+					<div className="flex items-center justify-between gap-8">
+						<figure className="rounded-md border border-placeholder bg-white p-2">
+							<SearchIcon className="size-[22px] [&_>_*]:stroke-current" />
+						</figure>
 
-								<p>Grid</p>
-							</Tabs.Trigger>
+						<div className="flex gap-4">
+							<Tabs.List className="items-stretch bg-transparent p-0 text-sm">
+								<Tabs.Trigger
+									value="grid"
+									className="flex items-center gap-1 rounded-l-md border-y border-l border-borderPrimary bg-white p-2 data-[state=active]:bg-abeg-primary data-[state=active]:font-extrabold data-[state=active]:text-white"
+								>
+									<Grid3x3Icon className="size-5 font-normal" />
+									<p>Grid</p>
+								</Tabs.Trigger>
 
-							<Tabs.Trigger
-								value="list"
-								className="flex items-center gap-1 rounded-r-md border p-2 data-[state=active]:border-abeg-primary data-[state=active]:bg-abeg-primary data-[state=inactive]:bg-white data-[state=active]:font-extrabold data-[state=active]:text-white"
-							>
-								<AlignJustifyIcon className="size-5 font-normal" />
+								<Tabs.Trigger
+									value="list"
+									className="flex items-center gap-1 rounded-r-md border-y border-r p-2 data-[state=active]:bg-abeg-primary data-[state=inactive]:bg-white data-[state=active]:font-extrabold data-[state=active]:text-white"
+								>
+									<AlignJustifyIcon className="size-5 font-normal" />
+									<p>List</p>
+								</Tabs.Trigger>
+							</Tabs.List>
 
-								<p>List</p>
-							</Tabs.Trigger>
-						</Tabs.List>
+							<Dropdown.Menu>
+								<Dropdown.MenuTrigger className="flex cursor-pointer items-center gap-2 rounded-lg border border-placeholder bg-white px-3 py-2 outline-none">
+									<p className="text-sm font-medium">{filter}</p>
+									<ArrowDown />
+								</Dropdown.MenuTrigger>
 
-						{/* <Select.Root defaultValue="All">
-							<Select.Trigger
-								icon={<ArrowDown />}
-								className="gap-2 rounded-[8px] border-placeholder bg-white px-3 text-sm py-2 font-medium"
-							>
-								<Select.Value />
-							</Select.Trigger>
-
-							<Select.Content>
-								<Select.Item value="All" className="lg:text-base">
-									All
-								</Select.Item>
-							</Select.Content>
-						</Select.Root> */}
+								<Dropdown.MenuContent className="border-none p-0">
+									<Dropdown.MenuRadioGroup
+										value={filter}
+										onValueChange={setFilter}
+										className="ml-auto block cursor-pointer bg-white text-sm font-medium text-abeg-text"
+									>
+										<Dropdown.MenuRadioItem value="All">All item</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Option 2">
+											Option 2
+										</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Option 3">
+											Option 3
+										</Dropdown.MenuRadioItem>
+									</Dropdown.MenuRadioGroup>
+								</Dropdown.MenuContent>
+							</Dropdown.Menu>
+						</div>
 
 						<Dropdown.Menu>
-							<Dropdown.MenuTrigger>
-								All
-								<ArrowDown />
-							</Dropdown.MenuTrigger>
+							<div className="flex items-center gap-2">
+								<p className="md:text-white">View</p>
+
+								<Dropdown.MenuTrigger className="flex min-w-[70px] cursor-pointer items-center gap-2 rounded-lg border border-placeholder bg-white px-3 py-2 outline-none">
+									<p className="text-sm font-medium">{resultsPerPage}</p>
+									<ArrowDown />
+								</Dropdown.MenuTrigger>
+
+								<p className="md:text-white">Results Per Page</p>
+							</div>
+
+							<Dropdown.MenuContent className="border-none p-0">
+								<Dropdown.MenuRadioGroup
+									value={String(resultsPerPage)}
+									onValueChange={(value) => setResultsPerPage(Number(value))}
+									className="ml-auto block cursor-pointer bg-white text-sm font-medium text-abeg-text"
+								>
+									<Dropdown.MenuRadioItem value="10">10</Dropdown.MenuRadioItem>
+									<Dropdown.MenuRadioItem value="20">20</Dropdown.MenuRadioItem>
+									<Dropdown.MenuRadioItem value="30">30</Dropdown.MenuRadioItem>
+								</Dropdown.MenuRadioGroup>
+							</Dropdown.MenuContent>
 						</Dropdown.Menu>
 					</div>
 				</div>
 
 				<Tabs.Content value="grid">
-					<CampaignCardList
-						cardDetailsArray={campaignsFromDb}
-						listType="grid"
-					/>
+					<CampaignCardList cardDetailsArray={campaignsFromDb} listType="grid" />
 				</Tabs.Content>
 
 				<Tabs.Content value="list">
-					<CampaignCardList
-						cardDetailsArray={campaignsFromDb}
-						listType="vertical"
-					/>
+					<CampaignCardList cardDetailsArray={campaignsFromDb} listType="vertical" />
 				</Tabs.Content>
 			</Tabs.Root>
 		</AuthenticatedUserLayout>
