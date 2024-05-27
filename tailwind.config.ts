@@ -1,4 +1,6 @@
+import typographyPlugin from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
+import animationPlugin from "tailwindcss-animate";
 import plugin from "tailwindcss/plugin";
 
 const config = {
@@ -41,7 +43,7 @@ const config = {
 				unfocused: "#A8CCCC",
 				semiWhite: "#E6EAEE",
 				inputBorder: "rgba(124, 148, 107, 0.25)",
-				summaryCardBorder: "#D0D5DD",
+				borderPrimary: "#D0D5DD",
 				headerDivider: "#D4D4D4",
 				otpBorder: "rgba(0, 128, 128, 0.5)",
 				"why-choose-us": "#F6F6F6",
@@ -132,9 +134,9 @@ const config = {
 	},
 
 	plugins: [
-		require("tailwindcss-animate"),
-		require("@tailwindcss/typography"),
-		plugin(function ({ addUtilities, addVariant, addComponents, theme }) {
+		animationPlugin,
+		typographyPlugin,
+		plugin(({ addVariant, addComponents, theme }) => {
 			addVariant("progress-unfilled", ["&::-webkit-progress-bar", "&"]);
 			addVariant("progress-filled", [
 				"&::-webkit-progress-value",

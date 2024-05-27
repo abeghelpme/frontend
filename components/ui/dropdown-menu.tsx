@@ -184,6 +184,26 @@ const DropdownMenuShortcut = ({
 };
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
 
+const Dropdown = {
+	Menu: DropdownMenu,
+	MenuTrigger: DropdownMenuTrigger,
+	MenuContent: DropdownMenuContent,
+	MenuItem: DropdownMenuItem,
+	MenuCheckboxItem: DropdownMenuCheckboxItem,
+	MenuRadioItem: DropdownMenuRadioItem,
+	MenuLabel: DropdownMenuLabel,
+	MenuSeparator: DropdownMenuSeparator,
+	MenuShortcut: DropdownMenuShortcut,
+	MenuGroup: DropdownMenuGroup,
+	MenuPortal: DropdownMenuPortal,
+	MenuSub: DropdownMenuSub,
+	MenuSubContent: DropdownMenuSubContent,
+	MenuSubTrigger: DropdownMenuSubTrigger,
+	MenuRadioGroup: DropdownMenuRadioGroup,
+};
+
+export default Dropdown;
+
 export {
 	DropdownMenu,
 	DropdownMenuTrigger,

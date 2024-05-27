@@ -34,7 +34,7 @@ function StepTwo() {
 		}
 	}, [formStepData]);
 
-	useWatchFormStatus(formState);
+	useWatchFormStatus(control);
 
 	const onSubmit = async (data: StepTwoData) => {
 		updateFormData(data);
@@ -93,7 +93,7 @@ function StepTwo() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField="title" />
+						<FormErrorMessage control={control} errorField="title" />
 					</li>
 
 					<li>
@@ -133,12 +133,12 @@ function StepTwo() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField="fundraiser" />
+						<FormErrorMessage control={control} errorField="fundraiser" />
 					</li>
 
 					<li>
 						<label htmlFor="goal" className="text-sm font-semibold lg:text-xl">
-							Campaign Goal
+							Campaign Goal (₦)
 						</label>
 
 						<input
@@ -154,7 +154,7 @@ function StepTwo() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField="goal" />
+						<FormErrorMessage control={control} errorField="goal" />
 					</li>
 
 					<li>
@@ -178,7 +178,7 @@ function StepTwo() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField="deadline" />
+						<FormErrorMessage control={control} errorField="deadline" />
 					</li>
 				</ol>
 			</form>

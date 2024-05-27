@@ -29,7 +29,6 @@ function StepThree() {
 	const {
 		control,
 		handleSubmit,
-		formState,
 		getValues,
 		reset,
 		setValue: setFormValue,
@@ -43,9 +42,9 @@ function StepThree() {
 		if (!getValues().categoryId) {
 			reset(formStepData);
 		}
-	}, [formStepData]);
+	}, [formStepData, getValues, reset]);
 
-	useWatchFormStatus(formState);
+	useWatchFormStatus(control);
 
 	const onSubmit = async (data: StepThreeData) => {
 		const formData = new FormData();
@@ -117,7 +116,7 @@ function StepThree() {
 										onChange={field.onChange}
 									/>
 
-									<FormErrorMessage formState={formState} errorField="photos" />
+									<FormErrorMessage control={control} errorField="photos" />
 
 									<ImagePreview value={field.value} onChange={field.onChange} />
 								</>
@@ -148,7 +147,7 @@ function StepThree() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField="story" />
+						<FormErrorMessage control={control} errorField="story" />
 					</li>
 				</ol>
 			</form>

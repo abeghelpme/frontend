@@ -3,6 +3,7 @@ export { default as Button } from "./button";
 export { default as Dialog } from "./dialog";
 
 export {
+	default as Dropdown,
 	DropdownMenu,
 	DropdownMenuTrigger,
 	DropdownMenuContent,
@@ -40,5 +41,6 @@ export { Select, SelectPrimitive } from "./select";
 export { DatePicker } from "./date-picker";
 export { default as Toggle } from "./toggle";
 export { default as Card } from "./card";
+export { default as Tabs } from "./tabs";
 export { Switch } from "./switch";
 export { Checkbox } from "./checkbox";

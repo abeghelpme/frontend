@@ -1083,3 +1083,50 @@ export const UploadIcon = () => {
 		</svg>
 	);
 };
+
+export const GridIcon = (props: React.SVGProps<SVGSVGElement>) => (
+	<svg
+		width="20"
+		height="20"
+		viewBox="0 0 20 20"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+		{...props}
+	>
+		<path
+			d="M7.4974 18.3337H12.4974C16.6641 18.3337 18.3307 16.667 18.3307 12.5003V7.50033C18.3307 3.33366 16.6641 1.66699 12.4974 1.66699H7.4974C3.33073 1.66699 1.66406 3.33366 1.66406 7.50033V12.5003C1.66406 16.667 3.33073 18.3337 7.4974 18.3337Z"
+			stroke="white"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M1.69531 7.08301H18.337"
+			stroke="white"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M1.69531 12.917H18.337"
+			stroke="white"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M7.09375 18.3248V1.6748"
+			stroke="white"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M12.9219 18.3248V1.6748"
+			stroke="white"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+	</svg>
+);

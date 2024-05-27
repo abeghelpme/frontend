@@ -15,7 +15,7 @@ type CampaignCardProps = {
 
 	cardType?: "overview" | "regular";
 
-	cardDetails: Campaign;
+	cardDetails: Campaign | undefined;
 } & AsProp;
 
 type TransformedDetails = {
@@ -34,13 +34,13 @@ type TransformedDetails = {
 };
 
 type CardListProps = {
-	listType: "horizontal" | "grid";
+	listType: "horizontal" | "grid" | "vertical";
 
 	classNames?: {
 		base?: string;
 		card?: CampaignCardProps["classNames"];
 	};
-	cardDetailsArray: Array<CampaignCardProps["cardDetails"]>;
+	cardDetailsArray: Array<CampaignCardProps["cardDetails"]> | undefined;
 };
 
 export const generateDummyCardData = (count = 5) =>
@@ -60,28 +60,36 @@ export const generateDummyCardData = (count = 5) =>
 
 export const dummyCardData = generateDummyCardData();
 
+const transformCardData = (
+	cardDetails: NonNullable<CampaignCardProps["cardDetails"]>
+): TransformedDetails => ({
+	id: cardDetails._id,
+	category: cardDetails.category ? cardDetails.category.name : "Unknown",
+	status: cardDetails.status,
+	goal: cardDetails.goal,
+	amountRaised: cardDetails.amountRaised,
+	commentCount: 0,
+	donorCount: 0,
+	imageSrc:
+		cardDetails.images[0]?.secureUrl ?? "/assets/images/shared/logo.svg",
+	daysLeft: getDaysLeft(cardDetails.deadline),
+	location: cardDetails.country || "Not Provided",
+	name: cardDetails.creator
+		? cardDetails.fundraiser === "INDIVIDUAL"
+			? `${cardDetails.creator.firstName} ${cardDetails.creator.lastName}`
+			: "Beneficiary"
+		: "Unknown",
+	title: cardDetails.title,
+});
+
 export function CampaignCard(props: CampaignCardProps) {
 	const { cardDetails, cardType = "regular", classNames, as } = props;
 
-	const transformedDetails = {
-		id: cardDetails._id,
-		category: cardDetails.category ? cardDetails.category.name : "Unknown",
-		status: cardDetails.status,
-		goal: cardDetails.goal,
-		amountRaised: cardDetails.amountRaised,
-		commentCount: 0,
-		donorCount: 0,
-		imageSrc:
-			cardDetails.images[0]?.secureUrl ?? "/assets/images/shared/logo.svg",
-		daysLeft: getDaysLeft(cardDetails.deadline),
-		location: cardDetails.country || "Not Provided",
-		name: cardDetails.creator
-			? cardDetails.fundraiser === "INDIVIDUAL"
-				? `${cardDetails.creator.firstName} ${cardDetails.creator.lastName}`
-				: "Beneficiary"
-			: "Unknown",
-		title: cardDetails.title,
-	} satisfies TransformedDetails;
+	if (!cardDetails) {
+		return null;
+	}
+
+	const transformedDetails = transformCardData(cardDetails);
 
 	const shortId = cardDetails.url ? cardDetails.url.split("/c/")[1] : null;
 
@@ -89,7 +97,7 @@ export function CampaignCard(props: CampaignCardProps) {
 		<Card
 			as={as}
 			className={cn(
-				"flex w-full flex-col justify-between gap-5 lg:min-w-[400px]",
+				"flex w-full flex-col justify-between gap-5",
 				classNames?.base
 			)}
 		>
@@ -102,16 +110,15 @@ export function CampaignCard(props: CampaignCardProps) {
 				asChild
 			>
 				<div className="flex max-h-[236px] md:max-h-[250px]">
-					<Link href={`/c/${shortId}`} draggable={false} className="basis-full">
+					<Link href={`/c/${shortId}`} className="basis-full">
 						<Image
 							src={transformedDetails.imageSrc}
 							className={cn(
-								"size-full rounded-md object-cover ",
+								"size-full rounded-md object-cover",
 								classNames?.image
 							)}
 							width={383}
 							height={236}
-							draggable={false}
 							alt="Campaigns Image"
 						/>
 
@@ -230,21 +237,25 @@ export function CampaignCardList(props: CardListProps) {
 	const semanticClasses = {
 		cardList: {
 			horizontal: dragContainerClasses,
-			grid: "grid md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 w-full",
+			// grid: "grid grid-cols-[repeat(auto-fill,minmax(min(100%,402px),1fr))]",
+			grid: "grid gap-4 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 w-full",
+			vertical: "flex flex-col w-full",
 		},
 
 		card: {
 			base: {
 				horizontal: cn(
-					"max-w-[370px] shrink-0 lg:max-w-[396px]",
+					"max-w-[370px] shrink-0 md:max-w-[396px]",
 					dragItemClasses
 				),
-				grid: " overflow-hidden",
+				grid: "max-w-[403px]",
+				vertical: "max-w-[403px]",
 			},
 
 			header: {
 				horizontal: "aspect-[383/263] md:aspect-[396/263] max-h-[263px]",
-				grid: "aspect-[380/345] max-h-[345px] md:aspect-[403/375] h-full md:max-h-[375px]",
+				grid: "max-h-[236px] h-full md:max-h-[250px]",
+				vertical: "max-h-[236px] h-full md:max-h-[250px]",
 			},
 		},
 	};
@@ -260,7 +271,7 @@ export function CampaignCardList(props: CardListProps) {
 		>
 			{cardDetailsArray.map((detail) => (
 				<CampaignCard
-					key={detail._id}
+					key={detail?._id}
 					as="li"
 					cardDetails={detail}
 					classNames={{

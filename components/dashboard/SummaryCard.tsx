@@ -5,7 +5,7 @@ type SummaryCardProps = {
 };
 const SummaryCard = ({ title, figure, result }: SummaryCardProps) => {
 	return (
-		<div className="group w-1/3 space-y-9 rounded-xl border border-summaryCardBorder bg-white p-4 text-abeg-text transition-colors duration-300 hover:border-white hover:bg-abeg-primary hover:text-white max-md:w-full">
+		<div className="border-borderPrimary group w-1/3 space-y-9 rounded-xl border bg-white p-4 text-abeg-text transition-colors duration-300 hover:border-white hover:bg-abeg-primary hover:text-white max-md:w-full">
 			<p className="space-y-2">
 				<svg
 					width="25"
