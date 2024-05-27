@@ -3,8 +3,14 @@ import { CampaignCardList } from "@/components/common/CampaignCard";
 import { SearchIcon } from "@/components/common/svg";
 import { Dropdown, Tabs } from "@/components/ui";
 import { AuthenticatedUserLayout } from "@/layouts";
+import { cn } from "@/lib";
+import {
+	arrowLeft,
+	arrowRight,
+} from "@/public/assets/images/campaign-category";
 import { useCampaignStore } from "@/store";
 import { AlignJustifyIcon, Grid3x3Icon } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 function AllCampaignsPage() {
@@ -16,7 +22,10 @@ function AllCampaignsPage() {
 		<AuthenticatedUserLayout isDashboard>
 			<Tabs.Root defaultValue="grid" className="mb-[95px] space-y-8">
 				<div className="flex flex-col flex-wrap justify-between gap-6 md:flex-row md:items-center md:gap-3">
-					<Heading as="h1" className="text-[32px]  font-extrabold md:text-white">
+					<Heading
+						as="h1"
+						className="text-[32px]  font-extrabold md:text-white"
+					>
 						My Campaigns
 					</Heading>
 
@@ -56,7 +65,9 @@ function AllCampaignsPage() {
 										onValueChange={setFilter}
 										className="ml-auto block cursor-pointer bg-white text-sm font-medium text-abeg-text"
 									>
-										<Dropdown.MenuRadioItem value="All">All item</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="All">
+											All item
+										</Dropdown.MenuRadioItem>
 										<Dropdown.MenuRadioItem value="Option 2">
 											Option 2
 										</Dropdown.MenuRadioItem>
@@ -96,13 +107,81 @@ function AllCampaignsPage() {
 				</div>
 
 				<Tabs.Content value="grid">
-					<CampaignCardList cardDetailsArray={campaignsFromDb} listType="grid" />
+					<CampaignCardList
+						cardDetailsArray={campaignsFromDb}
+						listType="grid"
+					/>
 				</Tabs.Content>
 
 				<Tabs.Content value="list">
-					<CampaignCardList cardDetailsArray={campaignsFromDb} listType="vertical" />
+					<CampaignCardList
+						cardDetailsArray={campaignsFromDb}
+						listType="vertical"
+					/>
 				</Tabs.Content>
 			</Tabs.Root>
+
+			<section className="mt-10 flex items-center justify-center gap-5 md:mt-20">
+				<button
+					// onClick={handlePrevPage}
+					// disabled={currentPage === 1}
+					className="flex items-center gap-2 font-bold outline-none md:text-2xl"
+				>
+					<span>
+						<Image
+							src={arrowLeft}
+							alt={"arrow left icon"}
+							priority
+							width={30}
+							height={30}
+						/>
+					</span>
+					<span> Prev</span>
+				</button>
+
+				{Array.from({ length: resultsPerPage }, (_, index) => index + 1).map(
+					(pageNumber, i) => (
+						<div key={i} className="flex items-center">
+							{(pageNumber <= 3 || i === resultsPerPage - 1) && (
+								<button
+									key={pageNumber}
+									// onClick={() => handlePageChange(pageNumber)}
+									className={cn(
+										"rounded-full px-3 py-1 font-bold md:px-4 md:text-2xl"
+										// currentPage === pageNumber &&
+										// 	"border border-black bg-abeg-primary text-white"
+									)}
+								>
+									{pageNumber}
+								</button>
+							)}
+							{pageNumber === 3 && resultsPerPage > 3 && (
+								<span className="mb-2 flex items-center px-2 py-1 font-bold md:text-2xl">
+									...
+								</span>
+							)}
+						</div>
+					)
+				)}
+
+				<button
+					// onClick={handleNextPage}
+					// disabled={currentPage === totalPages}
+					className="flex items-center gap-2 bg-transparent font-bold outline-none md:text-2xl"
+				>
+					<span>Next</span>
+
+					<span>
+						<Image
+							src={arrowRight}
+							alt={"arrow right icon"}
+							priority
+							width={30}
+							height={30}
+						/>
+					</span>
+				</button>
+			</section>
 		</AuthenticatedUserLayout>
 	);
 }
