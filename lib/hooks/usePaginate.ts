@@ -1,6 +1,5 @@
 import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { useInitCampaignStore } from "@/store";
 import { useEffect, useState } from "react";
 import { callApi } from "../helpers/callApi";
 import { useCallbackRef } from "./useCallbackRef";
@@ -33,16 +32,9 @@ export const usePaginate = <T = Campaign>(
 	});
 
 	const upDateData = useCallbackRef(() => {
-		if (
-			!Array.isArray(endpointOrCampaignList) ||
-			endpointOrCampaignList.length === 0
-		)
-			return;
+		if (!Array.isArray(endpointOrCampaignList) || endpointOrCampaignList.length === 0) return;
 
-		const newDataSlice = endpointOrCampaignList.slice(
-			page - 1,
-			options.limit ?? LIMIT
-		) as T[];
+		const newDataSlice = endpointOrCampaignList.slice(page - 1, options.limit ?? LIMIT) as T[];
 
 		const updatedData = shouldReturnAll
 			? { ...data, data: [...data.data, ...newDataSlice] }
@@ -62,10 +54,7 @@ export const usePaginate = <T = Campaign>(
 		setIsFetching(true);
 		setError("");
 
-		if (
-			typeof endpointOrCampaignList !== "string" ||
-			endpointOrCampaignList.length === 0
-		) {
+		if (typeof endpointOrCampaignList !== "string" || endpointOrCampaignList.length === 0) {
 			return setError("Endpoint is required");
 		}
 
@@ -77,9 +66,9 @@ export const usePaginate = <T = Campaign>(
 		const newPage = direction === "next" ? page + 1 : page - 1;
 		setPage(newPage);
 
-		const { data: response, error: apiError } = await callApi<
-			ApiResponse<PaginatedResponse<T>>
-		>(`/${endpointOrCampaignList}?page=${newPage}&limit=${LIMIT}`);
+		const { data: response, error: apiError } = await callApi<ApiResponse<PaginatedResponse<T>>>(
+			`/${endpointOrCampaignList}?page=${newPage}&limit=${LIMIT}`
+		);
 
 		if (apiError || !response?.data) {
 			setError(apiError?.message ?? "Could not fetch data");
@@ -99,11 +88,7 @@ export const usePaginate = <T = Campaign>(
 	};
 
 	const fetchFromStore = (direction: "prev" | "next") => {
-		if (
-			!Array.isArray(endpointOrCampaignList) ||
-			endpointOrCampaignList.length === 0
-		)
-			return;
+		if (!Array.isArray(endpointOrCampaignList) || endpointOrCampaignList.length === 0) return;
 
 		if (direction === "prev" && page <= 1) return;
 
@@ -111,10 +96,7 @@ export const usePaginate = <T = Campaign>(
 
 		setPage(newPage);
 
-		const newDataSlice = endpointOrCampaignList.slice(
-			newPage - 1,
-			options.limit ?? LIMIT
-		) as T[];
+		const newDataSlice = endpointOrCampaignList.slice(newPage - 1, options.limit ?? LIMIT) as T[];
 
 		const updatedData = shouldReturnAll
 			? { ...data, data: [...data.data, ...newDataSlice] }

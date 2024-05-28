@@ -26,8 +26,7 @@ const config = {
 				heroBg: "url('/assets/images/shared/hero-background.svg')",
 				dashboardBg: "url('/assets/images/dashboard/dashboardBg.png')",
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-				"gradient-conic":
-					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+				"gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
 
 			boxShadow: {
@@ -138,11 +137,18 @@ const config = {
 		typographyPlugin,
 		plugin(({ addVariant, addComponents, theme }) => {
 			addVariant("progress-unfilled", ["&::-webkit-progress-bar", "&"]);
-			addVariant("progress-filled", [
-				"&::-webkit-progress-value",
-				"&::-moz-progress-bar",
-				"&",
-			]);
+			addVariant("progress-filled", ["&::-webkit-progress-value", "&::-moz-progress-bar", "&"]);
+
+			addComponents({
+				".scrollbar-hide": {
+					"-ms-overflow-style": "none" /* IE and Edge */,
+					"scrollbar-width": "none" /* Firefox */,
+
+					"&::-webkit-scrollbar": {
+						display: "none",
+					},
+				},
+			});
 
 			addComponents({
 				".scrollbar-hide": {
