@@ -11,7 +11,7 @@ import { CampaignCardList } from "../common/CampaignCard";
 import NoCampaign from "./NoCampaigns";
 
 // Custom hook to determine the number of items per page based on screen size
-const useItemsPerPage = () => {
+export const useItemsPerPage = () => {
 	const [itemsPerPage, setItemsPerPage] = useState(9);
 
 	useEffect(() => {

@@ -1083,3 +1083,76 @@ export const UploadIcon = () => {
 		</svg>
 	);
 };
+
+export const GridIcon = (props: React.SVGProps<SVGSVGElement>) => (
+	<svg
+		width="20"
+		height="20"
+		viewBox="0 0 20 20"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+		{...props}
+	>
+		<path
+			d="M7.4974 18.3337H12.4974C16.6641 18.3337 18.3307 16.667 18.3307 12.5003V7.50033C18.3307 3.33366 16.6641 1.66699 12.4974 1.66699H7.4974C3.33073 1.66699 1.66406 3.33366 1.66406 7.50033V12.5003C1.66406 16.667 3.33073 18.3337 7.4974 18.3337Z"
+			stroke="white"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M1.69531 7.08301H18.337"
+			stroke="white"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M1.69531 12.917H18.337"
+			stroke="white"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M7.09375 18.3248V1.6748"
+			stroke="white"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M12.9219 18.3248V1.6748"
+			stroke="white"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+	</svg>
+);
+
+export const SearchIcon = (props: React.SVGProps<SVGSVGElement>) => (
+	<svg
+		width="25"
+		height="24"
+		viewBox="0 0 25 24"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+		{...props}
+	>
+		<path
+			d="M11.9643 20.9725C17.1945 20.9725 21.4344 16.7326 21.4344 11.5024C21.4344 6.27215 17.1945 2.03223 11.9643 2.03223C6.73407 2.03223 2.49414 6.27215 2.49414 11.5024C2.49414 16.7326 6.73407 20.9725 11.9643 20.9725Z"
+			stroke="white"
+			strokeWidth="1.49529"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M22.4312 21.9693L20.4375 19.9756"
+			stroke="white"
+			strokeWidth="1.49529"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+	</svg>
+);

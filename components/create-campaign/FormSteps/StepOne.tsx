@@ -33,7 +33,6 @@ function StepOne() {
 
 	const {
 		control,
-		formState,
 		handleSubmit,
 		getValues,
 		reset,
@@ -48,25 +47,23 @@ function StepOne() {
 		if (!getValues().categoryId) {
 			reset(formStepData);
 		}
-	}, [formStepData]);
+	}, [formStepData, getValues, reset]);
+
+	useWatchFormStatus(control);
 
 	const [CategoryList] = useBaseElementList();
 	const [CountryList] = useBaseElementList();
 	const [TagList] = useElementList();
 
-	useWatchFormStatus(formState);
-
 	const onSubmit = async (data: StepOneData) => {
 		updateFormData(data);
+
 		const { data: dataInfo, error } = await callApi<
 			ApiResponse<Partial<Campaign>>
 		>(`/campaign/create/one`, {
 			...data,
 			...(!!campaignId && { campaignId }),
 		});
-
-		// console.log("data info", dataInfo);
-		// console.log("error", error);
 
 		if (error) {
 			toast.error(error.status, {
@@ -76,7 +73,7 @@ function StepOne() {
 			return;
 		}
 
-		if (!dataInfo || !dataInfo.data) return;
+		if (!dataInfo?.data) return;
 
 		updateCampaignId(dataInfo.data._id);
 		goToStep(2);
@@ -174,7 +171,7 @@ function StepOne() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField={"categoryId"} />
+						<FormErrorMessage control={control} errorField={"categoryId"} />
 					</li>
 
 					<li>
@@ -196,7 +193,7 @@ function StepOne() {
 								>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-4 h-[50px] rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px] lg:px-4 lg:text-base"
+										className="mt-4 h-[50px] gap-2 rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px] lg:px-4 lg:text-base"
 									>
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
@@ -219,7 +216,7 @@ function StepOne() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField={"country"} />
+						<FormErrorMessage control={control} errorField={"country"} />
 					</li>
 
 					<li>
@@ -239,7 +236,7 @@ function StepOne() {
 
 							<button
 								type="button"
-								className="rounded-md border border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base self-stretch"
+								className="self-stretch rounded-md border border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base"
 								onClick={handleAddTags}
 							>
 								Add
@@ -257,7 +254,7 @@ function StepOne() {
 								render={(tag, index) => (
 									<li
 										key={`${tag}-${index}`}
-										className="flex min-w-20 items-center justify-between gap-2.5 rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] px-3 py-1"
+										className="flex min-w-20 items-center justify-between gap-2.5 rounded-[20px] border border-abeg-primary bg-[rgb(229,242,242)] px-3 py-1"
 									>
 										<p>{tag}</p>
 

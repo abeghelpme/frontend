@@ -19,7 +19,7 @@ const Toaster = (props: ToasterProps) => {
 					toast:
 						"group toast max-lg:mx-auto max-lg:group-[.toaster]:max-w-[356px] group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
 					success:
-						"group success data-[type=success]:group-[.toaster]:bg-success-bg data-[type=success]:group-[.toaster]:text-success-text data-[type=success]border-success-border",
+						"group success data-[type=success]:group-[.toaster]:bg-success-bg data-[type=success]:group-[.toaster]:text-success-text data-[type=success]:border-success-border",
 					error:
 						"group error data-[type=error]:group-[.toaster]:bg-error-bg data-[type=error]:group-[.toaster]:text-error-text data-[type=error]:group-[.toaster]:border-error-border",
 

@@ -34,7 +34,7 @@ function StepTwo() {
 		}
 	}, [formStepData]);
 
-	useWatchFormStatus(formState);
+	useWatchFormStatus(control);
 
 	const onSubmit = async (data: StepTwoData) => {
 		updateFormData(data);
@@ -93,7 +93,7 @@ function StepTwo() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField="title" />
+						<FormErrorMessage control={control} errorField="title" />
 					</li>
 
 					<li>
@@ -133,12 +133,12 @@ function StepTwo() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField="fundraiser" />
+						<FormErrorMessage control={control} errorField="fundraiser" />
 					</li>
 
 					<li>
 						<label htmlFor="goal" className="text-sm font-semibold lg:text-xl">
-							Campaign Goal
+							Campaign Goal (₦)
 						</label>
 
 						<input
@@ -147,14 +147,14 @@ function StepTwo() {
 							type="number"
 							placeholder="Set a realistic target amount"
 							className={cn(
-								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4  lg:text-base",
+								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4 lg:text-base",
 
 								formState.errors.goal &&
 									"border-abeg-error-20 focus-visible:outline-abeg-error-20"
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField="goal" />
+						<FormErrorMessage control={control} errorField="goal" />
 					</li>
 
 					<li>
@@ -178,7 +178,7 @@ function StepTwo() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField="deadline" />
+						<FormErrorMessage control={control} errorField="deadline" />
 					</li>
 				</ol>
 			</form>

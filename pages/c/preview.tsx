@@ -21,7 +21,7 @@ export const getStaticProps = (async () => {
 	const { data, error } =
 		await callApi<ApiResponse<Campaign[]>>(`/campaign/featured`);
 
-	if (error || !data || !data.data) {
+	if (error || !data?.data) {
 		return { notFound: true };
 	}
 
@@ -39,7 +39,7 @@ function PreviewCampaignPage({
 	const currentCampaign = useCampaignStore((state) =>
 		state.campaigns.find(
 			(campaign) =>
-				campaign._id === searchParams.get("id") && !campaign.isPublished
+				!campaign.isPublished && campaign._id === searchParams.get("id")
 		)
 	);
 
@@ -124,7 +124,7 @@ function PreviewCampaignPage({
 						</FormActionButton>
 					</div>
 
-					<Heading as="h1" className="mt-7 text-4xl lg:text-4xl">
+					<Heading as="h2" className="mt-7 text-4xl lg:text-4xl">
 						{`${currentCampaign.title[0].toUpperCase()}${currentCampaign.title.slice(
 							1
 						)}`}

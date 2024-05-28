@@ -109,7 +109,9 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 		resetFormData: () => set({ formStepData: initialFormState.formStepData }),
 
 		initializeFormData: () => {
-			const { campaigns } = useInitCampaignStore.getState();
+			const campaigns = useInitCampaignStore.getState().campaigns as
+				| Campaign[]
+				| undefined;
 
 			if (!campaigns || campaigns.length === 0) return;
 
@@ -143,9 +145,11 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 				return;
 			}
 
-			const currentDraftCampaign = campaigns[0];
+			const currentDraftCampaign = campaigns.find(
+				(campaign) => campaign.status === "Draft"
+			);
 
-			if (currentDraftCampaign.status !== "Draft") return;
+			if (!currentDraftCampaign) return;
 
 			set({
 				currentStep: currentDraftCampaign.currentStep,

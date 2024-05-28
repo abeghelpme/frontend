@@ -14,4 +14,6 @@ export { default as Notification } from "./Notification";
 export { default as PlusIcon } from "./PlusIcon";
 export { default as SettingsIcon } from "./SettingsIcon";
 export { default as UpdatesIcon } from "./UpdatesIcon";
+export { default as CampaignIcon } from "./CampaignIcon";
+export { default as BookmarkIcon } from "./BookmarkIcon";
 export { default as UserIcon } from "./UserIcon";

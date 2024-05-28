@@ -1,10 +1,13 @@
 import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { useRef, useState } from "react";
+import { useInitCampaignStore } from "@/store";
+import { useEffect, useState } from "react";
 import { callApi } from "../helpers/callApi";
+import { useCallbackRef } from "./useCallbackRef";
 
-type UsePaginateProps = {
+type UsePaginateOptions = {
 	allData?: boolean;
+	limit?: number;
 	startPage?: number;
 };
 
@@ -16,26 +19,53 @@ type PaginatedResponse<T> = {
 const LIMIT = 12;
 
 export const usePaginate = <T = Campaign>(
-	endpoint: string | undefined,
-	options: UsePaginateProps = {
-		allData: false,
-		startPage: 1,
-	}
+	endpointOrCampaignList: string | Campaign[] | undefined,
+	options: UsePaginateOptions = {}
 ) => {
 	const [page, setPage] = useState(options.startPage ?? 1);
-	const returnAll = useRef(options.allData ?? false);
+	const [shouldReturnAll] = useState(options.allData ?? false);
 
 	const [data, setData] = useState<PaginatedResponse<T>>({
-		data: [],
+		data: Array.isArray(endpointOrCampaignList)
+			? (endpointOrCampaignList.slice(page - 1, options.limit ?? LIMIT) as T[])
+			: [],
 		count: 0,
 	});
+
+	const upDateData = useCallbackRef(() => {
+		if (
+			!Array.isArray(endpointOrCampaignList) ||
+			endpointOrCampaignList.length === 0
+		)
+			return;
+
+		const newDataSlice = endpointOrCampaignList.slice(
+			page - 1,
+			options.limit ?? LIMIT
+		) as T[];
+
+		const updatedData = shouldReturnAll
+			? { ...data, data: [...data.data, ...newDataSlice] }
+			: { ...data, data: newDataSlice };
+
+		setData(updatedData);
+	});
+
+	useEffect(() => {
+		upDateData();
+	}, [options.limit, upDateData]);
+
 	const [isFetching, setIsFetching] = useState(false);
 	const [error, setError] = useState("");
 
 	const fetch = async (direction: "prev" | "next") => {
 		setIsFetching(true);
 		setError("");
-		if (!endpoint) {
+
+		if (
+			typeof endpointOrCampaignList !== "string" ||
+			endpointOrCampaignList.length === 0
+		) {
 			return setError("Endpoint is required");
 		}
 
@@ -47,34 +77,57 @@ export const usePaginate = <T = Campaign>(
 		const newPage = direction === "next" ? page + 1 : page - 1;
 		setPage(newPage);
 
-		const { data: response, error } = await callApi<
+		const { data: response, error: apiError } = await callApi<
 			ApiResponse<PaginatedResponse<T>>
-		>(`/${endpoint}?page=${newPage}&limit=${LIMIT}`);
+		>(`/${endpointOrCampaignList}?page=${newPage}&limit=${LIMIT}`);
 
-		if (error || !response || !response.data) {
-			setError(error?.message || "Could not fetch data");
+		if (apiError || !response?.data) {
+			setError(apiError?.message ?? "Could not fetch data");
 			setIsFetching(false);
 			return;
 		}
 
-		let updateData;
-		if (returnAll.current) {
-			updateData = {
-				...data,
-				data: [...data.data, ...response.data.data],
-			};
-		} else {
-			updateData = response.data;
-		}
+		const updateData = shouldReturnAll
+			? {
+					...data,
+					data: [...data.data, ...response.data.data],
+			  }
+			: response.data;
 
 		setData(updateData);
 		setIsFetching(false);
 	};
 
+	const fetchFromStore = (direction: "prev" | "next") => {
+		if (
+			!Array.isArray(endpointOrCampaignList) ||
+			endpointOrCampaignList.length === 0
+		)
+			return;
+
+		if (direction === "prev" && page <= 1) return;
+
+		const newPage = direction === "next" ? page + 1 : page - 1;
+
+		setPage(newPage);
+
+		const newDataSlice = endpointOrCampaignList.slice(
+			newPage - 1,
+			options.limit ?? LIMIT
+		) as T[];
+
+		const updatedData = shouldReturnAll
+			? { ...data, data: [...data.data, ...newDataSlice] }
+			: { ...data, data: newDataSlice };
+
+		setData(updatedData);
+	};
+
 	const hasMore = () => {
-		if (returnAll.current) {
+		if (shouldReturnAll) {
 			return data.data.length < data.count;
 		}
+
 		return page < Math.floor(data.count / LIMIT);
 	};
 
@@ -86,6 +139,7 @@ export const usePaginate = <T = Campaign>(
 		isFetching,
 		error,
 		fetch,
+		fetchFromStore,
 		hasPrevious,
 		hasMore,
 	};

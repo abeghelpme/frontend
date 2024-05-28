@@ -1,4 +1,6 @@
+import typographyPlugin from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
+import animationPlugin from "tailwindcss-animate";
 import plugin from "tailwindcss/plugin";
 
 const config = {
@@ -30,6 +32,7 @@ const config = {
 
 			boxShadow: {
 				"auth-layout-shadow": " 0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
+				analyticsShadow: " 0px 4px 2px 0px rgba(16,24,40, 0.05)",
 				otpInput: "2px 4px 4px 0 rgba(139, 210, 189, 0.1)",
 			},
 
@@ -40,6 +43,7 @@ const config = {
 				unfocused: "#A8CCCC",
 				semiWhite: "#E6EAEE",
 				inputBorder: "rgba(124, 148, 107, 0.25)",
+				borderPrimary: "#D0D5DD",
 				headerDivider: "#D4D4D4",
 				otpBorder: "rgba(0, 128, 128, 0.5)",
 				"why-choose-us": "#F6F6F6",
@@ -130,22 +134,28 @@ const config = {
 	},
 
 	plugins: [
-		require("tailwindcss-animate"),
-		require("@tailwindcss/typography"),
-		plugin(function ({ addUtilities, addVariant, addComponents, theme }) {
-			const newUtilities = {
-				".hide-scrollbar::-webkit-scrollbar": {
-					display: "none",
-				},
-			};
-			addUtilities(newUtilities);
-
+		animationPlugin,
+		typographyPlugin,
+		plugin(({ addVariant, addComponents, theme }) => {
 			addVariant("progress-unfilled", ["&::-webkit-progress-bar", "&"]);
 			addVariant("progress-filled", [
 				"&::-webkit-progress-value",
 				"&::-moz-progress-bar",
 				"&",
 			]);
+
+			addComponents({
+				".scrollbar-hide": {
+					"&::-webkit-scrollbar": {
+						display: "none",
+					},
+
+					"&": {
+						"-ms-overflow-style": "none" /* IE and Edge */,
+						"scrollbar-width": "none" /* Firefox */,
+					},
+				},
+			});
 
 			addComponents({
 				".custom-scrollbar": {

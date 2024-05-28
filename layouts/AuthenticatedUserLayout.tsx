@@ -2,6 +2,8 @@ import {
 	AnalyticsIcon,
 	ArrowDown,
 	Avatar,
+	BookmarkIcon,
+	CampaignIcon,
 	CloseIcon,
 	DashboardIcon,
 	Hamburger,
@@ -23,7 +25,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui";
 import type { User } from "@/interfaces";
-import { callApi } from "@/lib";
+import { callApi, cn } from "@/lib";
 import { useSession } from "@/store";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -73,7 +75,9 @@ export const AuthenticatedUserLayout = ({
 		actions: { clearSession },
 	} = useSession((state) => state);
 	const castedUser = user as User;
+
 	const initials = castedUser?.firstName[0] + castedUser?.lastName[0];
+
 	return (
 		<>
 			<header className="sticky left-0 top-0 z-10 flex items-center justify-between gap-10 border-b border-b-abeg-primary bg-white px-[5%] py-5 lg:px-[7%] 2xl:px-[10%]">
@@ -92,9 +96,10 @@ export const AuthenticatedUserLayout = ({
 				{/* Mobile menu */}
 				{isDashboard && (
 					<div
-						className={`absolute inset-0 z-[110] flex h-full min-h-svh -translate-x-[110%] flex-col gap-7 bg-white p-[51px] transition-transform duration-500 md:hidden ${
-							isOpen ? "translate-x-0" : ""
-						}`}
+						className={cn(
+							"absolute inset-0 z-[110] flex h-full min-h-svh translate-x-[-110%] flex-col gap-7 bg-white p-[51px] transition-transform duration-500 md:hidden",
+							isOpen && "translate-x-0"
+						)}
 					>
 						<Button
 							onClick={() => setIsOpen(false)}
@@ -168,7 +173,7 @@ export const AuthenticatedUserLayout = ({
 								<Button
 									variant="danger"
 									onClick={async () => {
-										const { data, error } = await callApi("/auth/signout");
+										await callApi("/auth/signout");
 										clearSession();
 									}}
 									fullWidth
@@ -182,24 +187,22 @@ export const AuthenticatedUserLayout = ({
 				</div>
 			</header>
 			{isDashboard && (
-				<section className="flex-col gap-6 bg-cover bg-no-repeat md:flex md:h-[42svh] md:bg-abeg-primary md:bg-dashboardBg xl:h-[37svh] 2xl:h-[40svh] 3xl:h-[19svh]">
+				<section className="flex-col gap-6 bg-cover bg-no-repeat md:flex md:h-[310px] md:bg-abeg-primary md:bg-dashboardBg">
 					<div className="px-[5%] lg:px-[7%] 2xl:px-[10%]">
 						<div className="mt-6 flex flex-col items-start justify-between gap-5 md:mt-0 md:flex-row md:py-6 lg:gap-10">
-							<div className="space-y-2 md:text-xl md:text-white xl:text-2xl">
-								<p className="font-bold">
+							<div className="space-y-2 text-sm md:text-xl md:text-white lg:text-2xl">
+								<p className="font-semibold">
 									Hi, {castedUser?.firstName || "FirstName"}👋
 								</p>
 
 								{router.pathname === "/c" ? (
-									<p className="">Welcome to your dashboard✨.</p>
+									<p className="">Here's an overview of your campaigns✨.</p>
 								) : router.pathname === "/c/campaigns" ? (
-									<p className=""> Here is an overview of your campaigns✨.</p>
-								) : router.pathname === "/c/analytics" ? (
-									<p className="">
-										Here is an overview of your campaign activities✨.
-									</p>
+									<p className=""> Welcome to your created campaigns✨.</p>
+								) : router.pathname === "/c/bookmarks" ? (
+									<p className="">Here are you saved campaigns✨.</p>
 								) : router.pathname === "/c/settings" ? (
-									<p>Here's a snapshot of your settings page</p>
+									<p>Customize our platform to work for you!.✨</p>
 								) : null}
 							</div>
 							<Link
@@ -227,22 +230,23 @@ export const AuthenticatedUserLayout = ({
 							</Link>
 
 							<Link
-								href="/c/analytics"
+								href="/c/campaigns"
 								className={`flex items-center gap-2 !text-white ${
-									router.pathname === "/c/analytics" && "font-semibold"
+									router.pathname === "/c/campaigns" && "font-semibold"
 								}`}
 							>
-								<AnalyticsIcon fill={router.pathname === "/c/analytics"} />
-								Analytics
+								<CampaignIcon fill={router.pathname === "/c/campaigns"} />
+								Campaigns
 							</Link>
+
 							<Link
-								href="/notifications"
+								href="/c/bookmarks"
 								className={`flex items-center gap-2 !text-white ${
-									router.pathname === "/notifications" && "font-semibold"
+									router.pathname === "/bookmarks" && "font-semibold"
 								}`}
 							>
-								<UpdatesIcon fill={router.pathname === "/notifications"} />
-								Updates
+								<BookmarkIcon fill={router.pathname === "/bookmarks"} />
+								Bookmarks
 							</Link>
 							<Link
 								href="/c/settings"
@@ -260,8 +264,7 @@ export const AuthenticatedUserLayout = ({
 			<main
 				data-isopen={isOpen}
 				className={`authenticatedUserLayoutMain h-full flex-1 px-[5%] lg:px-[7%] 2xl:px-[10%] ${
-					isDashboard &&
-					"mt-10 space-y-8 md:mt-0 md:-translate-y-[4.8rem] lg:space-y-10"
+					isDashboard && "mt-10 flex flex-col gap-8 md:mt-[-110px] lg:gap-10"
 				}`}
 			>
 				{children}

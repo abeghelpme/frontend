@@ -1,17 +1,24 @@
 import { cn } from "@/lib";
 import { useEffect, useRef } from "react";
-import type { FieldValues, FormState } from "react-hook-form";
+import {
+	type Control,
+	type FieldValues,
+	type FormState,
+	useFormState,
+} from "react-hook-form";
 
 type ErrorParagraphProps<TStepData extends FieldValues> = {
 	className?: string;
-	formState: FormState<TStepData>;
+	control: Control<TStepData>;
 	errorField: keyof TStepData;
 };
 
 function FormErrorMessage<TStepData extends FieldValues>(
 	props: ErrorParagraphProps<TStepData>
 ) {
-	const { className, formState, errorField } = props;
+	const { className, control, errorField } = props;
+
+	const formState = useFormState({ control });
 
 	const paragraphRef = useRef<HTMLParagraphElement>(null);
 	const message = formState.errors[errorField]?.message as string | undefined;
