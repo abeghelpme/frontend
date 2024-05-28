@@ -147,7 +147,7 @@ function StepTwo() {
 							type="number"
 							placeholder="Set a realistic target amount"
 							className={cn(
-								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4  lg:text-base",
+								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4 lg:text-base",
 
 								formState.errors.goal &&
 									"border-abeg-error-20 focus-visible:outline-abeg-error-20"

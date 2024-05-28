@@ -230,7 +230,7 @@ export function CampaignCardList(props: CardListProps) {
 	const { dragScrollProps, dragContainerClasses, dragItemClasses } =
 		useDragScroll<HTMLUListElement>();
 
-	if (!cardDetailsArray || cardDetailsArray.length === 0) {
+	if (!Array.isArray(cardDetailsArray) || cardDetailsArray.length === 0) {
 		return null;
 	}
 

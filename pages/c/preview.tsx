@@ -21,7 +21,7 @@ export const getStaticProps = (async () => {
 	const { data, error } =
 		await callApi<ApiResponse<Campaign[]>>(`/campaign/featured`);
 
-	if (error || !data || !data.data) {
+	if (error || !data?.data) {
 		return { notFound: true };
 	}
 

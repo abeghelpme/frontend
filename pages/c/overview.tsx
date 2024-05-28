@@ -1,7 +1,7 @@
 import { DonationStatsPanel } from "@/components/campaign-analytics";
 import MapDisplay from "@/components/campaign-analytics/MapDisplay";
 import { ArrowDown, Heading } from "@/components/common";
-import { CampaignCard, dummyCardData } from "@/components/common/CampaignCard";
+import { CampaignCard } from "@/components/common/CampaignCard";
 import {
 	Button,
 	DropdownMenu,
