@@ -1,4 +1,5 @@
 import type { ApiResponse, User } from "@/interfaces";
+import Router from "next/router";
 import type { SessionData } from "@/interfaces/ApiResponses";
 import { callApi } from "@/lib";
 import { create } from "zustand";
@@ -61,7 +62,7 @@ export const useInitSession = create<Session>()((set, get) => ({
 				currentPageUrl !== "/signup" &&
 				!get().isFirstMount
 			) {
-				window.location.replace("/signin?unauthorized=true");
+				Router.push("/signin?unauthorized=true");
 			}
 		},
 	} satisfies Session["actions"],
