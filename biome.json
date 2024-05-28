@@ -23,7 +23,7 @@
 			"enabled": true,
 			"bracketSpacing": true,
 			"bracketSameLine": false,
-			"lineWidth": 80,
+			"lineWidth": 102,
 			"semicolons": "always",
 			"quoteStyle": "double",
 			"indentWidth": 2,

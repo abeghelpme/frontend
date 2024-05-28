@@ -36,20 +36,17 @@ export const useInitCampaignStore = create<CampaignStore>()((set, get) => ({
 		initializeCampaigns: (campaigns) => set({ campaigns }),
 
 		initializeCategories: async () => {
-			const { data, error } = await callApi<
-				ApiResponse<CampaignStore["categories"]>
-			>("/campaign/categories");
+			const { data, error } =
+				await callApi<ApiResponse<CampaignStore["categories"]>>("/campaign/categories");
 
-			if (error || !data || !data.data) return;
+			if (error || !data?.data) return;
 
 			set({ categories: data.data });
 		},
 	} satisfies CampaignStore["actions"],
 }));
 
-export const useCampaignStore = <TResult>(
-	selector: SelectorFn<CampaignStore, TResult>
-) => {
+export const useCampaignStore = <TResult>(selector: SelectorFn<CampaignStore, TResult>) => {
 	const state = useInitCampaignStore(useShallow(selector));
 
 	return state;
