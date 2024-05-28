@@ -151,6 +151,19 @@ const config = {
 			});
 
 			addComponents({
+				".scrollbar-hide": {
+					"&::-webkit-scrollbar": {
+						display: "none",
+					},
+
+					"&": {
+						"-ms-overflow-style": "none" /* IE and Edge */,
+						"scrollbar-width": "none" /* Firefox */,
+					},
+				},
+			});
+
+			addComponents({
 				".custom-scrollbar": {
 					"&::-webkit-scrollbar": {
 						width: "10px",
