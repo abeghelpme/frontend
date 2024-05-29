@@ -15,6 +15,7 @@ const validateTagValue = (tagsArray: string[], newTag: string | undefined) => {
 		toast.error("Error", {
 			description: "Cannot add more than 5 tags",
 		});
+
 		return;
 	}
 
