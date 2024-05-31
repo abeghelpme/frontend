@@ -19,19 +19,16 @@ function AllCampaignsPage() {
 	return (
 		<Tabs.Root defaultValue="grid" className="mb-[95px] space-y-8">
 			<div className="flex flex-col flex-wrap justify-between gap-3 max-md:gap-6 md:flex-row md:items-center">
-				<Heading as="h1" className="text-[32px]  font-extrabold md:text-white">
+				<Heading as="h1" className="text-[32px] font-extrabold md:text-white">
 					My Campaigns
 				</Heading>
 
 				<div className="flex flex-wrap items-center justify-between gap-4 md:gap-8">
 					<div className="flex gap-2 md:gap-8">
-						<form className="flex items-center rounded-md border border-placeholder bg-white p-2 [--icon-size:22px] focus-visible:ring-2 focus-visible:ring-placeholder max-md:relative">
-							<SearchIcon className="absolute size-[--icon-size] md:static [&>*]:stroke-current" />
+						<form className="flex items-center gap-[6px] rounded-md border border-placeholder bg-white p-2 focus-visible:ring-2 focus-visible:ring-placeholder">
+							<SearchIcon className="size-[22px] md:static [&>*]:stroke-current" />
 
-							<input
-								type="search"
-								className="ml-[--icon-size] w-[118px] pl-1 text-sm outline-none md:hidden"
-							/>
+							<input type="search" className="w-[118px] text-sm outline-none md:hidden" />
 						</form>
 
 						<div className="flex items-center gap-4">
@@ -59,36 +56,19 @@ function AllCampaignsPage() {
 									<ArrowDown />
 								</Dropdown.MenuTrigger>
 
-								<Dropdown.MenuContent
-									className="rounded-xl border-none p-0"
-									align="start"
-								>
+								<Dropdown.MenuContent className="rounded-xl border-none p-0" align="start">
 									<Dropdown.MenuRadioGroup
 										value={filter}
 										onValueChange={setFilter}
 										className="cursor-pointer bg-white p-2 text-sm font-medium text-abeg-text"
 									>
-										<Dropdown.MenuRadioItem value="All">
-											All Campaigns
-										</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Approved">
-											Approved
-										</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Rejected">
-											Rejected
-										</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Pending">
-											Pending
-										</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Published">
-											Published
-										</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Drafts">
-											Drafts
-										</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Closed">
-											Closed
-										</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="All">All Campaigns</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Approved">Approved</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Rejected">Rejected</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Pending">Pending</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Published">Published</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Drafts">Drafts</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Closed">Closed</Dropdown.MenuRadioItem>
 									</Dropdown.MenuRadioGroup>
 								</Dropdown.MenuContent>
 							</Dropdown.Menu>
@@ -123,17 +103,11 @@ function AllCampaignsPage() {
 			</div>
 
 			<Tabs.Content value="grid">
-				<CampaignCardList
-					cardDetailsArray={paginatedCampaigns}
-					listType="grid"
-				/>
+				<CampaignCardList cardDetailsArray={paginatedCampaigns} listType="grid" />
 			</Tabs.Content>
 
 			<Tabs.Content value="list">
-				<CampaignCardList
-					cardDetailsArray={paginatedCampaigns}
-					listType="vertical"
-				/>
+				<CampaignCardList cardDetailsArray={paginatedCampaigns} listType="vertical" />
 			</Tabs.Content>
 		</Tabs.Root>
 	);

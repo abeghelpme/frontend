@@ -46,7 +46,7 @@ type CardListProps = {
 export const generateDummyCardData = (count = 5) =>
 	Array<TransformedDetails>(count).fill({
 		imageSrc: "/assets/images/dashboard/dummyCardImg.svg",
-		title: "Bringing Dental Care to Underserved Communities",
+		title: "Bringing Dental Care to Undeserved Communities",
 		location: "Lagos, Nigeria",
 		name: "Locs Designer",
 		goal: 3000000,
@@ -70,15 +70,15 @@ const transformCardData = (
 	amountRaised: cardDetails.amountRaised,
 	commentCount: 0,
 	donorCount: 0,
-	imageSrc:
-		cardDetails.images[0]?.secureUrl ?? "/assets/images/shared/logo.svg",
+	imageSrc: cardDetails.images[0]?.secureUrl ?? "/assets/images/shared/logo.svg",
 	daysLeft: getDaysLeft(cardDetails.deadline),
-	location: cardDetails.country || "Not Provided",
-	name: cardDetails.creator
-		? cardDetails.fundraiser === "INDIVIDUAL"
+	location: cardDetails?.country ?? "Not Provided",
+	name:
+		cardDetails.creator && cardDetails.fundraiser === "INDIVIDUAL"
 			? `${cardDetails.creator.firstName} ${cardDetails.creator.lastName}`
-			: "Beneficiary"
-		: "Unknown",
+			: cardDetails.creator && cardDetails.fundraiser === "BENEFICIARY"
+			  ? "Beneficiary"
+			  : "Unknown",
 	title: cardDetails.title,
 });
 
@@ -94,18 +94,9 @@ export function CampaignCard(props: CampaignCardProps) {
 	const shortId = cardDetails.url ? cardDetails.url.split("/c/")[1] : null;
 
 	return (
-		<Card
-			as={as}
-			className={cn(
-				"flex w-full flex-col justify-between gap-5",
-				classNames?.base
-			)}
-		>
+		<Card as={as} className={cn("flex w-full flex-col justify-between gap-5", classNames?.base)}>
 			<Card.Header
-				className={cn(
-					"relative rounded-md [-webkit-user-drag:none]",
-					classNames?.header
-				)}
+				className={cn("relative rounded-md [-webkit-user-drag:none]", classNames?.header)}
 				draggable={false}
 				asChild
 			>
@@ -113,10 +104,7 @@ export function CampaignCard(props: CampaignCardProps) {
 					<Link href={`/c/${shortId}`} className="basis-full">
 						<Image
 							src={transformedDetails.imageSrc}
-							className={cn(
-								"size-full rounded-md object-cover",
-								classNames?.image
-							)}
+							className={cn("size-full rounded-md object-cover", classNames?.image)}
 							width={383}
 							height={236}
 							alt="Campaigns Image"
@@ -132,17 +120,13 @@ export function CampaignCard(props: CampaignCardProps) {
 								{cardType === "regular" && (
 									<figure className="mr-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
 										<DonorIcon stroke="light" className="size-4" />
-										<figcaption>
-											{transformedDetails.donorCount} total donors
-										</figcaption>
+										<figcaption>{transformedDetails.donorCount} total donors</figcaption>
 									</figure>
 								)}
 
 								<figure className="ml-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
 									<ClockIcon />
-									<figcaption>
-										{transformedDetails.daysLeft} days left
-									</figcaption>
+									<figcaption>{transformedDetails.daysLeft} days left</figcaption>
 								</figure>
 							</div>
 						</div>
@@ -185,14 +169,10 @@ export function CampaignCard(props: CampaignCardProps) {
 								<div className="flex items-center justify-between gap-7">
 									<figure className="flex items-center gap-1">
 										<DonorIcon stroke="dark" className="size-4 lg:size-5" />
-										<figcaption>
-											{transformedDetails.donorCount} total donors
-										</figcaption>
+										<figcaption>{transformedDetails.donorCount} total donors</figcaption>
 									</figure>
 									<figure className="flex items-center gap-1">
-										<figcaption>
-											{transformedDetails.commentCount} comments
-										</figcaption>
+										<figcaption>{transformedDetails.commentCount} comments</figcaption>
 									</figure>
 								</div>
 							</div>
@@ -244,10 +224,7 @@ export function CampaignCardList(props: CardListProps) {
 
 		card: {
 			base: {
-				horizontal: cn(
-					"max-w-[370px] shrink-0 md:max-w-[396px]",
-					dragItemClasses
-				),
+				horizontal: cn("max-w-[370px] shrink-0 md:max-w-[396px]", dragItemClasses),
 				grid: "max-w-[403px]",
 				vertical: "max-w-[403px]",
 			},
@@ -263,11 +240,7 @@ export function CampaignCardList(props: CardListProps) {
 	return (
 		<ul
 			{...(listType === "horizontal" && dragScrollProps)}
-			className={cn(
-				"gap-6 lg:gap-8",
-				semanticClasses.cardList[listType],
-				classNames?.base
-			)}
+			className={cn("gap-6 lg:gap-8", semanticClasses.cardList[listType], classNames?.base)}
 		>
 			{cardDetailsArray.map((detail) => (
 				<CampaignCard
@@ -275,14 +248,8 @@ export function CampaignCardList(props: CardListProps) {
 					as="li"
 					cardDetails={detail}
 					classNames={{
-						base: cn(
-							semanticClasses.card.base[listType],
-							classNames?.card?.base
-						),
-						header: cn(
-							semanticClasses.card.header[listType],
-							classNames?.card?.header
-						),
+						base: cn(semanticClasses.card.base[listType], classNames?.card?.base),
+						header: cn(semanticClasses.card.header[listType], classNames?.card?.header),
 						image: classNames?.card?.image,
 					}}
 				/>
