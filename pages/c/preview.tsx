@@ -1,8 +1,5 @@
 import { Heading } from "@/components/common";
-import {
-	CampaignOutlook,
-	FormActionButton,
-} from "@/components/create-campaign";
+import { CampaignOutlook, FormActionButton } from "@/components/create-campaign";
 import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
@@ -18,8 +15,7 @@ import { useRouter } from "next/router";
 import { toast } from "sonner";
 
 export const getStaticProps = (async () => {
-	const { data, error } =
-		await callApi<ApiResponse<Campaign[]>>(`/campaign/featured`);
+	const { data, error } = await callApi<ApiResponse<Campaign[]>>(`/campaign/featured`);
 
 	if (error || !data?.data) {
 		return { notFound: true };
@@ -31,15 +27,12 @@ export const getStaticProps = (async () => {
 	};
 }) satisfies GetStaticProps<{ featuredCampaigns: Campaign[] }>;
 
-function PreviewCampaignPage({
-	featuredCampaigns,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+function PreviewCampaignPage({ featuredCampaigns }: InferGetStaticPropsType<typeof getStaticProps>) {
 	const searchParams = useSearchParams();
 
 	const currentCampaign = useCampaignStore((state) =>
 		state.campaigns.find(
-			(campaign) =>
-				!campaign.isPublished && campaign._id === searchParams.get("id")
+			(campaign) => !campaign.isPublished && campaign._id === searchParams.get("id")
 		)
 	);
 
@@ -95,8 +88,8 @@ function PreviewCampaignPage({
 					<p>This is what your fundraiser campaign will look like to donors</p>
 
 					<p className="font-semibold lg:text-xl">
-						Note: Your campaign will become visible to donors once published and
-						cannot be edited after!
+						Note: Your campaign will become visible to donors once published and cannot be edited
+						after!
 					</p>
 
 					<div className="flex gap-5">
@@ -108,11 +101,7 @@ function PreviewCampaignPage({
 							Publish Campaign
 						</FormActionButton>
 
-						<FormActionButton
-							type="button"
-							className="bg-white font-bold text-abeg-primary"
-							asChild
-						>
+						<FormActionButton type="button" className="bg-white font-bold text-abeg-primary" asChild>
 							<Link
 								href={{
 									pathname: "/c/create",
@@ -125,9 +114,7 @@ function PreviewCampaignPage({
 					</div>
 
 					<Heading as="h2" className="mt-7 text-4xl lg:text-4xl">
-						{`${currentCampaign.title[0].toUpperCase()}${currentCampaign.title.slice(
-							1
-						)}`}
+						{`${currentCampaign.title?.[0]?.toUpperCase()}${currentCampaign.title?.slice(1)}`}
 					</Heading>
 				</CampaignOutlook.Header>
 			</CampaignOutlook>
@@ -135,9 +122,7 @@ function PreviewCampaignPage({
 	);
 }
 
-PreviewCampaignPage.getLayout = (page: React.ReactElement) => (
-	<BaseLayout>{page}</BaseLayout>
-);
+PreviewCampaignPage.getLayout = (page: React.ReactElement) => <BaseLayout>{page}</BaseLayout>;
 
 export default PreviewCampaignPage;
 PreviewCampaignPage.protect = true;

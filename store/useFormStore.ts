@@ -11,9 +11,7 @@ export type StepOneData = Prettify<
 	}
 >;
 
-export type StepTwoData = Prettify<
-	Pick<Campaign, "title" | "goal" | "deadline" | "fundraiser">
->;
+export type StepTwoData = Prettify<Pick<Campaign, "title" | "goal" | "deadline" | "fundraiser">>;
 
 export type StepThreeData = Prettify<
 	Pick<Campaign, "story" | "storyHtml"> & {
@@ -22,11 +20,6 @@ export type StepThreeData = Prettify<
 >;
 
 export type FormStore = {
-	formStatus: {
-		isValid: boolean;
-		isSubmitting: boolean;
-	};
-
 	currentStep: Campaign["currentStep"];
 
 	campaignId: Campaign["_id"];
@@ -36,17 +29,9 @@ export type FormStore = {
 	actions: {
 		goToStep: (newStep: number) => void;
 
-		updateCampaignId: (
-			updatedId: Partial<FormStore["campaignId"]> | undefined
-		) => void;
+		updateCampaignId: (updatedId: Partial<FormStore["campaignId"]> | undefined) => void;
 
-		updateFormStatus: (
-			updatedFormStatus: Partial<FormStore["formStatus"]>
-		) => void;
-
-		updateFormData: (
-			updatedFormData: Partial<FormStore["formStepData"]>
-		) => void;
+		updateFormData: (updatedFormData: Partial<FormStore["formStepData"]>) => void;
 
 		resetFormData: () => void;
 
@@ -56,11 +41,6 @@ export type FormStore = {
 
 export const initialFormState = {
 	currentStep: 1,
-
-	formStatus: {
-		isValid: true,
-		isSubmitting: false,
-	},
 
 	campaignId: "",
 
@@ -88,12 +68,6 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 			set({ currentStep: newStep as FormStore["currentStep"] });
 		},
 
-		updateFormStatus: (newFormStatus) => {
-			const { formStatus: previousFormStatus } = get();
-
-			set({ formStatus: { ...previousFormStatus, ...newFormStatus } });
-		},
-
 		updateCampaignId: (updatedId) => {
 			if (!updatedId || updatedId === get().campaignId) return;
 
@@ -109,17 +83,14 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 		resetFormData: () => set({ formStepData: initialFormState.formStepData }),
 
 		initializeFormData: () => {
-			const campaigns = useInitCampaignStore.getState().campaigns as
-				| Campaign[]
-				| undefined;
+			const campaigns = useInitCampaignStore.getState().campaigns as Campaign[] | undefined;
 
 			if (!campaigns || campaigns.length === 0) return;
 
 			const searchParams = new URLSearchParams(window.location.search);
 
 			const campaignToBeEdited = campaigns.find(
-				(campaign) =>
-					!campaign.isPublished && campaign._id === searchParams.get("id")
+				(campaign) => !campaign.isPublished && campaign._id === searchParams.get("id")
 			);
 
 			if (campaignToBeEdited) {
@@ -145,9 +116,7 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 				return;
 			}
 
-			const currentDraftCampaign = campaigns.find(
-				(campaign) => campaign.status === "Draft"
-			);
+			const currentDraftCampaign = campaigns.find((campaign) => campaign.status === "Draft");
 
 			if (!currentDraftCampaign) return;
 
@@ -173,9 +142,7 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 	} satisfies FormStore["actions"],
 }));
 
-export const useFormStore = <TResult>(
-	selector: SelectorFn<FormStore, TResult>
-) => {
+export const useFormStore = <TResult>(selector: SelectorFn<FormStore, TResult>) => {
 	const state = useInitFormStore(useShallow(selector));
 
 	return state;

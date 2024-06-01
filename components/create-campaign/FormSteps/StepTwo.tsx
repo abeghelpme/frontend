@@ -1,14 +1,12 @@
 import { DatePicker, Select } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { callApi, cn, zodValidator } from "@/lib";
-import { useWatchFormStatus } from "@/lib/hooks";
+import { callApi, cn } from "@/lib";
 import { useFormStore } from "@/store";
 import type { StepTwoData } from "@/store/useFormStore";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFormContext as useHookFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import Heading from "../../common/Heading";
 import FormErrorMessage from "../FormErrorMessage";
@@ -21,30 +19,23 @@ function StepTwo() {
 		actions: { goToStep, updateFormData, updateCampaignId },
 	} = useFormStore((state) => state);
 
-	const { control, formState, reset, getValues, register, handleSubmit } =
-		useForm({
-			mode: "onChange",
-			resolver: zodResolver(zodValidator("campaignStepTwo")!),
-			defaultValues: formStepData,
-		});
+	const { control, handleSubmit, getValues, reset, formState, register } =
+		useHookFormContext<StepTwoData>();
 
 	useEffect(() => {
-		if (!getValues().categoryId) {
-			reset(formStepData);
-		}
+		!getValues().title && reset(formStepData);
 	}, [formStepData]);
-
-	useWatchFormStatus(control);
 
 	const onSubmit = async (data: StepTwoData) => {
 		updateFormData(data);
 
-		const { data: dataInfo, error } = await callApi<
-			ApiResponse<Partial<Campaign>>
-		>(`/campaign/create/two`, {
-			...data,
-			campaignId,
-		});
+		const { data: dataInfo, error } = await callApi<ApiResponse<Partial<Campaign>>>(
+			`/campaign/create/two`,
+			{
+				...data,
+				campaignId,
+			}
+		);
 
 		if (error) {
 			toast.error(error.status, {
@@ -54,7 +45,7 @@ function StepTwo() {
 			return;
 		}
 
-		if (!dataInfo || !dataInfo.data) return;
+		if (!dataInfo?.data) return;
 
 		updateCampaignId(dataInfo.data._id);
 		goToStep(3);
@@ -86,10 +77,9 @@ function StepTwo() {
 							type="text"
 							placeholder="Give your campaign a catchy title that can resonate with donors"
 							className={cn(
-								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4  lg:text-base",
+								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4 lg:text-base",
 
-								formState.errors.title &&
-									"border-abeg-error-20 focus-visible:outline-abeg-error-20"
+								formState.errors.title && "border-abeg-error-20 focus-visible:outline-abeg-error-20"
 							)}
 						/>
 
@@ -97,10 +87,7 @@ function StepTwo() {
 					</li>
 
 					<li>
-						<label
-							htmlFor="fundraiser"
-							className="text-sm font-semibold lg:text-xl"
-						>
+						<label htmlFor="fundraiser" className="text-sm font-semibold lg:text-xl">
 							Who is fundraising?
 						</label>
 
@@ -149,8 +136,7 @@ function StepTwo() {
 							className={cn(
 								"mt-4 w-full rounded-[10px] border border-unfocused px-2 py-4 text-xs focus-visible:outline-abeg-primary lg:p-4 lg:text-base",
 
-								formState.errors.goal &&
-									"border-abeg-error-20 focus-visible:outline-abeg-error-20"
+								formState.errors.goal && "border-abeg-error-20 focus-visible:outline-abeg-error-20"
 							)}
 						/>
 
@@ -158,10 +144,7 @@ function StepTwo() {
 					</li>
 
 					<li>
-						<label
-							htmlFor="deadline"
-							className="text-sm font-semibold lg:text-xl"
-						>
+						<label htmlFor="deadline" className="text-sm font-semibold lg:text-xl">
 							Campaign Deadline
 						</label>
 

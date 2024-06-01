@@ -6,24 +6,30 @@ import {
 	StepTwo,
 } from "@/components/create-campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
-import { cn } from "@/lib";
-import { useFormStore, useInitCampaignStore } from "@/store";
+import { cn, zodValidator } from "@/lib";
+import { useFormStore } from "@/store";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
+import { FormProvider as HookFormProvider, useForm } from "react-hook-form";
 
 const STEP_COMPONENT_LOOKUP = {
-	1: <StepOne />,
-	2: <StepTwo />,
-	3: <StepThree />,
-};
-
-void useInitCampaignStore.getState().actions.initializeCategories();
+	1: { component: <StepOne />, validator: "campaignStepOne" },
+	2: { component: <StepTwo />, validator: "campaignStepTwo" },
+	3: { component: <StepThree />, validator: "campaignStepThree" },
+} as const;
 
 function CreateCampaignPage() {
 	const {
 		currentStep,
-		formStatus,
+		formStepData,
 		actions: { goToStep, initializeFormData },
 	} = useFormStore((state) => state);
+
+	const methods = useForm({
+		mode: "onChange",
+		resolver: zodResolver(zodValidator(STEP_COMPONENT_LOOKUP[currentStep].validator)!),
+		defaultValues: formStepData,
+	});
 
 	useEffect(() => {
 		initializeFormData();
@@ -53,13 +59,10 @@ function CreateCampaignPage() {
 						<FormActionButton
 							type="submit"
 							text="Continue"
-							className={cn(
-								"bg-abeg-primary",
-								currentStep === 3 && "lg:hidden"
-							)}
+							className={cn("bg-abeg-primary", currentStep === 3 && "lg:hidden")}
 							targetForm={`${currentStep}`}
-							isLoading={formStatus.isSubmitting}
-							disabled={formStatus.isSubmitting}
+							isSubmitting={methods.formState.isSubmitting}
+							disabled={methods.formState.isSubmitting}
 						/>
 
 						{currentStep === 3 && (
@@ -69,8 +72,8 @@ function CreateCampaignPage() {
 								variant="primary"
 								className={"bg-abeg-primary font-bold max-lg:hidden"}
 								targetForm={`${currentStep}`}
-								isLoading={formStatus.isSubmitting}
-								disabled={formStatus.isSubmitting}
+								isSubmitting={methods.formState.isSubmitting}
+								disabled={methods.formState.isSubmitting}
 							/>
 						)}
 					</div>
@@ -82,7 +85,9 @@ function CreateCampaignPage() {
 					<StepTracker />
 				</section>
 
-				{STEP_COMPONENT_LOOKUP[currentStep]}
+				<HookFormProvider {...methods}>
+					{STEP_COMPONENT_LOOKUP[currentStep].component}
+				</HookFormProvider>
 			</div>
 		</AuthenticatedUserLayout>
 	);
