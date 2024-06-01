@@ -1,22 +1,26 @@
 import { toast } from "sonner";
-import {
-	MAX_FILE_QUANTITY,
-	MAX_FILE_SIZE,
-	acceptedFilesString,
-	allowedFileTypes,
-} from "./constants";
+import { MAX_FILE_QUANTITY, MAX_FILE_SIZE, acceptedFilesString, allowedFileTypes } from "./constants";
 
-const validateFiles = (
-	newFileList: FileList,
-	exisitingFileArray: File[] = []
-) => {
+const validateFiles = (newFileList: FileList, existingFileArray: File[] = []) => {
 	const validFilesArray: File[] = [];
 
 	const isFileUnique = (file: File) => {
-		return exisitingFileArray.every((fileItem) => fileItem.name !== file.name);
+		return existingFileArray.every((fileItem) => fileItem.name !== file.name);
+	};
+
+	const isMaxFileQuantityReached = (maxQuantity: number) => {
+		return existingFileArray.length === maxQuantity || validFilesArray.length === maxQuantity;
 	};
 
 	for (const file of newFileList) {
+		if (isMaxFileQuantityReached(MAX_FILE_QUANTITY)) {
+			toast.error("Error", {
+				description: `Cannot upload more than ${MAX_FILE_QUANTITY} files`,
+			});
+
+			break;
+		}
+
 		if (!allowedFileTypes.includes(file.type)) {
 			toast.error("Error", {
 				description: `File type must be of: ${acceptedFilesString}`,
@@ -39,18 +43,6 @@ const validateFiles = (
 			});
 
 			continue;
-		}
-
-		const isMaxFileQuantityReached =
-			validFilesArray.length === MAX_FILE_QUANTITY ||
-			exisitingFileArray.length === MAX_FILE_QUANTITY;
-
-		if (isMaxFileQuantityReached) {
-			toast.error("Error", {
-				description: `Cannot upload more than ${MAX_FILE_QUANTITY} files`,
-			});
-
-			return validFilesArray;
 		}
 
 		validFilesArray.push(file);

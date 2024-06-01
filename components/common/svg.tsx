@@ -1,13 +1,5 @@
-import type { FillSvgProps } from "@/interfaces";
-
 export const AbegHelpLogo = () => (
-	<svg
-		width="137"
-		height="28"
-		viewBox="0 0 137 28"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-	>
+	<svg width="137" height="28" viewBox="0 0 137 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path
 			fillRule="evenodd"
 			clipRule="evenodd"
@@ -34,13 +26,7 @@ export const AbegHelpLogo = () => (
 );
 
 export const ArrowDown = () => (
-	<svg
-		width="18"
-		height="9"
-		viewBox="0 0 18 9"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-	>
+	<svg width="18" height="9" viewBox="0 0 18 9" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path
 			d="M16.9201 0.949951L10.4001 7.46995C9.63008 8.23995 8.37008 8.23995 7.60008 7.46995L1.08008 0.949951"
 			stroke="#292D32"
@@ -53,13 +39,7 @@ export const ArrowDown = () => (
 );
 
 export const CloseIcon = () => (
-	<svg
-		width="67"
-		height="67"
-		viewBox="0 0 67 67"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-	>
+	<svg width="67" height="67" viewBox="0 0 67 67" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path
 			d="M25.6055 41.4004L41.4063 25.5996"
 			stroke="#008080"
@@ -79,13 +59,7 @@ export const CloseIcon = () => (
 
 export const ReceiveIcon = () => {
 	return (
-		<svg
-			width="20"
-			height="20"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M2 8.5H14.5"
 				stroke="#484848"
@@ -135,11 +109,7 @@ export const ReceiveIcon = () => {
 	);
 };
 export const NigeriaFlag = () => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		id="flag-icons-ng"
-		viewBox="0 0 512 512"
-	>
+	<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-ng" viewBox="0 0 512 512">
 		<g fillRule="evenodd" strokeWidth="1pt">
 			<path fill="#fff" d="M0 0h512v512H0z" />
 			<path fill="#008753" d="M341.3 0H512v512H341.3zM0 0h170.7v512H0z" />
@@ -147,11 +117,7 @@ export const NigeriaFlag = () => (
 	</svg>
 );
 export const GambiaFlag = () => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		id="flag-icons-gm"
-		viewBox="0 0 512 512"
-	>
+	<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-gm" viewBox="0 0 512 512">
 		<g fillRule="evenodd" strokeWidth="1pt">
 			<path fill="red" d="M0 0h512v170.7H0z" />
 			<path fill="#fff" d="M0 170.7h512V199H0z" />
@@ -163,30 +129,17 @@ export const GambiaFlag = () => (
 );
 
 export const GhanaFlag = () => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		id="flag-icons-gh"
-		viewBox="0 0 512 512"
-	>
+	<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-gh" viewBox="0 0 512 512">
 		<path fill="#006b3f" d="M0 0h512v512H0z" />
 		<path fill="#fcd116" d="M0 0h512v341.3H0z" />
 		<path fill="#ce1126" d="M0 0h512v170.7H0z" />
-		<path
-			fill="#000001"
-			d="m256 170.7 55.5 170.6L166.3 236h179.4L200.6 341.3z"
-		/>
+		<path fill="#000001" d="m256 170.7 55.5 170.6L166.3 236h179.4L200.6 341.3z" />
 	</svg>
 );
 
 export const Hamburger = () => {
 	return (
-		<svg
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M3 12H15M3 6H21M3 18H21"
 				stroke="#484848"
@@ -199,11 +152,7 @@ export const Hamburger = () => {
 };
 
 export const MaliFlag = () => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		id="flag-icons-ml"
-		viewBox="0 0 512 512"
-	>
+	<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-ml" viewBox="0 0 512 512">
 		<g fillRule="evenodd">
 			<path fill="red" d="M340.6 0H512v512H340.6z" />
 			<path fill="#009a00" d="M0 0h170.3v512H0z" />
@@ -212,11 +161,7 @@ export const MaliFlag = () => (
 	</svg>
 );
 export const LiberiaFlag = () => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		id="flag-iconsLr"
-		viewBox="0 0 512 512"
-	>
+	<svg xmlns="http://www.w3.org/2000/svg" id="flag-iconsLr" viewBox="0 0 512 512">
 		<defs>
 			<clipPath id="lr-a">
 				<path fillOpacity=".7" d="M0 0h512v512H0z" />
@@ -250,49 +195,18 @@ export const CameroonFlag = () => (
 		<g fill="#fcd116" transform="translate(256 256)scale(5.6889)">
 			<g id="cm-b">
 				<path id="cm-a" d="M0-8-2.5-.4 1.3.9z" />
-				<use
-					xlinkHref="#cm-a"
-					width="100%"
-					height="100%"
-					transform="scale(-1 1)"
-				/>
+				<use xlinkHref="#cm-a" width="100%" height="100%" transform="scale(-1 1)" />
 			</g>
-			<use
-				xlinkHref="#cm-b"
-				width="100%"
-				height="100%"
-				transform="rotate(72)"
-			/>
-			<use
-				xlinkHref="#cm-b"
-				width="100%"
-				height="100%"
-				transform="rotate(144)"
-			/>
-			<use
-				xlinkHref="#cm-b"
-				width="100%"
-				height="100%"
-				transform="rotate(-144)"
-			/>
-			<use
-				xlinkHref="#cm-b"
-				width="100%"
-				height="100%"
-				transform="rotate(-72)"
-			/>
+			<use xlinkHref="#cm-b" width="100%" height="100%" transform="rotate(72)" />
+			<use xlinkHref="#cm-b" width="100%" height="100%" transform="rotate(144)" />
+			<use xlinkHref="#cm-b" width="100%" height="100%" transform="rotate(-144)" />
+			<use xlinkHref="#cm-b" width="100%" height="100%" transform="rotate(-72)" />
 		</g>
 	</svg>
 );
 
 export const CheckedIcon = () => (
-	<svg
-		width="24"
-		height="24"
-		viewBox="0 0 24 25"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-	>
+	<svg width="24" height="24" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path
 			d="M9 22.5015H15C20 22.5015 22 20.5015 22 15.5015V9.50146C22 4.50146 20 2.50146 15 2.50146H9C4 2.50146 2 4.50146 2 9.50146V15.5015C2 20.5015 4 22.5015 9 22.5015Z"
 			stroke="#008080"
@@ -311,13 +225,7 @@ export const CheckedIcon = () => (
 );
 
 export const UncheckedIcon = () => (
-	<svg
-		width="24"
-		height="24"
-		viewBox="0 0 24 24"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-	>
+	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path
 			d="M9.3 21H14.7C19.2 21 21 19.2 21 14.7V9.3C21 4.8 19.2 3 14.7 3H9.3C4.8 3 3 4.8 3 9.3V14.7C3 19.2 4.8 21 9.3 21Z"
 			stroke="#008080"
@@ -330,13 +238,7 @@ export const UncheckedIcon = () => (
 
 export const AbegHelpLogoWhite = () => {
 	return (
-		<svg
-			width="36"
-			height="36"
-			viewBox="0 0 36 36"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<rect width="35.9987" height="36.0001" rx="6" fill="#F5F3F3" />
 			<path
 				fillRule="evenodd"
@@ -350,13 +252,7 @@ export const AbegHelpLogoWhite = () => {
 
 export const FilterIcon = () => {
 	return (
-		<svg
-			width="20"
-			height="20"
-			viewBox="0 0 20 20"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M4.50065 1.75H15.5007C16.4173 1.75 17.1673 2.5 17.1673 3.41667V5.25C17.1673 5.91667 16.7507 6.75 16.334 7.16667L12.7507 10.3333C12.2507 10.75 11.9173 11.5833 11.9173 12.25V15.8333C11.9173 16.3333 11.584 17 11.1673 17.25L10.0007 18C8.91732 18.6667 7.41732 17.9167 7.41732 16.5833V12.1667C7.41732 11.5833 7.08398 10.8333 6.75065 10.4167L3.58398 7.08333C3.16732 6.66667 2.83398 5.91667 2.83398 5.41667V3.5C2.83398 2.5 3.58398 1.75 4.50065 1.75Z"
 				stroke="#484848"
@@ -377,7 +273,7 @@ export const FilterIcon = () => {
 	);
 };
 
-export const Star = ({ fill, stroke }: FillSvgProps) => {
+export const StarIcon = ({ fill, stroke, ...props }: React.SVGProps<SVGSVGElement>) => {
 	return (
 		<svg
 			width="24"
@@ -385,6 +281,7 @@ export const Star = ({ fill, stroke }: FillSvgProps) => {
 			viewBox="0 0 31 31"
 			fill={fill ? "#008080" : "none"}
 			xmlns="http://www.w3.org/2000/svg"
+			{...props}
 		>
 			<path
 				d="M17.4324 4.39767L19.6379 8.80873C19.9387 9.42277 20.7407 10.0117 21.4174 10.1245L25.4149 10.7887C27.9713 11.2148 28.5728 13.0694 26.7307 14.899L23.6229 18.0068C23.0966 18.5331 22.8084 19.5482 22.9713 20.275L23.861 24.1221C24.5628 27.1673 22.9462 28.3452 20.252 26.7537L16.5051 24.5357C15.8284 24.1347 14.7131 24.1347 14.0239 24.5357L10.277 26.7537C7.59523 28.3452 5.96615 27.1547 6.66791 24.1221L7.55764 20.275C7.72055 19.5482 7.43232 18.5331 6.906 18.0068L3.79821 14.899C1.96862 13.0694 2.5576 11.2148 5.11401 10.7887L9.11153 10.1245C9.7757 10.0117 10.5777 9.42277 10.8785 8.80873L13.084 4.39767C14.287 2.00416 16.2419 2.00416 17.4324 4.39767Z"
@@ -396,41 +293,8 @@ export const Star = ({ fill, stroke }: FillSvgProps) => {
 		</svg>
 	);
 };
-export const SlashedStar = ({ fill, stroke }: FillSvgProps) => {
-	return (
-		<svg
-			width="24"
-			height="31"
-			viewBox="0 0 31 31"
-			fill={fill ? "#008080" : "none"}
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path
-				d="M7.06991 23.3703L7.7842 20.275C7.94711 19.5482 7.65889 18.5331 7.13257 18.0068L4.02477 14.899C2.19518 13.0694 2.78416 11.2148 5.34057 10.7887L9.3381 10.1245C10.0023 10.0117 10.8043 9.42277 11.105 8.80873L13.3106 4.39767C14.501 2.00416 16.4559 2.00416 17.659 4.39767L19.8645 8.80873C20.0023 9.09695 20.2655 9.37264 20.5537 9.61074"
-				stroke={!stroke ? "#484848" : "#008080"}
-				strokeWidth="1.87971"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-			<path
-				d="M25.6399 10.79C28.1963 11.2161 28.7978 13.0708 26.9557 14.9003L23.8479 18.0081C23.3216 18.5345 23.0334 19.5495 23.1963 20.2763L24.086 24.1235C24.7878 27.1686 23.1712 28.3466 20.477 26.7551L16.7301 24.537C16.0534 24.136 14.9381 24.136 14.2488 24.537L10.502 26.7551"
-				stroke={!stroke ? "#484848" : "#008080"}
-				strokeWidth="1.87971"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-			<path
-				d="M28.0218 2.50586L2.95898 27.5687"
-				stroke={"#484848"}
-				strokeWidth="1.87971"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-		</svg>
-	);
-};
 
-export const Closed = ({ fill, stroke }: FillSvgProps) => {
+export const DraftsIcon = ({ fill, stroke, ...props }: React.SVGProps<SVGSVGElement>) => {
 	return (
 		<svg
 			width="24"
@@ -438,40 +302,7 @@ export const Closed = ({ fill, stroke }: FillSvgProps) => {
 			viewBox="0 0 31 31"
 			fill={fill ? "#008080" : "none"}
 			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path
-				d="M12.1719 18.584L19.2647 11.4912"
-				stroke={!stroke ? "#484848" : "#ffffff"}
-				strokeWidth="1.87971"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-			<path
-				d="M19.2647 18.584L12.1719 11.4912"
-				stroke={!stroke ? "#484848" : "#ffffff"}
-				strokeWidth="1.87971"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-			<path
-				d="M11.9575 27.5687H19.4764C25.7421 27.5687 28.2484 25.0624 28.2484 18.7967V11.2779C28.2484 5.01215 25.7421 2.50586 19.4764 2.50586H11.9575C5.69183 2.50586 3.18555 5.01215 3.18555 11.2779V18.7967C3.18555 25.0624 5.69183 27.5687 11.9575 27.5687Z"
-				stroke={!stroke ? "#292D32" : "#008080"}
-				strokeWidth="1.87971"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-		</svg>
-	);
-};
-
-export const Drafts = ({ fill, stroke }: FillSvgProps) => {
-	return (
-		<svg
-			width="24"
-			height="31"
-			viewBox="0 0 31 31"
-			fill={fill ? "#008080" : "none"}
-			xmlns="http://www.w3.org/2000/svg"
+			{...props}
 		>
 			<path
 				d="M14.6884 2.50586H12.1822C5.91644 2.50586 3.41016 5.01215 3.41016 11.2779V18.7967C3.41016 25.0624 5.91644 27.5687 12.1822 27.5687H19.701C25.9667 27.5687 28.473 25.0624 28.473 18.7967V16.2904"
@@ -500,15 +331,131 @@ export const Drafts = ({ fill, stroke }: FillSvgProps) => {
 	);
 };
 
-export const Moneys = () => {
+export const SlashedStarIcon = ({ fill, stroke, ...props }: React.SVGProps<SVGSVGElement>) => {
 	return (
 		<svg
-			width="63"
-			height="63"
-			viewBox="0 0 63 63"
-			fill="none"
+			width="24"
+			height="31"
+			viewBox="0 0 31 31"
+			fill={fill ? "#008080" : "none"}
 			xmlns="http://www.w3.org/2000/svg"
+			{...props}
 		>
+			<path
+				d="M7.06991 23.3703L7.7842 20.275C7.94711 19.5482 7.65889 18.5331 7.13257 18.0068L4.02477 14.899C2.19518 13.0694 2.78416 11.2148 5.34057 10.7887L9.3381 10.1245C10.0023 10.0117 10.8043 9.42277 11.105 8.80873L13.3106 4.39767C14.501 2.00416 16.4559 2.00416 17.659 4.39767L19.8645 8.80873C20.0023 9.09695 20.2655 9.37264 20.5537 9.61074"
+				stroke={!stroke ? "#484848" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M25.6399 10.79C28.1963 11.2161 28.7978 13.0708 26.9557 14.9003L23.8479 18.0081C23.3216 18.5345 23.0334 19.5495 23.1963 20.2763L24.086 24.1235C24.7878 27.1686 23.1712 28.3466 20.477 26.7551L16.7301 24.537C16.0534 24.136 14.9381 24.136 14.2488 24.537L10.502 26.7551"
+				stroke={!stroke ? "#484848" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M28.0218 2.50586L2.95898 27.5687"
+				stroke={"#484848"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const PendingStarIcon = (props: React.SVGProps<SVGSVGElement>) => (
+	<svg
+		width="20"
+		height="20"
+		viewBox="0 0 20 20"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+		{...props}
+	>
+		<path
+			d="M12.8235 4.34199L13.9985 6.69199C14.1568 7.01699 14.5818 7.32532 14.9402 7.39198L17.0652 7.74198C18.4235 7.96698 18.7402 8.95032 17.7652 9.93365L16.1068 11.592C15.8318 11.867 15.6735 12.4087 15.7652 12.8003L16.2402 14.8503C16.6152 16.467 15.7485 17.1003 14.3235 16.2503L12.3318 15.067C11.9735 14.8503 11.3735 14.8503 11.0152 15.067L9.02348 16.2503C7.59848 17.092 6.73183 16.467 7.10683 14.8503L7.58183 12.8003C7.6735 12.417 7.51516 11.8753 7.24016 11.592L5.58184 9.93365C4.60684 8.95865 4.9235 7.97531 6.28183 7.74198L8.40682 7.39198C8.76516 7.33365 9.19016 7.01699 9.34849 6.69199L10.5235 4.34199C11.1485 3.06699 12.1818 3.06699 12.8235 4.34199Z"
+			stroke="#484848"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M6.66797 4.16699H1.66797"
+			stroke="#484848"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path d="M4.16797 15.833H1.66797" stroke="#484848" strokeLinecap="round" strokeLinejoin="round" />
+		<path d="M2.5013 10H1.66797" stroke="#484848" strokeLinecap="round" strokeLinejoin="round" />
+	</svg>
+);
+
+export const ClosedIcon = ({ fill, stroke, ...props }: React.SVGProps<SVGSVGElement>) => {
+	return (
+		<svg
+			width="24"
+			height="31"
+			viewBox="0 0 31 31"
+			fill={fill ? "#008080" : "none"}
+			xmlns="http://www.w3.org/2000/svg"
+			{...props}
+		>
+			<path
+				d="M12.1719 18.584L19.2647 11.4912"
+				stroke={!stroke ? "#484848" : "#ffffff"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M19.2647 18.584L12.1719 11.4912"
+				stroke={!stroke ? "#484848" : "#ffffff"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M11.9575 27.5687H19.4764C25.7421 27.5687 28.2484 25.0624 28.2484 18.7967V11.2779C28.2484 5.01215 25.7421 2.50586 19.4764 2.50586H11.9575C5.69183 2.50586 3.18555 5.01215 3.18555 11.2779V18.7967C3.18555 25.0624 5.69183 27.5687 11.9575 27.5687Z"
+				stroke={!stroke ? "#292D32" : "#008080"}
+				strokeWidth="1.87971"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
+	);
+};
+
+export const VerifiedIcon = (props: React.SVGProps<SVGSVGElement>) => (
+	<svg
+		width="63"
+		height="63"
+		viewBox="0 0 63 63"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+		{...props}
+	>
+		<path
+			d="M22 31.5L28.3262 37.8525L41.005 25.1475"
+			stroke="#008080"
+			strokeWidth="3.9375"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<path
+			d="M28.2212 6.43207C30.0325 4.88332 32.9988 4.88332 34.8363 6.43207L38.9838 10.0021C39.7713 10.6846 41.2413 11.2358 42.2913 11.2358L46.7537 11.2358C49.5362 11.2358 51.82 13.5196 51.82 16.3021V20.7646C51.82 21.7883 52.3712 23.2846 53.0537 24.0721L56.6238 28.2196C58.1725 30.0308 58.1725 32.9971 56.6238 34.8346L53.0537 38.9821C52.3712 39.7696 51.82 41.2396 51.82 42.2896V46.7521C51.82 49.5346 49.5362 51.8183 46.7537 51.8183H42.2913C41.2675 51.8183 39.7713 52.3696 38.9838 53.0521L34.8363 56.6221C33.025 58.1708 30.0587 58.1708 28.2212 56.6221L24.0737 53.0521C23.2862 52.3696 21.8162 51.8183 20.7662 51.8183H16.225C13.4425 51.8183 11.1587 49.5346 11.1587 46.7521L11.1587 42.2633C11.1587 41.2396 10.6075 39.7696 9.95125 38.9821L6.4075 34.8083C4.885 32.9971 4.885 30.0571 6.4075 28.2458L9.95125 24.0721C10.6075 23.2846 11.1587 21.8146 11.1587 20.7908V16.2758C11.1587 13.4933 13.4425 11.2096 16.225 11.2096H20.7662C21.79 11.2096 23.2862 10.6583 24.0737 9.97582L28.2212 6.43207Z"
+			stroke="#008080"
+			strokeWidth="3.9375"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+	</svg>
+);
+
+export const Moneys = () => {
+	return (
+		<svg width="63" height="63" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M50.662 20.7901V34.309C50.662 42.394 46.042 45.8589 39.112 45.8589H16.0383C14.857 45.8589 13.7283 45.754 12.6783 45.5178C12.022 45.4128 11.392 45.229 10.8145 45.019C6.87704 43.549 4.48828 40.1365 4.48828 34.309L4.48828 20.7901C4.48828 12.7051 9.10826 9.24023 16.0383 9.24023L39.112 9.24023C44.992 9.24023 49.2183 11.734 50.347 17.4302C50.5308 18.4802 50.662 19.5564 50.662 20.7901Z"
 				stroke="#008080"
@@ -553,42 +500,9 @@ export const Moneys = () => {
 	);
 };
 
-export const Verify = () => {
-	return (
-		<svg
-			width="63"
-			height="63"
-			viewBox="0 0 63 63"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path
-				d="M22 31.5L28.3262 37.8525L41.005 25.1475"
-				stroke="#008080"
-				strokeWidth="3.9375"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-			<path
-				d="M28.2212 6.43207C30.0325 4.88332 32.9988 4.88332 34.8363 6.43207L38.9838 10.0021C39.7713 10.6846 41.2413 11.2358 42.2913 11.2358L46.7537 11.2358C49.5362 11.2358 51.82 13.5196 51.82 16.3021V20.7646C51.82 21.7883 52.3712 23.2846 53.0537 24.0721L56.6238 28.2196C58.1725 30.0308 58.1725 32.9971 56.6238 34.8346L53.0537 38.9821C52.3712 39.7696 51.82 41.2396 51.82 42.2896V46.7521C51.82 49.5346 49.5362 51.8183 46.7537 51.8183H42.2913C41.2675 51.8183 39.7713 52.3696 38.9838 53.0521L34.8363 56.6221C33.025 58.1708 30.0587 58.1708 28.2212 56.6221L24.0737 53.0521C23.2862 52.3696 21.8162 51.8183 20.7662 51.8183H16.225C13.4425 51.8183 11.1587 49.5346 11.1587 46.7521L11.1587 42.2633C11.1587 41.2396 10.6075 39.7696 9.95125 38.9821L6.4075 34.8083C4.885 32.9971 4.885 30.0571 6.4075 28.2458L9.95125 24.0721C10.6075 23.2846 11.1587 21.8146 11.1587 20.7908V16.2758C11.1587 13.4933 13.4425 11.2096 16.225 11.2096H20.7662C21.79 11.2096 23.2862 10.6583 24.0737 9.97582L28.2212 6.43207Z"
-				stroke="#008080"
-				strokeWidth="3.9375"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-		</svg>
-	);
-};
-
 export const WalletAdd = () => {
 	return (
-		<svg
-			width="63"
-			height="63"
-			viewBox="0 0 63 63"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="63" height="63" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M37.4375 40.5254H24.3125"
 				stroke="#008080"
@@ -685,13 +599,7 @@ export const TotalDonors = ({ className }: { className?: string }) => {
 
 export const BringPositiveChangeStar = () => {
 	return (
-		<svg
-			width="24"
-			height="25"
-			viewBox="0 0 24 25"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				fillRule="evenodd"
 				clipRule="evenodd"
@@ -704,13 +612,7 @@ export const BringPositiveChangeStar = () => {
 
 export const Spark = () => {
 	return (
-		<svg
-			width="51"
-			height="56"
-			viewBox="0 0 51 56"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="51" height="56" viewBox="0 0 51 56" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				fillRule="evenodd"
 				clipRule="evenodd"
@@ -735,13 +637,7 @@ export const Spark = () => {
 
 export const Smiley = () => {
 	return (
-		<svg
-			width="49"
-			height="25"
-			viewBox="0 0 49 25"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="49" height="25" viewBox="0 0 49 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				fillRule="evenodd"
 				clipRule="evenodd"
@@ -762,13 +658,7 @@ export const Smiley = () => {
 
 export const Sun = () => {
 	return (
-		<svg
-			width="40"
-			height="40"
-			viewBox="0 0 40 40"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M19.9997 31.6668C26.443 31.6668 31.6663 26.4435 31.6663 20.0002C31.6663 13.5568 26.443 8.3335 19.9997 8.3335C13.5564 8.3335 8.33301 13.5568 8.33301 20.0002C8.33301 26.4435 13.5564 31.6668 19.9997 31.6668Z"
 				fill="white"
@@ -783,13 +673,7 @@ export const Sun = () => {
 
 export const Cup = () => {
 	return (
-		<svg
-			width="36"
-			height="36"
-			viewBox="0 0 36 36"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<rect width="36" height="36" rx="18" fill="white" />
 			<path
 				d="M18.125 21.75V23.5"
@@ -838,13 +722,7 @@ export const Cup = () => {
 
 export const Heart = () => {
 	return (
-		<svg
-			width="20"
-			height="20"
-			viewBox="0 0 20 20"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M10.517 17.3418C10.2337 17.4418 9.76699 17.4418 9.48366 17.3418C7.06699 16.5168 1.66699 13.0752 1.66699 7.24183C1.66699 4.66683 3.74199 2.5835 6.30033 2.5835C7.81699 2.5835 9.15866 3.31683 10.0003 4.45016C10.842 3.31683 12.192 2.5835 13.7003 2.5835C16.2587 2.5835 18.3337 4.66683 18.3337 7.24183C18.3337 13.0752 12.9337 16.5168 10.517 17.3418Z"
 				stroke="#292D32"
@@ -858,13 +736,7 @@ export const Heart = () => {
 
 export const ArrowUpRight = ({ fill = "#484848" }: { fill?: string }) => {
 	return (
-		<svg
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M18.7504 6V15.75C18.7504 15.9489 18.6714 16.1397 18.5307 16.2803C18.3901 16.421 18.1993 16.5 18.0004 16.5C17.8015 16.5 17.6107 16.421 17.4701 16.2803C17.3294 16.1397 17.2504 15.9489 17.2504 15.75V7.81031L6.53104 18.5306C6.39031 18.6714 6.19944 18.7504 6.00042 18.7504C5.80139 18.7504 5.61052 18.6714 5.46979 18.5306C5.32906 18.3899 5.25 18.199 5.25 18C5.25 17.801 5.32906 17.6101 5.46979 17.4694L16.1901 6.75H8.25042C8.0515 6.75 7.86074 6.67098 7.72009 6.53033C7.57943 6.38968 7.50042 6.19891 7.50042 6C7.50042 5.80109 7.57943 5.61032 7.72009 5.46967C7.86074 5.32902 8.0515 5.25 8.25042 5.25H18.0004C18.1993 5.25 18.3901 5.32902 18.5307 5.46967C18.6714 5.61032 18.7504 5.80109 18.7504 6Z"
 				fill={fill}
@@ -875,13 +747,7 @@ export const ArrowUpRight = ({ fill = "#484848" }: { fill?: string }) => {
 
 export const Settings = () => {
 	return (
-		<svg
-			width="20"
-			height="20"
-			viewBox="0 0 20 20"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M15.833 18.3337V9.16699"
 				stroke="white"
@@ -960,13 +826,7 @@ export const Settings = () => {
 
 export const AccountIcon = () => {
 	return (
-		<svg
-			width="17"
-			height="16"
-			viewBox="0 0 17 16"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M11.062 8.07288C12.0466 8.53823 12.886 9.26255 13.4906 10.1683C14.0951 11.0741 14.442 12.1272 14.494 13.2149C14.5009 13.3145 14.4878 13.4145 14.4555 13.5091C14.4232 13.6036 14.3723 13.6907 14.3059 13.7653C14.2394 13.8398 14.1588 13.9004 14.0686 13.9434C13.9784 13.9864 13.8806 14.0109 13.7808 14.0156C13.681 14.0203 13.5813 14.0049 13.4876 13.9705C13.3938 13.9362 13.3078 13.8834 13.2347 13.8153C13.1616 13.7472 13.1029 13.6653 13.0619 13.5742C13.0209 13.4831 12.9985 13.3847 12.996 13.2849C12.9415 12.1294 12.4441 11.0393 11.6071 10.2409C10.7701 9.44241 9.6578 8.99695 8.50104 8.99695C7.34428 8.99695 6.23195 9.44241 5.39494 10.2409C4.55794 11.0393 4.06056 12.1294 4.00604 13.2849C3.99257 13.4805 3.90305 13.663 3.75666 13.7934C3.61027 13.9238 3.41864 13.9917 3.2228 13.9825C3.02697 13.9734 2.84251 13.8879 2.70891 13.7444C2.57532 13.6009 2.50321 13.4109 2.50804 13.2149C2.5599 12.1272 2.90657 11.0742 3.51094 10.1684C4.11531 9.26263 4.95463 8.53828 5.93904 8.07288C5.30805 7.54657 4.85451 6.83866 4.64009 6.04545C4.42568 5.25224 4.46081 4.41224 4.74071 3.63971C5.0206 2.86718 5.53167 2.19961 6.2044 1.72783C6.87713 1.25604 7.67886 1.00293 8.50054 1.00293C9.32222 1.00293 10.1239 1.25604 10.7967 1.72783C11.4694 2.19961 11.9805 2.86718 12.2604 3.63971C12.5403 4.41224 12.5754 5.25224 12.361 6.04545C12.1466 6.83866 11.693 7.54657 11.062 8.07288ZM11.001 4.99988C11.001 4.33684 10.7376 3.70095 10.2688 3.23211C9.79997 2.76327 9.16408 2.49988 8.50104 2.49988C7.838 2.49988 7.20211 2.76327 6.73327 3.23211C6.26443 3.70095 6.00104 4.33684 6.00104 4.99988C6.00104 5.66292 6.26443 6.2988 6.73327 6.76764C7.20211 7.23649 7.838 7.49988 8.50104 7.49988C9.16408 7.49988 9.79997 7.23649 10.2688 6.76764C10.7376 6.2988 11.001 5.66292 11.001 4.99988Z"
 				fill="#57606A"
@@ -977,13 +837,7 @@ export const AccountIcon = () => {
 
 export const NotificationIcon = () => {
 	return (
-		<svg
-			width="14"
-			height="16"
-			viewBox="0 0 14 16"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M7.00167 16C7.48892 16.0002 7.95948 15.8225 8.32498 15.5002C8.69047 15.178 8.92576 14.7334 8.98667 14.25C9.00367 14.113 8.88967 14 8.75167 14H5.25167C5.11367 14 4.99967 14.113 5.01667 14.25C5.07758 14.7334 5.31287 15.178 5.67837 15.5002C6.04386 15.8225 6.51442 16.0002 7.00167 16ZM2.00167 5C2.00167 3.67392 2.52845 2.40215 3.46614 1.46447C4.40382 0.526784 5.67559 0 7.00167 0C8.32775 0 9.59952 0.526784 10.5372 1.46447C11.4749 2.40215 12.0017 3.67392 12.0017 5V7.947C12.0017 7.997 12.0167 8.045 12.0437 8.086L13.7467 10.641C13.8984 10.8697 13.9854 11.1352 13.9984 11.4093C14.0113 11.6835 13.9498 11.956 13.8202 12.198C13.6907 12.4399 13.498 12.6423 13.2627 12.7835C13.0273 12.9247 12.7581 12.9995 12.4837 13H1.51967C1.24465 13.0007 0.974629 12.9265 0.738528 12.7855C0.502427 12.6444 0.309142 12.4418 0.179374 12.1993C0.0496054 11.9568 -0.0117567 11.6836 0.00185949 11.4089C0.0154757 11.1343 0.103557 10.8685 0.25667 10.64L1.95967 8.086C1.98685 8.04472 2.00144 7.99642 2.00167 7.947V5ZM7.00167 1.5C6.07341 1.5 5.18317 1.86875 4.5268 2.52513C3.87042 3.1815 3.50167 4.07174 3.50167 5V7.947C3.50167 8.293 3.39967 8.63 3.20767 8.917L1.50467 11.473C1.50265 11.4759 1.5016 11.4794 1.50167 11.483L1.50267 11.489C1.50267 11.491 1.50467 11.493 1.50667 11.495L1.51267 11.499L1.51967 11.5H12.4837L12.4907 11.499L12.4967 11.495L12.5007 11.489L12.5017 11.482C12.5017 11.4784 12.5007 11.4749 12.4987 11.472L10.7957 8.918C10.6039 8.63088 10.5015 8.2933 10.5017 7.948V5C10.5017 4.07174 10.1329 3.1815 9.47654 2.52513C8.82017 1.86875 7.92993 1.5 7.00167 1.5Z"
 				fill="#57606A"
@@ -994,13 +848,7 @@ export const NotificationIcon = () => {
 
 export const BillingIcon = () => {
 	return (
-		<svg
-			width="16"
-			height="16"
-			viewBox="0 0 16 16"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M10.75 9C10.5511 9 10.3603 9.07902 10.2197 9.21967C10.079 9.36032 10 9.55109 10 9.75C10 9.94891 10.079 10.1397 10.2197 10.2803C10.3603 10.421 10.5511 10.5 10.75 10.5H12.25C12.4489 10.5 12.6397 10.421 12.7803 10.2803C12.921 10.1397 13 9.94891 13 9.75C13 9.55109 12.921 9.36032 12.7803 9.21967C12.6397 9.07902 12.4489 9 12.25 9H10.75Z"
 				fill="#57606A"
@@ -1015,13 +863,7 @@ export const BillingIcon = () => {
 
 export const EditIcon = () => {
 	return (
-		<svg
-			width="19"
-			height="19"
-			viewBox="0 0 19 19"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M12.6999 2.39018L6.46161 8.62851C6.22411 8.86601 5.98661 9.3331 5.93911 9.67351L5.5987 12.0564C5.47203 12.9193 6.08161 13.521 6.94453 13.4023L9.32745 13.0618C9.65995 13.0143 10.127 12.7768 10.3724 12.5393L16.6108 6.30101C17.6874 5.22435 18.1941 3.97351 16.6108 2.39018C15.0274 0.806846 13.7766 1.31351 12.6999 2.39018Z"
 				fill="#008080"
@@ -1045,13 +887,7 @@ export const EditIcon = () => {
 
 export const UploadIcon = () => {
 	return (
-		<svg
-			width="36"
-			height="35"
-			viewBox="0 0 36 35"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+		<svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M13.6257 24.792V16.042L10.709 18.9587"
 				stroke="#484848"

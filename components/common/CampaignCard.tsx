@@ -9,11 +9,14 @@ import Heading from "./Heading";
 import SingleCampaignProgress from "./SingleCampaignProgress";
 import { DonorIcon } from "./campaign-icons";
 import { BankIcon, ClockIcon, EyeIcon, LocationIcon } from "./dashboardIcons";
+import { getStatusIconInfo } from "./dashboardIcons/Star";
 
 type CampaignCardProps = {
 	classNames?: { base?: string; header?: string; image?: string };
 
 	cardType?: "overview" | "regular";
+
+	withStatusCaption?: boolean;
 
 	cardDetails: Campaign | undefined;
 } & AsProp;
@@ -30,7 +33,7 @@ type TransformedDetails = {
 	commentCount: number;
 	daysLeft: number;
 	category: string;
-	status: string;
+	status: Campaign["status"];
 };
 
 type CardListProps = {
@@ -41,12 +44,12 @@ type CardListProps = {
 		card?: CampaignCardProps["classNames"];
 	};
 	cardDetailsArray: Array<CampaignCardProps["cardDetails"]> | undefined;
-};
+} & Pick<CampaignCardProps, "withStatusCaption">;
 
 export const generateDummyCardData = (count = 5) =>
 	Array<TransformedDetails>(count).fill({
 		imageSrc: "/assets/images/dashboard/dummyCardImg.svg",
-		title: "Bringing Dental Care to Underserved Communities",
+		title: "Bringing Dental Care to Undeserved Communities",
 		location: "Lagos, Nigeria",
 		name: "Locs Designer",
 		goal: 3000000,
@@ -70,20 +73,20 @@ const transformCardData = (
 	amountRaised: cardDetails.amountRaised,
 	commentCount: 0,
 	donorCount: 0,
-	imageSrc:
-		cardDetails.images[0]?.secureUrl ?? "/assets/images/shared/logo.svg",
+	imageSrc: cardDetails.images[0]?.secureUrl ?? "/assets/images/shared/logo.svg",
 	daysLeft: getDaysLeft(cardDetails.deadline),
-	location: cardDetails.country || "Not Provided",
-	name: cardDetails.creator
-		? cardDetails.fundraiser === "INDIVIDUAL"
+	location: cardDetails?.country ?? "Not Provided",
+	name:
+		cardDetails.creator && cardDetails.fundraiser === "INDIVIDUAL"
 			? `${cardDetails.creator.firstName} ${cardDetails.creator.lastName}`
-			: "Beneficiary"
-		: "Unknown",
+			: cardDetails.creator && cardDetails.fundraiser === "BENEFICIARY"
+			  ? "Beneficiary"
+			  : "Unknown",
 	title: cardDetails.title,
 });
 
 export function CampaignCard(props: CampaignCardProps) {
-	const { cardDetails, cardType = "regular", classNames, as } = props;
+	const { cardDetails, cardType = "regular", withStatusCaption, classNames, as } = props;
 
 	if (!cardDetails) {
 		return null;
@@ -93,19 +96,12 @@ export function CampaignCard(props: CampaignCardProps) {
 
 	const shortId = cardDetails.url ? cardDetails.url.split("/c/")[1] : null;
 
+	const StatusInfo = getStatusIconInfo(transformedDetails.status);
+
 	return (
-		<Card
-			as={as}
-			className={cn(
-				"flex w-full flex-col justify-between gap-5",
-				classNames?.base
-			)}
-		>
+		<Card as={as} className={cn("flex w-full flex-col justify-between gap-5", classNames?.base)}>
 			<Card.Header
-				className={cn(
-					"relative rounded-md [-webkit-user-drag:none]",
-					classNames?.header
-				)}
+				className={cn("relative rounded-md [-webkit-user-drag:none]", classNames?.header)}
 				draggable={false}
 				asChild
 			>
@@ -113,36 +109,43 @@ export function CampaignCard(props: CampaignCardProps) {
 					<Link href={`/c/${shortId}`} className="basis-full">
 						<Image
 							src={transformedDetails.imageSrc}
-							className={cn(
-								"size-full rounded-md object-cover",
-								classNames?.image
-							)}
+							className={cn("size-full rounded-md object-cover", classNames?.image)}
 							width={383}
 							height={236}
 							alt="Campaigns Image"
 						/>
 
 						<div className="absolute inset-0 flex select-none flex-col items-start justify-between p-6 text-xs text-white">
-							<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-								<LocationIcon />
-								<figcaption>{transformedDetails.location}</figcaption>
-							</figure>
+							<div className="flex w-full justify-between">
+								<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
+									<LocationIcon />
+									<figcaption>{transformedDetails.location}</figcaption>
+								</figure>
+
+								{withStatusCaption && (
+									<figure
+										className={cn(
+											"ml-auto flex items-center gap-1 rounded-md p-2 backdrop-blur-md",
+											StatusInfo.bgColor
+										)}
+									>
+										<StatusInfo.Icon />
+										<figcaption>{transformedDetails.status}</figcaption>
+									</figure>
+								)}
+							</div>
 
 							<div className="flex w-full justify-between">
 								{cardType === "regular" && (
 									<figure className="mr-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
 										<DonorIcon stroke="light" className="size-4" />
-										<figcaption>
-											{transformedDetails.donorCount} total donors
-										</figcaption>
+										<figcaption>{transformedDetails.donorCount} total donors</figcaption>
 									</figure>
 								)}
 
 								<figure className="ml-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
 									<ClockIcon />
-									<figcaption>
-										{transformedDetails.daysLeft} days left
-									</figcaption>
+									<figcaption>{transformedDetails.daysLeft} days left</figcaption>
 								</figure>
 							</div>
 						</div>
@@ -161,15 +164,13 @@ export function CampaignCard(props: CampaignCardProps) {
 				</Card.Content>
 			)}
 
-			{cardType === "regular" ? (
-				<Card.Footer>
+			<Card.Footer>
+				{cardType === "regular" ? (
 					<SingleCampaignProgress
 						amountRaised={transformedDetails.amountRaised}
 						goal={transformedDetails.goal}
 					/>
-				</Card.Footer>
-			) : (
-				<Card.Footer>
+				) : (
 					<div className="space-y-4 md:space-y-5">
 						<Heading as="h4" className="hidden font-bold md:block md:text-2xl">
 							{transformedDetails.title}
@@ -185,14 +186,10 @@ export function CampaignCard(props: CampaignCardProps) {
 								<div className="flex items-center justify-between gap-7">
 									<figure className="flex items-center gap-1">
 										<DonorIcon stroke="dark" className="size-4 lg:size-5" />
-										<figcaption>
-											{transformedDetails.donorCount} total donors
-										</figcaption>
+										<figcaption>{transformedDetails.donorCount} total donors</figcaption>
 									</figure>
 									<figure className="flex items-center gap-1">
-										<figcaption>
-											{transformedDetails.commentCount} comments
-										</figcaption>
+										<figcaption>{transformedDetails.commentCount} comments</figcaption>
 									</figure>
 								</div>
 							</div>
@@ -218,14 +215,14 @@ export function CampaignCard(props: CampaignCardProps) {
 							</div>
 						</article>
 					</div>
-				</Card.Footer>
-			)}
+				)}
+			</Card.Footer>
 		</Card>
 	);
 }
 
 export function CampaignCardList(props: CardListProps) {
-	const { cardDetailsArray, listType, classNames } = props;
+	const { cardDetailsArray, listType, withStatusCaption, classNames } = props;
 
 	const { dragScrollProps, dragContainerClasses, dragItemClasses } =
 		useDragScroll<HTMLUListElement>();
@@ -244,10 +241,7 @@ export function CampaignCardList(props: CardListProps) {
 
 		card: {
 			base: {
-				horizontal: cn(
-					"max-w-[370px] shrink-0 md:max-w-[396px]",
-					dragItemClasses
-				),
+				horizontal: cn("max-w-[370px] shrink-0 md:max-w-[396px]", dragItemClasses),
 				grid: "max-w-[403px]",
 				vertical: "max-w-[403px]",
 			},
@@ -263,26 +257,17 @@ export function CampaignCardList(props: CardListProps) {
 	return (
 		<ul
 			{...(listType === "horizontal" && dragScrollProps)}
-			className={cn(
-				"gap-6 lg:gap-8",
-				semanticClasses.cardList[listType],
-				classNames?.base
-			)}
+			className={cn("gap-6 lg:gap-8", semanticClasses.cardList[listType], classNames?.base)}
 		>
 			{cardDetailsArray.map((detail) => (
 				<CampaignCard
 					key={detail?._id}
 					as="li"
 					cardDetails={detail}
+					withStatusCaption={withStatusCaption}
 					classNames={{
-						base: cn(
-							semanticClasses.card.base[listType],
-							classNames?.card?.base
-						),
-						header: cn(
-							semanticClasses.card.header[listType],
-							classNames?.card?.header
-						),
+						base: cn(semanticClasses.card.base[listType], classNames?.card?.base),
+						header: cn(semanticClasses.card.header[listType], classNames?.card?.header),
 						image: classNames?.card?.image,
 					}}
 				/>
