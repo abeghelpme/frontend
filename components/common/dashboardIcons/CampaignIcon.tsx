@@ -1,6 +1,10 @@
 import type { FillSvgProps } from "@/interfaces";
 
-function CampaignIcon({ fill, stroke }: FillSvgProps) {
+function CampaignIcon({
+	fill,
+	stroke,
+	...props
+}: Omit<React.SVGProps<SVGSVGElement>, "fill" | "stroke"> & FillSvgProps) {
 	return (
 		<svg
 			width="31"
@@ -8,6 +12,7 @@ function CampaignIcon({ fill, stroke }: FillSvgProps) {
 			viewBox="0 0 31 31"
 			fill={fill ? "#EE885E" : "none"}
 			xmlns="http://www.w3.org/2000/svg"
+			{...props}
 		>
 			<path
 				d="M18.0821 9.39844V23.931C18.0806 24.0872 18.1186 24.2412 18.1926 24.3788C18.2665 24.5164 18.374 24.6331 18.505 24.7181L19.7973 25.5757C19.9225 25.6593 20.0659 25.7116 20.2156 25.7282C20.3652 25.7448 20.5166 25.7252 20.6571 25.6711C20.7975 25.617 20.9229 25.5299 21.0227 25.4172C21.1226 25.3046 21.1938 25.1695 21.2306 25.0236L22.7814 18.797"

@@ -1,20 +1,44 @@
-import { ArrowDown, Heading } from "@/components/common";
+import { ArrowDown, CampaignIcon, Heading } from "@/components/common";
 import { CampaignCardList } from "@/components/common/CampaignCard";
-import { SearchIcon } from "@/components/common/svg";
+import {
+	ClosedIcon,
+	DraftsIcon,
+	PendingStarIcon,
+	SearchIcon,
+	SlashedStarIcon,
+	StarIcon,
+	VerifiedIcon,
+} from "@/components/common/svg";
 import { Dropdown, Tabs } from "@/components/ui";
+import type { Campaign } from "@/interfaces/Campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { usePaginate } from "@/lib/hooks";
-import { useCampaignStore } from "@/store";
+import { useSession } from "@/store";
 import { AlignJustifyIcon, Grid3x3Icon } from "lucide-react";
 import { useState } from "react";
 
+const STATUS_FILTER_LOOKUP = {
+	All: (campaign: Campaign[]) => campaign,
+	Approved: (campaign: Campaign[]) => campaign.filter((c) => c.status === "Approved"),
+	Pending: (campaign: Campaign[]) => campaign.filter((c) => c.status === "In Review"),
+	Rejected: (campaign: Campaign[]) => campaign.filter((c) => c.status === "Rejected"),
+	Drafts: (campaign: Campaign[]) => campaign.filter((c) => c.status === "Draft"),
+	Closed: (campaign: Campaign[]) =>
+		campaign.filter((c) => c.status === ("Closed" as Campaign["status"])),
+	Published: (campaign: Campaign[]) => campaign.filter((c) => c.isPublished),
+};
+
 function AllCampaignsPage() {
-	const campaignsFromDb = useCampaignStore((state) => state.campaigns);
-	const [filter, setFilter] = useState("All");
+	const [statusFilter, setStatusFilter] = useState<keyof typeof STATUS_FILTER_LOOKUP>("All");
+	const userId = useSession((state) => state.user?._id);
 	const [resultsPerPage, setResultsPerPage] = useState(10);
 	const {
 		data: { data: paginatedCampaigns },
-	} = usePaginate(campaignsFromDb, { limit: resultsPerPage });
+	} = usePaginate(`campaign/user/${userId}`, {
+		limit: resultsPerPage,
+	});
+
+	const filteredCampaigns = STATUS_FILTER_LOOKUP[statusFilter](paginatedCampaigns);
 
 	return (
 		<Tabs.Root defaultValue="grid" className="mb-[95px] space-y-8">
@@ -52,23 +76,47 @@ function AllCampaignsPage() {
 
 							<Dropdown.Menu>
 								<Dropdown.MenuTrigger className="flex cursor-pointer items-center gap-2 rounded-lg border border-placeholder bg-white px-3 py-2 outline-none">
-									<p className="text-sm font-medium">{filter}</p>
+									<p className="text-sm font-medium">{statusFilter}</p>
 									<ArrowDown />
 								</Dropdown.MenuTrigger>
 
+								<Dropdown.MenuSeparator />
 								<Dropdown.MenuContent className="rounded-xl border-none p-0" align="start">
 									<Dropdown.MenuRadioGroup
-										value={filter}
-										onValueChange={setFilter}
+										value={statusFilter}
+										onValueChange={(value) =>
+											setStatusFilter(value as keyof typeof STATUS_FILTER_LOOKUP)
+										}
 										className="cursor-pointer bg-white p-2 text-sm font-medium text-abeg-text"
 									>
-										<Dropdown.MenuRadioItem value="All">All Campaigns</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Approved">Approved</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Rejected">Rejected</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Pending">Pending</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Published">Published</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Drafts">Drafts</Dropdown.MenuRadioItem>
-										<Dropdown.MenuRadioItem value="Closed">Closed</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="All" className="gap-2 px-0">
+											<CampaignIcon className="size-5 [&>*]:stroke-abeg-text" />
+											All Campaigns
+										</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Approved" className="gap-2 px-0">
+											<StarIcon className="size-5" />
+											Approved
+										</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Rejected" className="gap-2 px-0">
+											<SlashedStarIcon className="size-5" />
+											Rejected
+										</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Pending" className="gap-2 px-0">
+											<PendingStarIcon className="size-5" />
+											Pending
+										</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Published" className="gap-2 px-0">
+											<VerifiedIcon className="size-5 [&>*]:stroke-abeg-text" />
+											Published
+										</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Drafts" className="gap-2 px-0">
+											<DraftsIcon className="size-5" />
+											Drafts
+										</Dropdown.MenuRadioItem>
+										<Dropdown.MenuRadioItem value="Closed" className="gap-2 px-0">
+											<ClosedIcon className="size-5" />
+											Closed
+										</Dropdown.MenuRadioItem>
 									</Dropdown.MenuRadioGroup>
 								</Dropdown.MenuContent>
 							</Dropdown.Menu>
@@ -103,11 +151,19 @@ function AllCampaignsPage() {
 			</div>
 
 			<Tabs.Content value="grid">
-				<CampaignCardList cardDetailsArray={paginatedCampaigns} listType="grid" />
+				<CampaignCardList
+					cardDetailsArray={filteredCampaigns}
+					listType="grid"
+					withStatusCaption={true}
+				/>
 			</Tabs.Content>
 
 			<Tabs.Content value="list">
-				<CampaignCardList cardDetailsArray={paginatedCampaigns} listType="vertical" />
+				<CampaignCardList
+					cardDetailsArray={filteredCampaigns}
+					listType="vertical"
+					withStatusCaption={true}
+				/>
 			</Tabs.Content>
 		</Tabs.Root>
 	);

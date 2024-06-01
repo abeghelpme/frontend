@@ -9,11 +9,14 @@ import Heading from "./Heading";
 import SingleCampaignProgress from "./SingleCampaignProgress";
 import { DonorIcon } from "./campaign-icons";
 import { BankIcon, ClockIcon, EyeIcon, LocationIcon } from "./dashboardIcons";
+import { getStatusIconInfo } from "./dashboardIcons/Star";
 
 type CampaignCardProps = {
 	classNames?: { base?: string; header?: string; image?: string };
 
 	cardType?: "overview" | "regular";
+
+	withStatusCaption?: boolean;
 
 	cardDetails: Campaign | undefined;
 } & AsProp;
@@ -30,7 +33,7 @@ type TransformedDetails = {
 	commentCount: number;
 	daysLeft: number;
 	category: string;
-	status: string;
+	status: Campaign["status"];
 };
 
 type CardListProps = {
@@ -41,7 +44,7 @@ type CardListProps = {
 		card?: CampaignCardProps["classNames"];
 	};
 	cardDetailsArray: Array<CampaignCardProps["cardDetails"]> | undefined;
-};
+} & Pick<CampaignCardProps, "withStatusCaption">;
 
 export const generateDummyCardData = (count = 5) =>
 	Array<TransformedDetails>(count).fill({
@@ -83,7 +86,7 @@ const transformCardData = (
 });
 
 export function CampaignCard(props: CampaignCardProps) {
-	const { cardDetails, cardType = "regular", classNames, as } = props;
+	const { cardDetails, cardType = "regular", withStatusCaption, classNames, as } = props;
 
 	if (!cardDetails) {
 		return null;
@@ -92,6 +95,8 @@ export function CampaignCard(props: CampaignCardProps) {
 	const transformedDetails = transformCardData(cardDetails);
 
 	const shortId = cardDetails.url ? cardDetails.url.split("/c/")[1] : null;
+
+	const StatusInfo = getStatusIconInfo(transformedDetails.status);
 
 	return (
 		<Card as={as} className={cn("flex w-full flex-col justify-between gap-5", classNames?.base)}>
@@ -111,10 +116,24 @@ export function CampaignCard(props: CampaignCardProps) {
 						/>
 
 						<div className="absolute inset-0 flex select-none flex-col items-start justify-between p-6 text-xs text-white">
-							<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
-								<LocationIcon />
-								<figcaption>{transformedDetails.location}</figcaption>
-							</figure>
+							<div className="flex w-full justify-between">
+								<figure className="flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
+									<LocationIcon />
+									<figcaption>{transformedDetails.location}</figcaption>
+								</figure>
+
+								{withStatusCaption && (
+									<figure
+										className={cn(
+											"ml-auto flex items-center gap-1 rounded-md p-2 backdrop-blur-md",
+											StatusInfo.bgColor
+										)}
+									>
+										<StatusInfo.Icon />
+										<figcaption>{transformedDetails.status}</figcaption>
+									</figure>
+								)}
+							</div>
 
 							<div className="flex w-full justify-between">
 								{cardType === "regular" && (
@@ -145,15 +164,13 @@ export function CampaignCard(props: CampaignCardProps) {
 				</Card.Content>
 			)}
 
-			{cardType === "regular" ? (
-				<Card.Footer>
+			<Card.Footer>
+				{cardType === "regular" ? (
 					<SingleCampaignProgress
 						amountRaised={transformedDetails.amountRaised}
 						goal={transformedDetails.goal}
 					/>
-				</Card.Footer>
-			) : (
-				<Card.Footer>
+				) : (
 					<div className="space-y-4 md:space-y-5">
 						<Heading as="h4" className="hidden font-bold md:block md:text-2xl">
 							{transformedDetails.title}
@@ -198,14 +215,14 @@ export function CampaignCard(props: CampaignCardProps) {
 							</div>
 						</article>
 					</div>
-				</Card.Footer>
-			)}
+				)}
+			</Card.Footer>
 		</Card>
 	);
 }
 
 export function CampaignCardList(props: CardListProps) {
-	const { cardDetailsArray, listType, classNames } = props;
+	const { cardDetailsArray, listType, withStatusCaption, classNames } = props;
 
 	const { dragScrollProps, dragContainerClasses, dragItemClasses } =
 		useDragScroll<HTMLUListElement>();
@@ -247,6 +264,7 @@ export function CampaignCardList(props: CardListProps) {
 					key={detail?._id}
 					as="li"
 					cardDetails={detail}
+					withStatusCaption={withStatusCaption}
 					classNames={{
 						base: cn(semanticClasses.card.base[listType], classNames?.card?.base),
 						header: cn(semanticClasses.card.header[listType], classNames?.card?.header),

@@ -30,8 +30,10 @@ export const usePaginate = <T = Campaign>(
 			: [],
 		count: 0,
 	});
+	const [isFetching, setIsFetching] = useState(false);
+	const [error, setError] = useState("");
 
-	const upDateData = useCallbackRef(() => {
+	const upDateWithDataFromStore = useCallbackRef(() => {
 		if (!Array.isArray(endpointOrCampaignList) || endpointOrCampaignList.length === 0) return;
 
 		const newDataSlice = endpointOrCampaignList.slice(page - 1, options.limit ?? LIMIT) as T[];
@@ -43,14 +45,36 @@ export const usePaginate = <T = Campaign>(
 		setData(updatedData);
 	});
 
+	const upDateWithDataFromApi = useCallbackRef(async () => {
+		if (typeof endpointOrCampaignList !== "string" || endpointOrCampaignList.length === 0) return;
+
+		setIsFetching(true);
+
+		const { data: response, error: apiError } = await callApi<ApiResponse<PaginatedResponse<T>>>(
+			`/${endpointOrCampaignList}?page=1&limit=${options.limit ?? LIMIT}`
+		);
+
+		if (apiError || !response?.data) {
+			setError(apiError?.message ?? "Could not fetch data");
+			setIsFetching(false);
+			return;
+		}
+
+		setIsFetching(false);
+
+		const updatedData = shouldReturnAll
+			? { ...data, data: [...data.data, ...response.data.data] }
+			: { ...data, data: response.data as never };
+
+		setData(updatedData);
+	});
+
 	useEffect(() => {
-		upDateData();
-	}, [options.limit, upDateData]);
+		upDateWithDataFromStore();
+		void upDateWithDataFromApi();
+	}, [options.limit]);
 
-	const [isFetching, setIsFetching] = useState(false);
-	const [error, setError] = useState("");
-
-	const fetch = async (direction: "prev" | "next") => {
+	const fetchFromEndpoint = async (direction: "prev" | "next") => {
 		setIsFetching(true);
 		setError("");
 
@@ -81,7 +105,7 @@ export const usePaginate = <T = Campaign>(
 					...data,
 					data: [...data.data, ...response.data.data],
 			  }
-			: response.data;
+			: { ...data, data: response.data as never };
 
 		setData(updateData);
 		setIsFetching(false);
@@ -120,7 +144,7 @@ export const usePaginate = <T = Campaign>(
 		data,
 		isFetching,
 		error,
-		fetch,
+		fetchFromEndpoint,
 		fetchFromStore,
 		hasPrevious,
 		hasMore,
