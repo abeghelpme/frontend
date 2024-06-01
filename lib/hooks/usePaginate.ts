@@ -1,6 +1,5 @@
 import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { useInitCampaignStore } from "@/store";
 import { useEffect, useState } from "react";
 import { callApi } from "../helpers/callApi";
 import { useCallbackRef } from "./useCallbackRef";
@@ -31,18 +30,13 @@ export const usePaginate = <T = Campaign>(
 			: [],
 		count: 0,
 	});
+	const [isFetching, setIsFetching] = useState(false);
+	const [error, setError] = useState("");
 
-	const upDateData = useCallbackRef(() => {
-		if (
-			!Array.isArray(endpointOrCampaignList) ||
-			endpointOrCampaignList.length === 0
-		)
-			return;
+	const upDateWithDataFromStore = useCallbackRef(() => {
+		if (!Array.isArray(endpointOrCampaignList) || endpointOrCampaignList.length === 0) return;
 
-		const newDataSlice = endpointOrCampaignList.slice(
-			page - 1,
-			options.limit ?? LIMIT
-		) as T[];
+		const newDataSlice = endpointOrCampaignList.slice(page - 1, options.limit ?? LIMIT) as T[];
 
 		const updatedData = shouldReturnAll
 			? { ...data, data: [...data.data, ...newDataSlice] }
@@ -51,21 +45,40 @@ export const usePaginate = <T = Campaign>(
 		setData(updatedData);
 	});
 
+	const upDateWithDataFromApi = useCallbackRef(async () => {
+		if (typeof endpointOrCampaignList !== "string" || endpointOrCampaignList.length === 0) return;
+
+		setIsFetching(true);
+
+		const { data: response, error: apiError } = await callApi<ApiResponse<PaginatedResponse<T>>>(
+			`/${endpointOrCampaignList}?page=1&limit=${options.limit ?? LIMIT}`
+		);
+
+		if (apiError || !response?.data) {
+			setError(apiError?.message ?? "Could not fetch data");
+			setIsFetching(false);
+			return;
+		}
+
+		setIsFetching(false);
+
+		const updatedData = shouldReturnAll
+			? { ...data, data: [...data.data, ...response.data.data] }
+			: { ...data, data: response.data as never };
+
+		setData(updatedData);
+	});
+
 	useEffect(() => {
-		upDateData();
-	}, [options.limit, upDateData]);
+		upDateWithDataFromStore();
+		void upDateWithDataFromApi();
+	}, [options.limit]);
 
-	const [isFetching, setIsFetching] = useState(false);
-	const [error, setError] = useState("");
-
-	const fetch = async (direction: "prev" | "next") => {
+	const fetchFromEndpoint = async (direction: "prev" | "next") => {
 		setIsFetching(true);
 		setError("");
 
-		if (
-			typeof endpointOrCampaignList !== "string" ||
-			endpointOrCampaignList.length === 0
-		) {
+		if (typeof endpointOrCampaignList !== "string" || endpointOrCampaignList.length === 0) {
 			return setError("Endpoint is required");
 		}
 
@@ -77,9 +90,9 @@ export const usePaginate = <T = Campaign>(
 		const newPage = direction === "next" ? page + 1 : page - 1;
 		setPage(newPage);
 
-		const { data: response, error: apiError } = await callApi<
-			ApiResponse<PaginatedResponse<T>>
-		>(`/${endpointOrCampaignList}?page=${newPage}&limit=${LIMIT}`);
+		const { data: response, error: apiError } = await callApi<ApiResponse<PaginatedResponse<T>>>(
+			`/${endpointOrCampaignList}?page=${newPage}&limit=${LIMIT}`
+		);
 
 		if (apiError || !response?.data) {
 			setError(apiError?.message ?? "Could not fetch data");
@@ -92,18 +105,14 @@ export const usePaginate = <T = Campaign>(
 					...data,
 					data: [...data.data, ...response.data.data],
 			  }
-			: response.data;
+			: { ...data, data: response.data as never };
 
 		setData(updateData);
 		setIsFetching(false);
 	};
 
 	const fetchFromStore = (direction: "prev" | "next") => {
-		if (
-			!Array.isArray(endpointOrCampaignList) ||
-			endpointOrCampaignList.length === 0
-		)
-			return;
+		if (!Array.isArray(endpointOrCampaignList) || endpointOrCampaignList.length === 0) return;
 
 		if (direction === "prev" && page <= 1) return;
 
@@ -111,10 +120,7 @@ export const usePaginate = <T = Campaign>(
 
 		setPage(newPage);
 
-		const newDataSlice = endpointOrCampaignList.slice(
-			newPage - 1,
-			options.limit ?? LIMIT
-		) as T[];
+		const newDataSlice = endpointOrCampaignList.slice(newPage - 1, options.limit ?? LIMIT) as T[];
 
 		const updatedData = shouldReturnAll
 			? { ...data, data: [...data.data, ...newDataSlice] }
@@ -138,7 +144,7 @@ export const usePaginate = <T = Campaign>(
 		data,
 		isFetching,
 		error,
-		fetch,
+		fetchFromEndpoint,
 		fetchFromStore,
 		hasPrevious,
 		hasMore,

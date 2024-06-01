@@ -31,8 +31,7 @@ const Overview = () => {
 	const searchParams = useSearchParams();
 	const currentCampaign = useCampaignStore((state) =>
 		state.campaigns.find(
-			(campaign) =>
-				campaign._id === searchParams.get("id") && !campaign.isPublished
+			(campaign) => campaign._id === searchParams.get("id") && !campaign.isPublished
 		)
 	);
 
@@ -44,17 +43,13 @@ const Overview = () => {
 		<AuthenticatedUserLayout isDashboard>
 			<section className="">
 				<div className="flex flex-col justify-between gap-8 md:m-0 lg:flex-row">
-					<Heading
-						as="h1"
-						className="mb-4 text-lg font-bold md:hidden lg:w-3/5 lg:space-y-5"
-					>
+					<Heading as="h1" className="mb-4 text-lg font-bold md:hidden lg:w-3/5 lg:space-y-5">
 						{currentCampaign.title}
 					</Heading>
 
 					<CampaignCard
 						classNames={{
-							image:
-								"aspect-[382/266] md:aspect-[751/313] max-h-[313px] rounded-[10px]",
+							image: "aspect-[382/266] md:aspect-[751/313] max-h-[313px] rounded-[10px]",
 						}}
 						cardType="overview"
 						cardDetails={currentCampaign}
@@ -78,9 +73,7 @@ const Overview = () => {
 								<DropdownMenuContent className="w-56" align="end" forceMount>
 									<DropdownMenuGroup>
 										<DropdownMenuItem className="py-2">7 days</DropdownMenuItem>
-										<DropdownMenuItem className="py-2">
-											14 days
-										</DropdownMenuItem>
+										<DropdownMenuItem className="py-2">14 days</DropdownMenuItem>
 									</DropdownMenuGroup>
 								</DropdownMenuContent>
 							</DropdownMenu>
@@ -92,12 +85,7 @@ const Overview = () => {
 									className="flex flex-col md:flex-row md:items-center md:justify-between md:gap-7"
 								>
 									<div className="flex items-center gap-2">
-										<Image
-											src={user.image}
-											alt="User Image"
-											width={30}
-											height={30}
-										/>
+										<Image src={user.image} alt="User Image" width={30} height={30} />
 										<div className="xl: flex flex-col">
 											<span className="font-medium">{user.name}</span>
 											<span className="text-sm">{user.email}</span>

@@ -1,5 +1,5 @@
 import { getEditorExtensions } from "@/lib/helpers/campaign";
-import type { FormStore } from "@/store";
+import type { StepThreeData } from "@/store";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { sanitize } from "isomorphic-dompurify";
 import { useEffect } from "react";
@@ -9,7 +9,7 @@ import TipTapToolBar from "./TipTapToolBar";
 type EditorProps = {
 	placeholder?: string;
 	editorContent: string;
-	setFormValue: UseFormSetValue<FormStore["formStepData"]>;
+	setFormValue: UseFormSetValue<StepThreeData>;
 	onChange: (content: string) => void;
 };
 
@@ -25,18 +25,14 @@ function TiptapEditor(props: EditorProps) {
 
 		editorProps: {
 			attributes: {
-				class:
-					"focus-visible:outline-none disabled:cursor-not-allowed min-h-24",
+				class: "focus-visible:outline-none disabled:cursor-not-allowed min-h-24",
 			},
 		},
 
 		content: editorContent,
 
 		onUpdate: (options) => {
-			const purifiedHTML = sanitize(options.editor.getHTML()).replaceAll(
-				"<p></p>",
-				`<br>`
-			);
+			const purifiedHTML = sanitize(options.editor.getHTML()).replaceAll("<p></p>", `<br>`);
 
 			onChange(purifiedHTML);
 

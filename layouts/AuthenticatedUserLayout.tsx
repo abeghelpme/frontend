@@ -83,11 +83,7 @@ export const AuthenticatedUserLayout = ({
 			<header className="sticky left-0 top-0 z-10 flex items-center justify-between gap-10 border-b border-b-abeg-primary bg-white px-[5%] py-5 lg:px-[7%] 2xl:px-[10%]">
 				<div className="flex items-center gap-5">
 					{isDashboard && (
-						<Button
-							onClick={() => setIsOpen(!isOpen)}
-							variant="regular"
-							className="md:hidden"
-						>
+						<Button onClick={() => setIsOpen(!isOpen)} variant="regular" className="md:hidden">
 							<Hamburger />
 						</Button>
 					)}
@@ -101,11 +97,7 @@ export const AuthenticatedUserLayout = ({
 							isOpen && "translate-x-0"
 						)}
 					>
-						<Button
-							onClick={() => setIsOpen(false)}
-							variant="regular"
-							className="!justify-end"
-						>
+						<Button onClick={() => setIsOpen(false)} variant="regular" className="!justify-end">
 							<CloseIcon />
 						</Button>
 						<div className="space-y-6">
@@ -191,9 +183,7 @@ export const AuthenticatedUserLayout = ({
 					<div className="px-[5%] lg:px-[7%] 2xl:px-[10%]">
 						<div className="mt-6 flex flex-col items-start justify-between gap-5 md:mt-0 md:flex-row md:py-6 lg:gap-10">
 							<div className="space-y-2 text-sm md:text-xl md:text-white lg:text-2xl">
-								<p className="font-semibold">
-									Hi, {castedUser?.firstName || "FirstName"}👋
-								</p>
+								<p className="font-semibold">Hi, {castedUser?.firstName || "FirstName"}👋</p>
 
 								{router.pathname === "/c" ? (
 									<p className="">Here's an overview of your campaigns✨.</p>

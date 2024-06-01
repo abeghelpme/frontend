@@ -1,13 +1,8 @@
 import { cn } from "@/lib";
-import { useDragScroll } from "@/lib/hooks";
-import {
-	storiesAboutUs,
-	testimonialImage1,
-} from "@/public/assets/images/landing-page";
+import { storiesAboutUs, testimonialImage1 } from "@/public/assets/images/landing-page";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useState } from "react";
-import * as React from "react";
 
 const successStories = [
 	{
@@ -48,40 +43,33 @@ const successStories = [
 	},
 ];
 const SuccessStories = ({ className }: { className?: string }) => {
-	useDragScroll<HTMLDivElement>("desktopOnly");
 	const [currentItem, setCurrentItem] = useState(0);
 
 	const next = () => {
-		setCurrentItem((prevItem) =>
-			prevItem === successStories.length - 1 ? 0 : prevItem + 1
-		);
+		setCurrentItem((prevItem) => (prevItem === successStories.length - 1 ? 0 : prevItem + 1));
 	};
 
 	const prev = () => {
-		setCurrentItem((prevItem) =>
-			prevItem === 0 ? successStories.length - 1 : prevItem - 1
-		);
+		setCurrentItem((prevItem) => (prevItem === 0 ? successStories.length - 1 : prevItem - 1));
 	};
 
 	return (
 		<div className={cn("relative flex flex-col md:gap-12", className)}>
-			<h1 className="px-4 text-2xl md:text-3xl  font-bold text-center">
+			<h1 className="px-4 text-center text-2xl  font-bold md:text-3xl">
 				The Success stories of the benefactors speak for themselves
 			</h1>
 
-			<div className={"md:flex overflow-hidden"}>
+			<div className={"overflow-hidden md:flex"}>
 				{successStories.map((story, id) => (
 					<div
 						key={id}
 						style={{ transform: `translateX(-${currentItem * 100}%)` }}
-						className="w-full transition-transform duration-500 flex flex-col-reverse gap-5 md:flex-row shrink-0 grow-0 space-y-10 md:space-y-0 md:justify-between md:items-center"
+						className="flex w-full shrink-0 grow-0 flex-col-reverse gap-5 space-y-10 transition-transform duration-500 md:flex-row md:items-center md:justify-between md:space-y-0"
 					>
-						<div className="md:w-1/2 space-y-5 md:space-y-10">
+						<div className="space-y-5 md:w-1/2 md:space-y-10">
 							<h1 className="text-base md:text-lg">{story.title}</h1>
-							<h1 className="text-2xl md:text-3xl  font-bold pr-16 md:pr-0">
-								{story.secondTitle}
-							</h1>
-							<p className="text-base md:text-lg font-medium">{story.text}</p>
+							<h1 className="pr-16 text-2xl  font-bold md:pr-0 md:text-3xl">{story.secondTitle}</h1>
+							<p className="text-base font-medium md:text-lg">{story.text}</p>
 						</div>
 						<div className="w-full md:w-1/2">
 							<Image
@@ -92,16 +80,16 @@ const SuccessStories = ({ className }: { className?: string }) => {
 								className="w-full rounded-2xl object-cover"
 							/>
 							<button
-								className="hidden md:block absolute z-50 top-[45%] right-0 transform -translate-y-1/2 border border-white rounded-full p-2 md:p-3 backdrop-filter backdrop-blur-md hover:backdrop-blur-lg transition-all duration-300"
+								className="absolute right-0 top-[45%] z-50 hidden -translate-y-1/2 transform rounded-full border border-white p-2 backdrop-blur-md backdrop-filter transition-all duration-300 hover:backdrop-blur-lg md:block md:p-3"
 								onClick={next}
 							>
-								<ArrowRightIcon className="text-white size-20" />
+								<ArrowRightIcon className="size-20 text-white" />
 							</button>
 							<button
-								className="hidden md:block absolute z-50 transform  top-[70%] right-0 -translate-y-1/2 border border-white rounded-full p-2 md:p-3 backdrop-filter backdrop-blur-md hover:backdrop-blur-lg transition-all duration-300"
+								className="absolute right-0 top-[70%] z-50 hidden  -translate-y-1/2 transform rounded-full border border-white p-2 backdrop-blur-md backdrop-filter transition-all duration-300 hover:backdrop-blur-lg md:block md:p-3"
 								onClick={prev}
 							>
-								<ArrowLeftIcon className="text-white size-20" />
+								<ArrowLeftIcon className="size-20 text-white" />
 							</button>
 						</div>
 					</div>

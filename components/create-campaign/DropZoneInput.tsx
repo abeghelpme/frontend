@@ -14,14 +14,14 @@ type DropZoneInputProps = {
 function DropZoneInput(props: DropZoneInputProps) {
 	const { value: imageFiles, onChange } = props;
 
-	const [isDragActive, toggleIsDragActive] = useToggle(false);
+	const [isDragging, toggleIsDragging] = useToggle(false);
 
 	const { updateFormData } = useFormStore((state) => state.actions);
 
-	const handleImageUpload = (
-		event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>
-	) => {
-		event.type === "drop" && toggleIsDragActive(false);
+	const handleImageUpload = (event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>) => {
+		if (event.type === "drop") {
+			toggleIsDragging(false);
+		}
 
 		const fileList =
 			event.type === "drop"
@@ -36,9 +36,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 			return;
 		}
 
-		const realImageFiles = imageFiles.filter(
-			(file) => file instanceof File
-		) as File[];
+		const realImageFiles = imageFiles.filter((file) => file instanceof File) as File[];
 
 		const validFilesArray = validateFiles(fileList, realImageFiles);
 
@@ -51,20 +49,18 @@ function DropZoneInput(props: DropZoneInputProps) {
 		onChange(newFileState);
 
 		toast.success("Success", {
-			description: `Uploaded ${validFilesArray.length} file${
-				validFilesArray.length > 1 ? "s" : ""
-			}!`,
+			description: `Uploaded ${validFilesArray.length} file${validFilesArray.length > 1 ? "s" : ""}!`,
 		});
 	};
 
 	const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
 		event.preventDefault();
-		toggleIsDragActive(true);
+		toggleIsDragging(true);
 	};
 
 	const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
 		event.preventDefault();
-		toggleIsDragActive(false);
+		toggleIsDragging(false);
 	};
 
 	return (
@@ -74,7 +70,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 			onDragLeave={handleDragLeave}
 			className={cn(
 				"relative mt-4 flex min-h-40 flex-col items-center justify-end rounded-[5px] border border-dashed border-abeg-primary py-[0.9375rem] text-xs lg:min-h-60",
-				isDragActive && "opacity-60"
+				isDragging && "opacity-60"
 			)}
 		>
 			<Button
@@ -94,9 +90,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 			/>
 
 			<div className="mt-[0.9375rem] text-center text-xs lg:text-xs">
-				<p className="italic text-abeg-primary">
-					Click to select files, or Drag {`'n'`} Drop
-				</p>
+				<p className="italic text-abeg-primary">Click to select files, or Drag {`'n'`} Drop</p>
 
 				<p className="mt-1">Support files; PDF, JPG, CSV </p>
 
