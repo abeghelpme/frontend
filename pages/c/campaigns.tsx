@@ -144,9 +144,11 @@ function AllCampaignsPage() {
 								onValueChange={(value) => setResultsPerPage(Number(value))}
 								className="ml-auto block cursor-pointer bg-white text-sm font-medium text-abeg-text"
 							>
-								<Dropdown.MenuRadioItem value="1">10</Dropdown.MenuRadioItem>
-								<Dropdown.MenuRadioItem value="2">20</Dropdown.MenuRadioItem>
-								<Dropdown.MenuRadioItem value="3">30</Dropdown.MenuRadioItem>
+								<Dropdown.MenuRadioItem value="10">10</Dropdown.MenuRadioItem>
+								<Dropdown.MenuRadioItem value="15">15</Dropdown.MenuRadioItem>
+								<Dropdown.MenuRadioItem value="20">20</Dropdown.MenuRadioItem>
+								<Dropdown.MenuRadioItem value="25">25</Dropdown.MenuRadioItem>
+								<Dropdown.MenuRadioItem value="30">30</Dropdown.MenuRadioItem>
 							</Dropdown.MenuRadioGroup>
 						</Dropdown.MenuContent>
 					</Dropdown.Menu>
