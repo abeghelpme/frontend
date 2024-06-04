@@ -1,5 +1,5 @@
 import type { Campaign } from "@/interfaces/Campaign";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCallbackRef } from "./useCallbackRef";
 
 type UsePaginateOptions = {
@@ -40,11 +40,11 @@ export const usePagination = <TDataItem = Campaign>(
 
 	const initializePagination = useCallbackRef(() => handleUpdateData(currentPage));
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		initializePagination();
 	}, [limit, campaignList, initializePagination]);
 
-	const handlePagination = (directionOrPage: "prev" | "next" | number) => () => {
+	const handlePageChange = (directionOrPage: "prev" | "next" | number) => {
 		if (typeof directionOrPage === "number") {
 			handleUpdateData(directionOrPage);
 
@@ -73,7 +73,7 @@ export const usePagination = <TDataItem = Campaign>(
 		data: paginatedData,
 		currentPage,
 		totalPageCount,
-		handlePagination,
+		handlePageChange,
 		hasPrevious,
 		hasMore,
 	};

@@ -34,6 +34,7 @@ export {
 
 export { default as Input } from "./input";
 export { default as ProgressBar } from "./progressbar";
+export { default as Pagination } from "./pagination";
 
 export { Toaster } from "./sonner";
 

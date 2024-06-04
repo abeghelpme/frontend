@@ -10,12 +10,11 @@ import {
 	StarIcon,
 	VerifiedIcon,
 } from "@/components/common/svg";
-import { Dropdown, Tabs } from "@/components/ui";
+import { Dropdown, Pagination, Tabs } from "@/components/ui";
 import type { Campaign } from "@/interfaces/Campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { usePagination } from "@/lib/hooks/usePagination";
 import { useCampaignStore } from "@/store";
-import { Pagination } from "@nextui-org/pagination";
 import { AlignJustifyIcon, Grid3x3Icon } from "lucide-react";
 import { useState } from "react";
 
@@ -37,7 +36,7 @@ function AllCampaignsPage() {
 	const {
 		data: paginatedCampaigns,
 		totalPageCount,
-		handlePagination,
+		handlePageChange,
 		currentPage,
 	} = usePagination(allUserCampaigns, { limit: resultsPerPage });
 
@@ -173,7 +172,7 @@ function AllCampaignsPage() {
 
 			<div className="mt-[30px] flex items-center justify-center gap-[14px] p-2 md:mt-[40px]">
 				<button
-					onClick={handlePagination("prev")}
+					onClick={() => handlePageChange("prev")}
 					className="flex items-center gap-2 p-2 font-extrabold"
 				>
 					<ArrowLeft className="size-5" />
@@ -181,19 +180,13 @@ function AllCampaignsPage() {
 				</button>
 
 				<Pagination
-					disableCursorAnimation
-					page={currentPage}
-					showShadow={true}
-					onChange={(value) => handlePagination(value)()}
-					classNames={{
-						wrapper: "flex items-center gap-4",
-						item: "h-auto w-auto min-w-[initial] bg-transparent text-base font-extrabold data-[active=true]:size-7 data-[active=true]:rounded-full data-[active=true]:border-[1.4px] data-[active=true]:border-black data-[active=true]:bg-abeg-primary",
-					}}
-					total={totalPageCount}
+					onPageChange={handlePageChange}
+					currentPage={currentPage}
+					totalPageCount={totalPageCount}
 				/>
 
 				<button
-					onClick={handlePagination("next")}
+					onClick={() => handlePageChange("next")}
 					className="flex items-center gap-2 p-2 font-extrabold"
 				>
 					Next
