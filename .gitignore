@@ -25,6 +25,7 @@ pnpm-lock.yaml
 
 # misc
 .DS_Store
+.npmrc
 *.pem
 
 # debug

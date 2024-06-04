@@ -13,10 +13,9 @@ import {
 import { Dropdown, Tabs } from "@/components/ui";
 import type { Campaign } from "@/interfaces/Campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
-import { cn } from "@/lib";
-import { useElementList } from "@/lib/hooks";
 import { usePagination } from "@/lib/hooks/usePagination";
 import { useCampaignStore } from "@/store";
+import { Pagination } from "@nextui-org/pagination";
 import { AlignJustifyIcon, Grid3x3Icon } from "lucide-react";
 import { useState } from "react";
 
@@ -43,8 +42,6 @@ function AllCampaignsPage() {
 	} = usePagination(allUserCampaigns, { limit: resultsPerPage });
 
 	const filteredCampaigns = STATUS_FILTER_LOOKUP(paginatedCampaigns)[statusFilter];
-
-	const [ButtonList] = useElementList();
 
 	return (
 		<Tabs.Root defaultValue="grid" className="flex flex-col gap-8 pb-[90px]">
@@ -172,59 +169,35 @@ function AllCampaignsPage() {
 				/>
 			</Tabs.Content>
 
-			{
-				<div className="mt-[30px] flex items-center justify-center gap-[14px] p-2 md:mt-[40px]">
-					<button
-						onClick={handlePagination("prev")}
-						className="flex items-center gap-2 font-extrabold"
-					>
-						<ArrowLeft className="size-5" />
-						<p> Prev</p>
-					</button>
+			<div className="mt-[30px] flex items-center justify-center gap-[14px] p-2 md:mt-[40px]">
+				<button
+					onClick={handlePagination("prev")}
+					className="flex items-center gap-2 p-2 font-extrabold"
+				>
+					<ArrowLeft className="size-5" />
+					Prev
+				</button>
 
-					<ButtonList
-						className="flex items-center gap-4 font-extrabold"
-						each={[...Array(totalPageCount).keys()]}
-						render={(index) => {
-							const pageNumber = index + 1;
+				<Pagination
+					disableCursorAnimation
+					page={currentPage}
+					showShadow={true}
+					onChange={(value) => handlePagination(value)()}
+					classNames={{
+						wrapper: "flex items-center gap-4",
+						item: "h-auto w-auto min-w-[initial] bg-transparent text-base font-extrabold data-[active=true]:size-7 data-[active=true]:rounded-full data-[active=true]:border-[1.4px] data-[active=true]:border-black data-[active=true]:bg-abeg-primary",
+					}}
+					total={totalPageCount}
+				/>
 
-							const Button = (
-								<button
-									onClick={handlePagination(pageNumber)}
-									className={cn(
-										currentPage === pageNumber &&
-											"size-7 rounded-full border-[1.4px] border-black bg-abeg-primary text-white"
-									)}
-								>
-									{pageNumber}
-								</button>
-							);
-
-							return (
-								<li key={index}>
-									{(pageNumber <= 3 || pageNumber === totalPageCount) && Button}
-
-									{index === 3 && totalPageCount > 4 && (
-										<div className="flex items-center gap-[2px]">
-											<span className="block size-1 rounded-full bg-abeg-text" />
-											<span className="block size-1 rounded-full bg-abeg-text" />
-											<span className="block size-1 rounded-full bg-abeg-text" />
-										</div>
-									)}
-								</li>
-							);
-						}}
-					/>
-
-					<button
-						onClick={handlePagination("next")}
-						className="flex items-center gap-2 font-extrabold"
-					>
-						<p>Next</p>
-						<ArrowLeft className="size-5 rotate-180" />
-					</button>
-				</div>
-			}
+				<button
+					onClick={handlePagination("next")}
+					className="flex items-center gap-2 p-2 font-extrabold"
+				>
+					Next
+					<ArrowLeft className="size-5 rotate-180" />
+				</button>
+			</div>
 		</Tabs.Root>
 	);
 }

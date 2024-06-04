@@ -242,7 +242,7 @@ export function CampaignCardList(props: CardListProps) {
 		card: {
 			base: {
 				horizontal: cn("max-w-[370px] shrink-0 md:max-w-[396px]", dragItemClasses),
-				grid: "max-w-[403px]",
+				grid: "w-[clamp(300px,100%,403px)]",
 				vertical: "max-w-[403px]",
 			},
 
