@@ -16,7 +16,6 @@ export * from "./dashboardIcons";
 export {
 	AbegHelpLogo,
 	AbegHelpLogoWhite,
-	ArrowDown,
 	CameroonFlag,
 	CloseIcon,
 	ClosedIcon,
@@ -50,3 +49,4 @@ export {
 	UploadIcon,
 } from "./svg";
 export { default as SingleCampaignProgress } from "./SingleCampaignProgress";
+export { default as Pagination } from "./Pagination";

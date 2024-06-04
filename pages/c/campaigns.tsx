@@ -1,7 +1,6 @@
-import { ArrowDown, CampaignIcon, Heading } from "@/components/common";
+import { ArrowDown, CampaignIcon, Heading, Pagination } from "@/components/common";
 import { CampaignCardList } from "@/components/common/CampaignCard";
 import {
-	ArrowLeft,
 	ClosedIcon,
 	DraftsIcon,
 	PendingStarIcon,
@@ -10,7 +9,7 @@ import {
 	StarIcon,
 	VerifiedIcon,
 } from "@/components/common/svg";
-import { Dropdown, Pagination, Tabs } from "@/components/ui";
+import { Dropdown, Tabs } from "@/components/ui";
 import type { Campaign } from "@/interfaces/Campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { usePagination } from "@/lib/hooks/usePagination";
@@ -170,29 +169,11 @@ function AllCampaignsPage() {
 				/>
 			</Tabs.Content>
 
-			<div className="mt-[30px] flex items-center justify-center gap-[14px] p-2 md:mt-[40px]">
-				<button
-					onClick={() => handlePageChange("prev")}
-					className="flex items-center gap-2 p-2 font-extrabold"
-				>
-					<ArrowLeft className="size-5" />
-					Prev
-				</button>
-
-				<Pagination
-					onPageChange={handlePageChange}
-					currentPage={currentPage}
-					totalPageCount={totalPageCount}
-				/>
-
-				<button
-					onClick={() => handlePageChange("next")}
-					className="flex items-center gap-2 p-2 font-extrabold"
-				>
-					Next
-					<ArrowLeft className="size-5 rotate-180" />
-				</button>
-			</div>
+			<Pagination
+				onPageChange={handlePageChange}
+				currentPage={currentPage}
+				totalPageCount={totalPageCount}
+			/>
 		</Tabs.Root>
 	);
 }
