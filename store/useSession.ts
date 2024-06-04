@@ -34,8 +34,10 @@ export const useInitSession = create<Session>()((set, get) => ({
 			}
 
 			const { data } = await callApi<ApiResponse<SessionData>>("/auth/session");
+
 			useInitCampaignStore.getState().actions.initializeCampaigns(data?.data?.campaigns ?? []);
-			void useInitCampaignStore.getState().actions.initializeCategories();
+
+			void useInitCampaignStore.getState().actions.initializeAllUserCampaigns(data?.data?.user._id);
 
 			set({
 				...(data?.data && { user: data.data.user }),

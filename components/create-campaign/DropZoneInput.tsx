@@ -20,6 +20,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 	const handleImageUpload = (event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>) => {
 		if (event.type === "drop") {
+			event.preventDefault();
 			toggleIsDragging(false);
 		}
 
@@ -36,9 +37,9 @@ function DropZoneInput(props: DropZoneInputProps) {
 			return;
 		}
 
-		const realImageFiles = imageFiles.filter((file) => file instanceof File) as File[];
+		const existingImageFiles = imageFiles.filter((file) => file instanceof File) as File[];
 
-		const validFilesArray = validateFiles(fileList, realImageFiles);
+		const validFilesArray = validateFiles(fileList, existingImageFiles);
 
 		if (validFilesArray.length === 0) return;
 

@@ -36,6 +36,12 @@ function CreateCampaignPage() {
 	}, []);
 
 	useEffect(() => {
+		if (methods.getValues().categoryId) return;
+
+		methods.reset(formStepData);
+	}, [formStepData]);
+
+	useEffect(() => {
 		window.scrollTo({
 			top: 0,
 			left: 0,

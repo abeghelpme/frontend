@@ -5,7 +5,6 @@ import { callApi, cn } from "@/lib";
 import { useFormStore } from "@/store";
 import type { StepTwoData } from "@/store/useFormStore";
 import { ChevronDownIcon } from "lucide-react";
-import { useEffect } from "react";
 import { Controller, useFormContext as useHookFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import Heading from "../../common/Heading";
@@ -15,16 +14,10 @@ function StepTwo() {
 	const {
 		currentStep,
 		campaignId,
-		formStepData,
 		actions: { goToStep, updateFormData, updateCampaignId },
 	} = useFormStore((state) => state);
 
-	const { control, handleSubmit, getValues, reset, formState, register } =
-		useHookFormContext<StepTwoData>();
-
-	useEffect(() => {
-		!getValues().title && reset(formStepData);
-	}, [formStepData]);
+	const { control, handleSubmit, formState, register } = useHookFormContext<StepTwoData>();
 
 	const onSubmit = async (data: StepTwoData) => {
 		updateFormData(data);

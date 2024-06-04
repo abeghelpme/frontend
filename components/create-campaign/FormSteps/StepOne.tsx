@@ -5,11 +5,11 @@ import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib";
 import { targetCountries, validateTagValue } from "@/lib/helpers/campaign";
-import { useBaseElementList, useElementList } from "@/lib/hooks";
+import { useElementList } from "@/lib/hooks";
 import { useCampaignStore } from "@/store";
 import { type StepOneData, useFormStore } from "@/store/useFormStore";
 import { ChevronDownIcon } from "lucide-react";
-import { type KeyboardEvent, type MouseEvent, useEffect, useRef } from "react";
+import { type KeyboardEvent, type MouseEvent, useRef } from "react";
 import { Controller, useFormContext as useHookFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import FormErrorMessage from "../FormErrorMessage";
@@ -26,20 +26,10 @@ function StepOne() {
 
 	const campaignCategories = useCampaignStore((state) => state.categories);
 
-	const {
-		control,
-		handleSubmit,
-		getValues,
-		reset,
-		setValue: setFormValue,
-	} = useHookFormContext<StepOneData>();
+	const { control, handleSubmit, setValue: setFormValue } = useHookFormContext<StepOneData>();
 
-	useEffect(() => {
-		!getValues().categoryId && reset(formStepData);
-	}, [formStepData]);
-
-	const [CategoryList] = useBaseElementList();
-	const [CountryList] = useBaseElementList();
+	const [CategoryList] = useElementList("base");
+	const [CountryList] = useElementList("base");
 	const [TagList] = useElementList();
 
 	const onSubmit = async (data: StepOneData) => {

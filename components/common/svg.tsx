@@ -920,6 +920,26 @@ export const UploadIcon = () => {
 	);
 };
 
+export const ArrowLeft = (props: React.SVGProps<SVGSVGElement>) => (
+	<svg
+		width="36"
+		height="36"
+		viewBox="0 0 36 36"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+		{...props}
+	>
+		<path
+			d="M22.7734 6.55966L13.2042 16.1289C12.0741 17.259 12.0741 19.1083 13.2042 20.2384L22.7734 29.8076"
+			stroke="#484848"
+			strokeWidth="2.20151"
+			strokeMiterlimit="10"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+	</svg>
+);
+
 export const GridIcon = (props: React.SVGProps<SVGSVGElement>) => (
 	<svg
 		width="20"

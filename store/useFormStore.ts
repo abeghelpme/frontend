@@ -33,7 +33,7 @@ export type FormStore = {
 
 		updateFormData: (updatedFormData: Partial<FormStore["formStepData"]>) => void;
 
-		resetFormData: () => void;
+		resetFormStore: () => void;
 
 		initializeFormData: () => void;
 	};
@@ -80,7 +80,7 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 			set({ formStepData: { ...formStepData, ...updatedFormData } });
 		},
 
-		resetFormData: () => set({ formStepData: initialFormState.formStepData }),
+		resetFormStore: () => set(initialFormState),
 
 		initializeFormData: () => {
 			const campaigns = useInitCampaignStore.getState().campaigns as Campaign[] | undefined;

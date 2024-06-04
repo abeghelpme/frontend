@@ -4,7 +4,6 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { callApi } from "@/lib";
 import { type StepThreeData, useCampaignStore, useFormStore } from "@/store";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { Controller, useFormContext as useHookFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import DropZoneInput from "../DropZoneInput";
@@ -18,23 +17,12 @@ function StepThree() {
 	const {
 		currentStep,
 		campaignId,
-		formStepData,
-		actions: { resetFormData },
+		actions: { resetFormStore },
 	} = useFormStore((state) => state);
 
 	const { addCampaign } = useCampaignStore((state) => state.actions);
 
-	const {
-		control,
-		handleSubmit,
-		getValues,
-		reset,
-		setValue: setFormValue,
-	} = useHookFormContext<StepThreeData>();
-
-	useEffect(() => {
-		!getValues().story && reset(formStepData);
-	}, [formStepData]);
+	const { control, handleSubmit, setValue: setFormValue } = useHookFormContext<StepThreeData>();
 
 	const onSubmit = async (data: StepThreeData) => {
 		const formData = new FormData();
@@ -59,7 +47,7 @@ function StepThree() {
 
 		if (!dataInfo?.data) return;
 
-		resetFormData();
+		resetFormStore();
 
 		addCampaign(dataInfo.data);
 
