@@ -182,9 +182,8 @@ function BookmarksPage() {
 								<button
 									onClick={handlePagination(pageNumber)}
 									className={cn(
-										"size-7 rounded-full",
 										currentPage === pageNumber &&
-											"border-[1.4px] border-black bg-abeg-primary text-white"
+											"border-[1.4px] border-black size-7 rounded-full bg-abeg-primary text-white"
 									)}
 								>
 									{pageNumber}

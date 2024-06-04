@@ -192,9 +192,8 @@ function AllCampaignsPage() {
 								<button
 									onClick={handlePagination(pageNumber)}
 									className={cn(
-										"size-7 rounded-full",
 										currentPage === pageNumber &&
-											"border-[1.4px] border-black bg-abeg-primary text-white"
+											"size-7 rounded-full border-[1.4px] border-black bg-abeg-primary text-white"
 									)}
 								>
 									{pageNumber}
