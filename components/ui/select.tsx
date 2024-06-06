@@ -40,10 +40,7 @@ function SelectScrollUpButton(
 	return (
 		<SelectPrimitive.ScrollUpButton
 			ref={ref}
-			className={cn(
-				"flex cursor-default items-center justify-center py-1",
-				className
-			)}
+			className={cn("flex cursor-default items-center justify-center py-1", className)}
 			{...restOfProps}
 		>
 			<ChevronUpIcon />
@@ -60,10 +57,7 @@ function SelectScrollDownButton(
 	return (
 		<SelectPrimitive.ScrollDownButton
 			ref={ref}
-			className={cn(
-				"flex cursor-default items-center justify-center py-1",
-				className
-			)}
+			className={cn("flex cursor-default items-center justify-center py-1", className)}
 			{...restOfProps}
 		>
 			<ChevronDownIcon />
@@ -76,9 +70,6 @@ function SelectContent(
 	ref: ForwardedRefType<typeof SelectPrimitive.Content>
 ) {
 	const { className, children, position = "popper", ...restOfProps } = props;
-
-	const ScrollDownButton = forwardRef(SelectScrollDownButton);
-	const ScrollUpButton = forwardRef(SelectScrollUpButton);
 
 	return (
 		<SelectPrimitive.Portal>
@@ -93,7 +84,7 @@ function SelectContent(
 				position={position}
 				{...restOfProps}
 			>
-				<ScrollUpButton />
+				<Select.ScrollDownButton />
 
 				<SelectPrimitive.Viewport
 					className={cn(
@@ -105,7 +96,7 @@ function SelectContent(
 					{children}
 				</SelectPrimitive.Viewport>
 
-				<ScrollDownButton />
+				<Select.ScrollUpButton />
 			</SelectPrimitive.Content>
 		</SelectPrimitive.Portal>
 	);
