@@ -18,8 +18,6 @@ function DropZoneInput(props: DropZoneInputProps) {
 	const existingImageFiles = imageFiles.filter((file) => file instanceof File) as File[];
 
 	const handleImageUpload: DropZoneProps["onDrop"] = ({ acceptedFiles }) => {
-		if (acceptedFiles.length === 0) return;
-
 		const newFileState = [...imageFiles, ...acceptedFiles];
 
 		updateFormData({ photos: newFileState });

@@ -70,6 +70,8 @@ function DropZone(props: DropZoneProps & InputProps) {
 				: (event as ChangeEvent<HTMLInputElement>).target.files;
 
 		if (fileList === null) {
+			console.warn("No file selected");
+
 			toast.error("Error", {
 				description: "No file selected",
 			});
@@ -80,6 +82,8 @@ function DropZone(props: DropZoneProps & InputProps) {
 		const filesArray = validator
 			? validator(fileList, existingFiles)
 			: handleFileValidation(fileList, existingFiles, { ...validationRules, allowedFileTypes });
+
+		if (filesArray.length === 0) return;
 
 		onDrop({ acceptedFiles: filesArray, event });
 	};
