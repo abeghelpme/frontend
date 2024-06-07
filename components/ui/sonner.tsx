@@ -11,7 +11,7 @@ const Toaster = (props: ToasterProps) => {
 			theme={theme as ToasterProps["theme"]}
 			className="toaster group"
 			position="bottom-right"
-			duration={10000}
+			duration={3000}
 			closeButton={true}
 			pauseWhenPageIsHidden={true}
 			toastOptions={{
