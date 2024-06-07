@@ -1,9 +1,8 @@
-import { Button } from "@/components/ui";
+import { Button, DropZone, type DropZoneProps } from "@/components/ui";
 import { validateFiles } from "@/lib/helpers/campaign";
 import { allowedFileTypes } from "@/lib/helpers/campaign/validateFiles";
 import { type StepThreeData, useFormStore } from "@/store";
 import { toast } from "sonner";
-import { DropZone, type DropZoneProps } from "../common";
 
 type DropZoneInputProps = {
 	value: StepThreeData["photos"];

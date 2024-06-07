@@ -110,7 +110,7 @@ function DropZone(props: DropZoneProps & InputProps) {
 			)}
 		>
 			<input
-				className="absolute inset-0 cursor-pointer opacity-0"
+				className={cn("absolute inset-0 cursor-pointer opacity-0", classNames?.input)}
 				type="file"
 				{...(allowedFileTypes && { accept: allowedFileTypes.join(", ") })}
 				onChange={handleImageUpload}

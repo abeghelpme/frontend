@@ -43,3 +43,4 @@ export { default as Card } from "./card";
 export { default as Tabs } from "./tabs";
 export { Switch } from "./switch";
 export { Checkbox } from "./checkbox";
+export { default as DropZone, type DropZoneProps } from "./drop-zone";
