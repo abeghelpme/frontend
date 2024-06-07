@@ -43,7 +43,7 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 					throw new Error(`Request timed out after ${timeout}ms`, {
 						cause: "Timeout",
 					});
-				}, timeout)
+			  }, timeout)
 			: null;
 
 		// FIXME - Remove this type cast once TS updates its lib-dom types for AbortSignal, to include the new any() method
@@ -102,17 +102,10 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 
 			// == Exhaustive error handling for request failures
 		} catch (error) {
-			if (
-				error instanceof DOMException &&
-				error.name === "AbortError" &&
-				error.cause === "Timeout"
-			) {
+			if (error instanceof DOMException && error.name === "AbortError" && error.cause === "Timeout") {
 				const message = `Request was cancelled`;
 
-				console.info(
-					`%cAbortError: ${message}`,
-					"color: red; font-weight: 500; font-size: 14px;"
-				);
+				console.info(`%cAbortError: ${message}`, "color: red; font-weight: 500; font-size: 14px;");
 				console.trace("AbortError");
 
 				return {
