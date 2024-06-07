@@ -72,20 +72,22 @@ const Login = () => {
 			if (responseData?.data) {
 				const { user, campaigns } = responseData?.data;
 
+				// check if user has 2fa enabled
 				if (user.twoFA.active === false) {
+					await router.push("/signin?redirect=false", undefined, {
+						shallow: true,
+					});
+					// check if user doesn't have 2fa and opted to not be prompted again
 					const skipModal = localStorage.getItem(`skip-2FA-${user._id}`);
+					// populate store with initial data
+					updateUser(user);
+					initializeCampaigns(campaigns);
+					await initializeCategories();
 					if (skipModal === "true") {
 						router.push(campaigns && campaigns.length > 0 ? "/c" : "/c/create");
 					} else {
 						setOpenModal(true);
-						await router.push("/signin?redirect=false", undefined, {
-							shallow: true,
-						});
 					}
-					// populate store with initial data
-					updateUser(user);
-					initializeCampaigns(campaigns);
-					void initializeCategories();
 				} else {
 					router.push({
 						pathname: "/2fa/authenticate",
