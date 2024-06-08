@@ -1,12 +1,13 @@
 import { cn } from "@/lib";
 import { handleFileValidation } from "@/lib/helpers/campaign/validateFiles";
 import { useToggle } from "@/lib/hooks";
+import { isFunction, isObject } from "@/lib/type-helpers";
 import type React from "react";
 import type { ChangeEvent, DragEvent } from "react";
 import { toast } from "sonner";
 
 type InputProps = Omit<React.ComponentPropsWithRef<"input">, "className" | "onDrop"> & {
-	classNames?: { base?: string; input?: string; dragInProgress?: string };
+	classNames?: { base?: string; input?: string; activeDragState?: string };
 };
 
 export type DropZoneProps =
@@ -18,7 +19,7 @@ export type DropZoneProps =
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			validator?: (...params: any[]) => File[];
 
-			validationRules?: never;
+			validationRules?: "Option not available since you're using the validator prop";
 
 			onDrop: (details: {
 				acceptedFiles: File[];
@@ -36,7 +37,7 @@ export type DropZoneProps =
 				disallowDuplicates?: boolean;
 			};
 
-			validator?: never;
+			validator?: "Option not available since you're using the validationRules prop";
 
 			onDrop: (details: {
 				acceptedFiles: File[];
@@ -79,9 +80,13 @@ function DropZone(props: DropZoneProps & InputProps) {
 			return;
 		}
 
-		const filesArray = validator
+		const filesArray = isFunction(validator)
 			? validator(fileList, existingFiles)
-			: handleFileValidation(fileList, existingFiles, { ...validationRules, allowedFileTypes });
+			: handleFileValidation(
+					fileList,
+					existingFiles,
+					isObject(validationRules) ? { ...validationRules, allowedFileTypes } : {}
+			  );
 
 		if (filesArray.length === 0) return;
 
@@ -104,9 +109,9 @@ function DropZone(props: DropZoneProps & InputProps) {
 			onDragOver={handleDragOver}
 			onDragLeave={handleDragLeave}
 			className={cn(
-				"relative",
+				"relative flex flex-col",
 				classNames?.base,
-				isDragging && ["opacity-60", classNames?.dragInProgress]
+				isDragging && ["opacity-60", classNames?.activeDragState]
 			)}
 		>
 			<input
