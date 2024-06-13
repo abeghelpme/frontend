@@ -24,24 +24,23 @@ function ImagePreview(props: ImagePreviewProps) {
 		return file;
 	});
 
-	const handleRemoveImage =
-		(imageFile: StepThreeData["photos"][number]) => () => {
-			const updatedFileState = imageFiles.filter((file) => {
-				if (file instanceof File && imageFile instanceof File) {
-					return file.name !== imageFile.name;
-				}
+	const handleRemoveImage = (imageFile: StepThreeData["photos"][number]) => () => {
+		const updatedFileState = imageFiles.filter((file) => {
+			if (file instanceof File && imageFile instanceof File) {
+				return file.name !== imageFile.name;
+			}
 
-				if (typeof file === "string" && typeof imageFile === "string") {
-					return file !== imageFile;
-				}
+			if (typeof file === "string" && typeof imageFile === "string") {
+				return file !== imageFile;
+			}
 
-				return false;
-			});
+			return false;
+		});
 
-			updateFormData({ photos: updatedFileState });
+		updateFormData({ photos: updatedFileState });
 
-			onChange(updatedFileState);
-		};
+		onChange(updatedFileState);
+	};
 
 	return (
 		<ImagePreviewList
@@ -72,7 +71,7 @@ function ImagePreview(props: ImagePreviewProps) {
 							{file instanceof File && <p className="truncate">{file.name}</p>}
 
 							{isCoverImage && (
-								<span className="absolute left-[50%] top-0.5 block translate-x-[-50%] text-xs font-bold text-abeg-primary">
+								<span className="absolute left-1/2 top-0.5 block -translate-x-1/2 text-xs font-bold text-abeg-primary">
 									*Cover image
 								</span>
 							)}
@@ -80,10 +79,7 @@ function ImagePreview(props: ImagePreviewProps) {
 
 						{file instanceof File && (
 							<button type="button" onClick={handleRemoveImage(file)}>
-								<Trash2Icon
-									size={20}
-									className="text-red-500 active:scale-110"
-								/>
+								<Trash2Icon size={20} className="text-red-500 active:scale-110" />
 							</button>
 						)}
 					</li>

@@ -1,3 +1,4 @@
+import { nextui } from "@nextui-org/theme";
 import typographyPlugin from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 import animationPlugin from "tailwindcss-animate";
@@ -10,6 +11,7 @@ const config = {
 		"./components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 		"./lib/hooks/useDragScroll.ts",
+		"./node_modules/@nextui-org/theme/dist/components/pagination.js",
 	],
 
 	theme: {
@@ -133,6 +135,7 @@ const config = {
 	},
 
 	plugins: [
+		nextui(),
 		animationPlugin,
 		typographyPlugin,
 		plugin(({ addVariant, addComponents, theme }) => {

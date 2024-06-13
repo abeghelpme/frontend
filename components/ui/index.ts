@@ -34,7 +34,6 @@ export {
 
 export { default as Input } from "./input";
 export { default as ProgressBar } from "./progressbar";
-
 export { Toaster } from "./sonner";
 
 export { Select, SelectPrimitive } from "./select";
@@ -44,3 +43,4 @@ export { default as Card } from "./card";
 export { default as Tabs } from "./tabs";
 export { Switch } from "./switch";
 export { Checkbox } from "./checkbox";
+export { default as DropZone, type DropZoneProps } from "./drop-zone";

@@ -28,10 +28,8 @@ const Toaster = (props: ToasterProps) => {
 						"group-[.toaster]:text-sm group-[.toast]:text-muted-foreground  group-[.toast.error]:text-inherit group-[.toast.success]:text-inherit",
 					closeButton:
 						"group-[.toaster]:bg-inherit group-[.toaster]:text-inherit group-[.toaster]:border-inherit data-[close-button]:group-[.toaster]:hover:border-inherit data-[close-button]:group-[.toaster]:hover:bg-inherit",
-					actionButton:
-						"group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-					cancelButton:
-						"group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+					actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
+					cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
 				},
 			}}
 			{...props}

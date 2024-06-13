@@ -1,4 +1,4 @@
-import { ArrowDown, CampaignIcon, Heading } from "@/components/common";
+import { ArrowDown, CampaignIcon, Heading, Pagination } from "@/components/common";
 import { CampaignCardList } from "@/components/common/CampaignCard";
 import {
 	ClosedIcon,
@@ -12,36 +12,37 @@ import {
 import { Dropdown, Tabs } from "@/components/ui";
 import type { Campaign } from "@/interfaces/Campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
-import { usePaginate } from "@/lib/hooks";
-import { useSession } from "@/store";
+import { usePagination } from "@/lib/hooks/usePagination";
+import { useCampaignStore } from "@/store";
 import { AlignJustifyIcon, Grid3x3Icon } from "lucide-react";
 import { useState } from "react";
 
-const STATUS_FILTER_LOOKUP = {
-	All: (campaign: Campaign[]) => campaign,
-	Approved: (campaign: Campaign[]) => campaign.filter((c) => c.status === "Approved"),
-	Pending: (campaign: Campaign[]) => campaign.filter((c) => c.status === "In Review"),
-	Rejected: (campaign: Campaign[]) => campaign.filter((c) => c.status === "Rejected"),
-	Drafts: (campaign: Campaign[]) => campaign.filter((c) => c.status === "Draft"),
-	Closed: (campaign: Campaign[]) =>
-		campaign.filter((c) => c.status === ("Closed" as Campaign["status"])),
-	Published: (campaign: Campaign[]) => campaign.filter((c) => c.isPublished),
-};
+export const STATUS_FILTER_LOOKUP = (campaign: Campaign[]) => ({
+	All: campaign,
+	Approved: campaign.filter((c) => c.status === "Approved"),
+	Pending: campaign.filter((c) => c.status === "In Review"),
+	Rejected: campaign.filter((c) => c.status === "Rejected"),
+	Drafts: campaign.filter((c) => c.status === "Draft"),
+	Closed: campaign.filter((c) => c.status === ("Closed" as Campaign["status"])),
+	Published: campaign.filter((c) => c.isPublished),
+});
 
 function AllCampaignsPage() {
-	const [statusFilter, setStatusFilter] = useState<keyof typeof STATUS_FILTER_LOOKUP>("All");
-	const userId = useSession((state) => state.user?._id);
+	const [statusFilter, setStatusFilter] =
+		useState<keyof ReturnType<typeof STATUS_FILTER_LOOKUP>>("All");
 	const [resultsPerPage, setResultsPerPage] = useState(10);
+	const allUserCampaigns = useCampaignStore((state) => state.allUserCampaigns);
 	const {
-		data: { data: paginatedCampaigns },
-	} = usePaginate(`campaign/user/${userId}`, {
-		limit: resultsPerPage,
-	});
+		data: paginatedCampaigns,
+		totalPageCount,
+		handlePageChange,
+		currentPage,
+	} = usePagination(allUserCampaigns, { limit: resultsPerPage });
 
-	const filteredCampaigns = STATUS_FILTER_LOOKUP[statusFilter](paginatedCampaigns);
+	const filteredCampaigns = STATUS_FILTER_LOOKUP(paginatedCampaigns)[statusFilter];
 
 	return (
-		<Tabs.Root defaultValue="grid" className="mb-[95px] space-y-8">
+		<Tabs.Root defaultValue="grid" className="flex flex-col gap-8 pb-[90px]">
 			<div className="flex flex-col flex-wrap justify-between gap-3 max-md:gap-6 md:flex-row md:items-center">
 				<Heading as="h1" className="text-[32px] font-extrabold md:text-white">
 					My Campaigns
@@ -142,7 +143,9 @@ function AllCampaignsPage() {
 								className="ml-auto block cursor-pointer bg-white text-sm font-medium text-abeg-text"
 							>
 								<Dropdown.MenuRadioItem value="10">10</Dropdown.MenuRadioItem>
+								<Dropdown.MenuRadioItem value="15">15</Dropdown.MenuRadioItem>
 								<Dropdown.MenuRadioItem value="20">20</Dropdown.MenuRadioItem>
+								<Dropdown.MenuRadioItem value="25">25</Dropdown.MenuRadioItem>
 								<Dropdown.MenuRadioItem value="30">30</Dropdown.MenuRadioItem>
 							</Dropdown.MenuRadioGroup>
 						</Dropdown.MenuContent>
@@ -165,6 +168,12 @@ function AllCampaignsPage() {
 					withStatusCaption={true}
 				/>
 			</Tabs.Content>
+
+			<Pagination
+				onPageChange={handlePageChange}
+				currentPage={currentPage}
+				totalPageCount={totalPageCount}
+			/>
 		</Tabs.Root>
 	);
 }

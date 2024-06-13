@@ -13,6 +13,8 @@
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.4",
 		"@marsidev/react-turnstile": "^0.5.1",
+		"@nextui-org/pagination": "^2.0.32",
+		"@nextui-org/theme": "^2.2.5",
 		"@radix-ui/react-accordion": "^1.1.2",
 		"@radix-ui/react-avatar": "^1.0.4",
 		"@radix-ui/react-checkbox": "^1.0.4",

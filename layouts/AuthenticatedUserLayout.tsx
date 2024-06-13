@@ -48,14 +48,9 @@ const navigation = [
 		title: "campaigns",
 	},
 	{
-		path: "/c/analytics",
-		icon: <AnalyticsIcon stroke />,
-		title: "analytics",
-	},
-	{
-		path: "/notifications",
-		icon: <UpdatesIcon stroke />,
-		title: "updates",
+		path: "/c/bookmarks",
+		icon: <BookmarkIcon stroke />,
+		title: "bookmarks",
 	},
 	{
 		path: "/c/settings",
@@ -76,7 +71,7 @@ export const AuthenticatedUserLayout = ({
 	} = useSession((state) => state);
 	const castedUser = user as User;
 
-	const initials = castedUser?.firstName[0] + castedUser?.lastName[0];
+	const initials = castedUser.firstName[0] + castedUser.lastName[0];
 
 	return (
 		<>
@@ -101,7 +96,7 @@ export const AuthenticatedUserLayout = ({
 							<CloseIcon />
 						</Button>
 						<div className="space-y-6">
-							{navigation.map(({ title, icon, path }) => (
+							{navigation.map(({ title, path }) => (
 								<Link
 									onClick={() => setIsOpen(false)}
 									key={title}
@@ -126,7 +121,7 @@ export const AuthenticatedUserLayout = ({
 								<Avatar initials={initials} />
 
 								<span className="ml-4 mr-2 hidden px-1 md:block">
-									{castedUser?.firstName || "First Name"}
+									{castedUser.firstName || "First Name"}
 								</span>
 								<span className="cursor-pointer" aria-hidden>
 									<ArrowDown />
@@ -138,7 +133,7 @@ export const AuthenticatedUserLayout = ({
 								<div className="flex flex-col space-y-1">
 									<p className="text-sm font-medium leading-none">Profile</p>
 									<p className="text-xs leading-none text-muted-foreground">
-										{castedUser?.email || "m@example.com"}
+										{castedUser.email || "m@example.com"}
 									</p>
 								</div>
 							</DropdownMenuLabel>
@@ -153,7 +148,7 @@ export const AuthenticatedUserLayout = ({
 								<DropdownMenuItem className="lg:hidden">
 									<Link
 										href="/c"
-										className="flex w-full items-center gap-2 rounded-md bg-abeg-primary px-2 py-2 text-sm"
+										className="flex w-full items-center gap-2 rounded-md bg-abeg-primary p-2 text-sm"
 									>
 										<PlusIcon />
 										Create Campaign
@@ -183,7 +178,7 @@ export const AuthenticatedUserLayout = ({
 					<div className="px-[5%] lg:px-[7%] 2xl:px-[10%]">
 						<div className="mt-6 flex flex-col items-start justify-between gap-5 md:mt-0 md:flex-row md:py-6 lg:gap-10">
 							<div className="space-y-2 text-sm md:text-xl md:text-white lg:text-2xl">
-								<p className="font-semibold">Hi, {castedUser?.firstName || "FirstName"}👋</p>
+								<p className="font-semibold">Hi, {castedUser.firstName || "FirstName"}👋</p>
 
 								{router.pathname === "/c" ? (
 									<p className="">Here's an overview of your campaigns✨.</p>
@@ -254,7 +249,7 @@ export const AuthenticatedUserLayout = ({
 			<main
 				data-isopen={isOpen}
 				className={`authenticatedUserLayoutMain h-full flex-1 px-[5%] lg:px-[7%] 2xl:px-[10%] ${
-					isDashboard && "mt-10 flex flex-col gap-8 md:mt-[-110px] lg:gap-10"
+					isDashboard && "mt-10 flex flex-col gap-8 md:mt-[-120px] lg:gap-10"
 				}`}
 			>
 				{children}
