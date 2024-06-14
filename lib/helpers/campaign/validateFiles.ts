@@ -1,23 +1,42 @@
 import { toast } from "sonner";
-import {
-	MAX_FILE_QUANTITY,
-	MAX_FILE_SIZE,
-	acceptedFilesString,
-	allowedFileTypes,
-} from "./constants";
 
-const validateFiles = (
+export const handleFileValidation = (
 	newFileList: FileList,
-	exisitingFileArray: File[] = []
+
+	existingFileArray?: File[],
+
+	validationRules?: {
+		fileLimit?: number;
+		maxFileSize?: number;
+		allowedFileTypes?: string[];
+		disallowDuplicates?: boolean;
+	}
 ) => {
+	const { fileLimit, maxFileSize, allowedFileTypes, disallowDuplicates } = validationRules ?? {};
+
 	const validFilesArray: File[] = [];
 
 	const isFileUnique = (file: File) => {
-		return exisitingFileArray.every((fileItem) => fileItem.name !== file.name);
+		return (existingFileArray ?? []).every((fileItem) => fileItem.name !== file.name);
 	};
 
+	const isFileLimitReached = (limit: number) => {
+		return (existingFileArray ?? []).length === limit || validFilesArray.length === limit;
+	};
+
+	//	== Loop through fileList and validate each file
 	for (const file of newFileList) {
-		if (!allowedFileTypes.includes(file.type)) {
+		if (fileLimit && isFileLimitReached(fileLimit)) {
+			toast.error("Error", {
+				description: `Cannot upload more than ${fileLimit} files`,
+			});
+
+			break;
+		}
+
+		if (allowedFileTypes && !allowedFileTypes.includes(file.type)) {
+			const acceptedFilesString = allowedFileTypes.join(" | ");
+
 			toast.error("Error", {
 				description: `File type must be of: ${acceptedFilesString}`,
 			});
@@ -25,7 +44,7 @@ const validateFiles = (
 			continue;
 		}
 
-		if (file.size > MAX_FILE_SIZE) {
+		if (maxFileSize && file.size > maxFileSize) {
 			toast.error("Error", {
 				description: "Cannot upload a file larger than 5mb",
 			});
@@ -33,24 +52,12 @@ const validateFiles = (
 			continue;
 		}
 
-		if (!isFileUnique(file)) {
+		if (disallowDuplicates && !isFileUnique(file)) {
 			toast.error("Error", {
 				description: `File: "${file.name}" has already been selected`,
 			});
 
 			continue;
-		}
-
-		const isMaxFileQuantityReached =
-			validFilesArray.length === MAX_FILE_QUANTITY ||
-			exisitingFileArray.length === MAX_FILE_QUANTITY;
-
-		if (isMaxFileQuantityReached) {
-			toast.error("Error", {
-				description: `Cannot upload more than ${MAX_FILE_QUANTITY} files`,
-			});
-
-			return validFilesArray;
 		}
 
 		validFilesArray.push(file);
@@ -59,4 +66,19 @@ const validateFiles = (
 	return validFilesArray;
 };
 
-export { validateFiles };
+export const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+
+export const validateFiles = (
+	newFileList: FileList,
+
+	existingFileArray?: File[]
+) => {
+	const validFilesArray = handleFileValidation(newFileList, existingFileArray, {
+		fileLimit: 5,
+		maxFileSize: 5 * 1024 * 1024,
+		allowedFileTypes,
+		disallowDuplicates: true,
+	});
+
+	return validFilesArray;
+};

@@ -18,6 +18,7 @@ import type {
 	InferGetStaticPropsType,
 } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 
@@ -87,7 +88,7 @@ const ExploreCampaignPage = ({
 
 	const { dragScrollProps, dragContainerClasses } =
 		useDragScroll<HTMLDivElement>();
-	const router = useRouter();
+
 	return (
 		<BaseLayout>
 			<div className="relative flex flex-col items-center space-y-4 overflow-hidden bg-cover bg-center px-5 py-28 text-gray-50 md:px-20 md:py-32">
@@ -108,10 +109,10 @@ const ExploreCampaignPage = ({
 					height={90}
 					className="absolute right-[-2rem] top-[27rem] md:left-16 md:top-16 md:-translate-y-0 md:translate-x-0 lg:left-40 lg:top-32"
 				/>
-				<h1 className="pr-5 text-4xl  md:text-5xl font-bold leading-tight md:flex md:justify-center md:pr-0 md:leading-snug">
+				<h1 className="pr-5 text-4xl  font-bold leading-tight md:flex md:justify-center md:pr-0 md:text-5xl md:leading-snug">
 					{categoryName}
 				</h1>
-				<p className="max-w-[500px] pr-8 text-base md:text-lg text-gray-50 md:pr-0 md:text-center">
+				<p className="max-w-[500px] pr-8 text-base text-gray-50 md:pr-0 md:text-center md:text-lg">
 					Join the effortless way to fund-raise and make a difference and
 					empower your cause with Abeghelp.me
 				</p>
@@ -146,13 +147,13 @@ const ExploreCampaignPage = ({
 				/>
 			</div>
 
-			<div className="pt-10 md:py-20 flex flex-col gap-10 md:gap-20">
+			<div className="flex flex-col gap-10 pt-10 md:gap-20 md:py-20">
 				<div className="flex w-full flex-col gap-8">
 					<div className="flex flex-col gap-2 px-5 md:px-20 ">
-						<h1 className="text-2xl md:text-3xl font-bold md:w-full">
+						<h1 className="text-2xl font-bold md:w-full md:text-3xl">
 							Explore our {`${categoryName?.toLowerCase()} campaigns`}
 						</h1>
-						<p className="text-base md:text-lg font-medium text-placeholder md:w-3/6">
+						<p className="text-base font-medium text-placeholder md:w-3/6 md:text-lg">
 							Join the effortless way to fund-raise and make a difference and
 							empower your cause with Abeghelp.me
 						</p>
@@ -160,39 +161,43 @@ const ExploreCampaignPage = ({
 					<div
 						{...dragScrollProps}
 						className={cn(
-							"flex gap-8 text-black justify-between",
+							"flex justify-between gap-8 text-black",
 							dragContainerClasses
 						)}
 					>
 						{allCampaignCategories.map((category, id) => {
 							return (
 								<Button
+									asChild
 									key={id}
 									className={cn(
-										"text-black text-base whitespace-nowrap rounded-none p-0 py-1",
+										"whitespace-nowrap rounded-none p-0 py-1 text-base text-black",
 										categoryName === category.name
-											? "text-abeg-primary border-b-4 border-b-abeg-primary font-bold"
+											? "border-b-4 border-b-abeg-primary font-bold text-abeg-primary"
 											: ""
 									)}
-									onClick={() =>
-										void router.push({
+								>
+									<Link
+										href={{
 											pathname: `/explore/${category._id}`,
 											query: {
 												name: category.name,
 											},
-										})
-									}
-								>
-									{category.name}
+										}}
+									>
+										{category.name}
+									</Link>
 								</Button>
 							);
 						})}
 					</div>
+
 					<CampaignCategoryCard
 						allCampaigns={campaigns}
 						categoryName={categoryName}
 					/>
 				</div>
+
 				<HowItWorks className="px-5 md:px-20" />
 				<TestimonialCard />
 			</div>

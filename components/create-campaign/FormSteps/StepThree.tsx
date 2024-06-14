@@ -1,13 +1,10 @@
 import { Heading } from "@/components/common";
 import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { callApi, zodValidator } from "@/lib";
-import { useWatchFormStatus } from "@/lib/hooks";
+import { callApi } from "@/lib";
 import { type StepThreeData, useCampaignStore, useFormStore } from "@/store";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFormContext as useHookFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import DropZoneInput from "../DropZoneInput";
 import FormErrorMessage from "../FormErrorMessage";
@@ -20,32 +17,12 @@ function StepThree() {
 	const {
 		currentStep,
 		campaignId,
-		formStepData,
-		actions: { resetFormData },
+		actions: { resetFormStore },
 	} = useFormStore((state) => state);
 
 	const { addCampaign } = useCampaignStore((state) => state.actions);
 
-	const {
-		control,
-		handleSubmit,
-		formState,
-		getValues,
-		reset,
-		setValue: setFormValue,
-	} = useForm({
-		mode: "onChange",
-		resolver: zodResolver(zodValidator("campaignStepThree")!),
-		defaultValues: formStepData,
-	});
-
-	useEffect(() => {
-		if (!getValues().categoryId) {
-			reset(formStepData);
-		}
-	}, [formStepData]);
-
-	useWatchFormStatus(formState);
+	const { control, handleSubmit, setValue: setFormValue } = useHookFormContext<StepThreeData>();
 
 	const onSubmit = async (data: StepThreeData) => {
 		const formData = new FormData();
@@ -70,7 +47,7 @@ function StepThree() {
 
 		if (!dataInfo?.data) return;
 
-		resetFormData();
+		resetFormStore();
 
 		addCampaign(dataInfo.data);
 
@@ -100,10 +77,7 @@ function StepThree() {
 			>
 				<ol className="flex flex-col gap-6">
 					<li>
-						<label
-							htmlFor="photos"
-							className="text-sm font-semibold lg:text-xl"
-						>
+						<label htmlFor="photos" className="text-sm font-semibold lg:text-xl">
 							Campaign Cover Image
 						</label>
 
@@ -112,12 +86,9 @@ function StepThree() {
 							name="photos"
 							render={({ field }) => (
 								<>
-									<DropZoneInput
-										value={field.value}
-										onChange={field.onChange}
-									/>
+									<DropZoneInput value={field.value} onChange={field.onChange} />
 
-									<FormErrorMessage formState={formState} errorField="photos" />
+									<FormErrorMessage control={control} errorField="photos" />
 
 									<ImagePreview value={field.value} onChange={field.onChange} />
 								</>
@@ -131,8 +102,8 @@ function StepThree() {
 						</label>
 
 						<p className="my-4 text-xs lg:text-base">
-							A detailed description of the campaign, outlining the need for
-							funding and how the funds will be used.
+							A detailed description of the campaign, outlining the need for funding and how the funds
+							will be used.
 						</p>
 
 						<Controller
@@ -148,7 +119,7 @@ function StepThree() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField="story" />
+						<FormErrorMessage control={control} errorField="story" />
 					</li>
 				</ol>
 			</form>

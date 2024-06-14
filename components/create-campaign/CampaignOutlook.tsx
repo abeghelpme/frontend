@@ -2,25 +2,13 @@ import {
 	DummyAvatar,
 	MoneyIcon,
 	ShareIcon,
-	whatsappIcon,
-	xIcon,
 } from "@/components/common/campaign-icons";
-import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import {
-	type DonationDetailsType,
-	callApi,
-	cn,
-	getDaysLeft,
-	zodValidator,
-} from "@/lib";
+import { cn, getDaysLeft } from "@/lib";
 import { getDateFromString } from "@/lib/helpers/campaign";
-import { useElementList, useShareCampaign } from "@/lib/hooks";
+import { useElementList } from "@/lib/hooks";
 import { useSlot } from "@/lib/hooks/useSlot";
-import { useSession } from "@/store";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { FilesIcon, LinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -34,9 +22,11 @@ import {
 	SingleCampaignProgress,
 } from "../common";
 import { FAQ, UrgentFundraisers } from "../common/landingPage";
-import { Button, Checkbox, Input } from "../ui";
+import { Button } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
+import DonationFlowDialog from "./DonationFlowDialog";
 import DonorSection from "./DonorSection";
+import ShareCampaignDialog from "./ShareCampaignDialog";
 
 type CampaignOutlookProps = {
 	children?: React.ReactNode;
@@ -59,10 +49,9 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	const [TagList] = useElementList();
 
-	const HeaderSlot = useSlot(children, CampaignOutlook.Header);
+	const [hideExcessStory, setHideExcessStory] = useState(true);
 
-	const { generateTweet, generateWhatsAppMessage, handleShareLink } =
-		useShareCampaign();
+	const HeaderSlot = useSlot(children, CampaignOutlook.Header);
 
 	const fundraiserTarget =
 		`${campaign.creator?.firstName} ${campaign.creator?.lastName}` ||
@@ -70,7 +59,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
-	//donation flow
 	const { user } = useSession((state) => state);
 	useEffect(() => {
 		if (user) {
@@ -125,7 +113,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 		router.push(dataInfo?.data?.paymentUrl as string);
 		setDonateLoading(false);
 	};
-
 	return (
 		<main className="flex flex-col pb-20 text-abeg-text">
 			<section className="relative px-6 pb-14 pt-11 text-white md:px-[80px]">
@@ -141,7 +128,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 				<p className="mt-3 text-pretty text-base md:text-lg">{excerpt}</p>
 
-				<div className="relative mt-6 flex flex-wrap items-center gap-2 max-lg:justify-between lg:gap-9">
+				<article className="relative mt-6 flex flex-wrap items-center gap-2 max-lg:justify-between lg:gap-9">
 					<figure className="flex items-center gap-3 ">
 						{campaign?.creator?.photo && (
 							<Image
@@ -156,15 +143,15 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 						<figcaption className="text-lg">{fundraiserTarget}</figcaption>
 					</figure>
-					<CustomDialog
-						classNames={{
-							content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
-						}}
+
+					<DonationFlowDialog
+						campaignId={campaignId}
 						trigger={
 							<button className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-lg font-bold">
 								Donate
 							</button>
 						}
+
 					>
 						<form
 							className="flex flex-col gap-4"
@@ -279,69 +266,19 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						</form>
 					</CustomDialog>
 
-					<CustomDialog
-						classNames={{
-							content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
-						}}
+					/>
+
+
+					<ShareCampaignDialog
+						campaign={campaign}
 						trigger={
+							/* Using absolute on the button to prevent it from forcing unneeded flex wrap for the tags */
 							<button className="absolute right-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] max-lg:hidden">
 								<ShareIcon />
 							</button>
 						}
-					>
-						<p className="text-center">
-							Spread the word, share your campaign with friends, family, and the
-							world. Every share brings us one step closer to making a
-							difference
-						</p>
-						<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-							<div className="flex items-center gap-1">
-								<LinkIcon className="size-5" />
-								<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
-							</div>
-							<button
-								className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
-								onClick={handleShareLink(campaign.url)}
-							>
-								<FilesIcon className="size-4" />
-								Copy link
-							</button>
-						</div>
-						<div className="mt-6 flex w-full items-center justify-between gap-4 text-base">
-							<hr className="my-1 w-full border border-placeholder" />
-							<p className="shrink-0">or share on</p>
-							<hr className="my-1 w-full border border-placeholder" />
-						</div>
-						<div className="mt-6 flex w-full items-center justify-between">
-							<Link
-								href={generateTweet(
-									campaign.title,
-									campaign.url,
-									campaign.tags
-								)}
-								target="_blank"
-								className="flex w-full items-center gap-2"
-							>
-								<Image src={xIcon as string} width={32} height={32} alt="" />
-								Twitter (X)
-							</Link>
-
-							<Link
-								href={generateWhatsAppMessage(campaign.title, campaign.url)}
-								target="_blank"
-								className="flex w-full items-center justify-end gap-2"
-							>
-								<Image
-									src={whatsappIcon as string}
-									width={32}
-									height={32}
-									alt=""
-								/>
-								Whatsapp
-							</Link>
-						</div>
-					</CustomDialog>
-				</div>
+					/>
+				</article>
 
 				<CampaignCarousel
 					images={campaign.images}
@@ -353,7 +290,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					}}
 				/>
 
-				<div className="relative mt-6">
+				<article className="relative mt-6 flex items-center">
 					<TagList
 						className="flex flex-wrap gap-5 max-lg:pr-[42px]"
 						each={campaign.tags}
@@ -367,69 +304,16 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						)}
 					/>
 
-					<CustomDialog
-						classNames={{
-							content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
-						}}
+					<ShareCampaignDialog
+						campaign={campaign}
 						trigger={
-							<button className="absolute right-0 top-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] lg:hidden">
+							/* Using absolute on the button to prevent it from forcing unneeded flex wrap for the tags */
+							<button className="absolute right-0 rounded-full border border-white bg-abeg-text/40 p-2 active:scale-[1.03] lg:hidden">
 								<ShareIcon />
 							</button>
 						}
-					>
-						<p className="text-center">
-							Spread the word, share your campaign with friends, family, and the
-							world. Every share brings us one step closer to making a
-							difference
-						</p>
-						<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-							<div className="flex items-center gap-1">
-								<LinkIcon className="size-5" />
-								<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
-							</div>
-							<button
-								className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
-								onClick={handleShareLink(campaign.url)}
-							>
-								<FilesIcon className="size-4" />
-								Copy link
-							</button>
-						</div>
-						<div className="mt-6 flex w-full items-center justify-between gap-4 text-base">
-							<hr className="my-1 w-full border border-placeholder" />
-							<p className="shrink-0">or share on</p>
-							<hr className="my-1 w-full border border-placeholder" />
-						</div>
-						<div className="mt-6 flex w-full items-center justify-between">
-							<Link
-								href={generateTweet(
-									campaign.title,
-									campaign.url,
-									campaign.tags
-								)}
-								target="_blank"
-								className="flex w-full items-center gap-2"
-							>
-								<Image src={xIcon as string} width={32} height={32} alt="" />
-								Twitter (X)
-							</Link>
-
-							<Link
-								href={generateWhatsAppMessage(campaign.title, campaign.url)}
-								target="_blank"
-								className="flex w-full items-center justify-end gap-2"
-							>
-								<Image
-									src={whatsappIcon as string}
-									width={32}
-									height={32}
-									alt=""
-								/>
-								Whatsapp
-							</Link>
-						</div>
-					</CustomDialog>
-				</div>
+					/>
+				</article>
 			</section>
 
 			<div className="mt-14 flex flex-col self-center px-6 max-lg:max-w-[450px] max-lg:items-center lg:flex-row-reverse lg:gap-5 lg:px-[80px]">
@@ -441,10 +325,8 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					/>
 
 					<article className="space-y-4">
-						<CustomDialog
-							classNames={{
-								content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
-							}}
+						<DonationFlowDialog
+							campaignId={campaignId}
 							trigger={
 								<Button
 									variant="primary"
@@ -566,11 +448,10 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								</Button>
 							</form>
 						</CustomDialog>
+						/>
 
-						<CustomDialog
-							classNames={{
-								content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
-							}}
+						<ShareCampaignDialog
+							campaign={campaign}
 							trigger={
 								<Button
 									variant="secondary"
@@ -579,59 +460,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									Share this campaign
 								</Button>
 							}
-						>
-							<p className="text-center">
-								Spread the word, share your campaign with friends, family, and
-								the world. Every share brings us one step closer to making a
-								difference
-							</p>
-							<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-								<div className="flex items-center gap-1">
-									<LinkIcon className="size-5" />
-									<p className="[overflow-wrap:anywhere]">{campaign.url}</p>
-								</div>
-								<button
-									className="flex shrink-0 gap-1 rounded-lg bg-white px-1 py-[5px] text-xs text-abeg-primary"
-									onClick={handleShareLink(campaign.url)}
-								>
-									<FilesIcon className="size-4" />
-									Copy link
-								</button>
-							</div>
-							<div className="mt-6 flex w-full items-center justify-between gap-4 text-base">
-								<hr className="my-1 w-full border border-placeholder" />
-								<p className="shrink-0">or share on</p>
-								<hr className="my-1 w-full border border-placeholder" />
-							</div>
-							<div className="mt-6 flex w-full items-center justify-between">
-								<Link
-									href={generateTweet(
-										campaign.title,
-										campaign.url,
-										campaign.tags
-									)}
-									target="_blank"
-									className="flex w-full items-center gap-2"
-								>
-									<Image src={xIcon as string} width={32} height={32} alt="" />
-									Twitter (X)
-								</Link>
-
-								<Link
-									href={generateWhatsAppMessage(campaign.title, campaign.url)}
-									target="_blank"
-									className="flex w-full items-center justify-end gap-2"
-								>
-									<Image
-										src={whatsappIcon as string}
-										width={32}
-										height={32}
-										alt=""
-									/>
-									Whatsapp
-								</Link>
-							</div>
-						</CustomDialog>
+						/>
 					</article>
 
 					<article className="space-y-7">
@@ -669,19 +498,31 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						>
 							Story
 						</Heading>
+
 						<div
-							className="mt-6 min-h-16 text-justify text-base md:text-lg"
+							className={cn(
+								"mt-6 min-h-16 text-justify text-base md:text-lg",
+								hideExcessStory && "line-clamp-[10]"
+							)}
 							dangerouslySetInnerHTML={{
 								__html: campaign.storyHtml,
 							}}
 						/>
 
-						<p className="mt-6 text-base md:text-xl lg:mt-12">
+						<Button
+							onClick={() => setHideExcessStory((prev) => !prev)}
+							variant="secondary"
+							className="ml-auto mt-2 shrink-0 rounded-md border-abeg-primary py-2 text-base font-medium text-abeg-primary lg:rounded-lg"
+						>
+							{hideExcessStory ? "Read more" : "Read less"}
+						</Button>
+
+						<p className="mt-8 text-base md:text-xl lg:mt-12">
 							Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
 						</p>
 
 						<TagList
-							className="mt-4 grid gap-x-2 gap-y-4 grid-cols-2 font-medium lg:grid-cols-3 lg:gap-y-6"
+							className="mt-4 grid grid-cols-2 gap-x-2 gap-y-4 font-medium lg:grid-cols-3 lg:gap-y-6"
 							each={campaign.tags}
 							render={(tag, index) => (
 								<li
@@ -732,6 +573,6 @@ function CampaignOutlookHeader(props: CampaignHeaderProps) {
 }
 
 CampaignOutlook.Header = CampaignOutlookHeader;
-CampaignOutlookHeader.slot = "header";
+CampaignOutlookHeader.slot = Symbol.for("header");
 
 export default CampaignOutlook;

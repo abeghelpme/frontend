@@ -188,7 +188,7 @@ const TwoFa = () => {
 									>
 										<h3 className="font-semibold">Authentication app</h3>
 										<div className="flex items-center gap-8">
-											<p className="balancedText md:text-lg">
+											<p className="text-balance md:text-lg">
 												We recommend downloading the{" "}
 												<Link
 													target="_blank"
@@ -221,7 +221,7 @@ const TwoFa = () => {
 									>
 										<h3 className=" font-semibold">Email Address</h3>
 										<div className="flex items-center gap-2 ">
-											<p className="balancedText md:text-lg">
+											<p className="text-balance md:text-lg">
 												We will send a code to your registered email address
 											</p>
 											<input

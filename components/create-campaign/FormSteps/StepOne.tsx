@@ -3,19 +3,14 @@ import { CrossIcon } from "@/components/common/campaign-icons";
 import { Select } from "@/components/ui";
 import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { callApi, zodValidator } from "@/lib";
+import { callApi } from "@/lib";
 import { targetCountries, validateTagValue } from "@/lib/helpers/campaign";
-import {
-	useBaseElementList,
-	useElementList,
-	useWatchFormStatus,
-} from "@/lib/hooks";
+import { useElementList } from "@/lib/hooks";
 import { useCampaignStore } from "@/store";
 import { type StepOneData, useFormStore } from "@/store/useFormStore";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
-import { type KeyboardEvent, type MouseEvent, useEffect, useRef } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { type KeyboardEvent, type MouseEvent, useRef } from "react";
+import { Controller, useFormContext as useHookFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import FormErrorMessage from "../FormErrorMessage";
 
@@ -31,42 +26,23 @@ function StepOne() {
 
 	const campaignCategories = useCampaignStore((state) => state.categories);
 
-	const {
-		control,
-		formState,
-		handleSubmit,
-		getValues,
-		reset,
-		setValue: setFormValue,
-	} = useForm({
-		mode: "onChange",
-		resolver: zodResolver(zodValidator("campaignStepOne")!),
-		defaultValues: formStepData,
-	});
+	const { control, handleSubmit, setValue: setFormValue } = useHookFormContext<StepOneData>();
 
-	useEffect(() => {
-		if (!getValues().categoryId) {
-			reset(formStepData);
-		}
-	}, [formStepData]);
-
-	const [CategoryList] = useBaseElementList();
-	const [CountryList] = useBaseElementList();
+	const [CategoryList] = useElementList("base");
+	const [CountryList] = useElementList("base");
 	const [TagList] = useElementList();
-
-	useWatchFormStatus(formState);
 
 	const onSubmit = async (data: StepOneData) => {
 		updateFormData(data);
-		const { data: dataInfo, error } = await callApi<
-			ApiResponse<Partial<Campaign>>
-		>(`/campaign/create/one`, {
-			...data,
-			...(!!campaignId && { campaignId }),
-		});
 
-		// console.log("data info", dataInfo);
-		// console.log("error", error);
+
+		const { data: dataInfo, error } = await callApi<ApiResponse<Partial<Campaign>>>(
+			`/campaign/create/one`,
+			{
+				...data,
+				...(!!campaignId && { campaignId }),
+			}
+		);
 
 		if (error) {
 			toast.error(error.status, {
@@ -76,15 +52,13 @@ function StepOne() {
 			return;
 		}
 
-		if (!dataInfo || !dataInfo.data) return;
+		if (!dataInfo?.data) return;
 
 		updateCampaignId(dataInfo.data._id);
 		goToStep(2);
 	};
 
-	const handleAddTags = (
-		event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>
-	) => {
+	const handleAddTags = (event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => {
 		const isEnterKey = (event as KeyboardEvent).key === "Enter";
 
 		if (event.type === "keydown" && !isEnterKey) return;
@@ -93,10 +67,7 @@ function StepOne() {
 			event.preventDefault();
 		}
 
-		const validTag = validateTagValue(
-			formStepData.tags,
-			tagInputRef.current?.value
-		);
+		const validTag = validateTagValue(formStepData.tags, tagInputRef.current?.value);
 
 		if (!validTag) return;
 
@@ -133,10 +104,7 @@ function StepOne() {
 			>
 				<ol className="flex flex-col gap-6">
 					<li>
-						<label
-							htmlFor="categoryId"
-							className="text-sm font-semibold lg:text-xl"
-						>
+						<label htmlFor="categoryId" className="text-sm font-semibold lg:text-xl">
 							What best describes your fundraiser?
 						</label>
 
@@ -144,11 +112,7 @@ function StepOne() {
 							control={control}
 							name="categoryId"
 							render={({ field }) => (
-								<Select.Root
-									name={field.name}
-									value={field.value}
-									onValueChange={field.onChange}
-								>
+								<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
 										className="mt-4 h-[50px] rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px] lg:px-4 lg:text-base"
@@ -160,11 +124,7 @@ function StepOne() {
 										<CategoryList
 											each={campaignCategories}
 											render={(category) => (
-												<Select.Item
-													key={category._id}
-													value={category._id}
-													className="lg:text-base"
-												>
+												<Select.Item key={category._id} value={category._id} className="lg:text-base">
 													{category.name}
 												</Select.Item>
 											)}
@@ -174,14 +134,11 @@ function StepOne() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField={"categoryId"} />
+						<FormErrorMessage control={control} errorField={"categoryId"} />
 					</li>
 
 					<li>
-						<label
-							htmlFor="country"
-							className="text-sm font-semibold lg:text-xl"
-						>
+						<label htmlFor="country" className="text-sm font-semibold lg:text-xl">
 							What country are you located?
 						</label>
 
@@ -189,14 +146,10 @@ function StepOne() {
 							control={control}
 							name="country"
 							render={({ field }) => (
-								<Select.Root
-									name={field.name}
-									value={field.value}
-									onValueChange={field.onChange}
-								>
+								<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 									<Select.Trigger
 										icon={<ChevronDownIcon />}
-										className="mt-4 h-[50px] rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px] lg:px-4 lg:text-base"
+										className="mt-4 h-[50px] gap-2 rounded-[10px] border-unfocused px-2 text-xs data-[placeholder]:text-placeholder lg:h-[58px] lg:px-4 lg:text-base"
 									>
 										<Select.Value placeholder="Select your country" />
 									</Select.Trigger>
@@ -219,7 +172,7 @@ function StepOne() {
 							)}
 						/>
 
-						<FormErrorMessage formState={formState} errorField={"country"} />
+						<FormErrorMessage control={control} errorField={"country"} />
 					</li>
 
 					<li>
@@ -239,7 +192,7 @@ function StepOne() {
 
 							<button
 								type="button"
-								className="rounded-md border border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base self-stretch"
+								className="self-stretch rounded-md border border-abeg-primary px-3 py-2 text-xs font-semibold text-abeg-primary lg:px-[15px] lg:py-4 lg:text-base"
 								onClick={handleAddTags}
 							>
 								Add
@@ -257,7 +210,7 @@ function StepOne() {
 								render={(tag, index) => (
 									<li
 										key={`${tag}-${index}`}
-										className="flex min-w-20 items-center justify-between gap-2.5 rounded-[20px] border-[1px] border-abeg-primary bg-[rgb(229,242,242)] px-3 py-1"
+										className="flex min-w-20 items-center justify-between gap-2.5 rounded-[20px] border border-abeg-primary bg-[rgb(229,242,242)] px-3 py-1"
 									>
 										<p>{tag}</p>
 

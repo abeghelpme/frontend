@@ -16,11 +16,10 @@ export * from "./dashboardIcons";
 export {
 	AbegHelpLogo,
 	AbegHelpLogoWhite,
-	ArrowDown,
 	CameroonFlag,
 	CloseIcon,
-	Closed,
-	Drafts,
+	ClosedIcon,
+	DraftsIcon,
 	FilterIcon,
 	GambiaFlag,
 	GhanaFlag,
@@ -29,10 +28,10 @@ export {
 	MaliFlag,
 	NigeriaFlag,
 	ReceiveIcon,
-	SlashedStar,
-	Star,
+	SlashedStarIcon,
+	StarIcon,
 	Moneys,
-	Verify,
+	VerifiedIcon,
 	WalletAdd,
 	TotalDonors,
 	BringPositiveChangeStar,
@@ -50,3 +49,4 @@ export {
 	UploadIcon,
 } from "./svg";
 export { default as SingleCampaignProgress } from "./SingleCampaignProgress";
+export { default as Pagination } from "./Pagination";

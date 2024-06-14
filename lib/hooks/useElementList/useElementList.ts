@@ -1,7 +1,10 @@
-import ForObject from "./For";
+import For from "./For";
 
-const { For, ForList } = ForObject;
+function useElementList(type: "base"): [typeof For.Base];
+function useElementList(type?: "withWrapper"): [typeof For.List];
 
-export const useElementList = (): [ForList: typeof ForList] => [ForList];
+function useElementList(type = "withWrapper") {
+	return type === "withWrapper" ? [For.List] : [For.Base];
+}
 
-export const useBaseElementList = (): [For: typeof For] => [For];
+export { useElementList };

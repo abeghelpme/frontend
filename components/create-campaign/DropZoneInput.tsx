@@ -1,9 +1,7 @@
-import { Button } from "@/components/ui";
-import { cn } from "@/lib";
-import { acceptedFilesString, validateFiles } from "@/lib/helpers/campaign";
-import { useToggle } from "@/lib/hooks";
+import { Button, DropZone, type DropZoneProps } from "@/components/ui";
+import { validateFiles } from "@/lib/helpers/campaign";
+import { allowedFileTypes } from "@/lib/helpers/campaign/validateFiles";
 import { type StepThreeData, useFormStore } from "@/store";
-import type { ChangeEvent, DragEvent } from "react";
 import { toast } from "sonner";
 
 type DropZoneInputProps = {
@@ -14,68 +12,32 @@ type DropZoneInputProps = {
 function DropZoneInput(props: DropZoneInputProps) {
 	const { value: imageFiles, onChange } = props;
 
-	const [isDragActive, toggleIsDragActive] = useToggle(false);
-
 	const { updateFormData } = useFormStore((state) => state.actions);
 
-	const handleImageUpload = (
-		event: ChangeEvent<HTMLInputElement> | DragEvent<HTMLDivElement>
-	) => {
-		event.type === "drop" && toggleIsDragActive(false);
+	const existingImageFiles = imageFiles.filter((file) => file instanceof File) as File[];
 
-		const fileList =
-			event.type === "drop"
-				? (event as DragEvent).dataTransfer.files
-				: (event as ChangeEvent<HTMLInputElement>).target.files;
-
-		if (fileList === null) {
-			toast.error("Error", {
-				description: "No file selected",
-			});
-
-			return;
-		}
-
-		const realImageFiles = imageFiles.filter(
-			(file) => file instanceof File
-		) as File[];
-
-		const validFilesArray = validateFiles(fileList, realImageFiles);
-
-		if (validFilesArray.length === 0) return;
-
-		const newFileState = [...imageFiles, ...validFilesArray];
+	const handleImageUpload: DropZoneProps["onDrop"] = ({ acceptedFiles }) => {
+		const newFileState = [...imageFiles, ...acceptedFiles];
 
 		updateFormData({ photos: newFileState });
 
 		onChange(newFileState);
 
 		toast.success("Success", {
-			description: `Uploaded ${validFilesArray.length} file${
-				validFilesArray.length > 1 ? "s" : ""
-			}!`,
+			description: `Uploaded ${acceptedFiles.length} file${acceptedFiles.length > 1 ? "s" : ""}!`,
 		});
 	};
 
-	const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
-		event.preventDefault();
-		toggleIsDragActive(true);
-	};
-
-	const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
-		event.preventDefault();
-		toggleIsDragActive(false);
-	};
-
 	return (
-		<div
+		<DropZone
 			onDrop={handleImageUpload}
-			onDragOver={handleDragOver}
-			onDragLeave={handleDragLeave}
-			className={cn(
-				"relative mt-4 flex min-h-40 flex-col items-center justify-end rounded-[5px] border border-dashed border-abeg-primary py-[0.9375rem] text-xs lg:min-h-60",
-				isDragActive && "opacity-60"
-			)}
+			allowedFileTypes={allowedFileTypes}
+			existingFiles={existingImageFiles}
+			validator={validateFiles}
+			classNames={{
+				base: "mt-4 flex min-h-40 flex-col items-center justify-end rounded-[5px] border border-dashed border-abeg-primary py-[0.9375rem] text-xs lg:min-h-60",
+			}}
+			multiple={true}
 		>
 			<Button
 				variant="primary"
@@ -85,24 +47,14 @@ function DropZoneInput(props: DropZoneInputProps) {
 				Upload
 			</Button>
 
-			<input
-				className="absolute inset-0 cursor-pointer opacity-0"
-				type="file"
-				accept={acceptedFilesString}
-				onChange={handleImageUpload}
-				multiple
-			/>
-
 			<div className="mt-[0.9375rem] text-center text-xs lg:text-xs">
-				<p className="italic text-abeg-primary">
-					Click to select files, or Drag {`'n'`} Drop
-				</p>
+				<p className="italic text-abeg-primary">Click to select files, or Drag {`'n'`} Drop</p>
 
 				<p className="mt-1">Support files; PDF, JPG, CSV </p>
 
-				<p className="text-abeg-green">Not more than 5mb</p>
+				<p className="text-abeg-primary">Not more than 5mb</p>
 			</div>
-		</div>
+		</DropZone>
 	);
 }
 

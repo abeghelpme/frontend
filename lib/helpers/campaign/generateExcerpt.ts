@@ -1,4 +1,6 @@
-const generateExcerpt = (story: string) => {
+const generateExcerpt = (story: string | undefined) => {
+	if (!story) return "";
+
 	// Take the first 200 characters of the campaign story
 	const first200Chars = story.slice(0, 200);
 

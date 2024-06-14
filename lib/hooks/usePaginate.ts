@@ -47,9 +47,9 @@ export const usePaginate = <T = Campaign>(
 		const newPage = direction === "next" ? page + 1 : page - 1;
 		setPage(newPage);
 
-		const { data: response, error } = await callApi<
-			ApiResponse<PaginatedResponse<T>>
-		>(`/${endpoint}?page=${newPage}&limit=${LIMIT}`);
+		const { data: response, error } = await callApi<ApiResponse<PaginatedResponse<T>>>(
+			`/${endpoint}?page=${newPage}&limit=${LIMIT}`
+		);
 
 		if (error || !response || !response.data) {
 			setError(error?.message || "Could not fetch data");

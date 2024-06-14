@@ -1,4 +1,7 @@
+import { nextui } from "@nextui-org/theme";
+import typographyPlugin from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
+import animationPlugin from "tailwindcss-animate";
 import plugin from "tailwindcss/plugin";
 
 const config = {
@@ -8,6 +11,7 @@ const config = {
 		"./components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 		"./lib/hooks/useDragScroll.ts",
+		"./node_modules/@nextui-org/theme/dist/components/pagination.js",
 	],
 
 	theme: {
@@ -24,12 +28,12 @@ const config = {
 				heroBg: "url('/assets/images/shared/hero-background.svg')",
 				dashboardBg: "url('/assets/images/dashboard/dashboardBg.png')",
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-				"gradient-conic":
-					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+				"gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
 
 			boxShadow: {
 				"auth-layout-shadow": " 0px 2px 32px 0px rgba(0, 0, 0, 0.08)",
+				analyticsShadow: " 0px 4px 2px 0px rgba(16,24,40, 0.05)",
 				otpInput: "2px 4px 4px 0 rgba(139, 210, 189, 0.1)",
 			},
 
@@ -40,6 +44,7 @@ const config = {
 				unfocused: "#A8CCCC",
 				semiWhite: "#E6EAEE",
 				inputBorder: "rgba(124, 148, 107, 0.25)",
+				borderPrimary: "#D0D5DD",
 				headerDivider: "#D4D4D4",
 				otpBorder: "rgba(0, 128, 128, 0.5)",
 				"why-choose-us": "#F6F6F6",
@@ -130,22 +135,36 @@ const config = {
 	},
 
 	plugins: [
-		require("tailwindcss-animate"),
-		require("@tailwindcss/typography"),
-		plugin(function ({ addUtilities, addVariant, addComponents, theme }) {
-			const newUtilities = {
-				".hide-scrollbar::-webkit-scrollbar": {
-					display: "none",
-				},
-			};
-			addUtilities(newUtilities);
-
+		nextui(),
+		animationPlugin,
+		typographyPlugin,
+		plugin(({ addVariant, addComponents, theme }) => {
 			addVariant("progress-unfilled", ["&::-webkit-progress-bar", "&"]);
-			addVariant("progress-filled", [
-				"&::-webkit-progress-value",
-				"&::-moz-progress-bar",
-				"&",
-			]);
+			addVariant("progress-filled", ["&::-webkit-progress-value", "&::-moz-progress-bar", "&"]);
+
+			addComponents({
+				".scrollbar-hide": {
+					"-ms-overflow-style": "none" /* IE and Edge */,
+					"scrollbar-width": "none" /* Firefox */,
+
+					"&::-webkit-scrollbar": {
+						display: "none",
+					},
+				},
+			});
+
+			addComponents({
+				".scrollbar-hide": {
+					"&::-webkit-scrollbar": {
+						display: "none",
+					},
+
+					"&": {
+						"-ms-overflow-style": "none" /* IE and Edge */,
+						"scrollbar-width": "none" /* Firefox */,
+					},
+				},
+			});
 
 			addComponents({
 				".custom-scrollbar": {

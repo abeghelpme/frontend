@@ -1,6 +1,6 @@
 import Auth from "@/components/Protect";
 import { Toaster } from "@/components/ui";
-import { useSession } from "@/store";
+import { useCampaignStore, useSession } from "@/store";
 import "@/styles/globals.css";
 import { DefaultSeo, type DefaultSeoProps } from "next-seo";
 import type { AppProps } from "next/app";
@@ -45,27 +45,25 @@ const SEOCONFIG: DefaultSeoProps = {
 };
 
 export default function App({ Component, pageProps }: ComponentWithPageLayout) {
-	const {
-		actions: { getSession },
-	} = useSession((state) => state);
+	const { getSession } = useSession((state) => state.actions);
+	const { initializeCategories } = useCampaignStore((state) => state.actions);
 
 	const getLayout = Component.getLayout ?? ((page) => page);
 
 	useEffect(() => {
-		void (async () => {
-			await getSession(true);
-		})();
+		void getSession(true);
+		void initializeCategories();
 	}, []);
 
 	return (
 		<>
 			<DefaultSeo {...SEOCONFIG} />
 			<style jsx global>{`
-        html {
-          font-family: ${manrope.style.fontFamily};
-          color: #484848;
-        }
-      `}</style>
+				html {
+					font-family: ${manrope.style.fontFamily};
+					color: #484848;
+				}
+			`}</style>
 			<NextNProgress color="#324823" />
 			{Component.protect === true ? (
 				<Auth>{getLayout(<Component {...pageProps} />)}</Auth>

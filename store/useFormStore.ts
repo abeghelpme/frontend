@@ -11,9 +11,7 @@ export type StepOneData = Prettify<
 	}
 >;
 
-export type StepTwoData = Prettify<
-	Pick<Campaign, "title" | "goal" | "deadline" | "fundraiser">
->;
+export type StepTwoData = Prettify<Pick<Campaign, "title" | "goal" | "deadline" | "fundraiser">>;
 
 export type StepThreeData = Prettify<
 	Pick<Campaign, "story" | "storyHtml"> & {
@@ -22,11 +20,6 @@ export type StepThreeData = Prettify<
 >;
 
 export type FormStore = {
-	formStatus: {
-		isValid: boolean;
-		isSubmitting: boolean;
-	};
-
 	currentStep: Campaign["currentStep"];
 
 	campaignId: Campaign["_id"];
@@ -36,19 +29,11 @@ export type FormStore = {
 	actions: {
 		goToStep: (newStep: number) => void;
 
-		updateCampaignId: (
-			updatedId: Partial<FormStore["campaignId"]> | undefined
-		) => void;
+		updateCampaignId: (updatedId: Partial<FormStore["campaignId"]> | undefined) => void;
 
-		updateFormStatus: (
-			updatedFormStatus: Partial<FormStore["formStatus"]>
-		) => void;
+		updateFormData: (updatedFormData: Partial<FormStore["formStepData"]>) => void;
 
-		updateFormData: (
-			updatedFormData: Partial<FormStore["formStepData"]>
-		) => void;
-
-		resetFormData: () => void;
+		resetFormStore: () => void;
 
 		initializeFormData: () => void;
 	};
@@ -56,11 +41,6 @@ export type FormStore = {
 
 export const initialFormState = {
 	currentStep: 1,
-
-	formStatus: {
-		isValid: true,
-		isSubmitting: false,
-	},
 
 	campaignId: "",
 
@@ -88,12 +68,6 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 			set({ currentStep: newStep as FormStore["currentStep"] });
 		},
 
-		updateFormStatus: (newFormStatus) => {
-			const { formStatus: previousFormStatus } = get();
-
-			set({ formStatus: { ...previousFormStatus, ...newFormStatus } });
-		},
-
 		updateCampaignId: (updatedId) => {
 			if (!updatedId || updatedId === get().campaignId) return;
 
@@ -106,20 +80,17 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 			set({ formStepData: { ...formStepData, ...updatedFormData } });
 		},
 
-		resetFormData: () => set({ formStepData: initialFormState.formStepData }),
+		resetFormStore: () => set(initialFormState),
 
 		initializeFormData: () => {
-			const { campaigns } = useInitCampaignStore.getState();
+			const campaigns = useInitCampaignStore.getState().campaigns as Campaign[] | undefined;
 
-			if (!campaigns) return;
-
-			if (campaigns.length === 0) return;
+			if (!campaigns || campaigns.length === 0) return;
 
 			const searchParams = new URLSearchParams(window.location.search);
 
 			const campaignToBeEdited = campaigns.find(
-				(campaign) =>
-					campaign._id === searchParams.get("id") && !campaign.isPublished
+				(campaign) => !campaign.isPublished && campaign._id === searchParams.get("id")
 			);
 
 			if (campaignToBeEdited) {
@@ -145,35 +116,33 @@ export const useInitFormStore = create<FormStore>()((set, get) => ({
 				return;
 			}
 
-			const currentCampaign = campaigns[0];
+			const currentDraftCampaign = campaigns.find((campaign) => campaign.status === "Draft");
 
-			if (currentCampaign.status !== "Draft") return;
+			if (!currentDraftCampaign) return;
 
 			set({
-				currentStep: currentCampaign.currentStep,
+				currentStep: currentDraftCampaign.currentStep,
 
-				campaignId: currentCampaign._id,
+				campaignId: currentDraftCampaign._id,
 
 				formStepData: {
-					categoryId: currentCampaign.category?._id ?? "",
-					country: currentCampaign.country,
-					tags: currentCampaign.tags,
-					title: currentCampaign.title,
-					deadline: currentCampaign.deadline,
-					fundraiser: currentCampaign.fundraiser,
-					goal: currentCampaign.goal,
-					story: currentCampaign.story,
-					storyHtml: currentCampaign.storyHtml,
-					photos: currentCampaign.images.map((image) => image.secureUrl),
+					categoryId: currentDraftCampaign.category?._id ?? "",
+					country: currentDraftCampaign.country,
+					tags: currentDraftCampaign.tags,
+					title: currentDraftCampaign.title,
+					deadline: currentDraftCampaign.deadline,
+					fundraiser: currentDraftCampaign.fundraiser,
+					goal: currentDraftCampaign.goal,
+					story: currentDraftCampaign.story,
+					storyHtml: currentDraftCampaign.storyHtml,
+					photos: currentDraftCampaign.images.map((image) => image.secureUrl),
 				},
 			});
 		},
 	} satisfies FormStore["actions"],
 }));
 
-export const useFormStore = <TResult>(
-	selector: SelectorFn<FormStore, TResult>
-) => {
+export const useFormStore = <TResult>(selector: SelectorFn<FormStore, TResult>) => {
 	const state = useInitFormStore(useShallow(selector));
 
 	return state;

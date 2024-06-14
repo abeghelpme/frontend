@@ -28,8 +28,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const getStaticProps = (async () => {
-	const { data, error } =
-		await callApi<ApiResponse<Campaign[]>>("/campaign/featured");
+	const { data, error } = await callApi<ApiResponse<Campaign[]>>("/campaign/featured");
 
 	if (error || !data?.data) {
 		return { props: { featuredCampaigns: [] } };
@@ -68,11 +67,11 @@ const campaignCard = [
 	},
 ];
 
-const HomePage = ({
-	featuredCampaigns,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const { dragContainerClasses, dragScrollProps } =
-		useDragScroll<HTMLDivElement>("desktopOnly");
+const HomePage = ({ featuredCampaigns }: InferGetStaticPropsType<typeof getStaticProps>) => {
+	const { dragContainerClasses, dragScrollProps } = useDragScroll<HTMLDivElement>({
+		usage: "desktopOnly",
+	});
+
 	return (
 		<>
 			<NextSeo
@@ -95,25 +94,22 @@ const HomePage = ({
 				}}
 			/>
 			<BaseLayout>
-				<div className="flex flex-col gap-10 md:gap-20 px-5 md:px-20 py-10 md:py-20">
-					<div className="  flex flex-col gap-8 text-center max-w-[755px] self-center">
+				<div className="flex flex-col gap-10 px-5 py-10 md:gap-20 md:p-20">
+					<div className="  flex max-w-[755px] flex-col gap-8 self-center text-center">
 						<div className="relative">
-							<p className=" text-4xl  md:text-5xl font-extrabold">
+							<p className=" text-4xl  font-extrabold md:text-5xl">
 								Start your journey into fundraising with ease
 							</p>
-							<div className="absolute hidden md:block inset-0 left-[-2rem] md:left-8 lg:left-16 md:top-[-2rem]">
+							<div className="absolute inset-0 -left-8 hidden md:-top-8 md:left-8 md:block lg:left-16">
 								<Spark />
 							</div>
 						</div>
-						<p className=" text-xl md:text-2xl font-normal">
-							Join the effortless way to fund raise and make a difference and
-							empower your cause with Abeghelp.me
+						<p className=" text-xl font-normal md:text-2xl">
+							Join the effortless way to fund raise and make a difference and empower your cause with
+							Abeghelp.me
 						</p>
-						<div className="flex justify-center gap-2 md:gap-6 self-center">
-							<Button
-								className="bg-abeg-primary font-semibold text-white md:text-lg"
-								asChild
-							>
+						<div className="flex justify-center gap-2 self-center md:gap-6">
+							<Button className="bg-abeg-primary font-semibold text-white md:text-lg" asChild>
 								<Link href="/c/create">Start a fundraiser</Link>
 							</Button>
 						</div>
@@ -125,24 +121,24 @@ const HomePage = ({
 
 				<div className="">
 					<div className="w-full space-y-5 px-5 md:justify-between md:px-20 lg:flex lg:space-y-0 lg:divide-x-2 lg:divide-slate-300">
-						<div className="flex gap-3 items-center md:pr-20">
-							<div className="w-2 bg-abeg-primary rounded-md h-20"></div>
+						<div className="flex items-center gap-3 md:pr-20">
+							<div className="h-20 w-2 rounded-md bg-abeg-primary" />
 							<div className="flex flex-col gap-2">
 								<p className="text-xl">How it works</p>
-								<h3 className="text-2xl md:text-3xl font-bold">
+								<h3 className="text-2xl font-bold md:text-3xl">
 									A Path to Making <br /> a Difference.
 								</h3>
 							</div>
 						</div>
 
 						<div className="w-full flex-1 items-center justify-between gap-10 lg:flex lg:pl-20 xl:w-1/3">
-							<p className="text-lg md:text-xl font-normal text-abeg-text">
-								Join the effortless way to raise funds <br /> and make a
-								difference and empower <br /> your cause with Abeghelp.me
+							<p className="text-lg font-normal text-abeg-text md:text-xl">
+								Join the effortless way to raise funds <br /> and make a difference and empower <br />{" "}
+								your cause with Abeghelp.me
 							</p>
 
 							<Button
-								className="mt-5 flex max-w-[210px] justify-center border border-abeg-primary text-abeg-primary text-base outline-none whitespace-nowrap"
+								className="mt-5 flex max-w-[210px] justify-center whitespace-nowrap border border-abeg-primary text-base text-abeg-primary outline-none"
 								asChild
 							>
 								<Link href="/explore" className="flex gap-2">
@@ -157,10 +153,7 @@ const HomePage = ({
 
 					<div
 						{...dragScrollProps}
-						className={cn(
-							"gap-5 space-y-5 px-5 py-10 md:space-y-0 md:p-20",
-							dragContainerClasses
-						)}
+						className={cn("gap-5 space-y-5 px-5 py-10 md:space-y-0 md:p-20", dragContainerClasses)}
 					>
 						{campaignCard.map((card, index) => (
 							<div
@@ -170,13 +163,8 @@ const HomePage = ({
 								<h1 className="text-xl font-bold">{card.heading}</h1>
 								<p className="text-sm font-medium">{card.text}</p>
 								<div className="flex">
-									<Image
-										src={card.image}
-										alt="Create campaign card image"
-										width={200}
-										height={200}
-									/>
-									<p className="absolute bottom-0 left-0 right-[-1.5rem] top-[8rem] flex justify-end text-end text-[13rem] font-bold text-white">
+									<Image src={card.image} alt="Create campaign card image" width={200} height={200} />
+									<p className="absolute -right-6 bottom-0 left-0 top-32 flex justify-end text-end text-[13rem] font-bold text-white">
 										{card.index}
 									</p>
 								</div>
@@ -185,12 +173,9 @@ const HomePage = ({
 					</div>
 
 					{featuredCampaigns.length > 0 && (
-						<UrgentFundraisers
-							featuredCampaigns={featuredCampaigns}
-							className="pt-5 pb-20"
-						/>
+						<UrgentFundraisers featuredCampaigns={featuredCampaigns} className="pb-20 pt-5" />
 					)}
-					<div className="w-full bg-why-choose-us px-5 md:px-20 py-10 md:py-20">
+					<div className="w-full bg-why-choose-us px-5 py-10 md:p-20">
 						<WhyUs />
 					</div>
 					<div className=" pt-10">
@@ -207,12 +192,12 @@ export default HomePage;
 
 const Cards = () => {
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-8 md:gap-6  items-center">
-			<div className="flex flex-col gap-4 text-white overflow-hidden">
-				<div className="relative flex flex-col gap-20 p-4 md:p-6 h-full">
+		<div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2  md:gap-6 lg:grid-cols-3  xl:grid-cols-4">
+			<div className="flex flex-col gap-4 overflow-hidden text-white">
+				<div className="relative flex h-full flex-col gap-20 p-4 md:p-6">
 					<Image
 						src={charity}
-						className="absolute inset-0 z-[-1] size-full object-cover rounded-lg "
+						className="absolute inset-0 z-[-1] size-full rounded-lg object-cover "
 						fetchPriority="high"
 						priority={true}
 						loading="eager"
@@ -220,71 +205,70 @@ const Cards = () => {
 						width={200}
 						height={200}
 					/>
-					<p className="font-bold text-lg m:text-xl">Charity</p>
-					<p className="font-medium text-base md:text-lg">
-						Respond to the humanitarian crisis in the North East, where
-						insurgency has caused massive loss of lives and homelessness.
+					<p className="m:text-xl text-lg font-bold">Charity</p>
+					<p className="text-base font-medium md:text-lg">
+						Respond to the humanitarian crisis in the North East, where insurgency has caused massive
+						loss of lives and homelessness.
 					</p>
 				</div>
 				<Link
 					href="/explore/66029c5d59ccbd1162a2e252?name=Emergency"
-					className="rounded-full bg-[#F7F7F7] w-full flex justify-between px-4 py-3 font-bold text-base text-abeg-text"
+					className="flex w-full justify-between rounded-full bg-[#F7F7F7] px-4 py-3 text-base font-bold text-abeg-text"
 				>
 					<span className="flex items-center">Donate</span>
-					<div className="p-2 rounded-full bg-white">
+					<div className="rounded-full bg-white p-2">
 						<ArrowUpRight />
 					</div>
 				</Link>
 			</div>
-			<div className="flex flex-col-reverse md:flex-col gap-4 text-white overflow-hidden">
+			<div className="flex flex-col-reverse gap-4 overflow-hidden text-white md:flex-col">
 				<BringPositiveChangeStar />
-				<div className="rounded-full w-full  bg-[#F7F7F7] flex justify-between px-4 py-3 font-bold text-base text-abeg-text">
-					<div className="p-2 rounded-full bg-white">
+				<div className="flex w-full  justify-between rounded-full bg-[#F7F7F7] px-4 py-3 text-base font-bold text-abeg-text">
+					<div className="rounded-full bg-white p-2">
 						<Heart />
 					</div>
 					<span className="flex items-center">Inspire change</span>
 				</div>
-				<div className="relative flex flex-col gap-8 p-4 md:p-6 bg-abeg-primary rounded-lg overflow-hidden ">
-					<p className="font-bold text-lg m:text-xl">Change lives</p>
-					<p className="font-medium text-base md:text-lg">
-						30% of the African population lacks access to safe drinking water,
-						and about 70% does not have access to basic sanitation facilities.
+				<div className="relative flex flex-col gap-8 overflow-hidden rounded-lg bg-abeg-primary p-4 md:p-6 ">
+					<p className="m:text-xl text-lg font-bold">Change lives</p>
+					<p className="text-base font-medium md:text-lg">
+						30% of the African population lacks access to safe drinking water, and about 70% does not
+						have access to basic sanitation facilities.
 					</p>
 				</div>
 			</div>
 			<div className="flex flex-col gap-4 text-white ">
-				<div className=" flex flex-col gap-20 p-4 md:p-6 bg-abeg-primary overflow-hidden rounded-lg">
-					<div className="flex gap-4 justify-between">
-						<p className="font-bold text-lg m:text-xl">Humanitarian aid</p>
+				<div className=" flex flex-col gap-20 overflow-hidden rounded-lg bg-abeg-primary p-4 md:p-6">
+					<div className="flex justify-between gap-4">
+						<p className="m:text-xl text-lg font-bold">Humanitarian aid</p>
 						<Smiley />
 					</div>
-					<p className="font-medium text-base md:text-lg">
-						Empower others to thrive, fostering a better world for all. Let's
-						create a community where everyone flourishes and contributes
-						positively to society.
+					<p className="text-base font-medium md:text-lg">
+						Empower others to thrive, fostering a better world for all. Let's create a community where
+						everyone flourishes and contributes positively to society.
 					</p>
 				</div>
-				<div className="rounded-full w-full  bg-[#F7F7F7] flex justify-between px-4 py-3 font-bold text-base text-abeg-text">
-					<div className="p-2 rounded-full bg-white">
+				<div className="flex w-full  justify-between rounded-full bg-[#F7F7F7] px-4 py-3 text-base font-bold text-abeg-text">
+					<div className="rounded-full bg-white p-2">
 						<Cup />
 					</div>
 					<span className="flex items-center">Make a difference</span>
 				</div>
 			</div>
-			<div className="flex flex-col-reverse md:flex-col gap-4 text-white overflow-hidden">
+			<div className="flex flex-col-reverse gap-4 overflow-hidden text-white md:flex-col">
 				<Link
 					href="/explore"
-					className="rounded-full bg-[#F7F7F7] w-full flex justify-between px-4 py-3 font-bold text-base text-abeg-text"
+					className="flex w-full justify-between rounded-full bg-[#F7F7F7] px-4 py-3 text-base font-bold text-abeg-text"
 				>
 					<span className="flex items-center">Explore campaigns</span>
-					<div className="p-2 rounded-full bg-white">
+					<div className="rounded-full bg-white p-2">
 						<ArrowUpRight />
 					</div>
 				</Link>
-				<div className="relative flex flex-col gap-20 p-4 md:p-6 h-full">
+				<div className="relative flex h-full flex-col gap-20 p-4 md:p-6">
 					<Image
 						src={support}
-						className="absolute inset-0 z-[-1] size-full object-cover rounded-lg "
+						className="absolute inset-0 z-[-1] size-full rounded-lg object-cover "
 						fetchPriority="high"
 						priority={true}
 						loading="eager"
@@ -294,10 +278,10 @@ const Cards = () => {
 					/>
 					<Sun />
 					<div className="flex flex-col gap-4">
-						<p className="font-bold text-lg m:text-xl">Charity</p>
-						<p className="font-medium text-base md:text-lg">
-							Respond to the humanitarian crisis in the North East, where
-							insurgency has caused massive loss of lives and homelessness.
+						<p className="m:text-xl text-lg font-bold">Charity</p>
+						<p className="text-base font-medium md:text-lg">
+							Respond to the humanitarian crisis in the North East, where insurgency has caused
+							massive loss of lives and homelessness.
 						</p>
 					</div>
 				</div>
@@ -316,7 +300,7 @@ const BringPositiveChange = () => {
 						<BringPositiveChangeStar />
 					</span>
 				</p>
-				<p className="text-center text-2xl md:text-3xl font-bold">
+				<p className="text-center text-2xl font-bold md:text-3xl">
 					<span className="mr-4 inline-block">
 						<BringPositiveChangeStar />
 					</span>
@@ -356,31 +340,24 @@ const WhyUs = () => {
 	];
 	return (
 		<div className="flex flex-col gap-8 md:gap-12">
-			<div className="flex gap-3 items-center">
-				<div className="w-2 bg-abeg-primary rounded-md h-20"></div>
+			<div className="flex items-center gap-3">
+				<div className="h-20 w-2 rounded-md bg-abeg-primary" />
 				<div className="flex flex-col gap-2">
 					<p className="text-xl">Why us?</p>
-					<h3 className="text-2xl md:text-3xl font-bold">Why Choose Us?</h3>
+					<h3 className="text-2xl font-bold md:text-3xl">Why Choose Us?</h3>
 				</div>
 			</div>
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-y-12">
+			<div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
 				{whyUsComponentTexts.map((singleComponent, id) => {
 					return (
 						<div key={id} className="flex flex-col gap-2 text-justify">
-							<p className="text-lg md:text-xl font-bold">
-								{singleComponent.title}
-							</p>
-							<p className="text-base md:text-lg font-normal">
-								{singleComponent.text}
-							</p>
+							<p className="text-lg font-bold md:text-xl">{singleComponent.title}</p>
+							<p className="text-base font-normal md:text-lg">{singleComponent.text}</p>
 						</div>
 					);
 				})}
 			</div>
-			<Button
-				className="bg-abeg-primary font-semibold text-white md:text-lg w-fit mx-auto"
-				asChild
-			>
+			<Button className="mx-auto w-fit bg-abeg-primary font-semibold text-white md:text-lg" asChild>
 				<Link href="/c/create">Start a fundraiser</Link>
 			</Button>
 		</div>
