@@ -10,17 +10,8 @@ import { useElementList } from "@/lib/hooks";
 import { useSlot } from "@/lib/hooks/useSlot";
 import { format } from "date-fns";
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import {
-	CustomDialog,
-	FormErrorMessage,
-	Heading,
-	SingleCampaignProgress,
-} from "../common";
+import { useState } from "react";
+import { Heading, SingleCampaignProgress } from "../common";
 import { FAQ, UrgentFundraisers } from "../common/landingPage";
 import { Button } from "../ui";
 import CampaignCarousel from "./CampaignCarousel";
@@ -43,9 +34,6 @@ type CampaignHeaderProps = {
 
 function CampaignOutlook(props: CampaignOutlookProps) {
 	const { campaign, featuredCampaigns, excerpt, children, campaignId } = props;
-	const [donateLoading, setDonateLoading] = useState(false);
-
-	const router = useRouter();
 
 	const [TagList] = useElementList();
 
@@ -59,60 +47,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
-	const { user } = useSession((state) => state);
-	useEffect(() => {
-		if (user) {
-			reset({
-				donorName: `${user.firstName} ${user.lastName}`,
-				donorEmail: user.email,
-				amount: "",
-			});
-		}
-	}, [user]);
-	const [hideMyDetails, setHideMyDetails] = useState(false);
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm<DonationDetailsType>({
-		resolver: zodResolver(zodValidator("donationDetails")!),
-		mode: "onChange",
-		reValidateMode: "onChange",
-		defaultValues: {
-			donorName: "",
-			donorEmail: "",
-			amount: "",
-		},
-	});
-
-	const onDonateSubmit: SubmitHandler<DonationDetailsType> = async (
-		data: DonationDetailsType
-	) => {
-		setDonateLoading(true);
-		console.log({ ...data, hideMyDetails, campaignId, amount: +data.amount });
-		const { data: dataInfo, error } = await callApi<ApiResponse>(
-			"/donation/create",
-			{
-				...data,
-				hideMyDetails,
-				campaignId,
-				amount: +data.amount,
-			}
-		);
-		if (error) {
-			toast.error("Error", {
-				description: error.message,
-			});
-			setDonateLoading(false);
-			return;
-		}
-		toast.success("Success", {
-			description: dataInfo?.message,
-		});
-		router.push(dataInfo?.data?.paymentUrl as string);
-		setDonateLoading(false);
-	};
 	return (
 		<main className="flex flex-col pb-20 text-abeg-text">
 			<section className="relative px-6 pb-14 pt-11 text-white md:px-[80px]">
@@ -151,123 +85,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								Donate
 							</button>
 						}
-
-					>
-						<form
-							className="flex flex-col gap-4"
-							onSubmit={(e) => {
-								e.preventDefault();
-								handleSubmit(onDonateSubmit)(e);
-							}}
-						>
-							<p className="mt-2 text-center">
-								Donate to this campaign. Every penny brings us one step closer
-								to making a difference
-							</p>
-							<div className="space-y-1 bg-white">
-								<label
-									htmlFor="donorName"
-									className="text-sm font-medium md:text-base"
-								>
-									Full name
-								</label>
-								<Input
-									{...register("donorName")}
-									autoFocus
-									type="text"
-									id="donorName"
-									required
-									placeholder="Enter your Full name"
-									className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
-										errors.donorName &&
-										"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
-									}`}
-									disabled={user?.firstName && user.lastName ? true : false}
-								/>
-								<FormErrorMessage
-									error={errors.donorName!}
-									errorMsg={errors.donorName?.message!}
-								/>
-							</div>
-							<div className="space-y-1">
-								<label
-									htmlFor="donorEmail"
-									className="text-sm font-medium md:text-base"
-								>
-									Email address
-								</label>
-								<Input
-									{...register("donorEmail")}
-									autoFocus
-									type="text"
-									id="donorEmail"
-									required
-									placeholder="Enter your email address"
-									className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
-										errors.donorEmail &&
-										"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
-									}`}
-									disabled={user?.email ? true : false}
-								/>
-								<FormErrorMessage
-									error={errors.donorEmail!}
-									errorMsg={errors.donorEmail?.message!}
-								/>
-							</div>
-							<div className="space-y-1">
-								<label
-									htmlFor="amount"
-									className="text-sm font-medium md:text-base"
-								>
-									Amount (₦)
-								</label>
-								<Input
-									{...register("amount")}
-									autoFocus
-									type="number"
-									id="amount"
-									required
-									placeholder="Enter any amount"
-									className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
-										errors.amount &&
-										"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
-									}`}
-								/>
-								<FormErrorMessage
-									error={errors.amount!}
-									errorMsg={errors.amount?.message!}
-								/>
-							</div>
-							<div className="flex items-center gap-3">
-								<Checkbox
-									name="hideMyDetails"
-									id="hideMydetails"
-									className="accent-red-500"
-									checked={hideMyDetails}
-									onCheckedChange={() => setHideMyDetails(!hideMyDetails)}
-								/>
-								<label
-									htmlFor="hideMyDetails"
-									className="cursor-pointer text-sm font-medium md:text-base"
-									onClick={() => setHideMyDetails(!hideMyDetails)}
-								>
-									Donate anonymously
-								</label>
-							</div>
-							<Button
-								className={cn(
-									"bg-abeg-primary text-base text-white",
-									donateLoading && "disabled:cursor-not-allowed"
-								)}
-								loading={donateLoading}
-							>
-								Donate
-							</Button>
-						</form>
-					</CustomDialog>
-
 					/>
-
 
 					<ShareCampaignDialog
 						campaign={campaign}
@@ -335,119 +153,6 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 									Donate to this campaign
 								</Button>
 							}
-						>
-							<form
-								className="flex flex-col gap-4"
-								onSubmit={(e) => {
-									e.preventDefault();
-									handleSubmit(onDonateSubmit)(e);
-								}}
-							>
-								<p className="mt-2 text-center">
-									Donate to this campaign. Every penny brings us one step closer
-									to making a difference
-								</p>
-								<div className="space-y-1 bg-white">
-									<label
-										htmlFor="donorName"
-										className="text-sm font-medium md:text-base"
-									>
-										Full name
-									</label>
-									<Input
-										{...register("donorName")}
-										autoFocus
-										type="text"
-										id="donorName"
-										required
-										placeholder="Enter your Full name"
-										className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
-											errors.donorName &&
-											"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
-										}`}
-										disabled={user?.firstName && user.lastName ? true : false}
-									/>
-									<FormErrorMessage
-										error={errors.donorName!}
-										errorMsg={errors.donorName?.message!}
-									/>
-								</div>
-								<div className="space-y-1">
-									<label
-										htmlFor="donorEmail"
-										className="text-sm font-medium md:text-base"
-									>
-										Email address
-									</label>
-									<Input
-										{...register("donorEmail")}
-										autoFocus
-										type="text"
-										id="donorEmail"
-										required
-										placeholder="Enter your email address"
-										className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
-											errors.donorEmail &&
-											"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
-										}`}
-										disabled={user?.email ? true : false}
-									/>
-									<FormErrorMessage
-										error={errors.donorEmail!}
-										errorMsg={errors.donorEmail?.message!}
-									/>
-								</div>
-								<div className="space-y-1">
-									<label
-										htmlFor="amount"
-										className="text-sm font-medium md:text-base"
-									>
-										Amount (₦)
-									</label>
-									<Input
-										{...register("amount")}
-										autoFocus
-										type="number"
-										id="amount"
-										required
-										placeholder="Enter any amount"
-										className={`min-h-[45px] border text-sm font-light disabled:cursor-not-allowed disabled:bg-inherit md:text-base ${
-											errors.amount &&
-											"ring-2 ring-abeg-error-20 placeholder:text-abeg-error-20"
-										}`}
-									/>
-									<FormErrorMessage
-										error={errors.amount!}
-										errorMsg={errors.amount?.message!}
-									/>
-								</div>
-								<div className="flex items-center gap-3">
-									<Checkbox
-										name="hideMyDetails"
-										id="hideMydetails"
-										className="accent-red-500"
-										checked={hideMyDetails}
-										onCheckedChange={() => setHideMyDetails(!hideMyDetails)}
-									/>
-									<label
-										htmlFor="hideMyDetails"
-										className="cursor-pointer text-sm font-medium md:text-base"
-										onClick={() => setHideMyDetails(!hideMyDetails)}
-									>
-										Donate anonymously
-									</label>
-								</div>
-								<Button
-									className={cn(
-										"bg-abeg-primary text-base text-white",
-										donateLoading && "disabled:cursor-not-allowed"
-									)}
-									loading={donateLoading}
-								>
-									Donate
-								</Button>
-							</form>
-						</CustomDialog>
 						/>
 
 						<ShareCampaignDialog

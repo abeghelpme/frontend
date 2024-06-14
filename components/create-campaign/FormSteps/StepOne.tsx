@@ -35,7 +35,6 @@ function StepOne() {
 	const onSubmit = async (data: StepOneData) => {
 		updateFormData(data);
 
-
 		const { data: dataInfo, error } = await callApi<ApiResponse<Partial<Campaign>>>(
 			`/campaign/create/one`,
 			{
