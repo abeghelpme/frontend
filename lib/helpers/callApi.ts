@@ -41,8 +41,7 @@ export const callApi = async <T>(
 							Accept: "application/json",
 					  }
 					: { "Content-Type": "multipart/form-data" }),
-				"x-referer":
-					process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.abeghelp.me",
+				"x-referer": process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.abeghelp.me",
 			},
 			cancelToken: source.token,
 		});
