@@ -49,7 +49,7 @@ export const handleFileValidation = (
 
 		if (maxFileSize && file.size > fileSizeToMb(maxFileSize)) {
 			toast.error("Error", {
-				description: "Cannot upload a file larger than 5mb",
+				description: `Cannot upload a file larger than ${maxFileSize}mb`,
 			});
 
 			continue;
