@@ -84,7 +84,7 @@ const Login = () => {
 					initializeCampaigns(campaigns);
 					await initializeCategories();
 					if (skipModal === "true") {
-						router.push(campaigns && campaigns.length > 0 ? "/c" : "/c/create");
+						router.push("/c");
 					} else {
 						setOpenModal(true);
 					}

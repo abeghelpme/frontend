@@ -72,7 +72,7 @@ const transformCardData = (
 	goal: cardDetails.goal,
 	amountRaised: cardDetails.amountRaised,
 	commentCount: 0,
-	donorCount: 0,
+	donorCount: cardDetails?.totalDonations ?? 0,
 	imageSrc: cardDetails.images[0]?.secureUrl ?? "/assets/images/shared/logo.svg",
 	daysLeft: getDaysLeft(cardDetails.deadline),
 	location: cardDetails?.country ?? "Not Provided",
@@ -94,7 +94,7 @@ export function CampaignCard(props: CampaignCardProps) {
 
 	const transformedDetails = transformCardData(cardDetails);
 
-	const shortId = cardDetails.url ? cardDetails.url.split("/c/")[1] : null;
+	const shortId = cardDetails.shortId;
 
 	const StatusInfo = getStatusIconInfo(transformedDetails.status);
 

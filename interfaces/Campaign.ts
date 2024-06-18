@@ -1,3 +1,4 @@
+import type { Donation } from "@/interfaces/Donation";
 import { targetCountries } from "@/lib/helpers/campaign";
 import type { Prettify } from "@/lib/type-helpers";
 
@@ -31,7 +32,7 @@ type FlaggedReasonType = "Inappropriate Content" | "Mismatch" | "Exists";
 export type Campaign = {
 	_id: string;
 	currentStep: 1 | 2 | 3;
-	url: string;
+	shortId: string;
 	category: Category | null;
 	country: (typeof targetCountries)[number];
 	tags: string[];
@@ -50,6 +51,8 @@ export type Campaign = {
 	flaggedReasons: Array<{ type: FlaggedReasonType; reason: string }>;
 	isDeleted: boolean;
 	featured: boolean;
+	donations: Donation[];
+	totalDonations: number;
 };
 
 export type AllCampaignCategories = {
