@@ -24,6 +24,9 @@ export const handleFileValidation = (
 		return (existingFileArray ?? []).length === limit || validFilesArray.length === limit;
 	};
 
+	// eslint-disable-next-line unicorn/consistent-function-scoping
+	const fileSizeToMb = (size: number) => size * 1024 * 1024;
+
 	//	== Loop through fileList and validate each file
 	for (const file of newFileList) {
 		if (fileLimit && isFileLimitReached(fileLimit)) {
@@ -44,9 +47,9 @@ export const handleFileValidation = (
 			continue;
 		}
 
-		if (maxFileSize && file.size > maxFileSize) {
+		if (maxFileSize && file.size > fileSizeToMb(maxFileSize)) {
 			toast.error("Error", {
-				description: "Cannot upload a file larger than 5mb",
+				description: `Cannot upload a file larger than ${maxFileSize}mb`,
 			});
 
 			continue;
