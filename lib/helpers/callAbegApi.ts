@@ -23,7 +23,9 @@ const callAbegApi = createFetcher({
 		}
 
 		if (response.status === 429) {
-			toast.error("Too may requests!", { description: response.errorData.message });
+			toast.error("Too many requests!", {
+				description: response.errorData.message,
+			});
 		}
 
 		if (response.status === 403 && response.errorData.message === "2FA verification is required") {

@@ -62,7 +62,7 @@ export const callApi = async <T>(
 				useInitSession.getState().actions.clearSession();
 			}
 			if (error.response.status === 429) {
-				toast.error("Too may requests!", {
+				toast.error("Too many requests!", {
 					description: error.message,
 				});
 			}
