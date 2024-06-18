@@ -1,13 +1,17 @@
-export const isArray = (value: unknown): value is unknown[] =>
-	Array.isArray(value);
+export const isArray = (value: unknown): value is unknown[] => Array.isArray(value);
 
-export const isFormData = (value: unknown): value is FormData =>
-	value instanceof FormData;
+export const isFormData = (value: unknown): value is FormData => value instanceof FormData;
 
 export const isObject = (value: unknown): value is Record<string, unknown> => {
-	const isArray = Array.isArray(value);
-	const isFormData = value instanceof FormData;
-	const isObject = typeof value === "object" && value !== null;
+	const isRegularObject = typeof value === "object" && value !== null;
 
-	return !isArray && !isFormData && isObject;
+	return !isFormData(value) && !isArray(value) && isRegularObject;
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// == `Any` is required here so that one can pass custom function type without type errors
+export const isFunction = <TFunction extends (...args: any) => any>(
+	value: unknown
+): value is TFunction => {
+	return typeof value === "function";
 };
