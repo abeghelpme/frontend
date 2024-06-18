@@ -5,6 +5,7 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
+import { assertENV } from "@/lib/type-helpers/assert";
 import { useCampaignStore } from "@/store";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { NextSeo } from "next-seo";
@@ -13,6 +14,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { toast } from "sonner";
+
+const frontendUrl = assertENV(process.env.NEXT_PUBLIC_BASE_URL);
 
 export const getStaticProps = (async () => {
 	const { data, error } = await callApi<ApiResponse<Campaign[]>>(`/campaign/featured`);
@@ -53,7 +56,7 @@ function PreviewCampaignPage({ featuredCampaigns }: InferGetStaticPropsType<type
 		}
 
 		toast.success("Campaign published successfully");
-		void router.push(`/c/${currentCampaign.url.split("/c/")[1]}`);
+		void router.push(`/c/${currentCampaign.shortId}`);
 	};
 
 	const excerpt = generateExcerpt(currentCampaign.story);
@@ -63,9 +66,9 @@ function PreviewCampaignPage({ featuredCampaigns }: InferGetStaticPropsType<type
 			<NextSeo
 				title={currentCampaign.title}
 				description={excerpt}
-				canonical={currentCampaign.url}
+				canonical={`${frontendUrl}/c/${currentCampaign.shortId}`}
 				openGraph={{
-					url: currentCampaign.url,
+					url: `${frontendUrl}/c/${currentCampaign.shortId}`,
 					title: currentCampaign.title,
 					description: excerpt,
 					...(currentCampaign.images.length > 0 && {

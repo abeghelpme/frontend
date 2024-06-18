@@ -1,8 +1,4 @@
-import {
-	DummyAvatar,
-	MoneyIcon,
-	ShareIcon,
-} from "@/components/common/campaign-icons";
+import { DummyAvatar, MoneyIcon, ShareIcon } from "@/components/common/campaign-icons";
 import type { Campaign } from "@/interfaces/Campaign";
 import { cn, getDaysLeft } from "@/lib";
 import { getDateFromString } from "@/lib/helpers/campaign";
@@ -42,10 +38,15 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 	const HeaderSlot = useSlot(children, CampaignOutlook.Header);
 
 	const fundraiserTarget =
-		`${campaign.creator?.firstName} ${campaign.creator?.lastName}` ||
-		"Beneficiary";
+		`${campaign.creator?.firstName} ${campaign.creator?.lastName}` || "Beneficiary";
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
+
+	const [isBookmarked, setIsBookmarked] = useState(false);
+
+	const toggleBookmark = () => {
+		setIsBookmarked(!isBookmarked);
+	};
 
 	return (
 		<main className="flex flex-col pb-20 text-abeg-text">
@@ -78,14 +79,27 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						<figcaption className="text-lg">{fundraiserTarget}</figcaption>
 					</figure>
 
-					<DonationFlowDialog
-						campaignId={campaignId}
-						trigger={
-							<button className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-lg font-bold">
-								Donate
-							</button>
-						}
-					/>
+					<div className="flex gap-2">
+						<DonationFlowDialog
+							campaignId={campaignId}
+							trigger={
+								<button className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-lg font-bold">
+									Donate
+								</button>
+							}
+						/>
+
+						<button
+							onClick={toggleBookmark}
+							className={`rounded-[20px] border px-[30px] py-1 text-lg font-bold ${
+								isBookmarked
+									? "border-green-500 bg-green-100 text-green-700"
+									: "border-gray-300 bg-white/50 text-white"
+							}`}
+						>
+							{isBookmarked ? "Bookmarked" : "Bookmark"}
+						</button>
+					</div>
 
 					<ShareCampaignDialog
 						campaign={campaign}
@@ -102,8 +116,8 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					images={campaign.images}
 					classNames={{ base: "mt-8" }}
 					captionContent={{
-						location: campaign.country,
-						donorCount: 0,
+						location: campaign?.country ?? "Online",
+						donorCount: campaign?.totalDonations ?? 0,
 						daysLeft: getDaysLeft(campaign.deadline),
 					}}
 				/>
@@ -140,6 +154,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						amountRaised={campaign.amountRaised}
 						goal={campaign.goal}
 						style2
+						totalDonations={campaign?.totalDonations ?? 0}
 					/>
 
 					<article className="space-y-4">
@@ -172,20 +187,20 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						<figure className="flex items-start gap-2.5 text-sm lg:text-base">
 							<MoneyIcon className="mt-[5px] size-6 shrink-0" />
 							<figcaption>
-								Be among the first to donate to this fundraiser, every penny
-								donated will go a long way
+								Be among the first to donate to this fundraiser, every penny donated will go a long
+								way
 							</figcaption>
 						</figure>
 
 						<figure className="flex items-center gap-2 text-sm lg:text-base">
 							<DummyAvatar className="size-8 shrink-0" />
-							<figcaption>
-								{fundraiserTarget} is in charge of this fundraiser.
-							</figcaption>
+							<figcaption>{fundraiserTarget} is in charge of this fundraiser.</figcaption>
 						</figure>
 					</article>
 
-					<DonorSection className="px-[19px]" />
+					{/*  Start show of people that have donated to this campaign  */}
+					<DonorSection className="px-[19px]" donations={campaign.donations} />
+					{/* End show of people that have donated to this campaign  */}
 				</section>
 
 				<section className="max-w-[714px] text-2xl">
@@ -230,10 +245,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 							className="mt-4 grid grid-cols-2 gap-x-2 gap-y-4 font-medium lg:grid-cols-3 lg:gap-y-6"
 							each={campaign.tags}
 							render={(tag, index) => (
-								<li
-									key={`${tag}-${index}`}
-									className="flex min-w-0 text-base md:text-lg"
-								>
+								<li key={`${tag}-${index}`} className="flex min-w-0 text-base md:text-lg">
 									<p className="truncate">{tag}</p>
 								</li>
 							)}
@@ -246,9 +258,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						<div>
 							<p className="flex flex-col text-base md:text-lg">
 								{fundraiserTarget} is in charge of this fundraiser.
-								<span className="mt-4 text-base md:text-lg">
-									{campaign.country}
-								</span>
+								<span className="mt-4 text-base md:text-lg">{campaign.country}</span>
 							</p>
 							<Button
 								variant="primary"
@@ -261,10 +271,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				</section>
 			</div>
 
-			<UrgentFundraisers
-				featuredCampaigns={featuredCampaigns}
-				className="mt-[72px] lg:mt-[120px]"
-			/>
+			<UrgentFundraisers featuredCampaigns={featuredCampaigns} className="mt-[72px] lg:mt-[120px]" />
 
 			<FAQ className="mt-[72px] w-full px-6 lg:mt-[120px] lg:px-[80px]" />
 		</main>

@@ -5,13 +5,12 @@ import type { Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import { generateExcerpt } from "@/lib/helpers/campaign/generateExcerpt";
-import type {
-	GetStaticPaths,
-	GetStaticProps,
-	InferGetStaticPropsType,
-} from "next";
+import { assertENV } from "@/lib/type-helpers/assert";
+import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
+
+const frontendUrl = assertENV(process.env.NEXT_PUBLIC_BASE_URL);
 
 export const getStaticPaths = (async () => {
 	const { data, error } = await callApi<ApiResponse<Campaign[]>>(
@@ -27,7 +26,7 @@ export const getStaticPaths = (async () => {
 
 	return {
 		paths: data.data.map((campaign) => ({
-			params: { shortId: campaign.url.split("/c/")[1] },
+			params: { shortId: campaign.shortId },
 		})),
 
 		fallback: true,
@@ -71,9 +70,9 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
 		<>
 			<NextSeo
-				canonical={campaign.url}
+				canonical={`${frontendUrl}/c/${campaign.shortId}`}
 				openGraph={{
-					url: campaign.url,
+					url: `${frontendUrl}/c/${campaign.shortId}`,
 					title: campaign.title,
 					description: excerpt,
 					...(campaign.images.length > 0 && {
@@ -110,6 +109,4 @@ function CampaignView(props: InferGetStaticPropsType<typeof getStaticProps>) {
 
 export default CampaignView;
 
-CampaignView.getLayout = (page: React.ReactElement) => (
-	<BaseLayout>{page}</BaseLayout>
-);
+CampaignView.getLayout = (page: React.ReactElement) => <BaseLayout>{page}</BaseLayout>;
