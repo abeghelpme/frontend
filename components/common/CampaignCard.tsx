@@ -46,23 +46,6 @@ type CardListProps = {
 	cardDetailsArray: Array<CampaignCardProps["cardDetails"]> | undefined;
 } & Pick<CampaignCardProps, "withStatusCaption">;
 
-export const generateDummyCardData = (count = 5) =>
-	Array<TransformedDetails>(count).fill({
-		imageSrc: "/assets/images/dashboard/dummyCardImg.svg",
-		title: "Bringing Dental Care to Undeserved Communities",
-		location: "Lagos, Nigeria",
-		name: "Locs Designer",
-		goal: 3000000,
-		amountRaised: 2000000,
-		donorCount: 235567,
-		commentCount: 235567,
-		daysLeft: 20,
-		category: "Health and Wellness",
-		status: "In Review",
-	});
-
-export const dummyCardData = generateDummyCardData();
-
 const transformCardData = (
 	cardDetails: NonNullable<CampaignCardProps["cardDetails"]>
 ): TransformedDetails => ({
