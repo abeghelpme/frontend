@@ -1,5 +1,5 @@
-import type { ApiResponse } from "@/interfaces";
-import { type DonationDetailsType, callApi, cn, zodValidator } from "@/lib";
+import { type DonationDetailsType, cn, zodValidator } from "@/lib";
+import { callAbegApi } from "@/lib/helpers/callAbegApi";
 import { useSession } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
@@ -49,18 +49,12 @@ function DonationFlowDialog({
 	});
 
 	const onDonateSubmit: SubmitHandler<DonationDetailsType> = async (data: DonationDetailsType) => {
-		setDonateLoading(true);
-
-		const { data: dataInfo, error } = await callApi<ApiResponse>("/donation/create", {
+		const { data: dataInfo, error } = await callAbegApi<{ paymentUrl?: string }>("/donation/create", {
 			...data,
 			hideMyDetails,
 			campaignId,
 			amount: +data.amount,
-			redirectUrl: `${window.location}`,
 		});
-
-		// unload donate button
-		setDonateLoading(false);
 
 		if (error) {
 			toast.error("Error", {
@@ -70,16 +64,17 @@ function DonationFlowDialog({
 		}
 
 		toast.success("Success", {
-			description: dataInfo?.message,
+			description: dataInfo.message,
 		});
+
 		// redirect to the payment page
-		router.push(dataInfo?.data?.paymentUrl!, "_blank");
+		void router.push(dataInfo.data?.paymentUrl!, "_blank");
 	};
 
 	return (
 		<CustomDialog
 			classNames={{
-				content: "gap-0 p-12 md:p-12 w-full max-w-[500px]",
+				content: "w-full max-w-[500px] gap-0 p-12 md:p-12",
 			}}
 			trigger={trigger}
 		>
@@ -87,7 +82,7 @@ function DonationFlowDialog({
 				className="flex flex-col gap-4"
 				onSubmit={(e) => {
 					e.preventDefault();
-					handleSubmit(onDonateSubmit)(e);
+					void handleSubmit(onDonateSubmit)(e);
 				}}
 			>
 				<p className="mt-2 text-center">
@@ -110,6 +105,7 @@ function DonationFlowDialog({
 						disabled={user?.firstName && user.lastName ? true : false}
 					/>
 					<FormErrorMessage error={errors.donorName!} errorMsg={errors.donorName?.message!} />
+					<FormErrorMessage error={errors.donorName} errorMsg={errors.donorName?.message} />
 				</div>
 				<div className="space-y-1">
 					<label htmlFor="donorEmail" className="text-sm font-medium md:text-base">
@@ -128,6 +124,7 @@ function DonationFlowDialog({
 						disabled={user?.email ? true : false}
 					/>
 					<FormErrorMessage error={errors.donorEmail!} errorMsg={errors.donorEmail?.message!} />
+					<FormErrorMessage error={errors.donorEmail} errorMsg={errors.donorEmail?.message} />
 				</div>
 				<div className="space-y-1">
 					<label htmlFor="amount" className="text-sm font-medium md:text-base">
@@ -145,6 +142,7 @@ function DonationFlowDialog({
 						}`}
 					/>
 					<FormErrorMessage error={errors.amount!} errorMsg={errors.amount?.message!} />
+					<FormErrorMessage error={errors.amount} errorMsg={errors.amount?.message} />
 				</div>
 				<div className="flex items-center gap-3">
 					<Checkbox

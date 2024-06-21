@@ -1,7 +1,6 @@
 import { Heading } from "@/components/common";
-import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { callApi } from "@/lib";
+import { callAbegApi } from "@/lib/helpers/callAbegApi";
 import { type StepThreeData, useCampaignStore, useFormStore } from "@/store";
 import { useRouter } from "next/router";
 import { Controller, useFormContext as useHookFormContext } from "react-hook-form";
@@ -32,10 +31,7 @@ function StepThree() {
 		formData.set("campaignId", campaignId);
 		data.photos.forEach((imageFile) => formData.append("photos", imageFile));
 
-		const { data: dataInfo, error } = await callApi<ApiResponse<Campaign>>(
-			`/campaign/create/three`,
-			formData
-		);
+		const { data: dataInfo, error } = await callAbegApi<Campaign>(`/campaign/create/three`, formData);
 
 		if (error) {
 			toast.error(error.status, {
@@ -45,7 +41,7 @@ function StepThree() {
 			return;
 		}
 
-		if (!dataInfo?.data) return;
+		if (!dataInfo.data) return;
 
 		resetFormStore();
 
