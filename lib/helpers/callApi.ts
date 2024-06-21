@@ -41,8 +41,7 @@ export const callApi = async <T>(
 							Accept: "application/json",
 					  }
 					: { "Content-Type": "multipart/form-data" }),
-				"x-referer":
-					process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.abeghelp.me",
+				"x-referer": process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.abeghelp.me",
 			},
 			cancelToken: source.token,
 		});
@@ -63,7 +62,7 @@ export const callApi = async <T>(
 				useInitSession.getState().actions.clearSession();
 			}
 			if (error.response.status === 429) {
-				toast.error("Too may requests!", {
+				toast.error("Too many requests!", {
 					description: error.message,
 				});
 			}

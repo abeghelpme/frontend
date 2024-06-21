@@ -1,10 +1,6 @@
 import { Button } from "@/components/ui";
 import type { Campaign } from "@/interfaces/Campaign";
-import {
-	arrowDown,
-	arrowLeft,
-	arrowRight,
-} from "@/public/assets/images/campaign-category";
+import { arrowDown, arrowLeft, arrowRight } from "@/public/assets/images/campaign-category";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CampaignCardList } from "../common/CampaignCard";
@@ -43,8 +39,9 @@ export const CampaignCategoryCard = ({
 	allCampaigns: Campaign[];
 	categoryName: string | null;
 }) => {
-	if (allCampaigns.length === 0)
+	if (allCampaigns?.length === 0) {
 		return <NoCampaign categoryName={categoryName} />;
+	}
 
 	const itemsPerPage = useItemsPerPage();
 	const [currentPage, setCurrentPage] = useState(1);
@@ -54,7 +51,7 @@ export const CampaignCategoryCard = ({
 
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
-	const currentItems = allCampaigns.slice(startIndex, endIndex);
+	const currentItems = allCampaigns?.slice(startIndex, endIndex);
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
@@ -107,30 +104,26 @@ export const CampaignCategoryCard = ({
 					</span>
 					<span> Prev</span>
 				</button>
-				{Array.from({ length: totalPages }, (_, index) => index + 1).map(
-					(pageNumber, i) => (
-						<div key={i} className="flex items-center">
-							{(pageNumber <= 3 || i === totalPages - 1) && (
-								<button
-									key={pageNumber}
-									onClick={() => handlePageChange(pageNumber)}
-									className={`rounded-full px-3 py-1 md:px-4 md:text-2xl ${
-										currentPage === pageNumber
-											? "border border-black bg-abeg-primary font-bold text-white"
-											: "font-bold"
-									}`}
-								>
-									{pageNumber}
-								</button>
-							)}
-							{pageNumber === 3 && totalPages > 3 && (
-								<span className="mb-2 flex items-center px-2 py-1 font-bold md:text-2xl">
-									...
-								</span>
-							)}
-						</div>
-					)
-				)}
+				{Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber, i) => (
+					<div key={i} className="flex items-center">
+						{(pageNumber <= 3 || i === totalPages - 1) && (
+							<button
+								key={pageNumber}
+								onClick={() => handlePageChange(pageNumber)}
+								className={`rounded-full px-3 py-1 md:px-4 md:text-2xl ${
+									currentPage === pageNumber
+										? "border border-black bg-abeg-primary font-bold text-white"
+										: "font-bold"
+								}`}
+							>
+								{pageNumber}
+							</button>
+						)}
+						{pageNumber === 3 && totalPages > 3 && (
+							<span className="mb-2 flex items-center px-2 py-1 font-bold md:text-2xl">...</span>
+						)}
+					</div>
+				))}
 				<button
 					onClick={handleNextPage}
 					disabled={currentPage === totalPages}

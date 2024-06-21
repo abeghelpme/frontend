@@ -7,25 +7,15 @@ import type { AllCampaignCategories, Campaign } from "@/interfaces/Campaign";
 import { BaseLayout } from "@/layouts";
 import { callApi, cn } from "@/lib";
 import { useDragScroll, usePaginate } from "@/lib/hooks";
-import {
-	heroCircle,
-	heroHalfMoon,
-	searchIcon,
-} from "@/public/assets/images/campaign-category";
-import type {
-	GetStaticPaths,
-	GetStaticProps,
-	InferGetStaticPropsType,
-} from "next";
+import { heroCircle, heroHalfMoon, searchIcon } from "@/public/assets/images/campaign-category";
+import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 
 export const getStaticPaths = (async () => {
-	const { data, error } = await callApi<ApiResponse<Campaign[]>>(
-		"/campaign/categories"
-	);
+	const { data, error } = await callApi<ApiResponse<Campaign[]>>("/campaign/categories");
 
 	if (error || !data?.data || data.data.length === 0) {
 		return {
@@ -79,15 +69,11 @@ const ExploreCampaignPage = ({
 	const params = useSearchParams();
 	const categoryName = params.get("name");
 
-	const { currentPage, data, hasMore, hasPrevious } = usePaginate(
-		"/campaign/all",
-		{
-			startPage: 2,
-		}
-	);
+	const { currentPage, data, hasMore, hasPrevious } = usePaginate("/campaign/all", {
+		startPage: 2,
+	});
 
-	const { dragScrollProps, dragContainerClasses } =
-		useDragScroll<HTMLDivElement>();
+	const { dragScrollProps, dragContainerClasses } = useDragScroll<HTMLDivElement>();
 
 	return (
 		<BaseLayout>
@@ -113,8 +99,8 @@ const ExploreCampaignPage = ({
 					{categoryName}
 				</h1>
 				<p className="max-w-[500px] pr-8 text-base text-gray-50 md:pr-0 md:text-center md:text-lg">
-					Join the effortless way to fund-raise and make a difference and
-					empower your cause with Abeghelp.me
+					Join the effortless way to fund-raise and make a difference and empower your cause with
+					Abeghelp.me
 				</p>
 				<div className="relative flex w-full flex-row justify-center gap-2 pt-5 md:w-[40rem] md:gap-5 md:pt-8">
 					<div className="flex flex-1 items-center">
@@ -132,9 +118,7 @@ const ExploreCampaignPage = ({
 							className="absolute bottom-0 left-3 -translate-y-1/2 md:bottom-2"
 						/>
 					</div>
-					<Button className=" bg-white text-base font-bold text-abeg-primary md:px-9">
-						Search
-					</Button>
+					<Button className=" bg-white text-base font-bold text-abeg-primary md:px-9">Search</Button>
 				</div>
 				<Image
 					src={heroCircle}
@@ -154,18 +138,15 @@ const ExploreCampaignPage = ({
 							Explore our {`${categoryName?.toLowerCase()} campaigns`}
 						</h1>
 						<p className="text-base font-medium text-placeholder md:w-3/6 md:text-lg">
-							Join the effortless way to fund-raise and make a difference and
-							empower your cause with Abeghelp.me
+							Join the effortless way to fund-raise and make a difference and empower your cause with
+							Abeghelp.me
 						</p>
 					</div>
 					<div
 						{...dragScrollProps}
-						className={cn(
-							"flex justify-between gap-8 text-black",
-							dragContainerClasses
-						)}
+						className={cn("flex justify-between gap-8 text-black", dragContainerClasses)}
 					>
-						{allCampaignCategories.map((category, id) => {
+						{allCampaignCategories?.map((category, id) => {
 							return (
 								<Button
 									asChild
@@ -192,10 +173,7 @@ const ExploreCampaignPage = ({
 						})}
 					</div>
 
-					<CampaignCategoryCard
-						allCampaigns={campaigns}
-						categoryName={categoryName}
-					/>
+					<CampaignCategoryCard allCampaigns={campaigns} categoryName={categoryName} />
 				</div>
 
 				<HowItWorks className="px-5 md:px-20" />

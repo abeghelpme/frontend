@@ -1,0 +1,6 @@
+// These are observations and things needed to be done 
+
+18-June-2024
+1. read more button shows in single campaign details page even when the story is short.
+2. search is not working for campaign explore by category id 
+
