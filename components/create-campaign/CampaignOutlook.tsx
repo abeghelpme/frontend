@@ -2,11 +2,11 @@ import { DummyAvatar, MoneyIcon, ShareIcon } from "@/components/common/campaign-
 import type { Campaign } from "@/interfaces/Campaign";
 import { cn, getDaysLeft } from "@/lib";
 import { getDateFromString } from "@/lib/helpers/campaign";
-import { useElementList } from "@/lib/hooks";
+import { useElementList, useToggle } from "@/lib/hooks";
 import { useSlot } from "@/lib/hooks/useSlot";
 import { format } from "date-fns";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef } from "react";
 import { Heading, SingleCampaignProgress } from "../common";
 import { FAQ, UrgentFundraisers } from "../common/landingPage";
 import { Button } from "../ui";
@@ -31,22 +31,24 @@ type CampaignHeaderProps = {
 function CampaignOutlook(props: CampaignOutlookProps) {
 	const { campaign, featuredCampaigns, excerpt, children, campaignId } = props;
 
+	const storyRef = useRef<HTMLDivElement>(null);
+
+	console.dir(storyRef.current);
+
 	const [TagList] = useElementList();
 
-	const [hideExcessStory, setHideExcessStory] = useState(true);
+	const [hideExcessStory, toggleHideExcessStory] = useToggle(campaign.story.length > 450);
 
 	const HeaderSlot = useSlot(children, CampaignOutlook.Header);
 
 	const fundraiserTarget =
-		`${campaign.creator?.firstName} ${campaign.creator?.lastName}` || "Beneficiary";
+		campaign.creator?.firstName || campaign.creator?.lastName
+			? `${campaign.creator.firstName} ${campaign.creator.lastName}`
+			: "Beneficiary";
 
 	const campaignDeadline = getDateFromString(campaign.deadline);
 
-	const [isBookmarked, setIsBookmarked] = useState(false);
-
-	const toggleBookmark = () => {
-		setIsBookmarked(!isBookmarked);
-	};
+	const [isBookmarked, toggleBookmarked] = useToggle(false);
 
 	return (
 		<main className="flex flex-col pb-20 text-abeg-text">
@@ -64,8 +66,8 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 				<p className="mt-3 text-pretty text-base md:text-lg">{excerpt}</p>
 
 				<article className="relative mt-6 flex flex-wrap items-center gap-2 max-lg:justify-between lg:gap-9">
-					<figure className="flex items-center gap-3 ">
-						{campaign?.creator?.photo && (
+					<figure className="flex items-center gap-3">
+						{campaign.creator?.photo && (
 							<Image
 								src={campaign.creator.photo}
 								alt="image"
@@ -74,7 +76,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 								className="size-10 rounded-full"
 							/>
 						)}
-						{!campaign?.creator?.photo && <DummyAvatar className="size-10" />}
+						{!campaign.creator?.photo && <DummyAvatar className="size-10" />}
 
 						<figcaption className="text-lg">{fundraiserTarget}</figcaption>
 					</figure>
@@ -90,7 +92,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						/>
 
 						<button
-							onClick={toggleBookmark}
+							onClick={toggleBookmarked}
 							className={`rounded-[20px] border px-[30px] py-1 text-lg font-bold ${
 								isBookmarked
 									? "border-green-500 bg-green-100 text-green-700"
@@ -116,8 +118,8 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 					images={campaign.images}
 					classNames={{ base: "mt-8" }}
 					captionContent={{
-						location: campaign?.country ?? "Online",
-						donorCount: campaign?.totalDonations ?? 0,
+						location: campaign.country ?? "Online",
+						donorCount: campaign.totalDonations ?? 0,
 						daysLeft: getDaysLeft(campaign.deadline),
 					}}
 				/>
@@ -129,7 +131,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						render={(tag, index) => (
 							<li
 								key={`${tag}-${index}`}
-								className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-base font-bold md:text-lg "
+								className="rounded-[20px] border border-white bg-white/30 px-[30px] py-1 text-base font-bold md:text-lg"
 							>
 								<p>{tag}</p>
 							</li>
@@ -154,7 +156,7 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						amountRaised={campaign.amountRaised}
 						goal={campaign.goal}
 						style2
-						totalDonations={campaign?.totalDonations ?? 0}
+						totalDonations={campaign.totalDonations ?? 0}
 					/>
 
 					<article className="space-y-4">
@@ -220,22 +222,24 @@ function CampaignOutlook(props: CampaignOutlookProps) {
 						</Heading>
 
 						<div
-							className={cn(
-								"mt-6 min-h-16 text-justify text-base md:text-lg",
-								hideExcessStory && "line-clamp-[10]"
-							)}
+							ref={storyRef}
+							className={cn("mt-6 min-h-16 text-justify text-base md:text-lg")}
 							dangerouslySetInnerHTML={{
-								__html: campaign.storyHtml,
+								__html: hideExcessStory
+									? `${campaign.storyHtml.slice(0, 450)}...`
+									: campaign.storyHtml,
 							}}
 						/>
 
-						<Button
-							onClick={() => setHideExcessStory((prev) => !prev)}
-							variant="secondary"
-							className="ml-auto mt-2 shrink-0 rounded-md border-abeg-primary py-2 text-base font-medium text-abeg-primary lg:rounded-lg"
-						>
-							{hideExcessStory ? "Read more" : "Read less"}
-						</Button>
+						{campaign.story.length > 450 && (
+							<Button
+								onClick={toggleHideExcessStory}
+								variant="secondary"
+								className="ml-auto mt-2 shrink-0 rounded-md border-abeg-primary py-2 text-base font-medium text-abeg-primary lg:rounded-lg"
+							>
+								{hideExcessStory ? "Read more" : "Read less"}
+							</Button>
+						)}
 
 						<p className="mt-8 text-base md:text-xl lg:mt-12">
 							Campaign closes on: {format(campaignDeadline, "dd-MM-yyyy")}.
