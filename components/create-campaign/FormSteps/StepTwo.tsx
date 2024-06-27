@@ -1,7 +1,7 @@
 import { DatePicker, Select } from "@/components/ui";
-import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { callApi, cn } from "@/lib";
+import { cn } from "@/lib";
+import { callAbegApi } from "@/lib/helpers/callAbegApi";
 import { useFormStore } from "@/store";
 import type { StepTwoData } from "@/store/useFormStore";
 import { ChevronDownIcon } from "lucide-react";
@@ -22,13 +22,10 @@ function StepTwo() {
 	const onSubmit = async (data: StepTwoData) => {
 		updateFormData(data);
 
-		const { data: dataInfo, error } = await callApi<ApiResponse<Partial<Campaign>>>(
-			`/campaign/create/two`,
-			{
-				...data,
-				campaignId,
-			}
-		);
+		const { data: dataInfo, error } = await callAbegApi<Partial<Campaign>>(`/campaign/create/two`, {
+			...data,
+			campaignId,
+		});
 
 		if (error) {
 			toast.error(error.status, {
@@ -38,7 +35,7 @@ function StepTwo() {
 			return;
 		}
 
-		if (!dataInfo?.data) return;
+		if (!dataInfo.data) return;
 
 		updateCampaignId(dataInfo.data._id);
 		goToStep(3);

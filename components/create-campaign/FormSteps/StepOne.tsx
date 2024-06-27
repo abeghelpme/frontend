@@ -1,9 +1,8 @@
 import { Heading } from "@/components/common";
 import { CrossIcon } from "@/components/common/campaign-icons";
 import { Select } from "@/components/ui";
-import type { ApiResponse } from "@/interfaces";
 import type { Campaign } from "@/interfaces/Campaign";
-import { callApi } from "@/lib";
+import { callAbegApi } from "@/lib/helpers/callAbegApi";
 import { targetCountries, validateTagValue } from "@/lib/helpers/campaign";
 import { useElementList } from "@/lib/hooks";
 import { useCampaignStore } from "@/store";
@@ -35,13 +34,10 @@ function StepOne() {
 	const onSubmit = async (data: StepOneData) => {
 		updateFormData(data);
 
-		const { data: dataInfo, error } = await callApi<ApiResponse<Partial<Campaign>>>(
-			`/campaign/create/one`,
-			{
-				...data,
-				...(!!campaignId && { campaignId }),
-			}
-		);
+		const { data: dataInfo, error } = await callAbegApi<Partial<Campaign>>(`/campaign/create/one`, {
+			...data,
+			...(Boolean(campaignId) && { campaignId }),
+		});
 
 		if (error) {
 			toast.error(error.status, {
@@ -51,7 +47,7 @@ function StepOne() {
 			return;
 		}
 
-		if (!dataInfo?.data) return;
+		if (!dataInfo.data) return;
 
 		updateCampaignId(dataInfo.data._id);
 		goToStep(2);
