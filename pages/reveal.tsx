@@ -3,7 +3,7 @@
  * Created Date: Su Jul 2024                                                   *
  * Author: Emmanuel Bayode O.                                                  *
  * -----                                                                       *
- * Last Modified: Su/07/2024 04:nn:11
+ * Last Modified: Su/07/2024 04:nn:08
  * Modified By: Emmanuel Bayode O.
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -19,6 +19,7 @@ import { toast } from "sonner";
 
 const Reveal = () => {
 	const [loading, setLoading] = useState(false);
+	const [success, setSuccess] = useState(false);
 	const [values, setValues] = useState({
 		phone: "",
 		name: "",
@@ -56,7 +57,7 @@ const Reveal = () => {
 			firstName: values.name,
 		});
 
-		console.log(response);
+		setSuccess(true);
 		setLoading(false);
 	};
 	return (
@@ -69,52 +70,61 @@ const Reveal = () => {
 				withHeader
 				hasSuccess={false}
 			>
-				<form onSubmit={handleSubmit}>
-					<div className="space-y-1">
-						<label htmlFor="email" className="text-sm font-medium md:text-lg">
-							Enter whatsapp phone number with country code (e.g +2348115307397)
-						</label>
-						<Input
-							onChange={(e) =>
-								setValues((prev) => ({
-									...prev,
-									phone: e.target.value.replaceAll(" ", ""),
-								}))
-							}
-							autoFocus
-							type="text"
-							placeholder="Enter number (e.g +2348115307397)"
-							className={`min-h-[45px] ring-2 ring-abeg-primary-20 placeholder:text-abeg-primary-20`}
-						/>
+				{success ? (
+					<div className="bg-green-50 p-4 rounded-md text-green-700">
+						<p>
+							Your secret is:{" "}
+							<span className="font-semibold">${Math.random().toString(10).substring(2, 15)}</span>
+						</p>
 					</div>
-					<div className="space-y-1 mt-2">
-						<label htmlFor="email" className="text-sm font-medium md:text-lg">
-							Enter Your whatsapp name or first name
-						</label>
-						<Input
-							onChange={(e) =>
-								setValues((prev) => ({
-									...prev,
-									name: e.target.value.replaceAll(" ", ""),
-								}))
-							}
-							autoFocus
-							type="text"
-							placeholder="Enter name (e.g Emmanuel)"
-							className={`min-h-[45px] ring-2 ring-abeg-primary-20 placeholder:text-abeg-primary-20`}
-						/>
-					</div>
-					<Button
-						type="submit"
-						disabled={loading}
-						loading={loading}
-						variant="primary"
-						className="disabled:bg-gray-500 mt-6"
-						fullWidth
-					>
-						Continue...
-					</Button>
-				</form>
+				) : (
+					<form onSubmit={handleSubmit}>
+						<div className="space-y-1">
+							<label htmlFor="email" className="text-sm font-medium md:text-lg">
+								Enter whatsapp phone number with country code (e.g +2348115307397)
+							</label>
+							<Input
+								onChange={(e) =>
+									setValues((prev) => ({
+										...prev,
+										phone: e.target.value.replaceAll(" ", ""),
+									}))
+								}
+								autoFocus
+								type="text"
+								placeholder="Enter number (e.g +2348115307397)"
+								className={`min-h-[45px] ring-2 ring-abeg-primary-20 placeholder:text-abeg-primary-20`}
+							/>
+						</div>
+						<div className="space-y-1 mt-2">
+							<label htmlFor="email" className="text-sm font-medium md:text-lg">
+								Enter Your whatsapp name or first name
+							</label>
+							<Input
+								onChange={(e) =>
+									setValues((prev) => ({
+										...prev,
+										name: e.target.value.replaceAll(" ", ""),
+									}))
+								}
+								autoFocus
+								type="text"
+								placeholder="Enter name (e.g Emmanuel)"
+								className={`min-h-[45px] ring-2 ring-abeg-primary-20 placeholder:text-abeg-primary-20`}
+							/>
+						</div>
+						<Button
+							type="submit"
+							disabled={loading}
+							loading={loading}
+							variant="primary"
+							className="disabled:bg-gray-500 mt-6"
+							fullWidth
+						>
+							Continue...
+						</Button>
+					</form>
+				)}
 			</AuthPagesLayout>
 		</>
 	);
