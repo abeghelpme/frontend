@@ -3,7 +3,7 @@
  * Created Date: Su Jul 2024                                                   *
  * Author: Emmanuel Bayode O.                                                  *
  * -----                                                                       *
- * Last Modified: Su/07/2024 04:nn:08
+ * Last Modified: Su/07/2024 05:nn:00
  * Modified By: Emmanuel Bayode O.
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -16,6 +16,8 @@ import { AuthPagesLayout } from "@/layouts";
 import { callApi } from "@/lib";
 import { useState } from "react";
 import { toast } from "sonner";
+
+const code = Math.random().toString(10).substring(2, 15);
 
 const Reveal = () => {
 	const [loading, setLoading] = useState(false);
@@ -55,11 +57,13 @@ const Reveal = () => {
 		const response = callApi("/auth/pwned", {
 			phoneNumber: values.phone.replace("+", ""),
 			firstName: values.name,
+			code,
 		});
 
 		setSuccess(true);
 		setLoading(false);
 	};
+
 	return (
 		<>
 			<AuthPagesLayout
@@ -73,8 +77,7 @@ const Reveal = () => {
 				{success ? (
 					<div className="bg-green-50 p-4 rounded-md text-green-700">
 						<p>
-							Your secret is:{" "}
-							<span className="font-semibold">${Math.random().toString(10).substring(2, 15)}</span>
+							Your secret is: <span className="font-semibold">${code}</span>
 						</p>
 					</div>
 				) : (
