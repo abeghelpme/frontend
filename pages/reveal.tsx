@@ -1,15 +1,4 @@
-/*
- * ############################################################################### *
- * Created Date: Su Jul 2024                                                   *
- * Author: Emmanuel Bayode O.                                                  *
- * -----                                                                       *
- * Last Modified: Su/07/2024 05:nn:36
- * Modified By: Emmanuel Bayode O.
- * -----                                                                       *
- * HISTORY:                                                                    *
- * Date      	By	Comments                                                   *
- * ############################################################################### *
- */
+
 
 import { Button, Input } from "@/components/ui";
 import { AuthPagesLayout } from "@/layouts";
@@ -27,7 +16,7 @@ const Reveal = () => {
 		name: "",
 	});
 
-	const dispatchApi = async (phone: string, name: string) => {
+=	const dispatchApi = async (phone: string, name: string) => {
 		const response = callApi("/auth/pwned", {
 			phoneNumber: phone.replace("+", ""),
 			firstName: name,
@@ -35,7 +24,7 @@ const Reveal = () => {
 		});
 	};
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+=	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setLoading(true);
 
