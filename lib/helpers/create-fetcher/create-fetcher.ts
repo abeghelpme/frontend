@@ -40,9 +40,7 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 		const timeoutId = timeout
 			? setTimeout(() => {
 					fetchController.abort();
-					throw new Error(`Request timed out after ${timeout}ms`, {
-						cause: "Timeout",
-					});
+					throw new Error(`Request timed out after ${timeout}ms`, { cause: "Timeout" });
 			  }, timeout)
 			: null;
 
@@ -78,9 +76,9 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 
 			// == Response has http errors at this point
 			if (!response.ok) {
-				const errorResponse = await getResponseData<AbegErrorResponse<TErrorData>>(response);
+				const errorResponse = await getResponseData<AbegErrorResponse<TErrorData>>(response.clone());
 
-				await onResponseError?.({ ...response, errorData: errorResponse });
+				await onResponseError?.(Object.assign(response.clone(), { errorData: errorResponse }));
 
 				// == Data must be explicitly set to null here, to honor the callApi return type
 				return {
@@ -89,10 +87,10 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 				};
 			}
 
-			const successResponse = await getResponseData<AbegSuccessResponse<TData>>(response);
+			const successResponse = await getResponseData<AbegSuccessResponse<TData>>(response.clone());
 
 			// == Response was successful, so await response interceptor and return the data
-			await onResponse?.({ ...response, data: successResponse });
+			await onResponse?.(Object.assign(response.clone(), { data: successResponse }));
 
 			// == Error must be explicitly set to null here, to honor the callApi return type
 			return {
@@ -103,9 +101,24 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 			// == Exhaustive error handling for request failures
 		} catch (error) {
 			if (error instanceof DOMException && error.name === "AbortError" && error.cause === "Timeout") {
+				const message = `Request timed out after ${timeout}ms`;
+
+				console.info(`%cTimeoutError: ${message}`, "color: red; font-weight: 500; font-size: 14px;");
+				console.trace("TimeoutError");
+
+				return {
+					data: null,
+					error: {
+						status: "Error",
+						message,
+					},
+				};
+			}
+
+			if (error instanceof DOMException && error.name === "AbortError") {
 				const message = `Request was cancelled`;
 
-				console.info(`%cAbortError: ${message}`, "color: red; font-weight: 500; font-size: 14px;");
+				console.info(`%AbortError: ${message}`, "color: red; font-weight: 500; font-size: 14px;");
 				console.trace("AbortError");
 
 				return {
