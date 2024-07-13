@@ -31,7 +31,11 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 		const prevController = abortControllerStore.get(url);
 
 		if (prevController) {
-			prevController.abort();
+			const reason = new DOMException(
+				`Automatic cancelation of the previous unfinished request to this same url: ${url}`,
+				"AbortError"
+			);
+			prevController.abort(reason);
 		}
 
 		const fetchController = new AbortController();
@@ -39,8 +43,8 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 
 		const timeoutId = timeout
 			? setTimeout(() => {
-					fetchController.abort();
-					throw new Error(`Request timed out after ${timeout}ms`, { cause: "Timeout" });
+					const reason = new DOMException(`Request timed out after ${timeout}ms`, "TimeoutError");
+					fetchController.abort(reason);
 			  }, timeout)
 			: null;
 
@@ -100,26 +104,27 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 
 			// == Exhaustive error handling for request failures
 		} catch (error) {
-			if (error instanceof DOMException && error.name === "AbortError" && error.cause === "Timeout") {
-				const message = `Request timed out after ${timeout}ms`;
-
-				console.info(`%cTimeoutError: ${message}`, "color: red; font-weight: 500; font-size: 14px;");
-				console.trace("TimeoutError");
+			if (error instanceof DOMException && error.name === "TimeoutError") {
+				console.info(
+					`%c${error.name}: ${error.message}`,
+					"color: red; font-weight: 500; font-size: 14px;"
+				);
+				console.trace(error.name);
 
 				return {
 					data: null,
 					error: {
 						status: "Error",
-						message,
+						message: error.message,
 					},
 				};
 			}
 
 			if (error instanceof DOMException && error.name === "AbortError") {
-				const message = `Request was cancelled`;
+				const message = `Request was aborted due to: ${error.message}`;
 
-				console.info(`%AbortError: ${message}`, "color: red; font-weight: 500; font-size: 14px;");
-				console.trace("AbortError");
+				console.info(`%${error.name}: ${message}`, "color: red; font-weight: 500; font-size: 14px;");
+				console.trace(error.name);
 
 				return {
 					data: null,
