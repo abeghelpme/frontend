@@ -30,6 +30,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 	return (
 		<DropZone
+			multiple={true}
 			onDrop={handleImageUpload}
 			allowedFileTypes={allowedFileTypes}
 			existingFiles={existingImageFiles}
@@ -37,7 +38,6 @@ function DropZoneInput(props: DropZoneInputProps) {
 			classNames={{
 				base: "mt-4 flex min-h-40 flex-col items-center justify-end rounded-[5px] border border-dashed border-abeg-primary py-[0.9375rem] text-xs lg:min-h-60",
 			}}
-			multiple={true}
 		>
 			<Button
 				variant="primary"
