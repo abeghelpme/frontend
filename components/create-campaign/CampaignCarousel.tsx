@@ -32,7 +32,7 @@ const CampaignCarousel = (props: CampaignCarouselProps) => {
 					classNames={{
 						base: "px-[18px] py-[25px] md:px-[53px] lg:py-10",
 						iconsContainer:
-							"size-[25px] lg:size-20 bg-abeg-text/40 flex justify-center items-center border border-white backdrop-blur-md rounded-full",
+							"flex size-[25px] items-center justify-center rounded-full border border-white bg-abeg-text/40 backdrop-blur-md lg:size-20",
 					}}
 					icons={{
 						prev: <ArrowLeftIcon className="size-2.5 lg:size-[30px]" />,

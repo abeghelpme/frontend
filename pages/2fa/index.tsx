@@ -115,9 +115,7 @@ const TwoFa = () => {
 							<OtpInputDisplay
 								otp={otp}
 								setOtp={setOtp}
-								topSection={
-									<p>{`Enter the 6 digits code we sent to ${castedUser?.email}`}</p>
-								}
+								topSection={<p>{`Enter the 6 digits code we sent to ${castedUser?.email}`}</p>}
 								bottomSection={
 									<div className="mt-8 flex w-full flex-col gap-12 lg:gap-14">
 										<p className="text-center">
@@ -126,7 +124,7 @@ const TwoFa = () => {
 												type="submit"
 												disabled={loading.resend}
 												onClick={(e) => otp === "" && void handleStep(e)}
-												className="!p-0 !text-sm md:!text-base font-medium text-abeg-primary disabled:text-gray-500 disabled:!bg-transparent disabled:cursor-not-allowed inline"
+												className="inline !p-0 !text-sm font-medium text-abeg-primary disabled:cursor-not-allowed disabled:!bg-transparent disabled:text-gray-500 md:!text-base"
 											>
 												resend it
 											</Button>
@@ -164,17 +162,12 @@ const TwoFa = () => {
 			<div className="relative flex min-h-full flex-col justify-between">
 				{step === 1 ? (
 					<>
-						<div className="mx-auto mt-8 lg:mt-10 w-full">
-							<h1 className="text-2xl font-semibold">
-								Set up two-factor authentication
-							</h1>
-							<p className="text-formLabel mt-6">
-								Add an extra layer of security to your account
-							</p>
+						<div className="mx-auto mt-8 w-full lg:mt-10">
+							<h1 className="text-2xl font-semibold">Set up two-factor authentication</h1>
+							<p className="text-formLabel mt-6">Add an extra layer of security to your account</p>
 							<p className="mt-4">
-								Two&#8209;factor authentication protects your account by
-								requiring an additional code when you log in on a device that we
-								don&apos;t recognize.
+								Two&#8209;factor authentication protects your account by requiring an additional code
+								when you log in on a device that we don&apos;t recognize.
 							</p>
 							<div className="mt-[3rem] space-y-8">
 								<h2 className="text-xl font-semibold">
@@ -192,6 +185,7 @@ const TwoFa = () => {
 												We recommend downloading the{" "}
 												<Link
 													target="_blank"
+													rel="noopener"
 													href={
 														"https://support.google.com/accounts/answer/1066447?hl=en&co=GENIE.Platform%3DiOS&oco=0"
 													}
@@ -199,8 +193,8 @@ const TwoFa = () => {
 												>
 													Google Authenticator
 												</Link>{" "}
-												app if you don&apos;t have one. It will generate a code
-												that you&apos;ll enter when you log in.
+												app if you don&apos;t have one. It will generate a code that you&apos;ll enter
+												when you log in.
 											</p>
 											<input
 												type="radio"
@@ -214,13 +208,9 @@ const TwoFa = () => {
 										</div>
 									</label>
 									<hr className="my-4 border-b" />
-									<label
-										htmlFor="email"
-										aria-label="Set up with email"
-										className="space-y-2"
-									>
-										<h3 className=" font-semibold">Email Address</h3>
-										<div className="flex items-center gap-2 ">
+									<label htmlFor="email" aria-label="Set up with email" className="space-y-2">
+										<h3 className="font-semibold">Email Address</h3>
+										<div className="flex items-center gap-2">
 											<p className="text-balance md:text-lg">
 												We will send a code to your registered email address
 											</p>

@@ -19,14 +19,14 @@ function ShareCampaignDialog({ campaign, trigger }: ShareCampaignProps) {
 
 	return (
 		<CustomDialog
-			classNames={{ content: "gap-0 px-4 py-14 md:p-12 w-full max-w-[500px]" }}
+			classNames={{ content: "w-full max-w-[500px] gap-0 px-4 py-14 md:p-12" }}
 			trigger={trigger}
 		>
 			<p className="text-center">
 				Spread the word, share your campaign with friends, family, and the world, make a difference
 			</p>
 			<div className="mt-6 flex items-center justify-between rounded-lg bg-abeg-primary p-2 text-base text-white">
-				<LinkIcon className="size-5 " />
+				<LinkIcon className="size-5" />
 				{/* CSS technique required to keep the url from rigidly pushing other flex elements out of view on smaller screens */}
 				<p className="mx-3 w-0 basis-full overflow-clip overflow-ellipsis text-center">
 					{`${frontendUrl}/c/${campaign.shortId}`}
@@ -49,6 +49,7 @@ function ShareCampaignDialog({ campaign, trigger }: ShareCampaignProps) {
 				<Link
 					href={generateTweet(campaign.title, `${frontendUrl}/c/${campaign.shortId}`, campaign.tags)}
 					target="_blank"
+					rel="noopener"
 					className="flex w-full items-center gap-2"
 				>
 					<Image src={xIcon as string} width={32} height={32} priority={true} alt="" />
@@ -58,6 +59,7 @@ function ShareCampaignDialog({ campaign, trigger }: ShareCampaignProps) {
 				<Link
 					href={generateWhatsAppMessage(campaign.title, `${frontendUrl}/c/${campaign.shortId}`)}
 					target="_blank"
+					rel="noopener"
 					className="flex w-full items-center justify-end gap-2"
 				>
 					<Image src={whatsappIcon as string} width={32} priority={true} height={32} alt="" />

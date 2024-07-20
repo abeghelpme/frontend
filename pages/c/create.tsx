@@ -7,7 +7,7 @@ import {
 } from "@/components/create-campaign";
 import { AuthenticatedUserLayout } from "@/layouts";
 import { cn, zodValidator } from "@/lib";
-import { useFormStore } from "@/store";
+import { useFormStore, useInitFormStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { FormProvider as HookFormProvider, useForm } from "react-hook-form";
@@ -28,18 +28,13 @@ function CreateCampaignPage() {
 	const methods = useForm({
 		mode: "onChange",
 		resolver: zodResolver(zodValidator(STEP_COMPONENT_LOOKUP[currentStep].validator)!),
-		defaultValues: formStepData,
+		defaultValues: useInitFormStore.getInitialState().formStepData,
+		values: formStepData,
 	});
 
 	useEffect(() => {
 		initializeFormData();
 	}, []);
-
-	useEffect(() => {
-		if (methods.getValues().categoryId) return;
-
-		methods.reset(formStepData);
-	}, [formStepData]);
 
 	useEffect(() => {
 		window.scrollTo({

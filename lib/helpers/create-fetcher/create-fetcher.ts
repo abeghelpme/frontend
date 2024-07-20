@@ -31,7 +31,11 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 		const prevController = abortControllerStore.get(url);
 
 		if (prevController) {
-			prevController.abort();
+			const reason = new DOMException(
+				`Automatic cancelation of the previous unfinished request to this same url: ${url}`,
+				"AbortError"
+			);
+			prevController.abort(reason);
 		}
 
 		const fetchController = new AbortController();
@@ -39,10 +43,8 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 
 		const timeoutId = timeout
 			? setTimeout(() => {
-					fetchController.abort();
-					throw new Error(`Request timed out after ${timeout}ms`, {
-						cause: "Timeout",
-					});
+					const reason = new DOMException(`Request timed out after ${timeout}ms`, "TimeoutError");
+					fetchController.abort(reason);
 			  }, timeout)
 			: null;
 
@@ -78,9 +80,9 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 
 			// == Response has http errors at this point
 			if (!response.ok) {
-				const errorResponse = await getResponseData<AbegErrorResponse<TErrorData>>(response);
+				const errorResponse = await getResponseData<AbegErrorResponse<TErrorData>>(response.clone());
 
-				await onResponseError?.({ ...response, errorData: errorResponse });
+				await onResponseError?.(Object.assign(response.clone(), { errorData: errorResponse }));
 
 				// == Data must be explicitly set to null here, to honor the callApi return type
 				return {
@@ -89,10 +91,10 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 				};
 			}
 
-			const successResponse = await getResponseData<AbegSuccessResponse<TData>>(response);
+			const successResponse = await getResponseData<AbegSuccessResponse<TData>>(response.clone());
 
 			// == Response was successful, so await response interceptor and return the data
-			await onResponse?.({ ...response, data: successResponse });
+			await onResponse?.(Object.assign(response.clone(), { data: successResponse }));
 
 			// == Error must be explicitly set to null here, to honor the callApi return type
 			return {
@@ -102,11 +104,27 @@ const createFetcher = <TBaseData, TBaseErrorData>(
 
 			// == Exhaustive error handling for request failures
 		} catch (error) {
-			if (error instanceof DOMException && error.name === "AbortError" && error.cause === "Timeout") {
-				const message = `Request was cancelled`;
+			if (error instanceof DOMException && error.name === "TimeoutError") {
+				console.info(
+					`%c${error.name}: ${error.message}`,
+					"color: red; font-weight: 500; font-size: 14px;"
+				);
+				console.trace(error.name);
 
-				console.info(`%cAbortError: ${message}`, "color: red; font-weight: 500; font-size: 14px;");
-				console.trace("AbortError");
+				return {
+					data: null,
+					error: {
+						status: "Error",
+						message: error.message,
+					},
+				};
+			}
+
+			if (error instanceof DOMException && error.name === "AbortError") {
+				const message = `Request was aborted due to: ${error.message}`;
+
+				console.info(`%${error.name}: ${message}`, "color: red; font-weight: 500; font-size: 14px;");
+				console.trace(error.name);
 
 				return {
 					data: null,

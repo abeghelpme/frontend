@@ -30,10 +30,6 @@ function ImagePreview(props: ImagePreviewProps) {
 				return file.name !== imageFile.name;
 			}
 
-			if (typeof file === "string" && typeof imageFile === "string") {
-				return file !== imageFile;
-			}
-
 			return false;
 		});
 
