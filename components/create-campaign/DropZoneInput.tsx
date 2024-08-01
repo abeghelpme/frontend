@@ -14,7 +14,7 @@ function DropZoneInput(props: DropZoneInputProps) {
 
 	const { updateFormData } = useFormStore((state) => state.actions);
 
-	const existingImageFiles = imageFiles.filter((file) => file instanceof File) as File[];
+	const existingImageFiles = imageFiles.filter((file): file is File => file instanceof File);
 
 	const handleImageUpload: DropZoneProps["onDrop"] = ({ acceptedFiles }) => {
 		const newFileState = [...imageFiles, ...acceptedFiles];
