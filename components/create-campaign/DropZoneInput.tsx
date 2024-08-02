@@ -10,14 +10,12 @@ type DropZoneInputProps = {
 };
 
 function DropZoneInput(props: DropZoneInputProps) {
-	const { value: imageFiles, onChange } = props;
+	const { value: imageFilesOrString, onChange } = props;
 
 	const { updateFormData } = useFormStore((state) => state.actions);
 
-	const existingImageFiles = imageFiles.filter((file): file is File => file instanceof File);
-
 	const handleImageUpload: DropZoneProps["onDrop"] = ({ acceptedFiles }) => {
-		const newFileState = [...imageFiles, ...acceptedFiles];
+		const newFileState = [...imageFilesOrString, ...acceptedFiles];
 
 		updateFormData({ photos: newFileState });
 
@@ -28,12 +26,14 @@ function DropZoneInput(props: DropZoneInputProps) {
 		});
 	};
 
+	const realImageFiles = imageFilesOrString.filter((file): file is File => file instanceof File);
+
 	return (
 		<DropZone
 			multiple={true}
 			onDrop={handleImageUpload}
 			allowedFileTypes={allowedFileTypes}
-			existingFiles={existingImageFiles}
+			existingFiles={realImageFiles}
 			validator={validateFiles}
 			classNames={{
 				base: "mt-4 flex min-h-40 flex-col items-center justify-end rounded-[5px] border border-dashed border-abeg-primary py-[0.9375rem] text-xs lg:min-h-60",
