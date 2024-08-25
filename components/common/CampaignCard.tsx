@@ -1,5 +1,6 @@
 import type { Campaign } from "@/interfaces/Campaign";
 import { cn, getDaysLeft } from "@/lib";
+import { getDaysLeftForDonationCarousel } from "@/lib/helpers/create-fetcher/utils";
 import { useDragScroll } from "@/lib/hooks";
 import type { AsProp } from "@/lib/type-helpers";
 import Image from "next/image";
@@ -128,7 +129,9 @@ export function CampaignCard(props: CampaignCardProps) {
 
 								<figure className="ml-auto flex items-center gap-1 rounded-md bg-abeg-text/30 p-2 backdrop-blur-md">
 									<ClockIcon />
-									<figcaption>{transformedDetails.daysLeft} days left</figcaption>
+									<figcaption>
+										{getDaysLeftForDonationCarousel(transformedDetails?.daysLeft)} days left
+									</figcaption>
 								</figure>
 							</div>
 						</div>
