@@ -19,13 +19,18 @@ function StepOne() {
 	const {
 		currentStep,
 		campaignId,
-		formStepData,
 		actions: { goToStep, updateFormData, updateCampaignId },
 	} = useFormStore((state) => state);
 
 	const campaignCategories = useCampaignStore((state) => state.categories);
 
-	const { control, handleSubmit, setValue: setFormValue } = useHookFormContext<StepOneData>();
+	const {
+		control,
+		handleSubmit,
+		setValue: setFormValue,
+		watch,
+		getValues: getFormValues,
+	} = useHookFormContext<StepOneData>();
 
 	const [CategoryList] = useElementList("base");
 	const [CountryList] = useElementList("base");
@@ -62,13 +67,11 @@ function StepOne() {
 			event.preventDefault();
 		}
 
-		const validTag = validateTagValue(formStepData.tags, tagInputRef.current?.value);
+		const validTag = validateTagValue(getFormValues().tags, tagInputRef.current?.value);
 
 		if (!validTag) return;
 
-		const newTagState = [...formStepData.tags, `#${validTag}`];
-
-		updateFormData({ tags: newTagState });
+		const newTagState = [...getFormValues().tags, `#${validTag}`];
 
 		setFormValue("tags", newTagState);
 
@@ -76,12 +79,12 @@ function StepOne() {
 	};
 
 	const handleRemoveTags = (tag: string) => () => {
-		const newTagState = formStepData.tags.filter((tagItem) => tagItem !== tag);
-
-		updateFormData({ tags: newTagState });
+		const newTagState = getFormValues().tags.filter((tagItem) => tagItem !== tag);
 
 		setFormValue("tags", newTagState);
 	};
+
+	const watchedTags = watch("tags");
 
 	return (
 		<section className="w-full">
@@ -196,12 +199,12 @@ function StepOne() {
 
 						<div className="mt-4 flex flex-col gap-4">
 							<span className="text-xs text-abeg-primary lg:text-sm">
-								{formStepData.tags.length}/5 tags
+								{watchedTags.length}/5 tags
 							</span>
 
 							<TagList
 								className="flex flex-wrap gap-2 text-xs font-medium text-abeg-primary lg:text-base"
-								each={formStepData.tags}
+								each={watchedTags}
 								render={(tag, index) => (
 									<li
 										key={`${tag}-${index}`}

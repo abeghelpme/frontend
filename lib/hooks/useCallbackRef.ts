@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { isServer } from "../constants";
-import type { CallbackFn } from "../type-helpers/global-type-helpers";
+import type { CallbackFn } from "../type-helpers/global";
 
 const useIsoMorphicLayoutEffect = isServer ? useEffect : useLayoutEffect;
 
-const useCallbackRef = <TParams, TResult = unknown>(
-	callbackFn: CallbackFn<TParams, TResult>
-) => {
+const useCallbackRef = <TParams, TResult = unknown>(callbackFn: CallbackFn<TParams, TResult>) => {
 	const callbackRef = useRef(callbackFn);
 
 	useIsoMorphicLayoutEffect(() => {
@@ -14,10 +12,7 @@ const useCallbackRef = <TParams, TResult = unknown>(
 		callbackRef.current = callbackFn;
 	}, [callbackFn]);
 
-	const savedCallback = useCallback(
-		(...params: TParams[]) => callbackRef.current(...params),
-		[]
-	);
+	const savedCallback = useCallback((...params: TParams[]) => callbackRef.current(...params), []);
 
 	return savedCallback;
 };

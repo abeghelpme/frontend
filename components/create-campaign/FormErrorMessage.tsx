@@ -13,17 +13,28 @@ function FormErrorMessage<TStepData extends FieldValues>(props: ErrorParagraphPr
 
 	const formState = useFormState({ control });
 
-	const paragraphRef = useRef<HTMLParagraphElement>(null);
+	const errorParagraphRef = useRef<HTMLParagraphElement>(null);
 	const message = formState.errors[errorField]?.message as string | undefined;
 
 	const animationClass = "animate-shake";
 
+	console.log(formState.errors);
+	console.dir(errorParagraphRef.current);
+
 	useEffect(() => {
-		if (!paragraphRef.current) return;
+		if (!errorParagraphRef.current) return;
 
-		if (paragraphRef.current.classList.contains(animationClass)) return;
+		if (errorParagraphRef.current.classList.contains(animationClass)) return;
 
-		paragraphRef.current.classList.add(animationClass);
+		errorParagraphRef.current.classList.add(animationClass);
+
+		// Scroll to first error message
+		if (Object.keys(formState.errors).indexOf(errorField as string) === 0) {
+			errorParagraphRef.current.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
+			});
+		}
 	}, [formState.submitCount]);
 
 	if (!message) {
@@ -32,9 +43,9 @@ function FormErrorMessage<TStepData extends FieldValues>(props: ErrorParagraphPr
 
 	return (
 		<p
-			ref={paragraphRef}
+			ref={errorParagraphRef}
 			className={cn("ml-1 mt-3 text-xs font-medium italic text-red-400 lg:text-base", className)}
-			onAnimationEnd={() => paragraphRef.current?.classList.remove(animationClass)}
+			onAnimationEnd={() => errorParagraphRef.current?.classList.remove(animationClass)}
 		>
 			*{message}
 		</p>

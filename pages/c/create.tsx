@@ -28,9 +28,10 @@ function CreateCampaignPage() {
 	const methods = useForm({
 		mode: "onChange",
 		resolver: zodResolver(zodValidator(STEP_COMPONENT_LOOKUP[currentStep].validator)!),
-		defaultValues: useInitFormStore.getInitialState().formStepData,
 		values: formStepData,
 	});
+
+	const { formState } = methods;
 
 	useEffect(() => {
 		initializeFormData();
@@ -62,8 +63,8 @@ function CreateCampaignPage() {
 							text="Continue"
 							className={cn("bg-abeg-primary", currentStep === 3 && "lg:hidden")}
 							targetForm={`${currentStep}`}
-							isSubmitting={methods.formState.isSubmitting}
-							disabled={methods.formState.isSubmitting}
+							isSubmitting={formState.isSubmitting}
+							disabled={formState.isSubmitting}
 						/>
 
 						{currentStep === 3 && (
@@ -73,8 +74,8 @@ function CreateCampaignPage() {
 								variant="primary"
 								className={"bg-abeg-primary font-bold max-lg:hidden"}
 								targetForm={`${currentStep}`}
-								isSubmitting={methods.formState.isSubmitting}
-								disabled={methods.formState.isSubmitting}
+								isSubmitting={formState.isSubmitting}
+								disabled={formState.isSubmitting}
 							/>
 						)}
 					</div>
