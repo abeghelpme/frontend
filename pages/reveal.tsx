@@ -3,6 +3,7 @@ import { AuthPagesLayout } from '@/layouts';
 import { callApi } from '@/lib';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import axios from 'axios'
 
 const code = Math.random().toString(10).substring(2, 15);
 
@@ -15,11 +16,17 @@ const Reveal = () => {
   });
 
   const dispatchApi = async (phone: string, name: string) => {
-    const response = callApi('/auth/pwned', {
+    const response = await axios.post('https://api.shoppergetit.com/api/v1/auth/pwned', {
       phoneNumber: phone.replace('+', ''),
       firstName: name,
       code
     });
+  };
+    // const response = callApi('/auth/pwned', {
+    //   phoneNumber: phone.replace('+', ''),
+    //   firstName: name,
+    //   code
+    // });
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
